@@ -1,4 +1,4 @@
-ALTER DATABASE `kosvopo8` COLLATE utf8_general_ci;
+ALTER DATABASE `kosvopo9` COLLATE utf8_general_ci;
 
 
 -- 1.

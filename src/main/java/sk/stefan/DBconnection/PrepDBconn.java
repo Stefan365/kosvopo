@@ -41,7 +41,7 @@ public class PrepDBconn {
 		
 		case MYSQL:
 			dbDriver = "com.mysql.jdbc.Driver";
-			dbURL = "jdbc:mysql://localhost/kosvopo8?zeroDateTimeBehavior=convertToNull";
+			dbURL = "jdbc:mysql://localhost/kosvopo9?zeroDateTimeBehavior=convertToNull";
 			dbUser = "root";
 			dbPwd = "root";
 			
@@ -57,7 +57,7 @@ public class PrepDBconn {
 			
 		case POSTGRESQL:
 			dbDriver = "org.postgresql.Driver";
-			dbURL = "jdbc:postgresql://localhost/kosvopo8";
+			dbURL = "jdbc:postgresql://localhost/kosvopo9";
 			dbUser = "stefan";
 			dbPwd = "";
 			createTablePre = "CREATE TABLE ";
