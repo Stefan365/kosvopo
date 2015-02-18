@@ -59,6 +59,7 @@ public class DBAdapter {
      * Konstruktor, který vytvoření spojení s databází. *
      */
     public DBAdapter() {
+        
 	// nastavení lokálního prostředí
 	Locale locale = new Locale("cz", "CZ");
 	// načtení properties

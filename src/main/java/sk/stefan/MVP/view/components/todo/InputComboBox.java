@@ -11,10 +11,8 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.converter.Converter;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.TextField;
-
 import java.util.Locale;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.view.converters.todo.AnyEntityConverter;
 
@@ -53,8 +51,8 @@ public final class InputComboBox<E> extends ComboBox {
     private Item item; 
     private Property<?> prop; 
 
-    //další pomocné proměnné:
-    private final Logger logger = Logger.getLogger(InputComboBox.class.getName());
+    //logger: 
+    private final Logger logger = Logger.getLogger(InputComboBox.class);
 
     /**
      * Pomocná komponenta TextField, která, jak bylo vysvětleno v hlavičce 
@@ -122,6 +120,8 @@ public final class InputComboBox<E> extends ComboBox {
      *
      */
     private void involveFg() {
+        //fn - fieldname is name of property in Item.
+        //it corresponds with the name of property of relevant entity
         this.fg.bind(tf, fn);
         this.setValue(tf.getValue());
     }
@@ -175,11 +175,7 @@ public final class InputComboBox<E> extends ComboBox {
     public void initListener() {
         this.addValueChangeListener(new ValueChangeListener() {
 
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8428549162334253900L;
-
+    
             @Override
             public void valueChange(
                 com.vaadin.data.Property.ValueChangeEvent event) {

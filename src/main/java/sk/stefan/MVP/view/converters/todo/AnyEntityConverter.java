@@ -63,6 +63,7 @@ public class AnyEntityConverter<E> implements Converter<String, E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Class<E> getModelType() {
         return (Class<E>) cls;
     }
