@@ -73,7 +73,7 @@ public final class InputFormLayout<T> extends FormLayout {
     /**
      * SQLcontainer, na kterém je postavena tabulka s úkoly.
      */
-    private final SQLContainer sqlContainer;
+    private SQLContainer sqlContainer;
     
     /**
      * FieldGoup je nástroj na svázaní vaadinovské komponenty a nějakého jiného 
@@ -197,7 +197,8 @@ public final class InputFormLayout<T> extends FormLayout {
 
             switch (propertyTypeName) {
                 case "java.lang.Long":
-                    if (pn.contains("id_")) {
+                    if (pn.contains("_id")) {
+                        String tableN = getTableName(pn);
                         switch (pn) {
                             case "id_tcy":
                                 //POZN: parametry POJO by se meli jmenovat stejne ako 
@@ -418,8 +419,8 @@ public final class InputFormLayout<T> extends FormLayout {
                     sqlContainer.commit();
                     fieldsFL.setEnabled(false);
                     okCancelListener.doAdditionalOkAction();
-
                     Notification.show("Úkol byl úspešně uložen!");
+
                 } catch (SQLException | UnsupportedOperationException | CommitException e) {
                     logger.warn(e.getLocalizedMessage(), e);
                 }
@@ -442,6 +443,14 @@ public final class InputFormLayout<T> extends FormLayout {
 
         this.addComponent(buttonsHL);
 
+    }
+
+    private String getTableName() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private String getTableName(String pn) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -5,44 +5,16 @@
  */
 package sk.stefan.MVP.view;
 
-import sk.stefan.listenersImpl.RenewBackgroundListenerImpl;
-import com.vaadin.data.Property;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.Sizeable;
-import com.vaadin.server.StreamResource;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.server.VaadinService;
-import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
-import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
-import java.io.File;
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.model.entity.Planet;
 import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
@@ -55,13 +27,6 @@ import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.entity.jpa.ActClassification;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.components.todo.InputFormLayout;
-import sk.stefan.MVP.view.dialogs.todo.TaskDlg;
-import sk.stefan.MVP.view.helpers.ImageUploader;
-import sk.stefan.MVP.view.helpers.ImageUploaderA;
-import sk.stefan.MVP.view.helpers.MyImageSource;
-import sk.stefan.MVP.view.helpers.Take5;
-import sk.stefan.listeners.RenewBackgroundListener;
 import sk.stefan.utils.InputFormWrapper;
 
 /**

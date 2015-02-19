@@ -8,14 +8,15 @@ package sk.stefan.listeners;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.InputAllView;
 import sk.stefan.MVP.view.dialogs.todo.TaskDlg;
 import sk.stefan.listenersImpl.RenewBackgroundListenerImpl;
-
 
 /**
  *
@@ -29,7 +30,10 @@ public class InputButClickListener implements Button.ClickListener {
     private final Class<?> cls;
     private final String title;
     private final InputAllView iaw;
-    
+    private SQLContainer sqlCont;
+    private TaskDlg tdlg;
+    private String tn;
+
     public InputButClickListener(Class<?> cls, String title, InputAllView iaw) {
         this.cls = cls;
         this.title = title;
@@ -38,30 +42,32 @@ public class InputButClickListener implements Button.ClickListener {
 
     @Override
     public void buttonClick(Button.ClickEvent event) {
-//                        b = new Button(allButtonsNames[]Map.get(b).getButtonName());
-//                    , new Button.ClickListener() {
-//            
         //cls = (allButtonsMap.get(b).getClsE());
         try {
-            TaskDlg tdlg;
-            Field tnField = cls.getDeclaredField("TN");
-            String tn;
-            try {
-                tn = (String) tnField.get(null);
-                SQLContainer sqlCont;
-                sqlCont = DoDBconn.getContainer(tn);
-                tdlg = new TaskDlg("Nový " + title,
+            Field tnFld = cls.getDeclaredField("TN");
+
+            tn = (String) tnFld.get(null);
+            sqlCont = DoDBconn.getContainer(tn);
+
+            //vytvorenie noveho dialogoveho okna s mapami
+            //toto dat do input form layoutu.
+//                Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
+//                Constructor<UniRepo> repoCtor = (Constructor<UniRepo>) repoCls.getConstructor(Class.class);
+//                return repoCtor.newInstance(cls).findAll();
+            tdlg = new TaskDlg("Nový " + title,
                     sqlCont,
                     null,
-                    new RenewBackgroundListenerImpl(iaw));               
-                UI.getCurrent().addWindow(tdlg);                
-            } catch (IllegalAccessException | SQLException ex) {
-                log.error("pokazilo sa to");
-            }
-
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException ex) {
-            log.error("pokazilo sa to ");
+                    new RenewBackgroundListenerImpl(iaw),
+                    cls
+            );
+            UI.getCurrent().addWindow(tdlg);
+            //POZOR na toto, malo by to dobehnut az potom, co sa ukonci vlakno 
+            //UI okna:
+            sqlCont = null;
+        } catch (IllegalAccessException | SQLException | NoSuchFieldException | SecurityException ex) {
+            log.error(ex.getMessage());
         }
+
     }
 
 }

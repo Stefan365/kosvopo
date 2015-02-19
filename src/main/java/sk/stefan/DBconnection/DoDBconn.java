@@ -29,33 +29,34 @@ public class DoDBconn {
     private static JDBCConnectionPool connectionPool = null;
     private static final JDBCConnectionPool connectionPoolCont = null;
 
-    private static final String driver;
-    private static final String url;
-    private static final String user;
-    private static final String passwd;
+//    private static final String driver;
+//    private static final String url;
+//    private static final String user;
+//    private static final String passwd;
 
     static {
+        connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 55);
         //connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 55);
-        properties = ResourceBundle.getBundle("dbconnection", locale);
-        //connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 55);
-        driver = properties.getString("dbDriver");
-        url = properties.getString("dbUrl");
-        user = properties.getString("dbUser");
-        passwd = properties.getString("dbPwd");
-
-        connectToDb(driver, url, user, passwd, 2, 55);
+        
+//        properties = ResourceBundle.getBundle("dbconnection", locale);
+//        driver = properties.getString("dbDriver");
+//        url = properties.getString("dbUrl");
+//        user = properties.getString("dbUser");
+//        passwd = properties.getString("dbPwd");
+//        connectToDb(driver, url, user, passwd, 2, 55);
     }
 
     // 0.A konstruktor:
     public DoDBconn() {
-        properties = ResourceBundle.getBundle("dbconnection", locale);
-        //connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 55);
-        String driver = properties.getString("dbDriver");
-        String url = properties.getString("dbUrl");
-        String user = properties.getString("dbUser");
-        String passwd = properties.getString("dbPwd");
 
-        connectToDb(driver, url, user, passwd, 2, 55);
+        connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 55);
+        
+//        properties = ResourceBundle.getBundle("dbconnection", locale);
+//        String driver = properties.getString("dbDriver");
+//        String url = properties.getString("dbUrl");
+//        String user = properties.getString("dbUser");
+//        String passwd = properties.getString("dbPwd");
+//        connectToDb(driver, url, user, passwd, 2, 55);
     }
 
     // 1.
