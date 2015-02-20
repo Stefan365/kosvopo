@@ -264,7 +264,7 @@ public class Kos6View extends VerticalLayout implements View {
          * layout.addComponents(upload); layout.addComponents(panel);
          * panel.setContent(layout); /
          */
-		// B.2
+        // B.2
         // Implement both receiver that saves upload in a file and
         // listener for successful upload
         ImageUploaderA uploadera = new ImageUploaderA();

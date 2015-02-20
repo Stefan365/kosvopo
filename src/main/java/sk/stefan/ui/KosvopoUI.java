@@ -7,23 +7,16 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import javax.servlet.annotation.WebServlet;
 import sk.stefan.MVP.view.AddressbookView;
-import sk.stefan.MVP.view.DruhyView;
 import sk.stefan.MVP.view.FilaManager;
 import sk.stefan.MVP.view.HomoView;
 import sk.stefan.MVP.view.InputAllView;
 import sk.stefan.MVP.view.K4_Verejna_osobaView;
 import sk.stefan.MVP.view.K5_PoslanciView;
-import sk.stefan.MVP.view.Kos1View;
 import sk.stefan.MVP.view.Kos2View;
 import sk.stefan.MVP.view.Kos3View;
-import sk.stefan.MVP.view.Kos6View;
-import sk.stefan.MVP.view.Kos8View;
-import sk.stefan.MVP.view.LettingUserDownladFile;
 import sk.stefan.MVP.view.LoginView;
-import sk.stefan.MVP.view.Page1;
-import sk.stefan.MVP.view.Page2;
 import sk.stefan.MVP.view.VstupniView;
-import sk.stefan.MVP.view.Welcome;
+import sk.stefan.MVP.view.Kos6View;
 
 @SuppressWarnings("serial")
 public class KosvopoUI extends UI {
@@ -46,21 +39,21 @@ public class KosvopoUI extends UI {
         navigator.addView("login", new LoginView(navigator));
 
         navigator.addView("vstupny", new InputAllView(navigator));
-        navigator.addView("druhy", new DruhyView(navigator));
+        //navigator.addView("druhy", new DruhyView(navigator));
         navigator.addView("homo", new HomoView(navigator));
         navigator.addView("addressbook", new AddressbookView(navigator));
         navigator.addView("filamanager", new FilaManager(navigator));
-        navigator.addView("kos1", new Kos1View(navigator));
+        //navigator.addView("kos1", new Kos1View(navigator));
         navigator.addView("kos2", new Kos2View(navigator));
         navigator.addView("kos3", new Kos3View(navigator));
         navigator.addView("kos4", new K4_Verejna_osobaView(navigator));
         navigator.addView("kos5", new K5_PoslanciView(navigator));
         navigator.addView("kos6", new Kos6View(navigator));
-        navigator.addView("download", new LettingUserDownladFile(navigator));
-        navigator.addView("kos8", new Kos8View(navigator));
-        navigator.addView("page1", new Page1(navigator));
-        navigator.addView("page2", new Page2(navigator));
-        navigator.addView("welcome", new Welcome(navigator));
+//        navigator.addView("download", new LettingUserDownladFile(navigator));
+//        navigator.addView("kos8", new Kos8View(navigator));
+//        navigator.addView("page1", new Page1(navigator));
+//        navigator.addView("page2", new Page2(navigator));
+//        navigator.addView("welcome", new Welcome(navigator));
         
 
         navigator.navigateTo("login");

@@ -173,27 +173,27 @@ public class NavigationComponent extends HorizontalLayout {
         b16.setStyleName(BaseTheme.BUTTON_LINK);
         b17.setStyleName(BaseTheme.BUTTON_LINK);
 
-		//hl = new HorizontalLayout();
+	//hl = new HorizontalLayout();
         this.setSpacing(true);
         this.setMargin(true);
 
         this.addComponent(b1);
         this.addComponent(b2);
-        this.addComponent(b3);
+//        this.addComponent(b3);
         this.addComponent(b4);
         this.addComponent(b5);
         this.addComponent(b6);
-        this.addComponent(b7);
+//        this.addComponent(b7);
         this.addComponent(b8);
         this.addComponent(b9);
         this.addComponent(b10);
         this.addComponent(b11);
         this.addComponent(b12);
-        this.addComponent(b13);
-        this.addComponent(b14);
-        this.addComponent(b15);
-        this.addComponent(b16);
-        this.addComponent(b17);
+//        this.addComponent(b13);
+//        this.addComponent(b14);
+//        this.addComponent(b15);
+//        this.addComponent(b16);
+//        this.addComponent(b17);
 
     }
 }

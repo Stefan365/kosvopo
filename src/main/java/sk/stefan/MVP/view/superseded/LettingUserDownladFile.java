@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view;
+package sk.stefan.MVP.view.superseded;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -25,34 +25,33 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class LettingUserDownladFile  extends VerticalLayout implements View {
+public class LettingUserDownladFile extends VerticalLayout implements View {
 
-	
-	private Button downloadButton;
-	private StreamResource myResource;
-	private FileDownloader fileDownloader;
-	private Window win;
-	private HorizontalLayout lay2;
-	
-	public LettingUserDownladFile(Navigator nav){
-		
-		this.initLayout();
-		this.addComponent(new NavigationComponent(nav));
-	}
+    private Button downloadButton;
+    private StreamResource myResource;
+    private FileDownloader fileDownloader;
+    private Window win;
+    private HorizontalLayout lay2;
 
-	private void initLayout () {
+    public LettingUserDownladFile(Navigator nav) {
+
+        this.initLayout();
+        this.addComponent(new NavigationComponent(nav));
+    }
+
+    private void initLayout() {
 
         downloadButton = new Button("Download image");
 
         myResource = createResource();
         fileDownloader = new FileDownloader(myResource);
-        
+
         fileDownloader.extend(downloadButton);
         //String path = "C:/Users/User/Pictures/obr/psychobox.png";
         String path = "C:/psychobox.png";
-        
+
         publishReport(path);
-        
+
         this.addComponent(downloadButton);
     }
 
@@ -78,56 +77,55 @@ public class LettingUserDownladFile  extends VerticalLayout implements View {
         }, "psychobox.png");
     }
 
-	@Override
-	public void enter(ViewChangeEvent event) {
+    @Override
+    public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-		
-	}
-	
-	private void publishReport(final String path){
 
-		StreamSource s = new StreamSource() {
+    }
 
-	        public java.io.InputStream getStream() {
-	            try {
-	                File f = new File(path);
-	                FileInputStream fis = new FileInputStream(f);
-	                return fis;
-	            } catch (FileNotFoundException e) {
-	                // TODO Auto-generated catch block
-	                e.printStackTrace();
-	            }
-	            return null;
-	        }
-	    };
+    private void publishReport(final String path) {
 
-	    
-	    //StreamResource r = new StreamResource(s, "appointmentScheduleDate.pdf", this.getUI());
-	    StreamResource r = new StreamResource(s, "C:/psychobox.png");
-	    r.setCacheTime(-1);
-	    Embedded e = new Embedded();
-	    e.setSizeFull();
-	    //e.setType(Embedded.TYPE_BROWSER);
+        StreamSource s = new StreamSource() {
 
-	    r.setMIMEType("application/pdf");
+            public java.io.InputStream getStream() {
+                try {
+                    File f = new File(path);
+                    FileInputStream fis = new FileInputStream(f);
+                    return fis;
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
 
-	    e.setSource(r);
-	    e.setHeight("650px");
-	    
-	    /*
-	    win = new Window("Report");
-	    win.center();
-	    win.setModal(true);
-	    win.setHeight("700px");
-	    win.setWidth("900px");
-	    */
-	    lay2 = new HorizontalLayout();
-	    lay2.addComponent(e);
-	    this.addComponent(lay2);
+        //StreamResource r = new StreamResource(s, "appointmentScheduleDate.pdf", this.getUI());
+        StreamResource r = new StreamResource(s, "C:/psychobox.png");
+        r.setCacheTime(-1);
+        Embedded e = new Embedded();
+        e.setSizeFull();
+        //e.setType(Embedded.TYPE_BROWSER);
+
+        r.setMIMEType("application/pdf");
+
+        e.setSource(r);
+        e.setHeight("650px");
+
+        /*
+         win = new Window("Report");
+         win.center();
+         win.setModal(true);
+         win.setHeight("700px");
+         win.setWidth("900px");
+         */
+        lay2 = new HorizontalLayout();
+        lay2.addComponent(e);
+        this.addComponent(lay2);
 	    //win.addComponent(e);
-	    
-	    //this.getUI().addWindow(win);
+
+        //this.getUI().addWindow(win);
 	    /**/
-	}
+    }
 
 }
