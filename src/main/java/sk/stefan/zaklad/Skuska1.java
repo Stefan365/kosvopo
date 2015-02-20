@@ -11,7 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Change;
@@ -26,10 +28,9 @@ import sk.stefan.MVP.model.entity.dao.Subject;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.User;
-import sk.stefan.MVP.model.entity.dao.UserRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
-import sk.stefan.MVP.model.entity.dao.ActClassification;
+import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.Okres;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 
@@ -44,14 +45,101 @@ public class Skuska1<T> {
             NoSuchMethodException, IllegalArgumentException,
             InvocationTargetException, SQLException {
 
+        //******* SKUSKA REFLEXIE, map:
+        Skuska1<VoteClassification> sk = new Skuska1<>();
+        Map<String, Integer> map = sk.findAllByClass(Kraj.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        
+        map = sk.findAllByClass(Location.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(Okres.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(PersonClassification.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(PublicBody.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(PublicPerson.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(PublicRole.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(Subject.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(Tenure.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(Theme.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(Vote.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(VoteClassification.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        map = sk.findAllByClass(VoteOfRole.class);
+        if (map != null) {
+            for (String s:map.keySet()){
+               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+            }
+        }
+        
+//      
+        
+        //******* koniec SKUSKy REFLEXIE, map.
+        
+        
         //******* SKUSKA REFLEXIE:
-//        Skuska1<ActClassification> sk = new Skuska1<>();
+//        Skuska1<VoteClassification> sk = new Skuska1<>();
 //        List<? extends Object> obj = sk.skusReflex(Kraj.class);
 //        if (obj != null) {
 //            log.info("DELLKA kraj: " + obj.size());
 //        }
 //
-//        obj = sk.skusReflex(ActClassification.class);
+//        obj = sk.skusReflex(VoteClassification.class);
 //        if (obj != null) {
 //            log.info("DELLKA: act_cl:" + obj.size());
 //        }
@@ -108,9 +196,8 @@ public class Skuska1<T> {
 //        if (obj != null) {
 //            log.info("DELLKA vot_of_role: " + obj.size());
 //        }
-        //*******KONIEC SKUSKY REFLEXIE:
-        
 
+        //*******KONIEC SKUSKY REFLEXIE:
 //		sk1.tryDate();
 //		sk1.skusIf();
         //sk.tryDate1();
@@ -122,10 +209,9 @@ public class Skuska1<T> {
         // UniGetAllRepo<PublicPerson> uniRepo = new
         // UniGetAllRepo<>(ent.getClass());
         // UniRepo<PublicPerson> uniRepo = new UniRepo<>(PublicPerson.class);
-        //*********************
-//        
-//          Skuska1<ActClassification> sk1 = new Skuska1<>();
-//          sk1.skusaj(ActClassification.class);
+//********************* testovanie UNIREPO
+//          Skuska1<VoteClassification> sk1 = new Skuska1<>();
+//          sk1.skusaj(VoteClassification.class);
 //          
 //          Skuska1<Change> sk2 = new Skuska1<>(); sk2.skusaj(Change.class);
 //          
@@ -164,7 +250,6 @@ public class Skuska1<T> {
 //          
 //          Skuska1<VoteOfRole> sk16 = new Skuska1<>();
 //          sk16.skusaj(VoteOfRole.class);
-//          
         //*********************
         /* Class c = Integer.class; Class ca = PublicPerson.class; Class
          cb = ent.getClass();
@@ -513,7 +598,7 @@ public class Skuska1<T> {
             //log.info("CLAZZ: " + clazz.getCanonicalName());
             //log.info("CLS2: " + cls2.getCanonicalName());
             @SuppressWarnings("unchecked")
-            Constructor<UniRepo> ctor = (Constructor<UniRepo>) clazz.getConstructor(Class.class);
+            Constructor<UniRepo<? extends Object>> ctor = (Constructor<UniRepo<? extends Object>>) clazz.getConstructor(Class.class);
             //Constructor<Skuska> csku = (Constructor<Skuska>) cls2.getConstructor(int.class);
             return ctor.newInstance(cls).findAll();
             //return csku.newInstance(5).getList();
@@ -525,4 +610,35 @@ public class Skuska1<T> {
         }
         return null;
     }
+
+    @SuppressWarnings({"unchecked"})
+    private Map<String, Integer> findAllByClass(Class<?> cls) {
+
+        Map<String, Integer> map = new HashMap<>();
+        String repN;
+        Integer id;
+
+        try {
+            Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
+            Constructor<UniRepo<? extends Object>> repoCtor;
+            repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
+            List<? extends Object> listObj;
+            listObj = repoCtor.newInstance(cls).findAll();
+
+            for (Object o : listObj) {
+                Method getRepNameMethod = cls.getDeclaredMethod("getPresentationName");
+                repN = (String) getRepNameMethod.invoke(o);
+                Method getIdMethod = cls.getDeclaredMethod("getId");
+                id = (Integer) getIdMethod.invoke(o);
+                map.put(repN, id);
+            }
+            return map;
+        } catch (NoSuchMethodException | InvocationTargetException |
+                IllegalArgumentException | IllegalAccessException |
+                InstantiationException | SecurityException | ClassNotFoundException ex) {
+            log.error(ex.getMessage());
+        }
+        return null;
+    }
+
 }

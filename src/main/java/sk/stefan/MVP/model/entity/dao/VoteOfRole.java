@@ -1,88 +1,88 @@
 package sk.stefan.MVP.model.entity.dao;
 
-
-
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.interfaces.PresentationName;
 
 public class VoteOfRole implements PresentationName {
 
-	private static final String TN = "T_Vote_Of_Role";
+    public static final String TN = "T_Vote_Of_Role";
 
-	private Integer id;
+    public static final String CLASS_PRESENTATION_NAME = "Hlasovaneie verejného činiteľa";
 
-	private Integer public_role_id;
+    private Integer id;
 
-	private Integer vote_id;
+    private Integer public_role_id;
 
-	private String decision;
+    private Integer vote_id;
 
-	private Boolean visible;
+    private String decision;
 
-	// getters:
-	public Integer getId() {
-		return this.id;
-	}
+    private Boolean visible;
 
-	public Integer getPublic_role_id() {
-		return this.public_role_id;
-	}
+    // getters:
+    public Integer getId() {
+        return this.id;
+    }
 
-	public Integer getVote_id() {
-		return this.vote_id;
-	}
+    public Integer getPublic_role_id() {
+        return this.public_role_id;
+    }
 
-	public String getDecision() {
-		return this.decision;
-	}
+    public Integer getVote_id() {
+        return this.vote_id;
+    }
 
-	public Boolean getVisible() {
-		return this.visible;
-	}
+    public String getDecision() {
+        return this.decision;
+    }
 
-	public static String getTN() {
-		return TN;
-	}
+    public Boolean getVisible() {
+        return this.visible;
+    }
 
-	// setters:
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public static String getTN() {
+        return TN;
+    }
 
-	public void setPublic_role_id(Integer prid) {
-		this.public_role_id = prid;
-	}
+    // setters:
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setVote_id(Integer votid) {
-		this.vote_id = votid;
-	}
+    public void setPublic_role_id(Integer prid) {
+        this.public_role_id = prid;
+    }
 
-	public void setDecision(String dec) {
-		this.decision = dec;
-	}
+    public void setVote_id(Integer votid) {
+        this.vote_id = votid;
+    }
 
-	public void setVisible(Boolean vis) {
-		this.visible = vis;
-	}
+    public void setDecision(String dec) {
+        this.decision = dec;
+    }
 
-	@Override
-	public String getPresentationName() {
+    public void setVisible(Boolean vis) {
+        this.visible = vis;
+    }
 
-		UniRepo<PublicRole> prRepo = new UniRepo<PublicRole>(PublicRole.class);
-		UniRepo<PublicPerson> ppRepo = new UniRepo<PublicPerson>(
-				PublicPerson.class);
-		UniRepo<Vote> votRepo = new UniRepo<Vote>(Vote.class);
+    @Override
+    public String getPresentationName() {
 
-		if (public_role_id != null) {
-			PublicRole pr = prRepo.findOne(public_role_id);
-			PublicPerson pp = ppRepo.findOne(pr.getPublic_person_id());
-			Vote vot = votRepo.findOne(vote_id);
+        UniRepo<PublicRole> prRepo = new UniRepo<PublicRole>(PublicRole.class);
+        UniRepo<PublicPerson> ppRepo = new UniRepo<PublicPerson>(
+                PublicPerson.class);
+        UniRepo<Vote> votRepo = new UniRepo<Vote>(Vote.class);
 
-			return pp.getPresentationName() + ", " + vot.getPresentationName();
-		} else {
-			return id + ", ";
-		}
+        if (public_role_id != null) {
+            PublicRole pr = prRepo.findOne(public_role_id);
+            PublicPerson pp = ppRepo.findOne(pr.getPublic_person_id());
+            Vote vot = votRepo.findOne(vote_id);
 
-	}
+            return pp.getPresentationName() + ", " + vot.getPresentationName();
+        } else {
+            return id + ", ";
+        }
+
+    }
 
 }

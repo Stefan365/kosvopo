@@ -42,7 +42,7 @@ public class TaskDlg extends Window implements OkCancelListener {
      * @param sqlCont sqlcontainer na kterém je postavena tabulka s úkoly.
      * @param item vybraná položka z SQLcontaineru (řádek z tabulky).
      * @param lis Listener na obnovu view.
-     * @param cls trieda entity, ktorej sa input form tyka.
+     * @param cls trieda entity, ktorej sa input-form tyka.
      */
     public TaskDlg(String caption, SQLContainer sqlCont, Item item, RenewBackgroundListener lis, Class<?> cls) {
         this.listener = lis;
@@ -67,7 +67,7 @@ public class TaskDlg extends Window implements OkCancelListener {
 
     @Override
     public void doAdditionalCancelAction() {
-        listener.refreshTodo();
+        //listener.refreshTodo();
         close();
     }
 

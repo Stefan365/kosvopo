@@ -5,66 +5,68 @@ import sk.stefan.interfaces.PresentationName;
 
 public class PublicBody implements PresentationName {
 
-	private static final String TN = "T_Public_Body";
+    public static final String TN = "T_Public_Body";
+    
+    public static final String CLASS_PRESENTATION_NAME = "Verejný orgán";
 
-	private Integer id;
+    private Integer id;
 
-	private String name;
+    private String name;
 
-	private Integer location_id;
+    private Integer location_id;
 
-	private Boolean visible;
+    private Boolean visible;
 
-	// getters:
-	public Integer getId() {
-		return this.id;
-	}
+    // getters:
+    public Integer getId() {
+        return this.id;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public Integer getLocation_id() {
-		return this.location_id;
-	}
+    public Integer getLocation_id() {
+        return this.location_id;
+    }
 
-	public Boolean getVisible() {
-		return this.visible;
-	}
+    public Boolean getVisible() {
+        return this.visible;
+    }
 
-	public static String getTN() {
-		return TN;
-	}
+    public static String getTN() {
+        return TN;
+    }
 
-	// setters:
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    // setters:
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setName(String nam) {
-		this.name = nam;
-	}
+    public void setName(String nam) {
+        this.name = nam;
+    }
 
-	public void setLocation_id(Integer locid) {
-		this.location_id = locid;
-	}
+    public void setLocation_id(Integer locid) {
+        this.location_id = locid;
+    }
 
-	public void setVisible(Boolean vis) {
-		this.visible = vis;
-	}
+    public void setVisible(Boolean vis) {
+        this.visible = vis;
+    }
 
-	@Override
-	public String getPresentationName() {
+    @Override
+    public String getPresentationName() {
 
-		UniRepo<Location> locRepo = new UniRepo<Location>(Location.class);
+        UniRepo<Location> locRepo = new UniRepo<Location>(Location.class);
 
-		if (location_id != null) {
-			Location loc = locRepo.findOne(location_id);
-			return name + ", " + loc.getPresentationName();
-		} else {
-			return name;
-		}
+        if (location_id != null) {
+            Location loc = locRepo.findOne(location_id);
+            return name + ", " + loc.getPresentationName();
+        } else {
+            return name;
+        }
 
-	}
+    }
 
 }

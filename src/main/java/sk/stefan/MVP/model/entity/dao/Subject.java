@@ -4,7 +4,9 @@ import sk.stefan.interfaces.PresentationName;
 
 public class Subject implements PresentationName {
 
-    private static final String TN = "T_Subject";
+    public static final String TN = "T_Subject";
+    
+    public static final String CLASS_PRESENTATION_NAME = "Predmet hlasovania";
 
     private Integer id;
 

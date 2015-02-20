@@ -14,40 +14,15 @@ public final class InputFormWrapper<E extends Object> {
      * Trieda danej entity
      */
     private final Class<E> clsE;
-    private final Object objE;
     private final String buttonName;
-
-//    public InputFormWrapper(Class<E> clsE, String butName){
-//        this.setButtonName(butName);
-//        this.setClsE(clsE);
-//    }
-    @SuppressWarnings("unchecked")
-    public InputFormWrapper(E objE, String butName) {
-//        this.setButtonName(butName);
-//        this.setObjE(objE);
-//        this.setClsE((Class<E>) objE.getClass());
+    private final String tableName;
+    
+    public InputFormWrapper(Class<E> clsE, String butName, String tn){
         this.buttonName = butName;
-        this.clsE = (Class<E>) objE.getClass();
-        this.objE = objE;
+        this.clsE = clsE;
+        this.tableName = tn;
     }
-
-//    public void setName(String nm){
-//        this.name = nm;
-//    }
-//    public void setButtonName(String nm){
-//        this.buttonName = nm;
-//    }
-//    
-//    public void setClsE(Class<E> cls){
-//        this.clsE = cls;
-//    }
-//    
-//    public void setObjE(Object o){
-//        this.objE = o;
-//    }
-//    public String getName(){
-//        return this.name;
-//    }
+    
     public String getButtonName() {
         return this.buttonName;
     }
@@ -55,9 +30,8 @@ public final class InputFormWrapper<E extends Object> {
     public Class<E> getClsE() {
         return this.clsE;
     }
-
-    public Object getObjE() {
-        return this.objE;
+    
+    public String getTableName() {
+        return this.tableName;
     }
-
 }

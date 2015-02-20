@@ -32,306 +32,304 @@ import com.vaadin.ui.VerticalLayout;
 
 public class PomFormLayout<T> extends FormLayout {
 
-	/**
-	 * Identifikator:
-	 */
-	private static final long serialVersionUID = 4947104793788125920L;
+    /**
+     * Identifikator:
+     */
+    private static final long serialVersionUID = 4947104793788125920L;
 
-	private Class<?> clsT;
-	private UniRepo<T> entRepo;
-	private BeanFieldGroup<T> bfg;
-	private T ent;
+    private Class<?> clsT;
+    private UniRepo<T> entRepo;
+    private BeanFieldGroup<T> bfg;
+    private T ent;
 
-	private FormLayout fieldsFL;
-	private HorizontalLayout buttonsHL;
-	private Button removeBT;
-	private Button saveBT, editBT;
+    private FormLayout fieldsFL;
+    private HorizontalLayout buttonsHL;
+    private Button removeBT;
+    private Button saveBT, editBT;
 
-	/**
-	 * 
-	 */
-	public PomFormLayout(Class<?> clsT, BeanFieldGroup<T> bfg) {
-		
-		
-		this.clsT = clsT;
-		this.entRepo = new UniRepo<>(clsT);
-		this.bfg = bfg;
-		if (bfg.getItemDataSource() != null) {
-			ent = bfg.getItemDataSource().getBean();
-			this.setEntity(ent);
-			this.initFieldsLayout();
-			this.addButtons();
+    /**
+     *
+     */
+    public PomFormLayout(Class<?> clsT, BeanFieldGroup<T> bfg) {
 
-		}
-		//upravy vzhladu:
-		this.setMargin(true);
-		this.setSpacing(true);
-		
-	}
+        this.clsT = clsT;
+        this.entRepo = new UniRepo<>(clsT);
+        this.bfg = bfg;
+        if (bfg.getItemDataSource() != null) {
+            ent = bfg.getItemDataSource().getBean();
+            this.setEntity(ent);
+            this.initFieldsLayout();
+            this.addButtons();
 
-	/**
-	 * 
-	 */
-	public boolean setEntity(T ent) {
-		if (ent != null) {
-			this.ent = ent;
-			bfg.setItemDataSource(ent);
-			this.initFieldsLayout();
-			this.addButtons();
-			this.setVisible(true);
-			return true;
-		} else {
-			this.setVisible(false);
-			return false;
-		}
-	}
+        }
+        //upravy vzhladu:
+        this.setMargin(true);
+        this.setSpacing(true);
 
-	/**
-	 * Získa formulár s danými políčkami, šité na mieru projektu. tj. šité na
-	 * mieru typov: Integer, String(TextArea/TextField), Boolean(CheckBox),
-	 * Date(DateField), enum(ComboBox, SelectList, TwinColSelect...)
-	 * 
-	 * @throws SecurityException
-	 * @throws NoSuchFieldException
-	 * @throws NoSuchMethodException
-	 * @throws InvocationTargetException
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * 
-	 */
-	public void initFieldsLayout() {
+    }
 
-		fieldsFL = new FormLayout();
-		fieldsFL.setMargin(true);
-		fieldsFL.setSpacing(true);
-		
-		
-		String propertyTypeName; // nazov typu danej property danej ent.
+    /**
+     *
+     */
+    public boolean setEntity(T ent) {
+        if (ent != null) {
+            this.ent = ent;
+            bfg.setItemDataSource(ent);
+            this.initFieldsLayout();
+            this.addButtons();
+            this.setVisible(true);
+            return true;
+        } else {
+            this.setVisible(false);
+            return false;
+        }
+    }
 
-		Map<String, Class<?>> mapPar;
+    /**
+     * Získa formulár s danými políčkami, šité na mieru projektu. tj. šité na
+     * mieru typov: Integer, String(TextArea/TextField), Boolean(CheckBox),
+     * Date(DateField), enum(ComboBox, SelectList, TwinColSelect...)
+     *
+     * @throws SecurityException
+     * @throws NoSuchFieldException
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     *
+     */
+    public void initFieldsLayout() {
 
-		try {
-			mapPar = PomDao.getTypParametrov(clsT);
-		} catch (NoSuchFieldException | SecurityException e1) {
-			e1.printStackTrace();
-			return;
-		}
-		for (String pn : mapPar.keySet()) {
+        fieldsFL = new FormLayout();
+        fieldsFL.setMargin(true);
+        fieldsFL.setSpacing(true);
 
-			propertyTypeName = mapPar.get(pn).getCanonicalName();
+        String propertyTypeName; // nazov typu danej property danej ent.
 
-			System.out.println(propertyTypeName);
+        Map<String, Class<?>> mapPar;
 
-			switch (propertyTypeName) {
-			case "java.lang.Integer":
+        try {
+            mapPar = PomDao.getTypParametrov(clsT);
+        } catch (NoSuchFieldException | SecurityException e1) {
+            e1.printStackTrace();
+            return;
+        }
+        for (String pn : mapPar.keySet()) {
 
-				if (pn.contains("_id")) {
-					//do nothing, pak bude odkaz na komplikovanu entitu.
-				} else {
-					Component fi = bindTextField(pn);
-					fieldsFL.addComponent(fi);
-					if ("id".equals(pn)){
-						fi.setEnabled(false);
-					}
-				}
-				break;
+            propertyTypeName = mapPar.get(pn).getCanonicalName();
 
-			case "java.lang.String":
-				if ("name".equals(pn) || "description".equals(pn)) {
-					fieldsFL.addComponent(bindTextArea(pn));
-				} else {
-					fieldsFL.addComponent(bindTextField(pn));
-				}
-				break;
+            System.out.println(propertyTypeName);
 
-			case "java.lang.Boolean":
+            switch (propertyTypeName) {
+                case "java.lang.Integer":
 
-				List<Boolean> bolList = new ArrayList<>();
-				bolList.add(Boolean.FALSE);
-				bolList.add(Boolean.TRUE);
+                    if (pn.contains("_id")) {
+                        //do nothing, pak bude odkaz na komplikovanu entitu.
+                    } else {
+                        Component fi = bindTextField(pn);
+                        fieldsFL.addComponent(fi);
+                        if ("id".equals(pn)) {
+                            fi.setEnabled(false);
+                        }
+                    }
+                    break;
 
-				MyComboBox<T, Boolean> cb = new MyComboBox<>(clsT,
-						Boolean.class, bfg, pn, bolList);
-				fieldsFL.addComponent(cb);
-				break;
+                case "java.lang.String":
+                    if ("name".equals(pn) || "description".equals(pn)) {
+                        fieldsFL.addComponent(bindTextArea(pn));
+                    } else {
+                        fieldsFL.addComponent(bindTextField(pn));
+                    }
+                    break;
 
-			case "java.util.Date":
-				fieldsFL.addComponent(this.bindUtilDateField(pn));
-				break;
+                case "java.lang.Boolean":
 
-			case "java.sql.Date":
-				fieldsFL.addComponent(this.bindSqlDateField(pn));
-				break;
+                    List<Boolean> bolList = new ArrayList<>();
+                    bolList.add(Boolean.FALSE);
+                    bolList.add(Boolean.TRUE);
 
-			default:
-				// do nothing
-				break;
-			}
-		}
-		fieldsFL.setEnabled(false);
-		this.addComponent(fieldsFL);
-	}
+                    MyComboBox<T, Boolean> cb = new MyComboBox<>(clsT,
+                            Boolean.class, bfg, pn, bolList);
+                    fieldsFL.addComponent(cb);
+                    break;
 
-	// 1.
-	/**
-	 * Vytvori pole pre textField a zviaze ho s BFG.
-	 * 
-	 */
-	public TextField bindTextField(String fn) {
-		TextField field = new TextField(fn);
-		bfg.bind(field, fn);
-		return field;
-	}
+                case "java.util.Date":
+                    fieldsFL.addComponent(this.bindUtilDateField(pn));
+                    break;
 
-	// 2.
-	/**
-	 * Vytvori pole pre textAreu a zviaze ho s BFG.
-	 * 
-	 */
-	public TextArea bindTextArea(String fn) {
-		TextArea field = new TextArea(fn);
-		bfg.bind(field, fn);
-		return field;
-	}
+                case "java.sql.Date":
+                    fieldsFL.addComponent(this.bindSqlDateField(pn));
+                    break;
 
-	// 3.
-	/**
-	 * Vytvori pole pre util.Date a zviaze ho s BFG.
-	 * 
-	 */
-	public PopupDateField bindUtilDateField(String fn) {
-		//PopupDateField field = new PopupDateField();
+                default:
+                    // do nothing
+                    break;
+            }
+        }
+        fieldsFL.setEnabled(false);
+        this.addComponent(fieldsFL);
+    }
 
-		PopupDateField field = new PopupDateField(){
+    // 1.
+    /**
+     * Vytvori pole pre textField a zviaze ho s BFG.
+     *
+     */
+    public TextField bindTextField(String fn) {
+        TextField field = new TextField(fn);
+        bfg.bind(field, fn);
+        return field;
+    }
 
-			@Override
-			protected java.util.Date handleUnparsableDateString(
-					String dateString) {
-				try {
-					SimpleDateFormat sdf = new SimpleDateFormat(
-							"yyyy-MM-dd hh:mm:ss");
-					Date d = (Date) sdf.parse(dateString); 
+    // 2.
+    /**
+     * Vytvori pole pre textAreu a zviaze ho s BFG.
+     *
+     */
+    public TextArea bindTextArea(String fn) {
+        TextArea field = new TextArea(fn);
+        bfg.bind(field, fn);
+        return field;
+    }
 
-					return d;
-				} catch (ParseException e) {
-					e.printStackTrace();
-					return null;
-				}
+    // 3.
+    /**
+     * Vytvori pole pre util.Date a zviaze ho s BFG.
+     *
+     */
+    public PopupDateField bindUtilDateField(String fn) {
+        //PopupDateField field = new PopupDateField();
 
-			}
-		};
-		field.setImmediate(true);
-		field.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
-		field.setLocale(Locale.UK);
-		field.setResolution(Resolution.MINUTE);
-		field.setDateFormat("yyyy-MM-dd HH:mm:ss");
-		bfg.bind(field, fn);
-		return field;
-	}
+        PopupDateField field = new PopupDateField() {
 
-	// 4.
-	/**
-	 * Vytvori pole pre sql.Date a zviaze ho s BFG.
-	 * 
-	 */
-	public PopupDateField bindSqlDateField(String fn) {
+            @Override
+            protected java.util.Date handleUnparsableDateString(
+                    String dateString) {
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat(
+                            "yyyy-MM-dd hh:mm:ss");
+                    Date d = (Date) sdf.parse(dateString);
 
-		PopupDateField field = new PopupDateField() {
+                    return d;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return null;
+                }
 
-			@Override
-			protected java.sql.Date handleUnparsableDateString(String dateString) {
+            }
+        };
+        field.setImmediate(true);
+        field.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+        field.setLocale(Locale.UK);
+        field.setResolution(Resolution.MINUTE);
+        field.setDateFormat("yyyy-MM-dd HH:mm:ss");
+        bfg.bind(field, fn);
+        return field;
+    }
 
-				String fields[] = dateString.split("-");
+    // 4.
+    /**
+     * Vytvori pole pre sql.Date a zviaze ho s BFG.
+     *
+     */
+    public PopupDateField bindSqlDateField(String fn) {
 
-				if (fields.length >= 3) {
-					try {
-						SimpleDateFormat sdf = new SimpleDateFormat(
-								"yyyy-MM-dd");
-						return (java.sql.Date) sdf.parse(dateString);
-					} catch (ParseException e) {
-						e.printStackTrace();
-						return null;
-					}
-				} else {
-					return null;
-				}
-			}
-		};
-		field.setImmediate(true);
-		field.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
-		field.setLocale(Locale.UK);
-		field.setResolution(Resolution.DAY);
-		field.setDateFormat("yyyy-MM-dd");
-		bfg.bind(field, fn);
+        PopupDateField field = new PopupDateField() {
 
-		return field;
-	}
+            @Override
+            protected java.sql.Date handleUnparsableDateString(String dateString) {
 
-	// prida tlacitka na pracu s danym layoutom.
-	private void addButtons() {
+                String fields[] = dateString.split("-");
 
-		editBT = new Button("Edit");
-		saveBT = new Button("Save");
-		removeBT = new Button("Remove");
+                if (fields.length >= 3) {
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat(
+                                "yyyy-MM-dd");
+                        return (java.sql.Date) sdf.parse(dateString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
+            }
+        };
+        field.setImmediate(true);
+        field.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+        field.setLocale(Locale.UK);
+        field.setResolution(Resolution.DAY);
+        field.setDateFormat("yyyy-MM-dd");
+        bfg.bind(field, fn);
 
-		buttonsHL = new HorizontalLayout();
-		buttonsHL.setMargin(true);
-		buttonsHL.setSpacing(true);
+        return field;
+    }
 
-		editBT.setEnabled(true);
-		saveBT.setEnabled(false);
-		removeBT.setEnabled(true);
+    // prida tlacitka na pracu s danym layoutom.
+    private void addButtons() {
 
-		editBT.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				bfg.setEnabled(true);
-				fieldsFL.setEnabled(true);
-				editBT.setEnabled(false);
-				saveBT.setEnabled(true);
-			}
-		});
+        editBT = new Button("Edit");
+        saveBT = new Button("Save");
+        removeBT = new Button("Remove");
 
-		saveBT.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// ulozenie zmien do DB:
-				try {
-					bfg.commit();
-					entRepo.save(ent);
-					Notification.show("Entita úspešne uložená!");
-				} catch (CommitException e1) {
-					Notification.show("Nepodarilo sa commitnut field group!",
-							Type.ERROR_MESSAGE);
-					e1.printStackTrace();
-				}
+        buttonsHL = new HorizontalLayout();
+        buttonsHL.setMargin(true);
+        buttonsHL.setSpacing(true);
 
-				bfg.setEnabled(false);
-				fieldsFL.setEnabled(false);
-				editBT.setEnabled(true);
-				saveBT.setEnabled(false);
-			}
-		});
+        editBT.setEnabled(true);
+        saveBT.setEnabled(false);
+        removeBT.setEnabled(true);
 
-		removeBT.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (entRepo.delete(ent)) {
-					Notification.show("Entita úspešne vymazaná!");
-					setVisible(false);
-				} else {
-					Notification
-							.show("Nepodarilo sa vymazat entitu, skus najprv vymazat jej podentity!");
-				}
-			}
-		});
+        editBT.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                bfg.setEnabled(true);
+                fieldsFL.setEnabled(true);
+                editBT.setEnabled(false);
+                saveBT.setEnabled(true);
+            }
+        });
 
-		buttonsHL.addComponent(editBT);
-		buttonsHL.addComponent(saveBT);
-		buttonsHL.addComponent(removeBT);
+        saveBT.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                // ulozenie zmien do DB:
+                try {
+                    bfg.commit();
+                    entRepo.save(ent);
+                    Notification.show("Entita úspešne uložená!");
+                } catch (CommitException e1) {
+                    Notification.show("Nepodarilo sa commitnut field group!",
+                            Type.ERROR_MESSAGE);
+                    e1.printStackTrace();
+                }
 
-		this.addComponent(buttonsHL);
+                bfg.setEnabled(false);
+                fieldsFL.setEnabled(false);
+                editBT.setEnabled(true);
+                saveBT.setEnabled(false);
+            }
+        });
 
-	}
+        removeBT.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                if (entRepo.delete(ent)) {
+                    Notification.show("Entita úspešne vymazaná!");
+                    setVisible(false);
+                } else {
+                    Notification
+                            .show("Nepodarilo sa vymazat entitu, skus najprv vymazat jej podentity!");
+                }
+            }
+        });
+
+        buttonsHL.addComponent(editBT);
+        buttonsHL.addComponent(saveBT);
+        buttonsHL.addComponent(removeBT);
+
+        this.addComponent(buttonsHL);
+
+    }
 
 }

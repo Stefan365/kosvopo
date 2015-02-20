@@ -21,19 +21,30 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import org.apache.log4j.Logger;
-
+import sk.stefan.MVP.model.entity.dao.Kraj;
+import sk.stefan.MVP.model.entity.dao.Location;
+import sk.stefan.MVP.model.entity.dao.Okres;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
+import sk.stefan.MVP.model.entity.dao.PublicPerson;
+import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.entity.dao.Subject;
+import sk.stefan.MVP.model.entity.dao.Tenure;
+import sk.stefan.MVP.model.entity.dao.Theme;
+import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.todo.User_log;
-import sk.stefan.MVP.model.service.CategoryService;
-import sk.stefan.MVP.model.service.CategoryServiceImpl;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.converters.todo.DateConverter;
 import sk.stefan.MVP.view.todo.Tools;
 import sk.stefan.enums.TaskRepetitions;
@@ -53,6 +64,8 @@ import sk.stefan.security.SecurityService;
  */
 public final class InputFormLayout<T> extends FormLayout {
 
+    private static final Logger log = Logger.getLogger(InputFormLayout.class);
+        
     /**
      * Identifikator:
      */
@@ -62,72 +75,70 @@ public final class InputFormLayout<T> extends FormLayout {
      * Class dané třídy T
      */
     private final Class<?> clsT;
-    
-    
+
     /**
      * Spolu s uzavřením formulárě se musí vykonat další akce v základním view,
      * ze kterého se formulář otevře, na to slouží tento listener.
      */
     private final OkCancelListener okCancelListener;
-    
+
     /**
      * SQLcontainer, na kterém je postavena tabulka s úkoly.
      */
     private SQLContainer sqlContainer;
-    
+
     /**
-     * FieldGoup je nástroj na svázaní vaadinovské komponenty a nějakého jiného 
+     * FieldGoup je nástroj na svázaní vaadinovské komponenty a nějakého jiného
      * objekty, který dané entitě poskytuje informace k zobrazení.
      */
     private final FieldGroup fg;
-    
+
     /**
-     * Slovník, ve kterém je klíčem název parametru a hodnotou 
-     * pro něj vhodná interaktivní komponenta. (např. completion_date/DateField)
+     * Slovník, ve kterém je klíčem název parametru a hodnotou pro něj vhodná
+     * interaktivní komponenta. (např. completion_date/DateField)
      */
     private final Map<String, Component> fieldMap;
-    
+
     /**
-     * Proměnná, která ukládá informaci o tom, jestli se bude upravovat 
-     * již existující položka(false), nebo vytvářet nová(true).
+     * Proměnná, která ukládá informaci o tom, jestli se bude upravovat již
+     * existující položka(false), nebo vytvářet nová(true).
      */
     private final boolean isNew;
-    
+
     /**
      * Vybraná položka ze SQLContaineru (řádek z tabulky)
      */
     private Item item;
-    
+
     /**
      * id této položky.
      */
     private Object itemId;
-    
+
     /**
-     * Layout, kde budou zobrazeny interaktivní 
-     * komponenty všechny kromě tlačítek OK-CANCEL.  
+     * Layout, kde budou zobrazeny interaktivní komponenty všechny kromě
+     * tlačítek OK-CANCEL.
      */
     private FormLayout fieldsFL;
-    
+
     /**
      * Layout pro uložení tlačítek OK-CANCEL.
      */
     private HorizontalLayout buttonsHL;
-    
+
     /**
      * Tlačítka pro potvrzení, resp. zrušení změn ve formuláři.
      */
     private Button okBT, cancelBT;
-    
+
     //další pomocné proměnné:
     private final Logger logger = Logger.getLogger(InputFormLayout.class.getName());
     private final SecurityService securityService;
-    private final CategoryService categoryService;
-
+    
     //0.
     /**
      * Konstruktor.
-     * 
+     *
      * @param clsT Class třídy T
      * @param item položka ze SQLContaineru
      * @param sqlCont SQL container na kterém je postavena tabulka s úkoly.
@@ -135,7 +146,6 @@ public final class InputFormLayout<T> extends FormLayout {
      */
     public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont, OkCancelListener okl) {
 
-        this.categoryService = new CategoryServiceImpl();
         this.fieldMap = new HashMap<>();
         securityService = new SecurityService();
         this.fg = new FieldGroup();
@@ -149,8 +159,8 @@ public final class InputFormLayout<T> extends FormLayout {
             sqlContainer.removeAllContainerFilters();
             itemId = sqlContainer.addItem();
             this.item = sqlContainer.getItem(itemId);
-            sqlContainer.getItem(itemId).getItemProperty("title").setValue("název...");
-            okCancelListener.obnovFilter();
+            //sqlContainer.getItem(itemId).getItemProperty("title").setValue("název...");
+            //okCancelListener.obnovFilter();
         } else {
             isNew = false;
         }
@@ -166,9 +176,9 @@ public final class InputFormLayout<T> extends FormLayout {
 
     //1.
     /**
-     * Vytvoří formulář s danými políčkami, šitými na míru (šité na
-     * mieru typov: Long, String(TextArea/TextField), Boolean(CheckBox),
-     * Date(DateField), enum(ComboBox, SelectList, TwinColSelect...)).
+     * Vytvoří formulář s danými políčkami, šitými na míru (šité na mieru typov:
+     * Long, String(TextArea/TextField), Boolean(CheckBox), Date(DateField),
+     * enum(ComboBox, SelectList, TwinColSelect...)).
      */
     public void initFieldsLayout() {
 
@@ -196,26 +206,21 @@ public final class InputFormLayout<T> extends FormLayout {
             propertyTypeName = mapPar.get(pn).getCanonicalName();
 
             switch (propertyTypeName) {
-                case "java.lang.Long":
+                case "java.lang.Integer":
                     if (pn.contains("_id")) {
-                        String tableN = getTableName(pn);
-                        switch (pn) {
-                            case "id_tcy":
-                                //POZN: parametry POJO by se meli jmenovat stejne ako 
-                                // stloupce tabulky a identifikator by se mel jmenovat jen 'id'..
-                                User_log user = securityService.getCurrentUser();
-                                Map<String, Long> map
-                                    = categoryService.findAllCategoriesIdByUser(user);
-                                InputComboBox<Long> cb;
-                                cb = new InputComboBox<>(fg, pn, map, Long.class);
-                                fieldMap.put(pn, cb);
-                                break;
-                            default:
-                                break;
-                        }
+                        //vytvorenie noveho dialogoveho okna s mapami
+                        //toto dat do input form layoutu.
+
+                        //POZN: parametry POJO by se meli jmenovat stejne ako 
+                        // stloupce tabulky a identifikator by se mel jmenovat jen 'id'..
+                        Class<?> cls = getClassFromName(pn);
+                        Map<String, Integer> map = findAllByClass(cls);
+                        InputComboBox<Integer> cb;
+                        cb = new InputComboBox<>(fg, pn, map, Integer.class);
+                        fieldMap.put(pn, cb);
                     } else {
                         Component fi = bindTextField(pn);
-                        fieldMap.put(pn, fi);//fieldsFL.addComponent(fi);
+                        fieldMap.put(pn, fi);
                     }
                     break;
 
@@ -253,24 +258,25 @@ public final class InputFormLayout<T> extends FormLayout {
                             //do nothing. tyto datumy se vyplní automaticky.
                             break;
                         default:
+                            log.info("KAROLKO: " + "DATE");
                             fieldMap.put(pn, bindUtilDateField(pn));
                             break;
                     }
                     break;
 
                 case "cz.iivos.todo.enums.TaskRepetitions":
-                    Map map = Tools.makeEnumMap(TaskRepetitions.getPeriodsNames(), 
-                        TaskRepetitions.getOrdinals());
-                    InputComboBox<Integer> cb = 
-                        new InputComboBox<>(fg, pn, map, Integer.class);
+                    Map map = Tools.makeEnumMap(TaskRepetitions.getPeriodsNames(),
+                            TaskRepetitions.getOrdinals());
+                    InputComboBox<Integer> cb
+                            = new InputComboBox<>(fg, pn, map, Integer.class);
                     fieldMap.put(pn, cb);
                     break;
-                    
+
                 case "cz.iivos.todo.enums.TaskWarnings":
-                    Map map1 = Tools.makeEnumMap(TaskWarnings.getWarningNames(), 
-                        TaskWarnings.getOrdinals());
-                    InputComboBox<Integer> cb1 = 
-                        new InputComboBox<>(fg, pn, map1, Integer.class);
+                    Map map1 = Tools.makeEnumMap(TaskWarnings.getWarningNames(),
+                            TaskWarnings.getOrdinals());
+                    InputComboBox<Integer> cb1
+                            = new InputComboBox<>(fg, pn, map1, Integer.class);
                     fieldMap.put(pn, cb1);
                     break;
                 default:
@@ -382,7 +388,7 @@ public final class InputFormLayout<T> extends FormLayout {
         fg.bind(field, fn);
         return field;
     }
-    
+
     // 7.
     /**
      * Vytvoří, inicializuje a přidá tlačítka OK-CANCEL.
@@ -403,16 +409,11 @@ public final class InputFormLayout<T> extends FormLayout {
             @Override
             public void buttonClick(ClickEvent event) {
                 if (isNew) {
-                    User_log user = securityService.getCurrentUser();
-                    sqlContainer.removeAllContainerFilters();
-                    sqlContainer.getItem(itemId).getItemProperty("id_lur").setValue(user.getId());
-                    sqlContainer.getItem(itemId).getItemProperty("deleted").setValue(Boolean.FALSE);
-                    sqlContainer.getItem(itemId).getItemProperty("completed").setValue(Boolean.FALSE);
-                    sqlContainer.getItem(itemId).getItemProperty("creation_date").setValue(new Date());
-                    okCancelListener.obnovFilter();
+                    //User_log user = securityService.getCurrentUser();
+                    //sqlContainer.removeAllContainerFilters();
+                    //okCancelListener.obnovFilter();
                 }
 
-                
                 // ulozenie zmien do DB:
                 try {
                     fg.commit();
@@ -445,12 +446,68 @@ public final class InputFormLayout<T> extends FormLayout {
 
     }
 
-    private String getTableName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /**
+     * Vrati vhodnu triedu podla nazvu FK entity.
+     *
+     *
+     */
+    private Class<?> getClassFromName(String pn) {
+
+        switch (pn) {
+
+            case "kraj_id":
+                return Kraj.class;
+            case "okres_id":
+                return Okres.class;
+            case "public_person_id":
+                return PublicPerson.class;
+            case "location_id":
+                return Location.class;
+            case "public_role_id":
+                return PublicRole.class;
+            case "public_body_id":
+                return PublicBody.class;
+            case "vote_id":
+                return Vote.class;
+            case "subject_id":
+                return Subject.class;
+            case "theme_id":
+                return Theme.class;
+            case "tenure_id":
+                return Tenure.class;
+            default:
+                return null;
+        }
     }
 
-    private String getTableName(String pn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @SuppressWarnings({"unchecked"})
+    private Map<String, Integer> findAllByClass(Class<?> cls) {
+
+        Map<String, Integer> map = new HashMap<>();
+        String repN;
+        Integer id;
+
+        try {
+            Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
+            Constructor<UniRepo<? extends Object>> repoCtor;
+            repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
+            List<? extends Object> listObj;
+            listObj = repoCtor.newInstance(cls).findAll();
+
+            for (Object o : listObj) {
+                Method getRepNameMethod = cls.getDeclaredMethod("getPresentationName");
+                repN = (String) getRepNameMethod.invoke(o);
+                Method getIdMethod = cls.getDeclaredMethod("getId");
+                id = (Integer) getIdMethod.invoke(o);
+                map.put(repN, id);
+            }
+            return map;
+        } catch (NoSuchMethodException | InvocationTargetException |
+                IllegalArgumentException | IllegalAccessException |
+                InstantiationException | SecurityException | ClassNotFoundException ex) {
+            log.error(ex.getMessage());
+        }
+        return null;
     }
 
 }

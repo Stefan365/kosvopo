@@ -48,7 +48,7 @@ public class UniRepo<T> implements MyRepo<T> {
             Method getTnMethod = cls.getDeclaredMethod("getTN");
             TN = (String) getTnMethod.invoke(null);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            log.error("chyba, !");
+            log.error(e.getMessage());
         }
     }
 

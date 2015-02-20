@@ -1,7 +1,7 @@
 package sk.stefan.MVP.model.entity.dao.todo;
 
 import com.vaadin.shared.ui.colorpicker.Color;
-import cz.iivos.todo.interfaces.RepresentativeName;
+import sk.stefan.interfaces.RepresentativeName;
 
 /**
  * Trida kategorie ukolu

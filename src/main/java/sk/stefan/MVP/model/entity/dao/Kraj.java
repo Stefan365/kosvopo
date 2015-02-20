@@ -4,7 +4,9 @@ import sk.stefan.interfaces.PresentationName;
 
 public class Kraj implements PresentationName {
 
-    private static final String TN = "T_Kraj";
+    public static final String TN = "T_Kraj";
+    
+    public static final String CLASS_PRESENTATION_NAME = "Kraj";
 
     private Integer id;
 

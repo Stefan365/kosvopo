@@ -115,6 +115,12 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>sk.stefan</groupId>
+            <artifactId>kosvopo6</artifactId>
+            <version>1.0</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package cz.iivos.todo.interfaces;
+package sk.stefan.interfaces;
 
 /**
  * Rozhrani pro vsechny entity, ktere budou vystupovat ve Vaadinovskych 
