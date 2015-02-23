@@ -2,6 +2,7 @@ package sk.stefan.MVP.view.todo;
 
 import com.vaadin.data.Item;
 import com.vaadin.event.LayoutEvents;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Sizeable.Unit;
@@ -122,32 +123,32 @@ public class Tools {
 //        }
 //        return layout;
 //    }
-//
-//    /**
-//     * VytvoĹ™Ă­ textovĂ© pole roztaĹľenĂ© na celou ĹˇĂ­Ĺ™ku vlastnĂ­ka
-//     */
-//    public static TextField createFormTextField(String caption, boolean required) {
-//        TextField tf = new TextField(caption);
-//        tf.setStyleName(ValoTheme.TEXTFIELD_SMALL);
-//        tf.setSizeFull();
-//        tf.setValidationVisible(false);
-//
-//        return tf;
-//    }
-//
-//    /**
-//     * VytvoĹ™Ă­ textovĂ© pole roztaĹľenĂ© na celou ĹˇĂ­Ĺ™ku vlastnĂ­ka
-//     */
-//    public static TextArea createTextArea(String caption, boolean required) {
-//        TextArea ta = new TextArea(caption);
-//        ta.setRequired(required);
-//        ta.setSizeFull();
-//
-//        return ta;
-//    }
-//
+
+    /**
+     * VytvoĹ™Ă­ textovĂ© pole roztaĹľenĂ© na celou ĹˇĂ­Ĺ™ku vlastnĂ­ka
+     */
+    public static TextField createFormTextField(String caption, boolean required) {
+        TextField tf = new TextField(caption);
+        tf.setStyleName(ValoTheme.TEXTFIELD_SMALL);
+        tf.setSizeFull();
+        tf.setValidationVisible(false);
+
+        return tf;
+    }
+
+    /**
+     * VytvoĹ™Ă­ textovĂ© pole roztaĹľenĂ© na celou ĹˇĂ­Ĺ™ku vlastnĂ­ka
+     */
+    public static TextArea createTextArea(String caption, boolean required) {
+        TextArea ta = new TextArea(caption);
+        ta.setRequired(required);
+        ta.setSizeFull();
+
+        return ta;
+    }
+
 //    public static void initApplicationLayout(VerticalLayout layout,
-//            Navigation navigation, ViewId view, User_log user) {
+//            Navigator nav, ViewId view, User_log user) {
 //        layout.addComponent(Tools.createApplicationMenu(navigation, view, user));
 //        layout.setSpacing(true);
 //        layout.setMargin(true);
@@ -155,7 +156,7 @@ public class Tools {
 //        layout.setHeight(600, Unit.PIXELS);
 //        layout.addStyleName("applayout");
 //    }
-
+//
     /**
      * VytvoĹ™Ă­ textovĂ© polepro zadĂˇnĂ­ hesla roztaĹľenĂ© na celou ĹˇĂ­Ĺ™ku
      * vlastnĂ­ka

@@ -72,6 +72,7 @@ public class DoDBconn {
     // 2.
     public static Connection getConnection() throws SQLException {
         Connection conn = connectionPool.reserveConnection();
+        conn.setAutoCommit(true);
         return conn;
     }
 

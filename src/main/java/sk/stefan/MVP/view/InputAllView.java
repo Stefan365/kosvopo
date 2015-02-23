@@ -59,7 +59,7 @@ public class InputAllView extends VerticalLayout implements View {
         this.initButtons();
 //        this.initButtonsListeners();     
 
-        this.addComponent(new NavigationComponent(nav));
+        this.addComponent(NavigationComponent.getNavComp());
     }
 
     private void initMap() {
@@ -93,10 +93,6 @@ public class InputAllView extends VerticalLayout implements View {
 
     }
 
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
-
-    }
 
     private void addButtonsToLayout() {
         for (Button b : allButtonsMap.keySet()) {
@@ -113,4 +109,10 @@ public class InputAllView extends VerticalLayout implements View {
             b.addClickListener(new InputButClickListener(wr.getClsE(), wr.getButtonName(), this));
         }
     }
+    
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        this.addComponent(NavigationComponent.getNavComp());
+    }
+
 }

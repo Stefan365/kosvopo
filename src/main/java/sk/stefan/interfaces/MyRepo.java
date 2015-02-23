@@ -1,7 +1,5 @@
 package sk.stefan.interfaces;
 
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 import java.util.List;
 
 public interface MyRepo<T> {
@@ -16,6 +14,9 @@ public interface MyRepo<T> {
 	public List<T> findByParam(String paramName, String paramValue);
 
 	// 4.
+        /**
+         * Zahrna update i vytvorenie novej entity.
+         */
 	public T save(T ent);
 
 	// 5.

@@ -22,7 +22,7 @@ public class Kos8View extends VerticalLayout implements View {
 
         this.buildMainLayout();
         this.addComponent(mainLayout);
-        this.addComponent(new NavigationComponent(nav));
+        this.addComponent(NavigationComponent.getNavComp());
     }
 
     private AbsoluteLayout buildMainLayout() {

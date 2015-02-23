@@ -20,6 +20,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import java.sql.ResultSet;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.User;
 
 public class UniRepo<T> implements MyRepo<T> {
 
@@ -47,7 +48,8 @@ public class UniRepo<T> implements MyRepo<T> {
         try {
             Method getTnMethod = cls.getDeclaredMethod("getTN");
             TN = (String) getTnMethod.invoke(null);
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+        } catch (IllegalAccessException | IllegalArgumentException | 
+                InvocationTargetException | NoSuchMethodException | SecurityException e) {
             log.error(e.getMessage());
         }
     }
@@ -112,6 +114,12 @@ public class UniRepo<T> implements MyRepo<T> {
     }
 
     // 3.
+    /**
+     * Najde entitu podla zadaneho parametra.
+     * @param paramName
+     * @param paramValue
+     * @return 
+     */
     @Override
     public List<T> findByParam(String paramName, String paramValue) {
 
@@ -150,13 +158,16 @@ public class UniRepo<T> implements MyRepo<T> {
             //Notification.show("Chyba, uniRepo::findByParam(...)",
             //		Type.ERROR_MESSAGE);
 
-            e.printStackTrace();
+            log.error(e.getMessage());
             return null;
         }
 
     }
 
+    
     // 4.
+    /**
+     */
     @Override
     public T save(T ent) {
         try {
@@ -313,7 +324,7 @@ public class UniRepo<T> implements MyRepo<T> {
     }
 
     // funkce na naplneni entity:
-    public T fillEntity(ResultSet rs) {
+    private T fillEntity(ResultSet rs) {
 
         //Class<?> rsCls = rs.getClass();
         Class<?> rsCls = ResultSet.class;
@@ -380,7 +391,8 @@ public class UniRepo<T> implements MyRepo<T> {
                 T ent = (T) cls.newInstance();
 
                 for (String pn : mapPar.keySet()) {
-
+                    log.info("ParameterName: " +  mapPar.get(pn).getCanonicalName());
+                    
                     entMetName = PomDao.getG_SetterName(pn, "set");
                     rsMetName = PomDao.getGettersForResultSet(mapPar.get(pn)
                             .getCanonicalName());
@@ -437,4 +449,46 @@ public class UniRepo<T> implements MyRepo<T> {
         }
     }
 
+    /**
+     * Modifikuje iba specifikovany parameter.     
+     * @param paramName the name of parameter.
+     * @param paramValue the new value of parameter 
+     * @param id id of row where the value is updated.
+     */
+    public void updateParam(String paramName, String paramValue, String id) {
+        Connection conn;
+        Statement st;
+        try {
+            conn = DoDBconn.getConnection();
+            
+            st = conn.createStatement();
+
+            // Notification.show("SOM TU!");
+            String sql;
+            if (paramValue == null) {
+                sql = String.format("UPDATE %s SET %s = NULL WHERE id =%s", TN, paramName, id);
+            } else if ("null".equalsIgnoreCase(paramValue) || "true".equalsIgnoreCase(paramValue) || "false".equalsIgnoreCase(paramValue)) {
+                sql = String.format("UPDATE %s SET %s = %s WHERE id =%s", TN, paramName, paramValue, id);
+            } else {
+                sql = String.format("UPDATE %s SET %s = '%s' WHERE  id =%s", TN, paramName, paramValue, id);
+            }
+
+            // Notification.show(sql);
+            log.info("UPDATEPARAM, SQL: *" + sql + "*");
+
+            int i = st.executeUpdate(sql);
+            //st.execute(sql);
+            //log.info("UPDATEPARAM, affected rows: *" + i + "*");
+            
+            st.close();
+            DoDBconn.releaseConnection(conn);
+        
+        } catch (SecurityException | IllegalArgumentException | SQLException e) {
+            //Notification.show("Chyba, uniRepo::findByParam(...)",
+            //		Type.ERROR_MESSAGE);
+            log.error(e.getMessage());
+        } finally {
+            
+        }
+    }
 }

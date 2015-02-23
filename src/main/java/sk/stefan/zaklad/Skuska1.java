@@ -44,88 +44,109 @@ public class Skuska1<T> {
             SecurityException, InstantiationException, IllegalAccessException,
             NoSuchMethodException, IllegalArgumentException,
             InvocationTargetException, SQLException {
+        
+//        Byte[] b = new  Byte[12];
+//        log.info(b.getClass().getCanonicalName());
 
-        //******* SKUSKA REFLEXIE, map:
-        Skuska1<VoteClassification> sk = new Skuska1<>();
-        Map<String, Integer> map = sk.findAllByClass(Kraj.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
+        UniRepo<User> uniRepo = new UniRepo<>(User.class);
+        uniRepo.updateParam("password", "KOKOSOVO", "1");
+
+        List<User> allUs = uniRepo.findAll();
+        for(User u : allUs){
+            log.info(u.getPresentationName() + " : " + u.getPassword().toString());
         }
         
-        map = sk.findAllByClass(Location.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(Okres.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(PersonClassification.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(PublicBody.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(PublicPerson.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(PublicRole.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(Subject.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(Tenure.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(Theme.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(Vote.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(VoteClassification.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
-        map = sk.findAllByClass(VoteOfRole.class);
-        if (map != null) {
-            for (String s:map.keySet()){
-               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
-            }
-        }
+        
+        
+        
+        
+//        List<Location> loc = uniRepo.findAll();
+//        for (Location l: loc){
+//            log.info("L" + l.getMestka_cast());
+//        }
+        
+
+        //******* SKUSKA REFLEXIE, map:
+//        Skuska1<VoteClassification> sk = new Skuska1<>();
+//        Map<String, Integer> map = sk.findAllByClass(Kraj.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        
+//        map = sk.findAllByClass(Location.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(Okres.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(PersonClassification.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(PublicBody.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(PublicPerson.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(PublicRole.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(Subject.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(Tenure.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(Theme.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(Vote.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(VoteClassification.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
+//        map = sk.findAllByClass(VoteOfRole.class);
+//        if (map != null) {
+//            for (String s:map.keySet()){
+//               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
+//            }
+//        }
         
 //      
         
@@ -639,6 +660,15 @@ public class Skuska1<T> {
             log.error(ex.getMessage());
         }
         return null;
+    }
+    
+    private void skusUniRepo(){
+        UniRepo<Location> uniRepo = new UniRepo<>(Location.class);
+        
+        uniRepo.updateParam("mestka_cast", "KOKOSOVO", "6");
+        uniRepo.updateParam("visible", "false", "6");
+        uniRepo.updateParam("mestka_cast", null, "8");
+
     }
 
 }

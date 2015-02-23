@@ -2,9 +2,11 @@ package sk.stefan.MVP.view.components;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.BaseTheme;
+import sk.stefan.MVP.model.service.SecurityService;
 
 public class NavigationComponent extends HorizontalLayout {
 
@@ -13,59 +15,72 @@ public class NavigationComponent extends HorizontalLayout {
      */
     private static final long serialVersionUID = 8811699550804144740L;
 
-    Button b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17;
-    HorizontalLayout hl;
+    private final Button b1, b1a, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17;
+    private HorizontalLayout hl;
+    private SecurityService securityService;
 
-    Navigator navigator;
+    private Navigator navigator;
 
-    public NavigationComponent(Navigator nav) {
+    private static NavigationComponent navComp;
+
+    private NavigationComponent(Navigator nav) {
 
         this.navigator = nav;
 
-        b1 = new Button("login",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 7834517499543650204L;
+        b1 = new Button("login");
+        b1.addClickListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 7834517499543650204L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                String butN = event.getButton().getCaption();
+                switch (butN) {
+                    case "login":
                         navigator.navigateTo("login");
-                    }
-                });
+                        break;
+
+                    case "logout":
+                        securityService.logout();
+                        ochudobniNavigator();
+                        event.getButton().setCaption("login");
+                        Notification.show("odhlásenie prebehlo úspešne!");
+                        nav.navigateTo("vstupny");
+
+                        break;
+                    default:
+                }
+            }
+        });
+        
+        b1a = new Button("A_inputAll", (ClickEvent event) -> {
+            navigator.navigateTo("A_inputAll");
+        });
 
         b2 = new Button("vstupny", (ClickEvent event) -> {
             navigator.navigateTo("vstupny");
         });
 
-        b3 = new Button("druhy", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                navigator.navigateTo("druhy");
-            }
+        b3 = new Button("druhy", (ClickEvent event) -> {
+            navigator.navigateTo("druhy");
         });
 
-        b4 = new Button("homo",
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("homo");
-                    }
-                });
+        b4 = new Button("homo", (ClickEvent event) -> {
+            navigator.navigateTo("homo");
+        });
 
         b5 = new Button("abook",
                 new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
+
                     @Override
                     public void buttonClick(ClickEvent event) {
                         navigator.navigateTo("addressbook");
                     }
                 });
 
-        b6 = new Button("fila",
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("filamanager");
-                    }
-                });
+        b6 = new Button("fila", (ClickEvent event) -> {
+            navigator.navigateTo("filamanager");
+        });
 
         b7 = new Button("kos1",
                 new Button.ClickListener() {
@@ -91,27 +106,27 @@ public class NavigationComponent extends HorizontalLayout {
                     }
                 });
 
-        b10 = new Button("kos4",
+        b10 = new Button("A_kos4",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("kos4");
+                        navigator.navigateTo("A_kos4");
                     }
                 });
 
-        b11 = new Button("kos5",
+        b11 = new Button("A_kos5",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("kos5");
+                        navigator.navigateTo("A_kos5");
                     }
                 });
 
-        b12 = new Button("kos6",
+        b12 = new Button("A_kos6",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("kos6");
+                        navigator.navigateTo("A_kos6");
                     }
                 });
 
@@ -156,6 +171,7 @@ public class NavigationComponent extends HorizontalLayout {
                 });
 
         b1.setStyleName(BaseTheme.BUTTON_LINK);
+        b1a.setStyleName(BaseTheme.BUTTON_LINK);
         b2.setStyleName(BaseTheme.BUTTON_LINK);
         b3.setStyleName(BaseTheme.BUTTON_LINK);
         b4.setStyleName(BaseTheme.BUTTON_LINK);
@@ -173,7 +189,7 @@ public class NavigationComponent extends HorizontalLayout {
         b16.setStyleName(BaseTheme.BUTTON_LINK);
         b17.setStyleName(BaseTheme.BUTTON_LINK);
 
-	//hl = new HorizontalLayout();
+        //hl = new HorizontalLayout();
         this.setSpacing(true);
         this.setMargin(true);
 
@@ -186,9 +202,6 @@ public class NavigationComponent extends HorizontalLayout {
 //        this.addComponent(b7);
         this.addComponent(b8);
         this.addComponent(b9);
-        this.addComponent(b10);
-        this.addComponent(b11);
-        this.addComponent(b12);
 //        this.addComponent(b13);
 //        this.addComponent(b14);
 //        this.addComponent(b15);
@@ -196,4 +209,57 @@ public class NavigationComponent extends HorizontalLayout {
 //        this.addComponent(b17);
 
     }
+
+    /**
+     *
+     * @param nav
+     */
+    public static void createNavComp(Navigator nav) {
+        navComp = new NavigationComponent(nav);
+    }
+
+    public static Button getLoginBut(){
+        return navComp.b1;
+    }
+    
+    /**
+     * provides the singleton. //later to be done by Spring.
+     *
+     * @return
+     */
+    public static NavigationComponent getNavComp() {
+        return navComp;
+    }
+
+    public void addAdminButtons() {
+        navComp.addComponent(b1a);
+        navComp.addComponent(b10);
+        navComp.addComponent(b11);
+        navComp.addComponent(b12);
+    }
+
+//    public void removeAdminButtons() {
+//        navComp.removeComponent(b10);
+//        navComp.removeComponent(b11);
+//        navComp.removeComponent(b12);
+//
+//    }
+    
+    /**
+     * Ochudobni navigator o views, ktore nepatria do administracie.
+     */
+    private void ochudobniNavigator() {
+        navigator.removeView("A_inputAll");
+        navigator.removeView("A_kos5");
+        navigator.removeView("A_kos4");
+        navigator.removeView("A_kos6");
+
+        navComp.removeComponent(b1a);
+        navComp.removeComponent(b10);
+        navComp.removeComponent(b11);
+        navComp.removeComponent(b12);
+
+    }
+
+
 }

@@ -3,6 +3,8 @@ package sk.stefan.MVP.model.entity.dao;
 import sk.stefan.interfaces.PresentationName;
 
 import java.io.Serializable;
+import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.SecurityServiceImpl;
 
 public class User implements Serializable, PresentationName {
 
@@ -22,14 +24,16 @@ public class User implements Serializable, PresentationName {
 
     private String login;
 
-    private String password;
+    private byte[] password;
+    
+    private final SecurityService securityService = new SecurityServiceImpl();
 
     public User(String fn, String ln, String em, String lg, String pw) {
         this.first_name = fn;
         this.last_name = ln;
         this.e_mail = em;
         this.login = lg;
-        this.password = pw;
+        this.password = securityService.encryptPassword(pw);
     }
 
     public User() {
@@ -56,7 +60,7 @@ public class User implements Serializable, PresentationName {
         return this.login;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return this.password;
     }
 
@@ -85,7 +89,7 @@ public class User implements Serializable, PresentationName {
         this.login = login;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(byte[] password) {
         this.password = password;
     }
 

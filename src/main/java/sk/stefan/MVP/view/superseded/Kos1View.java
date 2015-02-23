@@ -29,7 +29,7 @@ public class Kos1View extends VerticalLayout implements View {
 
     public Kos1View(Navigator nav) {
         this.initLayout();
-        this.addComponent(new NavigationComponent(nav));
+        this.addComponent(NavigationComponent.getNavComp());
     }
 
     private void initLayout() {

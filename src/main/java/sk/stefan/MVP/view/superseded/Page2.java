@@ -41,7 +41,7 @@ public class Page2 extends VerticalLayout implements View {
         addComponent(goToPageW);
         addComponent(goToPage1);
 
-        this.addComponent(new NavigationComponent(nav));
+        this.addComponent(NavigationComponent.getNavComp());
 
     }
 

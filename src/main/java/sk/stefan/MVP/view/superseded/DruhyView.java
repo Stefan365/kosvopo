@@ -17,10 +17,10 @@ import sk.stefan.MVP.view.components.NavigationComponent;
 
 public class DruhyView extends VerticalLayout implements View {
 
-	//private Navigator navigator;
+    //private Navigator navigator;
     public DruhyView(Navigator nav) {
 
-		//navigator = nav;
+        //navigator = nav;
         this.setMargin(true);
 
         // A.MENUBAR
@@ -28,7 +28,7 @@ public class DruhyView extends VerticalLayout implements View {
         menubar.setWidth(25.0f, Sizeable.Unit.PERCENTAGE);
         menubar.setHeight(150.0f, Sizeable.Unit.PERCENTAGE);
 
-		// menubar.setWidth("450px");
+        // menubar.setWidth("450px");
         // menubar.setHeight("50px");
         // A feedback component
         final Label selection = new Label("-");
@@ -94,7 +94,7 @@ public class DruhyView extends VerticalLayout implements View {
         linka.setIcon(new ThemeResource("img/psychobox.png"));
         // zabezpeci otvorenie v novej zalozke:
         linka.setTargetName("_blank");
-		// zabezpeci otvorenie v novom okne:
+        // zabezpeci otvorenie v novom okne:
         // linka.setTargetBorder(Link.TARGET_BORDER_NONE);
         // linka.setTargetHeight(300);
         // linka.setTargetWidth(400);
@@ -108,7 +108,7 @@ public class DruhyView extends VerticalLayout implements View {
 
         this.addComponent(date);
 
-        this.addComponent(new NavigationComponent(nav));
+        this.addComponent(NavigationComponent.getNavComp());
 
     }
 

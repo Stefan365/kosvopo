@@ -45,12 +45,13 @@ import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.todo.User_log;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.view.converters.todo.DateConverter;
 import sk.stefan.MVP.view.todo.Tools;
 import sk.stefan.enums.TaskRepetitions;
 import sk.stefan.enums.TaskWarnings;
 import sk.stefan.listeners.todo.OkCancelListener;
-import sk.stefan.security.SecurityService;
 
 /**
  *
@@ -147,7 +148,7 @@ public final class InputFormLayout<T> extends FormLayout {
     public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont, OkCancelListener okl) {
 
         this.fieldMap = new HashMap<>();
-        securityService = new SecurityService();
+        securityService = new SecurityServiceImpl();
         this.fg = new FieldGroup();
         fg.setBuffered(false);
         this.sqlContainer = sqlCont;
@@ -280,6 +281,7 @@ public final class InputFormLayout<T> extends FormLayout {
                     fieldMap.put(pn, cb1);
                     break;
                 default:
+                    //ignore: passwords: java.lang.Byte[], byte[], etc...
                     // do nothing
                     break;
             }

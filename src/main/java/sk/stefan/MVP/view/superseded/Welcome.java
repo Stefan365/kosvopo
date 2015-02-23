@@ -41,7 +41,7 @@ public class Welcome extends VerticalLayout implements View {
         addComponent(goToPage1);
         addComponent(goToPage2);
 
-        this.addComponent(new NavigationComponent(nav));
+        this.addComponent(NavigationComponent.getNavComp());
 
     }
 

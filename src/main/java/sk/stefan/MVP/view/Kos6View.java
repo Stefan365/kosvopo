@@ -56,7 +56,7 @@ public class Kos6View extends VerticalLayout implements View {
 
     public Kos6View(Navigator nav) {
         this.initLayout();
-        this.addComponent(new NavigationComponent(nav));
+        this.addComponent(NavigationComponent.getNavComp());
     }
 
     private void initLayout() {
@@ -331,7 +331,7 @@ public class Kos6View extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeEvent event) {
-
+        this.addComponent(NavigationComponent.getNavComp());
     }
 
 }

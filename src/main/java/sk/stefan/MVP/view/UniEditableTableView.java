@@ -1,36 +1,43 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sk.stefan.MVP.view;
 
 import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.event.FieldEvents;
 import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
+import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.view.components.NavigationComponent;
 
 /**
+ * 
  * Class for Editable environment for editing database table.
+ * 
+ * @author stefan
+ * 
  */
-public class AddressbookView extends VerticalLayout implements View {
+public class UniEditableTableView<T> extends VerticalLayout implements View {
 
-    private static final Logger log = Logger.getLogger(AddressbookView.class);
+    private static final Logger log = Logger.getLogger(UniEditableTableView.class);
     private static final long serialVersionUID = 1L;
 
     /* User interface components are stored in session. */
@@ -48,21 +55,34 @@ public class AddressbookView extends VerticalLayout implements View {
     private Button butEdit;
     private Button butSave;
 
-    private static final String[] fieldNames = new String[]{"ID", "first_name",
-        "last_name", "company"};
-    private static final String[] nonEditFn = new String[]{"ID"};
+//    private String[] visibleFn = new String[]{"ID", "first_name",
+//        "last_name", "company"};
+//    private String[] nonEditFn = new String[]{"ID"};
     
 
-    private static SQLContainer sqlContainer;
+    //Class specific:
+    private SQLContainer sqlContainer;
+    private Class<T> clsE;
+    private String Tn;
+    private String[] visibleFn;
+    private String[] nonEditFn;
 
-    public AddressbookView() {
-
+    public UniEditableTableView(Class<T> cls, String[] visibleCol, String[] uneditCol) {
+        
+        this.clsE = cls;
+        this.visibleFn = visibleCol;
+        this.nonEditFn = uneditCol;
+        
         try {
-            sqlContainer = DoDBconn.getContainer("addressbook_1");
-        } catch (SQLException e) {
+            Method getTnMethod = cls.getDeclaredMethod("getTN");
+            Tn = (String) getTnMethod.invoke(null);
+            sqlContainer = DoDBconn.getContainer(Tn);
+        } catch (IllegalAccessException | IllegalArgumentException | 
+                InvocationTargetException | NoSuchMethodException | 
+                SecurityException | SQLException e) {
             log.error(e.getMessage());
         }
-
+    
         initLayout();
         initcontactListTable();
         initEditor();
@@ -124,7 +144,7 @@ public class AddressbookView extends VerticalLayout implements View {
         removeContactButton.setEnabled(true);
 
         /* User interface can be created dynamically to reflect underlying data. */
-        for (String fieldName : fieldNames) {
+        for (String fieldName : visibleFn) {
             TextField field = new TextField(fieldName);
             editorLayout.addComponent(field);
             field.setWidth("100%");
@@ -148,10 +168,10 @@ public class AddressbookView extends VerticalLayout implements View {
         butEdit.setEnabled(true);
         butSave.setEnabled(false);
 
-        butEdit.addClickListener(new ClickListener() {
+        butEdit.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
             @Override
-            public void buttonClick(ClickEvent event) {
+            public void buttonClick(Button.ClickEvent event) {
                 editorFields.setEnabled(true);
                 butEdit.setEnabled(false);
                 butSave.setEnabled(true);
@@ -159,10 +179,10 @@ public class AddressbookView extends VerticalLayout implements View {
             }
         });
 
-        butSave.addClickListener(new ClickListener() {
+        butSave.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
             @Override
-            public void buttonClick(ClickEvent event) {
+            public void buttonClick(Button.ClickEvent event) {
                 // ulozenie zmien do DB:
                 try {
                     sqlContainer.commit();
@@ -188,21 +208,21 @@ public class AddressbookView extends VerticalLayout implements View {
     private void initSearch() {
 
         searchField.setInputPrompt("Search contacts");
-        searchField.setTextChangeEventMode(TextChangeEventMode.LAZY);
+        searchField.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
 
-        searchField.addTextChangeListener(new TextChangeListener() {
+        searchField.addTextChangeListener(new FieldEvents.TextChangeListener() {
             private static final long serialVersionUID = 1L;
             @Override
-            public void textChange(final TextChangeEvent event) {
+            public void textChange(final FieldEvents.TextChangeEvent event) {
 
                 /* Reset the filter for the contactContainer. */
                 sqlContainer.removeAllContainerFilters();
                 String tx = "%" + event.getText() + "%";
                 if (!tx.equals("")) {
                     sqlContainer.addContainerFilter(new Or(
-                            new Like(fieldNames[1], tx),
-                            new Like(fieldNames[2], tx),
-                            new Like(fieldNames[3], tx)));
+                            new Like(visibleFn[1], tx),
+                            new Like(visibleFn[2], tx),
+                            new Like(visibleFn[3], tx)));
                 }
             }
         });
@@ -212,27 +232,27 @@ public class AddressbookView extends VerticalLayout implements View {
     /**
      */
     private void initAddRemoveButtons() {
-        addNewContactButton.addClickListener(new ClickListener() {
+        addNewContactButton.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
             @Override
             @SuppressWarnings("unchecked")
-            public void buttonClick(ClickEvent event) {
+            public void buttonClick(Button.ClickEvent event) {
 
                 sqlContainer.removeAllContainerFilters();
                 Object contactId = sqlContainer.addItem();
 
-                contactListTable.getContainerProperty(contactId, fieldNames[1]).setValue("New");
-                contactListTable.getContainerProperty(contactId, fieldNames[2]).setValue("Contact");
+                contactListTable.getContainerProperty(contactId, visibleFn[1]).setValue("New");
+                contactListTable.getContainerProperty(contactId, visibleFn[2]).setValue("New");
 
                 // Lets choose the newly created contact to edit it.
                 contactListTable.select(contactId);
             }
         });
 
-        removeContactButton.addClickListener(new ClickListener() {
+        removeContactButton.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
             @Override
-            public void buttonClick(ClickEvent event) {
+            public void buttonClick(Button.ClickEvent event) {
                 Object contactId = contactListTable.getValue();
                 contactListTable.removeItem(contactId);
                 try {
@@ -263,14 +283,14 @@ public class AddressbookView extends VerticalLayout implements View {
      */
     private void initcontactListTable() {
         contactListTable.setContainerDataSource(sqlContainer);
-        contactListTable.setVisibleColumns(new Object[]{fieldNames[0], fieldNames[1], fieldNames[2], fieldNames[3]});
+        contactListTable.setVisibleColumns(new Object[]{visibleFn[0], visibleFn[1], visibleFn[2], visibleFn[3]});
         contactListTable.setSelectable(true);
         contactListTable.setImmediate(true);
 
         contactListTable.addValueChangeListener(new Property.ValueChangeListener() {
             private static final long serialVersionUID = 1L;
             @Override
-            public void valueChange(ValueChangeEvent event) {
+            public void valueChange(Property.ValueChangeEvent event) {
                 Object contactId = contactListTable.getValue();
 
                 if (contactId != null) {
@@ -291,7 +311,7 @@ public class AddressbookView extends VerticalLayout implements View {
     }
 
     @Override
-    public void enter(ViewChangeEvent event) {
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
     }
 }

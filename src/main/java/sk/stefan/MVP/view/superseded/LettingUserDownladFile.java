@@ -36,7 +36,7 @@ public class LettingUserDownladFile extends VerticalLayout implements View {
     public LettingUserDownladFile(Navigator nav) {
 
         this.initLayout();
-        this.addComponent(new NavigationComponent(nav));
+        this.addComponent(NavigationComponent.getNavComp());
     }
 
     private void initLayout() {
