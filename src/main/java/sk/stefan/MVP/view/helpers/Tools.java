@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view.todo;
+package sk.stefan.MVP.view.helpers;
 
 import com.vaadin.data.Item;
 import com.vaadin.event.LayoutEvents;
@@ -23,6 +23,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -215,7 +216,7 @@ public class Tools {
 
         Map<String, Class<?>> typy = new HashMap<>();
 
-        Set<String> zozPar = Tools.getClassProperties(cls, false);
+        List<String> zozPar = Tools.getClassProperties(cls, false);
 
         for (String p : zozPar) {
             Type typ = cls.getDeclaredField(p).getType();
@@ -223,6 +224,8 @@ public class Tools {
         }
         return typy;
     }
+    
+    
 
     // 4. stefan
     /**
@@ -233,11 +236,13 @@ public class Tools {
      * @return 
      * @throws java.lang.NoSuchFieldException
      */
-    public static Set<String> getClassProperties(Class<?> cls, boolean keepId)
+    public static List<String> getClassProperties(Class<?> cls, boolean keepId)
             throws NoSuchFieldException, SecurityException {
 
-        Set<String> properties = new HashSet<>();
-
+        //Set<String> properties= new HashSet<>();
+        List<String> properties = new ArrayList<>();
+        
+        
         for (Method method : cls.getDeclaredMethods()) {
 
             String methodName = method.getName();
@@ -252,11 +257,7 @@ public class Tools {
                 properties.remove("id");
             }
         }
-
         return properties;
-        
-        
-        
     }   
     
     //5.

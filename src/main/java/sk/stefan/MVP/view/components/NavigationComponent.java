@@ -15,7 +15,7 @@ public class NavigationComponent extends HorizontalLayout {
      */
     private static final long serialVersionUID = 8811699550804144740L;
 
-    private final Button b1, b1a, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17;
+    private final Button b1, b1a, b2, b3, b4, b4a, b4b, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17;
     private HorizontalLayout hl;
     private SecurityService securityService;
 
@@ -66,6 +66,12 @@ public class NavigationComponent extends HorizontalLayout {
 
         b4 = new Button("homo", (ClickEvent event) -> {
             navigator.navigateTo("homo");
+        });
+        b4a = new Button("user", (ClickEvent event) -> {
+            navigator.navigateTo("user");
+        });
+        b4b = new Button("okres", (ClickEvent event) -> {
+            navigator.navigateTo("okres");
         });
 
         b5 = new Button("abook",
@@ -175,6 +181,9 @@ public class NavigationComponent extends HorizontalLayout {
         b2.setStyleName(BaseTheme.BUTTON_LINK);
         b3.setStyleName(BaseTheme.BUTTON_LINK);
         b4.setStyleName(BaseTheme.BUTTON_LINK);
+        b4a.setStyleName(BaseTheme.BUTTON_LINK);
+        b4b.setStyleName(BaseTheme.BUTTON_LINK);
+        
         b5.setStyleName(BaseTheme.BUTTON_LINK);
         b6.setStyleName(BaseTheme.BUTTON_LINK);
         b7.setStyleName(BaseTheme.BUTTON_LINK);
@@ -197,6 +206,9 @@ public class NavigationComponent extends HorizontalLayout {
         this.addComponent(b2);
 //        this.addComponent(b3);
         this.addComponent(b4);
+        this.addComponent(b4a);
+        this.addComponent(b4b);
+        
         this.addComponent(b5);
         this.addComponent(b6);
 //        this.addComponent(b7);

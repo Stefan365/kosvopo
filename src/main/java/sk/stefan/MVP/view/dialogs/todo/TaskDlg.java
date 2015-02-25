@@ -48,7 +48,7 @@ public class TaskDlg extends Window implements OkCancelListener {
         this.listener = lis;
         this.setCaption(caption);
         setModal(true);
-        flInputForm = new InputFormLayout<>(cls, item, sqlCont, this);
+        flInputForm = new InputFormLayout<>(cls, item, sqlCont, this, null);
 
         // obsah dialogu
         VerticalLayout content = new VerticalLayout(flInputForm);

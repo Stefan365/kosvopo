@@ -48,9 +48,9 @@ public class AddressbookView extends VerticalLayout implements View {
     private Button butEdit;
     private Button butSave;
 
-    private static final String[] fieldNames = new String[]{"ID", "first_name",
+    private static final String[] fieldNames = new String[]{"id", "first_name",
         "last_name", "company"};
-    private static final String[] nonEditFn = new String[]{"ID"};
+    private static final String[] nonEditFn = new String[]{"id"};
     
 
     private static SQLContainer sqlContainer;
@@ -263,7 +263,7 @@ public class AddressbookView extends VerticalLayout implements View {
      */
     private void initcontactListTable() {
         contactListTable.setContainerDataSource(sqlContainer);
-        contactListTable.setVisibleColumns(new Object[]{fieldNames[0], fieldNames[1], fieldNames[2], fieldNames[3]});
+        //contactListTable.setVisibleColumns((Object[]) fieldNames);
         contactListTable.setSelectable(true);
         contactListTable.setImmediate(true);
 

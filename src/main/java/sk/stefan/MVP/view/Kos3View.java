@@ -20,7 +20,7 @@ public class Kos3View extends VerticalLayout implements View {
     private Link linka;
     private Label selection;
 
-    public Kos3View(Navigator nav) {
+    public Kos3View() {
         this.initLayout();
         this.addComponent(NavigationComponent.getNavComp());
     }

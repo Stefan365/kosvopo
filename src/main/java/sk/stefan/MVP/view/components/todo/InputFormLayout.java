@@ -26,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +49,7 @@ import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.view.converters.todo.DateConverter;
-import sk.stefan.MVP.view.todo.Tools;
+import sk.stefan.MVP.view.helpers.Tools;
 import sk.stefan.enums.TaskRepetitions;
 import sk.stefan.enums.TaskWarnings;
 import sk.stefan.listeners.todo.OkCancelListener;
@@ -66,7 +67,7 @@ import sk.stefan.listeners.todo.OkCancelListener;
 public final class InputFormLayout<T> extends FormLayout {
 
     private static final Logger log = Logger.getLogger(InputFormLayout.class);
-        
+
     /**
      * Identifikator:
      */
@@ -86,7 +87,7 @@ public final class InputFormLayout<T> extends FormLayout {
     /**
      * SQLcontainer, na kterém je postavena tabulka s úkoly.
      */
-    private SQLContainer sqlContainer;
+    private final SQLContainer sqlContainer;
 
     /**
      * FieldGoup je nástroj na svázaní vaadinovské komponenty a nějakého jiného
@@ -131,11 +132,16 @@ public final class InputFormLayout<T> extends FormLayout {
      * Tlačítka pro potvrzení, resp. zrušení změn ve formuláři.
      */
     private Button okBT, cancelBT;
+    
+    /**
+     * Tlacitka, ktore nemaju ist do formulara.
+     */
+    private List<String> nonEditFn;
 
     //další pomocné proměnné:
     private final Logger logger = Logger.getLogger(InputFormLayout.class.getName());
     private final SecurityService securityService;
-    
+
     //0.
     /**
      * Konstruktor.
@@ -144,9 +150,17 @@ public final class InputFormLayout<T> extends FormLayout {
      * @param item položka ze SQLContaineru
      * @param sqlCont SQL container na kterém je postavena tabulka s úkoly.
      * @param okl listener pro vykonání dodatečných akcí spojených s OK-CANCEL.
+     * @param nEditFn zoznam mien parametrov, ktore budu pri tvorbe formularu ignorovane. 
      */
-    public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont, OkCancelListener okl) {
+    public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont, 
+            OkCancelListener okl, List<String> nEditFn) {
 
+        if (nEditFn == null){
+           this.nonEditFn = new ArrayList<>();
+        } else {
+            this.nonEditFn = nEditFn;
+        }
+        
         this.fieldMap = new HashMap<>();
         securityService = new SecurityServiceImpl();
         this.fg = new FieldGroup();
@@ -203,7 +217,9 @@ public final class InputFormLayout<T> extends FormLayout {
         }
 
         for (String pn : mapPar.keySet()) {
-
+            if (nonEditFn.contains(pn)){
+                continue;
+            }
             propertyTypeName = mapPar.get(pn).getCanonicalName();
 
             switch (propertyTypeName) {
@@ -421,7 +437,9 @@ public final class InputFormLayout<T> extends FormLayout {
                     fg.commit();
                     sqlContainer.commit();
                     fieldsFL.setEnabled(false);
-                    okCancelListener.doAdditionalOkAction();
+                    if (okCancelListener != null) {
+                        okCancelListener.doAdditionalOkAction();
+                    }
                     Notification.show("Úkol byl úspešně uložen!");
 
                 } catch (SQLException | UnsupportedOperationException | CommitException e) {
@@ -437,7 +455,9 @@ public final class InputFormLayout<T> extends FormLayout {
                 if (isNew) {
                     sqlContainer.removeItem(itemId);
                 }
-                okCancelListener.doAdditionalCancelAction();
+                if (okCancelListener != null) {
+                    okCancelListener.doAdditionalCancelAction();
+                }
             }
         });
         //TodosView s;
@@ -510,6 +530,10 @@ public final class InputFormLayout<T> extends FormLayout {
             log.error(ex.getMessage());
         }
         return null;
+    }
+    
+    public void setItem(Item it){
+        this.item = it;
     }
 
 }

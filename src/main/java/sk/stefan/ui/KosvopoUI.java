@@ -6,6 +6,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import javax.servlet.annotation.WebServlet;
+import sk.stefan.MVP.model.entity.dao.Kraj;
+import sk.stefan.MVP.model.entity.dao.User;
 import sk.stefan.MVP.view.AddressbookView;
 import sk.stefan.MVP.view.FilaManagerView;
 import sk.stefan.MVP.view.HomoView;
@@ -13,8 +15,10 @@ import sk.stefan.MVP.view.InputAllView;
 import sk.stefan.MVP.view.Kos2View;
 import sk.stefan.MVP.view.Kos3View;
 import sk.stefan.MVP.view.LoginView;
+import sk.stefan.MVP.view.UniEditableTableView;
 import sk.stefan.MVP.view.VstupniView;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.enums.NonEditableFields;
 
 @SuppressWarnings("serial")
 public class KosvopoUI extends UI {
@@ -33,12 +37,15 @@ public class KosvopoUI extends UI {
     protected void init(VaadinRequest request) {
 
         navigator = new Navigator(this, this);
-        NavigationComponent.createNavComp();
+        NavigationComponent.createNavComp(navigator);
 
         navigator.addView("login", new LoginView(navigator));
         navigator.addView("vstupny", new VstupniView());
         //navigator.addView("druhy", new DruhyView(navigator));
         navigator.addView("homo", new HomoView());
+        navigator.addView("user", new UniEditableTableView<>(User.class, NonEditableFields.A_USER.getNonEditableParams()));
+        navigator.addView("okres", new UniEditableTableView<>(Kraj.class, NonEditableFields.KRAJ.getNonEditableParams()));
+        
         navigator.addView("addressbook", new AddressbookView());
         navigator.addView("filamanager", new FilaManagerView());
         //navigator.addView("kos1", new Kos1View(navigator));

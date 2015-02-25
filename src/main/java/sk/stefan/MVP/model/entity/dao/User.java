@@ -36,7 +36,12 @@ public class User implements Serializable, PresentationName {
         this.password = securityService.encryptPassword(pw);
     }
 
+    public User(String meno) {
+        this.first_name = meno;
+    }
+
     public User() {
+        
     }
 
     //getters:

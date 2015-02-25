@@ -1,5 +1,9 @@
 package sk.stefan.zaklad;
 
+import com.vaadin.data.Container;
+import com.vaadin.data.Container.Filter;
+import com.vaadin.data.util.filter.Like;
+import com.vaadin.data.util.filter.Or;
 import java.lang.reflect.Constructor;
 import sk.stefan.interfaces.PresentationName;
 
@@ -8,6 +12,8 @@ import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -48,14 +54,8 @@ public class Skuska1<T> {
 //        Byte[] b = new  Byte[12];
 //        log.info(b.getClass().getCanonicalName());
 
-        UniRepo<User> uniRepo = new UniRepo<>(User.class);
-        uniRepo.updateParam("password", "KOKOSOVO", "1");
-
-        List<User> allUs = uniRepo.findAll();
-        for(User u : allUs){
-            log.info(u.getPresentationName() + " : " + u.getPassword().toString());
-        }
-        
+        Skuska1<VoteClassification> sk = new Skuska1<>();
+        sk.skusToArray();
         
         
         
@@ -662,13 +662,38 @@ public class Skuska1<T> {
         return null;
     }
     
-    private void skusUniRepo(){
+    private void skusUniRepoParam(){
         UniRepo<Location> uniRepo = new UniRepo<>(Location.class);
         
         uniRepo.updateParam("mestka_cast", "KOKOSOVO", "6");
         uniRepo.updateParam("visible", "false", "6");
         uniRepo.updateParam("mestka_cast", null, "8");
+        
+        UniRepo<User> uniRepo1 = new UniRepo<>(User.class);
+        uniRepo.updateParam("password", "KOKOSOVO", "1");
 
+        List<User> allUs = uniRepo1.findAll();
+        for(User u : allUs){
+            log.info(u.getPresentationName() + " : " + Arrays.toString(u.getPassword()));
+        }
+    }
+    
+    private void skusToArray(){
+        Filter f1 = new Like("koko", "dfd");
+        Filter f2 = new Like("joko", "dfd");
+        Filter f3 = new Like("moko", "dfd");
+        
+        List<Filter> fls = new ArrayList<>();
+        
+        fls.add(f1);
+        fls.add(f2);
+        fls.add(f3);
+        
+        Filter[] fla = fls.toArray(new Filter[0]);
+        Container.Filter f2r = new Or(fla);
+        
+        log.info("DLZKA: " + fla.length);
+        
     }
 
 }

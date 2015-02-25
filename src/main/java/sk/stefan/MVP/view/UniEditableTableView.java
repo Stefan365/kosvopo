@@ -5,6 +5,8 @@
  */
 package sk.stefan.MVP.view;
 
+import com.vaadin.data.Container.Filter;
+import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.filter.Like;
@@ -24,67 +26,78 @@ import com.vaadin.ui.VerticalLayout;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.MVP.view.components.todo.InputFormLayout;
+import sk.stefan.MVP.view.helpers.Tools;
 
 /**
- * 
+ *
  * Class for Editable environment for editing database table.
- * 
+ *
  * @author stefan
- * 
+ * @param <E> type of UniEditableTableView
+ *
  */
-public class UniEditableTableView<T> extends VerticalLayout implements View {
+public class UniEditableTableView<E> extends VerticalLayout implements View {
 
     private static final Logger log = Logger.getLogger(UniEditableTableView.class);
     private static final long serialVersionUID = 1L;
 
     /* User interface components are stored in session. */
-    private Table contactListTable = new Table();
+    private Table uniTable = new Table();
     private TextField searchField = new TextField();
-    private Button addNewContactButton = new Button("New");
-    private Button removeContactButton = new Button("Remove this contact");
+    private Button addNewItemButton = new Button("Nová položka");
+    private Button removeItemButton = new Button("Odstráň túto položku");
     private FormLayout editorLayout = new FormLayout();
-    private HorizontalLayout editorLayout2 = new HorizontalLayout();
-    private FieldGroup editorFields = new FieldGroup();
+    private HorizontalLayout editorButtonsLayout;
+    private FieldGroup fg = new FieldGroup();
     //split panel:
     private HorizontalSplitPanel splitPanel;
     private VerticalLayout leftLayout;
     private HorizontalLayout bottomLeftLayout;
-    private Button butEdit;
-    private Button butSave;
+    private Button editBt;
+    private Button saveBt;
 
 //    private String[] visibleFn = new String[]{"ID", "first_name",
 //        "last_name", "company"};
 //    private String[] nonEditFn = new String[]{"ID"};
-    
-
     //Class specific:
     private SQLContainer sqlContainer;
-    private Class<T> clsE;
+    private Class<E> clsE;
     private String Tn;
-    private String[] visibleFn;
-    private String[] nonEditFn;
+    private List<String> visibleFn;
+    private List<String> nonEditFn;
+    private InputFormLayout<E> inputForm;
+    private Item item;
 
-    public UniEditableTableView(Class<T> cls, String[] visibleCol, String[] uneditCol) {
-        
+    public UniEditableTableView(Class<E> cls, String[] uneditCol) {
+
         this.clsE = cls;
-        this.visibleFn = visibleCol;
-        this.nonEditFn = uneditCol;
-        
+        try {
+            this.visibleFn = Tools.getClassProperties(cls, true);
+        } catch (NoSuchFieldException | SecurityException ex) {
+            log.error(ex.getMessage());
+        }
+
         try {
             Method getTnMethod = cls.getDeclaredMethod("getTN");
             Tn = (String) getTnMethod.invoke(null);
             sqlContainer = DoDBconn.getContainer(Tn);
-        } catch (IllegalAccessException | IllegalArgumentException | 
-                InvocationTargetException | NoSuchMethodException | 
+        } catch (IllegalAccessException | IllegalArgumentException |
+                InvocationTargetException | NoSuchMethodException |
                 SecurityException | SQLException e) {
             log.error(e.getMessage());
         }
-    
+        this.nonEditFn = Arrays.asList(uneditCol);
+        this.inputForm = new InputFormLayout<>(cls, null, sqlContainer, null, nonEditFn);
+
         initLayout();
-        initcontactListTable();
+        initUniTable();
         initEditor();
         initSearch();
         initAddRemoveButtons();
@@ -92,26 +105,24 @@ public class UniEditableTableView<T> extends VerticalLayout implements View {
     }
 
     //1.
-	/*
-     * In this example layouts are programmed in Java. You may choose use a
-     * visual editor, CSS or HTML templates for layout instead.
+    /**
+     * Zakladny layout
      */
     private void initLayout() {
 
-        /* Root of the user interface component tree is set */
+        // Root of the user interface component tree is set 
         splitPanel = new HorizontalSplitPanel();
         this.addComponent(splitPanel);
 
-        /* Build the component tree */
         leftLayout = new VerticalLayout();
         splitPanel.addComponent(leftLayout);
         splitPanel.addComponent(editorLayout);
 
-        leftLayout.addComponent(contactListTable);
+        leftLayout.addComponent(uniTable);
         bottomLeftLayout = new HorizontalLayout();
         leftLayout.addComponent(bottomLeftLayout);
         bottomLeftLayout.addComponent(searchField);
-        bottomLeftLayout.addComponent(addNewContactButton);
+        bottomLeftLayout.addComponent(addNewItemButton);
 
         /* Set the contents in the left of the split panel to use all the space */
         leftLayout.setSizeFull();
@@ -120,8 +131,8 @@ public class UniEditableTableView<T> extends VerticalLayout implements View {
          * On the left side, expand the size of the contactListTable so that it uses
          * all the space left after from bottomLeftLayout
          */
-        leftLayout.setExpandRatio(contactListTable, 1);
-        contactListTable.setSizeFull();
+        leftLayout.setExpandRatio(uniTable, 1);
+        uniTable.setSizeFull();
 
         /*
          * In the bottomLeftLayout, searchField takes all the width there is
@@ -140,51 +151,60 @@ public class UniEditableTableView<T> extends VerticalLayout implements View {
     //2.
     private void initEditor() {
 
-        editorLayout.addComponent(removeContactButton);
-        removeContactButton.setEnabled(true);
+        editorLayout.addComponent(removeItemButton);
+        removeItemButton.setEnabled(true);
 
-        /* User interface can be created dynamically to reflect underlying data. */
-        for (String fieldName : visibleFn) {
-            TextField field = new TextField(fieldName);
-            editorLayout.addComponent(field);
-            field.setWidth("100%");
-            //field.setTextChangeEventMode(TextChangeEventMode.LAZY);
-            editorFields.bind(field, fieldName);
+        //main latout s komponentami podla potreb danej entity.
+        editorLayout.addComponent(inputForm);
+//        for (String fieldName : visibleFn) {
+//            TextField field = new TextField(fieldName);
+//            editorLayout.addComponent(field);
+//            field.setWidth("100%");
+//            //field.setTextChangeEventMode(TextChangeEventMode.LAZY);
+//            fg.bind(field, fieldName);
+//
+//        }
+        /*
+         * Data can be buffered in the user interface. When doing so, commit()
+         * writes the changes to the data source. Here we choose (false) to write the
+         * changes automatically without calling commit().
+         */
+        fg.setBuffered(false);
 
-            /*
-             * Data can be buffered in the user interface. When doing so, commit()
-             * writes the changes to the data source. Here we choose (false) to write the
-             * changes automatically without calling commit().
-             */
-            editorFields.setBuffered(false);
-        }
+        editBt = new Button("Edit");
+        saveBt = new Button("Save");
+        editBt.setEnabled(true);
+        saveBt.setEnabled(false);
 
-        editorLayout.addComponent(editorLayout2);
-		//editorLayout.addComponent(new NavigationComponent(navigator));
+        //
+        editorButtonsLayout = new HorizontalLayout();
+        editorLayout.addComponent(editorButtonsLayout);
+        editorButtonsLayout.addComponent(editBt);
+        editorButtonsLayout.addComponent(saveBt);
+        //editorLayout.addComponent(new NavigationComponent(navigator));
 
-        //Pridanie tlacidiel:
-        butEdit = new Button("Edit");
-        butSave = new Button("Save");
-        butEdit.setEnabled(true);
-        butSave.setEnabled(false);
+        //Pridanie tlacidiel do editorButtonsLayout-u:
 
-        butEdit.addClickListener(new Button.ClickListener() {
+        editBt.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                editorFields.setEnabled(true);
-                butEdit.setEnabled(false);
-                butSave.setEnabled(true);
+                fg.setEnabled(true);
+                editBt.setEnabled(false);
+                saveBt.setEnabled(true);
 
             }
         });
 
-        butSave.addClickListener(new Button.ClickListener() {
+        saveBt.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 // ulozenie zmien do DB:
                 try {
+                    //fg.commit(); commit not needed, setBuffered(true)
                     sqlContainer.commit();
                 } catch (SQLException e) {
                     try {
@@ -194,35 +214,42 @@ public class UniEditableTableView<T> extends VerticalLayout implements View {
                     }
                     log.error(e.getMessage());
                 }
-                contactListTable.refreshRowCache();
-                editorFields.setEnabled(false);
-                butEdit.setEnabled(true);
-                butSave.setEnabled(false);
+                uniTable.refreshRowCache();
+                fg.setEnabled(false);
+                editBt.setEnabled(true);
+                saveBt.setEnabled(false);
             }
         });
-        editorLayout2.addComponent(butEdit);
-        editorLayout2.addComponent(butSave);
+
     }
 
     //3.
     private void initSearch() {
 
-        searchField.setInputPrompt("Search contacts");
+        searchField.setInputPrompt("možeš použiť vyhľadávanie");
         searchField.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
 
         searchField.addTextChangeListener(new FieldEvents.TextChangeListener() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void textChange(final FieldEvents.TextChangeEvent event) {
+                Filter o;
+                List<Filter> fls;
 
                 /* Reset the filter for the contactContainer. */
                 sqlContainer.removeAllContainerFilters();
                 String tx = "%" + event.getText() + "%";
-                if (!tx.equals("")) {
-                    sqlContainer.addContainerFilter(new Or(
-                            new Like(visibleFn[1], tx),
-                            new Like(visibleFn[2], tx),
-                            new Like(visibleFn[3], tx)));
+                if (!"".equals(tx)) {
+                    fls = new ArrayList<>();
+                    for (String s : visibleFn) {
+                        fls.add(new Like(s, tx));
+                    }
+                    o = new Or(fls.toArray(new Filter[0]));
+                    sqlContainer.addContainerFilter(o);
+//                    sqlContainer.addContainerFilter(new Or(
+//                            new Like(visibleFn.get(2), tx),
+//                            new Like(visibleFn.get(3), tx)));
                 }
             }
         });
@@ -230,36 +257,36 @@ public class UniEditableTableView<T> extends VerticalLayout implements View {
 
     //4.
     /**
+     * Pridávanie základných tlačítiek "Pridaj" a "Odober"
      */
     private void initAddRemoveButtons() {
-        addNewContactButton.addClickListener(new Button.ClickListener() {
+        addNewItemButton.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
+
             @Override
             @SuppressWarnings("unchecked")
             public void buttonClick(Button.ClickEvent event) {
 
                 sqlContainer.removeAllContainerFilters();
-                Object contactId = sqlContainer.addItem();
+                Object itemId = sqlContainer.addItem();
+// treba zabezpecit, aby not null bunky mali defaultne hodnoty.
+//                uniTable.getContainerProperty(itemId, visibleFn.get(1)).setValue("New");
+//                uniTable.getContainerProperty(itemId, visibleFn.get(2)).setValue("New");
 
-                contactListTable.getContainerProperty(contactId, visibleFn[1]).setValue("New");
-                contactListTable.getContainerProperty(contactId, visibleFn[2]).setValue("New");
-
-                // Lets choose the newly created contact to edit it.
-                contactListTable.select(contactId);
+                uniTable.select(itemId);
             }
         });
 
-        removeContactButton.addClickListener(new Button.ClickListener() {
+        removeItemButton.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                Object contactId = contactListTable.getValue();
-                contactListTable.removeItem(contactId);
+                Object itemId = uniTable.getValue();
+                uniTable.removeItem(itemId);
                 try {
-                    //sqlContainer.setAutoCommit(true);
                     sqlContainer.removeAllContainerFilters();
-                    sqlContainer.removeItem(contactId);
-                    //sqlContainer.setAutoCommit(false);
+                    sqlContainer.removeItem(itemId);
                     sqlContainer.commit();
 
                 } catch (UnsupportedOperationException e) {
@@ -279,36 +306,44 @@ public class UniEditableTableView<T> extends VerticalLayout implements View {
 
     //5.
     /**
-     * 
+     * Inicializuje tabulku na danu entitu.
      */
-    private void initcontactListTable() {
-        contactListTable.setContainerDataSource(sqlContainer);
-        contactListTable.setVisibleColumns(new Object[]{visibleFn[0], visibleFn[1], visibleFn[2], visibleFn[3]});
-        contactListTable.setSelectable(true);
-        contactListTable.setImmediate(true);
+    private void initUniTable() {
+        uniTable.setContainerDataSource(sqlContainer);
 
-        contactListTable.addValueChangeListener(new Property.ValueChangeListener() {
+        Object[] visCol = visibleFn.toArray();
+        uniTable.setVisibleColumns(visCol);
+        uniTable.setSelectable(true);
+        uniTable.setImmediate(true);
+
+        uniTable.addValueChangeListener(new Property.ValueChangeListener() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
-                Object contactId = contactListTable.getValue();
+                Object itemId = uniTable.getValue();
 
-                if (contactId != null) {
-                    editorFields.setItemDataSource(contactListTable.getItem(contactId));
+                if (itemId != null) {
+                    inputForm.setItem(uniTable.getItem(itemId));
+//                    editorFields.setItemDataSource(contactListTable.getItem(contactId));
                 }
-                editorLayout.setVisible(contactId != null);
-                editorFields.setEnabled(false);
-                butEdit.setEnabled(true);
-                butSave.setEnabled(false);
+                editorLayout.setVisible(itemId != null);
+                fg.setEnabled(false);//to sa ozivi az tlacitkom Edit,
+                //defaultne to bude needitovatelne.
+//                inputForm.setVisible(itemId != null);
+//                inputForm.setEnabled(false);
+
+                editBt.setEnabled(true);
+                saveBt.setEnabled(false);
             }
         });
     }
 
-    @Override
-    public void markAsDirty() {
-        // TODO Auto-generated method stub
-
-    }
+//    @Override
+//    public void markAsDirty() {
+//        // TODO Auto-generated method stub
+//
+//    }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
