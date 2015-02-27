@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Kraj;
 import sk.stefan.MVP.model.entity.dao.Location;
@@ -50,7 +51,7 @@ import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.view.converters.todo.DateConverter;
 import sk.stefan.MVP.view.helpers.Tools;
-import sk.stefan.enums.TaskRepetitions;
+import sk.stefan.enums.VoteResults;
 import sk.stefan.enums.TaskWarnings;
 import sk.stefan.listeners.todo.OkCancelListener;
 
@@ -131,16 +132,16 @@ public final class InputFormLayout<T> extends FormLayout {
     /**
      * Tlačítka pro potvrzení, resp. zrušení změn ve formuláři.
      */
-    private Button okBT, cancelBT;
-    
+    private Button okBt, cancelBt;
+
     /**
      * Tlacitka, ktore nemaju ist do formulara.
      */
     private List<String> nonEditFn;
 
     //další pomocné proměnné:
-    private final Logger logger = Logger.getLogger(InputFormLayout.class.getName());
-    private final SecurityService securityService;
+    private final Logger logger = Logger.getLogger(InputFormLayout.class);
+    //private final SecurityService securityService;
 
     //0.
     /**
@@ -150,19 +151,20 @@ public final class InputFormLayout<T> extends FormLayout {
      * @param item položka ze SQLContaineru
      * @param sqlCont SQL container na kterém je postavena tabulka s úkoly.
      * @param okl listener pro vykonání dodatečných akcí spojených s OK-CANCEL.
-     * @param nEditFn zoznam mien parametrov, ktore budu pri tvorbe formularu ignorovane. 
+     * @param nEditFn zoznam mien parametrov, ktore budu pri tvorbe formularu
+     * ignorovane.
      */
-    public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont, 
+    public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont,
             OkCancelListener okl, List<String> nEditFn) {
 
-        if (nEditFn == null){
-           this.nonEditFn = new ArrayList<>();
+        if (nEditFn == null) {
+            this.nonEditFn = new ArrayList<>();
         } else {
             this.nonEditFn = nEditFn;
         }
-        
+
         this.fieldMap = new HashMap<>();
-        securityService = new SecurityServiceImpl();
+        //securityService = new SecurityServiceImpl();
         this.fg = new FieldGroup();
         fg.setBuffered(false);
         this.sqlContainer = sqlCont;
@@ -217,7 +219,7 @@ public final class InputFormLayout<T> extends FormLayout {
         }
 
         for (String pn : mapPar.keySet()) {
-            if (nonEditFn.contains(pn)){
+            if (nonEditFn.contains(pn)) {
                 continue;
             }
             propertyTypeName = mapPar.get(pn).getCanonicalName();
@@ -225,15 +227,12 @@ public final class InputFormLayout<T> extends FormLayout {
             switch (propertyTypeName) {
                 case "java.lang.Integer":
                     if (pn.contains("_id")) {
-                        //vytvorenie noveho dialogoveho okna s mapami
-                        //toto dat do input form layoutu.
-
                         //POZN: parametry POJO by se meli jmenovat stejne ako 
                         // stloupce tabulky a identifikator by se mel jmenovat jen 'id'..
                         Class<?> cls = getClassFromName(pn);
                         Map<String, Integer> map = findAllByClass(cls);
-                        InputComboBox<Integer> cb;
-                        cb = new InputComboBox<>(fg, pn, map, Integer.class);
+                        InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
+                        cb.setValue(itemId);
                         fieldMap.put(pn, cb);
                     } else {
                         Component fi = bindTextField(pn);
@@ -275,25 +274,30 @@ public final class InputFormLayout<T> extends FormLayout {
                             //do nothing. tyto datumy se vyplní automaticky.
                             break;
                         default:
-                            log.info("KAROLKO: " + "DATE");
                             fieldMap.put(pn, bindUtilDateField(pn));
                             break;
                     }
                     break;
 
-                case "cz.iivos.todo.enums.TaskRepetitions":
-                    Map map = Tools.makeEnumMap(TaskRepetitions.getPeriodsNames(),
-                            TaskRepetitions.getOrdinals());
-                    InputComboBox<Integer> cb
-                            = new InputComboBox<>(fg, pn, map, Integer.class);
+                case "sk.stefan.enums.VoteResults":
+                    Map<String, Integer> map;
+                    map = Tools.makeEnumMap(VoteResults.getPeriodsNames(),
+                            VoteResults.getOrdinals());
+                    InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
+                    if (itemId == null) {
+                        cb.setValue(1);
+//                        cb.setValue(VoteResults.APPROVED);                      
+                    }
                     fieldMap.put(pn, cb);
                     break;
 
-                case "cz.iivos.todo.enums.TaskWarnings":
-                    Map map1 = Tools.makeEnumMap(TaskWarnings.getWarningNames(),
+                case "sk.stefan.enums.TaskWarnings":
+                    Map<String, Integer> map1 = Tools.makeEnumMap(TaskWarnings.getWarningNames(),
                             TaskWarnings.getOrdinals());
-                    InputComboBox<Integer> cb1
-                            = new InputComboBox<>(fg, pn, map1, Integer.class);
+                    InputComboBox<Integer> cb1 = new InputComboBox<>(fg, pn, map1);
+                    if (itemId == null) {
+                        cb1.setValue(1);
+                    }
                     fieldMap.put(pn, cb1);
                     break;
                 default:
@@ -418,51 +422,65 @@ public final class InputFormLayout<T> extends FormLayout {
         buttonsHL.setMargin(true);
         buttonsHL.setSpacing(true);
 
-        okBT = new Button("Ok");
-        cancelBT = new Button("Cancel");
-        cancelBT.setEnabled(true);
-        okBT.setEnabled(true);
+        okBt = new Button("Save");
+        cancelBt = new Button("Edit");
+        cancelBt.setEnabled(true);
+        okBt.setEnabled(true);
 
-        okBT.addClickListener(new ClickListener() {
+        okBt.addClickListener(new ClickListener() {
+            private static final long serialVersionUID = 1L;
+
             @Override
+            @SuppressWarnings("unchecked")
             public void buttonClick(ClickEvent event) {
                 if (isNew) {
-                    //User_log user = securityService.getCurrentUser();
-                    //sqlContainer.removeAllContainerFilters();
-                    //okCancelListener.obnovFilter();
+                    sqlContainer.removeAllContainerFilters();
+                    sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.TRUE);
+                    okCancelListener.obnovFilter();
                 }
 
                 // ulozenie zmien do DB:
                 try {
-                    fg.commit();
                     sqlContainer.commit();
                     fieldsFL.setEnabled(false);
+                    fg.setEnabled(false);
+                    cancelBt.setEnabled(true);
+                    okBt.setEnabled(false);
+
                     if (okCancelListener != null) {
                         okCancelListener.doAdditionalOkAction();
                     }
                     Notification.show("Úkol byl úspešně uložen!");
 
-                } catch (SQLException | UnsupportedOperationException | CommitException e) {
+                } catch (SQLException | UnsupportedOperationException e) {
                     logger.warn(e.getLocalizedMessage(), e);
                 }
             }
         });
 
-        cancelBT.addClickListener(new ClickListener() {
+        cancelBt.addClickListener(new ClickListener() {
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void buttonClick(ClickEvent event) {
-                okBT.setEnabled(true);
+                okBt.setEnabled(true);
                 if (isNew) {
                     sqlContainer.removeItem(itemId);
                 }
+                fg.setEnabled(true);
+                fieldsFL.setEnabled(true);
+
+                cancelBt.setEnabled(false);
+                okBt.setEnabled(true);
                 if (okCancelListener != null) {
                     okCancelListener.doAdditionalCancelAction();
                 }
+
             }
         });
         //TodosView s;
-        buttonsHL.addComponent(okBT);
-        buttonsHL.addComponent(cancelBT);
+        buttonsHL.addComponent(okBt);
+        buttonsHL.addComponent(cancelBt);
 
         this.addComponent(buttonsHL);
 
@@ -515,7 +533,7 @@ public final class InputFormLayout<T> extends FormLayout {
             repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
             List<? extends Object> listObj;
             listObj = repoCtor.newInstance(cls).findAll();
-
+            log.info("KARAMAZOV: " + (listObj == null));
             for (Object o : listObj) {
                 Method getRepNameMethod = cls.getDeclaredMethod("getPresentationName");
                 repN = (String) getRepNameMethod.invoke(o);
@@ -531,9 +549,28 @@ public final class InputFormLayout<T> extends FormLayout {
         }
         return null;
     }
-    
-    public void setItem(Item it){
+
+    public void setItem(Item it) {
         this.item = it;
+        if (item != null) {
+            fg.setItemDataSource(this.item);
+        }
     }
 
+    public void doEnableButtons() {
+        fieldsFL.setEnabled(false);
+        fg.setEnabled(false);
+        cancelBt.setEnabled(true);
+        okBt.setEnabled(false);
+
+        //this.refreshComboboxes();
+    }
+
+//    private void refreshComboboxes() {
+//        for (Component c: fieldMap.values()){
+//            if (c instanceof InputComboBox){
+//                //((InputComboBox<? extends Object>) c).refreshFg();
+//            }
+//        }
+//    }
 }

@@ -34,6 +34,7 @@ import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.todo.InputFormLayout;
 import sk.stefan.MVP.view.helpers.Tools;
+import sk.stefan.listeners.todo.OkCancelListener;
 
 /**
  *
@@ -43,49 +44,44 @@ import sk.stefan.MVP.view.helpers.Tools;
  * @param <E> type of UniEditableTableView
  *
  */
-public class UniEditableTableView<E> extends VerticalLayout implements View {
+public class UniEditableTableView<E> extends VerticalLayout implements View, OkCancelListener {
 
     private static final Logger log = Logger.getLogger(UniEditableTableView.class);
     private static final long serialVersionUID = 1L;
 
     /* User interface components are stored in session. */
+    private Class<E> clsE;
+    private Object itemId;
+    private Item item;
     private Table uniTable = new Table();
     private TextField searchField = new TextField();
-    private Button addNewItemButton = new Button("Nová položka");
-    private Button removeItemButton = new Button("Odstráň túto položku");
+    private Button addNewItemButton = new Button("Nová podložka");
+    private Button removeItemButton = new Button("Odstráň túto podložku");
     private FormLayout editorLayout = new FormLayout();
-    private HorizontalLayout editorButtonsLayout;
     private FieldGroup fg = new FieldGroup();
     //split panel:
     private HorizontalSplitPanel splitPanel;
     private VerticalLayout leftLayout;
     private HorizontalLayout bottomLeftLayout;
-    private Button editBt;
-    private Button saveBt;
 
-//    private String[] visibleFn = new String[]{"ID", "first_name",
-//        "last_name", "company"};
-//    private String[] nonEditFn = new String[]{"ID"};
     //Class specific:
     private SQLContainer sqlContainer;
-    private Class<E> clsE;
     private String Tn;
     private List<String> visibleFn;
-    private List<String> nonEditFn;
-    private InputFormLayout<E> inputForm;
-    private Item item;
+    private final List<String> nonEditFn;
+    private final InputFormLayout<E> inputForm;
 
-    public UniEditableTableView(Class<E> cls, String[] uneditCol) {
+    public UniEditableTableView(Class<E> clsq, String[] uneditCol) {
 
-        this.clsE = cls;
+        this.clsE = clsq;
         try {
-            this.visibleFn = Tools.getClassProperties(cls, true);
+            this.visibleFn = Tools.getClassProperties(clsE, true);
         } catch (NoSuchFieldException | SecurityException ex) {
             log.error(ex.getMessage());
         }
 
         try {
-            Method getTnMethod = cls.getDeclaredMethod("getTN");
+            Method getTnMethod = clsE.getDeclaredMethod("getTN");
             Tn = (String) getTnMethod.invoke(null);
             sqlContainer = DoDBconn.getContainer(Tn);
         } catch (IllegalAccessException | IllegalArgumentException |
@@ -94,7 +90,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements View {
             log.error(e.getMessage());
         }
         this.nonEditFn = Arrays.asList(uneditCol);
-        this.inputForm = new InputFormLayout<>(cls, null, sqlContainer, null, nonEditFn);
+        this.inputForm = new InputFormLayout<>(clsE, item, sqlContainer, this, nonEditFn);
 
         initLayout();
         initUniTable();
@@ -124,21 +120,11 @@ public class UniEditableTableView<E> extends VerticalLayout implements View {
         bottomLeftLayout.addComponent(searchField);
         bottomLeftLayout.addComponent(addNewItemButton);
 
-        /* Set the contents in the left of the split panel to use all the space */
         leftLayout.setSizeFull();
 
-        /*
-         * On the left side, expand the size of the contactListTable so that it uses
-         * all the space left after from bottomLeftLayout
-         */
         leftLayout.setExpandRatio(uniTable, 1);
         uniTable.setSizeFull();
 
-        /*
-         * In the bottomLeftLayout, searchField takes all the width there is
-         * after adding addNewContactButton. The height of the layout is defined
-         * by the tallest component.
-         */
         bottomLeftLayout.setWidth("100%");
         searchField.setWidth("100%");
         bottomLeftLayout.setExpandRatio(searchField, 1);
@@ -150,77 +136,11 @@ public class UniEditableTableView<E> extends VerticalLayout implements View {
 
     //2.
     private void initEditor() {
-
+        
         editorLayout.addComponent(removeItemButton);
         removeItemButton.setEnabled(true);
-
-        //main latout s komponentami podla potreb danej entity.
         editorLayout.addComponent(inputForm);
-//        for (String fieldName : visibleFn) {
-//            TextField field = new TextField(fieldName);
-//            editorLayout.addComponent(field);
-//            field.setWidth("100%");
-//            //field.setTextChangeEventMode(TextChangeEventMode.LAZY);
-//            fg.bind(field, fieldName);
-//
-//        }
-        /*
-         * Data can be buffered in the user interface. When doing so, commit()
-         * writes the changes to the data source. Here we choose (false) to write the
-         * changes automatically without calling commit().
-         */
         fg.setBuffered(false);
-
-        editBt = new Button("Edit");
-        saveBt = new Button("Save");
-        editBt.setEnabled(true);
-        saveBt.setEnabled(false);
-
-        //
-        editorButtonsLayout = new HorizontalLayout();
-        editorLayout.addComponent(editorButtonsLayout);
-        editorButtonsLayout.addComponent(editBt);
-        editorButtonsLayout.addComponent(saveBt);
-        //editorLayout.addComponent(new NavigationComponent(navigator));
-
-        //Pridanie tlacidiel do editorButtonsLayout-u:
-
-        editBt.addClickListener(new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                fg.setEnabled(true);
-                editBt.setEnabled(false);
-                saveBt.setEnabled(true);
-
-            }
-        });
-
-        saveBt.addClickListener(new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                // ulozenie zmien do DB:
-                try {
-                    //fg.commit(); commit not needed, setBuffered(true)
-                    sqlContainer.commit();
-                } catch (SQLException e) {
-                    try {
-                        sqlContainer.rollback();
-                    } catch (SQLException e1) {
-                        log.error(e1.getMessage());
-                    }
-                    log.error(e.getMessage());
-                }
-                uniTable.refreshRowCache();
-                fg.setEnabled(false);
-                editBt.setEnabled(true);
-                saveBt.setEnabled(false);
-            }
-        });
-
     }
 
     //3.
@@ -247,9 +167,6 @@ public class UniEditableTableView<E> extends VerticalLayout implements View {
                     }
                     o = new Or(fls.toArray(new Filter[0]));
                     sqlContainer.addContainerFilter(o);
-//                    sqlContainer.addContainerFilter(new Or(
-//                            new Like(visibleFn.get(2), tx),
-//                            new Like(visibleFn.get(3), tx)));
                 }
             }
         });
@@ -268,10 +185,8 @@ public class UniEditableTableView<E> extends VerticalLayout implements View {
             public void buttonClick(Button.ClickEvent event) {
 
                 sqlContainer.removeAllContainerFilters();
-                Object itemId = sqlContainer.addItem();
-// treba zabezpecit, aby not null bunky mali defaultne hodnoty.
-//                uniTable.getContainerProperty(itemId, visibleFn.get(1)).setValue("New");
-//                uniTable.getContainerProperty(itemId, visibleFn.get(2)).setValue("New");
+                itemId = sqlContainer.addItem();
+//              uniTable.getContainerProperty(itemId, visibleFn.get(2)).setValue("New");
 
                 uniTable.select(itemId);
             }
@@ -282,7 +197,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements View {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                Object itemId = uniTable.getValue();
+                itemId = uniTable.getValue();
                 uniTable.removeItem(itemId);
                 try {
                     sqlContainer.removeAllContainerFilters();
@@ -321,7 +236,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements View {
 
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
-                Object itemId = uniTable.getValue();
+                itemId = uniTable.getValue();
 
                 if (itemId != null) {
                     inputForm.setItem(uniTable.getItem(itemId));
@@ -329,24 +244,28 @@ public class UniEditableTableView<E> extends VerticalLayout implements View {
                 }
                 editorLayout.setVisible(itemId != null);
                 fg.setEnabled(false);//to sa ozivi az tlacitkom Edit,
-                //defaultne to bude needitovatelne.
-//                inputForm.setVisible(itemId != null);
-//                inputForm.setEnabled(false);
-
-                editBt.setEnabled(true);
-                saveBt.setEnabled(false);
+                inputForm.doEnableButtons();
             }
         });
     }
 
-//    @Override
-//    public void markAsDirty() {
-//        // TODO Auto-generated method stub
-//
-//    }
-
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
+    }
+
+    @Override
+    public void doAdditionalOkAction() {
+        uniTable.refreshRowCache();
+    }
+
+    @Override
+    public void doAdditionalCancelAction() {
+        uniTable.refreshRowCache();
+    }
+
+    @Override
+    public void obnovFilter() {
+
     }
 }

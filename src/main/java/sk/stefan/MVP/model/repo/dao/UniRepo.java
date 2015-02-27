@@ -1,33 +1,28 @@
 package sk.stefan.MVP.model.repo.dao;
 
-import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.view.helpers.PomDao;
-import sk.stefan.interfaces.MyRepo;
-
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
-import java.sql.ResultSet;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.User;
+import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.view.helpers.PomDao;
+import sk.stefan.interfaces.MyRepo;
 
 public class UniRepo<T> implements MyRepo<T> {
 
     private static final Logger log = Logger.getLogger(UniRepo.class);
     // table name:
     private String TN;
-    private final Class<?> cls;
+    private final Class<?> clsT;
 
     /**
      * Konstruktor:
@@ -35,13 +30,14 @@ public class UniRepo<T> implements MyRepo<T> {
      * @param cls
      */
     public UniRepo(Class<?> cls) {
-        this.cls = cls;
+        this.clsT = cls;
         this.setTN(cls);
     }
 
     /**
      *
      * Nastavi meno DB tabulky.
+     * 
      */
     private void setTN(Class<?> cls) {
 
@@ -55,19 +51,25 @@ public class UniRepo<T> implements MyRepo<T> {
     }
 
     // 1.
+    /**
+     * 
+     * @return 
+     */
     @Override
     public List<T> findAll() {
         try {
             Connection conn = DoDBconn.getConnection();
-            Statement st = conn.createStatement();
+            Statement st;
+            st = conn.createStatement();
 
             String sql = String.format("SELECT * FROM %s", TN);
-            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs;
+            rs = st.executeQuery(sql);
             //log.info("PETER 7: " + rs.getClass().getCanonicalName());
             //log.info("PETER 8:  " + (rs != null));
 
             //JDBC4ResultSet
-            log.info(sql + " DONE!");
+            //log.info(sql + " DONE!");
 
             List<T> listEnt = this.fillListEntity(rs);
 
@@ -77,9 +79,9 @@ public class UniRepo<T> implements MyRepo<T> {
 
             return listEnt;
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            //Notification.show("Chyba, uniRepo::findAll(...)",
-            //        Type.ERROR_MESSAGE);
-            e.printStackTrace();
+            Notification.show("Chyba, uniRepo::findAll(...)",
+                    Type.ERROR_MESSAGE);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
 
@@ -90,13 +92,15 @@ public class UniRepo<T> implements MyRepo<T> {
     public T findOne(Integer id) {
         try {
             Connection conn = DoDBconn.getConnection();
-            Statement st = conn.createStatement();
+            Statement st;
+            st = conn.createStatement();
 
             String sql = String
                     .format("SELECT * FROM %s WHERE id = %d", TN, id);
-            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs;
+            rs = st.executeQuery(sql);
             // Notification.show(sql);
-            System.out.println(sql);
+            log.info(sql);
             T ent = this.fillEntity(rs);
 
             rs.close();
@@ -105,9 +109,9 @@ public class UniRepo<T> implements MyRepo<T> {
 
             return ent;
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-//            Notification.show("Chyba, uniRepo::findOne(...)",
-//                    Type.ERROR_MESSAGE);
-            e.printStackTrace();
+            Notification.show("Chyba, uniRepo::findOne(...)",
+                    Type.ERROR_MESSAGE);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
 
@@ -125,7 +129,8 @@ public class UniRepo<T> implements MyRepo<T> {
 
         try {
             Connection conn = DoDBconn.getConnection();
-            Statement st = conn.createStatement();
+            Statement st;
+            st = conn.createStatement();
 
             // Notification.show("SOM TU!");
             String sql;
@@ -143,7 +148,8 @@ public class UniRepo<T> implements MyRepo<T> {
             // Notification.show(sql);
             System.out.println(sql);
 
-            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs;
+            rs = st.executeQuery(sql);
 
             System.out.println(sql);
             List<T> listEnt = this.fillListEntity(rs);
@@ -155,9 +161,8 @@ public class UniRepo<T> implements MyRepo<T> {
             return listEnt;
 
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            //Notification.show("Chyba, uniRepo::findByParam(...)",
-            //		Type.ERROR_MESSAGE);
-
+            Notification.show("Chyba, uniRepo::findByParam(...)",
+            		Type.ERROR_MESSAGE);
             log.error(e.getMessage());
             return null;
         }
@@ -167,6 +172,8 @@ public class UniRepo<T> implements MyRepo<T> {
     
     // 4.
     /**
+     * @param ent
+     * @return 
      */
     @Override
     public T save(T ent) {
@@ -178,7 +185,7 @@ public class UniRepo<T> implements MyRepo<T> {
             // Map<String, String> mapPar;
             Map<String, Class<?>> mapPar;
 
-            mapPar = PomDao.getTypParametrov(cls);
+            mapPar = PomDao.getTypParametrov(clsT);
 
             String sql, str;
 
@@ -194,7 +201,7 @@ public class UniRepo<T> implements MyRepo<T> {
 
             // kontrola o jakou entitu se jedna (nova/uz pouzita):
             entMetName = "getId";
-            Method entMethod = cls.getDeclaredMethod(entMetName);
+            Method entMethod = clsT.getDeclaredMethod(entMetName);
             if (entMethod.invoke(ent) == null) {
                 novy = true;
             } else {
@@ -219,7 +226,7 @@ public class UniRepo<T> implements MyRepo<T> {
                 zac = false;
 
                 entMetName = PomDao.getG_SetterName(pn, "get");
-                entMethod = cls.getDeclaredMethod(entMetName);
+                entMethod = clsT.getDeclaredMethod(entMetName);
 
                 // pokial je entita nova, tj. este nebola ulozena v DB.:
                 String s = "" + entMethod.invoke(ent);
@@ -238,7 +245,7 @@ public class UniRepo<T> implements MyRepo<T> {
                     insert1.append(pn);
                     insert2.append(s);
                 } else {
-                    update1.append(pn + " = " + s);
+                    update1.append(pn).append(" = ").append(s);
                 }
             }
 
@@ -260,8 +267,8 @@ public class UniRepo<T> implements MyRepo<T> {
             ResultSet rs = st.getGeneratedKeys();
             if (novy && rs.next()) {
                 Integer newId = rs.getInt(1);
-                entMethod = cls.getDeclaredMethod("setId",
-                        new Class[]{Integer.class});
+                entMethod = clsT.getDeclaredMethod("setId",
+                        new Class<?>[]{Integer.class});
                 entMethod.invoke(ent, newId);
                 // ent.setId(newId);
             }
@@ -283,6 +290,10 @@ public class UniRepo<T> implements MyRepo<T> {
     }
 
     // 5.
+    /**
+     * @param ent
+     * @return 
+     */
     @Override
     public boolean delete(T ent) {
         try {
@@ -292,7 +303,7 @@ public class UniRepo<T> implements MyRepo<T> {
             Integer id = null;
 
             if (ent != null) {
-                Method entMethod = cls.getDeclaredMethod("getId");
+                Method entMethod = clsT.getDeclaredMethod("getId");
                 id = (Integer) entMethod.invoke(ent);
             }
 
@@ -301,7 +312,7 @@ public class UniRepo<T> implements MyRepo<T> {
                         id);
                 st.executeUpdate(sql);
                 // Notification.show(sql);
-                System.out.println(sql);
+                log.info(sql);
             }
 
             st.close();
@@ -312,23 +323,26 @@ public class UniRepo<T> implements MyRepo<T> {
         } catch (IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
             Notification
                     .show("Chyba, uniRepo::delete(non SQL exception)", Type.ERROR_MESSAGE);
-            e.printStackTrace();
+            log.error(e.getLocalizedMessage(), e);
             return false;
         } catch (SQLException e) {
-            Notification.show("Chyba, uniRepo::delete(SQL exception)", Type.ERROR_MESSAGE);
-            //Notification.show("Danu entitu nieje mozne zatial vymazat, vymaz dalsie podentity");
-            e.printStackTrace();
+//            Notification.show("Chyba, uniRepo::delete(SQL exception)", Type.ERROR_MESSAGE);
+            Notification.show("Danu entitu nieje mozne zatial vymazat, vymaz dalsie podentity");
+            log.error(e.getLocalizedMessage(), e);
             return false;
         }
 
     }
 
     // funkce na naplneni entity:
+    /**
+     * 
+     */
     private T fillEntity(ResultSet rs) {
 
         //Class<?> rsCls = rs.getClass();
         Class<?> rsCls = ResultSet.class;
-        //log.info("PAVOLKO 0: " + rsCls.getCanonicalName());
+        
 
         
         String entMetName, rsMetName;
@@ -336,8 +350,8 @@ public class UniRepo<T> implements MyRepo<T> {
         Map<String, Class<?>> mapPar;
         try {
             @SuppressWarnings("unchecked")
-            T ent = (T) cls.newInstance();
-            mapPar = PomDao.getTypParametrov(cls);
+            T ent = (T) clsT.newInstance();
+            mapPar = PomDao.getTypParametrov(clsT);
 
             while (rs.next()) {
 
@@ -347,10 +361,10 @@ public class UniRepo<T> implements MyRepo<T> {
                     rsMetName = PomDao.getGettersForResultSet(mapPar.get(pn)
                             .getCanonicalName());
 
-                    Method entMethod = cls.getDeclaredMethod(entMetName,
-                            new Class[]{mapPar.get(pn)});
+                    Method entMethod = clsT.getDeclaredMethod(entMetName,
+                            new Class<?>[]{mapPar.get(pn)});
                     Method rsMethod = rsCls.getDeclaredMethod(rsMetName,
-                            new Class[]{String.class});
+                            new Class<?>[]{String.class});
 
                     entMethod.invoke(ent, rsMethod.invoke(rs, pn));
                 }
@@ -361,62 +375,66 @@ public class UniRepo<T> implements MyRepo<T> {
                 NoSuchFieldException | SecurityException |
                 NoSuchMethodException | IllegalArgumentException |
                 InvocationTargetException | SQLException e) {
-//            Notification.show("Chyba, uniRepo::fillEntity(...)",
-//                    Type.ERROR_MESSAGE);
-            log.error(e.getMessage());
+            Notification.show("Chyba, uniRepo::fillEntity(...)",
+                    Type.ERROR_MESSAGE);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
 
     }
 
     // funkce na seznamu entit:
+    /**
+     *
+     */
     private List<T> fillListEntity(ResultSet rs) {
 
 //        Class<?> rsCls = rs.getClass();
         Class<?> rsCls = ResultSet.class;
-        //log.info("PETER 1: " + rsCls.getCanonicalName());
-
-        List<T> listEnt = new ArrayList<T>();
+ 
+        List<T> listEnt = new ArrayList<>();
         String entMetName, rsMetName;
-        // Map<String, String> mapPar;
         Map<String, Class<?>> mapPar;
 
         try {
-//			@SuppressWarnings("unchecked")
-//			T enta = (T) cls.newInstance();
-            mapPar = PomDao.getTypParametrov(cls);
+            
+            mapPar = PomDao.getTypParametrov(clsT);
 
             while (rs.next()) {
                 @SuppressWarnings("unchecked")
-                T ent = (T) cls.newInstance();
+                T ent = (T) clsT.newInstance();
 
                 for (String pn : mapPar.keySet()) {
-                    log.info("ParameterName: " +  mapPar.get(pn).getCanonicalName());
+//                    log.info("ParameterName: " +  mapPar.get(pn).getCanonicalName());
                     
                     entMetName = PomDao.getG_SetterName(pn, "set");
                     rsMetName = PomDao.getGettersForResultSet(mapPar.get(pn)
                             .getCanonicalName());
-                    // System.out.println(entMetName);
-                    Method entMethod = cls.getDeclaredMethod(entMetName, new Class[]{mapPar.get(pn)});
-                    //log.info("PETER: *" + rsMetName + "*");
-                    Method rsMethod = rsCls.getDeclaredMethod(rsMetName, new Class[]{String.class});
+                    Method entMethod = clsT.getDeclaredMethod(entMetName, new Class<?>[]{mapPar.get(pn)});
+                    Method rsMethod;
+                    rsMethod = rsCls.getDeclaredMethod(rsMetName, new Class<?>[]{String.class});
 
                     entMethod.invoke(ent, rsMethod.invoke(rs, pn));
                 }
-                // Class c = Class.forName("MVP.model.entity.dao.VoteOfRole");
 
                 listEnt.add(ent);
             }
 
             return listEnt;
         } catch (InstantiationException | IllegalAccessException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException | SQLException e) {
-            //Notification.show("Chyba, uniRepo, fillListEntity(ResultSet rs)",
-            //		Type.ERROR_MESSAGE);
-            e.printStackTrace();
+            Notification.show("Chyba, uniRepo, fillListEntity(ResultSet rs)",
+            		Type.ERROR_MESSAGE);
+            log.error(e.getLocalizedMessage(), e);
             return null;
         }
     }
 
+    /**
+     * 
+     * @param entFrom
+     * @param entTo
+     * @return 
+     */
     @Override
     public boolean copy(T entFrom, T entTo) {
         try {
@@ -427,16 +445,16 @@ public class UniRepo<T> implements MyRepo<T> {
             String fromMetName, toMetName;
             Map<String, Class<?>> mapPar;
 
-            mapPar = PomDao.getTypParametrov(cls);
+            mapPar = PomDao.getTypParametrov(clsT);
 
             for (String pn : mapPar.keySet()) {
 
                 fromMetName = PomDao.getG_SetterName(pn, "get");
                 toMetName = PomDao.getG_SetterName(pn, "set");
 
-                Method fromMethod = cls.getDeclaredMethod(fromMetName);
-                Method toMethod = cls.getDeclaredMethod(toMetName,
-                        new Class[]{mapPar.get(pn)});
+                Method fromMethod = clsT.getDeclaredMethod(fromMetName);
+                Method toMethod = clsT.getDeclaredMethod(toMetName,
+                        new Class<?>[]{mapPar.get(pn)});
 
                 toMethod.invoke(entTo, fromMethod.invoke(entFrom));
             }
@@ -444,7 +462,7 @@ public class UniRepo<T> implements MyRepo<T> {
 
         } catch (IllegalAccessException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
             Notification.show("Chyba, uniRepo, copy(...)", Type.ERROR_MESSAGE);
-            e.printStackTrace();
+            log.error(e.getLocalizedMessage(), e);
             return false;
         }
     }
@@ -474,7 +492,7 @@ public class UniRepo<T> implements MyRepo<T> {
             }
 
             // Notification.show(sql);
-            log.info("UPDATEPARAM, SQL: *" + sql + "*");
+            //log.info("UPDATEPARAM, SQL: *" + sql + "*");
 
             int i = st.executeUpdate(sql);
             //st.execute(sql);
@@ -484,9 +502,9 @@ public class UniRepo<T> implements MyRepo<T> {
             DoDBconn.releaseConnection(conn);
         
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            //Notification.show("Chyba, uniRepo::findByParam(...)",
-            //		Type.ERROR_MESSAGE);
-            log.error(e.getMessage());
+            Notification.show("Chyba, uniRepo::findByParam(...)",
+            		Type.ERROR_MESSAGE);
+            log.error(e.getLocalizedMessage(), e);
         } finally {
             
         }

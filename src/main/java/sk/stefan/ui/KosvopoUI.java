@@ -6,8 +6,19 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import javax.servlet.annotation.WebServlet;
-import sk.stefan.MVP.model.entity.dao.Kraj;
+import sk.stefan.MVP.model.entity.dao.*;
+import sk.stefan.MVP.model.entity.dao.PersonClassification;
+import sk.stefan.MVP.model.entity.dao.PublicPerson;
+import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.entity.dao.Role;
+import sk.stefan.MVP.model.entity.dao.Subject;
+import sk.stefan.MVP.model.entity.dao.Tenure;
+import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.User;
+import sk.stefan.MVP.model.entity.dao.UserRole;
+import sk.stefan.MVP.model.entity.dao.Vote;
+import sk.stefan.MVP.model.entity.dao.VoteClassification;
+import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.view.AddressbookView;
 import sk.stefan.MVP.view.FilaManagerView;
 import sk.stefan.MVP.view.HomoView;
@@ -43,9 +54,24 @@ public class KosvopoUI extends UI {
         navigator.addView("vstupny", new VstupniView());
         //navigator.addView("druhy", new DruhyView(navigator));
         navigator.addView("homo", new HomoView());
+
         navigator.addView("user", new UniEditableTableView<>(User.class, NonEditableFields.A_USER.getNonEditableParams()));
-        navigator.addView("okres", new UniEditableTableView<>(Kraj.class, NonEditableFields.KRAJ.getNonEditableParams()));
-        
+        navigator.addView("okres", new UniEditableTableView<>(Okres.class, NonEditableFields.OKRES.getNonEditableParams()));
+        navigator.addView("kraj", new UniEditableTableView<>(Kraj.class, NonEditableFields.KRAJ.getNonEditableParams()));
+        navigator.addView("location", new UniEditableTableView<>(Location.class, NonEditableFields.LOCATION.getNonEditableParams()));
+        navigator.addView("per_class", new UniEditableTableView<>(PersonClassification.class, NonEditableFields.PERSON_CLASS.getNonEditableParams()));
+        navigator.addView("pub_body", new UniEditableTableView<>(PublicBody.class, NonEditableFields.PUBLIC_BODY.getNonEditableParams()));
+        navigator.addView("pub_person", new UniEditableTableView<>(PublicPerson.class, NonEditableFields.PUBLIC_PERSON.getNonEditableParams()));
+        navigator.addView("pub_role", new UniEditableTableView<>(PublicRole.class, NonEditableFields.PUBLIC_ROLE.getNonEditableParams()));
+        navigator.addView("role", new UniEditableTableView<>(Role.class, NonEditableFields.A_ROLE.getNonEditableParams()));
+        navigator.addView("subject", new UniEditableTableView<>(Subject.class, NonEditableFields.SUBJECT.getNonEditableParams()));
+        navigator.addView("tenure", new UniEditableTableView<>(Tenure.class, NonEditableFields.TENURE.getNonEditableParams()));
+        navigator.addView("theme", new UniEditableTableView<>(Theme.class, NonEditableFields.THEME.getNonEditableParams()));
+        navigator.addView("user_role", new UniEditableTableView<>(UserRole.class, NonEditableFields.A_USER_ROLE.getNonEditableParams()));
+        navigator.addView("vote", new UniEditableTableView<>(Vote.class, NonEditableFields.VOTE.getNonEditableParams()));
+        navigator.addView("vote_class", new UniEditableTableView<>(VoteClassification.class, NonEditableFields.VOTE_CLASS.getNonEditableParams()));
+        navigator.addView("vote_of_role", new UniEditableTableView<>(VoteOfRole.class, NonEditableFields.VOTE_OF_ROLE.getNonEditableParams()));
+
         navigator.addView("addressbook", new AddressbookView());
         navigator.addView("filamanager", new FilaManagerView());
         //navigator.addView("kos1", new Kos1View(navigator));
@@ -59,10 +85,9 @@ public class KosvopoUI extends UI {
 //        navigator.addView("page1", new Page1(navigator));
 //        navigator.addView("page2", new Page2(navigator));
 //        navigator.addView("welcome", new Welcome(navigator));
-        
+
         //navigator.navigateTo("login");
         navigator.navigateTo("vstupny");
-        
 
     }
 

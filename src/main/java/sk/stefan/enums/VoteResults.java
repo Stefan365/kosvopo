@@ -8,13 +8,13 @@ import java.util.List;
  *
  * @author stefan
  */
-public enum TaskRepetitions {
+public enum VoteResults {
 
-    NONE("žádné"), WEEKLY("týdně"), MONTHLY("měsíčně");
+    APPROVED("Schválené"), DISSALLOWED("zamietnuté");
 
     public String name;
 
-    TaskRepetitions(String name) {
+    VoteResults(String name) {
         this.name = name;
     }
 
@@ -29,7 +29,7 @@ public enum TaskRepetitions {
     public static List<String> getPeriodsNames() {
         List<String> list = new ArrayList<>();
 
-        for (TaskRepetitions r : TaskRepetitions.values()) {
+        for (VoteResults r : VoteResults.values()) {
             list.add(r.getName());
         }
         return list;
@@ -41,7 +41,7 @@ public enum TaskRepetitions {
      */
     public static List<Integer> getOrdinals() {
         List<Integer> list = new ArrayList<>();
-        for (TaskRepetitions r : TaskRepetitions.values()) {
+        for (VoteResults r : VoteResults.values()) {
             list.add(r.ordinal());
         }
         return list;

@@ -5,11 +5,12 @@ import sk.stefan.interfaces.PresentationName;
 import java.util.Date;
 
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.enums.VoteResults;
 
 public class Vote implements PresentationName {
 
     public static final String TN = "T_Vote";
-    
+
     public static final String CLASS_PRESENTATION_NAME = "Hlasovanie";
 
     private Integer id;
@@ -22,7 +23,7 @@ public class Vote implements PresentationName {
 
     private String internal_nr;
 
-    private String result_vote;
+    private VoteResults result_vote;
 
     private Integer for_vote;
 
@@ -55,7 +56,7 @@ public class Vote implements PresentationName {
         return this.internal_nr;
     }
 
-    public String getResult_vote() {
+    public VoteResults getResult_vote() {
         return this.result_vote;
     }
 
@@ -104,7 +105,7 @@ public class Vote implements PresentationName {
         this.internal_nr = inr;
     }
 
-    public void setResult_vote(String rv) {
+    public void setResult_vote(VoteResults rv) {
         this.result_vote = rv;
     }
 

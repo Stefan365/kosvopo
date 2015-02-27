@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.apache.log4j.Logger;
-import sk.stefan.enums.TaskRepetitions;
+import sk.stefan.enums.VoteResults;
 import sk.stefan.enums.TaskWarnings;
 
 /**
@@ -35,7 +35,7 @@ public class Task {
     /**
      * opakovani ukolu.
      */
-    private TaskRepetitions repetition_period; //"none", "weekly", "monthly"
+    private VoteResults repetition_period; //"none", "weekly", "monthly"
 
     /**
      * doba pred terminem/dobou opakovani ukolu, kdy dojde uzivateli upozorneni
@@ -97,11 +97,11 @@ public class Task {
         this.id_tcy = id_tcy;
     }
 
-    public TaskRepetitions getRepetition_period() {
+    public VoteResults getRepetition_period() {
         return repetition_period;
     }
 
-    public void setRepetition_period(TaskRepetitions repetition_period) {
+    public void setRepetition_period(VoteResults repetition_period) {
         this.repetition_period = repetition_period;
     }
 
@@ -193,10 +193,10 @@ public class Task {
 
         // pro periodicke ulohy je treba nalezt termin nejblize aktualnimu casu
         switch (this.getRepetition_period()) {
-            case WEEKLY:
+            case APPROVED:
                 hotTime = calcHotTimeByMillisPeriod(hotTime, nowTime, week);
                 break;
-            case MONTHLY:
+            case DISSALLOWED:
                 hotTime = calcHotTimeByMonthPeriod(hotTime);
                 break;
         }

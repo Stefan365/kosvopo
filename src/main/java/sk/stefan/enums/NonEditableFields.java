@@ -39,35 +39,51 @@ public enum NonEditableFields {
             case KRAJ:
                 return new String[]{};
             case LOCATION:
-                return new String[]{"visible"};
+                //return new String[]{"visible"};
+                return new String[]{};
+                
             case OKRES:
-                return new String[]{"visible"};
+                //return new String[]{"visible"};
+                return new String[]{};
+                
             case PERSON_CLASS:
-                return new String[]{"visible"};
+                return new String[]{};
+                //return new String[]{"visible"};
             case PUBLIC_BODY:
-                return new String[]{"visible"};
+                return new String[]{};
+                //return new String[]{"visible"};
             case PUBLIC_PERSON:
-                return new String[]{"visible"};
+                return new String[]{};
+                //return new String[]{"visible"};
             case PUBLIC_ROLE:
-                return new String[]{"visible"};
+                return new String[]{};
+                //return new String[]{"visible"};
             case SUBJECT:
-                return new String[]{"visible"};
+                return new String[]{};
+                //return new String[]{"visible"};
             case TENURE:
-                return new String[]{"visible"};
+                return new String[]{};
+                //return new String[]{"visible"};
             case THEME:
-                return new String[]{"visible"};
+                return new String[]{};
+                //return new String[]{"visible"};
             case VOTE:
-                return new String[]{"visible", "link"};
+                return new String[]{};
+                //return new String[]{"visible", "link"};
             case VOTE_CLASS:
-                return new String[]{"visible"};
+                return new String[]{};
+                //return new String[]{"visible"};
             case VOTE_OF_ROLE:
-                return new String[]{"visible"};
+                return new String[]{};
+                //return new String[]{"visible"};
             case A_USER:
-                return new String[]{"password"};
+                //return new String[]{"password"};
+                return new String[]{};
             case A_ROLE:
                 return new String[]{};
             case A_USER_ROLE:
-                return new String[]{"since", "till"};
+                return new String[]{};
+                //return new String[]{"since", "till"};
             default:
                 return null;
         }

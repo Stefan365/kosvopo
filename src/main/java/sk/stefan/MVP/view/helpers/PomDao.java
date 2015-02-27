@@ -107,6 +107,9 @@ public class PomDao {
                 case "java.lang.Byte[]":
                     sb.append("Bytes");
                     break;
+                case "sk.stefan.enums.VoteResults":
+                    sb.append("Int");
+                    break;
                 default:
                     String fields[] = typ.split("\\.");
                     sb.append(fields[fields.length - 1]);

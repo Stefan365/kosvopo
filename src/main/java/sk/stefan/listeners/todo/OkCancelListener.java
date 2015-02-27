@@ -16,5 +16,5 @@ public interface OkCancelListener {
 
 	public void doAdditionalCancelAction();
     
-    public void obnovFilter();
+        public void obnovFilter();
 }
