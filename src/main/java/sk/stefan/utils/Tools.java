@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view.helpers;
+package sk.stefan.utils;
 
 import com.vaadin.data.Item;
 import com.vaadin.event.LayoutEvents;
@@ -173,6 +173,10 @@ public class Tools {
 
     /**
      * Vytvori standardizovany formular
+     * @param caption
+     * @param light
+     * @param components
+     * @return 
      */
     public static FormLayout createFormLayout(String caption, boolean light,
             Component... components) {
@@ -190,6 +194,8 @@ public class Tools {
 
     /**
      * Vytvori hlavni nadpis
+     * @param caption
+     * @return 
      */
     public static Label createPanelCaption(String caption) {
         Label la = new Label(caption);

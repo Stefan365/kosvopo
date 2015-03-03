@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.MVP.view.dialogs.todo;
+package sk.stefan.MVP.view.components;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import sk.stefan.MVP.model.entity.dao.todo.Task;
-import sk.stefan.MVP.view.components.todo.InputFormLayout;
+import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.listeners.RenewBackgroundListener;
-import sk.stefan.listeners.todo.OkCancelListener;
+import sk.stefan.listeners.OkCancelListener;
 
 /**
  * Dialog pro editaci vlastnosti jedne ulohy

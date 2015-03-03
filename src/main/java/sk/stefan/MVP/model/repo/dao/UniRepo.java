@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.view.helpers.PomDao;
+import sk.stefan.utils.PomDao;
+import sk.stefan.enums.VoteResults;
 import sk.stefan.interfaces.MyRepo;
 
 public class UniRepo<T> implements MyRepo<T> {
@@ -414,14 +415,31 @@ public class UniRepo<T> implements MyRepo<T> {
                     Method rsMethod;
                     rsMethod = rsCls.getDeclaredMethod(rsMetName, new Class<?>[]{String.class});
 
-                    entMethod.invoke(ent, rsMethod.invoke(rs, pn));
+//                    log.info("KYRYLENKO 1: " + rsMetName);
+//                    log.info("KYRYLENKO 2: " + clsT.getCanonicalName());
+//                    log.info("KYRYLENKO 3: " + pn);
+//                    log.info("KYRYLENKO 4: " + entMetName);
+                    
+                    
+                    if("getShort".equals(rsMetName)){
+                        
+                        //entMethod.invoke(ent, rsMethod.invoke(rs, pn));
+                        entMethod.invoke(ent, VoteResults.values()[(Short)rsMethod.invoke(rs, pn)]);
+                        
+                    } else {
+                        entMethod.invoke(ent, rsMethod.invoke(rs, pn));
+                    }
+                    
+                    
                 }
 
                 listEnt.add(ent);
             }
 
             return listEnt;
-        } catch (InstantiationException | IllegalAccessException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException | SQLException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchFieldException | 
+                SecurityException | NoSuchMethodException | IllegalArgumentException | 
+                InvocationTargetException | SQLException e) {
             Notification.show("Chyba, uniRepo, fillListEntity(ResultSet rs)",
             		Type.ERROR_MESSAGE);
             log.error(e.getLocalizedMessage(), e);

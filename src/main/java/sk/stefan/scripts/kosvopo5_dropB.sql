@@ -1,5 +1,5 @@
 -- 15.
-DROP TABLE t_act_classification;
+DROP TABLE t_vote_classification;
 -- 14.
 DROP TABLE t_vote_of_role;
 -- 13. VOTE
@@ -22,16 +22,20 @@ DROP TABLE t_kraj;
 DROP TABLE t_person_classification;
 -- 6.
 DROP TABLE t_public_person;
+-- 6.B
+DROP TABLE t_public_person2;
+
+
 -- 5.
 DROP TABLE t_tenure;
 -- 4.
-DROP TABLE t_change;
+DROP TABLE a_change;
 -- 3.
-DROP TABLE t_user_role; 
+DROP TABLE a_user_role; 
 -- 2.
-DROP TABLE t_role; 
+DROP TABLE a_role; 
 -- 1.
-DROP TABLE t_user; 
+DROP TABLE a_user; 
 
 
 

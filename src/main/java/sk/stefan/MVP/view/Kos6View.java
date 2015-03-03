@@ -1,10 +1,10 @@
 package sk.stefan.MVP.view;
 
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.helpers.ImageUploader;
-import sk.stefan.MVP.view.helpers.ImageUploaderA;
-import sk.stefan.MVP.view.helpers.MyImageSource;
-import sk.stefan.MVP.view.helpers.Take5;
+import sk.stefan.utils.ImageUploader;
+import sk.stefan.utils.ImageUploaderA;
+import sk.stefan.utils.MyImageSource;
+import sk.stefan.utils.Take5;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;

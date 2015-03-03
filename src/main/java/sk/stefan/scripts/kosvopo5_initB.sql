@@ -1,33 +1,32 @@
-ALTER DATABASE `kosvopo9` COLLATE utf8_general_ci;
 
 
 -- 1.
-INSERT INTO t_user (first_name, last_name, e_mail, login, password)
+INSERT INTO a_user (first_name, last_name, e_mail, login, password)
 VALUES ('Peter', 'Sarkoci', 'peter.sarkoci@gmail.com', 'petak', 'petak');
-INSERT INTO t_user (first_name, last_name, e_mail, login, password)
+INSERT INTO a_user (first_name, last_name, e_mail, login, password)
 VALUES ('Štefan', 'Vereš', 'stefan.veres@gmail.com', 'stefan63', 'stefan63');
-INSERT INTO t_user (first_name, last_name, e_mail, login, password)
+INSERT INTO a_user (first_name, last_name, e_mail, login, password)
 VALUES ('Miro', 'Sčibrányi', 'miro.scibranyi@gmail.com', 'mito108', 'miro108');
 COMMIT; 
 
 
 -- 2.
-INSERT INTO t_role (role_name, rights_description)
+INSERT INTO a_role (role_name, rights_description)
 VALUES ('ADMIN', 'všetky práva, vrátane práv na priamy zásah do databázy');
-INSERT INTO t_role (role_name, rights_description)
+INSERT INTO a_role (role_name, rights_description)
 VALUES ('HELP_ADMIN', 'všetky práva (vkladanie nových entít, ...), okrem priameho vstupu do databázy');
-INSERT INTO t_role (role_name, rights_description)
+INSERT INTO a_role (role_name, rights_description)
 VALUES ('JUDGE', 'má právo dávať posudky a vkladať objasňujúce komentáre, + vkladanie domumentov');
-INSERT INTO t_role (role_name, rights_description)
+INSERT INTO a_role (role_name, rights_description)
 VALUES ('HELPER', 'práva aktivistu, tj. môže vkladať dokumenty');
 COMMIT; 
 
 -- 3.
-INSERT INTO t_user_role (role_id, user_id, since, till)
+INSERT INTO a_user_role (role_id, user_id, since, till)
 VALUES (1, 1, NOW(), null);
-INSERT INTO t_user_role (role_id, user_id, since, till)
+INSERT INTO a_user_role (role_id, user_id, since, till)
 VALUES (1, 2, NOW(), null);
-INSERT INTO t_user_role (role_id, user_id, since, till)
+INSERT INTO a_user_role (role_id, user_id, since, till)
 VALUES (3, 3, NOW(), null);
 COMMIT; 
 
@@ -57,6 +56,19 @@ VALUES ('Luboš', 'Jozefíny', '1954-12-21');
 INSERT INTO t_public_person(first_name, last_name, date_of_birth)
 VALUES ('Alex', 'Spevák', '1979-09-01');
 INSERT INTO t_public_person(first_name, last_name, date_of_birth)
+VALUES ('Emil', 'Čútora', '1967-04-01');
+COMMIT; 
+
+-- 6.B
+INSERT INTO t_public_person2(first_name, last_name, date_of_birth)
+VALUES ('Johan', 'Procházka', '1956-09-11');
+INSERT INTO t_public_person2(first_name, last_name, date_of_birth)
+VALUES ('Karol', 'Čútora', '1966-05-13');
+INSERT INTO t_public_person2(first_name, last_name, date_of_birth)
+VALUES ('Luboš', 'Jozefíny', '1954-12-21');
+INSERT INTO t_public_person2(first_name, last_name, date_of_birth)
+VALUES ('Alex', 'Spevák', '1979-09-01');
+INSERT INTO t_public_person2(first_name, last_name, date_of_birth)
 VALUES ('Emil', 'Čútora', '1967-04-01');
 COMMIT; 
 
@@ -155,16 +167,16 @@ COMMIT;
 -- 13. VOTE
 INSERT INTO t_vote(vote_date, public_body_id, subject_id, internal_nr, result_vote, 
             for_vote, against_vote, refrain_vote, absent, link)			
-VALUES (NOW(), 5, 1, '957-AC','schválené', 4, 0, 1, 0, null);
+VALUES (NOW(), 5, 1, '957-AC',1, 4, 0, 1, 0, null);
 INSERT INTO t_vote(vote_date, public_body_id, subject_id, internal_nr, result_vote, 
             for_vote, against_vote, refrain_vote, absent, link)			
-VALUES (NOW(), 5, 2, '958-AC','schválené', 3, 0, 2, 0, null);
+VALUES (NOW(), 5, 2, '958-AC',1, 3, 0, 2, 0, null);
 INSERT INTO t_vote(vote_date, public_body_id, subject_id, internal_nr, result_vote, 
 			for_vote, against_vote, refrain_vote, absent, link)			
-VALUES (NOW(), 5, 2, '959-AC','zamietnuté', 1, 4, 0, 0, null);
+VALUES (NOW(), 5, 2, '959-AC',1, 1, 4, 0, 0, null);
 INSERT INTO t_vote(vote_date, public_body_id, subject_id, internal_nr, result_vote, 
             for_vote, against_vote, refrain_vote, absent, link)			
-VALUES (NOW(), 5, 4, '963-AC','schválené', 3, 2, 0, 0, null);
+VALUES (NOW(), 5, 4, '963-AC',1, 3, 2, 0, 0, null);
 COMMIT;
 
 
@@ -196,21 +208,16 @@ COMMIT;
 
 
 -- 15.
-INSERT INTO t_act_classification(vote_of_role_id, subject_id, zhoda_s_programom, public_malignity, link)
-VALUES (11, null, 0, 9, null);
-INSERT INTO t_act_classification(vote_of_role_id, subject_id, zhoda_s_programom, public_malignity, link)
-VALUES (5, null, 3, 7, null);
-INSERT INTO t_act_classification(vote_of_role_id, subject_id, zhoda_s_programom, public_malignity, link)
-VALUES (9, null, 3, 6, null);
-INSERT INTO t_act_classification(vote_of_role_id, subject_id, zhoda_s_programom, public_malignity, link)
-VALUES (10, null, 3, 6, null);
-INSERT INTO t_act_classification(vote_of_role_id, subject_id, zhoda_s_programom, public_malignity, link)
-VALUES (16, null, 2, 9, null);
-INSERT INTO t_act_classification(vote_of_role_id, subject_id, zhoda_s_programom, public_malignity, link)
-VALUES (17, null, 2, 9, null);
-INSERT INTO t_act_classification(vote_of_role_id, subject_id, zhoda_s_programom, public_malignity, link)
-VALUES (18, null, 2, 9, null);
-INSERT INTO t_act_classification(vote_of_role_id, subject_id, zhoda_s_programom, public_malignity, link)
-VALUES (null, 4, 2, 9, null);
+INSERT INTO t_vote_classification(vote_id, public_malignity, brief_description)
+VALUES (1, 9, 'uplne na picu hlasovanie, akodlive jak das');
+
+INSERT INTO t_vote_classification(vote_id, public_malignity, brief_description)
+VALUES (2, 0, 'hlasovanie naozaj v zaujme obcanov');
+
+INSERT INTO t_vote_classification(vote_id, public_malignity, brief_description)
+VALUES (3, 5, 'nieco medzi, asi v tom bude tunel, nicmene stale je to prospesne verejnosti');
+
+INSERT INTO t_vote_classification(vote_id, public_malignity, brief_description)
+VALUES (4, 3, 'nieco medzi, asi v tom bude tunel, nicmene stale je to prospesne verejnosti');
 
 COMMIT;

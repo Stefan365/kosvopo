@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import sk.stefan.MVP.view.converters.MyBooleanConverter;
-import sk.stefan.MVP.view.helpers.PomDao;
+import sk.stefan.utils.PomDao;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;

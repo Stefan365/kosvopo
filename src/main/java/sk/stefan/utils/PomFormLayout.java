@@ -1,5 +1,6 @@
-package sk.stefan.MVP.view.helpers;
+package sk.stefan.utils;
 
+import sk.stefan.utils.PomDao;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

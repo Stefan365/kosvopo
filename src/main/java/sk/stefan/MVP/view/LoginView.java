@@ -20,7 +20,7 @@ import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.UserServiceImpl;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.helpers.Tools;
+import sk.stefan.utils.Tools;
 
 /**
  * Třída komponenty pro přihlášení do systému

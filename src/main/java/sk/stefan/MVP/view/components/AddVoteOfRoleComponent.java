@@ -4,8 +4,8 @@ import java.util.List;
 
 import sk.stefan.listeners.GeneralComponentListener;
 import sk.stefan.enums.NamesOfVoteDecisions;
-import sk.stefan.MVP.view.helpers.PomT;
-import sk.stefan.MVP.view.helpers.PomVaadin;
+import sk.stefan.utils.PomT;
+import sk.stefan.utils.PomVaadin;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
@@ -26,320 +26,320 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
 public class AddVoteOfRoleComponent extends VerticalLayout implements
-		GeneralComponentListener {
+        GeneralComponentListener {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3659971359822685378L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3659971359822685378L;
 
-	// repositories:
-	private UniRepo<VoteOfRole> vorRepo;
+    // repositories:
+    private UniRepo<VoteOfRole> vorRepo;
 
-	// services:
-	private VoteService voteService;
-	private PublicRoleService publicRoleService;
+    // services:
+    private VoteService voteService;
+    private PublicRoleService publicRoleService;
 
-	// zoznamy, na ktore su napojene vyberove komboboxy:
-	private List<PublicRole> lpr;
-	private List<Vote> lvot;
-	private List<String> ldec;
+    // zoznamy, na ktore su napojene vyberove komboboxy:
+    private List<PublicRole> lpr;
+    private List<Vote> lvot;
+    private List<String> ldec;
 
-	// entity:
-	private PublicPerson pp;
-	private PublicRole pr;
-	private Vote vo;
-	private VoteOfRole vor;
-	private String dec;
+    // entity:
+    private PublicPerson pp;
+    private PublicRole pr;
+    private Vote vo;
+    private VoteOfRole vor;
+    private String dec;
 
-	// komponenty:
-	private ComboBox publicRoleCB, voteCB, decisionCB;
-	private Button saveBT, editBT, doneBT;
-	private HorizontalLayout buttonLY;
-	private CheckBox historyCHB;
+    // komponenty:
+    private ComboBox publicRoleCB, voteCB, decisionCB;
+    private Button saveBT, editBT, doneBT;
+    private HorizontalLayout buttonLY;
+    private CheckBox historyCHB;
 
-	/**
-	 * Konstruktor
-	 * 
-	 * 
-	 */
-	public AddVoteOfRoleComponent(PublicPerson pp) {
-		this.pp = pp;
-		vor = new VoteOfRole();
+    /**
+     * Konstruktor
+     *
+     *
+     */
+    public AddVoteOfRoleComponent(PublicPerson pp) {
+        this.pp = pp;
+        vor = new VoteOfRole();
 
-		this.initComponent();
-		this.initButtonsListeners();
-		this.initCombosListeners();
+        this.initComponent();
+        this.initButtonsListeners();
+        this.initCombosListeners();
 
-		this.setCombosDataSouces();
-		this.initCheckBox();
+        this.setCombosDataSouces();
+        this.initCheckBox();
 
-		this.setMargin(true);
-		this.setSpacing(true);
+        this.setMargin(true);
+        this.setSpacing(true);
 
-	}
+    }
 
-	public void setPoslanec(PublicPerson pp) {
-		this.pp = pp;
-		this.setComboPublicRole(pp);
-		this.setComboVote(null);
-	}
+    public void setPoslanec(PublicPerson pp) {
+        this.pp = pp;
+        this.setComboPublicRole(pp);
+        this.setComboVote(null);
+    }
 
-	public void initComponent() {
+    public void initComponent() {
 
-		vorRepo = new UniRepo<VoteOfRole>(VoteOfRole.class);
-		voteService = new VoteService();
-		publicRoleService = new PublicRoleService();
+        vorRepo = new UniRepo<VoteOfRole>(VoteOfRole.class);
+        voteService = new VoteService();
+        publicRoleService = new PublicRoleService();
 
-		publicRoleCB = new ComboBox("Verejná rola");
-		voteCB = new ComboBox("Hlasovania");
-		decisionCB = new ComboBox("Rozhodnutie");
+        publicRoleCB = new ComboBox("Verejná rola");
+        voteCB = new ComboBox("Hlasovania");
+        decisionCB = new ComboBox("Rozhodnutie");
 
-		historyCHB = new CheckBox("História", false);
+        historyCHB = new CheckBox("História", false);
 
-		PomT.doladSelectList(publicRoleCB);
-		PomT.doladSelectList(voteCB);
-		PomT.doladSelectList(decisionCB);
+        PomT.doladSelectList(publicRoleCB);
+        PomT.doladSelectList(voteCB);
+        PomT.doladSelectList(decisionCB);
 
-		// lista s tlacitkami:
-		buttonLY = new HorizontalLayout();
-		// buttonLY.setMargin(true);
-		buttonLY.setSpacing(true);
+        // lista s tlacitkami:
+        buttonLY = new HorizontalLayout();
+        // buttonLY.setMargin(true);
+        buttonLY.setSpacing(true);
 
-		saveBT = new Button("save");
-		editBT = new Button("edit");
-		doneBT = new Button("done");
+        saveBT = new Button("save");
+        editBT = new Button("edit");
+        doneBT = new Button("done");
 
-		editBT.setEnabled(false);
+        editBT.setEnabled(false);
 
-		this.setMargin(true);
-		this.setSpacing(true);
+        this.setMargin(true);
+        this.setSpacing(true);
 
-		// skladanie dohromady:
-		this.addComponent(publicRoleCB);
-		this.addComponent(voteCB);
-		this.addComponent(decisionCB);
-		this.addComponent(historyCHB);
+        // skladanie dohromady:
+        this.addComponent(publicRoleCB);
+        this.addComponent(voteCB);
+        this.addComponent(decisionCB);
+        this.addComponent(historyCHB);
 
-		buttonLY.addComponent(saveBT);
-		buttonLY.addComponent(editBT);
-		buttonLY.addComponent(doneBT);
-		this.addComponent(buttonLY);
+        buttonLY.addComponent(saveBT);
+        buttonLY.addComponent(editBT);
+        buttonLY.addComponent(doneBT);
+        this.addComponent(buttonLY);
 
-	}
+    }
 
-	// 1.
-	/**
-	 * 
-	 * Initializes buttons properties.
-	 * 
-	 */
-	private void initButtonsListeners() {
+    // 1.
+    /**
+     *
+     * Initializes buttons properties.
+     *
+     */
+    private void initButtonsListeners() {
 
-		saveBT.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				doSave();
-			}
-		});
+        saveBT.addClickListener(new Button.ClickListener() {
+            public void buttonClick(ClickEvent event) {
+                doSave();
+            }
+        });
 
-		editBT.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				enableSave(true);
-			}
-		});
+        editBT.addClickListener(new Button.ClickListener() {
+            public void buttonClick(ClickEvent event) {
+                enableSave(true);
+            }
+        });
 
-		doneBT.addClickListener(new Button.ClickListener() {
+        doneBT.addClickListener(new Button.ClickListener() {
 
-			public void buttonClick(ClickEvent event) {
-				if (vor == null || vor.getId() != null && editBT.isEnabled()) {
-					enableSave(true);
-					setVisible(false);
-				} else {
-					final YesNoWindow_old window = new YesNoWindow_old("Upozornenie",
-							"Chcete uložiť zmeny?",
-							(GeneralComponentListener) event.getButton()
-									.getParent().getParent());
-					UI.getCurrent().addWindow(window);
-				}
-			}
-		});
-	}
+            public void buttonClick(ClickEvent event) {
+                if (vor == null || vor.getId() != null && editBT.isEnabled()) {
+                    enableSave(true);
+                    setVisible(false);
+                } else {
+                    final YesNoWindow_old window = new YesNoWindow_old("Upozornenie",
+                            "Chcete uložiť zmeny?",
+                            (GeneralComponentListener) event.getButton()
+                            .getParent().getParent());
+                    UI.getCurrent().addWindow(window);
+                }
+            }
+        });
+    }
 
-	// 1.
-	/**
-	 * 
-	 * zaktualizuje entitu VoteOfRole.
-	 * 
-	 */
-	protected void sestavVor() {
+    // 1.
+    /**
+     *
+     * zaktualizuje entitu VoteOfRole.
+     *
+     */
+    protected void sestavVor() {
 
-		pr = (PublicRole) publicRoleCB.getValue();
-		vo = (Vote) voteCB.getValue();
-		dec = (String) decisionCB.getValue();
-		
+        pr = (PublicRole) publicRoleCB.getValue();
+        vo = (Vote) voteCB.getValue();
+        dec = (String) decisionCB.getValue();
+
 		//Notification.show("vor:" + (vor==null));
-		//Notification.show("pr:" + (pr==null));
-		vor = new VoteOfRole();
-		
-		vor.setPublic_role_id(pr.getId());
-		vor.setVote_id(vo.getId());
-		vor.setDecision(dec);
-		vor.setVisible(Boolean.FALSE);
+        //Notification.show("pr:" + (pr==null));
+        vor = new VoteOfRole();
 
-	}
+        vor.setPublic_role_id(pr.getId());
+        vor.setVote_id(vo.getId());
+        vor.setDecision(dec);
+        vor.setVisible(Boolean.FALSE);
 
-	// 2.
-	/**
-	 * 
-	 * enable/ disable komponenty vzhladom na tlacitko save.
-	 * 
-	 */
-	private void enableSave(boolean enab) {
+    }
 
-		publicRoleCB.setEnabled(enab);
-		voteCB.setEnabled(enab);
-		decisionCB.setEnabled(enab);
-		saveBT.setEnabled(enab);
+    // 2.
+    /**
+     *
+     * enable/ disable komponenty vzhladom na tlacitko save.
+     *
+     */
+    private void enableSave(boolean enab) {
 
-		editBT.setEnabled(!enab);
+        publicRoleCB.setEnabled(enab);
+        voteCB.setEnabled(enab);
+        decisionCB.setEnabled(enab);
+        saveBT.setEnabled(enab);
 
-		this.decisionCB.setEnabled(enab);
-		this.voteCB.setEnabled(enab);
-		this.publicRoleCB.setEnabled(enab);
+        editBT.setEnabled(!enab);
 
-	}
+        this.decisionCB.setEnabled(enab);
+        this.voteCB.setEnabled(enab);
+        this.publicRoleCB.setEnabled(enab);
 
-	// 4.
-	/**
-	 * 
-	 * ukladanie s omaslenim.
-	 * 
-	 */
-	public void doSave() {
+    }
 
-		sestavVor();
-		vor = vorRepo.save(vor);
-		enableSave(false);
-		if (vor != null){
-			Notification.show("Hlasovani Verejneho cinitele Uspesne ulozeno!");
-		} else {
-			Notification.show("Ukládanie neprebehlo!");
-		}
+    // 4.
+    /**
+     *
+     * ukladanie s omaslenim.
+     *
+     */
+    public void doSave() {
 
-	}
+        sestavVor();
+        vor = vorRepo.save(vor);
+        enableSave(false);
+        if (vor != null) {
+            Notification.show("Hlasovani Verejneho cinitele Uspesne ulozeno!");
+        } else {
+            Notification.show("Ukládanie neprebehlo!");
+        }
 
-	// 3.
-	/**
-	 * 
-	 * Inicializuje listenery na vsetchych combo boxoch.
-	 * 
-	 */
-	private void initCombosListeners() {
+    }
 
-		publicRoleCB.addValueChangeListener(new ValueChangeListener() {
+    // 3.
+    /**
+     *
+     * Inicializuje listenery na vsetchych combo boxoch.
+     *
+     */
+    private void initCombosListeners() {
 
-			@Override
-			public void valueChange(ValueChangeEvent event) {
+        publicRoleCB.addValueChangeListener(new ValueChangeListener() {
 
-				pr = (PublicRole) event.getProperty().getValue();
-				//Notification.show(pr.getPresentationName());
-				setComboVote(pr);
-			}
-		});
+            @Override
+            public void valueChange(ValueChangeEvent event) {
 
-		voteCB.addValueChangeListener(new ValueChangeListener() {
+                pr = (PublicRole) event.getProperty().getValue();
+                //Notification.show(pr.getPresentationName());
+                setComboVote(pr);
+            }
+        });
 
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				vo = (Vote) event.getProperty().getValue();
-			}
-		});
+        voteCB.addValueChangeListener(new ValueChangeListener() {
 
-		decisionCB.addValueChangeListener(new ValueChangeListener() {
+            @Override
+            public void valueChange(ValueChangeEvent event) {
+                vo = (Vote) event.getProperty().getValue();
+            }
+        });
 
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				dec = (String) event.getProperty().getValue();
-			}
-		});
+        decisionCB.addValueChangeListener(new ValueChangeListener() {
 
-	}
+            @Override
+            public void valueChange(ValueChangeEvent event) {
+                dec = (String) event.getProperty().getValue();
+            }
+        });
 
-	// 5.
-	/**
-	 * 
-	 * I itializes datasource of comboxoes.
-	 * 
-	 */
-	public void setCombosDataSouces() {
+    }
 
-		this.setComboPublicRole(pp);
-		this.setComboVote(pr);
+    // 5.
+    /**
+     *
+     * I itializes datasource of comboxoes.
+     *
+     */
+    public void setCombosDataSouces() {
 
-		// 3. combo: rozhodnutia
-		ldec = NamesOfVoteDecisions.getDecisions();
-		PomVaadin.initComboStr(decisionCB, ldec);
+        this.setComboPublicRole(pp);
+        this.setComboVote(pr);
 
-	}
+        // 3. combo: rozhodnutia
+        ldec = NamesOfVoteDecisions.getDecisions();
+        PomVaadin.initComboStr(decisionCB, ldec);
 
-	/**
-	 * 
-	 */
-	private void setComboPublicRole(PublicPerson pp) {
+    }
+
+    /**
+     *
+     */
+    private void setComboPublicRole(PublicPerson pp) {
 		// 1. combo: PublicRole.
-		// if (pp != null) {
-		if (historyCHB.getValue()) {
-			lpr = publicRoleService.getAllPublicRolesOfPublicPerson(pp);
-		} else {
-			lpr = publicRoleService.getActualPublicRolesOfPublicPerson(pp);
-		}
-		PomVaadin.initCombo(publicRoleCB, lpr);
-	}
-	
-	/**
-	 * 
-	 */
-	private void setComboVote(PublicRole pr) {
+        // if (pp != null) {
+        if (historyCHB.getValue()) {
+            lpr = publicRoleService.getAllPublicRolesOfPublicPerson(pp);
+        } else {
+            lpr = publicRoleService.getActualPublicRolesOfPublicPerson(pp);
+        }
+        PomVaadin.initCombo(publicRoleCB, lpr);
+    }
+
+    /**
+     *
+     */
+    private void setComboVote(PublicRole pr) {
 		// 2. combo: Vote.
-		// if (pr != null) {
-		lvot = voteService.getAllVotesForPublicRole(pr);
+        // if (pr != null) {
+        lvot = voteService.getAllVotesForPublicRole(pr);
 		//Notification.show("VELKOST:" + lvot.size());
-		// }
-		PomVaadin.initCombo(voteCB, lvot);
-	}
+        // }
+        PomVaadin.initCombo(voteCB, lvot);
+    }
 
-	// 7.
-	/**
-	 * 
-	 * Initialised checkbox listener.
-	 * 
-	 */
-	public void initCheckBox() {
+    // 7.
+    /**
+     *
+     * Initialised checkbox listener.
+     *
+     */
+    public void initCheckBox() {
 
-		historyCHB.addValueChangeListener(new ValueChangeListener() {
+        historyCHB.addValueChangeListener(new ValueChangeListener() {
 
-			@Override
-			public void valueChange(final ValueChangeEvent event) {
-				final String valueString = String.valueOf(event.getProperty()
-						.getValue());
+            @Override
+            public void valueChange(final ValueChangeEvent event) {
+                final String valueString = String.valueOf(event.getProperty()
+                        .getValue());
 
-				setComboPublicRole(pp);
-				setComboVote(null);
+                setComboPublicRole(pp);
+                setComboVote(null);
 				// Notification.show("Value changed:", valueString,
-				// Type.TRAY_NOTIFICATION);
-			}
-		});
-	}
+                // Type.TRAY_NOTIFICATION);
+            }
+        });
+    }
 
-	@Override
-	public void doYesAction()  {
-		this.doSave();
-		this.setVisible(false);
+    @Override
+    public void doYesAction() {
+        this.doSave();
+        this.setVisible(false);
 
-	}
+    }
 
-	@Override
-	public void doNoAction() {
-		this.setVisible(false);
-	}
+    @Override
+    public void doNoAction() {
+        this.setVisible(false);
+    }
 }

@@ -1,11 +1,5 @@
-package sk.stefan.MVP.view.helpers;
+package sk.stefan.utils;
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
@@ -47,6 +41,7 @@ public class MyImageSource implements StreamResource.StreamSource {
         drawable.setColor(Color.black);
         drawable.drawString("Reloads=" + reloads, 75, 100);
         reloads++;
+        
         try {
             /* Write the image to a buffer. */
             imagebuffer = new ByteArrayOutputStream();

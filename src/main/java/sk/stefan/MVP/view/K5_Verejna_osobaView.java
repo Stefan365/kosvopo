@@ -11,8 +11,8 @@ import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.VoteOfRoleService;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.YesNoWindow_old;
-import sk.stefan.MVP.view.helpers.PomDao;
-import sk.stefan.MVP.view.helpers.PomFormLayout;
+import sk.stefan.utils.PomDao;
+import sk.stefan.utils.PomFormLayout;
 
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Property;

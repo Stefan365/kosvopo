@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.listeners.todo;
+package sk.stefan.listeners;
 
 /**
  * Pri zmene filtru sa moze stat, ze zasiahne i prave vybranu ulohu (tj. jej

@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view.helpers;
+package sk.stefan.utils;
 
 
 import java.util.Random;

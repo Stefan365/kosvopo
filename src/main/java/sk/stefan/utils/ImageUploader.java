@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view.helpers;
+package sk.stefan.utils;
 
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
@@ -22,20 +22,22 @@ import java.io.OutputStream;
 // Implement both receiver that saves upload in a file and
 // listener for successful upload
 public class ImageUploader implements Receiver, SucceededListener {
+    private static final long serialVersionUID = 1L;
 	
-    public File file;
+    private File file;
     
     final Embedded image = new Embedded("UUU");
     
     
+    @Override
     public OutputStream receiveUpload(String filename,
                                       String mimeType) {
         // Create upload stream
         FileOutputStream fos = null; // Stream to write to
         try {
             // Open the file for writing.: sem sa dany subor uploaduje. tj. napr. na server
-            file = new File("C:\\Users\\User\\Desktop\\kosvopo\\mavenproject2\\"+filename);
-            fos = new FileOutputStream(file);
+            setFile(new File("C:\\Users\\User\\Desktop\\kosvopo\\mavenproject2\\"+filename));
+            fos = new FileOutputStream(getFile());
         } catch (final java.io.FileNotFoundException e) {
             new Notification("Could not open file<br/>",
                              e.getMessage(),
@@ -49,7 +51,21 @@ public class ImageUploader implements Receiver, SucceededListener {
     public void uploadSucceeded(SucceededEvent event) {
         // Show the uploaded file in the image viewer
         image.setVisible(true);
-        image.setSource(new FileResource(file));
+        image.setSource(new FileResource(getFile()));
+    }
+
+    /**
+     * @return the file
+     */
+    public File getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(File file) {
+        this.file = file;
     }
 
    

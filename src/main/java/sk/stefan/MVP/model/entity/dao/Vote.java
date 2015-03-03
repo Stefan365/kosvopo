@@ -60,6 +60,7 @@ public class Vote implements PresentationName {
         return this.result_vote;
     }
 
+    
     public Integer getFor_vote() {
         return this.for_vote;
     }
@@ -108,6 +109,10 @@ public class Vote implements PresentationName {
     public void setResult_vote(VoteResults rv) {
         this.result_vote = rv;
     }
+    
+//    public void setResult_vote(Short rv) {
+//        this.result_vote = VoteResults.values()[rv];
+//    }
 
     public void setFor_vote(Integer fv) {
         this.for_vote = fv;

@@ -3,28 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package sk.stefan.MVP.view.components;
 
-package sk.stefan.MVP.view.components.todo;
-
-
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import sk.stefan.listeners.YesNoWindowListener;
 
 /**
- * Komponenta pro potvrzovací dialog. 
+ * Komponenta pro potvrzovací dialog.
  *
  * @author stefan
- * 
+ *
  */
 public class YesNoWindow extends Window {
+    
+    private static final long serialVersionUID = 1L;
 
-	
-	Button yesBT, noBT;
-	YesNoWindowListener listener;
-	HorizontalLayout buttonLayout;
-	VerticalLayout content;
-	Label msgLB;
-	
+    private final Button yesBt;
+    private final Button noBt;
+    private final YesNoWindowListener listener;
+    private HorizontalLayout buttonLayout;
+    private final VerticalLayout content;
+    private final Label msgLb;
+
     //0.
     /**
      * Konstruktor.
@@ -34,11 +38,11 @@ public class YesNoWindow extends Window {
      * @param listener listener pro akci YES.
      */
     public YesNoWindow(String caption, String message, YesNoWindowListener listener) {
-    	
+
         super(caption);
-        
-    	this.listener = listener;
-    	
+
+        this.listener = listener;
+
         content = new VerticalLayout();
         this.setContent(content);
         content.setWidth(450, Unit.PIXELS);
@@ -47,40 +51,43 @@ public class YesNoWindow extends Window {
         setModal(true);
 
         buttonLayout = new HorizontalLayout();
-        msgLB = new Label(message);
-        content.addComponent(msgLB);
+        msgLb = new Label(message);
+        content.addComponent(msgLb);
 
         buttonLayout = new HorizontalLayout();
         content.addComponent(buttonLayout);
         buttonLayout.setSpacing(true);
-        
-        yesBT = new Button("Ano");
-        buttonLayout.addComponent(yesBT);
-        
-        yesBT.addClickListener(new Button.ClickListener() {
+
+        yesBt = new Button("Ano");
+        buttonLayout.addComponent(yesBt);
+
+        yesBt.addClickListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 onYes(event);
             }
         });
-        
-        noBT = new Button("Ne");
-        buttonLayout.addComponent(noBT);
-        noBT.addClickListener(new Button.ClickListener() {
+
+        noBt = new Button("Ne");
+        buttonLayout.addComponent(noBt);
+        noBt.addClickListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 close();
             }
         });
-       
+
         center();
     }
 
     /**
      * Spuštění akce po stlačení YES.
+     * @param event
      */
     public void onYes(Event event) {
-    	listener.doYesAction(event);
+        listener.doYesAction(event);
         close();
     }
 }

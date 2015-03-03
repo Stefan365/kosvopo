@@ -1,4 +1,4 @@
-package sk.stefan.listeners.todo;
+package sk.stefan.listeners;
 
 /**
  * Logika tohoto listeneru je nasledovna:

@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view.converters.todo;
+package sk.stefan.MVP.view.converters;
 
 import java.sql.Timestamp;
 import java.util.Date;

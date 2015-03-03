@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package sk.stefan.MVP.view.components.todo;
+package sk.stefan.MVP.view.components;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Button;
@@ -21,19 +15,17 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Kraj;
 import sk.stefan.MVP.model.entity.dao.Location;
@@ -45,15 +37,13 @@ import sk.stefan.MVP.model.entity.dao.Subject;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.entity.dao.todo.User_log;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.service.SecurityServiceImpl;
-import sk.stefan.MVP.view.converters.todo.DateConverter;
-import sk.stefan.MVP.view.helpers.Tools;
-import sk.stefan.enums.VoteResults;
+import sk.stefan.MVP.view.converters.DateConverter;
 import sk.stefan.enums.TaskWarnings;
-import sk.stefan.listeners.todo.OkCancelListener;
+import sk.stefan.enums.VoteResults;
+import sk.stefan.listeners.OkCancelListener;
+import sk.stefan.listeners.YesNoWindowListener;
+import sk.stefan.utils.Tools;
 
 /**
  *
@@ -137,11 +127,7 @@ public final class InputFormLayout<T> extends FormLayout {
     /**
      * Tlacitka, ktore nemaju ist do formulara.
      */
-    private List<String> nonEditFn;
-
-    //další pomocné proměnné:
-    private final Logger logger = Logger.getLogger(InputFormLayout.class);
-    //private final SecurityService securityService;
+    private final List<String> nonEditFn;
 
     //0.
     /**
@@ -188,8 +174,8 @@ public final class InputFormLayout<T> extends FormLayout {
         // upravy vzhladu:
         this.setMargin(true);
         this.setSpacing(true);
-
     }
+    
 
     //1.
     /**
@@ -210,11 +196,11 @@ public final class InputFormLayout<T> extends FormLayout {
             try {
                 mapPar = Tools.getTypParametrov(clsT);
             } catch (NoSuchFieldException ex) {
-                //java.util.logging.Logger.getLogger(InputFormLayout.class.getName()).log(Level.SEVERE, null, ex);
+                log.error(ex.getMessage(), ex);
             }
 
         } catch (SecurityException ex) {
-            logger.warn(ex.getLocalizedMessage(), ex);
+            log.warn(ex.getLocalizedMessage(), ex);
             return;
         }
 
@@ -285,7 +271,7 @@ public final class InputFormLayout<T> extends FormLayout {
                             VoteResults.getOrdinals());
                     InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
                     if (itemId == null) {
-                        cb.setValue(1);
+                        cb.setValue(VoteResults.values()[1]);
 //                        cb.setValue(VoteResults.APPROVED);                      
                     }
                     fieldMap.put(pn, cb);
@@ -435,7 +421,7 @@ public final class InputFormLayout<T> extends FormLayout {
             public void buttonClick(ClickEvent event) {
                 if (isNew) {
                     sqlContainer.removeAllContainerFilters();
-                    sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.TRUE);
+                    //sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.TRUE);
                     okCancelListener.obnovFilter();
                 }
 
@@ -453,7 +439,7 @@ public final class InputFormLayout<T> extends FormLayout {
                     Notification.show("Úkol byl úspešně uložen!");
 
                 } catch (SQLException | UnsupportedOperationException e) {
-                    logger.warn(e.getLocalizedMessage(), e);
+                    log.warn(e.getLocalizedMessage(), e);
                 }
             }
         });
@@ -463,7 +449,9 @@ public final class InputFormLayout<T> extends FormLayout {
 
             @Override
             public void buttonClick(ClickEvent event) {
+                
                 okBt.setEnabled(true);
+
                 if (isNew) {
                     sqlContainer.removeItem(itemId);
                 }
@@ -475,7 +463,6 @@ public final class InputFormLayout<T> extends FormLayout {
                 if (okCancelListener != null) {
                     okCancelListener.doAdditionalCancelAction();
                 }
-
             }
         });
         //TodosView s;
@@ -566,11 +553,5 @@ public final class InputFormLayout<T> extends FormLayout {
         //this.refreshComboboxes();
     }
 
-//    private void refreshComboboxes() {
-//        for (Component c: fieldMap.values()){
-//            if (c instanceof InputComboBox){
-//                //((InputComboBox<? extends Object>) c).refreshFg();
-//            }
-//        }
-//    }
+    
 }

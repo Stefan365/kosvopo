@@ -17,11 +17,14 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,10 +34,13 @@ import java.util.Arrays;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.components.todo.InputFormLayout;
-import sk.stefan.MVP.view.helpers.Tools;
-import sk.stefan.listeners.todo.OkCancelListener;
+import sk.stefan.MVP.view.components.YesNoWindow;
+import sk.stefan.listeners.OkCancelListener;
+import sk.stefan.listeners.YesNoWindowListener;
+import sk.stefan.utils.Tools;
 
 /**
  *
@@ -44,7 +50,7 @@ import sk.stefan.listeners.todo.OkCancelListener;
  * @param <E> type of UniEditableTableView
  *
  */
-public class UniEditableTableView<E> extends VerticalLayout implements View, OkCancelListener {
+public class UniEditableTableView<E> extends VerticalLayout implements OkCancelListener, View {
 
     private static final Logger log = Logger.getLogger(UniEditableTableView.class);
     private static final long serialVersionUID = 1L;
@@ -119,6 +125,8 @@ public class UniEditableTableView<E> extends VerticalLayout implements View, OkC
         leftLayout.addComponent(bottomLeftLayout);
         bottomLeftLayout.addComponent(searchField);
         bottomLeftLayout.addComponent(addNewItemButton);
+        bottomLeftLayout.addComponent(removeItemButton);
+        
 
         leftLayout.setSizeFull();
 
@@ -137,7 +145,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements View, OkC
     //2.
     private void initEditor() {
         
-        editorLayout.addComponent(removeItemButton);
+        //editorLayout.addComponent(removeItemButton);
         removeItemButton.setEnabled(true);
         editorLayout.addComponent(inputForm);
         fg.setBuffered(false);
@@ -193,28 +201,39 @@ public class UniEditableTableView<E> extends VerticalLayout implements View, OkC
         });
 
         removeItemButton.addClickListener(new Button.ClickListener() {
+            
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                itemId = uniTable.getValue();
-                uniTable.removeItem(itemId);
-                try {
-                    sqlContainer.removeAllContainerFilters();
-                    sqlContainer.removeItem(itemId);
-                    sqlContainer.commit();
-
-                } catch (UnsupportedOperationException e) {
-                    try {
-                        //sqlContainer.rollback();
-                    } catch (UnsupportedOperationException e1) {
-                        log.error(e1.getMessage());
-                        log.error(e.getMessage());
-                    }
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    log.error(e.getMessage());
+                
+                if (item != null) {
+                    final YesNoWindow window = new YesNoWindow("Upozornenie",
+                            "Chcete úkol smazat?", new DeleteTaskListener());
+                    UI.getCurrent().addWindow(window);
+                } else {
+                    Notification.show("Vyber nejdříve řádek v tabulce!");
                 }
+
+                
+//                itemId = uniTable.getValue();
+//                uniTable.removeItem(itemId);
+//                try {
+//                    sqlContainer.removeAllContainerFilters();
+//                    sqlContainer.removeItem(itemId);
+//                    sqlContainer.commit();
+//
+//                } catch (UnsupportedOperationException e) {
+//                    try {
+//                        //sqlContainer.rollback();
+//                    } catch (UnsupportedOperationException e1) {
+//                        log.error(e1.getMessage());
+//                        log.error(e.getMessage());
+//                    }
+//                } catch (SQLException e) {
+//                    // TODO Auto-generated catch block
+//                    log.error(e.getMessage());
+//                }
             }
         });
     }
@@ -237,6 +256,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements View, OkC
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
                 itemId = uniTable.getValue();
+                item = uniTable.getItem(itemId);
 
                 if (itemId != null) {
                     inputForm.setItem(uniTable.getItem(itemId));
@@ -248,6 +268,75 @@ public class UniEditableTableView<E> extends VerticalLayout implements View, OkC
             }
         });
     }
+    
+    
+    /**
+     *
+     */
+    public class DeleteTaskListener implements YesNoWindowListener {
+
+        public DeleteTaskListener() {
+        }
+
+        @Override
+        @SuppressWarnings({"unchecked"})
+        public void doYesAction(Component.Event event) {
+            
+            if (itemId != null) {
+                //item.getItemProperty("visible").setValue(Boolean.FALSE);
+//                sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);                
+                UniRepo<E> unirepo = new UniRepo<>(clsE);
+                unirepo.updateParam("visible","false", "" + item.getItemProperty("id").getValue());
+            } else {
+                Notification.show("Není co mazat!");
+                return;
+            }
+//            try {
+//                sqlContainer.commit();
+                item = null;
+                itemId = null;
+                Notification.show("Úkol úspešne vymazaný!");
+                doAdditionalOkAction();
+//            } catch (UnsupportedOperationException | SQLException e) {
+//                Notification.show("Úkol NEBOL úspešne vymazaný!: " + e);
+//                try {
+//                    sqlContainer.rollback();
+//                } catch (UnsupportedOperationException | SQLException ex) {
+//                    Notification.show("Mazanie sa nepodarilo!", Notification.Type.ERROR_MESSAGE);
+//                    log.warn(ex.getLocalizedMessage());
+//                    throw new RuntimeException(ex);
+//                }
+//            } 
+            
+            
+            
+            
+            //okBt.setEnabled(true);
+            
+//                itemId = uniTable.getValue();
+//                uniTable.removeItem(itemId);
+//                try {
+//                    sqlContainer.removeAllContainerFilters();
+//                    sqlContainer.removeItem(itemId);
+//                    sqlContainer.commit();
+//                    sqlContainer.removeAllContainerFilters();
+//                    
+//                } catch (UnsupportedOperationException e) {
+//                    try {
+//                        //sqlContainer.rollback();
+//                    } catch (UnsupportedOperationException e1) {
+//                        log.error(e1.getMessage());
+//                        log.error(e.getMessage());
+//                    }
+//                } catch (SQLException e) {
+//                    // TODO Auto-generated catch block
+//                    log.error(e.getMessage());
+//                }
+
+            
+            
+        }
+    }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -256,11 +345,14 @@ public class UniEditableTableView<E> extends VerticalLayout implements View, OkC
 
     @Override
     public void doAdditionalOkAction() {
+        //Notification.show("KOKOSKO");
+        sqlContainer.refresh();
         uniTable.refreshRowCache();
     }
 
     @Override
     public void doAdditionalCancelAction() {
+        sqlContainer.refresh();
         uniTable.refreshRowCache();
     }
 

@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view.helpers;
+package sk.stefan.utils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -108,7 +108,7 @@ public class PomDao {
                     sb.append("Bytes");
                     break;
                 case "sk.stefan.enums.VoteResults":
-                    sb.append("Int");
+                    sb.append("Short");
                     break;
                 default:
                     String fields[] = typ.split("\\.");

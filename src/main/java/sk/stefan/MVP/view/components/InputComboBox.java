@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.MVP.view.components.todo;
+package sk.stefan.MVP.view.components;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;

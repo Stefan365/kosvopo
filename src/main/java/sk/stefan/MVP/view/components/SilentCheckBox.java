@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view.components.todo;
+package sk.stefan.MVP.view.components;
 
 import com.vaadin.ui.CheckBox;
 

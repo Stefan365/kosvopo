@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view.helpers;
+package sk.stefan.utils;
 
 import sk.stefan.interfaces.PresentationName;
 
@@ -30,34 +30,31 @@ import com.vaadin.ui.UI;
 
 public class PomVaadin {
 
-	public static void initCombo(AbstractSelect sel,
-			List<? extends PresentationName> list) {
-		sel.removeAllItems();
+    public static void initCombo(AbstractSelect sel,
+            List<? extends PresentationName> list) {
+        sel.removeAllItems();
 
-		if (list != null) {
-			for (Object item : list) {
-				sel.addItem(item);
-				sel.setItemCaption(item,
-						((PresentationName) item).getPresentationName());
-			}
-		}
-		sel.setValue(null);
+        if (list != null) {
+            for (Object item : list) {
+                sel.addItem(item);
+                sel.setItemCaption(item,
+                        ((PresentationName) item).getPresentationName());
+            }
+        }
+        sel.setValue(null);
 
-	}
+    }
 
-	public static void initComboStr(AbstractSelect sel, List<String> list) {
-		sel.removeAllItems();
+    public static void initComboStr(AbstractSelect sel, List<String> list) {
+        sel.removeAllItems();
 
-		if (list != null) {
-			for (Object item : list) {
-				sel.addItem(item);
-				sel.setItemCaption(item, item.toString());
-			}
-		}
-		sel.setValue(null);
+        if (list != null) {
+            for (Object item : list) {
+                sel.addItem(item);
+                sel.setItemCaption(item, item.toString());
+            }
+        }
+        sel.setValue(null);
 
-	}
-
-
-
+    }
 }
