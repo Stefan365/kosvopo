@@ -5,9 +5,13 @@
  */
 package sk.stefan.MVP.model.service;
 
+import com.vaadin.ui.Notification;
+import java.sql.SQLException;
 import java.util.List;
+import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.User;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.view.components.InputFormLayout;
 
 /**
  *
@@ -15,6 +19,7 @@ import sk.stefan.MVP.model.repo.dao.UniRepo;
  */
 public class UserServiceImpl implements UserService {
 
+    private static final Logger log = Logger.getLogger(UserServiceImpl.class);
     private final UniRepo<User> uniRepo = new UniRepo<>(User.class);
 
     @Override
@@ -33,7 +38,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void modifyPassword(String paramName, String paramValue, User user) {
-        uniRepo.updateParam(paramName, paramValue, "" + user.getId());
+        try {
+            uniRepo.updateParam(paramName, paramValue, "" + user.getId());
+        } catch (SQLException ex) {
+            log.error(ex);
+            Notification.show("Userservice" + ex);
+        }
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Change implements PresentationName {
 
-    public static final String TN = "A_Change";
+    public static final String TN = "a_change";
 
     private Integer id;
 

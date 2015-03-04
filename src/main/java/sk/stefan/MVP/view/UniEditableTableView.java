@@ -32,6 +32,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
@@ -126,7 +127,6 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         bottomLeftLayout.addComponent(searchField);
         bottomLeftLayout.addComponent(addNewItemButton);
         bottomLeftLayout.addComponent(removeItemButton);
-        
 
         leftLayout.setSizeFull();
 
@@ -144,7 +144,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
 
     //2.
     private void initEditor() {
-        
+
         //editorLayout.addComponent(removeItemButton);
         removeItemButton.setEnabled(true);
         editorLayout.addComponent(inputForm);
@@ -201,12 +201,12 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         });
 
         removeItemButton.addClickListener(new Button.ClickListener() {
-            
+
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                
+
                 if (item != null) {
                     final YesNoWindow window = new YesNoWindow("Upozornenie",
                             "Chcete úkol smazat?", new DeleteTaskListener());
@@ -214,26 +214,6 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
                 } else {
                     Notification.show("Vyber nejdříve řádek v tabulce!");
                 }
-
-                
-//                itemId = uniTable.getValue();
-//                uniTable.removeItem(itemId);
-//                try {
-//                    sqlContainer.removeAllContainerFilters();
-//                    sqlContainer.removeItem(itemId);
-//                    sqlContainer.commit();
-//
-//                } catch (UnsupportedOperationException e) {
-//                    try {
-//                        //sqlContainer.rollback();
-//                    } catch (UnsupportedOperationException e1) {
-//                        log.error(e1.getMessage());
-//                        log.error(e.getMessage());
-//                    }
-//                } catch (SQLException e) {
-//                    // TODO Auto-generated catch block
-//                    log.error(e.getMessage());
-//                }
             }
         });
     }
@@ -268,10 +248,9 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
             }
         });
     }
-    
-    
+
     /**
-     *
+     * 
      */
     public class DeleteTaskListener implements YesNoWindowListener {
 
@@ -281,60 +260,23 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         @Override
         @SuppressWarnings({"unchecked"})
         public void doYesAction(Component.Event event) {
-            
+
             if (itemId != null) {
-                //item.getItemProperty("visible").setValue(Boolean.FALSE);
-//                sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);                
-                UniRepo<E> unirepo = new UniRepo<>(clsE);
-                unirepo.updateParam("visible","false", "" + item.getItemProperty("id").getValue());
+                try {
+//                  item.getItemProperty("visible").setValue(Boolean.FALSE);
+//                  sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);
+                    UniRepo<E> unirepo = new UniRepo<>(clsE);
+                    unirepo.updateParam("visible", "false", "" + item.getItemProperty("id").getValue());
+                    item = null;
+                    itemId = null;
+                    Notification.show("Úkol úspešne vymazaný!");
+                    doAdditionalOkAction();
+                } catch (SQLException ex) {
+                    Notification.show("Vymazanie sa nepodarilo!");
+                }
             } else {
                 Notification.show("Není co mazat!");
-                return;
             }
-//            try {
-//                sqlContainer.commit();
-                item = null;
-                itemId = null;
-                Notification.show("Úkol úspešne vymazaný!");
-                doAdditionalOkAction();
-//            } catch (UnsupportedOperationException | SQLException e) {
-//                Notification.show("Úkol NEBOL úspešne vymazaný!: " + e);
-//                try {
-//                    sqlContainer.rollback();
-//                } catch (UnsupportedOperationException | SQLException ex) {
-//                    Notification.show("Mazanie sa nepodarilo!", Notification.Type.ERROR_MESSAGE);
-//                    log.warn(ex.getLocalizedMessage());
-//                    throw new RuntimeException(ex);
-//                }
-//            } 
-            
-            
-            
-            
-            //okBt.setEnabled(true);
-            
-//                itemId = uniTable.getValue();
-//                uniTable.removeItem(itemId);
-//                try {
-//                    sqlContainer.removeAllContainerFilters();
-//                    sqlContainer.removeItem(itemId);
-//                    sqlContainer.commit();
-//                    sqlContainer.removeAllContainerFilters();
-//                    
-//                } catch (UnsupportedOperationException e) {
-//                    try {
-//                        //sqlContainer.rollback();
-//                    } catch (UnsupportedOperationException e1) {
-//                        log.error(e1.getMessage());
-//                        log.error(e.getMessage());
-//                    }
-//                } catch (SQLException e) {
-//                    // TODO Auto-generated catch block
-//                    log.error(e.getMessage());
-//                }
-
-            
-            
         }
     }
 

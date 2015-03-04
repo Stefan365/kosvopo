@@ -4,6 +4,7 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import sk.stefan.interfaces.PresentationName;
 
@@ -20,6 +21,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Change;
@@ -41,6 +43,7 @@ import sk.stefan.MVP.model.entity.dao.Okres;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.utils.Tools;
 
 public class Skuska1<T> {
 
@@ -50,22 +53,17 @@ public class Skuska1<T> {
             SecurityException, InstantiationException, IllegalAccessException,
             NoSuchMethodException, IllegalArgumentException,
             InvocationTargetException, SQLException {
-        
+
 //        Byte[] b = new  Byte[12];
 //        log.info(b.getClass().getCanonicalName());
-
         Skuska1<VoteClassification> sk = new Skuska1<>();
-        sk.skusToArray();
-        
-        
-        
-        
+        sk.skusDepict();
+        //sk.skusToArray();
+
 //        List<Location> loc = uniRepo.findAll();
 //        for (Location l: loc){
 //            log.info("L" + l.getMestka_cast());
 //        }
-        
-
         //******* SKUSKA REFLEXIE, map:
 //        Skuska1<VoteClassification> sk = new Skuska1<>();
 //        Map<String, Integer> map = sk.findAllByClass(Kraj.class);
@@ -147,12 +145,8 @@ public class Skuska1<T> {
 //               log.info("PRVKY MAPY: " + s + " : " + map.get(s));                
 //            }
 //        }
-        
 //      
-        
         //******* koniec SKUSKy REFLEXIE, map.
-        
-        
         //******* SKUSKA REFLEXIE:
 //        Skuska1<VoteClassification> sk = new Skuska1<>();
 //        List<? extends Object> obj = sk.skusReflex(Kraj.class);
@@ -217,7 +211,6 @@ public class Skuska1<T> {
 //        if (obj != null) {
 //            log.info("DELLKA vot_of_role: " + obj.size());
 //        }
-
         //*******KONIEC SKUSKY REFLEXIE:
 //		sk1.tryDate();
 //		sk1.skusIf();
@@ -661,39 +654,59 @@ public class Skuska1<T> {
         }
         return null;
     }
-    
-    private void skusUniRepoParam(){
-        UniRepo<Location> uniRepo = new UniRepo<>(Location.class);
-        
-        uniRepo.updateParam("mestka_cast", "KOKOSOVO", "6");
-        uniRepo.updateParam("visible", "false", "6");
-        uniRepo.updateParam("mestka_cast", null, "8");
-        
-        UniRepo<User> uniRepo1 = new UniRepo<>(User.class);
-        uniRepo.updateParam("password", "KOKOSOVO", "1");
 
-        List<User> allUs = uniRepo1.findAll();
-        for(User u : allUs){
-            log.info(u.getPresentationName() + " : " + Arrays.toString(u.getPassword()));
+    private void skusUniRepoParam() {
+        try {
+            UniRepo<Location> uniRepo = new UniRepo<>(Location.class);
+
+            uniRepo.updateParam("mestka_cast", "KOKOSOVO", "6");
+            uniRepo.updateParam("visible", "false", "6");
+            uniRepo.updateParam("mestka_cast", null, "8");
+
+            UniRepo<User> uniRepo1 = new UniRepo<>(User.class);
+            uniRepo.updateParam("password", "KOKOSOVO", "1");
+
+            List<User> allUs = uniRepo1.findAll();
+            for (User u : allUs) {
+                log.info(u.getPresentationName() + " : " + Arrays.toString(u.getPassword()));
+            }
+        } catch (SQLException ex) {
+            log.error(ex);
         }
     }
-    
-    private void skusToArray(){
+
+    private void skusToArray() {
         Filter f1 = new Like("koko", "dfd");
         Filter f2 = new Like("joko", "dfd");
         Filter f3 = new Like("moko", "dfd");
-        
+
         List<Filter> fls = new ArrayList<>();
-        
+
         fls.add(f1);
         fls.add(f2);
         fls.add(f3);
-        
+
         Filter[] fla = fls.toArray(new Filter[0]);
         Container.Filter f2r = new Or(fla);
-        
+
         log.info("DLZKA: " + fla.length);
-        
+
+    }
+
+    /**
+     *
+     */
+    public void skusDepict() {
+        try {
+            Properties pro = Tools.getDepictParams("t_vote");//.getProperty(key);
+            for (String s: pro.stringPropertyNames()) {
+                log.info(s + " : " + pro.getProperty(s));
+                
+            }
+
+        } catch (IOException ex) {
+            log.error(ex);
+        }
     }
 
 }

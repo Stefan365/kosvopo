@@ -11,24 +11,24 @@ package sk.stefan.enums;
  */
 public enum NonEditableFields {
 
-    KRAJ("T_kraj"),
-    LOCATION("T_location"),
-    OKRES("T_okres"),
-    PERSON_CLASS("T_person_classification"),
-    PUBLIC_BODY("T_public_body"),
-    PUBLIC_PERSON("T_public_person"),
-    PUBLIC_ROLE("T_public_role"),
+    KRAJ("t_kraj"),
+    LOCATION("t_location"),
+    OKRES("t_okres"),
+    PERSON_CLASS("t_person_classification"),
+    PUBLIC_BODY("t_public_body"),
+    PUBLIC_PERSON("t_public_person"),
+    PUBLIC_ROLE("t_public_role"),
+    SUBJECT("t_subject"),
+    TENURE("t_tenure"),
+    THEME("t_theme"),
+    VOTE("t_vote"),
+    VOTE_CLASS("t_vote_classification"),
+    VOTE_OF_ROLE("t_vote_of_role"),
     A_ROLE("a_role"),
-    SUBJECT("T_subject"),
-    TENURE("T_tenure"),
-    THEME("T_theme"),
     A_USER("a_user"),
-    A_USER_ROLE("a_user_role"),
-    VOTE("T_vote"),
-    VOTE_CLASS("T_vote_classification"),
-    VOTE_OF_ROLE("T_vote_of_role");
+    A_USER_ROLE("a_user_role");
 
-    private String name;
+    private final String name;
 
     NonEditableFields(String name) {
         this.name = name;

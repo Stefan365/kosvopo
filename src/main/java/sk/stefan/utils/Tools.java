@@ -1,35 +1,26 @@
 package sk.stefan.utils;
 
 import com.vaadin.data.Item;
-import com.vaadin.event.LayoutEvents;
-import com.vaadin.navigator.Navigator;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import sk.stefan.MVP.model.entity.dao.todo.User_log;
+import java.util.Properties;
 
 /**
  * Trida obsahujici pomocne metody pro vytvareni GUI
@@ -124,7 +115,6 @@ public class Tools {
 //        }
 //        return layout;
 //    }
-
     /**
      * VytvoĹ™Ă­ textovĂ© pole roztaĹľenĂ© na celou ĹˇĂ­Ĺ™ku vlastnĂ­ka
      */
@@ -173,10 +163,11 @@ public class Tools {
 
     /**
      * Vytvori standardizovany formular
+     *
      * @param caption
      * @param light
      * @param components
-     * @return 
+     * @return
      */
     public static FormLayout createFormLayout(String caption, boolean light,
             Component... components) {
@@ -194,8 +185,9 @@ public class Tools {
 
     /**
      * Vytvori hlavni nadpis
+     *
      * @param caption
-     * @return 
+     * @return
      */
     public static Label createPanelCaption(String caption) {
         Label la = new Label(caption);
@@ -208,14 +200,13 @@ public class Tools {
         return la;
     }
 
-
     // 3. stefan
     /**
      * Ziska mapu nazvov 'parameter : jeho typ' danej triedy ako string.
      *
      * @param cls Class dana tridy.
-     * @return 
-     * @throws java.lang.NoSuchFieldException 
+     * @return
+     * @throws java.lang.NoSuchFieldException
      */
     public static Map<String, Class<?>> getTypParametrov(Class<?> cls)
             throws NoSuchFieldException, SecurityException {
@@ -230,8 +221,6 @@ public class Tools {
         }
         return typy;
     }
-    
-    
 
     // 4. stefan
     /**
@@ -239,7 +228,7 @@ public class Tools {
      *
      * @param cls Class dane tridy
      * @param keepId Ziska nazvy parametrov danej triedy ako zoznam typu String
-     * @return 
+     * @return
      * @throws java.lang.NoSuchFieldException
      */
     public static List<String> getClassProperties(Class<?> cls, boolean keepId)
@@ -247,8 +236,7 @@ public class Tools {
 
         //Set<String> properties= new HashSet<>();
         List<String> properties = new ArrayList<>();
-        
-        
+
         for (Method method : cls.getDeclaredMethods()) {
 
             String methodName = method.getName();
@@ -264,10 +252,11 @@ public class Tools {
             }
         }
         return properties;
-    }   
-    
+    }
+
     //5.
-     /** Makes map of String / Enum for list of enums.
+    /**
+     * Makes map of String / Enum for list of enums.
      *
      * @param listS seznam Stringu
      * @param listI zodpovidajici seznam integeru.
@@ -358,6 +347,32 @@ public class Tools {
     private static String getHtmlLabelText(String caption, String text) {
         return String.format("<div class=v-label-%s><strong>%s</strong></div><i>%s</i>",
                 ValoTheme.LABEL_BOLD, caption, text);
+    }
+
+    /**
+     * Method for getting the Properies
+     * @param tabName
+     * @return 
+     * @throws java.io.FileNotFoundException
+     */
+    public static Properties getDepictParams(String tabName) throws FileNotFoundException, IOException {
+        String fileN;
+        //fileN = "src\\main\\resources\\depictNames\\" + tabName.toLowerCase() + ".properties";
+        //fileN = tabName.toLowerCase() + ".properties";
+        //fileN = "\\WEB-INF\\" + tabName.toLowerCase() + ".properties";
+//        fileN = "/WEB-INF/" + tabName.toLowerCase() + ".properties";
+       
+        fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\" + tabName.toLowerCase() + ".properties";
+//        fileN = "/" + tabName.toLowerCase() + ".properties";
+        
+        Properties prop = new Properties();
+
+        InputStream input = new FileInputStream(fileN);
+        
+//        prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(tabName.toLowerCase() + ".properties"));
+//        prop.load(getServletContext().getResourceAsStream("/WEB-INF/filename.properties"));
+        prop.load(input);
+        return prop;
     }
 
 }

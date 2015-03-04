@@ -16,6 +16,7 @@ import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Kraj;
 import sk.stefan.MVP.model.entity.dao.Location;
@@ -39,6 +41,7 @@ import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.converters.DateConverter;
+import sk.stefan.enums.DepictColNames;
 import sk.stefan.enums.TaskWarnings;
 import sk.stefan.enums.VoteResults;
 import sk.stefan.listeners.OkCancelListener;
@@ -108,6 +111,8 @@ public final class InputFormLayout<T> extends FormLayout {
      */
     private Object itemId;
 
+    private String Tn;
+
     /**
      * Layout, kde budou zobrazeny interaktivní komponenty všechny kromě
      * tlačítek OK-CANCEL.
@@ -143,6 +148,14 @@ public final class InputFormLayout<T> extends FormLayout {
     public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont,
             OkCancelListener okl, List<String> nEditFn) {
 
+        try {
+            Method getTnMethod = clsT.getDeclaredMethod("getTN");
+            Tn = (String) getTnMethod.invoke(null);
+        } catch (IllegalAccessException | IllegalArgumentException |
+                InvocationTargetException | NoSuchMethodException e) {
+            log.error(e.getMessage());
+        }
+
         if (nEditFn == null) {
             this.nonEditFn = new ArrayList<>();
         } else {
@@ -152,7 +165,7 @@ public final class InputFormLayout<T> extends FormLayout {
         this.fieldMap = new HashMap<>();
         //securityService = new SecurityServiceImpl();
         this.fg = new FieldGroup();
-        fg.setBuffered(false);
+        this.fg.setBuffered(false);
         this.sqlContainer = sqlCont;
         this.clsT = clsT;
         this.okCancelListener = okl;
@@ -168,22 +181,27 @@ public final class InputFormLayout<T> extends FormLayout {
             isNew = false;
         }
         fg.setItemDataSource(this.item);
-        this.initFieldsLayout();
+        try {
+            this.initFieldsLayout();
+        } catch (IOException ex) {
+            log.error(ex);
+        }
         this.addButtons();
 
         // upravy vzhladu:
         this.setMargin(true);
         this.setSpacing(true);
     }
-    
 
     //1.
     /**
      * Vytvoří formulář s danými políčkami, šitými na míru (šité na mieru typov:
      * Long, String(TextArea/TextField), Boolean(CheckBox), Date(DateField),
      * enum(ComboBox, SelectList, TwinColSelect...)).
+     *
+     * @throws java.io.IOException
      */
-    public void initFieldsLayout() {
+    public void initFieldsLayout() throws IOException {
 
         fieldsFL = new FormLayout();
         fieldsFL.setMargin(true);
@@ -284,6 +302,7 @@ public final class InputFormLayout<T> extends FormLayout {
                     if (itemId == null) {
                         cb1.setValue(1);
                     }
+//                    cb1.setCaption(Tools.getNonEditableParams(Tn).getProperty(pn));
                     fieldMap.put(pn, cb1);
                     break;
                 default:
@@ -304,7 +323,7 @@ public final class InputFormLayout<T> extends FormLayout {
      * neznáme, naháže je tam náhodně:
      *
      */
-    private void completeForm() {
+    private void completeForm() throws IOException {
 
         switch (clsT.getCanonicalName()) {
             case "cz.iivos.todo.model.Task":
@@ -331,6 +350,11 @@ public final class InputFormLayout<T> extends FormLayout {
             default:
                 //náhodné rozvržení:
                 for (String key : fieldMap.keySet()) {
+                    //(fieldMap.get(key)).setCaption(Tools.getDepictParams(Tn).getProperty(key));
+                    String cap = (Tools.getDepictParams(Tn)).getProperty(key);
+                    log.info("CAP: " + cap);
+                    fieldMap.get(key).setCaption(cap);
+                    
                     fieldsFL.addComponent(fieldMap.get(key));
                 }
         }
@@ -449,7 +473,7 @@ public final class InputFormLayout<T> extends FormLayout {
 
             @Override
             public void buttonClick(ClickEvent event) {
-                
+
                 okBt.setEnabled(true);
 
                 if (isNew) {
@@ -553,5 +577,4 @@ public final class InputFormLayout<T> extends FormLayout {
         //this.refreshComboboxes();
     }
 
-    
 }

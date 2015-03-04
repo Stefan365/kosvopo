@@ -9,8 +9,12 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.ui.ComboBox;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.sql.SQLException;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import sk.stefan.DBconnection.DoDBconn;
 
 /**
  * Combobox, ktory ma schopnost transformovat presentation type (tj. String - to
@@ -68,6 +72,8 @@ public final class InputComboBox<E> extends ComboBox {
      * @param map Slovník reprezentativní jméno/entita
      */
     public InputComboBox(FieldGroup fg, String fn, Map<String, E> map) {
+        
+
         super(fn);
         this.fn = fn;
 
