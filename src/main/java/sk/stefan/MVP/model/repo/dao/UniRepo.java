@@ -5,6 +5,7 @@ import com.vaadin.ui.Notification.Type;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,11 +13,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.utils.PomDao;
+import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.enums.VoteResults;
 import sk.stefan.interfaces.MyRepo;
+import sk.stefan.utils.PomDao;
 
 public class UniRepo<T> implements MyRepo<T> {
 
@@ -24,6 +28,7 @@ public class UniRepo<T> implements MyRepo<T> {
     // table name:
     private String TN;
     private final Class<?> clsT;
+    private final SecurityService securityService;
 
     /**
      * Konstruktor:
@@ -33,6 +38,7 @@ public class UniRepo<T> implements MyRepo<T> {
     public UniRepo(Class<?> cls) {
         this.clsT = cls;
         this.setTN(cls);
+        this.securityService = new SecurityServiceImpl();
     }
 
     /**
@@ -47,7 +53,7 @@ public class UniRepo<T> implements MyRepo<T> {
             TN = (String) getTnMethod.invoke(null);
         } catch (IllegalAccessException | IllegalArgumentException |
                 InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -212,7 +218,10 @@ public class UniRepo<T> implements MyRepo<T> {
             }
             // cyklus:
             for (String pn : mapPar.keySet()) {
-
+                if ("password".equals(pn)){
+                    //password s abude ukladat inym sposobom
+                    continue;
+                }
                 if ("id".equals(pn)) {
                     continue;
                 }
@@ -234,6 +243,8 @@ public class UniRepo<T> implements MyRepo<T> {
 //					System.out.println("MENO: "+ (entMethod.invoke(ent)).getClass().getCanonicalName());
 //				}
 
+//                Doplnit java.sql.date
+                
                 if (entMethod.invoke(ent) != null && "java.util.Date".equals((entMethod.invoke(ent)).getClass().getCanonicalName())) {
                     s = "'" + PomDao.utilDateToString((Date) entMethod.invoke(ent)) + "'";
                 } else if (entMethod.invoke(ent) != null && "java.lang.Boolean".equals((entMethod.invoke(ent)).getClass().getCanonicalName())) {
@@ -511,7 +522,6 @@ public class UniRepo<T> implements MyRepo<T> {
             //st.execute(sql);
             //log.info("UPDATEPARAM, affected rows: *" + i + "*");
 
-
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
             Notification.show("Chyba, uniRepo::findByParam(...)",
                     Type.ERROR_MESSAGE);
@@ -526,4 +536,79 @@ public class UniRepo<T> implements MyRepo<T> {
             }
         }
     }
+
+    /**
+     * Modifikuje iba password. Vynimka z univerzalnosti, plati len pre tabulku a_user;
+     *
+     * @param rawPwd
+     * @param id id of row where the value is updated.
+     *
+     * @throws java.sql.SQLException
+     */
+    public void updatePassword(String rawPwd, String id) throws SQLException {
+
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        try {
+            conn = DoDBconn.getConnection();
+
+            st = conn.prepareStatement("UPDATE " + TN + " SET password = ? WHERE id = " + id);
+            st.setBytes(1, securityService.encryptPassword(rawPwd));
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(), ex);
+            throw new SQLException();
+        } finally {
+            if (st != null) {
+                st.close();
+            }
+            if (conn != null) {
+                DoDBconn.releaseConnection(conn);
+            }
+        }
+    }
+    
+    /**
+     * Modifikuje iba password. Len pre tabulku a_user;
+     *
+     * @param paramValue the new value of parameter
+     * @param id id of row where the value is updated.
+     * @return 
+     *
+     * @throws java.sql.SQLException
+     */
+    public byte[] getPassword(String id) throws SQLException {
+
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        byte[] hash = null;
+        try {
+            conn = DoDBconn.getConnection();
+            st = conn.prepareStatement("SELECT password FROM " + TN + " WHERE id = ?");
+            st.setString(1, id);
+            ResultSet result = st.executeQuery();
+
+            if (result.next()) {
+                hash = result.getBytes("password");
+            }
+            return hash;
+        } catch (SQLException ex) {
+            log.error(ex.getLocalizedMessage(), ex);
+            throw new SQLException(ex);
+        } finally {
+            if (st != null) {
+                st.close();
+            }
+            if (conn != null) {
+                DoDBconn.releaseConnection(conn);
+            }
+        }
+        
+    }
+    
+    
+    
+    
 }

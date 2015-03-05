@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TimeZone;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Kraj;
 import sk.stefan.MVP.model.entity.dao.Location;
@@ -40,6 +40,7 @@ import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.view.UniEditableTableView;
 import sk.stefan.MVP.view.converters.DateConverter;
 import sk.stefan.enums.DepictColNames;
 import sk.stefan.enums.TaskWarnings;
@@ -105,6 +106,7 @@ public final class InputFormLayout<T> extends FormLayout {
      * Vybraná položka ze SQLContaineru (řádek z tabulky)
      */
     private Item item;
+    private PasswordForm passVl;
 
     /**
      * id této položky.
@@ -282,6 +284,26 @@ public final class InputFormLayout<T> extends FormLayout {
                             break;
                     }
                     break;
+                case "java.sql.Date":
+                    Button bt = new Button();
+                    bt.addClickListener(new ClickListener() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public void buttonClick(ClickEvent event) {
+                            openPasswordWindow();
+                        }
+
+                    });
+                    break;
+
+                case "byte[]":
+                case "java.lang.Byte[]":
+                    if ("password".equals(pn)) {
+
+                    }
+
+                    break;
 
                 case "sk.stefan.enums.VoteResults":
                     Map<String, Integer> map;
@@ -325,38 +347,28 @@ public final class InputFormLayout<T> extends FormLayout {
      */
     private void completeForm() throws IOException {
 
-        switch (clsT.getCanonicalName()) {
-            case "cz.iivos.todo.model.Task":
-                fieldMap.get("title").setCaption("název: ");
-                fieldsFL.addComponent(fieldMap.get("title"));
+        String key;
+        Properties proPoradie = Tools.getPoradieParams(Tn);
+        Properties proDepict = Tools.getDepictParams(Tn);
 
-                fieldMap.get("description").setCaption("popis: ");
-                fieldsFL.addComponent(fieldMap.get("description"));
+        for (String s : proDepict.stringPropertyNames()) {
+            log.info("ZOBRAZ:*" + s + "* : *" + proDepict.getProperty(s) + "*");
+        }
+        for (String s : proPoradie.stringPropertyNames()) {
+            log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
+        }
 
-                fieldMap.get("id_tcy").setCaption("kategorie: ");
-                fieldsFL.addComponent(fieldMap.get("id_tcy"));
+        log.info("TN:" + Tn);
+        log.info("SIZE PORADIE:" + proPoradie.size());
+        log.info("SIZE DEPICT:" + proDepict.size());
 
-                fieldMap.get("repetition_period").setCaption("opakování: ");
-                fieldsFL.addComponent(fieldMap.get("repetition_period"));
-
-                fieldMap.get("warning_period").setCaption("upozornění: ");
-                fieldsFL.addComponent(fieldMap.get("warning_period"));
-
-                fieldMap.get("deadline").setCaption("termín: ");
-                fieldsFL.addComponent(fieldMap.get("deadline"));
-
-                break;
-
-            default:
-                //náhodné rozvržení:
-                for (String key : fieldMap.keySet()) {
-                    //(fieldMap.get(key)).setCaption(Tools.getDepictParams(Tn).getProperty(key));
-                    String cap = (Tools.getDepictParams(Tn)).getProperty(key);
-                    log.info("CAP: " + cap);
-                    fieldMap.get(key).setCaption(cap);
-                    
-                    fieldsFL.addComponent(fieldMap.get(key));
-                }
+        for (int i = 1; i < proPoradie.size(); i++) {
+            key = proPoradie.getProperty("" + i);
+            log.info("KEY: " + key);
+            String cap = proDepict.getProperty(key);
+            log.info("CAP: " + cap);
+            (fieldMap.get(key)).setCaption(cap);
+            fieldsFL.addComponent(fieldMap.get(key));
         }
     }
 
@@ -544,7 +556,7 @@ public final class InputFormLayout<T> extends FormLayout {
             repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
             List<? extends Object> listObj;
             listObj = repoCtor.newInstance(cls).findAll();
-            log.info("KARAMAZOV: " + (listObj == null));
+//            log.info("KARAMAZOV: " + (listObj == null));
             for (Object o : listObj) {
                 Method getRepNameMethod = cls.getDeclaredMethod("getPresentationName");
                 repN = (String) getRepNameMethod.invoke(o);
@@ -559,6 +571,54 @@ public final class InputFormLayout<T> extends FormLayout {
             log.error(ex.getMessage());
         }
         return null;
+    }
+
+    /**
+     * Otvori okno na zmenu hesla:
+     *
+     *
+     */
+    private void openPasswordWindow() {
+        if (item != null) {
+            final YesNoWindow window = new YesNoWindow("Upozornenie",
+                    "Zadajte prosím nové heslo", new DeleteTaskListener());
+            UI.getCurrent().addWindow(window);
+        } else {
+            Notification.show("Vyber nejdříve řádek v tabulce!");
+        }
+
+    }
+
+        /**
+     * 
+     */
+    public class DeleteTaskListener implements YesNoWindowListener {
+
+        public DeleteTaskListener() {
+        }
+
+        @Override
+        @SuppressWarnings({"unchecked"})
+        public void doYesAction(Component.Event event) {
+
+            if (itemId != null) {
+                try {
+//                  item.getItemProperty("visible").setValue(Boolean.FALSE);
+//                  sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);
+                    UniRepo<T> uniRepo = new UniRepo<>(clsT);
+                    
+                    uniRepo.updateParam("password", "false", "" + item.getItemProperty("id").getValue());
+                    item = null;
+                    itemId = null;
+                    Notification.show("Úkol úspešne vymazaný!");
+                    doAdditionalOkAction();
+                } catch (SQLException ex) {
+                    Notification.show("Vymazanie sa nepodarilo!");
+                }
+            } else {
+                Notification.show("Není co mazat!");
+            }
+        }
     }
 
     public void setItem(Item it) {

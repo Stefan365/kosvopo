@@ -9,7 +9,6 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import org.apache.log4j.Logger;
+import sk.stefan.MVP.view.components.InputFormLayout;
 
 /**
  * Trida obsahujici pomocne metody pro vytvareni GUI
@@ -28,6 +29,8 @@ import java.util.Properties;
  * @author Marek Svarc
  */
 public class Tools {
+
+    private static final Logger log = Logger.getLogger(Tools.class);
 
     /**
      * Vytvori hlavni menu aplikace
@@ -351,8 +354,9 @@ public class Tools {
 
     /**
      * Method for getting the Properies
+     *
      * @param tabName
-     * @return 
+     * @return
      * @throws java.io.FileNotFoundException
      */
     public static Properties getDepictParams(String tabName) throws FileNotFoundException, IOException {
@@ -361,17 +365,36 @@ public class Tools {
         //fileN = tabName.toLowerCase() + ".properties";
         //fileN = "\\WEB-INF\\" + tabName.toLowerCase() + ".properties";
 //        fileN = "/WEB-INF/" + tabName.toLowerCase() + ".properties";
-       
+
         fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\" + tabName.toLowerCase() + ".properties";
 //        fileN = "/" + tabName.toLowerCase() + ".properties";
-        
+
         Properties prop = new Properties();
 
         InputStream input = new FileInputStream(fileN);
-        
+
 //        prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(tabName.toLowerCase() + ".properties"));
 //        prop.load(getServletContext().getResourceAsStream("/WEB-INF/filename.properties"));
         prop.load(input);
+        return prop;
+    }
+
+    /**
+     * Method for getting the Properies
+     *
+     * @param tabName
+     * @return
+     * @throws java.io.FileNotFoundException
+     */
+    public static Properties getPoradieParams(String tabName) throws FileNotFoundException, IOException {
+        InputStream input;
+        String fileN;
+        fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\poradieParametrov\\"
+                + tabName.toLowerCase() + "_p.properties";
+        Properties prop = new Properties();
+        input = new FileInputStream(fileN);
+        prop.load(input);
+        input.close();
         return prop;
     }
 

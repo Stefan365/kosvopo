@@ -40,17 +40,19 @@ public enum DepictColNames {
     DepictColNames(String nm) {
         this.name = nm;
     }
+    
+    
 
-    public static Properties getNonEditableParams(String tabName) throws FileNotFoundException, IOException {
-        String fileN;
-        fileN = tabName + ".properties";
-        
-        Properties prop = new Properties();
-        
-        InputStream input = new FileInputStream(fileN);
-        prop.load(input);
-        return prop;
-
+//    public static Properties getPoradieParams(String tabName) {
+//        String fileN;
+//        fileN = tabName + ".properties";
+//        
+//        Properties prop = new Properties();
+//        
+//        InputStream input = new FileInputStream(fileN);
+//        prop.load(input);
+//        return prop;
+//
 //        switch (this) {
 //            case KRAJ:
 //                input = new FileInputStream("t_kraj.properties");
@@ -119,5 +121,5 @@ public enum DepictColNames {
 //            default:
 //                return null;
 //        }
-    }
+//    }
 }

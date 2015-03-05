@@ -6,8 +6,6 @@ import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
-import sk.stefan.interfaces.PresentationName;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
@@ -22,27 +20,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.Change;
-import sk.stefan.MVP.model.entity.dao.Kraj;
 import sk.stefan.MVP.model.entity.dao.Location;
-import sk.stefan.MVP.model.entity.dao.PersonClassification;
-import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
-import sk.stefan.MVP.model.entity.dao.Role;
-import sk.stefan.MVP.model.entity.dao.Subject;
-import sk.stefan.MVP.model.entity.dao.Tenure;
-import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.User;
-import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
-import sk.stefan.MVP.model.entity.dao.Okres;
-import sk.stefan.MVP.model.entity.dao.PublicBody;
-
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.interfaces.PresentationName;
 import sk.stefan.utils.Tools;
 
 public class Skuska1<T> {
@@ -57,7 +41,14 @@ public class Skuska1<T> {
 //        Byte[] b = new  Byte[12];
 //        log.info(b.getClass().getCanonicalName());
         Skuska1<VoteClassification> sk = new Skuska1<>();
-        sk.skusDepict();
+//        sk.skusDepict();
+        
+        Byte[] by = new Byte[5];
+        byte[] byq = new byte[5];
+        
+        log.info("TRIEDA:" + by.getClass().getCanonicalName());
+        log.info("TRIEDA:" + byq.getClass().getCanonicalName());
+        
         //sk.skusToArray();
 
 //        List<Location> loc = uniRepo.findAll();

@@ -1,10 +1,9 @@
 package sk.stefan.MVP.model.entity.dao;
 
-import sk.stefan.interfaces.PresentationName;
-
 import java.io.Serializable;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.interfaces.PresentationName;
 
 public class User implements Serializable, PresentationName {
 
@@ -12,8 +11,6 @@ public class User implements Serializable, PresentationName {
 
     public static final String TN = "A_User";
     
-    public static final String CLASS_PRESENTATION_NAME = "Užívateľ";
-
     private Integer id;
 
     private String first_name;
@@ -100,7 +97,6 @@ public class User implements Serializable, PresentationName {
 
     @Override
     public String getPresentationName() {
-
         return "USER: " + this.first_name + " " + this.last_name;
     }
 

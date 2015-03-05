@@ -56,8 +56,8 @@ public class SecurityServiceImpl implements SecurityService {
     /**
      * Porovná hesla.
      *
-     * @param rawPassword heslo v podobě plain text
-     * @param hashPassword hash hesla
+     * @param rawPassword heslo v podobe plain text
+     * @param hashPassword hash hesla z databazy
      * @return TRUE, pokud jsou hesla stejná
      */
     @Override
@@ -66,8 +66,8 @@ public class SecurityServiceImpl implements SecurityService {
         if (hashPassword == null || rawPassword == null) {
 	    return false;
 	}
-	return true;
-        //return MessageDigest.isEqual(hashPassword, encryptPassword(rawPassword));
+	//return true;
+        return MessageDigest.isEqual(hashPassword, encryptPassword(rawPassword));
         
     }
 
