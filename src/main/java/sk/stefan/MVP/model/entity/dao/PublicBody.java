@@ -5,7 +5,7 @@ import sk.stefan.interfaces.PresentationName;
 
 public class PublicBody implements PresentationName {
 
-    public static final String TN = "T_Public_Body";
+    public static final String TN = "t_public_body";
     
     public static final String CLASS_PRESENTATION_NAME = "Verejný orgán";
 
@@ -58,7 +58,7 @@ public class PublicBody implements PresentationName {
     @Override
     public String getPresentationName() {
 
-        UniRepo<Location> locRepo = new UniRepo<Location>(Location.class);
+        UniRepo<Location> locRepo = new UniRepo<>(Location.class);
 
         if (location_id != null) {
             Location loc = locRepo.findOne(location_id);

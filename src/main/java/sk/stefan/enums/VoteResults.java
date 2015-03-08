@@ -12,7 +12,7 @@ public enum VoteResults {
 
     APPROVED("Schválené"), DISSALLOWED("zamietnuté");
 
-    public String name;
+    public final String name;
 
     VoteResults(String name) {
         this.name = name;
@@ -26,7 +26,7 @@ public enum VoteResults {
      * vrací seznam jmen daných enumů
      * @return 
      */
-    public static List<String> getPeriodsNames() {
+    public static List<String> getResultNames() {
         List<String> list = new ArrayList<>();
 
         for (VoteResults r : VoteResults.values()) {

@@ -5,7 +5,7 @@ import com.vaadin.server.VaadinSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import sk.stefan.MVP.model.entity.dao.User;
+import sk.stefan.MVP.model.entity.dao.A_User;
 
 /**
  * Bezpečnostní Informační Služba.
@@ -31,8 +31,8 @@ public class SecurityServiceImpl implements SecurityService {
      * 
      */
     @Override
-    public void login(User user) {
-    	VaadinSession.getCurrent().setAttribute(User.class, user);
+    public void login(A_User user) {
+    	VaadinSession.getCurrent().setAttribute(A_User.class, user);
     }
 
     /**
@@ -40,7 +40,7 @@ public class SecurityServiceImpl implements SecurityService {
      */
     @Override
     public void logout() {
-	VaadinSession.getCurrent().setAttribute(User.class, null);
+	VaadinSession.getCurrent().setAttribute(A_User.class, null);
     }
 
     /**
@@ -49,8 +49,8 @@ public class SecurityServiceImpl implements SecurityService {
      * @return aktuálně přihlášeného uživatele
      */
     @Override
-    public User getCurrentUser() {
-	return VaadinSession.getCurrent().getAttribute(User.class);
+    public A_User getCurrentUser() {
+	return VaadinSession.getCurrent().getAttribute(A_User.class);
     }
 
     /**

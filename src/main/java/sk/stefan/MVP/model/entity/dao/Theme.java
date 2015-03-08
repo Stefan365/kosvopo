@@ -4,7 +4,7 @@ import sk.stefan.interfaces.PresentationName;
 
 public class Theme implements PresentationName {
 
-    public static final String TN = "T_Theme";
+    public static final String TN = "t_theme";
     
     public static final String CLASS_PRESENTATION_NAME = "Tématický okruh hlasovania";
 
@@ -15,6 +15,9 @@ public class Theme implements PresentationName {
     private String description;
 
     private Boolean visible;
+    
+    
+    
 
     //getters:
     public Integer getId() {

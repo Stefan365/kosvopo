@@ -23,6 +23,9 @@ import com.vaadin.ui.VerticalLayout;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.view.components.NavigationComponent;
 
 /**
@@ -34,6 +37,8 @@ public class AddressbookView extends VerticalLayout implements View {
     private static final long serialVersionUID = 1L;
 
     /* User interface components are stored in session. */
+    private A_User user;
+    private SecurityService securityService;
     private Table contactListTable = new Table();
     private TextField searchField = new TextField();
     private Button addNewContactButton = new Button("New");
@@ -56,6 +61,8 @@ public class AddressbookView extends VerticalLayout implements View {
     private static SQLContainer sqlContainer;
 
     public AddressbookView() {
+        
+        securityService = new SecurityServiceImpl();
 
         try {
             sqlContainer = DoDBconn.getContainer("addressbook_1");
@@ -293,5 +300,11 @@ public class AddressbookView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
+        user = securityService.getCurrentUser();
+        if (user != null) {
+            //do nothing
+        } else {
+            NavigationComponent.getNavigator().navigateTo("vstupny");
+        }
     }
 }

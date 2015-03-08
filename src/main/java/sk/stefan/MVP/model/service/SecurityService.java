@@ -5,7 +5,7 @@
  */
 package sk.stefan.MVP.model.service;
 
-import sk.stefan.MVP.model.entity.dao.User;
+import sk.stefan.MVP.model.entity.dao.A_User;
 
 /**
  *
@@ -13,11 +13,11 @@ import sk.stefan.MVP.model.entity.dao.User;
  */
 public interface SecurityService {
 
-    public void login(User user);
+    public void login(A_User user);
 
     public void logout();
 
-    public User getCurrentUser();
+    public A_User getCurrentUser();
 
     public boolean checkPassword(String rawPassword, byte[] hashPassword);
 

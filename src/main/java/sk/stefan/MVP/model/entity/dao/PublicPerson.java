@@ -1,12 +1,11 @@
 package sk.stefan.MVP.model.entity.dao;
 
+import java.sql.Date;
 import sk.stefan.interfaces.PresentationName;
-
-import java.util.Date;
 
 public class PublicPerson implements PresentationName {
 
-    public static final String TN = "T_Public_Person";
+    public static final String TN = "t_public_person";
     
     public static final String CLASS_PRESENTATION_NAME = "Verejná osoba";
 

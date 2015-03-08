@@ -13,7 +13,8 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.view.InputAllView;
-import sk.stefan.MVP.view.components.TaskDlg;
+import sk.stefan.MVP.view.components.InputFormLayout;
+import sk.stefan.MVP.view.components.UniDlg;
 import sk.stefan.listenersImpl.RenewBackgroundListenerImpl;
 
 /**
@@ -29,7 +30,7 @@ public class InputButClickListener implements Button.ClickListener {
     private final String title;
     private final InputAllView iaw;
     private SQLContainer sqlCont;
-    private TaskDlg tdlg;
+    private UniDlg tdlg;
     private String tn;
 
     public InputButClickListener(Class<?> cls, String title, InputAllView iaw) {
@@ -46,11 +47,10 @@ public class InputButClickListener implements Button.ClickListener {
 
             tn = (String) tnFld.get(null);
             sqlCont = DoDBconn.getContainer(tn);
-            tdlg = new TaskDlg("Nový " + title,
-                    sqlCont,
-                    null,
-                    new RenewBackgroundListenerImpl(iaw),
-                    cls
+            InputFormLayout<? extends Object> inputFl;
+            inputFl = new InputFormLayout<>(cls, null, sqlCont, null, null);
+            tdlg = new UniDlg("Nový " + title, inputFl,
+                    new RenewBackgroundListenerImpl(iaw)
             );
             UI.getCurrent().addWindow(tdlg);
             //POZOR na toto, malo by to dobehnut az potom, co sa ukonci vlakno 

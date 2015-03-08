@@ -1,19 +1,5 @@
 package sk.stefan.MVP.view;
 
-import java.util.Date;
-
-import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.model.entity.dao.PublicPerson;
-import sk.stefan.MVP.model.entity.dao.PublicPerson2;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
-import sk.stefan.MVP.model.entity.dao.VoteOfRole;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.MVP.model.service.VoteOfRoleService;
-import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.components.YesNoWindow_old;
-import sk.stefan.utils.PomDao;
-import sk.stefan.utils.PomFormLayout;
-
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -26,20 +12,17 @@ import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.datefield.Resolution;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
@@ -48,19 +31,29 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
-
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
-
+import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.entity.dao.PublicPerson2;
+import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.entity.dao.VoteOfRole;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.service.VoteOfRoleService;
+import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.MVP.view.components.YesNoWindow_old;
 import sk.stefan.listeners.GeneralComponentListener;
+import sk.stefan.utils.PomDao;
+import sk.stefan.utils.PomFormLayout;
 
 /**
  * Rozhraní pro zobrazeni udaju o konkretni verejne osobe (poslancovi)

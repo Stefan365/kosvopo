@@ -66,7 +66,13 @@ public class Location implements PresentationName {
 
     @Override
     public String getPresentationName() {
-        return this.obec_name;
+        String rn;
+        if (mestka_cast== null || "".equals(mestka_cast)){
+            rn = obec_name;
+        } else {
+            rn = obec_name + "-"+mestka_cast;
+        }
+        return rn;
     }
 
 }

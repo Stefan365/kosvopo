@@ -2,6 +2,7 @@ package sk.stefan.MVP.model.entity.dao;
 
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.enums.PublicUsefulness;
 import sk.stefan.interfaces.PresentationName;
 
 public class VoteClassification implements PresentationName {
@@ -16,7 +17,7 @@ public class VoteClassification implements PresentationName {
 
     private Integer vote_id;
 
-    private Integer public_malignity;
+    private PublicUsefulness public_usefulness;
     
     private String brief_description;
 
@@ -35,8 +36,8 @@ public class VoteClassification implements PresentationName {
         return this.brief_description;
     }
 
-    public Integer getPublic_malignity() {
-        return this.public_malignity;
+    public PublicUsefulness getPublic_usefulness() {
+        return this.public_usefulness;
     }
 
     public Boolean getVisible() {
@@ -58,8 +59,14 @@ public class VoteClassification implements PresentationName {
         this.vote_id = vid;
     }
 
-    public void setPublic_malignity(Integer pm) {
-        this.public_malignity = pm;
+    public void setPublic_usefulness(PublicUsefulness pu) {
+        this.public_usefulness = pu;
+    }
+    /**
+     * @param brief_description the brief_description to set
+     */
+    public void setBrief_description(String brief_description) {
+        this.brief_description = brief_description;
     }
 
     public void setVisible(Boolean vis) {
@@ -71,13 +78,10 @@ public class VoteClassification implements PresentationName {
 
         UniRepo<Vote> voteRepo = new UniRepo<>(Vote.class);
         if (vote_id != null) {
-            
             Vote vot = voteRepo.findOne(vote_id);
             return id + ", " + vot.getPresentationName();
-        } else {
-            return id + ", ";
+         } else {
+            return id + ", nedefinované";
         }
-
     }
-
 }

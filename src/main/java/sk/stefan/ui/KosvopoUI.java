@@ -10,12 +10,12 @@ import sk.stefan.MVP.model.entity.dao.*;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
-import sk.stefan.MVP.model.entity.dao.Role;
+import sk.stefan.MVP.model.entity.dao.A_Role;
 import sk.stefan.MVP.model.entity.dao.Subject;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
-import sk.stefan.MVP.model.entity.dao.User;
-import sk.stefan.MVP.model.entity.dao.UserRole;
+import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.dao.A_UserRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
@@ -33,6 +33,14 @@ import sk.stefan.enums.NonEditableFields;
 
 @SuppressWarnings("serial")
 public class KosvopoUI extends UI {
+
+    /**
+     * @return the navigator
+     */
+    @Override
+    public Navigator getNavigator() {
+        return navigator;
+    }
 
     /**
      *
@@ -55,7 +63,7 @@ public class KosvopoUI extends UI {
         //navigator.addView("druhy", new DruhyView(navigator));
         navigator.addView("homo", new HomoView());
 
-        navigator.addView("user", new UniEditableTableView<>(User.class, NonEditableFields.A_USER.getNonEditableParams()));
+        navigator.addView("user", new UniEditableTableView<>(A_User.class, NonEditableFields.A_USER.getNonEditableParams()));
         navigator.addView("okres", new UniEditableTableView<>(Okres.class, NonEditableFields.OKRES.getNonEditableParams()));
         navigator.addView("kraj", new UniEditableTableView<>(Kraj.class, NonEditableFields.KRAJ.getNonEditableParams()));
         navigator.addView("location", new UniEditableTableView<>(Location.class, NonEditableFields.LOCATION.getNonEditableParams()));
@@ -63,11 +71,11 @@ public class KosvopoUI extends UI {
         navigator.addView("pub_body", new UniEditableTableView<>(PublicBody.class, NonEditableFields.PUBLIC_BODY.getNonEditableParams()));
         navigator.addView("pub_person", new UniEditableTableView<>(PublicPerson.class, NonEditableFields.PUBLIC_PERSON.getNonEditableParams()));
         navigator.addView("pub_role", new UniEditableTableView<>(PublicRole.class, NonEditableFields.PUBLIC_ROLE.getNonEditableParams()));
-        navigator.addView("role", new UniEditableTableView<>(Role.class, NonEditableFields.A_ROLE.getNonEditableParams()));
+        navigator.addView("role", new UniEditableTableView<>(A_Role.class, NonEditableFields.A_ROLE.getNonEditableParams()));
         navigator.addView("subject", new UniEditableTableView<>(Subject.class, NonEditableFields.SUBJECT.getNonEditableParams()));
         navigator.addView("tenure", new UniEditableTableView<>(Tenure.class, NonEditableFields.TENURE.getNonEditableParams()));
         navigator.addView("theme", new UniEditableTableView<>(Theme.class, NonEditableFields.THEME.getNonEditableParams()));
-        navigator.addView("user_role", new UniEditableTableView<>(UserRole.class, NonEditableFields.A_USER_ROLE.getNonEditableParams()));
+        navigator.addView("user_role", new UniEditableTableView<>(A_UserRole.class, NonEditableFields.A_USER_ROLE.getNonEditableParams()));
         navigator.addView("vote", new UniEditableTableView<>(Vote.class, NonEditableFields.VOTE.getNonEditableParams()));
         navigator.addView("vote_class", new UniEditableTableView<>(VoteClassification.class, NonEditableFields.VOTE_CLASS.getNonEditableParams()));
         navigator.addView("vote_of_role", new UniEditableTableView<>(VoteOfRole.class, NonEditableFields.VOTE_OF_ROLE.getNonEditableParams()));

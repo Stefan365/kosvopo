@@ -32,14 +32,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.view.components.InputFormLayout;
+import sk.stefan.MVP.view.components.MyTable;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.YesNoWindow;
+import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
+import sk.stefan.listeners.RefreshViewListener;
 import sk.stefan.listeners.YesNoWindowListener;
 import sk.stefan.utils.Tools;
 
@@ -51,20 +56,24 @@ import sk.stefan.utils.Tools;
  * @param <E> type of UniEditableTableView
  *
  */
-public class UniEditableTableView<E> extends VerticalLayout implements OkCancelListener, View {
+public class UniEditableTableView<E> extends VerticalLayout implements OkCancelListener, 
+        RefreshViewListener, ObnovFilterListener, View {
 
     private static final Logger log = Logger.getLogger(UniEditableTableView.class);
     private static final long serialVersionUID = 1L;
+    
+    private A_User user;
+    private SecurityService securityService;
 
     /* User interface components are stored in session. */
     private Class<E> clsE;
     private Object itemId;
     private Item item;
-    private Table uniTable = new Table();
-    private TextField searchField = new TextField();
-    private Button addNewItemButton = new Button("Nová podložka");
-    private Button removeItemButton = new Button("Odstráň túto podložku");
-    private FormLayout editorLayout = new FormLayout();
+    private MyTable uniTable;// = new MyTable();
+    private TextField searchField;// = new TextField();
+    private Button addNewItemButton;// = new Button("Nová podložka");
+    private Button removeItemButton;// = new Button("Odstráň túto podložku");
+    private FormLayout editorLayout;// = new FormLayout();
     private FieldGroup fg = new FieldGroup();
     //split panel:
     private HorizontalSplitPanel splitPanel;
@@ -79,7 +88,9 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
     private final InputFormLayout<E> inputForm;
 
     public UniEditableTableView(Class<E> clsq, String[] uneditCol) {
-
+        
+        securityService = new SecurityServiceImpl();
+            
         this.clsE = clsq;
         try {
             this.visibleFn = Tools.getClassProperties(clsE, true);
@@ -114,6 +125,12 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
     private void initLayout() {
 
         // Root of the user interface component tree is set 
+        uniTable = new MyTable();
+        searchField = new TextField();
+        addNewItemButton = new Button("Nová podložka");
+        removeItemButton = new Button("Odstráň túto podložku");
+        editorLayout = new FormLayout();
+        
         splitPanel = new HorizontalSplitPanel();
         this.addComponent(splitPanel);
 
@@ -223,6 +240,8 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
      * Inicializuje tabulku na danu entitu.
      */
     private void initUniTable() {
+        
+    
         uniTable.setContainerDataSource(sqlContainer);
 
         Object[] visCol = visibleFn.toArray();
@@ -249,6 +268,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         });
     }
 
+
     /**
      * 
      */
@@ -270,7 +290,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
                     item = null;
                     itemId = null;
                     Notification.show("Úkol úspešne vymazaný!");
-                    doAdditionalOkAction();
+                    doOkAction();
                 } catch (SQLException ex) {
                     Notification.show("Vymazanie sa nepodarilo!");
                 }
@@ -283,23 +303,39 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
+                user = securityService.getCurrentUser();
+        if (user != null) {
+            //do nothing
+        } else {
+            NavigationComponent.getNavigator().navigateTo("vstupny");
+        }
+
     }
 
     @Override
-    public void doAdditionalOkAction() {
-        //Notification.show("KOKOSKO");
-        sqlContainer.refresh();
-        uniTable.refreshRowCache();
+    public void doOkAction() {
+//        Notification.show("KOKOSKO");
+//        sqlContainer.refresh();
+//        uniTable.refreshRowCache();
     }
 
     @Override
-    public void doAdditionalCancelAction() {
-        sqlContainer.refresh();
-        uniTable.refreshRowCache();
+    public void doCancelAction() {
+//        sqlContainer.refresh();
+//        uniTable.refreshRowCache();
     }
 
     @Override
     public void obnovFilter() {
-
+        
+        //do refresh action
     }
+    
+    @Override
+    public void refreshView() {
+        Notification.show("MAKOSKO");
+        sqlContainer.refresh();
+        uniTable.refreshRowCache();
+    }
+
 }

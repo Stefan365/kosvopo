@@ -13,16 +13,17 @@ import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
-import sk.stefan.MVP.model.entity.dao.Role;
+import sk.stefan.MVP.model.entity.dao.A_Role;
 import sk.stefan.MVP.model.entity.dao.Subject;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
-import sk.stefan.MVP.model.entity.dao.User;
-import sk.stefan.MVP.model.entity.dao.UserRole;
+import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.dao.A_UserRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.view.UniEditableTableView;
 import sk.stefan.enums.NonEditableFields;
 
@@ -39,13 +40,13 @@ public class NavigationComponent extends HorizontalLayout {
     private HorizontalLayout hl;
     private SecurityService securityService;
 
-    private Navigator navigator;
+    private static Navigator navigator;
 
     private static NavigationComponent navComp;
 
     private NavigationComponent(Navigator nav) {
-
-        this.navigator = nav;
+        this.securityService = new SecurityServiceImpl();
+        navigator = nav;
 
         b1 = new Button("login");
         b1.addClickListener(new Button.ClickListener() {
@@ -56,7 +57,7 @@ public class NavigationComponent extends HorizontalLayout {
                 String butN = event.getButton().getCaption();
                 switch (butN) {
                     case "login":
-                        navigator.navigateTo("login");
+                        getNavigator().navigateTo("login");
                         break;
 
                     case "logout":
@@ -73,70 +74,70 @@ public class NavigationComponent extends HorizontalLayout {
         });
 
         b1a = new Button("A_inputAll", (ClickEvent event) -> {
-            navigator.navigateTo("A_inputAll");
+            getNavigator().navigateTo("A_inputAll");
         });
 
         b2 = new Button("vstupny", (ClickEvent event) -> {
-            navigator.navigateTo("vstupny");
+            getNavigator().navigateTo("vstupny");
         });
 
         b3 = new Button("druhy", (ClickEvent event) -> {
-            navigator.navigateTo("druhy");
+            getNavigator().navigateTo("druhy");
         });
 
         b4 = new Button("homo", (ClickEvent event) -> {
-            navigator.navigateTo("homo");
+            getNavigator().navigateTo("homo");
         });
         b4a = new Button("user", (ClickEvent event) -> {
-            navigator.navigateTo("user");
+            getNavigator().navigateTo("user");
         });
         b4b = new Button("okres", (ClickEvent event) -> {
-            navigator.navigateTo("okres");
+            getNavigator().navigateTo("okres");
         });
         b4c = new Button("kraj", (ClickEvent event) -> {
-            navigator.navigateTo("kraj");
+            getNavigator().navigateTo("kraj");
         });
         b4d = new Button("location", (ClickEvent event) -> {
-            navigator.navigateTo("location");
+            getNavigator().navigateTo("location");
         });
         b4e = new Button("per_class", (ClickEvent event) -> {
-            navigator.navigateTo("per_class");
+            getNavigator().navigateTo("per_class");
         });
         b4f = new Button("pub_body", (ClickEvent event) -> {
-            navigator.navigateTo("pub_body");
+            getNavigator().navigateTo("pub_body");
         });
         b4g = new Button("pub_role", (ClickEvent event) -> {
-            navigator.navigateTo("pub_role");
+            getNavigator().navigateTo("pub_role");
         });
         b4h = new Button("role", (ClickEvent event) -> {
-            navigator.navigateTo("role");
+            getNavigator().navigateTo("role");
         });
         b4i = new Button("subject", (ClickEvent event) -> {
-            navigator.navigateTo("subject");
+            getNavigator().navigateTo("subject");
         });
         b4j = new Button("tenure", (ClickEvent event) -> {
-            navigator.navigateTo("tenure");
+            getNavigator().navigateTo("tenure");
         });
         
         
         b4k = new Button("theme", (ClickEvent event) -> {
-            navigator.navigateTo("theme");
+            getNavigator().navigateTo("theme");
         });
         b4l = new Button("user_role", (ClickEvent event) -> {
-            navigator.navigateTo("user_role");
+            getNavigator().navigateTo("user_role");
         });
         
         b4m = new Button("vote", (ClickEvent event) -> {
-            navigator.navigateTo("vote");
+            getNavigator().navigateTo("vote");
         });
         b4n = new Button("vote_class", (ClickEvent event) -> {
-            navigator.navigateTo("vote_class");
+            getNavigator().navigateTo("vote_class");
         });
         b4o = new Button("vote_of_role", (ClickEvent event) -> {
-            navigator.navigateTo("vote_of_role");
+            getNavigator().navigateTo("vote_of_role");
         });
         b4p = new Button("pub_person", (ClickEvent event) -> {
-            navigator.navigateTo("pub_person");
+            getNavigator().navigateTo("pub_person");
         });
 
         
@@ -146,19 +147,19 @@ public class NavigationComponent extends HorizontalLayout {
 
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("addressbook");
+                        getNavigator().navigateTo("addressbook");
                     }
                 });
 
         b6 = new Button("fila", (ClickEvent event) -> {
-            navigator.navigateTo("filamanager");
+            getNavigator().navigateTo("filamanager");
         });
 
         b7 = new Button("kos1",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("kos1");
+                        getNavigator().navigateTo("kos1");
                     }
                 });
 
@@ -166,7 +167,7 @@ public class NavigationComponent extends HorizontalLayout {
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("kos2");
+                        getNavigator().navigateTo("kos2");
                     }
                 });
 
@@ -174,7 +175,7 @@ public class NavigationComponent extends HorizontalLayout {
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("kos3");
+                        getNavigator().navigateTo("kos3");
                     }
                 });
 
@@ -182,7 +183,7 @@ public class NavigationComponent extends HorizontalLayout {
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("A_kos4");
+                        getNavigator().navigateTo("A_kos4");
                     }
                 });
 
@@ -190,7 +191,7 @@ public class NavigationComponent extends HorizontalLayout {
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("A_kos5");
+                        getNavigator().navigateTo("A_kos5");
                     }
                 });
 
@@ -198,7 +199,7 @@ public class NavigationComponent extends HorizontalLayout {
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("A_kos6");
+                        getNavigator().navigateTo("A_kos6");
                     }
                 });
 
@@ -206,7 +207,7 @@ public class NavigationComponent extends HorizontalLayout {
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("download");
+                        getNavigator().navigateTo("download");
                     }
                 });
 
@@ -214,7 +215,7 @@ public class NavigationComponent extends HorizontalLayout {
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("kos8");
+                        getNavigator().navigateTo("kos8");
                     }
                 });
 
@@ -222,7 +223,7 @@ public class NavigationComponent extends HorizontalLayout {
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("page1");
+                        getNavigator().navigateTo("page1");
                     }
                 });
 
@@ -230,7 +231,7 @@ public class NavigationComponent extends HorizontalLayout {
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("page2");
+                        getNavigator().navigateTo("page2");
                     }
                 });
 
@@ -238,7 +239,7 @@ public class NavigationComponent extends HorizontalLayout {
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        navigator.navigateTo("welcome");
+                        getNavigator().navigateTo("welcome");
                     }
                 });
 
@@ -339,6 +340,7 @@ public class NavigationComponent extends HorizontalLayout {
         return navComp;
     }
 
+    
     public void addAdminButtons() {
         navComp.addComponent(b1a);
         navComp.addComponent(b10);
@@ -356,16 +358,23 @@ public class NavigationComponent extends HorizontalLayout {
      * Ochudobni navigator o views, ktore nepatria do administracie.
      */
     private void ochudobniNavigator() {
-        navigator.removeView("A_inputAll");
-        navigator.removeView("A_kos5");
-        navigator.removeView("A_kos4");
-        navigator.removeView("A_kos6");
+        getNavigator().removeView("A_inputAll");
+        getNavigator().removeView("A_kos5");
+        getNavigator().removeView("A_kos4");
+        getNavigator().removeView("A_kos6");
 
         navComp.removeComponent(b1a);
         navComp.removeComponent(b10);
         navComp.removeComponent(b11);
         navComp.removeComponent(b12);
 
+    }
+
+    /**
+     * @return the navigator
+     */
+    public static Navigator getNavigator() {
+        return navigator;
     }
 
 }

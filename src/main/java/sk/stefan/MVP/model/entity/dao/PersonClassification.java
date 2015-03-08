@@ -1,14 +1,12 @@
 package sk.stefan.MVP.model.entity.dao;
 
-import sk.stefan.interfaces.PresentationName;
-
-import java.util.Date;
-
+import java.sql.Date;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.interfaces.PresentationName;
 
 public class PersonClassification implements PresentationName {
 
-    public static final String TN = "T_Person_Classification";
+    public static final String TN = "t_person_classification";
     
     public static final String CLASS_PRESENTATION_NAME = "Hodnotenie verejnej osoby";
 
@@ -81,8 +79,7 @@ public class PersonClassification implements PresentationName {
     @Override
     public String getPresentationName() {
 
-        UniRepo<PublicPerson> ppRepo = new UniRepo<PublicPerson>(
-                PublicPerson.class);
+        UniRepo<PublicPerson> ppRepo = new UniRepo<>(PublicPerson.class);
 
         if (public_person_id != null) {
             PublicPerson pp = ppRepo.findOne(public_person_id);

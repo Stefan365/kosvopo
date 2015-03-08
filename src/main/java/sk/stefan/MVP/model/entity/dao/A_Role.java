@@ -2,9 +2,9 @@ package sk.stefan.MVP.model.entity.dao;
 
 import sk.stefan.interfaces.PresentationName;
 
-public class Role implements PresentationName {
+public class A_Role implements PresentationName {
 
-    public static final String TN = "A_Role";
+    public static final String TN = "a_role";
     
     public static final String CLASS_PRESENTATION_NAME = "Rola";
 

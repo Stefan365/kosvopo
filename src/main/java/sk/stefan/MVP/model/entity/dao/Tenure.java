@@ -1,12 +1,11 @@
 package sk.stefan.MVP.model.entity.dao;
 
+import java.sql.Date;
 import sk.stefan.interfaces.PresentationName;
-
-import java.util.Date;
 
 public class Tenure implements PresentationName {
 
-    public static final String TN = "T_Tenure";
+    public static final String TN = "t_tenure";
     
     public static final String CLASS_PRESENTATION_NAME = "Volebné obdobie";
 
@@ -59,9 +58,9 @@ public class Tenure implements PresentationName {
     @Override
     public String getPresentationName() {
         if (till != null) {
-            return since + " - " + till;
+            return since + "-" + till;
         } else {
-            return since + "";
+            return since + "- ...";
         }
     }
 

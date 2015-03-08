@@ -1,15 +1,14 @@
 package sk.stefan.MVP.model.entity.dao;
 
-import sk.stefan.interfaces.PresentationName;
-
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.enums.VoteResults;
+import sk.stefan.interfaces.PresentationName;
 
 public class Vote implements PresentationName {
 
-    public static final String TN = "T_Vote";
+    public static final String TN = "t_vote";
 
     public static final String CLASS_PRESENTATION_NAME = "Hlasovanie";
 
@@ -32,7 +31,7 @@ public class Vote implements PresentationName {
     private Integer refrain_vote;
 
     private Integer absent;
-
+    
     private Boolean visible;
 
     // getters:
@@ -134,22 +133,24 @@ public class Vote implements PresentationName {
         this.visible = vis;
     }
 
+
     @Override
     public String getPresentationName() {
 
-        UniRepo<PublicBody> pbRepo = new UniRepo<PublicBody>(PublicBody.class);
-        UniRepo<Subject> subRepo = new UniRepo<Subject>(Subject.class);
+        UniRepo<Subject> subRepo = new UniRepo<>(Subject.class);
 
         if (public_body_id != null && subject_id != null) {
-            PublicBody pb = pbRepo.findOne(public_body_id);
             Subject sub = subRepo.findOne(subject_id);
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String dateStr = sdf.format(this.vote_date);
 
-            return pb.getPresentationName() + ", " + sub.getPresentationName()
-                    + ", " + this.vote_date;
+            return sub.getPresentationName() + ", kokos" + dateStr;
         } else {
-            return id + ", ";
+            return id + ", nedefinované";
         }
 
     }
+
 
 }

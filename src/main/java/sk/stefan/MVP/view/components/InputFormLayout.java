@@ -1,6 +1,7 @@
 package sk.stefan.MVP.view.components;
 
 import com.vaadin.data.Item;
+import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -13,6 +14,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -21,7 +23,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -40,13 +45,12 @@ import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.MVP.view.UniEditableTableView;
 import sk.stefan.MVP.view.converters.DateConverter;
-import sk.stefan.enums.DepictColNames;
 import sk.stefan.enums.TaskWarnings;
+import sk.stefan.enums.VoteActions;
 import sk.stefan.enums.VoteResults;
+import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
-import sk.stefan.listeners.YesNoWindowListener;
 import sk.stefan.utils.Tools;
 
 /**
@@ -60,7 +64,7 @@ import sk.stefan.utils.Tools;
  * @param <T> Daná třída T, pro kterou se formulář vytvoří
  */
 public final class InputFormLayout<T> extends FormLayout {
-
+    
     private static final Logger log = Logger.getLogger(InputFormLayout.class);
 
     /**
@@ -77,7 +81,8 @@ public final class InputFormLayout<T> extends FormLayout {
      * Spolu s uzavřením formulárě se musí vykonat další akce v základním view,
      * ze kterého se formulář otevře, na to slouží tento listener.
      */
-    private final OkCancelListener okCancelListener;
+    private OkCancelListener okCancelListener;
+    private ObnovFilterListener obnovFilterListener;
 
     /**
      * SQLcontainer, na kterém je postavena tabulka s úkoly.
@@ -89,6 +94,7 @@ public final class InputFormLayout<T> extends FormLayout {
      * objekty, který dané entitě poskytuje informace k zobrazení.
      */
     private final FieldGroup fg;
+    private final Component cp;
 
     /**
      * Slovník, ve kterém je klíčem název parametru a hodnotou pro něj vhodná
@@ -112,7 +118,7 @@ public final class InputFormLayout<T> extends FormLayout {
      * id této položky.
      */
     private Object itemId;
-
+    
     private String Tn;
 
     /**
@@ -143,13 +149,15 @@ public final class InputFormLayout<T> extends FormLayout {
      * @param clsT Class třídy T
      * @param item položka ze SQLContaineru
      * @param sqlCont SQL container na kterém je postavena tabulka s úkoly.
-     * @param okl listener pro vykonání dodatečných akcí spojených s OK-CANCEL.
+     * @param cp komponenta, ktora implementuje OkCancelListener i
+     * ObnovFilterListener.
      * @param nEditFn zoznam mien parametrov, ktore budu pri tvorbe formularu
      * ignorovane.
      */
     public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont,
-            OkCancelListener okl, List<String> nEditFn) {
-
+            Component cp, List<String> nEditFn) {
+        
+        this.cp = cp;
         try {
             Method getTnMethod = clsT.getDeclaredMethod("getTN");
             Tn = (String) getTnMethod.invoke(null);
@@ -157,20 +165,21 @@ public final class InputFormLayout<T> extends FormLayout {
                 InvocationTargetException | NoSuchMethodException e) {
             log.error(e.getMessage());
         }
-
+        
         if (nEditFn == null) {
             this.nonEditFn = new ArrayList<>();
         } else {
             this.nonEditFn = nEditFn;
         }
-
+        
         this.fieldMap = new HashMap<>();
         //securityService = new SecurityServiceImpl();
         this.fg = new FieldGroup();
         this.fg.setBuffered(false);
         this.sqlContainer = sqlCont;
         this.clsT = clsT;
-        this.okCancelListener = okl;
+        this.okCancelListener = (OkCancelListener) cp;
+        this.obnovFilterListener = (ObnovFilterListener) cp;
         this.item = item;
         if (item == null) {
             isNew = true;
@@ -204,11 +213,11 @@ public final class InputFormLayout<T> extends FormLayout {
      * @throws java.io.IOException
      */
     public void initFieldsLayout() throws IOException {
-
+        
         fieldsFL = new FormLayout();
         fieldsFL.setMargin(true);
         fieldsFL.setSpacing(true);
-
+        
         String propertyTypeName; // nazov typu danej property danej ent.
 
         Map<String, Class<?>> mapPar = new HashMap<>();
@@ -218,18 +227,18 @@ public final class InputFormLayout<T> extends FormLayout {
             } catch (NoSuchFieldException ex) {
                 log.error(ex.getMessage(), ex);
             }
-
+            
         } catch (SecurityException ex) {
             log.warn(ex.getLocalizedMessage(), ex);
             return;
         }
-
+        
         for (String pn : mapPar.keySet()) {
             if (nonEditFn.contains(pn)) {
                 continue;
             }
             propertyTypeName = mapPar.get(pn).getCanonicalName();
-
+            
             switch (propertyTypeName) {
                 case "java.lang.Integer":
                     if (pn.contains("_id")) {
@@ -245,7 +254,7 @@ public final class InputFormLayout<T> extends FormLayout {
                         fieldMap.put(pn, fi);
                     }
                     break;
-
+                
                 case "java.lang.String":
                     switch (pn) {
                         case "description":
@@ -260,9 +269,9 @@ public final class InputFormLayout<T> extends FormLayout {
                             fieldMap.put(pn, bindTextField(pn));
                             break;
                     }
-
+                    
                     break;
-
+                
                 case "java.lang.Boolean":
                     switch (pn) {
                         case "deleted":
@@ -272,7 +281,7 @@ public final class InputFormLayout<T> extends FormLayout {
                             fieldMap.put(pn, bindCheckBox(pn));
                     }
                     break;
-
+                
                 case "java.util.Date":
                     switch (pn) {
                         case "creation_date":
@@ -285,44 +294,44 @@ public final class InputFormLayout<T> extends FormLayout {
                     }
                     break;
                 case "java.sql.Date":
-                    Button bt = new Button();
-                    bt.addClickListener(new ClickListener() {
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            openPasswordWindow();
-                        }
-
-                    });
+                    fieldMap.put(pn, this.bindSqlDateField(pn));
                     break;
-
+                
                 case "byte[]":
                 case "java.lang.Byte[]":
                     if ("password".equals(pn)) {
-
+                        Button but = new Button("kok");
+                        but.addClickListener(new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
+                            
+                            @Override
+                            public void buttonClick(Button.ClickEvent event) {
+                                openPasswordWindow();
+                            }
+                        });
+                        fieldMap.put(pn, but);
                     }
-
                     break;
-
+                
                 case "sk.stefan.enums.VoteResults":
                     Map<String, Integer> map;
-                    map = Tools.makeEnumMap(VoteResults.getPeriodsNames(),
+                    map = Tools.makeEnumMap(VoteResults.getResultNames(),
                             VoteResults.getOrdinals());
                     InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
                     if (itemId == null) {
-                        cb.setValue(VoteResults.values()[1]);
+                        cb.setValue(VoteResults.values()[0]);
 //                        cb.setValue(VoteResults.APPROVED);                      
                     }
                     fieldMap.put(pn, cb);
                     break;
-
-                case "sk.stefan.enums.TaskWarnings":
-                    Map<String, Integer> map1 = Tools.makeEnumMap(TaskWarnings.getWarningNames(),
-                            TaskWarnings.getOrdinals());
+                
+                case "sk.stefan.enums.VoteActions":
+                    Map<String, Integer> map1;
+                    map1= Tools.makeEnumMap(VoteActions.getActionNames(),
+                            VoteActions.getOrdinals());
                     InputComboBox<Integer> cb1 = new InputComboBox<>(fg, pn, map1);
                     if (itemId == null) {
-                        cb1.setValue(1);
+                        cb1.setValue(VoteResults.values()[0]);
                     }
 //                    cb1.setCaption(Tools.getNonEditableParams(Tn).getProperty(pn));
                     fieldMap.put(pn, cb1);
@@ -333,7 +342,7 @@ public final class InputFormLayout<T> extends FormLayout {
                     break;
             }
         }
-
+        
         this.completeForm();
         fieldsFL.setEnabled(true);
         this.addComponent(fieldsFL);
@@ -346,27 +355,28 @@ public final class InputFormLayout<T> extends FormLayout {
      *
      */
     private void completeForm() throws IOException {
-
+        
         String key;
         Properties proPoradie = Tools.getPoradieParams(Tn);
         Properties proDepict = Tools.getDepictParams(Tn);
-
-        for (String s : proDepict.stringPropertyNames()) {
-            log.info("ZOBRAZ:*" + s + "* : *" + proDepict.getProperty(s) + "*");
-        }
-        for (String s : proPoradie.stringPropertyNames()) {
-            log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
-        }
-
-        log.info("TN:" + Tn);
-        log.info("SIZE PORADIE:" + proPoradie.size());
-        log.info("SIZE DEPICT:" + proDepict.size());
-
+        
+//        if ("t_tenure".equals(Tn)) {
+//            for (String s : proDepict.stringPropertyNames()) {
+//                log.info("ZOBRAZ:*" + s + "* : *" + proDepict.getProperty(s) + "*");
+//            }
+//            for (String s : proPoradie.stringPropertyNames()) {
+//                log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
+//            }
+//            
+//            log.info("TN:" + Tn);
+//            log.info("SIZE PORADIE:" + proPoradie.size());
+//            log.info("SIZE DEPICT:" + proDepict.size());
+//        }
         for (int i = 1; i < proPoradie.size(); i++) {
             key = proPoradie.getProperty("" + i);
-            log.info("KEY: " + key);
+//            log.info("KEY: *" + key + "*");
             String cap = proDepict.getProperty(key);
-            log.info("CAP: " + cap);
+//            log.info("CAP: *" + cap + "*");
             (fieldMap.get(key)).setCaption(cap);
             fieldsFL.addComponent(fieldMap.get(key));
         }
@@ -419,17 +429,58 @@ public final class InputFormLayout<T> extends FormLayout {
      * @return
      */
     public PopupDateField bindUtilDateField(String fn) {
-
+        
         PopupDateField field = new PopupDateField(fn);
         field.setConverter(new DateConverter());
         field.setImmediate(true);
         field.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
         field.setLocale(new Locale("cz", "CZ"));
-
+        
         field.setResolution(Resolution.MINUTE);
-
+        
         field.setDateFormat("yyyy-MM-dd HH:mm:ss");
         fg.bind(field, fn);
+        return field;
+    }
+
+    // 4.
+    /**
+     * Vytvori pole pre sql.Date a zviaze ho s FG.
+     *
+     * @param fn
+     * @return
+     */
+    public PopupDateField bindSqlDateField(String fn) {
+        
+        PopupDateField field = new PopupDateField() {
+            private static final long serialVersionUID = 1L;
+            
+            @Override
+            protected java.sql.Date handleUnparsableDateString(String dateString) {
+                
+                String fields[] = dateString.split("-");
+                
+                if (fields.length >= 3) {
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat(
+                                "yyyy-MM-dd");
+                        return (java.sql.Date) sdf.parse(dateString);
+                    } catch (ParseException e) {
+                        log.error(e.getMessage(), e);
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
+            }
+        };
+        field.setImmediate(true);
+        field.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+        field.setLocale(Locale.UK);
+        field.setResolution(Resolution.DAY);
+        field.setDateFormat("yyyy-MM-dd");
+        fg.bind(field, fn);
+        
         return field;
     }
 
@@ -439,26 +490,29 @@ public final class InputFormLayout<T> extends FormLayout {
      *
      */
     private void addButtons() {
-
+        
         buttonsHL = new HorizontalLayout();
         buttonsHL.setMargin(true);
         buttonsHL.setSpacing(true);
-
+        
         okBt = new Button("Save");
         cancelBt = new Button("Edit");
         cancelBt.setEnabled(true);
         okBt.setEnabled(true);
-
+        
         okBt.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
-
+            
             @Override
             @SuppressWarnings("unchecked")
             public void buttonClick(ClickEvent event) {
                 if (isNew) {
                     sqlContainer.removeAllContainerFilters();
                     //sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.TRUE);
-                    okCancelListener.obnovFilter();
+                    if (obnovFilterListener != null) {
+                        obnovFilterListener.obnovFilter();
+                    }
+                    
                 }
 
                 // ulozenie zmien do DB:
@@ -468,45 +522,45 @@ public final class InputFormLayout<T> extends FormLayout {
                     fg.setEnabled(false);
                     cancelBt.setEnabled(true);
                     okBt.setEnabled(false);
-
+                    
                     if (okCancelListener != null) {
-                        okCancelListener.doAdditionalOkAction();
+                        okCancelListener.doOkAction();
                     }
                     Notification.show("Úkol byl úspešně uložen!");
-
+                    
                 } catch (SQLException | UnsupportedOperationException e) {
                     log.warn(e.getLocalizedMessage(), e);
                 }
             }
         });
-
+        
         cancelBt.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
-
+            
             @Override
             public void buttonClick(ClickEvent event) {
-
+                
                 okBt.setEnabled(true);
-
+                
                 if (isNew) {
                     sqlContainer.removeItem(itemId);
                 }
                 fg.setEnabled(true);
                 fieldsFL.setEnabled(true);
-
+                
                 cancelBt.setEnabled(false);
                 okBt.setEnabled(true);
                 if (okCancelListener != null) {
-                    okCancelListener.doAdditionalCancelAction();
+                    okCancelListener.doCancelAction();
                 }
             }
         });
         //TodosView s;
         buttonsHL.addComponent(okBt);
         buttonsHL.addComponent(cancelBt);
-
+        
         this.addComponent(buttonsHL);
-
+        
     }
 
     /**
@@ -515,9 +569,9 @@ public final class InputFormLayout<T> extends FormLayout {
      *
      */
     private Class<?> getClassFromName(String pn) {
-
+        
         switch (pn) {
-
+            
             case "kraj_id":
                 return Kraj.class;
             case "okres_id":
@@ -542,14 +596,14 @@ public final class InputFormLayout<T> extends FormLayout {
                 return null;
         }
     }
-
+    
     @SuppressWarnings({"unchecked"})
     private Map<String, Integer> findAllByClass(Class<?> cls) {
-
+        
         Map<String, Integer> map = new HashMap<>();
         String repN;
         Integer id;
-
+        
         try {
             Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
             Constructor<UniRepo<? extends Object>> repoCtor;
@@ -580,54 +634,32 @@ public final class InputFormLayout<T> extends FormLayout {
      */
     private void openPasswordWindow() {
         if (item != null) {
-            final YesNoWindow window = new YesNoWindow("Upozornenie",
-                    "Zadajte prosím nové heslo", new DeleteTaskListener());
+            this.passVl = new PasswordForm(item, cp);
+            final OkCancelWindow window = new OkCancelWindow("Zmena hesla",
+                    "Zadajte prosím nové heslo", this.passVl);
             UI.getCurrent().addWindow(window);
         } else {
             Notification.show("Vyber nejdříve řádek v tabulce!");
         }
-
+        
     }
 
-        /**
-     * 
+    /**
+     * Nastaví listener
+     *
+     * @param list
      */
-    public class DeleteTaskListener implements YesNoWindowListener {
-
-        public DeleteTaskListener() {
-        }
-
-        @Override
-        @SuppressWarnings({"unchecked"})
-        public void doYesAction(Component.Event event) {
-
-            if (itemId != null) {
-                try {
-//                  item.getItemProperty("visible").setValue(Boolean.FALSE);
-//                  sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);
-                    UniRepo<T> uniRepo = new UniRepo<>(clsT);
-                    
-                    uniRepo.updateParam("password", "false", "" + item.getItemProperty("id").getValue());
-                    item = null;
-                    itemId = null;
-                    Notification.show("Úkol úspešne vymazaný!");
-                    doAdditionalOkAction();
-                } catch (SQLException ex) {
-                    Notification.show("Vymazanie sa nepodarilo!");
-                }
-            } else {
-                Notification.show("Není co mazat!");
-            }
-        }
+    public void setOkCancelListener(OkCancelListener list) {
+        this.okCancelListener = list;
     }
-
+    
     public void setItem(Item it) {
         this.item = it;
         if (item != null) {
             fg.setItemDataSource(this.item);
         }
     }
-
+    
     public void doEnableButtons() {
         fieldsFL.setEnabled(false);
         fg.setEnabled(false);
@@ -636,5 +668,5 @@ public final class InputFormLayout<T> extends FormLayout {
 
         //this.refreshComboboxes();
     }
-
+    
 }

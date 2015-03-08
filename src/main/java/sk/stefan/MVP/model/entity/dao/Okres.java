@@ -2,9 +2,9 @@ package sk.stefan.MVP.model.entity.dao;
 
 import sk.stefan.interfaces.PresentationName;
 
-public class Okres implements PresentationName {
+public final class Okres implements PresentationName {
 
-    public static final String TN = "T_Okres";
+    public static final String TN = "t_okres";
     
     public static final String CLASS_PRESENTATION_NAME = "Okres";
 

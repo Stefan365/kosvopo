@@ -5,7 +5,7 @@ import sk.stefan.interfaces.PresentationName;
 
 public class PublicRole implements PresentationName {
 
-    public static final String TN = "T_Public_Role";
+    public static final String TN = "t_public_role";
     
     public static final String CLASS_PRESENTATION_NAME = "Verejná funkcia";
 
@@ -78,20 +78,18 @@ public class PublicRole implements PresentationName {
     @Override
     public String getPresentationName() {
 
-        UniRepo<PublicBody> pbRepo = new UniRepo<PublicBody>(PublicBody.class);
-        UniRepo<PublicPerson> ppRepo = new UniRepo<PublicPerson>(
+        UniRepo<PublicPerson> ppRepo = new UniRepo<>(
                 PublicPerson.class);
-        UniRepo<Tenure> tenRepo = new UniRepo<Tenure>(Tenure.class);
+        UniRepo<Tenure> tenRepo = new UniRepo<>(Tenure.class);
 
         if (public_body_id != null && public_person_id != null
                 && tenure_id != null) {
-            PublicBody pb = pbRepo.findOne(public_body_id);
             PublicPerson pp = ppRepo.findOne(public_person_id);
             Tenure ten = tenRepo.findOne(tenure_id);
-            return pb.getPresentationName() + ", " + pp.getPresentationName()
+            return pp.getPresentationName()
                     + ", " + ten.getPresentationName();
         } else {
-            return id + ", ";
+            return id + ", nedefinované";
         }
 
     }

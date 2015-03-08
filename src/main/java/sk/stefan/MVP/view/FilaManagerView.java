@@ -14,6 +14,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Table;
 import java.io.File;
+import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.SecurityServiceImpl;
 
 public class FilaManagerView extends VerticalLayout implements View {
 
@@ -22,13 +25,17 @@ public class FilaManagerView extends VerticalLayout implements View {
      */
     private static final long serialVersionUID = 4285768319781449707L;
 
-
+    private A_User user;
+    private SecurityService securityService;
+    
     private FilesystemContainer docs;
     private Table docList;
     private KomB2 docView;
     private HorizontalSplitPanel split;
 
     public FilaManagerView() {
+
+        securityService = new SecurityServiceImpl();
 
         this.initLayout();
         this.addComponent(NavigationComponent.getNavComp());
@@ -70,6 +77,13 @@ public class FilaManagerView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
+        
+        user = securityService.getCurrentUser();
+        if (user != null) {
+            //do nothing
+        } else {
+            NavigationComponent.getNavigator().navigateTo("vstupny");
+        }
     }
 
 }

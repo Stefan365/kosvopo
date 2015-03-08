@@ -6,7 +6,7 @@
 package sk.stefan.MVP.model.service;
 
 import java.util.List;
-import sk.stefan.MVP.model.entity.dao.User;
+import sk.stefan.MVP.model.entity.dao.A_User;
 
 /**
  *
@@ -19,7 +19,7 @@ public interface UserService {
      * @param login login uživatele
      * @return instanci uživatele, pokud v databázi existuje, jinak vrací null
      */
-    User getUserByLogin(String login);
+    A_User getUserByLogin(String login);
     
     /**
      * Uloží nového nebo aktualizuje stávajícího uživatele. Vrací jeho aktuální
@@ -27,7 +27,7 @@ public interface UserService {
      * @param user uživatel k uložení do databáze
      * @return aktuální verzi uživatele
      */
-    User save(User user);
+    A_User save(A_User user);
     
     
     /**
@@ -36,19 +36,19 @@ public interface UserService {
      * @param paramValue
      * @param user uživatel, ktermy ma jiz zmeneny vnitrni parametr hesla.
      */
-    public void modifyPassword(String paramName, String paramValue, User user);
+    public void modifyPassword(String paramName, String paramValue, A_User user);
     
     /**
      * Vrátí seznam všech uživatelů.
      * @return seznam vrácených uživatelů.
      */
-    List<User> getAllUsers();
+    List<A_User> getAllUsers();
     
     /**
      * Smaže uživatele a jeho úkoly.
      * @param user mazaný uživatel.     * 
      */
-    public void delete(User user);    
+    public void delete(A_User user);    
 
     /**
      * Vrací hash hesla uživatele podle e-mailu.

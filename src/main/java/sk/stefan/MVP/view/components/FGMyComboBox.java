@@ -20,161 +20,161 @@ import com.vaadin.ui.TextField;
 
 public class FGMyComboBox<T, E> extends ComboBox {
 
-	private Item item; // aktualne vybrany objekt zo SQLcontaineru
-	private Property prop;
-	
-	private String fn; // field name
-	private TextField tf; // pomocny field, nebude viditelny. kvoli konvertoru,
-						// ktory sa obtiazne implementuje na ComboBox.
-	private FieldGroup fg;
-	private Class<?> clsT;
-	private Class<?> clsE;
-	private Type typE;
-	private String propertyETypeName;
-	private List<E> listEnt;
-	
-	/**
-	 * 
-	 * Konstruktor 
-	 */
-	public FGMyComboBox(Class<?> clsT, Class<?> clsE, FieldGroup fg, String fn, List<E> listEnt) {
-		super(fn);
-		this.fn = fn;
+    private Item item; // aktualne vybrany objekt zo SQLcontaineru
+    private Property prop;
 
-		this.clsT = clsT;
-		this.clsE = clsE;
-		this.tf = new TextField();
+    private String fn; // field name
+    private TextField tf; // pomocny field, nebude viditelny. kvoli konvertoru,
+    // ktory sa obtiazne implementuje na ComboBox.
+    private FieldGroup fg;
+    private Class<?> clsT;
+    private Class<?> clsE;
+    private Type typE;
+    private String propertyETypeName;
+    private List<E> listEnt;
 
-		this.listEnt = listEnt;
-		this.fg = fg;
-		this.involveFg();
-		try {
-			typE = (Class<?>) clsE;
-			propertyETypeName = ((Class<?>) typE).getCanonicalName();
-			this.initConverter();
-			this.initListener();
-			this.initCombo();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		}
+    /**
+     *
+     * Konstruktor
+     */
+    public FGMyComboBox(Class<?> clsT, Class<?> clsE, FieldGroup fg, String fn, List<E> listEnt) {
+        super(fn);
+        this.fn = fn;
 
-	}
-	
-	//3.
-	@SuppressWarnings("unchecked")
-	public void setItemDataSource(Item item) {
-		//this.item = hlasovaniaPoslTB.getItem(hlasId));;
-		this.item = item;
-		fg.setItemDataSource(item);
-		
-	}
-	
-	/**
-	 * Zapletie BFG do celkovej struktury:  
-	 **/
-	private void involveFg() {
-		this.fg.bind(tf, fn);
-		this.setValue(tf.getValue());
-	}
+        this.clsT = clsT;
+        this.clsE = clsE;
+        this.tf = new TextField();
 
-	// 1.
-	/**
-	 * Vytvori pole pre sql.Date a zviaze ho s BFG.
-	 * 
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * 
-	 */
-	// public ComboBox bindComboBoxField(String fn, BeanFieldGroup<T> bfg, List<E> listEnt)
-	public void initCombo() {
+        this.listEnt = listEnt;
+        this.fg = fg;
+        this.involveFg();
+        try {
+            typE = (Class<?>) clsE;
+            propertyETypeName = ((Class<?>) typE).getCanonicalName();
+            this.initConverter();
+            this.initListener();
+            this.initCombo();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
 
-		if (listEnt != null) {
-			for (E et : listEnt) {
-				this.addItem(et);
-				if (clsE.toString().contains("java.lang.String")
-						|| clsE.toString().contains("java.lang.Boolean")) {
-					this.setItemCaption(et, et.toString());
-				} else {
-					this.setItemCaption(et,
-							((PresentationName) et).getPresentationName());
-				}
-			}
-		}
-		this.initComboVal();
-		this.setImmediate(true);
-		this.setNewItemsAllowed(false);
-		this.setTextInputAllowed(true);
-		this.setNullSelectionAllowed(false);
-		this.setVisible(true);
-		
-	}
+    }
 
-	
-	//2.
-	/**
-	 * Inicializacia konvertoru pre pomocny field ()
-	 **/
-	public void initConverter() {
-		
-		switch (propertyETypeName) {
-		case "java.lang.Boolean":
-			//tf.setConverter(new MyBooleanConverter());
-			tf.setConverter(new StringToBooleanConverter());
-			break;
-		default:
+    //3.
+    @SuppressWarnings("unchecked")
+    public void setItemDataSource(Item item) {
+        //this.item = hlasovaniaPoslTB.getItem(hlasId));;
+        this.item = item;
+        fg.setItemDataSource(item);
+
+    }
+
+    /**
+     * Zapletie BFG do celkovej struktury:  
+	 *
+     */
+    private void involveFg() {
+        this.fg.bind(tf, fn);
+        this.setValue(tf.getValue());
+    }
+
+    // 1.
+    /**
+     * Vytvori pole pre sql.Date a zviaze ho s BFG.
+     *
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     *
+     */
+    // public ComboBox bindComboBoxField(String fn, BeanFieldGroup<T> bfg, List<E> listEnt)
+    public void initCombo() {
+
+        if (listEnt != null) {
+            for (E et : listEnt) {
+                this.addItem(et);
+                if (clsE.toString().contains("java.lang.String")
+                        || clsE.toString().contains("java.lang.Boolean")) {
+                    this.setItemCaption(et, et.toString());
+                } else {
+                    this.setItemCaption(et,
+                            ((PresentationName) et).getPresentationName());
+                }
+            }
+        }
+        this.initComboVal();
+        this.setImmediate(true);
+        this.setNewItemsAllowed(false);
+        this.setTextInputAllowed(true);
+        this.setNullSelectionAllowed(false);
+        this.setVisible(true);
+
+    }
+
+    //2.
+    /**
+     * Inicializacia konvertoru pre pomocny field ()
+	 *
+     */
+    public void initConverter() {
+
+        switch (propertyETypeName) {
+            case "java.lang.Boolean":
+                //tf.setConverter(new MyBooleanConverter());
+                tf.setConverter(new StringToBooleanConverter());
+                break;
+            default:
 			// prirad vhodny konvertor podla typu entity:
-			// pre kazdy typ entity tu bude jeden konvertor.
-		}
+            // pre kazdy typ entity tu bude jeden konvertor.
+        }
 
-	}
+    }
 
-	//4.
-	/**
-	 * Inicializuje value change listener COmboBoxu
-	 * 
-	 * */
-	public void initListener() {
-		this.addValueChangeListener(new ValueChangeListener() {
+    //4.
+    /**
+     * Inicializuje value change listener COmboBoxu
+     *
+     *
+     */
+    public void initListener() {
+        this.addValueChangeListener(new ValueChangeListener() {
 
-			@Override
-			public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
-				// TODO Auto-generated method stub
-				@SuppressWarnings("unchecked")
-				E val = (E) event.getProperty().getValue();
-				
-				switch (propertyETypeName) {
-				case "java.lang.Boolean":
-					//String s = (tf.getConverter()).convertToPresentation((Boolean) val, String.class, new Locale("EN"));
-					String s = MyBooleanConverter.convertToPresentation((Boolean)val);
-					tf.setValue(s);
-					break;
-				default:
+            @Override
+            public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
+                // TODO Auto-generated method stub
+                @SuppressWarnings("unchecked")
+                E val = (E) event.getProperty().getValue();
+
+                switch (propertyETypeName) {
+                    case "java.lang.Boolean":
+                        //String s = (tf.getConverter()).convertToPresentation((Boolean) val, String.class, new Locale("EN"));
+                        String s = MyBooleanConverter.convertToPresentation((Boolean) val);
+                        tf.setValue(s);
+                        break;
+                    default:
 					// prirad vhodny konvertor podla typu entity:
-					// pre kazdy typ entity tu bude jeden konvertor.
-				}
-			}
+                    // pre kazdy typ entity tu bude jeden konvertor.
+                }
+            }
 
-		});
+        });
 
-	}
-	
-	//5.
-	/**
-	 * Sluzi na nastavenie hodnoty v comboBoxe pri zobrazeni 
-	 * formulara.
-	 * 
-	 * 
-	 */
-	private void initComboVal(){
-		String methodName = PomDao.getG_SetterName(fn, "get");
-		
-		
-		if (fg.getItemDataSource() != null) {
-			item = fg.getItemDataSource();//.getItemProperty(id); //property
-			prop = item.getItemProperty(fn);
-		} else {
-			return;
-		}
+    }
+
+    //5.
+    /**
+     * Sluzi na nastavenie hodnoty v comboBoxe pri zobrazeni formulara.
+     *
+     *
+     */
+    private void initComboVal() {
+        String methodName = PomDao.getG_SetterName(fn, "get");
+
+        if (fg.getItemDataSource() != null) {
+            item = fg.getItemDataSource();//.getItemProperty(id); //property
+            prop = item.getItemProperty(fn);
+        } else {
+            return;
+        }
 //		item = hlasovaniaPoslTB.getValue();
 //
 //		if (item != null) {
@@ -187,10 +187,8 @@ public class FGMyComboBox<T, E> extends ComboBox {
 //			saveBT1.setEnabled(false);
 //		}
 
-		
-		
-		if (item != null) {
-			System.out.println("KAROLKO VITAZI!1");
+        if (item != null) {
+            System.out.println("KAROLKO VITAZI!1");
 //			try {
 //				Object item = event.getProperty().getValue();
 ////				Item item = table.getItem(item);
@@ -206,10 +204,7 @@ public class FGMyComboBox<T, E> extends ComboBox {
 //					| SecurityException e) {
 //				e.printStackTrace();
 //			}
-		}
-	}
-
-	
-	
+        }
+    }
 
 }

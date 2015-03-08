@@ -91,6 +91,7 @@ public class Kos3View extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
+
     }
 
 }

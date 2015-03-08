@@ -1,11 +1,16 @@
 package sk.stefan.MVP.view.components;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import java.util.List;
-
-import sk.stefan.listeners.GeneralComponentListener;
-import sk.stefan.enums.NamesOfVoteDecisions;
-import sk.stefan.utils.PomT;
-import sk.stefan.utils.PomVaadin;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
@@ -13,19 +18,13 @@ import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.enums.NamesOfVoteDecisions;
+import sk.stefan.enums.VoteActions;
+import sk.stefan.listeners.GeneralComponentListener;
+import sk.stefan.utils.PomT;
+import sk.stefan.utils.PomVaadin;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-
-public class AddVoteOfRoleComponent extends VerticalLayout implements
+public final class AddVoteOfRoleComponent extends VerticalLayout implements
         GeneralComponentListener {
 
     /**
@@ -50,7 +49,7 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
     private PublicRole pr;
     private Vote vo;
     private VoteOfRole vor;
-    private String dec;
+    private VoteActions dec;
 
     // komponenty:
     private ComboBox publicRoleCB, voteCB, decisionCB;
@@ -62,6 +61,7 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
      * Konstruktor
      *
      *
+     * @param pp
      */
     public AddVoteOfRoleComponent(PublicPerson pp) {
         this.pp = pp;
@@ -87,7 +87,7 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
 
     public void initComponent() {
 
-        vorRepo = new UniRepo<VoteOfRole>(VoteOfRole.class);
+        vorRepo = new UniRepo<>(VoteOfRole.class);
         voteService = new VoteService();
         publicRoleService = new PublicRoleService();
 
@@ -137,19 +137,25 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
     private void initButtonsListeners() {
 
         saveBT.addClickListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
+            @Override
             public void buttonClick(ClickEvent event) {
                 doSave();
             }
         });
 
         editBT.addClickListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
+            @Override
             public void buttonClick(ClickEvent event) {
                 enableSave(true);
             }
         });
 
         doneBT.addClickListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
+            @Override
             public void buttonClick(ClickEvent event) {
                 if (vor == null || vor.getId() != null && editBT.isEnabled()) {
                     enableSave(true);
@@ -175,9 +181,9 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
 
         pr = (PublicRole) publicRoleCB.getValue();
         vo = (Vote) voteCB.getValue();
-        dec = (String) decisionCB.getValue();
+        dec = (VoteActions) decisionCB.getValue();
 
-		//Notification.show("vor:" + (vor==null));
+        //Notification.show("vor:" + (vor==null));
         //Notification.show("pr:" + (pr==null));
         vor = new VoteOfRole();
 
@@ -237,6 +243,7 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
     private void initCombosListeners() {
 
         publicRoleCB.addValueChangeListener(new ValueChangeListener() {
+            private static final long serialVersionUID = 1L;
 
             @Override
             public void valueChange(ValueChangeEvent event) {
@@ -248,6 +255,7 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
         });
 
         voteCB.addValueChangeListener(new ValueChangeListener() {
+            private static final long serialVersionUID = 1L;
 
             @Override
             public void valueChange(ValueChangeEvent event) {
@@ -256,10 +264,11 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
         });
 
         decisionCB.addValueChangeListener(new ValueChangeListener() {
+            private static final long serialVersionUID = 1L;
 
             @Override
             public void valueChange(ValueChangeEvent event) {
-                dec = (String) event.getProperty().getValue();
+                dec = (VoteActions) event.getProperty().getValue();
             }
         });
 
@@ -286,7 +295,7 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
      *
      */
     private void setComboPublicRole(PublicPerson pp) {
-		// 1. combo: PublicRole.
+        // 1. combo: PublicRole.
         // if (pp != null) {
         if (historyCHB.getValue()) {
             lpr = publicRoleService.getAllPublicRolesOfPublicPerson(pp);
@@ -300,10 +309,10 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
      *
      */
     private void setComboVote(PublicRole pr) {
-		// 2. combo: Vote.
+        // 2. combo: Vote.
         // if (pr != null) {
         lvot = voteService.getAllVotesForPublicRole(pr);
-		//Notification.show("VELKOST:" + lvot.size());
+        //Notification.show("VELKOST:" + lvot.size());
         // }
         PomVaadin.initCombo(voteCB, lvot);
     }
@@ -325,7 +334,7 @@ public class AddVoteOfRoleComponent extends VerticalLayout implements
 
                 setComboPublicRole(pp);
                 setComboVote(null);
-				// Notification.show("Value changed:", valueString,
+                // Notification.show("Value changed:", valueString,
                 // Type.TRAY_NOTIFICATION);
             }
         });

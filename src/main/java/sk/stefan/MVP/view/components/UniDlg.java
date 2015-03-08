@@ -9,10 +9,9 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import sk.stefan.MVP.model.entity.dao.todo.Task;
-import sk.stefan.MVP.view.components.InputFormLayout;
-import sk.stefan.listeners.RenewBackgroundListener;
+import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
+import sk.stefan.listeners.RenewBackgroundListener;
 
 /**
  * Dialog pro editaci vlastnosti jedne ulohy
@@ -20,13 +19,14 @@ import sk.stefan.listeners.OkCancelListener;
  * @author Marek Svarc
  * @author Stefan
  */
-public class TaskDlg extends Window implements OkCancelListener {
+public class UniDlg extends Window implements OkCancelListener, ObnovFilterListener {
+
     private static final long serialVersionUID = 1L;
 
     /**
      * Formulář na zadávání/úpravu úkolů.
      */
-    final private InputFormLayout<Task> flInputForm;
+    //final private InputFormLayout<? extends Object> flInputForm;
 
     /**
      * Listener na obnovu základního view, ze kterého se do fromulářového okna
@@ -39,19 +39,32 @@ public class TaskDlg extends Window implements OkCancelListener {
      * Konstruktor.
      *
      * @param caption nadpis okna
-     * @param sqlCont sqlcontainer na kterém je postavena tabulka s úkoly.
-     * @param item vybraná položka z SQLcontaineru (řádek z tabulky).
+     * @param inputFl
      * @param lis Listener na obnovu view.
-     * @param cls trieda entity, ktorej sa input-form tyka.
      */
-    public TaskDlg(String caption, SQLContainer sqlCont, Item item, RenewBackgroundListener lis, Class<?> cls) {
+    public UniDlg(String caption, InputFormLayout<? extends Object> inputFl, RenewBackgroundListener lis) {
         this.listener = lis;
         this.setCaption(caption);
         setModal(true);
-        flInputForm = new InputFormLayout<>(cls, item, sqlCont, this, null);
+        inputFl.setOkCancelListener(this);
+//        InputFormLayout<> InputFormFl = new InputFormLayout<>(cls, item, sqlCont, this, null);
 
         // obsah dialogu
-        VerticalLayout content = new VerticalLayout(flInputForm);
+        VerticalLayout content = new VerticalLayout(inputFl);
+        content.setSpacing(true);
+        content.setMargin(true);
+
+        setContent(content);
+    }
+
+    public UniDlg(PasswordForm passFm, String caption, RenewBackgroundListener lis) {
+        this.listener = lis;
+        this.setCaption(caption);
+        setModal(true);
+//        flInputForm = new InputFormLayout<>(cls, item, sqlCont, this, null);
+
+        // obsah dialogu
+        VerticalLayout content = new VerticalLayout(passFm);
         content.setSpacing(true);
         content.setMargin(true);
 
@@ -60,13 +73,13 @@ public class TaskDlg extends Window implements OkCancelListener {
 
     // pozri na popis OkCancelListener
     @Override
-    public void doAdditionalOkAction() {
+    public void doOkAction() {
         listener.refreshTodo();
         close();
     }
 
     @Override
-    public void doAdditionalCancelAction() {
+    public void doCancelAction() {
         //listener.refreshTodo();
         close();
     }

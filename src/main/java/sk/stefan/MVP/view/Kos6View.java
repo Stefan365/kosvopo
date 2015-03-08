@@ -36,7 +36,7 @@ import com.vaadin.ui.Upload.ProgressListener;
 
 import java.io.File;
 import java.io.Serializable;
-import sk.stefan.MVP.model.entity.dao.User;
+import sk.stefan.MVP.model.entity.dao.A_User;
 
 public class Kos6View extends VerticalLayout implements View {
 
@@ -310,14 +310,14 @@ public class Kos6View extends VerticalLayout implements View {
     public void propertyModeExample(VerticalLayout layout) {
 
         // Have a bean container to put the beans in
-        BeanItemContainer<User> container = new BeanItemContainer<User>(
-                User.class);
+        BeanItemContainer<A_User> container = new BeanItemContainer<A_User>(
+                A_User.class);
 
         // Put some example data in it
-        container.addItem(new User("Mercury"));
-        container.addItem(new User("Venus"));
-        container.addItem(new User("Earth"));
-        container.addItem(new User("Mars"));
+        container.addItem(new A_User("Mercury"));
+        container.addItem(new A_User("Venus"));
+        container.addItem(new A_User("Earth"));
+        container.addItem(new A_User("Mars"));
         // Create a selection component bound to the container
         ComboBox select = new ComboBox("Los Planets", container);
 		// Set the caption mode to read the caption directly

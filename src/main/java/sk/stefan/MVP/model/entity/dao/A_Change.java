@@ -1,10 +1,9 @@
 package sk.stefan.MVP.model.entity.dao;
 
+import java.util.Date;
 import sk.stefan.interfaces.PresentationName;
 
-import java.util.Date;
-
-public class Change implements PresentationName {
+public class A_Change implements PresentationName {
 
     public static final String TN = "a_change";
 
@@ -15,10 +14,12 @@ public class Change implements PresentationName {
     private Integer user_id;
 
     private String table_name;
-
+    
+    private String column_name;
+    
     private Integer row_id;
 
-    private Boolean visible_status;
+    private String new_value;
 
     //getters:
     public Integer getId() {
@@ -39,10 +40,6 @@ public class Change implements PresentationName {
 
     public Integer getRow_id() {
         return this.row_id;
-    }
-
-    public Boolean getVisible_status() {
-        return this.visible_status;
     }
 
     public static String getTN() {
@@ -70,13 +67,38 @@ public class Change implements PresentationName {
         this.row_id = row_id;
     }
 
-    public void setVisible_status(Boolean vs) {
-        this.visible_status = vs;
-    }
 
     @Override
     public String getPresentationName() {
 
         return id + ", " + table_name + ", " + date_stamp;
+    }
+
+    /**
+     * @return the column_name
+     */
+    public String getColumn_name() {
+        return column_name;
+    }
+
+    /**
+     * @param column_name the column_name to set
+     */
+    public void setColumn_name(String column_name) {
+        this.column_name = column_name;
+    }
+
+    /**
+     * @return the old_value
+     */
+    public String getOld_value() {
+        return new_value;
+    }
+
+    /**
+     * @param old_value the old_value to set
+     */
+    public void setOld_value(String old_value) {
+        this.new_value = old_value;
     }
 }

@@ -14,6 +14,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Date;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.enums.Stability;
 
 public class DruhyView extends VerticalLayout implements View {
 
@@ -22,7 +23,6 @@ public class DruhyView extends VerticalLayout implements View {
 
         //navigator = nav;
         this.setMargin(true);
-
         // A.MENUBAR
         MenuBar menubar = new MenuBar();
         menubar.setWidth(25.0f, Sizeable.Unit.PERCENTAGE);

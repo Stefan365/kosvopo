@@ -14,7 +14,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-import sk.stefan.MVP.model.entity.dao.User;
+import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.model.service.UserService;
@@ -64,7 +64,7 @@ public class LoginView extends VerticalLayout implements View {
             @Override
             public void buttonClick(ClickEvent event) {
 
-                User user;
+                A_User user;
 
                 user = userService.getUserByLogin(tfEmail.getValue());
 

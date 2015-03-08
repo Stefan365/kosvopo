@@ -1,13 +1,13 @@
 
 package sk.stefan.MVP.model.entity.dao;
 
-import java.util.Date;
+import java.sql.Date;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.interfaces.PresentationName;
 
-public class UserRole implements PresentationName {
+public class A_UserRole implements PresentationName {
 
-    public static final String TN = "A_User_Role";
+    public static final String TN = "a_user_role";
 
     public static final String CLASS_PRESENTATION_NAME = "Rola užívateľa";
     
@@ -70,16 +70,16 @@ public class UserRole implements PresentationName {
     @Override
     public String getPresentationName() {
 
-        UniRepo<User> usrRepo = new UniRepo<User>(User.class);
-        UniRepo<Role> rolRepo = new UniRepo<Role>(Role.class);
+        UniRepo<A_User> usrRepo = new UniRepo<>(A_User.class);
+        UniRepo<A_Role> rolRepo = new UniRepo<>(A_Role.class);
 
         if (user_id != null && role_id != null) {
-            User u = usrRepo.findOne(user_id);
-            Role r = rolRepo.findOne(role_id);
-            return u.getPresentationName() + ", " + r.getPresentationName()
-                    + ", " + since + ((till == null) ? "" : (", " + till));
+            A_User u = usrRepo.findOne(user_id);
+            A_Role r = rolRepo.findOne(role_id);
+            return u.getPresentationName() + ", " + r.getPresentationName() + ", " + id;
+//                    + ", " + since + ((till == null) ? "" : (", " + till));
         } else {
-            return id + ", ";
+            return id + ", nedefinované";
         }
 
     }

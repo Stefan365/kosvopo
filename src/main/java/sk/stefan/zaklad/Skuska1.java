@@ -23,7 +23,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
-import sk.stefan.MVP.model.entity.dao.User;
+import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.interfaces.PresentationName;
@@ -654,11 +654,11 @@ public class Skuska1<T> {
             uniRepo.updateParam("visible", "false", "6");
             uniRepo.updateParam("mestka_cast", null, "8");
 
-            UniRepo<User> uniRepo1 = new UniRepo<>(User.class);
+            UniRepo<A_User> uniRepo1 = new UniRepo<>(A_User.class);
             uniRepo.updateParam("password", "KOKOSOVO", "1");
 
-            List<User> allUs = uniRepo1.findAll();
-            for (User u : allUs) {
+            List<A_User> allUs = uniRepo1.findAll();
+            for (A_User u : allUs) {
                 log.info(u.getPresentationName() + " : " + Arrays.toString(u.getPassword()));
             }
         } catch (SQLException ex) {

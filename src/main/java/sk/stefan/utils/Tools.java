@@ -365,16 +365,14 @@ public class Tools {
         //fileN = tabName.toLowerCase() + ".properties";
         //fileN = "\\WEB-INF\\" + tabName.toLowerCase() + ".properties";
 //        fileN = "/WEB-INF/" + tabName.toLowerCase() + ".properties";
-
-        fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\" + tabName.toLowerCase() + ".properties";
 //        fileN = "/" + tabName.toLowerCase() + ".properties";
+        
+        fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\" 
+                + tabName.toLowerCase() + ".properties";
 
         Properties prop = new Properties();
-
         InputStream input = new FileInputStream(fileN);
-
-//        prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(tabName.toLowerCase() + ".properties"));
-//        prop.load(getServletContext().getResourceAsStream("/WEB-INF/filename.properties"));
+        
         prop.load(input);
         return prop;
     }
@@ -396,6 +394,19 @@ public class Tools {
         prop.load(input);
         input.close();
         return prop;
+    }
+    
+    public static String getTableDepictNames(String tabName) throws FileNotFoundException, IOException {
+        InputStream input;
+        String fileN;
+        fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\nazvyTabuliek\\"
+                + tabName.toLowerCase() + ".properties";
+        Properties prop = new Properties();
+        input = new FileInputStream(fileN);
+        prop.load(input);
+        input.close();
+        
+        return prop.getProperty(tabName);
     }
 
 }

@@ -3,7 +3,6 @@ package sk.stefan.MVP.view;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import sk.stefan.MVP.view.components.AddVoteOfRoleComponent;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
@@ -33,7 +32,8 @@ import com.vaadin.ui.TextField;
 
 import java.sql.SQLException;
 import java.util.List;
-import sk.stefan.MVP.model.entity.dao.User;
+import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.view.components.AddVoteOfRoleComponent;
 
 /**
  * Rozhraní pro výběr poslanců (veřejných osob) k podrobnějšímu sledování.
@@ -42,8 +42,8 @@ import sk.stefan.MVP.model.entity.dao.User;
  */
 public class K4_PoslanciView extends VerticalLayout implements View {
 
-    public EntityProvider<User> vitemprov;
-    public EntityContainer<User> vitemcontainer;
+    public EntityProvider<A_User> vitemprov;
+    public EntityContainer<A_User> vitemcontainer;
     public EntityManagerFactory emf;
     public EntityManager em;
 
@@ -62,7 +62,7 @@ public class K4_PoslanciView extends VerticalLayout implements View {
     private BeanFieldGroup<PublicPerson2> bfg;
     private Button chooseBT, addPpVoteBT;
 
-    private AddVoteOfRoleComponent avorc;
+   private AddVoteOfRoleComponent avorc;
 
     /**
      *

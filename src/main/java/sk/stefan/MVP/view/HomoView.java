@@ -23,6 +23,9 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.ComboBox;
+import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.SecurityServiceImpl;
 
 public class HomoView extends VerticalLayout implements View {
 
@@ -30,6 +33,8 @@ public class HomoView extends VerticalLayout implements View {
      *
      */
     private static final long serialVersionUID = 1L;
+    private A_User user;
+    private SecurityService securityService;
 
     private ComboBox okresBox;
     private Label lab;
@@ -49,6 +54,7 @@ public class HomoView extends VerticalLayout implements View {
 
     //Navigator navigator;
     public HomoView() {
+        securityService = new SecurityServiceImpl();
 
         okresRepo = new UniRepo<>(Okres.class);
 
@@ -275,6 +281,13 @@ public class HomoView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
+        user = securityService.getCurrentUser();
+        if (user != null) {
+            //do nothing
+        } else {
+            NavigationComponent.getNavigator().navigateTo("vstupny");
+        }
+
     }
 
 }

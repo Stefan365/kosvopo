@@ -5,11 +5,11 @@ import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.interfaces.PresentationName;
 
-public class User implements Serializable, PresentationName {
+public class A_User implements Serializable, PresentationName {
 
     public static final long serialVersionUID = 1L;
 
-    public static final String TN = "A_User";
+    public static final String TN = "a_user";
     
     private Integer id;
 
@@ -23,9 +23,10 @@ public class User implements Serializable, PresentationName {
 
     private byte[] password;
     
+    
     private final SecurityService securityService = new SecurityServiceImpl();
 
-    public User(String fn, String ln, String em, String lg, String pw) {
+    public A_User(String fn, String ln, String em, String lg, String pw) {
         this.first_name = fn;
         this.last_name = ln;
         this.e_mail = em;
@@ -33,11 +34,11 @@ public class User implements Serializable, PresentationName {
         this.password = securityService.encryptPassword(pw);
     }
 
-    public User(String meno) {
+    public A_User(String meno) {
         this.first_name = meno;
     }
 
-    public User() {
+    public A_User() {
         
     }
 

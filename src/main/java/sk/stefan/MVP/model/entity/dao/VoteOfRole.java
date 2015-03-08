@@ -1,11 +1,12 @@
 package sk.stefan.MVP.model.entity.dao;
 
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.enums.VoteActions;
 import sk.stefan.interfaces.PresentationName;
 
 public class VoteOfRole implements PresentationName {
 
-    public static final String TN = "T_Vote_Of_Role";
+    public static final String TN = "t_vote_of_role";
 
     public static final String CLASS_PRESENTATION_NAME = "Hlasovaneie verejného činiteľa";
 
@@ -15,7 +16,7 @@ public class VoteOfRole implements PresentationName {
 
     private Integer vote_id;
 
-    private String decision;
+    private VoteActions decision;
 
     private Boolean visible;
 
@@ -31,15 +32,15 @@ public class VoteOfRole implements PresentationName {
     public Integer getVote_id() {
         return this.vote_id;
     }
-
-    public String getDecision() {
-        return this.decision;
+    public VoteActions getDecision() {
+        return decision;
     }
 
     public Boolean getVisible() {
         return this.visible;
     }
 
+    
     public static String getTN() {
         return TN;
     }
@@ -57,21 +58,25 @@ public class VoteOfRole implements PresentationName {
         this.vote_id = votid;
     }
 
-    public void setDecision(String dec) {
-        this.decision = dec;
+    public void setDecision(VoteActions decision) {
+        this.decision = decision;
     }
 
     public void setVisible(Boolean vis) {
         this.visible = vis;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getPresentationName() {
 
-        UniRepo<PublicRole> prRepo = new UniRepo<PublicRole>(PublicRole.class);
-        UniRepo<PublicPerson> ppRepo = new UniRepo<PublicPerson>(
+        UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
+        UniRepo<PublicPerson> ppRepo = new UniRepo<>(
                 PublicPerson.class);
-        UniRepo<Vote> votRepo = new UniRepo<Vote>(Vote.class);
+        UniRepo<Vote> votRepo = new UniRepo<>(Vote.class);
 
         if (public_role_id != null) {
             PublicRole pr = prRepo.findOne(public_role_id);
@@ -80,9 +85,10 @@ public class VoteOfRole implements PresentationName {
 
             return pp.getPresentationName() + ", " + vot.getPresentationName();
         } else {
-            return id + ", ";
+            return id + ", nedefinované";
         }
 
     }
+
 
 }
