@@ -18,7 +18,7 @@ import com.vaadin.data.util.converter.StringToBooleanConverter;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.TextField;
 
-public class FGMyComboBox<T, E> extends ComboBox {
+public class TBD_FGMyComboBox<T, E> extends ComboBox {
 
     private Item item; // aktualne vybrany objekt zo SQLcontaineru
     private Property prop;
@@ -37,7 +37,7 @@ public class FGMyComboBox<T, E> extends ComboBox {
      *
      * Konstruktor
      */
-    public FGMyComboBox(Class<?> clsT, Class<?> clsE, FieldGroup fg, String fn, List<E> listEnt) {
+    public TBD_FGMyComboBox(Class<?> clsT, Class<?> clsE, FieldGroup fg, String fn, List<E> listEnt) {
         super(fn);
         this.fn = fn;
 

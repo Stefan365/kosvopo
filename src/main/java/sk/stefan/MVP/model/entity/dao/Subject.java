@@ -1,5 +1,7 @@
 package sk.stefan.MVP.model.entity.dao;
 
+import java.util.List;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.interfaces.PresentationName;
 
 public class Subject implements PresentationName {
@@ -76,7 +78,19 @@ public class Subject implements PresentationName {
 
     @Override
     public String getPresentationName() {
-        return this.brief_description;
+        UniRepo<PublicBody> pbRepo = new UniRepo<>(PublicBody.class);
+        UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
+        
+        PublicRole pr = prRepo.findOne(this.public_role_id);
+        PublicBody pb = null;
+        if(pr != null){
+            pb = pbRepo.findOne(pr.getPublic_body_id());
+        }
+        String s = this.brief_description;
+        if (pb != null){
+            s += pb.getPresentationName();
+        }
+        return s;
     }
 
 }

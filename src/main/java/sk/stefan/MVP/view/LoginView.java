@@ -14,12 +14,20 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.UserServiceImpl;
+import sk.stefan.MVP.view.components.InputOptionGroup;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.enums.UserType;
+import sk.stefan.enums.VoteResult;
 import sk.stefan.utils.Tools;
 
 /**
@@ -28,24 +36,27 @@ import sk.stefan.utils.Tools;
 @SuppressWarnings("serial")
 public class LoginView extends VerticalLayout implements View {
 
+    private static final Logger log = Logger.getLogger(LoginView.class);
+
     private SecurityService securityService;
 
     private UserService userService;
 
-    private Navigator nav;
+    private final Navigator nav;
 
     private Button loginBt;
 
-    /**
-     * Textové pole pro zadani uzivatelskeho emailu
-     */
-    private TextField tfEmail;
+    private TextField emailTf;
 
-    /**
-     * Textové pole pro zadání hesla
-     */
-    private PasswordField tfPassword;
+    private PasswordField passwordPf;
 
+    private InputOptionGroup<Integer> userRoleOg;
+
+    private HorizontalLayout buttonsHl;
+    
+    private VerticalLayout formVl;
+    
+    
     public LoginView(final Navigator nav) {
 
         this.nav = nav;
@@ -55,9 +66,30 @@ public class LoginView extends VerticalLayout implements View {
         securityService = new SecurityServiceImpl();
         userService = new UserServiceImpl();
 
+        try {
+            this.initOptionGroup();
+            this.initFields();
+            this.initLayout();
+        } catch (NoSuchMethodException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+    }
+
+    private void initLayout(){
+        
+        formVl = new VerticalLayout(emailTf, passwordPf, this.userRoleOg, buttonsHl);
+        formVl.setMargin(true);
+        formVl.setSpacing(true);
+
+        this.addComponent(Tools.createPanelCaption("Prihlásenie sa do KOSVOPO5"));
+        this.addComponent(new Panel(formVl));
+        this.setWidth(300, Sizeable.Unit.PIXELS);
+    
+    }
+    private void initFields() {
         // Vytvareni komponent
-        tfEmail = Tools.createFormTextField("login", true);
-        tfPassword = Tools.createFormPasswordField("Heslo", true);
+        emailTf = Tools.createFormTextField("login", true);
+        passwordPf = Tools.createFormPasswordField("Heslo", true);
 
         loginBt = new Button("Prihlásiť", new Button.ClickListener() {
 
@@ -66,11 +98,13 @@ public class LoginView extends VerticalLayout implements View {
 
                 A_User user;
 
-                user = userService.getUserByLogin(tfEmail.getValue());
+                user = userService.getUserByLogin(emailTf.getValue());
 
                 if (user != null) {
                     byte[] userPwHash = userService.getEncPasswordByLogin(user.getLogin());
-                    if (securityService.checkPassword(tfPassword.getValue(), userPwHash)) {
+                    
+                    if (true) {
+//                    if (securityService.checkPassword(passwordPf.getValue(), userPwHash)) {
                         securityService.login(user);
                         obohatNavigator();
                         NavigationComponent.getLoginBut().setCaption("logout");
@@ -90,18 +124,32 @@ public class LoginView extends VerticalLayout implements View {
         loginBt.setSizeFull();
 
         // Zarovnani komponent na stranku
-        HorizontalLayout hlButtons = new HorizontalLayout(loginBt);
-        hlButtons.setSizeFull();
-        hlButtons.setSpacing(true);
-        hlButtons.setExpandRatio(loginBt, 1.0f);
+        buttonsHl = new HorizontalLayout(loginBt);
+        buttonsHl.setSizeFull();
+        buttonsHl.setSpacing(true);
+        buttonsHl.setExpandRatio(loginBt, 1.0f);
 
-        VerticalLayout vlForm = new VerticalLayout(tfEmail, tfPassword, loginBt);
-        vlForm.setMargin(true);
-        vlForm.setSpacing(true);
+    }
 
-        this.addComponent(Tools.createPanelCaption("Prihlásenie sa do KOSVOPO5"));
-        this.addComponent(new Panel(vlForm));
-        this.setWidth(300, Sizeable.Unit.PIXELS);
+    private void initOptionGroup() throws NoSuchMethodException {
+        try {
+            Class<?> cls = UserType.class;
+            Method getNm = cls.getDeclaredMethod("getNames");
+            Method getOm = cls.getDeclaredMethod("getOrdinals");
+            List<String> names = (List<String>) getNm.invoke(null);
+            List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
+            Map<String, Integer> map = Tools.makeEnumMap(names, ordinals);
+            
+            this.userRoleOg = new InputOptionGroup<Integer>(map);
+//            this.userRoleOg.select(UserType.values()[0]);
+//            this.userRoleOg.select(0);
+              this.userRoleOg.setValue(0);
+            
+            
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+
     }
 
     /**
@@ -119,10 +167,9 @@ public class LoginView extends VerticalLayout implements View {
 
     }
 
-
     @Override
     public void enter(ViewChangeEvent event) {
-        tfPassword.setValue("");
+        passwordPf.setValue("");
     }
 
 }

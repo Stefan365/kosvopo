@@ -2,6 +2,8 @@ package sk.stefan.MVP.model.entity.dao;
 
 import java.sql.Date;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.enums.PublicUsefulness;
+import sk.stefan.enums.Stability;
 import sk.stefan.interfaces.PresentationName;
 
 public class PersonClassification implements PresentationName {
@@ -16,9 +18,9 @@ public class PersonClassification implements PresentationName {
 
     private Integer public_person_id;
 
-    private Integer stability;
+    private Stability stability;
 
-    private Integer public_usefulness;
+    private PublicUsefulness public_usefulness;
 
     private Boolean visible;
 
@@ -35,11 +37,11 @@ public class PersonClassification implements PresentationName {
         return this.public_person_id;
     }
 
-    public Integer getStability() {
+    public Stability getStability() {
         return this.stability;
     }
 
-    public Integer getPublic_usefulness() {
+    public PublicUsefulness getPublic_usefulness() {
         return this.public_usefulness;
     }
 
@@ -64,11 +66,11 @@ public class PersonClassification implements PresentationName {
         this.public_person_id = ppid;
     }
 
-    public void setStability(Integer stab) {
+    public void setStability(Stability stab) {
         this.stability = stab;
     }
 
-    public void setPublic_usefulness(Integer usness) {
+    public void setPublic_usefulness(PublicUsefulness usness) {
         this.public_usefulness = usness;
     }
 

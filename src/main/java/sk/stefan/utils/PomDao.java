@@ -107,7 +107,11 @@ public class PomDao {
                 case "java.lang.Byte[]":
                     sb.append("Bytes");
                     break;
-                case "sk.stefan.enums.VoteResults":
+                case "sk.stefan.enums.VoteResult":
+                case "sk.stefan.enums.VoteAction":
+                case "sk.stefan.enums.Stability":
+                case "sk.stefan.enums.UserType":
+                case "sk.stefan.enums.PublicUsefulness":
                     sb.append("Short");
                     break;
                 default:

@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
-import sk.stefan.enums.VoteResults;
+import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.MyRepo;
 import sk.stefan.utils.PomDao;
 
@@ -430,7 +430,7 @@ public class UniRepo<T> implements MyRepo<T> {
                     if ("getShort".equals(rsMetName)) {
 
                         //entMethod.invoke(ent, rsMethod.invoke(rs, pn));
-                        entMethod.invoke(ent, VoteResults.values()[(Short) rsMethod.invoke(rs, pn)]);
+                        entMethod.invoke(ent, VoteResult.values()[(Short) rsMethod.invoke(rs, pn)]);
 
                     } else {
                         entMethod.invoke(ent, rsMethod.invoke(rs, pn));

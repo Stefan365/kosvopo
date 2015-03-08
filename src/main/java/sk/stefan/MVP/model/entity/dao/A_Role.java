@@ -1,14 +1,17 @@
 package sk.stefan.MVP.model.entity.dao;
 
+import sk.stefan.enums.UserType;
 import sk.stefan.interfaces.PresentationName;
 
 public class A_Role implements PresentationName {
 
     public static final String TN = "a_role";
-    
+
     public static final String CLASS_PRESENTATION_NAME = "Rola";
 
     private Integer id;
+
+    private UserType role;
 
     private String role_name;
 
@@ -17,6 +20,10 @@ public class A_Role implements PresentationName {
     //getters:
     public Integer getId() {
         return this.id;
+    }
+    
+    public UserType getRole() {
+        return role;
     }
 
     public String getRole_name() {
@@ -36,6 +43,10 @@ public class A_Role implements PresentationName {
         this.id = id;
     }
 
+    public void setRole(UserType role) {
+        this.role = role;
+    }
+
     public void setRole_name(String role_name) {
         this.role_name = role_name;
     }
@@ -49,5 +60,6 @@ public class A_Role implements PresentationName {
 
         return this.role_name;
     }
+
 
 }

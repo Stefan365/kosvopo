@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * 
  * @author lukas
  */
-public class User_log implements Serializable {
+public class TBD_User implements Serializable {
     
     static String SESSION_USER = "user";
     
@@ -37,11 +37,11 @@ public class User_log implements Serializable {
     
     private boolean admin;
     
-    private List<Task> tasks;
+    private List<TBD_Task> tasks;
 
-    public User_log() { }
+    public TBD_User() { }
     
-    public User_log(String email, String password) {
+    public TBD_User(String email, String password) {
 	this.email = email;
 	this.password = password;
     }
@@ -133,18 +133,18 @@ public class User_log implements Serializable {
     /**
      * @return the tasks
      */
-    public List<Task> getTasks() {
+    public List<TBD_Task> getTasks() {
 	return tasks;
     }
 
     /**
      * @param tasks the tasks to set
      */
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<TBD_Task> tasks) {
 	this.tasks = tasks;
     }
     
-    public void addTast(Task task) {
+    public void addTast(TBD_Task task) {
 	if (tasks == null) {
 	    tasks = new ArrayList<>();
 	}

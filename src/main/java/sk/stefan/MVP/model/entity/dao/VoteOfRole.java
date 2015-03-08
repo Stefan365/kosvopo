@@ -1,7 +1,7 @@
 package sk.stefan.MVP.model.entity.dao;
 
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.enums.VoteActions;
+import sk.stefan.enums.VoteAction;
 import sk.stefan.interfaces.PresentationName;
 
 public class VoteOfRole implements PresentationName {
@@ -16,7 +16,7 @@ public class VoteOfRole implements PresentationName {
 
     private Integer vote_id;
 
-    private VoteActions decision;
+    private VoteAction decision;
 
     private Boolean visible;
 
@@ -32,7 +32,7 @@ public class VoteOfRole implements PresentationName {
     public Integer getVote_id() {
         return this.vote_id;
     }
-    public VoteActions getDecision() {
+    public VoteAction getDecision() {
         return decision;
     }
 
@@ -58,7 +58,7 @@ public class VoteOfRole implements PresentationName {
         this.vote_id = votid;
     }
 
-    public void setDecision(VoteActions decision) {
+    public void setDecision(VoteAction decision) {
         this.decision = decision;
     }
 

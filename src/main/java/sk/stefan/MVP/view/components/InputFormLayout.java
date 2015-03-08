@@ -46,9 +46,9 @@ import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.converters.DateConverter;
-import sk.stefan.enums.TaskWarnings;
-import sk.stefan.enums.VoteActions;
-import sk.stefan.enums.VoteResults;
+import sk.stefan.enums.ZBD_TaskWarnings;
+import sk.stefan.enums.VoteAction;
+import sk.stefan.enums.VoteResult;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.utils.Tools;
@@ -64,7 +64,7 @@ import sk.stefan.utils.Tools;
  * @param <T> Daná třída T, pro kterou se formulář vytvoří
  */
 public final class InputFormLayout<T> extends FormLayout {
-    
+
     private static final Logger log = Logger.getLogger(InputFormLayout.class);
 
     /**
@@ -118,7 +118,7 @@ public final class InputFormLayout<T> extends FormLayout {
      * id této položky.
      */
     private Object itemId;
-    
+
     private String Tn;
 
     /**
@@ -156,7 +156,7 @@ public final class InputFormLayout<T> extends FormLayout {
      */
     public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont,
             Component cp, List<String> nEditFn) {
-        
+
         this.cp = cp;
         try {
             Method getTnMethod = clsT.getDeclaredMethod("getTN");
@@ -165,13 +165,13 @@ public final class InputFormLayout<T> extends FormLayout {
                 InvocationTargetException | NoSuchMethodException e) {
             log.error(e.getMessage());
         }
-        
+
         if (nEditFn == null) {
             this.nonEditFn = new ArrayList<>();
         } else {
             this.nonEditFn = nEditFn;
         }
-        
+
         this.fieldMap = new HashMap<>();
         //securityService = new SecurityServiceImpl();
         this.fg = new FieldGroup();
@@ -212,12 +212,13 @@ public final class InputFormLayout<T> extends FormLayout {
      *
      * @throws java.io.IOException
      */
+    @SuppressWarnings("unchecked")
     public void initFieldsLayout() throws IOException {
-        
+
         fieldsFL = new FormLayout();
         fieldsFL.setMargin(true);
         fieldsFL.setSpacing(true);
-        
+
         String propertyTypeName; // nazov typu danej property danej ent.
 
         Map<String, Class<?>> mapPar = new HashMap<>();
@@ -227,18 +228,18 @@ public final class InputFormLayout<T> extends FormLayout {
             } catch (NoSuchFieldException ex) {
                 log.error(ex.getMessage(), ex);
             }
-            
+
         } catch (SecurityException ex) {
             log.warn(ex.getLocalizedMessage(), ex);
             return;
         }
-        
+
         for (String pn : mapPar.keySet()) {
             if (nonEditFn.contains(pn)) {
                 continue;
             }
             propertyTypeName = mapPar.get(pn).getCanonicalName();
-            
+
             switch (propertyTypeName) {
                 case "java.lang.Integer":
                     if (pn.contains("_id")) {
@@ -254,7 +255,7 @@ public final class InputFormLayout<T> extends FormLayout {
                         fieldMap.put(pn, fi);
                     }
                     break;
-                
+
                 case "java.lang.String":
                     switch (pn) {
                         case "description":
@@ -269,9 +270,9 @@ public final class InputFormLayout<T> extends FormLayout {
                             fieldMap.put(pn, bindTextField(pn));
                             break;
                     }
-                    
+
                     break;
-                
+
                 case "java.lang.Boolean":
                     switch (pn) {
                         case "deleted":
@@ -281,7 +282,7 @@ public final class InputFormLayout<T> extends FormLayout {
                             fieldMap.put(pn, bindCheckBox(pn));
                     }
                     break;
-                
+
                 case "java.util.Date":
                     switch (pn) {
                         case "creation_date":
@@ -296,14 +297,14 @@ public final class InputFormLayout<T> extends FormLayout {
                 case "java.sql.Date":
                     fieldMap.put(pn, this.bindSqlDateField(pn));
                     break;
-                
+
                 case "byte[]":
                 case "java.lang.Byte[]":
                     if ("password".equals(pn)) {
                         Button but = new Button("kok");
                         but.addClickListener(new Button.ClickListener() {
                             private static final long serialVersionUID = 1L;
-                            
+
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
                                 openPasswordWindow();
@@ -312,37 +313,46 @@ public final class InputFormLayout<T> extends FormLayout {
                         fieldMap.put(pn, but);
                     }
                     break;
-                
-                case "sk.stefan.enums.VoteResults":
-                    Map<String, Integer> map;
-                    map = Tools.makeEnumMap(VoteResults.getResultNames(),
-                            VoteResults.getOrdinals());
-                    InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
-                    if (itemId == null) {
-                        cb.setValue(VoteResults.values()[0]);
-//                        cb.setValue(VoteResults.APPROVED);                      
+
+                case "sk.stefan.enums.VoteResult":
+                case "sk.stefan.enums.VoteAction":
+                case "sk.stefan.enums.Stability":
+                case "sk.stefan.enums.UserType":
+                case "sk.stefan.enums.PublicUsefulness":
+
+                    Class<?> cls = mapPar.get(pn);
+                    try {
+                        Method getNm = cls.getDeclaredMethod("getNames");
+                        Method getOm = cls.getDeclaredMethod("getOrdinals");
+
+                        List<String> names = (List<String>) getNm.invoke(null);
+                        List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
+                        Map<String, Integer> map = Tools.makeEnumMap(names, ordinals);
+                        
+                        InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
+                        if (itemId == null) {
+                             Property<?> prop = item.getItemProperty(pn);
+                            if (prop.getValue() != null) {
+                                cb.setValue(prop.getValue());
+                            } else {
+                                cb.setValue(VoteResult.getOrdinals().get(0));
+                            }
+                            
+                        }
+                        fieldMap.put(pn, cb);
+                    } catch (IllegalAccessException | IllegalArgumentException |
+                            InvocationTargetException | NoSuchMethodException e) {
+                        log.error(e.getMessage());
                     }
-                    fieldMap.put(pn, cb);
                     break;
-                
-                case "sk.stefan.enums.VoteActions":
-                    Map<String, Integer> map1;
-                    map1= Tools.makeEnumMap(VoteActions.getActionNames(),
-                            VoteActions.getOrdinals());
-                    InputComboBox<Integer> cb1 = new InputComboBox<>(fg, pn, map1);
-                    if (itemId == null) {
-                        cb1.setValue(VoteResults.values()[0]);
-                    }
-//                    cb1.setCaption(Tools.getNonEditableParams(Tn).getProperty(pn));
-                    fieldMap.put(pn, cb1);
-                    break;
+
                 default:
                     //ignore: passwords: java.lang.Byte[], byte[], etc...
                     // do nothing
                     break;
             }
         }
-        
+
         this.completeForm();
         fieldsFL.setEnabled(true);
         this.addComponent(fieldsFL);
@@ -355,28 +365,28 @@ public final class InputFormLayout<T> extends FormLayout {
      *
      */
     private void completeForm() throws IOException {
-        
+
         String key;
         Properties proPoradie = Tools.getPoradieParams(Tn);
         Properties proDepict = Tools.getDepictParams(Tn);
-        
+
 //        if ("t_tenure".equals(Tn)) {
-//            for (String s : proDepict.stringPropertyNames()) {
-//                log.info("ZOBRAZ:*" + s + "* : *" + proDepict.getProperty(s) + "*");
-//            }
-//            for (String s : proPoradie.stringPropertyNames()) {
-//                log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
-//            }
-//            
-//            log.info("TN:" + Tn);
-//            log.info("SIZE PORADIE:" + proPoradie.size());
-//            log.info("SIZE DEPICT:" + proDepict.size());
+            for (String s : proDepict.stringPropertyNames()) {
+                log.info("ZOBRAZ:*" + s + "* : *" + proDepict.getProperty(s) + "*");
+            }
+            for (String s : proPoradie.stringPropertyNames()) {
+                log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
+            }
+            
+            log.info("TN:" + Tn);
+            log.info("SIZE PORADIE:" + proPoradie.size());
+            log.info("SIZE DEPICT:" + proDepict.size());
 //        }
         for (int i = 1; i < proPoradie.size(); i++) {
             key = proPoradie.getProperty("" + i);
-//            log.info("KEY: *" + key + "*");
+            log.info("KEY: *" + key + "*");
             String cap = proDepict.getProperty(key);
-//            log.info("CAP: *" + cap + "*");
+            log.info("CAP: *" + cap + "*");
             (fieldMap.get(key)).setCaption(cap);
             fieldsFL.addComponent(fieldMap.get(key));
         }
@@ -429,15 +439,15 @@ public final class InputFormLayout<T> extends FormLayout {
      * @return
      */
     public PopupDateField bindUtilDateField(String fn) {
-        
+
         PopupDateField field = new PopupDateField(fn);
         field.setConverter(new DateConverter());
         field.setImmediate(true);
         field.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
         field.setLocale(new Locale("cz", "CZ"));
-        
+
         field.setResolution(Resolution.MINUTE);
-        
+
         field.setDateFormat("yyyy-MM-dd HH:mm:ss");
         fg.bind(field, fn);
         return field;
@@ -451,15 +461,15 @@ public final class InputFormLayout<T> extends FormLayout {
      * @return
      */
     public PopupDateField bindSqlDateField(String fn) {
-        
+
         PopupDateField field = new PopupDateField() {
             private static final long serialVersionUID = 1L;
-            
+
             @Override
             protected java.sql.Date handleUnparsableDateString(String dateString) {
-                
+
                 String fields[] = dateString.split("-");
-                
+
                 if (fields.length >= 3) {
                     try {
                         SimpleDateFormat sdf = new SimpleDateFormat(
@@ -480,7 +490,7 @@ public final class InputFormLayout<T> extends FormLayout {
         field.setResolution(Resolution.DAY);
         field.setDateFormat("yyyy-MM-dd");
         fg.bind(field, fn);
-        
+
         return field;
     }
 
@@ -490,19 +500,19 @@ public final class InputFormLayout<T> extends FormLayout {
      *
      */
     private void addButtons() {
-        
+
         buttonsHL = new HorizontalLayout();
         buttonsHL.setMargin(true);
         buttonsHL.setSpacing(true);
-        
+
         okBt = new Button("Save");
         cancelBt = new Button("Edit");
         cancelBt.setEnabled(true);
         okBt.setEnabled(true);
-        
+
         okBt.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
-            
+
             @Override
             @SuppressWarnings("unchecked")
             public void buttonClick(ClickEvent event) {
@@ -512,7 +522,7 @@ public final class InputFormLayout<T> extends FormLayout {
                     if (obnovFilterListener != null) {
                         obnovFilterListener.obnovFilter();
                     }
-                    
+
                 }
 
                 // ulozenie zmien do DB:
@@ -522,32 +532,32 @@ public final class InputFormLayout<T> extends FormLayout {
                     fg.setEnabled(false);
                     cancelBt.setEnabled(true);
                     okBt.setEnabled(false);
-                    
+
                     if (okCancelListener != null) {
                         okCancelListener.doOkAction();
                     }
                     Notification.show("Úkol byl úspešně uložen!");
-                    
+
                 } catch (SQLException | UnsupportedOperationException e) {
                     log.warn(e.getLocalizedMessage(), e);
                 }
             }
         });
-        
+
         cancelBt.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
-            
+
             @Override
             public void buttonClick(ClickEvent event) {
-                
+
                 okBt.setEnabled(true);
-                
+
                 if (isNew) {
                     sqlContainer.removeItem(itemId);
                 }
                 fg.setEnabled(true);
                 fieldsFL.setEnabled(true);
-                
+
                 cancelBt.setEnabled(false);
                 okBt.setEnabled(true);
                 if (okCancelListener != null) {
@@ -558,9 +568,9 @@ public final class InputFormLayout<T> extends FormLayout {
         //TodosView s;
         buttonsHL.addComponent(okBt);
         buttonsHL.addComponent(cancelBt);
-        
+
         this.addComponent(buttonsHL);
-        
+
     }
 
     /**
@@ -569,9 +579,9 @@ public final class InputFormLayout<T> extends FormLayout {
      *
      */
     private Class<?> getClassFromName(String pn) {
-        
+
         switch (pn) {
-            
+
             case "kraj_id":
                 return Kraj.class;
             case "okres_id":
@@ -596,14 +606,14 @@ public final class InputFormLayout<T> extends FormLayout {
                 return null;
         }
     }
-    
+
     @SuppressWarnings({"unchecked"})
     private Map<String, Integer> findAllByClass(Class<?> cls) {
-        
+
         Map<String, Integer> map = new HashMap<>();
         String repN;
         Integer id;
-        
+
         try {
             Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
             Constructor<UniRepo<? extends Object>> repoCtor;
@@ -641,7 +651,7 @@ public final class InputFormLayout<T> extends FormLayout {
         } else {
             Notification.show("Vyber nejdříve řádek v tabulce!");
         }
-        
+
     }
 
     /**
@@ -652,14 +662,14 @@ public final class InputFormLayout<T> extends FormLayout {
     public void setOkCancelListener(OkCancelListener list) {
         this.okCancelListener = list;
     }
-    
+
     public void setItem(Item it) {
         this.item = it;
         if (item != null) {
             fg.setItemDataSource(this.item);
         }
     }
-    
+
     public void doEnableButtons() {
         fieldsFL.setEnabled(false);
         fg.setEnabled(false);
@@ -668,5 +678,5 @@ public final class InputFormLayout<T> extends FormLayout {
 
         //this.refreshComboboxes();
     }
-    
+
 }

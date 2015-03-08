@@ -1,6 +1,6 @@
 package sk.stefan.MVP.view;
 
-import sk.stefan.MVP.view.components.KomB2;
+import sk.stefan.MVP.view.components.TBD_KomB2;
 import sk.stefan.MVP.view.components.NavigationComponent;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -30,7 +30,7 @@ public class FilaManagerView extends VerticalLayout implements View {
     
     private FilesystemContainer docs;
     private Table docList;
-    private KomB2 docView;
+    private TBD_KomB2 docView;
     private HorizontalSplitPanel split;
 
     public FilaManagerView() {
@@ -45,7 +45,7 @@ public class FilaManagerView extends VerticalLayout implements View {
 
         docs = new FilesystemContainer(new File("C:/Users/User/Documents/KNIHA O DRAKOVI"));
         docList = new Table("Documnets", docs);
-        docView = new KomB2();
+        docView = new TBD_KomB2();
 
 		// setContent(docList);
         // final VerticalLayout layout = new VerticalLayout();

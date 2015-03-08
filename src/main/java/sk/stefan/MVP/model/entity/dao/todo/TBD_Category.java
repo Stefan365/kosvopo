@@ -9,7 +9,7 @@ import sk.stefan.interfaces.RepresentativeName;
  * @author Marek Svarc
  * @author Stefan
  */
-public class Category implements RepresentativeName {
+public class TBD_Category implements RepresentativeName {
 
     /** Unikatni identifikator */
     private Long id;
@@ -26,14 +26,14 @@ public class Category implements RepresentativeName {
     /** Barva textu vypisu ukolu */
     private Color textColor;
 
-    public Category() {
+    public TBD_Category() {
         this.id = -1L;
         this.title = "";
         this.backColor = Color.WHITE;
         this.textColor = Color.BLACK;
     }
 
-    public Category(Long id, Long userId, String title, Color backColor, Color textColor) {
+    public TBD_Category(Long id, Long userId, String title, Color backColor, Color textColor) {
         this.id = id;
         this.userId = userId;
         this.title = title;

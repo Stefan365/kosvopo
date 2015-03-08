@@ -19,7 +19,7 @@ import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.enums.NamesOfVoteDecisions;
-import sk.stefan.enums.VoteActions;
+import sk.stefan.enums.VoteAction;
 import sk.stefan.listeners.GeneralComponentListener;
 import sk.stefan.utils.PomT;
 import sk.stefan.utils.PomVaadin;
@@ -49,7 +49,7 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
     private PublicRole pr;
     private Vote vo;
     private VoteOfRole vor;
-    private VoteActions dec;
+    private VoteAction dec;
 
     // komponenty:
     private ComboBox publicRoleCB, voteCB, decisionCB;
@@ -161,7 +161,7 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
                     enableSave(true);
                     setVisible(false);
                 } else {
-                    final YesNoWindow_old window = new YesNoWindow_old("Upozornenie",
+                    final TBD_YesNoWindow window = new TBD_YesNoWindow("Upozornenie",
                             "Chcete uložiť zmeny?",
                             (GeneralComponentListener) event.getButton()
                             .getParent().getParent());
@@ -181,7 +181,7 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
 
         pr = (PublicRole) publicRoleCB.getValue();
         vo = (Vote) voteCB.getValue();
-        dec = (VoteActions) decisionCB.getValue();
+        dec = (VoteAction) decisionCB.getValue();
 
         //Notification.show("vor:" + (vor==null));
         //Notification.show("pr:" + (pr==null));
@@ -268,7 +268,7 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
 
             @Override
             public void valueChange(ValueChangeEvent event) {
-                dec = (VoteActions) event.getProperty().getValue();
+                dec = (VoteAction) event.getProperty().getValue();
             }
         });
 

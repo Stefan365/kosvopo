@@ -50,10 +50,10 @@ import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.VoteOfRoleService;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.components.YesNoWindow_old;
+import sk.stefan.MVP.view.components.TBD_YesNoWindow;
 import sk.stefan.listeners.GeneralComponentListener;
 import sk.stefan.utils.PomDao;
-import sk.stefan.utils.PomFormLayout;
+import sk.stefan.utils.TBD_PomFormLayout;
 
 /**
  * Rozhraní pro zobrazeni udaju o konkretni verejne osobe (poslancovi)
@@ -74,7 +74,7 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
     private VerticalSplitPanel layoutVertSp;
     private VerticalLayout layout, leftLayout;
 
-    private PomFormLayout<PublicPerson2> fl;
+    private TBD_PomFormLayout<PublicPerson2> fl;
 
     private MenuBar menubar;
     private Link linka;
@@ -329,7 +329,7 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
         if (poslanec != null) {
             bfg2.setItemDataSource(poslanec);
         }
-        fl = new PomFormLayout<PublicPerson2>(PublicPerson2.class, bfg2);
+        fl = new TBD_PomFormLayout<PublicPerson2>(PublicPerson2.class, bfg2);
         leftLayout.addComponent(fl);
 
         this.addComponent(leftLayout);
@@ -361,7 +361,7 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
         removeVoteOfRoleBT.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                final YesNoWindow_old window = new YesNoWindow_old("Upozornenie",
+                final TBD_YesNoWindow window = new TBD_YesNoWindow("Upozornenie",
                         "Chcete Hlasovanie Vymazať?",
                         (GeneralComponentListener) event.getButton()
                         .getParent().getParent().getParent());

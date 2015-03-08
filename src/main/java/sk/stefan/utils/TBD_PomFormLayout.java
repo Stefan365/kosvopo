@@ -12,14 +12,13 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.MVP.view.components.MyComboBox;
+import sk.stefan.MVP.view.components.TBD_ComboBox;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
@@ -29,9 +28,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.VerticalLayout;
 
-public class PomFormLayout<T> extends FormLayout {
+public class TBD_PomFormLayout<T> extends FormLayout {
 
     /**
      * Identifikator:
@@ -51,7 +49,7 @@ public class PomFormLayout<T> extends FormLayout {
     /**
      *
      */
-    public PomFormLayout(Class<?> clsT, BeanFieldGroup<T> bfg) {
+    public TBD_PomFormLayout(Class<?> clsT, BeanFieldGroup<T> bfg) {
 
         this.clsT = clsT;
         this.entRepo = new UniRepo<>(clsT);
@@ -149,7 +147,7 @@ public class PomFormLayout<T> extends FormLayout {
                     bolList.add(Boolean.FALSE);
                     bolList.add(Boolean.TRUE);
 
-                    MyComboBox<T, Boolean> cb = new MyComboBox<>(clsT,
+                    TBD_ComboBox<T, Boolean> cb = new TBD_ComboBox<>(clsT,
                             Boolean.class, bfg, pn, bolList);
                     fieldsFL.addComponent(cb);
                     break;

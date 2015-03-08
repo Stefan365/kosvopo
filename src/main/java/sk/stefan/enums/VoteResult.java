@@ -8,13 +8,13 @@ import java.util.List;
  *
  * @author stefan
  */
-public enum VoteResults {
+public enum VoteResult {
 
     APPROVED("Schválené"), DISSALLOWED("zamietnuté");
 
     public final String name;
 
-    VoteResults(String name) {
+    VoteResult(String name) {
         this.name = name;
     }
 
@@ -26,10 +26,10 @@ public enum VoteResults {
      * vrací seznam jmen daných enumů
      * @return 
      */
-    public static List<String> getResultNames() {
+    public static List<String> getNames() {
         List<String> list = new ArrayList<>();
 
-        for (VoteResults r : VoteResults.values()) {
+        for (VoteResult r : VoteResult.values()) {
             list.add(r.getName());
         }
         return list;
@@ -41,7 +41,7 @@ public enum VoteResults {
      */
     public static List<Integer> getOrdinals() {
         List<Integer> list = new ArrayList<>();
-        for (VoteResults r : VoteResults.values()) {
+        for (VoteResult r : VoteResult.values()) {
             list.add(r.ordinal());
         }
         return list;

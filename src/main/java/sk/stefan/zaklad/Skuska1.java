@@ -4,6 +4,7 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
+import com.vaadin.ui.OptionGroup;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -698,6 +699,18 @@ public class Skuska1<T> {
         } catch (IOException ex) {
             log.error(ex);
         }
+    }
+    
+    public void optionSelect(){
+        OptionGroup sample = new OptionGroup("Select an option");
+        for (int i = 0; i < 5; i++) {
+            sample.addItem(i);
+            sample.setItemCaption(i, "Option " + i);
+        }
+        sample.select(2);
+        sample.setNullSelectionAllowed(false);
+        sample.setHtmlContentAllowed(true);
+        sample.setImmediate(true); 
     }
 
 }

@@ -6,13 +6,13 @@ package sk.stefan.enums;
  * @author Stefan
  *
  */
-public enum RelativeDays {
+public enum ZBD_RelativeDays {
 
     TODAY("dnes"), YESTERDAY("včera"), TOMORROW("zítra");
 
     public String name;
 
-    RelativeDays(String name) {
+    ZBD_RelativeDays(String name) {
         this.name = name;
     }
 

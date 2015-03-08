@@ -8,12 +8,12 @@ import java.util.List;
  *
  * @author stefan
  */
-public enum TaskWarnings {
+public enum ZBD_TaskWarnings {
 	NONE("žádné upozornění"), DAY_BEFORE("den před"), WEEK_BEFORE("týden před");
     
 	private final String name;
  
-	private TaskWarnings(String s) {
+	private ZBD_TaskWarnings(String s) {
 		name = s;
 	}
     
@@ -28,7 +28,7 @@ public enum TaskWarnings {
     public static List<String> getWarningNames() {
         List<String> list = new ArrayList<>();
 
-        for (TaskWarnings w : TaskWarnings.values()) {
+        for (ZBD_TaskWarnings w : ZBD_TaskWarnings.values()) {
             list.add(w.getName());
         }
         return list;
@@ -41,7 +41,7 @@ public enum TaskWarnings {
     public static List<Integer> getOrdinals() {
         List<Integer> list = new ArrayList<>();
 
-        for (TaskWarnings w : TaskWarnings.values()) {
+        for (ZBD_TaskWarnings w : ZBD_TaskWarnings.values()) {
             list.add(w.ordinal());
         }
         return list;

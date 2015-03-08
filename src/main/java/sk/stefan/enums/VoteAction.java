@@ -12,13 +12,13 @@ import java.util.List;
  *
  * @author stefan
  */
-public enum PublicUsefulness {
-
-    PU1("1. škodlivý"), PU2("2. mierne škodlivý"), PU3("3. neutrálny"), PU4("4. mierne prospešný"), PU5("5. prospešný");
+public enum VoteAction {
+    
+    FOR("Za"), AGAINST("Proti"), REFAIN("Zadržal sa"), ABSENT("Neprítomný");
 
     public final String name;
 
-    PublicUsefulness(String name) {
+    VoteAction(String name) {
         this.name = name;
     }
 
@@ -27,30 +27,29 @@ public enum PublicUsefulness {
     }
 
     /**
-     * vrací seznam jmen daných enumů
-     *
-     * @return
+     * vrací seznam jmen daných enumů.
+     * @return 
      */
     public static List<String> getNames() {
         List<String> list = new ArrayList<>();
 
-        for (PublicUsefulness pu : PublicUsefulness.values()) {
-            list.add(pu.getName());
+        for (VoteAction va : VoteAction.values()) {
+            list.add(va.getName());
         }
         return list;
     }
 
     /**
      * vrací seznam short hodnot daných enumů
-     *
-     * @return
+     * @return 
      */
     public static List<Integer> getOrdinals() {
         List<Integer> list = new ArrayList<>();
-        for (PublicUsefulness pu : PublicUsefulness.values()) {
-            list.add(pu.ordinal());
+        for (VoteAction va : VoteAction.values()) {
+            list.add(va.ordinal());
         }
         return list;
     }
 
+    
 }

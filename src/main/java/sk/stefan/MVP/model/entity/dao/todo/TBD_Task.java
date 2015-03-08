@@ -5,8 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.apache.log4j.Logger;
-import sk.stefan.enums.VoteResults;
-import sk.stefan.enums.TaskWarnings;
+import sk.stefan.enums.VoteResult;
+import sk.stefan.enums.ZBD_TaskWarnings;
 
 /**
  * Entita úkolu uživatele.
@@ -14,9 +14,9 @@ import sk.stefan.enums.TaskWarnings;
  * @author Štefan
  * @author Marek Švarc
  */
-public class Task {
+public class TBD_Task {
 
-    final private Logger logger = Logger.getLogger(Task.class.getName());
+    final private Logger logger = Logger.getLogger(TBD_Task.class.getName());
     /**
      * id ukolu.
      */
@@ -35,13 +35,13 @@ public class Task {
     /**
      * opakovani ukolu.
      */
-    private VoteResults repetition_period; //"none", "weekly", "monthly"
+    private VoteResult repetition_period; //"none", "weekly", "monthly"
 
     /**
      * doba pred terminem/dobou opakovani ukolu, kdy dojde uzivateli upozorneni
      * o blizicim se termine.
      */
-    private TaskWarnings warning_period; //"dayBefore", "weekBefore"
+    private ZBD_TaskWarnings warning_period; //"dayBefore", "weekBefore"
 
     /**
      * popis ukolu.
@@ -97,19 +97,19 @@ public class Task {
         this.id_tcy = id_tcy;
     }
 
-    public VoteResults getRepetition_period() {
+    public VoteResult getRepetition_period() {
         return repetition_period;
     }
 
-    public void setRepetition_period(VoteResults repetition_period) {
+    public void setRepetition_period(VoteResult repetition_period) {
         this.repetition_period = repetition_period;
     }
 
-    public TaskWarnings getWarning_period() {
+    public ZBD_TaskWarnings getWarning_period() {
         return warning_period;
     }
 
-    public void setWarning_period(TaskWarnings warning_period) {
+    public void setWarning_period(ZBD_TaskWarnings warning_period) {
         this.warning_period = warning_period;
     }
 
@@ -171,7 +171,7 @@ public class Task {
      */
     public boolean isHot() {
         // test zda jiz uloha neni dokoncena nebo nema stanoven termin nebo nepozaduje varovani
-        if (getCompleted() || (this.getDeadline() == null) || (getWarning_period() == TaskWarnings.NONE)) {
+        if (getCompleted() || (this.getDeadline() == null) || (getWarning_period() == ZBD_TaskWarnings.NONE)) {
             return false;
         }
 
@@ -219,10 +219,10 @@ public class Task {
      * @param tasks seznam vsech ukolu
      * @return seznam ukolu
      */
-    static public List<Task> getHotTasks(List<Task> tasks) {
-        List<Task> hotTasks = new ArrayList<>();
+    static public List<TBD_Task> getHotTasks(List<TBD_Task> tasks) {
+        List<TBD_Task> hotTasks = new ArrayList<>();
         if (tasks != null) {
-            for (Task task : tasks) {
+            for (TBD_Task task : tasks) {
                 if (task.isHot()) {
                     hotTasks.add(task);
                 }

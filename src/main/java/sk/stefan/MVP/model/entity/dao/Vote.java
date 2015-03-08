@@ -3,7 +3,7 @@ package sk.stefan.MVP.model.entity.dao;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.enums.VoteResults;
+import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.PresentationName;
 
 public class Vote implements PresentationName {
@@ -16,13 +16,11 @@ public class Vote implements PresentationName {
 
     private Date vote_date;
 
-    private Integer public_body_id;
-
     private Integer subject_id;
 
     private String internal_nr;
 
-    private VoteResults result_vote;
+    private VoteResult result_vote;
 
     private Integer for_vote;
 
@@ -43,10 +41,6 @@ public class Vote implements PresentationName {
         return this.vote_date;
     }
 
-    public Integer getPublic_body_id() {
-        return this.public_body_id;
-    }
-
     public Integer getSubject_id() {
         return this.subject_id;
     }
@@ -55,7 +49,7 @@ public class Vote implements PresentationName {
         return this.internal_nr;
     }
 
-    public VoteResults getResult_vote() {
+    public VoteResult getResult_vote() {
         return this.result_vote;
     }
 
@@ -93,10 +87,6 @@ public class Vote implements PresentationName {
         this.vote_date = date;
     }
 
-    public void setPublic_body_id(Integer pbid) {
-        this.public_body_id = pbid;
-    }
-
     public void setSubject_id(Integer subid) {
         this.subject_id = subid;
     }
@@ -105,7 +95,7 @@ public class Vote implements PresentationName {
         this.internal_nr = inr;
     }
 
-    public void setResult_vote(VoteResults rv) {
+    public void setResult_vote(VoteResult rv) {
         this.result_vote = rv;
     }
     
@@ -138,14 +128,14 @@ public class Vote implements PresentationName {
     public String getPresentationName() {
 
         UniRepo<Subject> subRepo = new UniRepo<>(Subject.class);
-
-        if (public_body_id != null && subject_id != null) {
+        
+        if (subject_id != null) {
             Subject sub = subRepo.findOne(subject_id);
             
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             String dateStr = sdf.format(this.vote_date);
 
-            return sub.getPresentationName() + ", kokos" + dateStr;
+            return sub.getPresentationName() + ", " + dateStr;
         } else {
             return id + ", nedefinované";
         }

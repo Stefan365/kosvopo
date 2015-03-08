@@ -12,13 +12,12 @@ import java.util.List;
  *
  * @author stefan
  */
-public enum VoteActions {
-    
-    FOR("Za"), AGAINST("Proti"), REFAIN("Zadržal sa"), ABSENT("Neprítomný");
+public enum UserType {
+    USER("užívateľ"), ADMIN("admin");
 
     public final String name;
 
-    VoteActions(String name) {
+    UserType(String name) {
         this.name = name;
     }
 
@@ -30,11 +29,11 @@ public enum VoteActions {
      * vrací seznam jmen daných enumů.
      * @return 
      */
-    public static List<String> getActionNames() {
+    public static List<String> getNames() {
         List<String> list = new ArrayList<>();
 
-        for (VoteActions va : VoteActions.values()) {
-            list.add(va.getName());
+        for (UserType ut : UserType.values()) {
+            list.add(ut.getName());
         }
         return list;
     }
@@ -45,11 +44,10 @@ public enum VoteActions {
      */
     public static List<Integer> getOrdinals() {
         List<Integer> list = new ArrayList<>();
-        for (VoteActions va : VoteActions.values()) {
-            list.add(va.ordinal());
+        for (UserType ut : UserType.values()) {
+            list.add(ut.ordinal());
         }
         return list;
     }
-
-    
+ 
 }

@@ -24,10 +24,7 @@ import org.apache.log4j.Logger;
  * @param <E> třída, představitelé které, se mají v comboBoxu zobrazit.
  */
 public final class InputComboBox<E> extends ComboBox {
-
-    /**
-     *
-     */
+    
     private static final long serialVersionUID = 1L;
 
     private static final Logger log = Logger.getLogger(InputComboBox.class);

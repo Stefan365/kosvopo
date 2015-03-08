@@ -9,6 +9,8 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,12 +53,15 @@ public class InputAllView extends VerticalLayout implements View {
     private final Button voteOfRole5Bt = new Button();
     private final Button actClass6Bt = new Button();
 
+    private final Button skuskaBt = new Button("skuska");
+
     private Map<Button, InputFormWrapper<? extends Object>> allButtonsMap = new HashMap<>();
 
     public InputAllView(Navigator nav) {
         this.initLayout();
         this.initMap();
         this.initButtons();
+        this.skusaj();
 //        this.initButtonsListeners();     
 
         this.addComponent(NavigationComponent.getNavComp());
@@ -83,7 +88,6 @@ public class InputAllView extends VerticalLayout implements View {
         layout = new VerticalLayout();
         layout.setMargin(true);
         layout.setSpacing(true);
-        
 
         initMap();
         initButtons();
@@ -92,7 +96,6 @@ public class InputAllView extends VerticalLayout implements View {
         this.addComponent(layout);
 
     }
-
 
     private void addButtonsToLayout() {
         for (Button b : allButtonsMap.keySet()) {
@@ -109,10 +112,33 @@ public class InputAllView extends VerticalLayout implements View {
             b.addClickListener(new InputButClickListener(wr.getClsE(), wr.getButtonName(), this));
         }
     }
-    
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
     }
 
+    private void skusaj() {
+        this.skuskaBt.addClickListener(new MyCLickListener("Karol"));
+        this.skuskaBt.addClickListener(new MyCLickListener("Peter"));
+        this.skuskaBt.addClickListener(new MyCLickListener("Pavol"));
+        
+        this.addComponent(skuskaBt);
+        
+    }
+
+    private class MyCLickListener implements ClickListener {
+        private static final long serialVersionUID = 1L;
+        private final String val;
+        
+        public MyCLickListener(String value){
+            val = value;
+        }
+
+        @Override
+        public void buttonClick(Button.ClickEvent event) {
+            Notification.show(val);
+        }
+        
+    }
 }
