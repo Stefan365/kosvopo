@@ -42,14 +42,16 @@ public class Skuska1<T> {
 //        Byte[] b = new  Byte[12];
 //        log.info(b.getClass().getCanonicalName());
         Skuska1<VoteClassification> sk = new Skuska1<>();
+        sk.skusKlonuj();
 //        sk.skusDepict();
-        
-        Byte[] by = new Byte[5];
-        byte[] byq = new byte[5];
-        
-        log.info("TRIEDA:" + by.getClass().getCanonicalName());
-        log.info("TRIEDA:" + byq.getClass().getCanonicalName());
-        
+//        
+//        
+//        Byte[] by = new Byte[5];
+//        byte[] byq = new byte[5];
+//        
+//        log.info("TRIEDA:" + by.getClass().getCanonicalName());
+//        log.info("TRIEDA:" + byq.getClass().getCanonicalName());
+//        
         //sk.skusToArray();
 
 //        List<Location> loc = uniRepo.findAll();
@@ -711,6 +713,36 @@ public class Skuska1<T> {
         sample.setNullSelectionAllowed(false);
         sample.setHtmlContentAllowed(true);
         sample.setImmediate(true); 
+    }
+    
+    private List<String> klonujList(List<String> list){
+        List<String> cloned = new ArrayList<>(list);
+        return cloned;
+    }
+    
+    private void skusKlonuj(){
+        List<String> b,c,d;
+        
+        List<String> a = new ArrayList<>();
+        a.add("a");
+        b = klonujList(a);
+        c = klonujList(a);
+        
+        a.add("a");
+        b.add("b");
+        c.add("c");
+            
+        for (String s : a){
+           log.info("A:" + s);            
+        }
+        for (String s : b){
+           log.info("B:" + s);            
+        }
+        for (String s : c){
+           log.info("C:" + s);            
+        }
+        
+
     }
 
 }

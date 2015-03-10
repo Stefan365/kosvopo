@@ -17,6 +17,7 @@ public class SilentCheckBox extends CheckBox {
         
         /**
          * Metoda pro tichou změnu hodnoty.
+     * @param newValue
          */
         public void setInternalValuea(Boolean newValue) {
             if (newValue == null)

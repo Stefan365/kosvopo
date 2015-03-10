@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
  * @param <E> třída, představitelé které, se mají v comboBoxu zobrazit.
  */
 public final class InputComboBox<E> extends ComboBox {
-    
+
     private static final long serialVersionUID = 1L;
 
     private static final Logger log = Logger.getLogger(InputComboBox.class);
@@ -41,13 +41,13 @@ public final class InputComboBox<E> extends ComboBox {
     /**
      * Název comboBoxu, je zhodný s názvem proměnné(property), která je typu E.
      */
-    private final String fn;
+    private String fn;
 
     /**
      * FieldGoup je nástroj na svázaní vaadinovské komponenty a nějakého jiného
      * objekty, který dané entitě poskytuje informace k zobrazení.
      */
-    private final FieldGroup fg;
+    private FieldGroup fg;
 
     /**
      * Slovník, ve kterém je klíčem reprezentativní název entity a hodnotou tato
@@ -65,7 +65,6 @@ public final class InputComboBox<E> extends ComboBox {
      * @param map Slovník reprezentativní jméno/entita
      */
     public InputComboBox(FieldGroup fg, String fn, Map<String, E> map) {
-        
 
         super(fn);
         this.fn = fn;
@@ -75,6 +74,18 @@ public final class InputComboBox<E> extends ComboBox {
         this.involveFg();
         try {
             this.initCombo();
+            this.initComboVal();
+        } catch (SecurityException e) {
+            logger.warn(e.getLocalizedMessage(), e);
+        }
+    }
+
+    public InputComboBox(Map<String, E> map) {
+
+        this.map = map;
+        try {
+            this.initCombo();
+            this.setValue(0);
         } catch (SecurityException e) {
             logger.warn(e.getLocalizedMessage(), e);
         }
@@ -101,7 +112,6 @@ public final class InputComboBox<E> extends ComboBox {
 //    public void refreshFg() {
 //        this.initComboVal();
 //    }
-
     // 2.
     /**
      * Inicializuje combo box.
@@ -117,7 +127,7 @@ public final class InputComboBox<E> extends ComboBox {
         }
         //this.setValue(log);
 
-        this.initComboVal();
+
         this.setImmediate(true);
         this.setNewItemsAllowed(false);
         this.setNullSelectionAllowed(false);

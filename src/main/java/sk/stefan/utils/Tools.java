@@ -13,6 +13,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -21,6 +23,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.Kraj;
+import sk.stefan.MVP.model.entity.dao.Location;
+import sk.stefan.MVP.model.entity.dao.Okres;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
+import sk.stefan.MVP.model.entity.dao.PublicPerson;
+import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.entity.dao.Subject;
+import sk.stefan.MVP.model.entity.dao.Tenure;
+import sk.stefan.MVP.model.entity.dao.Theme;
+import sk.stefan.MVP.model.entity.dao.Vote;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.components.InputFormLayout;
 
 /**
@@ -408,5 +421,70 @@ public class Tools {
         
         return prop.getProperty(tabName);
     }
+    
+        /**
+     * Vrati vhodnu triedu podla nazvu FK entity.
+     *
+     *
+     */
+    public static Class<?> getClassFromName(String pn) {
+
+        switch (pn) {
+
+            case "kraj_id":
+                return Kraj.class;
+            case "okres_id":
+                return Okres.class;
+            case "public_person_id":
+                return PublicPerson.class;
+            case "location_id":
+                return Location.class;
+            case "public_role_id":
+                return PublicRole.class;
+            case "public_body_id":
+                return PublicBody.class;
+            case "vote_id":
+                return Vote.class;
+            case "subject_id":
+                return Subject.class;
+            case "theme_id":
+                return Theme.class;
+            case "tenure_id":
+                return Tenure.class;
+            default:
+                return null;
+        }
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public static Map<String, Integer> findAllByClass(Class<?> cls) {
+
+        Map<String, Integer> map = new HashMap<>();
+        String repN;
+        Integer id;
+
+        try {
+            Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
+            Constructor<UniRepo<? extends Object>> repoCtor;
+            repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
+            List<? extends Object> listObj;
+            listObj = repoCtor.newInstance(cls).findAll();
+//            log.info("KARAMAZOV: " + (listObj == null));
+            for (Object o : listObj) {
+                Method getRepNameMethod = cls.getDeclaredMethod("getPresentationName");
+                repN = (String) getRepNameMethod.invoke(o);
+                Method getIdMethod = cls.getDeclaredMethod("getId");
+                id = (Integer) getIdMethod.invoke(o);
+                map.put(repN, id);
+            }
+            return map;
+        } catch (NoSuchMethodException | InvocationTargetException |
+                IllegalArgumentException | IllegalAccessException |
+                InstantiationException | SecurityException | ClassNotFoundException ex) {
+            log.error(ex.getMessage());
+        }
+        return null;
+    }
+
 
 }

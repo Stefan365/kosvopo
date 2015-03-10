@@ -81,7 +81,7 @@ public final class InputOptionGroup<E> extends OptionGroup {
         this.map = map;
         try {
             this.initOptionGroup();
-            this.setValue(map);
+            this.setValue(0);
         } catch (SecurityException e) {
             log.warn(e.getLocalizedMessage(), e);
         }
