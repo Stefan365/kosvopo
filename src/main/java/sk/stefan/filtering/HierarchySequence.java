@@ -5,6 +5,7 @@
  */
 package sk.stefan.filtering;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -16,17 +17,19 @@ import java.util.List;
  * @author stefan
  */
 public class HierarchySequence {
-    private List<String> hierTableSequence;
-
-    private List<ActualEntities> hierarchySequence;
+    private List<String> hierTableNamesSequence;
+    private List<String> bossReferences;
+    
+    private List<ActualEntity> hierActualEntitySequence;
 
     
     public HierarchySequence(List<String> hts){
-        this.hierTableSequence = hts;
+        this.hierTableNamesSequence = hts;
+        initHierSeq();
     }
     
     private void createHS(){
-        for (String s : hierTableSequence){
+        for (String s : hierTableNamesSequence){
             
         }
     }
@@ -36,27 +39,48 @@ public class HierarchySequence {
      * @return 
      */
     public String getBigBoss(){
-        int last = hierTableSequence.size() - 1;
-        return this.hierTableSequence.get(last);
+        int last = hierTableNamesSequence.size() - 1;
+        return this.hierTableNamesSequence.get(last);
     }
 
-    
-    //getters & setters:
-    public List<ActualEntities> getHierarchySequence() {
-        return Collections.unmodifiableList(hierarchySequence);
+    private void initHierSeq() {
+        this.hierActualEntitySequence = new ArrayList<>();
+        String tn, br;
+        ActualEntity ae;
+        for (int i = 0; i < hierTableNamesSequence.size() ; i++){
+            tn = hierTableNamesSequence.get(i);
+            br = bossReferences.get(i);
+            ae = new ActualEntity(tn, br);
+            hierActualEntitySequence.add(ae);
+        }
     }
     
-    public void setHierarchySequence(List<ActualEntities> hierarchySequence) {
-        this.hierarchySequence = hierarchySequence;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //getters & setters:
+    public List<ActualEntity> getHierarchySequence() {
+        return Collections.unmodifiableList(hierActualEntitySequence);
+    }
+    
+    public void setHierarchySequence(List<ActualEntity> hierarchySequence) {
+        this.hierActualEntitySequence = hierarchySequence;
     }
 
     public List<String> getHierTableSequence() {
-        return hierTableSequence;
+        return hierTableNamesSequence;
     }
     
 
     public void setHierTableSequence(List<String> hierTableSequence) {
-        this.hierTableSequence = hierTableSequence;
+        this.hierTableNamesSequence = hierTableSequence;
     }
+
     
 }

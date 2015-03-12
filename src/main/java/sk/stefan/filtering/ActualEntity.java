@@ -3,23 +3,31 @@ package sk.stefan.filtering;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 
 /**
  * Wrapper na zoznam aktualnych entit.
  *
  * @author stefan
+ * @param <E>
  */
-public class ActualEntities {
+public class ActualEntity<E> {
     private final String table_name;
+    private final String boss_reference;
     private Set<Integer> entIds;
+//    private UniRepo<E> uniRepo;
+//    private Class<?> clsE;
     
-    public ActualEntities(String tn, Set<Integer> setIds){
+    public ActualEntity(String tn, String br, Set<Integer> ids){
         this.table_name = tn;
-        this.entIds = setIds;
+        this.entIds = ids;
+        this.boss_reference = br;
+//        this.clsE = cls;
     }
     
-    public ActualEntities(String tn){
+    public ActualEntity(String tn, String br){
         this.table_name = tn;
+        this.boss_reference = br;
         this.entIds = new HashSet<>();
     }
     
@@ -37,7 +45,6 @@ public class ActualEntities {
     }
 
     public Set<Integer> getEntIds() {
-//        return Collections.unmodifiableSet(entIds);
         return entIds;
     }
 }
