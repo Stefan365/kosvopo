@@ -17,7 +17,7 @@
         
     </properties>
     
-        <repositories>
+    <repositories>
         <repository>
             <id>vaadin-addons</id>
             <url>http://maven.vaadin.com/vaadin-addons</url>
@@ -50,6 +50,7 @@
     
 
     <dependencies>
+        
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
@@ -133,7 +134,7 @@
             <version>1.0.0</version>
         </dependency>
         
-                <!-- DEPENCENCY FOR LOGGING -->
+        <!-- DEPENCENCY FOR LOGGING -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>

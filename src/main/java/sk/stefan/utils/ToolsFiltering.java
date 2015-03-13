@@ -26,11 +26,14 @@ public class ToolsFiltering {
 
     //1.
     /**
+     * vrati hierarchicku sekvenciu tried.
+     * tj. napr <t_vote, t_subect, t_theme>
+     * 
      * @param touchedTn
      * @param touchingTn
      * @return
      */
-    public static List<String> getAllHierarchySequencies(String touchedTn, String touchingTn) {
+    public static List<String> getHierarchicalSequence(String touchedTn, String touchingTn) {
 
         List<String> pom;
         List<String> start = new ArrayList<>();
@@ -69,7 +72,74 @@ public class ToolsFiltering {
         } while (true);
     }
 
+    
     //2.
+    /**
+     * Vrati hierarchicku sekvenciu obalenu do wrappovacej triedy. 
+     *
+     * @param hierarchicalSeq
+     * @return
+     */
+    public static List<A_Hierarchy> getFinalHierSequence(List<String> hierarchicalSeq) {
+
+        List<A_Hierarchy> hs = new ArrayList<>();
+        A_Hierarchy ae;
+        String btn, tn, ref;
+
+        String sql;
+
+        for (int i = 0; i < hierarchicalSeq.size() - 1; i++) {
+            tn = hierarchicalSeq.get(i);
+            btn = hierarchicalSeq.get(i + 1);
+            ref = makeReference(btn);
+            ae = new A_Hierarchy(tn, btn, ref);
+            hs.add(ae);
+//          Collections.reverse(hs.getHierarchySequence());
+        }
+
+        return hs;
+
+    }
+    
+    //3. 
+    /**
+     *
+     * @param hs
+     * @param value
+     * @return
+     */
+    public static List<Integer> getFinalIds(List<A_Hierarchy> hs, Integer value) {
+
+        String sql;
+        sql = createMySelect(hs, value);
+        return uniRepo.findAllFilteringIds(sql);
+
+    }
+    
+    //4.
+    /**
+     * Vrati pozadovany filter.
+     *
+     * @param ids
+     * @return
+     */
+    public static Filter createFiler(List<Integer> ids) {
+        Filter o;
+        List<Filter> fls = new ArrayList<>();
+                
+        for (Integer id : ids) {
+            String tx = "" + id;
+            if (!"".equals(tx)) {
+                fls.add(new Like("id", tx));
+            }
+        }
+        o = new Or(fls.toArray(new Filter[0]));
+                
+        return o;
+    }
+    
+    
+    //5. pom
     /**
      * Ziska zoznam nazvov tabuliek na ktore sa dana tabulka odkazuje, tj.
      * zoznam jej bossov.
@@ -86,7 +156,7 @@ public class ToolsFiltering {
         return hier;
     }
 
-    //3.
+    //6. pom
     /**
      * metoda vytriedi len hierarchicke postupnosti, ktore su potrebne.
      *
@@ -116,7 +186,7 @@ public class ToolsFiltering {
         return ret.get(poz);
     }
 
-    //4.
+    //7. pom
     /**
      *
      * @param list
@@ -136,7 +206,7 @@ public class ToolsFiltering {
         return pripojene;
     }
 
-    //5.
+    //8. pom
     /**
      * pomocna funkcia na klonovanie listu:
      */
@@ -145,72 +215,8 @@ public class ToolsFiltering {
         return cloned;
     }
 
-    //6.
-    /**
-     *
-     * @param actualThread
-     * @return
-     */
-    public static List<A_Hierarchy> getFinalSequence(List<String> actualThread) {
 
-        List<A_Hierarchy> hs = new ArrayList<>();
-        A_Hierarchy ae;
-        String btn, tn, ref;
-
-        String sql;
-
-        for (int i = 0; i < actualThread.size() - 1; i++) {
-            tn = actualThread.get(i);
-            btn = actualThread.get(i + 1);
-            ref = makeReference(btn);
-            ae = new A_Hierarchy(tn, btn, ref);
-            hs.add(ae);
-//          Collections.reverse(hs.getHierarchySequence());
-        }
-
-        return hs;
-
-    }
-
-    //7.
-    /**
-     *
-     * @param hs
-     * @param value
-     * @return
-     */
-    public static List<Integer> getFinalIds(List<A_Hierarchy> hs, Integer value) {
-
-        String sql;
-        sql = createMySelect(hs, value);
-        return uniRepo.findAllFilteringIds(sql);
-
-    }
-
-    /**
-     * Vrati pozadovany filter.
-     *
-     * @param ids
-     * @return
-     */
-    public static Filter createFiler(List<Integer> ids) {
-        Filter o;
-        List<Filter> fls = new ArrayList<>();
-                
-        for (Integer id : ids) {
-            String tx = "" + id;
-            if (!"".equals(tx)) {
-                fls.add(new Like("id", tx));
-            }
-        }
-        o = new Or(fls.toArray(new Filter[0]));
-                
-        return o;
-    }
-    
-    
-
-    //8.
+    //9. pom
     /**
      * Zostavi konecny sql dotaz, podla ktoreho sa bude nakoniec filtrovat dana
      * tabulka. trocha to obchadza logiku veci (na vstupe by mal byt
@@ -221,7 +227,7 @@ public class ToolsFiltering {
      * @param value
      * @return
      */
-    public static String createMySelect(List<A_Hierarchy> hs, Integer value) {
+    private static String createMySelect(List<A_Hierarchy> hs, Integer value) {
 
         StringBuilder sql = new StringBuilder();
         String tn, tnb, br;
@@ -253,7 +259,7 @@ public class ToolsFiltering {
         return sql.toString();
     }
 
-    //9.
+    //10. pom
     /**
      * vrati referenciu na sefa, tj, napr. ked sa z tabulky
      */
@@ -264,20 +270,20 @@ public class ToolsFiltering {
         return replace;
     }
 
-    //10.
+    //11. pom
     /**
      * Zisti, ktore checkboxu su prave zaskrtnute a podla toho zostavi aktualny
      * zoznam tabuliek, ktore budu zohladnene.
      *
      * @return
      */
-    public static List<String> checkActualFilTns() {
-
-        List<String> aktualList = new ArrayList<>();
-
-        aktualList.addAll(Arrays.asList(relFilTns));
-        return aktualList;
-
-    }
+//    public static List<String> checkActualFilTns() {
+//
+//        List<String> aktualList = new ArrayList<>();
+//
+//        aktualList.addAll(Arrays.asList(relFilTns));
+//        return aktualList;
+//
+//    }
 
 }

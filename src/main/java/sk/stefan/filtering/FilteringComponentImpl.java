@@ -60,8 +60,7 @@ public class FilteringComponentImpl extends HorizontalLayout {//implements Filte
     private List<Boolean> bol;
     private List<Integer> vals;
 
-    private List<HierarchySequence> seqs;
-
+    
     //0. konstruktor
     /**
      *
@@ -80,6 +79,8 @@ public class FilteringComponentImpl extends HorizontalLayout {//implements Filte
         this.initCompLists();
 
     }
+    
+    
 
     private void resetLocationValues(Integer integer) {
 
@@ -118,8 +119,7 @@ public class FilteringComponentImpl extends HorizontalLayout {//implements Filte
     private void initCompLists() {
         this.bol = new ArrayList<>();
         this.vals = new ArrayList<>();
-        this.seqs = new ArrayList<>();
-
+    
         this.checkboxes.add(locationCHb);
         this.checkboxes.add(pubBodyCHb);
         this.checkboxes.add(pubPersonCHb);
