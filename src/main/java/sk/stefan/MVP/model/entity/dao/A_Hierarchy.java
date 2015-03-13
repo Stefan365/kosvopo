@@ -5,9 +5,6 @@
  */
 package sk.stefan.MVP.model.entity.dao;
 
-import java.util.List;
-import java.util.Set;
-import sk.stefan.filtering.HierarchySequence;
 
 /**
  *
@@ -18,17 +15,19 @@ public class A_Hierarchy {
     private Integer id;
     private String table_name;
     private String boss_table;
-
-    HierarchySequence hs;
-    List<String> ls;
-    Set<Integer> ids;
+    private String boss_reference;
     
-//    private void checkti(){
-//        ids.a
-//    }
 
-    public static final String TN = "t_hierarchy";
-
+    public static final String TN = "a_hierarchy";
+    
+    public A_Hierarchy(String tn, String btn, String bref){
+        
+        this.table_name = tn;
+        this.boss_table = btn;
+        this.boss_reference = bref;
+    
+    }
+    
     
     
     public String getTable_name() {
@@ -53,6 +52,20 @@ public class A_Hierarchy {
 
     public void setBoss_table(String boss_table) {
         this.boss_table = boss_table;
+    }
+
+    /**
+     * @return the boss_reference
+     */
+    public String getBoss_reference() {
+        return boss_reference;
+    }
+
+    /**
+     * @param boss_reference the boss_reference to set
+     */
+    public void setBoss_reference(String boss_reference) {
+        this.boss_reference = boss_reference;
     }
     
 }

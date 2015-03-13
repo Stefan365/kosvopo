@@ -4,3 +4,32 @@
 2015-03-10 01:48:35 INFO  Skuska1:739 - B:b
 2015-03-10 01:48:35 INFO  Skuska1:742 - C:a
 2015-03-10 01:48:35 INFO  Skuska1:742 - C:c
+2015-03-12 23:12:20 INFO  Skuska1:752 - SIZE:11
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_vote_of_role -- t_public_role
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_tenure -- NULL
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_vote_classification -- t_vote
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_public_person -- NULL
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_person_classification -- t_public_person
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_theme -- NULL
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_subject -- t_public_role
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_public_role -- t_public_person
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_location -- NULL
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_public_body -- t_location
+2015-03-12 23:16:17 INFO  Skuska1:780 - t_vote -- t_subject
+2015-03-12 23:16:17 INFO  Skuska1:752 - SIZE:11
+2015-03-13 13:21:35 INFO  Skuska1:804 - ZACIATOK0
+2015-03-13 13:21:35 INFO  Skuska1:804 - KONIEC
+2015-03-13 13:21:35 INFO  Skuska1:806 - 
+2015-03-13 13:21:35 INFO  Skuska1:804 - ZACIATOK1
+2015-03-13 13:21:35 INFO  Skuska1:804 - KONIEC
+2015-03-13 13:21:35 INFO  Skuska1:806 - 
+2015-03-13 13:21:35 INFO  Skuska1:804 - ZACIATOK2
+2015-03-13 13:21:35 INFO  Skuska1:804 - KONIEC
+2015-03-13 13:21:35 INFO  Skuska1:806 - 
+2015-03-13 13:21:35 INFO  Skuska1:804 - ZACIATOK3
+2015-03-13 13:21:35 INFO  Skuska1:804 - KONIEC
+2015-03-13 13:21:35 INFO  Skuska1:806 - 
+2015-03-13 13:21:35 INFO  Skuska1:804 - ZACIATOK4
+2015-03-13 13:21:35 INFO  Skuska1:804 - KONIEC
+2015-03-13 13:21:35 INFO  Skuska1:806 - 
+2015-03-13 13:46:09 INFO  Skuska1:51 - *location_id*

@@ -218,7 +218,7 @@ public class UniRepo<T> implements MyRepo<T> {
             }
             // cyklus:
             for (String pn : mapPar.keySet()) {
-                if ("password".equals(pn)){
+                if ("password".equals(pn)) {
                     //password s abude ukladat inym sposobom
                     continue;
                 }
@@ -244,7 +244,6 @@ public class UniRepo<T> implements MyRepo<T> {
 //				}
 
 //                Doplnit java.sql.date
-                
                 if (entMethod.invoke(ent) != null && "java.util.Date".equals((entMethod.invoke(ent)).getClass().getCanonicalName())) {
                     s = "'" + PomDao.utilDateToString((Date) entMethod.invoke(ent)) + "'";
                 } else if (entMethod.invoke(ent) != null && "java.lang.Boolean".equals((entMethod.invoke(ent)).getClass().getCanonicalName())) {
@@ -538,7 +537,8 @@ public class UniRepo<T> implements MyRepo<T> {
     }
 
     /**
-     * Modifikuje iba password. Vynimka z univerzalnosti, plati len pre tabulku a_user;
+     * Modifikuje iba password. Vynimka z univerzalnosti, plati len pre tabulku
+     * a_user;
      *
      * @param rawPwd
      * @param id id of row where the value is updated.
@@ -568,13 +568,13 @@ public class UniRepo<T> implements MyRepo<T> {
             }
         }
     }
-    
+
     /**
      * Modifikuje iba password. Len pre tabulku a_user;
      *
      * @param paramValue the new value of parameter
      * @param id id of row where the value is updated.
-     * @return 
+     * @return
      *
      * @throws java.sql.SQLException
      */
@@ -605,10 +605,68 @@ public class UniRepo<T> implements MyRepo<T> {
                 DoDBconn.releaseConnection(conn);
             }
         }
-        
+
     }
-    
-    
-    
-    
+
+    /**
+     * For specific filtering purposes.
+     * 
+     * @param sql
+     * @return 
+     */
+    public List<Integer> findAllFilteringIds(String sql) {
+
+        try {
+            Connection conn = DoDBconn.getConnection();
+            Statement st;
+            st = conn.createStatement();
+
+            List<Integer> listIds;
+            // Notification.show(sql);
+            log.info("SQL: " + sql);
+
+            ResultSet rs;
+            rs = st.executeQuery(sql);
+
+            System.out.println(sql);
+            listIds = this.fillListIds(rs);
+
+            rs.close();
+            st.close();
+            DoDBconn.releaseConnection(conn);
+
+            return listIds;
+
+        } catch (SecurityException | IllegalArgumentException | SQLException e) {
+            Notification.show("Chyba, filterRepo::findAllIds(...)",
+                    Notification.Type.ERROR_MESSAGE);
+            log.error(e.getMessage());
+            return null;
+        }
+
+    }
+
+    /**
+     *
+     */
+    private List<Integer> fillListIds(ResultSet rs) {
+
+        List<Integer> listIds = new ArrayList<>();
+        int id;
+
+        try {
+            while (rs.next()) {
+                id = rs.getInt("id");
+                listIds.add(id);
+            }
+
+            return listIds;
+        } catch (SecurityException | IllegalArgumentException | SQLException e) {
+            Notification.show("Chyba, FilterRepo, fillListIds(ResultSet rs)",
+                    Notification.Type.ERROR_MESSAGE);
+            log.error(e.getLocalizedMessage(), e);
+            return null;
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.ui.OptionGroup;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +44,11 @@ public class Skuska1<T> {
 //        Byte[] b = new  Byte[12];
 //        log.info(b.getClass().getCanonicalName());
         Skuska1<VoteClassification> sk = new Skuska1<>();
-        sk.skusKlonuj();
+//        sk.skusKlonuj();
+//        sk.loadProperties();
+//        sk.addToIterableList();
+        String s = sk.makeReference("t_location");
+        log.info("*"+s+"*");
 //        sk.skusDepict();
 //        
 //        
@@ -693,17 +699,17 @@ public class Skuska1<T> {
     public void skusDepict() {
         try {
             Properties pro = Tools.getDepictParams("t_vote");//.getProperty(key);
-            for (String s: pro.stringPropertyNames()) {
+            for (String s : pro.stringPropertyNames()) {
                 log.info(s + " : " + pro.getProperty(s));
-                
+
             }
 
         } catch (IOException ex) {
             log.error(ex);
         }
     }
-    
-    public void optionSelect(){
+
+    public void optionSelect() {
         OptionGroup sample = new OptionGroup("Select an option");
         for (int i = 0; i < 5; i++) {
             sample.addItem(i);
@@ -712,37 +718,101 @@ public class Skuska1<T> {
         sample.select(2);
         sample.setNullSelectionAllowed(false);
         sample.setHtmlContentAllowed(true);
-        sample.setImmediate(true); 
+        sample.setImmediate(true);
     }
-    
-    private List<String> klonujList(List<String> list){
+
+    private List<String> klonujList(List<String> list) {
         List<String> cloned = new ArrayList<>(list);
         return cloned;
     }
-    
-    private void skusKlonuj(){
-        List<String> b,c,d;
-        
+
+    private void skusKlonuj() {
+        List<String> b, c, d;
+
         List<String> a = new ArrayList<>();
         a.add("a");
         b = klonujList(a);
         c = klonujList(a);
-        
+
         a.add("a");
         b.add("b");
         c.add("c");
-            
-        for (String s : a){
-           log.info("A:" + s);            
-        }
-        for (String s : b){
-           log.info("B:" + s);            
-        }
-        for (String s : c){
-           log.info("C:" + s);            
-        }
-        
 
+        for (String s : a) {
+            log.info("A:" + s);
+        }
+        for (String s : b) {
+            log.info("B:" + s);
+        }
+        for (String s : c) {
+            log.info("C:" + s);
+        }
+
+    }
+
+    private Map<String, String> loadProperties() {
+        this.prop = loadProperties(hierProps);
+        log.info("SIZE:" + prop.size());
+        return null;
+
+    }
+
+    private final Map<String, String> futuresMap = new HashMap<String, String>();
+    private Properties prop;
+
+    private final String hierProps
+            = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\hierarchy\\classHierarchy.properties";
+
+    //1.
+    private Properties loadProperties(String hp) {
+
+        Properties defaultProps = null;
+        try {
+            defaultProps = new Properties();
+            FileInputStream in = new FileInputStream(hp);
+            defaultProps.load(in);
+            in.close();
+        } catch (IOException ex) {
+            log.error(ex);
+        }
+
+        Enumeration e = defaultProps.propertyNames();
+
+        while (e.hasMoreElements()) {
+            String key = (String) e.nextElement();
+            log.info(key + " -- " + defaultProps.getProperty(key));
+        }
+
+        return defaultProps;
+    }
+
+    private void addToIterableList() {
+
+        List<List<String>> mainList = new ArrayList<>();
+        List<String> list;
+
+        for (int i = 0; i < 5; i++) {
+            list = new ArrayList<>();
+            list.add("ZACIATOK" + i);
+            mainList.add(list);
+        }
+
+        for (List<String> l : mainList) {
+            l.add("KONIEC");
+        }
+
+        for (List<String> l : mainList) {
+            for (String s : l) {
+                log.info(s);
+            }
+            log.info("");
+        }
+    }
+
+    private String makeReference(String tn) {
+        String replace = tn.replace("t_", "");
+        replace += "_id";
+        return replace;
     }
 
 }
