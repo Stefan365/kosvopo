@@ -5,80 +5,159 @@
  */
 package sk.stefan.filtering;
 
-import com.vaadin.data.Container.Filter;
-import com.vaadin.ui.Component;
+import com.vaadin.data.util.sqlcontainer.SQLContainer;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.VerticalLayout;
+import java.util.ArrayList;
 import java.util.List;
-import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
+import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.Location;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
+import sk.stefan.MVP.model.entity.dao.PublicPerson;
+import sk.stefan.MVP.view.components.SilentCheckBox;
 
 /**
  *
  * @author stefan
  */
-public interface FilteringComponent {
-        //do tejto mapy naloadovat properties hierarchy.properties
+@SuppressWarnings("serial")
+public class FilteringComponent extends VerticalLayout {
     
-    //1. hlavna filtrovacia funkcia
-    public List<Integer> getTouchedIds(String touchedTn, String touchingTn);
+    private static final Logger log = Logger.getLogger(FilteringComponent.class);
+    
+    private final String parentTn;
+    private final SQLContainer sqlContainer;
+
+    private SilentCheckBox locationCHb;
+    private FilterComboBox<Location> locationCombo;
+    private FilterListener<Location> locationLr;
+    private final List<FilterComboBox<?>> locTouchedCombos = new ArrayList<>();
+    private final VerticalLayout locationVl = new VerticalLayout();
     
     
-//    //2. toto sa urobi nakoniec.
-//    public Filter generujFilter(List<Integer> touchedIds);
+    private SilentCheckBox pubBodyCHb;
+    private FilterComboBox<PublicBody> pubBodyCombo;
+    private FilterListener<PublicBody> pubBodyLr;
+    //toto je tu len pro forma, keby sa pridavalo filtrovanie 
+    //ktore bude zavisle od PublicBody
+    private final List<FilterComboBox<?>> pbTouchedCombos = null;
+    private final VerticalLayout pubBodyVl = new VerticalLayout();
     
-    //2. kam sa ma aplikovat filter.
-    public void applyFilter(List<Integer> touchedIds, Object comp);
+    private SilentCheckBox pubPersonCHb;
+    private FilterComboBox<PublicPerson> pubPersonCombo;
+    private FilterListener<PublicPerson> pubPersonLr;
+    private final List<FilterComboBox<?>> ppTouchedCombos = null;
+    private final VerticalLayout pubPersonVl = new VerticalLayout();
+        
+    private final List<SilentCheckBox> checkboxes = new ArrayList<>();
+    private final List<FilterComboBox<?>> combos  = new ArrayList<>();
 
-    
-//    public void resetLocationValues(Integer integer);
-//    public void resetPubBodyValues(Integer integer);
-//    public void resetPubPersonValues(Integer integer);
-//    public void refreshState();
+    //0. konstruktor
+    /**
+     *
+     * @param parTn
+     * @param sqlCont
+     */
+    public FilteringComponent(String parTn, SQLContainer sqlCont) {
 
-    public List<A_Hierarchy> getAllHierarchies();
-    
-    public List<String> getAllHierarchySequencies(String touchedTn, String touchingTn);
+        this.parentTn = parTn;
+        this.sqlContainer = sqlCont;
 
-//    public List<String> getNextHierarchLayer(String tn);
-
-//    public List<List<String>> createAllSequences(List<List<String>> strs);
-
-    //spravi kartezky sucin
-//    public List<List<String>> pripoj(List<String> sequences, List<String> heads);
-
-    //toto je pomocna funkcia:
-//    public List<String> klonujList(List<String> list);
-
-    public List<List<String>> getActualSequencies(List<List<String>> all);
-
-    public String getBoss(List<String> list);
-
-    public List<A_Hierarchy> getFinalSequence(List<String> actualThreads);
+//        this.setSpacing(true);
+//        this.setMargin(true);
+        
+        this.initComponents();
+        this.initValues();
+        
+    }
 
     /**
-     * Zostavi konecny sql dotaz, podla ktoreho sa bude nakoniec filtrovat dana
-     * tabulka.
-     * @param hs
-     * @return 
+     *
      */
-    public String createMySelect(List<A_Hierarchy> hs);
-    
-    /**
-     * returns e.g. okres_id
-     * @param tn
-     * @return 
-     */
-    public String getBossReference(String tn);
+    private void initComponents() {
+        //1.
+        locationCHb = new SilentCheckBox();
+        locationCombo = new FilterComboBox<>(Location.class);
+        pubBodyCHb = new SilentCheckBox();
+        pubBodyCombo = new FilterComboBox<>(PublicBody.class);
+        pubPersonCHb = new SilentCheckBox();
+        pubPersonCombo = new FilterComboBox<>(PublicPerson.class);
+        
+        locTouchedCombos.add(pubBodyCombo);
+        
+        locationLr = new FilterListener<>(parentTn, 
+                Location.TN, 
+                locationCombo, 
+                locationCHb, 
+                sqlContainer, 
+                locTouchedCombos);
 
-    /**
-     * Zisti, ktore checkboxu su prave zaskrtnute a podla toho zostavi aktualny
-     * zoznam tabuliek, ktore budu zohladnene.
-     * @return 
-     */
-    public List<String> checkActualFilTns();
+        pubBodyLr = new FilterListener<>(parentTn, 
+                PublicBody.TN, 
+                pubBodyCombo, 
+                pubBodyCHb, 
+                sqlContainer, 
+                pbTouchedCombos);
+        
+        pubPersonLr = new FilterListener<>(parentTn, 
+                PublicPerson.TN, 
+                pubPersonCombo, 
+                pubPersonCHb, 
+                sqlContainer, 
+                ppTouchedCombos);
+        
+        
+        locationCHb.setCaption("Miesto");
+        locationCHb.addValueChangeListener(locationLr);
+        locationCombo.addValueChangeListener(locationLr);
+        
+        pubBodyCHb.setCaption("Verejný orgán");
+        pubBodyCHb.addValueChangeListener(pubBodyLr);
+        pubBodyCombo.addValueChangeListener(pubBodyLr);
+                
+        pubPersonCHb.setCaption("Verejná osoba");
+        pubPersonCHb.addValueChangeListener(pubPersonLr);
+        pubPersonCombo.addValueChangeListener(pubPersonLr);
+        
+        this.checkboxes.add(locationCHb);
+        this.checkboxes.add(pubBodyCHb);
+        this.checkboxes.add(pubPersonCHb);
+        
+        this.combos.add(locationCombo);
+        this.combos.add(pubBodyCombo);
+        this.combos.add(pubPersonCombo);
+        
+        //rozlozenie filtracnych komponent:
+        locationVl.addComponent(locationCHb);
+        locationVl.addComponent(locationCombo);
+//        locationVl.setSpacing(true);
+        locationVl.setMargin(true);
+        
+        pubBodyVl.addComponent(pubBodyCHb);
+        pubBodyVl.addComponent(pubBodyCombo);
+//        pubBodyVl.setSpacing(true);
+        pubBodyVl.setMargin(true);
+        
+        pubPersonVl.addComponent(pubPersonCHb);
+        pubPersonVl.addComponent(pubPersonCombo);
+//        pubPersonVl.setSpacing(true);
+        pubPersonVl.setMargin(true);
+
+        //put it all together:
+        this.addComponents(locationVl,pubBodyVl,pubPersonVl);
+        
+    }
+
+    private void initValues(){
+        for (CheckBox chb: checkboxes){
+            chb.setValue(Boolean.FALSE);
+        }
+        for (ComboBox com: combos){
+            com.setEnabled(false);
+        }
+        
+        
+    }
+
 }
-
-
-//    public void addFilter(Container.Filter f);
-//
-//    public void removeFilter(Container.Filter f);
-//
-//    public void refreshFilter(Filter f, FilterType ft);

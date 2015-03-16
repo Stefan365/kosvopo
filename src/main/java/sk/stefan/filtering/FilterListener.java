@@ -1,0 +1,127 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package sk.stefan.filtering;
+
+import com.vaadin.data.Container.Filter;
+import com.vaadin.data.Property;
+import com.vaadin.data.util.sqlcontainer.SQLContainer;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Notification;
+import java.util.List;
+import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
+import sk.stefan.MVP.view.components.SilentCheckBox;
+import sk.stefan.utils.ToolsFiltering;
+
+/**
+ *
+ * @author stefan
+ * @param <E>
+ */
+public class FilterListener<E> implements Property.ValueChangeListener {
+
+    private static final long serialVersionUID = 1L;
+    private static final Logger log = Logger.getLogger(FilterListener.class);
+
+    private final SQLContainer sqlCont;
+    private final String touchedTn;
+    private final String touchingTn;
+    private final List<FilterComboBox<?>> touchedChBs;
+
+    private Filter listenerFt;
+
+    private final FilterComboBox<E> combo;
+    private final SilentCheckBox chb;
+
+    private Boolean bolVal;
+    private Boolean doRefilter = Boolean.FALSE;
+    private Integer intVal;
+
+    //0. konstruktor
+    /**
+     *
+     * @param tdTn
+     * @param tgTn
+     * @param com
+     * @param ch
+     * @param sqlcont
+     * @param touchedChBs
+     */
+    public FilterListener(String tdTn, String tgTn, FilterComboBox<E> com, SilentCheckBox ch,
+            SQLContainer sqlcont, List<FilterComboBox<?>> touchedChBs) {
+
+        this.touchedTn = tdTn;
+        this.touchingTn = tgTn;
+
+        this.combo = com;
+        this.sqlCont = sqlcont;
+        this.chb = ch;
+        this.touchedChBs = touchedChBs;
+
+    }
+
+    @Override
+    public void valueChange(Property.ValueChangeEvent event) {
+
+        Object o = event.getProperty().getValue();
+
+        if (o instanceof Boolean) {
+            bolVal = (Boolean) o;
+            if (bolVal) {
+                intVal = (Integer) combo.getValue();
+                combo.setEnabled(true);
+                if (intVal != null) {
+                    doRefilter = Boolean.TRUE;
+                }
+            } else {
+                combo.setEnabled(false);
+            }
+
+        } else if (o instanceof Integer) {
+            intVal = (Integer) o;
+            if (intVal != null) {
+                doRefilter = Boolean.TRUE;
+            }
+        }
+
+        if (doRefilter && chb.getValue()) {
+
+            //filtrovanie hlavnej tabulky:
+            doRefilter = Boolean.FALSE;
+            List<String> hierarchicalSeq = ToolsFiltering.getHierarchicalSequence(touchedTn, touchingTn);
+            if (hierarchicalSeq == null) {
+                Notification.show("Táto položka nemá vplyv na tabuľku");
+            } else {
+                List<A_Hierarchy> hierSeq = ToolsFiltering.getFinalHierSequence(hierarchicalSeq);
+//                log.info("POCET HIERSEQ:" + hierSeq.size());
+                List<Integer> ids = ToolsFiltering.getFinalIds(hierSeq, intVal);
+
+//                log.info("POCET IDS:" + ids.size());
+                this.sqlCont.removeContainerFilter(listenerFt);
+                listenerFt = ToolsFiltering.createFilter(ids);
+                this.sqlCont.addContainerFilter(listenerFt);
+//                }
+
+            }
+
+            //filtrovanie ostatnych comboboxov:
+            if (touchedChBs != null) {
+                String comboTouchedTn;
+                for (FilterComboBox<?> c : touchedChBs) {
+                    comboTouchedTn = c.getTableName();
+                    List<String> hSeq = ToolsFiltering.getHierarchicalSequence(comboTouchedTn, touchingTn);
+                    List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
+                    List<Integer> idsC = ToolsFiltering.getFinalIds(hASeq, intVal);
+
+                    c.setNewValues(idsC);
+                }
+            }
+
+        }
+    }
+
+}

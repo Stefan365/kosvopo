@@ -34,7 +34,7 @@ import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.MVP.view.components.InputFormLayout;
+//import sk.stefan.MVP.view.components.InputFormLayout;
 
 /**
  * Trida obsahujici pomocne metody pro vytvareni GUI

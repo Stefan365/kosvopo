@@ -41,6 +41,7 @@ import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.MyTable;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.YesNoWindow;
+import sk.stefan.filtering.FilteringComponent;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.listeners.RefreshViewListener;
@@ -78,6 +79,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
     private HorizontalSplitPanel splitPanel;
     private VerticalLayout leftLayout;
     private HorizontalLayout bottomLeftLayout;
+    private FilteringComponent filters;
 
     //Class specific:
     private SQLContainer sqlContainer;
@@ -139,7 +141,10 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
 
         leftLayout.addComponent(uniTable);
         bottomLeftLayout = new HorizontalLayout();
-        leftLayout.addComponent(bottomLeftLayout);
+        filters = new FilteringComponent(Tn, sqlContainer);
+        
+        leftLayout.addComponents(bottomLeftLayout, filters);
+        
         bottomLeftLayout.addComponent(searchField);
         bottomLeftLayout.addComponent(addNewItemButton);
         bottomLeftLayout.addComponent(removeItemButton);

@@ -42,7 +42,7 @@ public class PrepDBconn {
                 dbDriver = "com.mysql.jdbc.Driver";
                 dbURL = "jdbc:mysql://localhost/kosvopo5?zeroDateTimeBehavior=convertToNull";
                 dbUser = "root";
-                dbPwd = "root";
+                dbPwd = "";
 
                 createTablePre = "CREATE TABLE ";
                 createTablePost = " (ID INT not null AUTO_INCREMENT, FIRST_NAME varchar(50), LAST_NAME varchar(50), "

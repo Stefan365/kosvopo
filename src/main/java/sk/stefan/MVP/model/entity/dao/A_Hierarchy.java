@@ -19,7 +19,9 @@ public class A_Hierarchy {
     
 
     public static final String TN = "a_hierarchy";
-    
+    public A_Hierarchy(){
+        
+    }
     public A_Hierarchy(String tn, String btn, String bref){
         
         this.table_name = tn;
@@ -28,7 +30,10 @@ public class A_Hierarchy {
     
     }
     
-    
+    public static String getTN() {
+        return TN;
+    }
+
     
     public String getTable_name() {
         return table_name;

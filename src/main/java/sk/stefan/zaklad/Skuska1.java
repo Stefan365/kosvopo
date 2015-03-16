@@ -23,9 +23,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
 import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
 import sk.stefan.MVP.model.entity.dao.A_User;
@@ -38,9 +40,10 @@ public class Skuska1<T> {
 
     private static final Logger log = Logger.getLogger(Skuska1.class);
 
-    public Skuska1(){
-    
+    public Skuska1() {
+
     }
+
     public static void main(String[] args) throws NoSuchFieldException,
             SecurityException, InstantiationException, IllegalAccessException,
             NoSuchMethodException, IllegalArgumentException,
@@ -49,24 +52,24 @@ public class Skuska1<T> {
 //        Byte[] b = new  Byte[12];
 //        log.info(b.getClass().getCanonicalName());
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:/context/BasicContext.xml");
-         
 
         Skuska1<VoteClassification> skc;
         skc = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        Skuska ska = (Skuska)ctx.getBean("skuskaApp");
-        
-        List<Integer> lis = ska.getList();
-        for (int i:lis){
-            log.info("LIST: " + i);
-        }
-        
-        Skuska1<VoteClassification> sk = new Skuska1<>();
+        skc.testAHierarchy();
+//        Skuska ska = (Skuska)ctx.getBean("skuskaApp");
+//        
+//        List<Integer> lis = ska.getList();
+//        for (int i:lis){
+//            log.info("LIST: " + i);
+//        }
+//        Skuska1<VoteClassification> sk = new Skuska1<>();
 //        sk.skusKlonuj();
 //        sk.loadProperties();
 //        sk.addToIterableList();
         String s = skc.makeReference("t_location");
         log.info("*" + s + "*");
+        skc.checkContains();
 //        sk.skusDepict();
 //        
 //        
@@ -831,6 +834,54 @@ public class Skuska1<T> {
         String replace = tn.replace("t_", "");
         replace += "_id";
         return replace;
+    }
+
+    private void checkContains() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+
+        Integer in = new Integer(1);
+        Integer ina = 1;
+
+        log.info("PRVY: " + list.contains(in));
+        log.info("DRUHY: " + list.contains(ina));
+    }
+
+    private void testAHierarchy() {
+        Class<A_Hierarchy> clsT = A_Hierarchy.class; 
+        UniRepo<A_Hierarchy> repo = new UniRepo<>(clsT);
+        log.info("HIERARCHIA0");
+        
+//        A_Hierarchy a = new A_Hierarchy();
+        
+        try {
+            A_Hierarchy ent = (A_Hierarchy) clsT.newInstance();
+            log.info("HIERARCHIA1:" + ent.getTable_name());
+            
+        } catch (InstantiationException ex) {
+            log.error(ex);
+        } catch (IllegalAccessException ex) {
+            log.error(ex);
+        }
+        
+        Class<Location> cls = Location.class; 
+        UniRepo<Location> repoL = new UniRepo<>(cls);
+        log.info("HIERARCHIA2");
+        
+        try {
+            Location ent = (Location) cls.newInstance();
+            log.info("HIERARCHIA3:" + ent.getObec_name());
+            
+        } catch (InstantiationException ex) {
+            log.error(ex);
+        } catch (IllegalAccessException ex) {
+            log.error(ex);
+        }
+
+
     }
 
 }
