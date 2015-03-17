@@ -622,7 +622,7 @@ public class UniRepo<T> implements MyRepo<T> {
 
             List<Integer> listIds;
             // Notification.show(sql);
-            log.info("SQL: " + sql);
+            log.info("MEGASQL:*" + sql + "*");
 
             ResultSet rs;
             rs = st.executeQuery(sql);

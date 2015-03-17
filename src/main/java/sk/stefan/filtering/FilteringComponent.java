@@ -155,6 +155,7 @@ public class FilteringComponent extends VerticalLayout {
         }
         for (ComboBox com: combos){
             com.setEnabled(false);
+//            com.setEnabled(false);
         }
         
         

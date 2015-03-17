@@ -37,7 +37,6 @@ public class ToolsFiltering {
 
 //        log.info("TOUCHED: " + touchedTn);
 //        log.info("TOUCHING: " + touchingTn);
-
         List<String> pom;
         List<String> start = new ArrayList<>();
 
@@ -66,7 +65,7 @@ public class ToolsFiltering {
 //                    }
 //                }
                 strs2 = new ArrayList<>();
-            } 
+            }
             if (counter >= 10) {
 //                log.info("VYCHADZAM0: " + strs.size());
 //                log.info("VYCHADZAM1: " + touchingTn);
@@ -85,7 +84,7 @@ public class ToolsFiltering {
                 posledny = list.get(list.size() - 1);
 //                log.info("POSLEDNY: " + c + ": *" +posledny+"*");
                 c++;
-                
+
                 if (posledny == null
                         || "null".equals(posledny.toLowerCase())
                         || touchingTn.equals(posledny)) {
@@ -99,7 +98,7 @@ public class ToolsFiltering {
 //                log.info("PRED NEXT HIER LAYER: " + posledny);
                 pom = getNextHierarchLayer(posledny);
                 int f = 0;
-                
+
 //                if ("t_public_body".equals(posledny)) {
 //                    log.info("ANO SOM TU: " + pom.size());
 //                    for (String s : pom) {
@@ -107,7 +106,6 @@ public class ToolsFiltering {
 //                        f++;
 //                    }
 //                }
-
 //                log.info("POM SIZE: " + pom.size());
 //                log.info("POM: " + pom.get(0));
                 pom2 = pripoj(list, pom);
@@ -179,10 +177,13 @@ public class ToolsFiltering {
     public static List<Integer> getFinalIds(List<A_Hierarchy> hs, Integer value) {
 
         String sql;
-        sql = createMySelect(hs, value);
-        log.info("MEGASQL:*" + sql + "*");
-        return uniRepo.findAllFilteringIds(sql);
-
+        if (hs!=null && !hs.isEmpty()) {
+            sql = createMySelect(hs, value);
+//            log.info("MEGASQL:*" + sql + "*");
+            return uniRepo.findAllFilteringIds(sql);
+        } else {
+            return null;
+        }
     }
 
     //4.
@@ -196,10 +197,10 @@ public class ToolsFiltering {
         Filter o;
         List<Filter> fls = new ArrayList<>();
 
-        if ((ids == null) || ids.isEmpty()){
+        if ((ids == null) || ids.isEmpty()) {
             return new Like("id", "kokos");
         }
-        
+
         for (Integer id : ids) {
             String tx = "" + id;
             if (!"".equals(tx)) {
@@ -223,7 +224,6 @@ public class ToolsFiltering {
 
 //        log.info("GETNEXTLEVEL1:" + tn);
 //        log.info("GETNEXTLEVEL2:" + ret.size());
-
         List<String> hier = new ArrayList<>();
         if (ret != null) {
             for (A_Hierarchy h : ret) {
@@ -333,7 +333,7 @@ public class ToolsFiltering {
         }
 
         //pridani hodnoty, ok ktorej sa vsetko odvija:
-        sql.append(value.toString());
+        sql.append(value);
 
         //uzavretie dotazu:
 //        for (int i = 0; i < size - 1; i++) {

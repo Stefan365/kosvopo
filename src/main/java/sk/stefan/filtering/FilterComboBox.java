@@ -45,7 +45,7 @@ public final class FilterComboBox<E> extends ComboBox {
         this.map = mapAll;
 
         this.initCombo();
-        this.initComboValues(map, 0);
+        this.initComboValues(map, 1);
 
     }
 
@@ -74,7 +74,7 @@ public final class FilterComboBox<E> extends ComboBox {
         //pre uchovanie tej istej entity
         Integer val = (Integer) this.getValue();
         if (val == null) {
-            val = 0;
+            val = 1;
         }
 
         //tvorba novej mapy.
@@ -84,8 +84,22 @@ public final class FilterComboBox<E> extends ComboBox {
             }
         }
         this.map = newMap;
+        
         this.initComboValues(map, val);
 
+    }
+    
+    public void setNewValues() {
+        
+        Integer val = (Integer) this.getValue();
+        if (val == null) {
+            val = 1;
+        }
+        //zatial staci takto, keby dany combobox bol spolocny pre rozne filtre,
+        //museli by sa vytvorit separatne mapy, ktore by sa aplikovali a deaplikovali.
+        //napr. skrz map collector: tj. tiedu ktorej instancia by patrila 
+        //do danej skupiny(podla retazca zavislosti) a na ktoru by mali odkaz comboboxy dotknute.
+        this.initComboValues(mapAll , val);
     }
 
     //6.
@@ -94,6 +108,7 @@ public final class FilterComboBox<E> extends ComboBox {
      */
     private void initComboValues(Map<String, Integer> mapa, Integer val) {
 
+        this.removeAllItems();
         if (mapa != null) {
             for (String key : mapa.keySet()) {
                 this.addItem(mapa.get(key));
@@ -103,6 +118,7 @@ public final class FilterComboBox<E> extends ComboBox {
         this.setValue(val);
     }
 
+    
     public String getTableName() {
         try {
             Method getTnMethod = clsE.getDeclaredMethod("getTN");

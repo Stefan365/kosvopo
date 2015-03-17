@@ -8,8 +8,6 @@ package sk.stefan.filtering;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Notification;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -71,6 +69,7 @@ public class FilterListener<E> implements Property.ValueChangeListener {
 
         if (o instanceof Boolean) {
             bolVal = (Boolean) o;
+            log.info("BOOLEAN: " + bolVal);
             if (bolVal) {
                 intVal = (Integer) combo.getValue();
                 combo.setEnabled(true);
@@ -79,6 +78,8 @@ public class FilterListener<E> implements Property.ValueChangeListener {
                 }
             } else {
                 combo.setEnabled(false);
+                this.sqlCont.removeContainerFilter(listenerFt);
+                removeFiltersFromTouched();
             }
 
         } else if (o instanceof Integer) {
@@ -97,30 +98,52 @@ public class FilterListener<E> implements Property.ValueChangeListener {
                 Notification.show("Táto položka nemá vplyv na tabuľku");
             } else {
                 List<A_Hierarchy> hierSeq = ToolsFiltering.getFinalHierSequence(hierarchicalSeq);
-//                log.info("POCET HIERSEQ:" + hierSeq.size());
                 List<Integer> ids = ToolsFiltering.getFinalIds(hierSeq, intVal);
 
-//                log.info("POCET IDS:" + ids.size());
                 this.sqlCont.removeContainerFilter(listenerFt);
                 listenerFt = ToolsFiltering.createFilter(ids);
                 this.sqlCont.addContainerFilter(listenerFt);
-//                }
 
             }
 
             //filtrovanie ostatnych comboboxov:
             if (touchedChBs != null) {
-                String comboTouchedTn;
-                for (FilterComboBox<?> c : touchedChBs) {
-                    comboTouchedTn = c.getTableName();
-                    List<String> hSeq = ToolsFiltering.getHierarchicalSequence(comboTouchedTn, touchingTn);
-                    List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
-                    List<Integer> idsC = ToolsFiltering.getFinalIds(hASeq, intVal);
-
-                    c.setNewValues(idsC);
-                }
+                addFiltersToTouched();
             }
+//                    comboTouchedTn = c.getTableName();
+//                    List<String> hSeq = ToolsFiltering.getHierarchicalSequence(comboTouchedTn, touchingTn);
+//                    List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
+//                    List<Integer> idsC = ToolsFiltering.getFinalIds(hASeq, intVal);
+//                    c.setNewValues(idsC);
 
+        }
+
+    }
+
+    /**
+     * Nastavi filter na zdruzeny comboBox:
+     */
+    private void addFiltersToTouched() {
+
+        for (FilterComboBox<?> c : touchedChBs) {
+
+            String comboTouchedTn = c.getTableName();
+            List<String> hSeq = ToolsFiltering.getHierarchicalSequence(comboTouchedTn, touchingTn);
+            List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
+            List<Integer> idsC = ToolsFiltering.getFinalIds(hASeq, intVal);
+            c.setNewValues(idsC);
+        }
+    }
+
+    /**
+     * odstani prislusny filter:
+     */
+    private void removeFiltersFromTouched() {
+
+        if (touchedChBs != null) {
+            for (FilterComboBox<?> c : touchedChBs) {
+                c.setNewValues();
+            }
         }
     }
 
