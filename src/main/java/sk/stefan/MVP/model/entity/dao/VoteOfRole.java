@@ -8,7 +8,7 @@ public class VoteOfRole implements PresentationName {
 
     public static final String TN = "t_vote_of_role";
 
-    public static final String CLASS_PRESENTATION_NAME = "Hlasovaneie verejného činiteľa";
+    public static final String PRES_NAME = "Hlasovaneie verejného činiteľa";
 
     private Integer id;
 

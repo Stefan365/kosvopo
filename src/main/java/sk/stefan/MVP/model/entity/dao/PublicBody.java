@@ -7,7 +7,7 @@ public class PublicBody implements PresentationName {
 
     public static final String TN = "t_public_body";
     
-    public static final String CLASS_PRESENTATION_NAME = "Verejný orgán";
+    public static final String PRES_NAME = "Verejný orgán";
 
     private Integer id;
 

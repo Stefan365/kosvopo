@@ -8,6 +8,7 @@ import com.vaadin.ui.CheckBox;
  * @author stefan
  * */
 public class SilentCheckBox extends CheckBox {
+    
         private static final long serialVersionUID = -6208978581410404086L;
         
         public SilentCheckBox() {
@@ -20,8 +21,9 @@ public class SilentCheckBox extends CheckBox {
      * @param newValue
          */
         public void setInternalValuea(Boolean newValue) {
-            if (newValue == null)
+            if (newValue == null) {
                 newValue = false;
+            }
             super.setInternalValue(newValue); 
         }
     }    

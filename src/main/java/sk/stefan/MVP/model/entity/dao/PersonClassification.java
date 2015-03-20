@@ -10,7 +10,7 @@ public class PersonClassification implements PresentationName {
 
     public static final String TN = "t_person_classification";
     
-    public static final String CLASS_PRESENTATION_NAME = "Hodnotenie verejnej osoby";
+    public static final String PRES_NAME = "Hodnotenie verejnej osoby";
 
     private Integer id;
 

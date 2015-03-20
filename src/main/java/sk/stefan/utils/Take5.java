@@ -8,19 +8,20 @@ import java.util.Random;
  * @author User
  */
 public class Take5 {
-    static int[] zoznamKariet = new int[5];
+    
+    private static int[] zoznamKariet = new int[5];
     
     
     public static final void nakrmzoznam(){
         Random rand = new Random();
         
-        for(int i = 0; i<zoznamKariet.length;i++){
+        for(int i = 0; i<getZoznamKariet().length;i++){
             int rc;
             do {
                   rc  = rand.nextInt((22)); 
             } while(jeVzozname(rc, i) == true);
 
-            zoznamKariet[i] = rc;        
+            getZoznamKariet()[i] = rc;        
         }
     }
     
@@ -29,11 +30,11 @@ public class Take5 {
     
     public static final String zobraz(){
         String s = "";
-        for (int i = 0; i < zoznamKariet.length; i++){
-            if(i + 1 != zoznamKariet.length){
-                s = s + zoznamKariet[i] + ", ";
+        for (int i = 0; i < getZoznamKariet().length; i++){
+            if(i + 1 != getZoznamKariet().length){
+                s = s + getZoznamKariet()[i] + ", ";
             } else{
-                s = s + zoznamKariet[i] + "";
+                s = s + getZoznamKariet()[i] + "";
             }
         }
         return s;
@@ -41,10 +42,24 @@ public class Take5 {
     
     private static boolean jeVzozname(int x, int j){
         for (int i = 0; i <= j; i++){
-            if(zoznamKariet[i] == x){
+            if(getZoznamKariet()[i] == x){
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @return the zoznamKariet
+     */
+    public static int[] getZoznamKariet() {
+        return zoznamKariet;
+    }
+
+    /**
+     * @param aZoznamKariet the zoznamKariet to set
+     */
+    public static void setZoznamKariet(int[] aZoznamKariet) {
+        zoznamKariet = aZoznamKariet;
     }
 }

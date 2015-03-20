@@ -6,7 +6,7 @@ public class Theme implements PresentationName {
 
     public static final String TN = "t_theme";
     
-    public static final String CLASS_PRESENTATION_NAME = "Tématický okruh hlasovania";
+    public static final String PRES_NAME = "Tématický okruh hlasovania";
 
     private Integer id;
 

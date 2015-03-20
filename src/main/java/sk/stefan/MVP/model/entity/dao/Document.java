@@ -23,7 +23,7 @@ public class Document  implements PresentationName {
     
     private static final String TN = "t_document";
     
-    private static final String CLASS_PRESENTATION_NAME = "Dokument";
+    private static final String PRES_NAME = "Dokument";
 
     
     public Document(){
@@ -36,10 +36,10 @@ public class Document  implements PresentationName {
     }
 
     /**
-     * @return the CLASS_PRESENTATION_NAME
+     * @return the PRES_NAME
      */
-    public static String getCLASS_PRESENTATION_NAME() {
-        return CLASS_PRESENTATION_NAME;
+    public static String getPRES_NAME() {
+        return PRES_NAME;
     }
 
     private Integer id;

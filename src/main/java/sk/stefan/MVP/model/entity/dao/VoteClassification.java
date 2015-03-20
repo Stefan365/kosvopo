@@ -11,7 +11,7 @@ public class VoteClassification implements PresentationName {
     
     public static final String TN = "t_vote_classification";
     
-    public static final String CLASS_PRESENTATION_NAME = "Hodnotenie hlasovania";
+    public static final String PRES_NAME = "Hodnotenie hlasovania";
 
     private Integer id;
 

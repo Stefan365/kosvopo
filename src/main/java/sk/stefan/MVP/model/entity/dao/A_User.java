@@ -11,6 +11,8 @@ public class A_User implements Serializable, PresentationName {
 
     public static final String TN = "a_user";
     
+    public static final String PRES_NAME = "uživateľ";
+    
     private Integer id;
 
     private String first_name;

@@ -6,7 +6,7 @@ public final class Okres implements PresentationName {
 
     public static final String TN = "t_okres";
     
-    public static final String CLASS_PRESENTATION_NAME = "Okres";
+    public static final String PRES_NAME = "Okres";
 
     private Integer id;
 

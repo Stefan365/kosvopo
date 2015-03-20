@@ -6,7 +6,7 @@ public class Location implements PresentationName {
 
     public static final String TN = "t_location";
     
-    public static final String CLASS_PRESENTATION_NAME = "Miesto";
+    public static final String PRES_NAME = "Miesto";
 
     private Integer id;
 

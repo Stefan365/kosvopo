@@ -8,7 +8,7 @@ public class Subject implements PresentationName {
 
     public static final String TN = "t_subject";
     
-    public static final String CLASS_PRESENTATION_NAME = "Predmet hlasovania";
+    public static final String PRES_NAME = "Predmet hlasovania";
 
     private Integer id;
 

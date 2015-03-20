@@ -6,6 +6,8 @@ import sk.stefan.interfaces.PresentationName;
 public class A_Change implements PresentationName {
 
     public static final String TN = "a_change";
+    
+    public static final String PRES_NAME = "Zmena";
 
     private Integer id;
 

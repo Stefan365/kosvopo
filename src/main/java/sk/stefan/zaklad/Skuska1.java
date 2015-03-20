@@ -11,6 +11,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
 import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
 import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.interfaces.PresentationName;
@@ -56,7 +58,7 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> skc;
         skc = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        skc.testAHierarchy();
+//        skc.testAHierarchy();
 //        Skuska ska = (Skuska)ctx.getBean("skuskaApp");
 //        
 //        List<Integer> lis = ska.getList();
@@ -67,9 +69,11 @@ public class Skuska1<T> {
 //        sk.skusKlonuj();
 //        sk.loadProperties();
 //        sk.addToIterableList();
-        String s = skc.makeReference("t_location");
-        log.info("*" + s + "*");
-        skc.checkContains();
+//        String s = skc.makeReference("t_location");
+//        log.info("*" + s + "*");
+//        skc.checkContains();
+        
+        skc.skusDate();
 //        sk.skusDepict();
 //        
 //        
@@ -851,37 +855,66 @@ public class Skuska1<T> {
     }
 
     private void testAHierarchy() {
-        Class<A_Hierarchy> clsT = A_Hierarchy.class; 
+        Class<A_Hierarchy> clsT = A_Hierarchy.class;
         UniRepo<A_Hierarchy> repo = new UniRepo<>(clsT);
         log.info("HIERARCHIA0");
-        
+
 //        A_Hierarchy a = new A_Hierarchy();
-        
         try {
             A_Hierarchy ent = (A_Hierarchy) clsT.newInstance();
             log.info("HIERARCHIA1:" + ent.getTable_name());
-            
+
         } catch (InstantiationException ex) {
             log.error(ex);
         } catch (IllegalAccessException ex) {
             log.error(ex);
         }
-        
-        Class<Location> cls = Location.class; 
+
+        Class<Location> cls = Location.class;
         UniRepo<Location> repoL = new UniRepo<>(cls);
         log.info("HIERARCHIA2");
-        
+
         try {
             Location ent = (Location) cls.newInstance();
             log.info("HIERARCHIA3:" + ent.getObec_name());
-            
+
         } catch (InstantiationException ex) {
             log.error(ex);
         } catch (IllegalAccessException ex) {
             log.error(ex);
         }
 
+    }
 
+    private void skusDate() {
+        
+//        java.sql.Date dateA = java.sql.Date.valueOf("2008-06-18");
+        Date d = new Date();
+        java.sql.Date dateA = new java.sql.Date(d.getTime());
+        java.sql.Date dateB;
+        
+        
+        UniRepo<Tenure> ur = new UniRepo<>(Tenure.class);
+        
+        Tenure t = ur.findOne(3);
+        dateA = t.getSince();
+        dateB = t.getTill();
+        Date tdy = new Date();
+        Long todays = tdy.getTime();
+        
+        log.info("Date value : " + dateA); //prints out 2008-06-18
+        log.info("Converted to Timestamp : " + dateA.getTime());
+        log.info("Date value : " + dateB); //prints out 2008-06-18
+        log.info("Converted to Timestamp : " + dateB.getTime());
+        Long rozd = todays - dateA.getTime();
+        log.info("Rozdiel ms: " + rozd);
+        log.info("Rozdiel sec: " + rozd/1000);
+        log.info("Rozdiel dni: " + rozd/1000/3600/24);
+        
+        
+        
+        
+        
     }
 
 }

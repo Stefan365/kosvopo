@@ -40,6 +40,7 @@ import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.MyTable;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import static sk.stefan.MVP.view.components.NavigationComponent.getNavigator;
 import sk.stefan.MVP.view.components.YesNoWindow;
 import sk.stefan.filtering.FilteringComponent;
 import sk.stefan.listeners.ObnovFilterListener;
@@ -56,12 +57,12 @@ import sk.stefan.utils.Tools;
  * @param <E> type of UniEditableTableView
  *
  */
-public class UniEditableTableView<E> extends VerticalLayout implements OkCancelListener, 
+public class UniEditableTableView<E> extends VerticalLayout implements OkCancelListener,
         RefreshViewListener, ObnovFilterListener, View {
 
     private static final Logger log = Logger.getLogger(UniEditableTableView.class);
     private static final long serialVersionUID = 1L;
-    
+
     private A_User user;
     private SecurityService securityService;
 
@@ -75,6 +76,8 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
     private Button removeItemButton;// = new Button("Odstráň túto podložku");
     private FormLayout editorLayout;// = new FormLayout();
     private FieldGroup fg = new FieldGroup();
+    private Button backBt;
+
     //split panel:
     private HorizontalSplitPanel splitPanel;
     private VerticalLayout leftLayout;
@@ -87,12 +90,17 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
     private List<String> visibleFn;
     private final List<String> nonEditFn;
     private final InputFormLayout<E> inputForm;
+    private final VerticalLayout linksVl;
 
     public UniEditableTableView(Class<E> clsq, String[] uneditCol) {
-        
+
         securityService = new SecurityServiceImpl();
-            
+
         this.clsE = clsq;
+        
+        this.setMargin(true);
+        this.setSpacing(true);
+        
         try {
             this.visibleFn = Tools.getClassProperties(clsE, true);
         } catch (NoSuchFieldException | SecurityException ex) {
@@ -116,7 +124,13 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         initEditor();
         initSearch();
         initAddRemoveButtons();
-        this.addComponent(NavigationComponent.getNavComp());
+        
+        linksVl = new VerticalLayout();
+        linksVl.setMargin(true);
+        linksVl.setSpacing(true);
+        linksVl.addComponent(backBt);
+        this.addComponent(linksVl);
+        
     }
 
     //1.
@@ -125,13 +139,16 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
      */
     private void initLayout() {
 
-        // Root of the user interface component tree is set 
+        backBt = new Button("naspať", (Button.ClickEvent event) -> {
+            getNavigator().navigateTo("adminview1");
+        });
+
         uniTable = new MyTable();
         searchField = new TextField();
         addNewItemButton = new Button("Nová podložka");
         removeItemButton = new Button("Odstráň túto podložku");
         editorLayout = new FormLayout();
-        
+
         splitPanel = new HorizontalSplitPanel();
         this.addComponent(splitPanel);
 
@@ -142,9 +159,9 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         leftLayout.addComponent(uniTable);
         bottomLeftLayout = new HorizontalLayout();
         filters = new FilteringComponent(Tn, sqlContainer);
-        
+
         leftLayout.addComponents(bottomLeftLayout, filters);
-        
+
         bottomLeftLayout.addComponent(searchField);
         bottomLeftLayout.addComponent(addNewItemButton);
         bottomLeftLayout.addComponent(removeItemButton);
@@ -158,9 +175,11 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         searchField.setWidth("100%");
         bottomLeftLayout.setExpandRatio(searchField, 1);
 
+        
         /* Put a little margin around the fields in the right side editor */
         editorLayout.setMargin(true);
         editorLayout.setVisible(false);
+        
     }
 
     //2.
@@ -244,8 +263,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
      * Inicializuje tabulku na danu entitu.
      */
     private void initUniTable() {
-        
-    
+
         uniTable.setContainerDataSource(sqlContainer);
 
         Object[] visCol = visibleFn.toArray();
@@ -272,9 +290,8 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         });
     }
 
-
     /**
-     * 
+     *
      */
     public class DeleteTaskListener implements YesNoWindowListener {
 
@@ -306,8 +323,8 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        this.addComponent(NavigationComponent.getNavComp());
-                user = securityService.getCurrentUser();
+//        this.linksVl.addComponent(NavigationComponent.getNavComp());
+        user = securityService.getCurrentUser();
         if (user != null) {
             //do nothing
         } else {
@@ -331,10 +348,10 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
 
     @Override
     public void obnovFilter() {
-        
+
         //do refresh action
     }
-    
+
     @Override
     public void refreshView() {
         Notification.show("MAKOSKO");

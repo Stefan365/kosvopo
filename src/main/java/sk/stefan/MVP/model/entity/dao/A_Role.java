@@ -7,7 +7,7 @@ public class A_Role implements PresentationName {
 
     public static final String TN = "a_role";
 
-    public static final String CLASS_PRESENTATION_NAME = "Rola";
+    public static final String PRES_NAME = "Rola";
 
     private Integer id;
 

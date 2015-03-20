@@ -7,7 +7,7 @@ public class Tenure implements PresentationName {
 
     public static final String TN = "t_tenure";
     
-    public static final String CLASS_PRESENTATION_NAME = "Volebné obdobie";
+    public static final String PRES_NAME = "Volebné obdobie";
 
     private Integer id;
 

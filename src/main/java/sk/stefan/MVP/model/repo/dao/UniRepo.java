@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.enums.VoteResult;
@@ -667,5 +668,6 @@ public class UniRepo<T> implements MyRepo<T> {
             return null;
         }
     }
+
 
 }

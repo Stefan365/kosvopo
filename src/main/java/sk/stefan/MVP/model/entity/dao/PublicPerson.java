@@ -7,7 +7,7 @@ public class PublicPerson implements PresentationName {
 
     public static final String TN = "t_public_person";
     
-    public static final String CLASS_PRESENTATION_NAME = "Verejná osoba";
+    public static final String PRES_NAME = "Verejná osoba";
 
     private Integer id;
 

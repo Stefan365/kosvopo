@@ -1,31 +1,28 @@
 package sk.stefan.MVP.view;
 
-import java.util.List;
-
-import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.model.entity.dao.Okres;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
-
+import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.AbstractSelect.NewItemHandler;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.ComboBox;
+import java.util.List;
 import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.dao.Okres;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.MVP.view.components.NavigationComponent;
 
 public class HomoView extends VerticalLayout implements View {
 
@@ -54,6 +51,7 @@ public class HomoView extends VerticalLayout implements View {
 
     //Navigator navigator;
     public HomoView() {
+        
         securityService = new SecurityServiceImpl();
 
         okresRepo = new UniRepo<>(Okres.class);

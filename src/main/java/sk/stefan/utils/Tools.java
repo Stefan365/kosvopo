@@ -1,12 +1,7 @@
 package sk.stefan.utils;
 
-import com.vaadin.data.Item;
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import java.io.FileInputStream;
@@ -18,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,93 +42,11 @@ public class Tools {
     private static final Logger log = Logger.getLogger(Tools.class);
 
     /**
-     * Vytvori hlavni menu aplikace
-     */
-//    @SuppressWarnings("serial")
-//    public static VerticalLayout createApplicationMenu(
-//            final Navigation navigation, ViewId selectedView,
-//            User_log user) {
-//
-//        VerticalLayout layout = new VerticalLayout();
-//        layout.addStyleName("appMenulayout");
-//
-//        // jmeno aplikace
-//        Label laTitle = new Label(String.format("<strong>%s</strong>, %s ",
-//                selectedView.title, user.getDisplayName()));
-//        laTitle.setSizeFull();
-//        laTitle.setStyleName(ValoTheme.LABEL_BOLD);
-//        laTitle.addStyleName(ValoTheme.LABEL_LARGE);
-//        laTitle.setContentMode(ContentMode.HTML);
-//
-//        // navigacni menu
-//        HorizontalLayout hlMain = new HorizontalLayout();
-//        hlMain.addComponent(laTitle);
-//        hlMain.setWidth(100, Unit.PERCENTAGE);
-//
-//        ViewId[] views;
-//        if (user.isAdmin()) {
-//            views = new ViewId[]{ViewId.TODOS, ViewId.CATEGORIES, ViewId.USERLIST, ViewId.PROFILE, ViewId.LOGIN};
-//        } else {
-//            views = new ViewId[]{ViewId.TODOS, ViewId.CATEGORIES, ViewId.PROFILE, ViewId.LOGIN};
-//        }
-//        for (final ViewId view : views) {
-//            if (view != selectedView) {
-//                Button btn = new Button(view.title, (ClickEvent event) -> {
-//                    // odhlaseni uzivatele
-//                    if (view.id.equals(ViewId.LOGIN.id)) {
-//                        SecurityService s = new SecurityService();
-//                        s.logout();
-//                    }
-//                    navigation.navigateTo(view, null);
-//                });
-//                if (view.icon != null) {
-//                    btn.setIcon(view.icon);
-//                }
-//                btn.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-//                btn.addStyleName(ValoTheme.BUTTON_SMALL);
-//                hlMain.addComponent(btn);
-//            }
-//        }
-//        hlMain.setExpandRatio(laTitle, 1.0f);
-//
-//        // nacteni ukolu u kterych je potreba upozorneni
-//        TaskServiceImpl taskServ = new TaskServiceImpl();
-//        final List<Task> hotTasks = Task.getHotTasks(taskServ.findAllTasksByUser(user));
-//
-//        // zobrazeni upozorneni na zhave ukoly
-//        VerticalLayout vlHotTasks = null;
-//        if (hotTasks.size() > 0) {
-//            Label laHotTasks = new Label(String.format(FontAwesome.EXCLAMATION_CIRCLE.getHtml()
-//                    + "  Máte nevyřešené úkoly (celkem %d), u kterých se blíží termín dokončení.", hotTasks.size()), ContentMode.HTML);
-//            laHotTasks.setStyleName(ValoTheme.LABEL_SMALL);
-//
-//            vlHotTasks = new VerticalLayout(laHotTasks);
-//            vlHotTasks.setSizeFull();
-//            vlHotTasks.setStyleName("appHotTasksLayout");
-//            vlHotTasks.addLayoutClickListener((LayoutEvents.LayoutClickEvent event) -> {
-//                StringBuilder text = new StringBuilder("<strong>Seznam nevyřešených úkolů, u kterých se blíží termín dokončení</strong><ol>");
-//                for (Task task : hotTasks) {
-//                    text.append("<li>");
-//                    text.append(task.getTitle());
-//                    text.append("</li>");
-//                }
-//                text.append("</ol>");
-//
-//                Notification msg = new Notification(text.toString(), Notification.Type.HUMANIZED_MESSAGE);
-//                msg.setHtmlContentAllowed(true);
-//                msg.setDelayMsec(-1);
-//                msg.show(Page.getCurrent());
-//            });
-//        }
-//
-//        layout.addComponent(hlMain);
-//        if (vlHotTasks != null) {
-//            layout.addComponent(vlHotTasks);
-//        }
-//        return layout;
-//    }
-    /**
-     * VytvoĹ™Ă­ textovĂ© pole roztaĹľenĂ© na celou ĹˇĂ­Ĺ™ku vlastnĂ­ka
+     * Vytvori textove pole.
+     * 
+     * @param caption
+     * @param required
+     * @return 
      */
     public static TextField createFormTextField(String caption, boolean required) {
         TextField tf = new TextField(caption);
@@ -144,29 +58,10 @@ public class Tools {
     }
 
     /**
-     * VytvoĹ™Ă­ textovĂ© pole roztaĹľenĂ© na celou ĹˇĂ­Ĺ™ku vlastnĂ­ka
-     */
-    public static TextArea createTextArea(String caption, boolean required) {
-        TextArea ta = new TextArea(caption);
-        ta.setRequired(required);
-        ta.setSizeFull();
-
-        return ta;
-    }
-
-//    public static void initApplicationLayout(VerticalLayout layout,
-//            Navigator nav, ViewId view, User_log user) {
-//        layout.addComponent(Tools.createApplicationMenu(navigation, view, user));
-//        layout.setSpacing(true);
-//        layout.setMargin(true);
-//        layout.setWidth(800, Unit.PIXELS);
-//        layout.setHeight(600, Unit.PIXELS);
-//        layout.addStyleName("applayout");
-//    }
-//
-    /**
-     * VytvoĹ™Ă­ textovĂ© polepro zadĂˇnĂ­ hesla roztaĹľenĂ© na celou ĹˇĂ­Ĺ™ku
-     * vlastnĂ­ka
+     * Vytvori textove pole pro zadanie hesla 
+     * @param caption
+     * @param required
+     * @return 
      */
     public static PasswordField createFormPasswordField(String caption,
             boolean required) {
@@ -175,28 +70,6 @@ public class Tools {
         pf.setSizeFull();
         pf.setValidationVisible(false);
         return pf;
-    }
-
-    /**
-     * Vytvori standardizovany formular
-     *
-     * @param caption
-     * @param light
-     * @param components
-     * @return
-     */
-    public static FormLayout createFormLayout(String caption, boolean light,
-            Component... components) {
-        FormLayout fl = new FormLayout(components);
-        fl.setCaption(caption);
-        fl.setSpacing(true);
-        fl.setWidth(100, Unit.PERCENTAGE);
-        if (light) {
-            fl.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-        }
-        fl.addStyleName("labeled");
-
-        return fl;
     }
 
     /**
@@ -286,80 +159,6 @@ public class Tools {
         return map;
     }
 
-    // 6.
-    /**
-     * Vraci info text do labelu na hlavni ToDo strance.
-     *
-     * @param item polozka z SQLContaineru, nad kterou se ma vytvorit Label
-     * @return
-     */
-    public static String createLabelText(Item item) {
-
-        StringBuilder lab = new StringBuilder(); // Using default 16 character
-
-        // size
-        lab.append(getHtmlLabelText("Úkol", item.getItemProperty("title").getValue().toString()));
-
-        // 1. popis:
-        final String description = "Popis";
-        if (item.getItemProperty("description") != null && item.getItemProperty("description").getValue() != null) {
-            lab.append(getHtmlLabelText(description, item.getItemProperty("description").getValue().toString()));
-        } else {
-            lab.append(getHtmlLabelText(description, "popis není zadán"));
-        }
-
-        // 2. opakovani ukolu:
-        final String repetitionPeriod = "Opakování úkolu";
-        if (item.getItemProperty("repetition_period") != null
-                && item.getItemProperty("repetition_period").getValue() != null) {
-            switch (item.getItemProperty("repetition_period").getValue().toString()) {
-                case "0":
-                    lab.append(getHtmlLabelText(repetitionPeriod, "opakování není zadáno"));
-                    break;
-                case "1":
-                    lab.append(getHtmlLabelText(repetitionPeriod, "každý týden"));
-                    break;
-                case "2":
-                    lab.append(getHtmlLabelText(repetitionPeriod, "každý měsíc"));
-                    break;
-                default:
-                    lab.append(getHtmlLabelText(repetitionPeriod, "jiná perioda"));
-                    break;
-            }
-        } else {
-            lab.append(getHtmlLabelText(repetitionPeriod, "chybí perioda"));
-        }
-
-        // 3. splneno:
-        final String deadline = "Termín";
-        if (item.getItemProperty("completed") != null
-                && item.getItemProperty("completed").getValue() != null) {
-            switch (item.getItemProperty("completed").getValue().toString()) {
-                case "false":
-                case "FALSE":
-                    if (item.getItemProperty("deadline").getValue() != null) {
-                        lab.append(getHtmlLabelText(deadline, item.getItemProperty("deadline").getValue().toString()));
-                    } else {
-                        lab.append(getHtmlLabelText(deadline, "termín není zadán"));
-                    }
-                    break;
-                case "true":
-                case "TRUE":
-                    if (item.getItemProperty("completion_date").getValue() != null) {
-                        lab.append(getHtmlLabelText(deadline, "Úkol splněn dne "
-                                + item.getItemProperty("completion_date").getValue().toString()));
-                    } else {
-                        lab.append(getHtmlLabelText(deadline, "termín není zadán"));
-                    }
-                    break;
-            }
-        } else {
-            lab.append(getHtmlLabelText(deadline, "splněno"));
-        }
-
-        return lab.toString();
-    }
-
     private static String getHtmlLabelText(String caption, String text) {
         return String.format("<div class=v-label-%s><strong>%s</strong></div><i>%s</i>",
                 ValoTheme.LABEL_BOLD, caption, text);
@@ -374,18 +173,13 @@ public class Tools {
      */
     public static Properties getDepictParams(String tabName) throws FileNotFoundException, IOException {
         String fileN;
-        //fileN = "src\\main\\resources\\depictNames\\" + tabName.toLowerCase() + ".properties";
-        //fileN = tabName.toLowerCase() + ".properties";
-        //fileN = "\\WEB-INF\\" + tabName.toLowerCase() + ".properties";
-//        fileN = "/WEB-INF/" + tabName.toLowerCase() + ".properties";
-//        fileN = "/" + tabName.toLowerCase() + ".properties";
-        
-        fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\" 
+
+        fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\"
                 + tabName.toLowerCase() + ".properties";
 
         Properties prop = new Properties();
         InputStream input = new FileInputStream(fileN);
-        
+
         prop.load(input);
         return prop;
     }
@@ -408,7 +202,7 @@ public class Tools {
         input.close();
         return prop;
     }
-    
+
     public static String getTableDepictNames(String tabName) throws FileNotFoundException, IOException {
         InputStream input;
         String fileN;
@@ -418,14 +212,16 @@ public class Tools {
         input = new FileInputStream(fileN);
         prop.load(input);
         input.close();
-        
+
         return prop.getProperty(tabName);
     }
-    
-        /**
+
+    /**
      * Vrati vhodnu triedu podla nazvu FK entity.
      *
      *
+     * @param pn
+     * @return 
      */
     public static Class<?> getClassFromName(String pn) {
 
@@ -456,6 +252,10 @@ public class Tools {
         }
     }
 
+    /**
+     * @param cls
+     * @return 
+     */
     @SuppressWarnings({"unchecked"})
     public static Map<String, Integer> findAllByClass(Class<?> cls) {
 
@@ -485,6 +285,77 @@ public class Tools {
         }
         return null;
     }
+
+    /**
+     * dekapits the tablename
+     * @param tn
+     * @return 
+     */
+    public static String decapit(String tn) {
+        
+        if (tn.contains("t_")) {
+            return tn.replace("t_", "");
+        } else if (tn.contains("a_")) {
+            return tn.replace("a_", "");
+        } else {
+            return "kokosko";
+        }
+
+    }
+    
+    /**
+     * Kontroluje, ci je volebne obdobie aktualne.
+     * 
+     * @param tenure_id
+     * @return 
+     */
+    public static Boolean isActual(Integer tenure_id) {
+   
+        UniRepo<Tenure> tenRepo = new UniRepo<>(Tenure.class);
+        Tenure ten = tenRepo.findOne(tenure_id);
+        
+        if (ten != null){
+            
+            Long today = (new Date()).getTime();
+            Long since = ten.getSince().getTime();
+            
+            if(since <= today && (ten.getTill() == null || ten.getTill().getTime() >= today)){
+                return Boolean.TRUE;
+            } else {
+                return Boolean.FALSE;
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Vrati verejne role, ktore aktualne patria do verejneho organu.
+     * 
+     * @param pubB
+     * @return 
+     */
+    public static List<PublicRole> getActualPublicRoles(PublicBody pubB){
+
+        List<PublicRole> prActual = new ArrayList<>();
+        
+        UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
+        
+        List<PublicRole> pubRoles = prRepo.findByParam("public_body_id", "" + pubB.getId());
+        
+        Integer tid;
+        
+        for (PublicRole pr : pubRoles){
+            tid = pr.getTenure_id(); 
+            if (Tools.isActual(tid)){
+                prActual.add(pr);
+            }
+        }
+        
+        return prActual;
+        
+    }
+
 
 
 }

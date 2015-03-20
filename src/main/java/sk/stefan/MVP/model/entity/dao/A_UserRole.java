@@ -9,7 +9,7 @@ public class A_UserRole implements PresentationName {
 
     public static final String TN = "a_user_role";
 
-    public static final String CLASS_PRESENTATION_NAME = "Rola užívateľa";
+    public static final String PRES_NAME = "Rola užívateľa";
     
     private Integer id;
 

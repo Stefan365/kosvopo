@@ -7,7 +7,7 @@ public class PublicRole implements PresentationName {
 
     public static final String TN = "t_public_role";
     
-    public static final String CLASS_PRESENTATION_NAME = "Verejná funkcia";
+    public static final String PRES_NAME = "Verejná funkcia";
 
     private Integer id;
 
@@ -75,6 +75,9 @@ public class PublicRole implements PresentationName {
         this.visible = vis;
     }
 
+    /**
+     * Reprezentativne meno pre comboboxy.
+     */
     @Override
     public String getPresentationName() {
 
@@ -92,6 +95,17 @@ public class PublicRole implements PresentationName {
             return id + ", nedefinované";
         }
 
+    }
+    
+    /**
+     * Na ziskanie reprezentacneho mena v pripada formulara na nove hlasovanie.
+     * @return 
+     */
+    public String getPresentationName2() {
+        UniRepo<PublicPerson> ppRepo = new UniRepo<>(
+                PublicPerson.class);
+        PublicPerson pp = ppRepo.findOne(public_person_id);
+        return pp.getPresentationName();
     }
 
 }

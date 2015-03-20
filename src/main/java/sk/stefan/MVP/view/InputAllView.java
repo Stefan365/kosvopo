@@ -69,17 +69,17 @@ public class InputAllView extends VerticalLayout implements View {
 
     private void initMap() {
 
-        allButtonsMap.put(tenure0Bt, new InputFormWrapper<>(Tenure.class, Tenure.CLASS_PRESENTATION_NAME, Tenure.getTN()));
-        allButtonsMap.put(location0Bt, new InputFormWrapper<>(Location.class, Location.CLASS_PRESENTATION_NAME, Location.getTN()));
-        allButtonsMap.put(theme0Bt, new InputFormWrapper<>(Theme.class, Theme.CLASS_PRESENTATION_NAME, Theme.getTN()));
-        allButtonsMap.put(publicPerson0Bt, new InputFormWrapper<>(PublicPerson.class, PublicPerson.CLASS_PRESENTATION_NAME, PublicPerson.getTN()));
-        allButtonsMap.put(publicBody1Bt, new InputFormWrapper<>(PublicBody.class, PublicBody.CLASS_PRESENTATION_NAME, PublicBody.getTN()));
-        allButtonsMap.put(personClass1Bt, new InputFormWrapper<>(PersonClassification.class, PersonClassification.CLASS_PRESENTATION_NAME, PersonClassification.getTN()));
-        allButtonsMap.put(publicRole2Bt, new InputFormWrapper<>(PublicRole.class, PublicRole.CLASS_PRESENTATION_NAME, PublicRole.getTN()));
-        allButtonsMap.put(subject3Bt, new InputFormWrapper<>(Subject.class, Subject.CLASS_PRESENTATION_NAME, Subject.getTN()));
-        allButtonsMap.put(vote4Bt, new InputFormWrapper<>(Vote.class, Vote.CLASS_PRESENTATION_NAME, Vote.getTN()));
-        allButtonsMap.put(voteOfRole5Bt, new InputFormWrapper<>(VoteOfRole.class, VoteOfRole.CLASS_PRESENTATION_NAME, VoteOfRole.getTN()));
-        allButtonsMap.put(actClass6Bt, new InputFormWrapper<>(VoteClassification.class, VoteClassification.CLASS_PRESENTATION_NAME, VoteClassification.getTN()));
+        allButtonsMap.put(tenure0Bt, new InputFormWrapper<>(Tenure.class, Tenure.PRES_NAME, Tenure.getTN()));
+        allButtonsMap.put(location0Bt, new InputFormWrapper<>(Location.class, Location.PRES_NAME, Location.getTN()));
+        allButtonsMap.put(theme0Bt, new InputFormWrapper<>(Theme.class, Theme.PRES_NAME, Theme.getTN()));
+        allButtonsMap.put(publicPerson0Bt, new InputFormWrapper<>(PublicPerson.class, PublicPerson.PRES_NAME, PublicPerson.getTN()));
+        allButtonsMap.put(publicBody1Bt, new InputFormWrapper<>(PublicBody.class, PublicBody.PRES_NAME, PublicBody.getTN()));
+        allButtonsMap.put(personClass1Bt, new InputFormWrapper<>(PersonClassification.class, PersonClassification.PRES_NAME, PersonClassification.getTN()));
+        allButtonsMap.put(publicRole2Bt, new InputFormWrapper<>(PublicRole.class, PublicRole.PRES_NAME, PublicRole.getTN()));
+        allButtonsMap.put(subject3Bt, new InputFormWrapper<>(Subject.class, Subject.PRES_NAME, Subject.getTN()));
+        allButtonsMap.put(vote4Bt, new InputFormWrapper<>(Vote.class, Vote.PRES_NAME, Vote.getTN()));
+        allButtonsMap.put(voteOfRole5Bt, new InputFormWrapper<>(VoteOfRole.class, VoteOfRole.PRES_NAME, VoteOfRole.getTN()));
+        allButtonsMap.put(actClass6Bt, new InputFormWrapper<>(VoteClassification.class, VoteClassification.PRES_NAME, VoteClassification.getTN()));
 
     }
 

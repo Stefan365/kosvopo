@@ -10,7 +10,7 @@ public class Vote implements PresentationName {
 
     public static final String TN = "t_vote";
 
-    public static final String CLASS_PRESENTATION_NAME = "Hlasovanie";
+    public static final String PRES_NAME = "Hlasovanie";
 
     private Integer id;
 
