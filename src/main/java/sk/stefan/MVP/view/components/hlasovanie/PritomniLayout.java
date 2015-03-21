@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package sk.stefan.MVP.view.components.hlasovanie;
 
 import com.vaadin.navigator.Navigator;
@@ -28,101 +29,152 @@ import sk.stefan.utils.Tools;
  * @author stefan
  */
 public class PritomniLayout extends VerticalLayout implements OkCancelListener {
-    
-   private static final Logger log = Logger.getLogger(PritomniLayout.class);
-    
+
+    private static final Logger log = Logger.getLogger(PritomniLayout.class);
+
     private static final long serialVersionUID = 1L;
-    
+
     private final Navigator navigator;
-    
+
     private List<PritomnyComponent> pritomni;
-    
-    private final PublicBody verOrg;
-    
-    private final Vote hlasovanie;
-    
+
+    private final PublicBody pubBody;
+
+    private Vote vote;
+
     private List<PublicRole> prActual;
-    
+
+    private final List<VoteOfRole> votesOfRoles = new ArrayList<>();
+
     private Button saveBt;
-    
+
     private Button cancelBt;
-    
+
     private HorizontalLayout buttonsLayout;
-        
+
     private final UniRepo<VoteOfRole> vorRepo;
-    
+
+    private final UniRepo<Vote> voteRepo;
+
+    private Boolean isNew;
+
     //0. konstruktor.
     /**
-     * 
+     *
      * @param pb
      * @param hlas
      * @param nav
      */
-    public PritomniLayout(PublicBody pb, Vote hlas, Navigator nav){
-        
+    public PritomniLayout(PublicBody pb, Vote hlas, Navigator nav) {
+
         //dostat to z Vote by bolo zdlhave.
-        this.verOrg = pb;
-        this.hlasovanie = hlas;
-        this.navigator =nav;
+        this.pubBody = pb;
+        this.vote = hlas;
+        this.navigator = nav;
         
+
         this.vorRepo = new UniRepo<>(VoteOfRole.class);
-                
+        this.voteRepo = new UniRepo<>(Vote.class);
+
         this.initLayout();
-        
+
     }
-    
+
     /**
-     * Vytvori layout a naplni ho prislusnymi komponentami.  
+     * Vytvori layout a naplni ho prislusnymi komponentami.
      */
-    private void initLayout(){
+    private void initLayout() {
         
-        prActual = Tools.getActualPublicRoles(verOrg);
+        prActual = Tools.getActualPublicRoles(pubBody);
         pritomni = new ArrayList<>();
-        
+
         PritomnyComponent prComp;
-        
+
         log.info("INITLAYOUT PRITOMNI:" + prActual.size());
-        for (PublicRole pr : prActual){
-////            prComp = new PritomnyComponent(pr, hlasovanie);
-//            this.pritomni.add(prComp);
-//            this.addComponent(prComp);
+
+        VoteOfRole vor;
+        List<VoteOfRole> vors = null;
+        isNew = false;
+
+        for (PublicRole pr : prActual) {
+//            vors = vorRepo.findByParam("public_role_id", "" + pr.getId());
+            if (vote.getId() != null) {
+                vors = vorRepo.findByParam("vote_id", "" + vote.getId());
+                if (vors != null && !vors.isEmpty()) {
+                    vor = vors.get(0);
+                } else {
+                    vor = new VoteOfRole();
+                    vor.setPublic_role_id(pr.getId());
+                    vor.setVote_id(vote.getId());
+                    vor.setVisible(Boolean.TRUE);
+                }
+            } //is novy:
+            else {
+                isNew = true;
+                vor = new VoteOfRole();
+                vor.setPublic_role_id(pr.getId());
+                vor.setVisible(Boolean.TRUE);
+            }
+            this.votesOfRoles.add(vor);
+            
+//            pri ukladani najprv ulozit entitu Vote.
+//            potom z nej vyextrahovat id a pridat ho do Vote of role a ulozit.
+            prComp = new PritomnyComponent(vor, vote);
+            this.pritomni.add(prComp);
+            this.addComponent(prComp);
         }
-        
+
         this.initButtons();
-        
+
         buttonsLayout.setMargin(true);
         buttonsLayout.setSpacing(true);
         this.addComponent(buttonsLayout);
     }
-    
-    private void initButtons(){
-        
+
+    private void initButtons() {
+
         buttonsLayout = new HorizontalLayout();
-        
+
         cancelBt = new Button("zrušiť");
-        
+
         saveBt = new Button("uložiť", (Button.ClickEvent event) -> {
             doOkAction();
         });
-        
+
         cancelBt = new Button("zrušiť", (Button.ClickEvent event) -> {
             doCancelAction();
         });
-        
+
         buttonsLayout.addComponents(saveBt, cancelBt);
-        
+
     }
 
     @Override
     public void doOkAction() {
-        for (PritomnyComponent prtka : this.pritomni){
-            vorRepo.save(prtka.getHlasovanieVerOs());
+        if (isNew) {
+            //obohati hlasovanie o nove id, po ulozeni do DB.
+            voteRepo.save(vote);
+            isNew = false;
+            for (VoteOfRole vor : votesOfRoles ) {
+                vor.setVote_id(vote.getId());
+                vorRepo.save(vor);
+            }
+        } else {
+            saveAllVoteOfRoles();
         }
         Notification.show("Uloženie prebehlo v poriadku!");
     }
 
+    
     @Override
     public void doCancelAction() {
         navigator.navigateTo("A_inputAll");
     }
+    
+    private void saveAllVoteOfRoles(){
+        for (VoteOfRole vor: votesOfRoles){
+            vor = vorRepo.save(vor);
+        }
+    }
+
 }

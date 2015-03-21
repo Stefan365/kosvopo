@@ -8,6 +8,7 @@ package sk.stefan.MVP.view;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.view.components.InputComboBox;
+import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.hlasovanie.PritomniLayout;
 import sk.stefan.utils.Tools;
@@ -30,19 +33,26 @@ public class VotingView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = 1L;
 
-    private final PritomniLayout pritomniLy;
+    
+//    HLAVNE KOMPONENTY:
+    private InputComboBox<Integer> pubBodycCb;
+    private InputFormLayout<Vote> voteFormLy;
+    private PritomniLayout pritomniLy;
+    
+    
+//    private final List<PublicRole> hlasujuci;
+    
+    
 
-    private final List<PublicRole> hlasujuci;
 
+
+//    REPA:
 //    @Autowired
     private final UniRepo<PublicRole> prRepo;
-
 //    @Autowired
     private final UniRepo<Tenure> tenureRepo;
-    
 //    @Autowired
     private final UniRepo<PublicBody> pbRepo;
-    
 //    @Autowired
     private final UniRepo<Vote> voteRepo;
     
@@ -69,8 +79,6 @@ public class VotingView extends VerticalLayout implements View {
         prRepo = new UniRepo<>(PublicRole.class);
         tenureRepo = new UniRepo<>(Tenure.class);
             
-        hlasujuci = new ArrayList<>();
-        
         List<PublicRole> hlasciAll
                 = this.prRepo.findByParam("public_body_id", "" + pubBody.getId());
         
@@ -81,23 +89,12 @@ public class VotingView extends VerticalLayout implements View {
         
         this.addComponent(pritomniLy);
         
-        Boolean isValid;
-//        
-//        
-        for (PublicRole pr: hlasciAll){
-            
-            isValid = Tools.isActual(pr.getTenure_id());
-            if (isValid){
-                hlasujuci.add(pr);
-            }
-        }
         
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
-        
         //do nothing
     }
 

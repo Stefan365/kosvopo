@@ -45,6 +45,8 @@ import sk.stefan.utils.ToolsDao;
 
 public class Skuska1<T> {
 
+    private A a, b, c;
+    
     private static final Logger log = Logger.getLogger(Skuska1.class);
 
     public Skuska1() {
@@ -62,10 +64,11 @@ public class Skuska1<T> {
 
         Skuska ska = (Skuska)ctx.getBean("skuskaApp");        
 //        Skuska ska = new Skuska(4); //nefunguje!!! vsetko musi byt vytvorene v ramci springu 
-        ska.skusRepo();
+//        ska.skusRepo();
         
-//        Skuska1<VoteClassification> sk;
-//        sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
+        Skuska1<VoteClassification> sk;
+        sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
+        sk.skusA();
 //
 //        log.info("CLASS:*" + VoteClassification.class.getCanonicalName()+"*");
 //        
@@ -995,6 +998,34 @@ public class Skuska1<T> {
             log.info("METHOD: " + m.getName());
         }
 
+    }
+    
+    private void skusA(){
+        List<A> lisa = new ArrayList<>();
+        a = new A(1);
+        b = new A(2);
+        c = new A(3);
+        
+        lisa.add(a);
+        lisa.add(b);
+        lisa.add(c);
+        
+        for (A a : lisa){
+            log.info("PRED: " + a.getNum());
+        }
+        
+        a = new A(5);
+        b = new A(6);
+        c = new A(7);
+        
+//        for (A a : lisa){
+//            a = new A(5);
+//        }
+        for (A a : lisa){
+            log.info("PO: " + a.getNum());
+        }
+        
+        
     }
 
 }

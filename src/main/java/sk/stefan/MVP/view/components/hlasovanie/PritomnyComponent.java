@@ -5,12 +5,8 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
-import java.util.Arrays;
-import java.util.List;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.enums.VoteAction;
 
 /**
@@ -23,33 +19,34 @@ public class PritomnyComponent extends HorizontalLayout {
     private Label presentLb;
     private OptionGroup decisionOg;
 
-    private final PublicRole pubRole;
-    private final Vote hlasovanie;
-    private final VoteOfRole hlasovanieVerOs;
+//    private final PublicRole pubRole;
+    private final Vote vote;
+    private final VoteOfRole voteOfRole;
     private VoteAction decision;
 
-    private final UniRepo<VoteOfRole> vorRepo;
+//    private final UniRepo<VoteOfRole> vorRepo;
     
     //0. konstruktor
     /**
      * @param vor
+     * @param hlas
      */
-    public PritomnyComponent(PublicRole pr, Vote hlas, PritomniLayout lisnr) {
+    public PritomnyComponent(VoteOfRole vor, Vote hlas) {
 //    public PritomnyComponent(VoteOfRole vor) {
 
-        vorRepo = new UniRepo<>(VoteOfRole.class);
+//        vorRepo = new UniRepo<>(VoteOfRole.class);
         
-        this.pubRole = pr;
-        this.hlasovanie = hlas;
-        this.hlasovanieVerOs = new VoteOfRole();
-        this.hlasovanieVerOs.setPublic_role_id(pr.getId());
-        this.hlasovanieVerOs.setVote_id(hlas.getId());
-        this.hlasovanieVerOs.setVisible(Boolean.TRUE);
+//        this.pubRole = pr;
+        this.vote = hlas;
+        this.voteOfRole = vor;
+//        this.hlasovanieVerOs.setPublic_role_id(pr.getId());
+//        this.hlasovanieVerOs.setVote_id(hlas.getId());
+//        this.hlasovanieVerOs.setVisible(Boolean.TRUE);
         
         
         
 
-//        this.initComp();
+        this.initComp();
     }
 
     private void initComp() {
@@ -60,7 +57,6 @@ public class PritomnyComponent extends HorizontalLayout {
         this.addComponents(decisionOg, presentLb);
 
         this.setSpacing(true);
-//        this.setMargin(true);
 
     }
 
@@ -85,12 +81,12 @@ public class PritomnyComponent extends HorizontalLayout {
 
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
-                hlasovanieVerOs.setDecision((VoteAction) event.getProperty().getValue());
+                voteOfRole.setDecision((VoteAction) event.getProperty().getValue());
             }
         });
 
-        if (this.hlasovanieVerOs.getDecision() == null) {
-            decisionOg.select(hlasovanieVerOs.getDecision());
+        if (this.voteOfRole.getDecision() == null) {
+            decisionOg.select(voteOfRole.getDecision());
 
         } else {
             decisionOg.select(0);
@@ -101,8 +97,8 @@ public class PritomnyComponent extends HorizontalLayout {
         decisionOg.setImmediate(true);
         
         VoteAction va;
-        if (this.hlasovanieVerOs.getDecision() != null){
-            va = this.hlasovanieVerOs.getDecision();
+        if (this.voteOfRole.getDecision() != null){
+            va = this.voteOfRole.getDecision();
         } else {
             va = VoteAction.ABSENT;
         }
@@ -133,7 +129,7 @@ public class PritomnyComponent extends HorizontalLayout {
 
     //Getters and Setters:
     public VoteOfRole getHlasovanieVerOs() {
-        return hlasovanieVerOs;
+        return voteOfRole;
     }
 
     public VoteAction getDecision() {
@@ -144,15 +140,15 @@ public class PritomnyComponent extends HorizontalLayout {
         this.decision = decision;
     }
 
-    public PublicRole getPubRole() {
-        return pubRole;
-    }
+//    public PublicRole getPubRole() {
+//        return pubRole;
+//    }
 
     /**
      * @return the hlasovanie
      */
     public Vote getHlasovanie() {
-        return hlasovanie;
+        return vote;
     }
 
 }

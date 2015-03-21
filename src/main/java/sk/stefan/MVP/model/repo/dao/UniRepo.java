@@ -187,6 +187,8 @@ public class UniRepo<T> implements MyRepo<T> {
 
     // 4.
     /**
+     * Vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
+     * 
      * @param ent
      * @return
      */
@@ -300,6 +302,7 @@ public class UniRepo<T> implements MyRepo<T> {
             DoDBconn.releaseConnection(conn);
 
             return ent;
+            
         } catch (IllegalAccessException | NoSuchFieldException |
                 SecurityException | NoSuchMethodException |
                 IllegalArgumentException | InvocationTargetException | SQLException e) {
