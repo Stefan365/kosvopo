@@ -62,8 +62,11 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusShortFromEnum();
-        sk.skusEnumFromShort();
+        sk.skusDeclaredVsmethod();
+//        sk.skusShortFromEnum();
+//        sk.skusEnumFromShort();
+//        
+        
 //        sk.skusVoteOfRole();
 
 //        skc.testAHierarchy();
@@ -943,7 +946,7 @@ public class Skuska1<T> {
     private void skusEnumFromShort() {
 
         try {
-            Short sh = 1;
+            Short sh = 3;
 
             Object en = ToolsDao.getEnumVal(VoteAction.class, sh);
 
@@ -952,7 +955,7 @@ public class Skuska1<T> {
             UniRepo<VoteOfRole> vorRepo = new UniRepo<>(VoteOfRole.class);
             VoteOfRole vor = vorRepo.findOne(44);
 //            vor.setDecision(VoteAction.REFAIN);
-  
+
             Method entMethod = (VoteOfRole.class).getMethod("setDecision", VoteAction.class);
             entMethod.invoke(vor, en);
             vorRepo.save(vor);
@@ -961,6 +964,20 @@ public class Skuska1<T> {
                 IllegalArgumentException | InvocationTargetException |
                 IllegalAccessException ex) {
             log.error(ex.getMessage(), ex);
+        }
+
+    }
+
+    private void skusDeclaredVsmethod() {
+        VoteAction va;
+
+        Class<?> cls = VoteAction.class;
+
+        for (Method m : cls.getDeclaredMethods()) {
+            log.info("DECLARED: " + m.getName());
+        }
+        for (Method m : cls.getMethods()) {
+            log.info("METHOD: " + m.getName());
         }
 
     }

@@ -107,7 +107,7 @@ public class KosvopoUI extends UI {
         navigator.addView("filamanager", new FilaManagerView());
         navigator.addView("kos2", new Kos2View());
         navigator.addView("kos3", new Kos3View());
-        navigator.addView("A_unputAll", new InputAllView(navigator));
+        navigator.addView("A_inputAll", new InputAllView(navigator));
         
         
         //pociatocna navigacia:

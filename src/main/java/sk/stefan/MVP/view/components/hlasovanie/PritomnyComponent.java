@@ -38,6 +38,10 @@ public class PritomnyComponent extends HorizontalLayout {
         this.pubRole = pr;
         this.hlasovanie = hlas;
         this.hlasovanieVerOs = new VoteOfRole();
+        this.hlasovanieVerOs.setPublic_role_id(pr.getId());
+        this.hlasovanieVerOs.setVote_id(hlas.getId());
+        
+        
 
         this.initComp();
     }

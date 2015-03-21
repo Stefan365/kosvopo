@@ -56,9 +56,10 @@ public class UniRepo<T> implements MyRepo<T> {
     private void setTN(Class<?> cls) {
 
         try {
-            //getDeclaredMethod = pre staticke metody.
+            
             Method getTnMethod = cls.getDeclaredMethod("getTN");
             TN = (String) getTnMethod.invoke(null);
+        
         } catch (IllegalAccessException | IllegalArgumentException |
                 InvocationTargetException | NoSuchMethodException | SecurityException e) {
             log.error(e.getMessage(), e);
@@ -215,7 +216,7 @@ public class UniRepo<T> implements MyRepo<T> {
 
             // kontrola o jakou entitu se jedna (nova/uz pouzita):
             entMetName = "getId";
-            Method entMethod = clsT.getDeclaredMethod(entMetName);
+            Method entMethod = clsT.getMethod(entMetName);
             if (entMethod.invoke(ent) == null) {
                 novy = true;
             } else {
@@ -244,7 +245,8 @@ public class UniRepo<T> implements MyRepo<T> {
                 zac = false;
 
                 entMetName = ToolsDao.getG_SetterName(pn, "get");
-                entMethod = clsT.getDeclaredMethod(entMetName);
+//                entMethod = clsT.getDeclaredMethod(entMetName);
+                entMethod = clsT.getMethod(entMetName);
 
                 // pokial je entita nova, tj. este nebola ulozena v DB.:
                 String s = "" + entMethod.invoke(ent);
@@ -281,14 +283,13 @@ public class UniRepo<T> implements MyRepo<T> {
             }
 
             // Notification.show(sql);
-            System.out.println(sql);
+            log.info("SAVE:" + sql);
 
             st.executeUpdate(sql);
             ResultSet rs = st.getGeneratedKeys();
             if (novy && rs.next()) {
                 Integer newId = rs.getInt(1);
-                entMethod = clsT.getDeclaredMethod("setId",
-                        new Class<?>[]{Integer.class});
+                entMethod = clsT.getMethod("setId", Integer.class);
                 entMethod.invoke(ent, newId);
                 // ent.setId(newId);
             }
@@ -302,7 +303,7 @@ public class UniRepo<T> implements MyRepo<T> {
         } catch (IllegalAccessException | NoSuchFieldException |
                 SecurityException | NoSuchMethodException |
                 IllegalArgumentException | InvocationTargetException | SQLException e) {
-//            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
+            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
             log.error(e.getMessage(), e);
             return null;
         }
@@ -323,7 +324,7 @@ public class UniRepo<T> implements MyRepo<T> {
             Integer id = null;
 
             if (ent != null) {
-                Method entMethod = clsT.getDeclaredMethod("getId");
+                Method entMethod = clsT.getMethod("getId");
                 id = (Integer) entMethod.invoke(ent);
             }
 
@@ -331,8 +332,7 @@ public class UniRepo<T> implements MyRepo<T> {
                 String sql = String.format("DELETE FROM %s WHERE id = %d", TN,
                         id);
                 st.executeUpdate(sql);
-                // Notification.show(sql);
-                log.info(sql);
+                log.info("DELETE:" + sql);
             }
 
             st.close();
@@ -354,78 +354,28 @@ public class UniRepo<T> implements MyRepo<T> {
 
     }
 
-    // funkce na naplneni entity:
     /**
+     * funkce na naplneni entity.
+     * 
+     * @param rs
+     * @return 
      *
      */
     private T fillEntity(ResultSet rs) {
-
-        //Class<?> rsCls = rs.getClass();
-        Class<?> rsCls = ResultSet.class;
-
-        String entMetName, rsMetName;
         
-        Map<String, Class<?>> mapPar;
-        try {
-            @SuppressWarnings("unchecked")
-            T ent = (T) clsT.newInstance();
-            
-            mapPar = ToolsDao.getTypParametrov(clsT);
-
-            while (rs.next()) {
-
-                for (String pn : mapPar.keySet()) {
-
-                    entMetName = ToolsDao.getG_SetterName(pn, "set");
-                    rsMetName = ToolsDao.getGettersForResultSet(mapPar.get(pn)
-                            .getCanonicalName());
-
-//                    Method entMethod = clsT.getDeclaredMethod(entMetName,
-//                            new Class<?>[]{mapPar.get(pn)});
-                    Method entMethod = clsT.getMethod(entMetName, mapPar.get(pn));
-//                    Method rsMethod = rsCls.getDeclaredMethod(rsMetName,
-//                            new Class<?>[]{String.class});
-                    Method rsMethod = rsCls.getMethod(rsMetName,String.class);
-
-//                    log.info("MISMATCH1 pn:" + pn);
-//                    log.info("MISMATCH2 entMetName:" + entMetName);
-//                    log.info("MISMATCH3 reMetName:" + rsMetName);
-//                    log.info("MISMATCH4 rs:" + rs);
-                    if ("getShort".equals(rsMetName)) {
-                        Short sh = (Short) rsMethod.invoke(rs, pn);
-                        
-                        Class<?> clsEnum = mapPar.get(pn);
-                        Method enumMethod = clsEnum.getDeclaredMethod("values");
-                        Object[] enumVals = (Object[]) (enumMethod.invoke(null));
-                        Object enumVal = enumVals[sh];
-                        
-                        entMethod.invoke(ent, enumVal);
-//                        entMethod.invoke(ent, VoteResult.values()[(Short) rsMethod.invoke(rs, pn)]);
-
-                    } else {
-                        entMethod.invoke(ent, rsMethod.invoke(rs, pn));
-                    }
-
-//                    entMethod.invoke(ent, rsMethod.invoke(rs, pn));
-                }
-            }
-
-            return ent;
-        } catch (InstantiationException | IllegalAccessException |
-                NoSuchFieldException | SecurityException |
-                NoSuchMethodException | IllegalArgumentException |
-                InvocationTargetException | SQLException e) {
-            Notification.show("Chyba, uniRepo::fillEntity(...)",
-                    Type.ERROR_MESSAGE);
-            log.error(e.getLocalizedMessage(), e);
+        List<T> ents = this.fillListEntity(rs);
+        if (ents.size() > 0){
+            return ents.get(0);
+        } else {
             return null;
         }
-
     }
 
-    // funkce na seznamu entit:
     /**
+     * naplna zoznam entit
      *
+     * @param rs
+     * @return 
      */
     private List<T> fillListEntity(ResultSet rs) {
 
@@ -475,13 +425,13 @@ public class UniRepo<T> implements MyRepo<T> {
                     } else {
                         entMethod.invoke(ent, rsMethod.invoke(rs, pn));
                     }
-
                 }
 
                 listEnts.add(ent);
             }
 
             return listEnts;
+            
         } catch (InstantiationException | IllegalAccessException | NoSuchFieldException |
                 SecurityException | NoSuchMethodException | IllegalArgumentException |
                 InvocationTargetException | SQLException e) {
@@ -515,9 +465,8 @@ public class UniRepo<T> implements MyRepo<T> {
                 fromMetName = ToolsDao.getG_SetterName(pn, "get");
                 toMetName = ToolsDao.getG_SetterName(pn, "set");
 
-                Method fromMethod = clsT.getDeclaredMethod(fromMetName);
-                Method toMethod = clsT.getDeclaredMethod(toMetName,
-                        new Class<?>[]{mapPar.get(pn)});
+                Method fromMethod = clsT.getMethod(fromMetName);
+                Method toMethod = clsT.getMethod(toMetName,mapPar.get(pn));
 
                 toMethod.invoke(entTo, fromMethod.invoke(entFrom));
             }
