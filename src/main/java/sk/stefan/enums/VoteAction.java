@@ -50,6 +50,16 @@ public enum VoteAction {
         }
         return list;
     }
+    
+    /**
+     * for reflexion purposes.
+     * @param va
+     * @return 
+     */
+    public static Integer getOrdinal(VoteAction va) {
+        return va.ordinal();
+    }
+    
 
     
 }

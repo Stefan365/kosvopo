@@ -1,5 +1,6 @@
 package sk.stefan.utils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -10,18 +11,27 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 
-public class PomDao {
+public class ToolsDao {
+
+    private static final Logger log = Logger.getLogger(ToolsDao.class);
 
     //1. 
     /**
      * Ziska nazvy parametrov danej triedy ako zoznam typu String
      *
+     * @param cls
+     * @param keepId
+     * @return
+     * @throws java.lang.NoSuchFieldException
      */
     public static Set<String> getClassProperties(Class<?> cls, boolean keepId)
             throws NoSuchFieldException, SecurityException {
 
-        Set<String> properties = new HashSet<String>();
+        Set<String> properties = new HashSet<>();
 
         for (Method method : cls.getDeclaredMethods()) {
 
@@ -44,6 +54,10 @@ public class PomDao {
     //2. 
     /**
      * gets getter or setter method name for given parameter
+     *
+     * @param p
+     * @param type
+     * @return
      */
     public static String getG_SetterName(String p, String type) {
 
@@ -59,13 +73,16 @@ public class PomDao {
     /**
      * Ziska mapu nazvov 'parameter : jeho typ' danej triedy ako string.
      *
+     * @param cls
+     * @return
+     * @throws java.lang.NoSuchFieldException
      */
     public static Map<String, Class<?>> getTypParametrov(Class<?> cls)
             throws NoSuchFieldException, SecurityException {
 
-        Map<String, Class<?>> typy = new HashMap<String, Class<?>>();
+        Map<String, Class<?>> typy = new HashMap<>();
 
-        Set<String> zozPar = PomDao.getClassProperties(cls, true);
+        Set<String> zozPar = ToolsDao.getClassProperties(cls, true);
 
         for (String p : zozPar) {
             Type typ = cls.getDeclaredField(p).getType();
@@ -79,10 +96,12 @@ public class PomDao {
     /**
      * Ziska mapu parameter : typ danej triedy.
      *
+     * @param typ
+     * @return
      */
     public static String getShortTyp(String typ) {
         String[] parts = typ.split("\\.");
-        List<String> str = new ArrayList<String>(Arrays.asList(parts));
+        List<String> str = new ArrayList<>(Arrays.asList(parts));
         return str.get(str.size() - 1);
     }
 
@@ -90,7 +109,7 @@ public class PomDao {
      * Ziska getter pre result set.
      *
      * @param typ
-     * @return 
+     * @return
      */
     public static String getGettersForResultSet(String typ) {
         StringBuilder sb = new StringBuilder();
@@ -112,6 +131,9 @@ public class PomDao {
                 case "sk.stefan.enums.Stability":
                 case "sk.stefan.enums.UserType":
                 case "sk.stefan.enums.PublicUsefulness":
+                case "sk.stefan.enums.FilterType":
+                case "sk.stefan.enums.NonEditableFields":
+
                     sb.append("Short");
                     break;
                 default:
@@ -122,7 +144,7 @@ public class PomDao {
         }
 
         String s = sb.toString();
-		//System.out.println("SKACU: " + s);
+        //System.out.println("SKACU: " + s);
         // ResultSet#getTimestamp() you need java.sql.Timestamp
         return s;
     }
@@ -130,8 +152,9 @@ public class PomDao {
     /**
      * Metoda sluzi k prevodu java.util.Date do stringu, ktory je ochotny
      * spolknout typ MYSQL timestamp.
+     *
      * @param date
-     * @return 
+     * @return
      */
     public static String utilDateToString(java.util.Date date) {
 
@@ -140,4 +163,44 @@ public class PomDao {
 
     }
 
+    /**
+     *
+     */
+    public static Integer getShortFromEnum(Class<?> cls, Object value) {
+
+        try {
+            Method entMethod = cls.getMethod("ordinal");
+//          Method entMethod = cls.getDeclaredMethod("getOrdinal", cls); //for static methods
+            Integer i = (Integer) entMethod.invoke(value);
+            return i;
+        } catch (NoSuchMethodException | SecurityException |
+                IllegalArgumentException | InvocationTargetException |
+                IllegalAccessException ex) {
+            log.error(ex.getMessage(), ex);
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @param clsEnum
+     * @param sh
+     * @return 
+     */
+    public static Object getEnumVal(Class<?> clsEnum, Short sh) {
+        
+        try {
+            
+            Method enumMethod = clsEnum.getDeclaredMethod("values");
+            Object[] enumVals = (Object[]) (enumMethod.invoke(null));
+            Object enumVal = enumVals[sh];
+            
+            return enumVal;
+        } catch (NoSuchMethodException | SecurityException |
+                IllegalArgumentException | InvocationTargetException |
+                IllegalAccessException ex) {
+            log.error(ex.getMessage(), ex);
+            return null;
+        } 
+    }
 }

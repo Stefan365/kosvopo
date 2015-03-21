@@ -52,7 +52,7 @@ import sk.stefan.MVP.model.service.VoteOfRoleService;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.TBD_YesNoWindow;
 import sk.stefan.listeners.GeneralComponentListener;
-import sk.stefan.utils.PomDao;
+import sk.stefan.utils.ToolsDao;
 import sk.stefan.utils.TBD_PomFormLayout;
 
 /**
@@ -158,7 +158,7 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
     private void initHlasovaniaPoslTB() throws NoSuchFieldException,
             SecurityException {
 
-        Set<String> nazvy = PomDao.getClassProperties(VoteOfRole.class, true);
+        Set<String> nazvy = ToolsDao.getClassProperties(VoteOfRole.class, true);
 
         hlasovaniaPoslTB.setContainerDataSource(sqlContainer);
         Object[] nazvyO = nazvy.toArray(new String[nazvy.size()]);
@@ -224,9 +224,9 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
 
         /* User interface can be created dynamically to reflect underlying data. */
         if (poslanec != null) {
-            fieldNames = PomDao.getClassProperties(PublicPerson2.class, false);
+            fieldNames = ToolsDao.getClassProperties(PublicPerson2.class, false);
         } else {
-            fieldNames = PomDao.getClassProperties(PublicPerson2.class, false);
+            fieldNames = ToolsDao.getClassProperties(PublicPerson2.class, false);
         }
 
         for (String fieldName : fieldNames) {
@@ -375,9 +375,9 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
 
         /* User interface can be created dynamically to reflect underlying data. */
         if (hlasovanie != null) {
-            fieldNames1 = PomDao.getClassProperties(hlasovanie.getClass(), true);
+            fieldNames1 = ToolsDao.getClassProperties(hlasovanie.getClass(), true);
         } else {
-            fieldNames1 = PomDao.getClassProperties(VoteOfRole.class, true);
+            fieldNames1 = ToolsDao.getClassProperties(VoteOfRole.class, true);
         }
 
         for (String fN : fieldNames1) {

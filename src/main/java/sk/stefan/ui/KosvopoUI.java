@@ -34,6 +34,8 @@ import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.enums.NonEditableFields;
 import sk.stefan.utils.Tools;
 
+@com.vaadin.annotations.Theme("mytheme")
+//@com.vaadin.annotations.Theme("mytheme1")
 @SuppressWarnings("serial")
 public class KosvopoUI extends UI {
 
@@ -91,7 +93,7 @@ public class KosvopoUI extends UI {
                 new UniEditableTableView<>(Theme.class, NonEditableFields.THEME.getNonEditableParams()));
         navigator.addView(Tools.decapit(A_UserRole.TN),
                 new UniEditableTableView<>(A_UserRole.class, NonEditableFields.A_USER_ROLE.getNonEditableParams()));
-        navigator.addView(Tools.decapit(Vote.TN),
+        navigator.addView(Tools.decapit(Vote.getTN()),
                 new UniEditableTableView<>(Vote.class, NonEditableFields.VOTE.getNonEditableParams()));
         navigator.addView(Tools.decapit(VoteClassification.TN),
                 new UniEditableTableView<>(VoteClassification.class, NonEditableFields.VOTE_CLASS.getNonEditableParams()));
@@ -105,6 +107,8 @@ public class KosvopoUI extends UI {
         navigator.addView("filamanager", new FilaManagerView());
         navigator.addView("kos2", new Kos2View());
         navigator.addView("kos3", new Kos3View());
+        navigator.addView("A_unputAll", new InputAllView(navigator));
+        
         
         //pociatocna navigacia:
         navigator.navigateTo("vstupny");

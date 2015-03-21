@@ -8,6 +8,7 @@ package sk.stefan.filtering;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import sk.stefan.MVP.view.components.SilentCheckBox;
  * @author stefan
  */
 @SuppressWarnings("serial")
-public class FilteringComponent extends VerticalLayout {
+public class FilteringComponent extends HorizontalLayout {
     
     private static final Logger log = Logger.getLogger(FilteringComponent.class);
     
@@ -64,8 +65,8 @@ public class FilteringComponent extends VerticalLayout {
         this.parentTn = parTn;
         this.sqlContainer = sqlCont;
 
-//        this.setSpacing(true);
-//        this.setMargin(true);
+        this.setSpacing(true);
+        this.setMargin(true);
         
         this.initComponents();
         this.initValues();

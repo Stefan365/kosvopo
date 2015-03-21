@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import sk.stefan.MVP.view.converters.MyBooleanConverter;
-import sk.stefan.utils.PomDao;
+import sk.stefan.utils.ToolsDao;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -167,7 +167,7 @@ public class TBD_FGMyComboBox<T, E> extends ComboBox {
      *
      */
     private void initComboVal() {
-        String methodName = PomDao.getG_SetterName(fn, "get");
+        String methodName = ToolsDao.getG_SetterName(fn, "get");
 
         if (fg.getItemDataSource() != null) {
             item = fg.getItemDataSource();//.getItemProperty(id); //property

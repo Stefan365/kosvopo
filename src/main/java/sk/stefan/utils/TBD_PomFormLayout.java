@@ -1,6 +1,6 @@
 package sk.stefan.utils;
 
-import sk.stefan.utils.PomDao;
+import sk.stefan.utils.ToolsDao;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -108,7 +108,7 @@ public class TBD_PomFormLayout<T> extends FormLayout {
         Map<String, Class<?>> mapPar;
 
         try {
-            mapPar = PomDao.getTypParametrov(clsT);
+            mapPar = ToolsDao.getTypParametrov(clsT);
         } catch (NoSuchFieldException | SecurityException e1) {
             e1.printStackTrace();
             return;

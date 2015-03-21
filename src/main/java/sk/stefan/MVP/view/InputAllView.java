@@ -10,12 +10,16 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.Kraj;
 import sk.stefan.MVP.model.entity.dao.Location;
+import sk.stefan.MVP.model.entity.dao.Okres;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
@@ -40,69 +44,112 @@ public class InputAllView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = 1L;
 
-    private VerticalLayout layout;
-    private final Button tenure0Bt = new Button();
+    private final GridLayout mainLayout = new GridLayout(2, 2);
+
+    private final VerticalLayout hodnoteniaLy = new VerticalLayout();
+    private final VerticalLayout hlasovanieLy = new VerticalLayout();
+    private final VerticalLayout miestoLy = new VerticalLayout();
+    private final VerticalLayout politikaLy = new VerticalLayout();
+
+    private final Label hodLb = new Label("Hodnotenia");
+    private final Label hlasLb = new Label("Hlasovanie");
+    private final Label miestLb = new Label("Miesto");
+    private final Label polLb = new Label("Politika");
+
+    private final Button krajBt = new Button();
+    private final Button okresBt = new Button();
     private final Button location0Bt = new Button();
-    private final Button theme0Bt = new Button();
+
     private final Button publicPerson0Bt = new Button();
+    private final Button tenure0Bt = new Button();
     private final Button publicBody1Bt = new Button();
-    private final Button personClass1Bt = new Button();
     private final Button publicRole2Bt = new Button();
+
+    private final Button theme0Bt = new Button();
     private final Button subject3Bt = new Button();
     private final Button vote4Bt = new Button();
-    private final Button voteOfRole5Bt = new Button();
-    private final Button actClass6Bt = new Button();
+//    private final Button voteOfRole5Bt = new Button();
 
-    private final Button skuskaBt = new Button("skuska");
+    private final Button personClass1Bt = new Button();
+    private final Button voteClass5Bt = new Button();
 
-    private Map<Button, InputFormWrapper<? extends Object>> allButtonsMap = new HashMap<>();
+//
+//    private final Button skuskaBt = new Button("skuska");
+    private final Map<Button, InputFormWrapper<? extends Object>> allButtonsMap = new HashMap<>();
 
     public InputAllView(Navigator nav) {
         this.initLayout();
+
         this.initMap();
         this.initButtons();
-        this.skusaj();
-//        this.initButtonsListeners();     
-
+        
         this.addComponent(NavigationComponent.getNavComp());
     }
 
     private void initMap() {
 
-        allButtonsMap.put(tenure0Bt, new InputFormWrapper<>(Tenure.class, Tenure.PRES_NAME, Tenure.getTN()));
-        allButtonsMap.put(location0Bt, new InputFormWrapper<>(Location.class, Location.PRES_NAME, Location.getTN()));
+        allButtonsMap.put(krajBt, new InputFormWrapper<>(Kraj.class, Kraj.PRES_NAME, Kraj.TN));
+        allButtonsMap.put(okresBt, new InputFormWrapper<>(Okres.class, Okres.PRES_NAME, Okres.TN));
+        allButtonsMap.put(location0Bt, new InputFormWrapper<>(Location.class, Location.PRES_NAME, Location.TN));
+        allButtonsMap.put(tenure0Bt, new InputFormWrapper<>(Tenure.class, Tenure.PRES_NAME, Tenure.TN));
         allButtonsMap.put(theme0Bt, new InputFormWrapper<>(Theme.class, Theme.PRES_NAME, Theme.getTN()));
-        allButtonsMap.put(publicPerson0Bt, new InputFormWrapper<>(PublicPerson.class, PublicPerson.PRES_NAME, PublicPerson.getTN()));
-        allButtonsMap.put(publicBody1Bt, new InputFormWrapper<>(PublicBody.class, PublicBody.PRES_NAME, PublicBody.getTN()));
-        allButtonsMap.put(personClass1Bt, new InputFormWrapper<>(PersonClassification.class, PersonClassification.PRES_NAME, PersonClassification.getTN()));
-        allButtonsMap.put(publicRole2Bt, new InputFormWrapper<>(PublicRole.class, PublicRole.PRES_NAME, PublicRole.getTN()));
-        allButtonsMap.put(subject3Bt, new InputFormWrapper<>(Subject.class, Subject.PRES_NAME, Subject.getTN()));
-        allButtonsMap.put(vote4Bt, new InputFormWrapper<>(Vote.class, Vote.PRES_NAME, Vote.getTN()));
-        allButtonsMap.put(voteOfRole5Bt, new InputFormWrapper<>(VoteOfRole.class, VoteOfRole.PRES_NAME, VoteOfRole.getTN()));
-        allButtonsMap.put(actClass6Bt, new InputFormWrapper<>(VoteClassification.class, VoteClassification.PRES_NAME, VoteClassification.getTN()));
+        allButtonsMap.put(publicPerson0Bt, new InputFormWrapper<>(PublicPerson.class, PublicPerson.PRES_NAME, PublicPerson.TN));
+        allButtonsMap.put(publicBody1Bt, new InputFormWrapper<>(PublicBody.class, PublicBody.PRES_NAME, PublicBody.TN));
+        allButtonsMap.put(personClass1Bt, new InputFormWrapper<>(PersonClassification.class, PersonClassification.PRES_NAME, PersonClassification.TN));
+        allButtonsMap.put(publicRole2Bt, new InputFormWrapper<>(PublicRole.class, PublicRole.PRES_NAME, PublicRole.TN));
+        allButtonsMap.put(subject3Bt, new InputFormWrapper<>(Subject.class, Subject.PRES_NAME, Subject.TN));
+        allButtonsMap.put(vote4Bt, new InputFormWrapper<>(Vote.class, Vote.getPRES_NAME(), Vote.getTN()));
+//        allButtonsMap.put(voteOfRole5Bt, new InputFormWrapper<>(VoteOfRole.class, VoteOfRole.PRES_NAME, VoteOfRole.getTN()));
+        allButtonsMap.put(voteClass5Bt, new InputFormWrapper<>(VoteClassification.class, VoteClassification.PRES_NAME, VoteClassification.TN));
 
     }
 
     private void initLayout() {
 
-        layout = new VerticalLayout();
-        layout.setMargin(true);
-        layout.setSpacing(true);
+        mainLayout.setMargin(true);
+        mainLayout.setSpacing(true);
 
-        initMap();
-        initButtons();
-        addButtonsToLayout();
+        mainLayout.addComponent(miestoLy, 0, 0);
+        mainLayout.addComponent(politikaLy, 1, 0);
+        mainLayout.addComponent(hlasovanieLy, 0, 1);
+        mainLayout.addComponent(hodnoteniaLy, 1, 1);
 
-        this.addComponent(layout);
+        miestoLy.setMargin(true);
+        miestoLy.setSpacing(true);
+        miestoLy.addComponent(miestLb);
+        miestoLy.addComponent(krajBt);
+        miestoLy.addComponent(okresBt);
+        miestoLy.addComponent(location0Bt);
+
+        politikaLy.setMargin(true);
+        politikaLy.setSpacing(true);
+        politikaLy.addComponent(polLb);
+        politikaLy.addComponent(publicPerson0Bt);
+        politikaLy.addComponent(tenure0Bt);
+        politikaLy.addComponent(publicBody1Bt);
+        politikaLy.addComponent(publicRole2Bt);
+
+        hlasovanieLy.setMargin(true);
+        hlasovanieLy.setSpacing(true);
+        hlasovanieLy.addComponent(hlasLb);
+        hlasovanieLy.addComponent(theme0Bt);
+        hlasovanieLy.addComponent(subject3Bt);
+        hlasovanieLy.addComponent(vote4Bt);
+
+        hodnoteniaLy.setMargin(true);
+        hodnoteniaLy.setSpacing(true);
+        hodnoteniaLy.addComponent(hodLb);
+        hodnoteniaLy.addComponent(personClass1Bt);
+        hodnoteniaLy.addComponent(voteClass5Bt);
+        
+        this.addComponent(mainLayout);
 
     }
 
-    private void addButtonsToLayout() {
-        for (Button b : allButtonsMap.keySet()) {
-            layout.addComponent(b);
-        }
-    }
 
+    /**
+     * inicializacia tlacitiek:
+     */
     private void initButtons() {
 
         for (Button b : allButtonsMap.keySet()) {
@@ -118,27 +165,30 @@ public class InputAllView extends VerticalLayout implements View {
         this.addComponent(NavigationComponent.getNavComp());
     }
 
-    private void skusaj() {
-        this.skuskaBt.addClickListener(new MyCLickListener("Karol"));
-        this.skuskaBt.addClickListener(new MyCLickListener("Peter"));
-        this.skuskaBt.addClickListener(new MyCLickListener("Pavol"));
-        
-        this.addComponent(skuskaBt);
-        
-    }
+//    //skuska
+//    private void skusaj() {
+//
+//        this.skuskaBt.addClickListener(new MyCLickListener("Karol"));
+//        this.skuskaBt.addClickListener(new MyCLickListener("Peter"));
+//        this.skuskaBt.addClickListener(new MyCLickListener("Pavol"));
+//
+//        this.addComponent(skuskaBt);
+//
+//    }
 
-    private class MyCLickListener implements ClickListener {
-        private static final long serialVersionUID = 1L;
-        private final String val;
-        
-        public MyCLickListener(String value){
-            val = value;
-        }
-
-        @Override
-        public void buttonClick(Button.ClickEvent event) {
-            Notification.show(val);
-        }
-        
-    }
+//    private class MyCLickListener implements ClickListener {
+//
+//        private static final long serialVersionUID = 1L;
+//        private final String val;
+//
+//        public MyCLickListener(String value) {
+//            val = value;
+//        }
+//
+//        @Override
+//        public void buttonClick(Button.ClickEvent event) {
+//            Notification.show(val);
+//        }
+//
+//    }
 }

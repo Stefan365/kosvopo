@@ -256,7 +256,7 @@ public class Tools {
      * @param cls
      * @return 
      */
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({"unchecked", "unchecked"})
     public static Map<String, Integer> findAllByClass(Class<?> cls) {
 
         Map<String, Integer> map = new HashMap<>();
@@ -269,7 +269,7 @@ public class Tools {
             repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
             List<? extends Object> listObj;
             listObj = repoCtor.newInstance(cls).findAll();
-//            log.info("KARAMAZOV: " + (listObj == null));
+            log.info("KARAMAZOV: " + (listObj == null));
             for (Object o : listObj) {
                 Method getRepNameMethod = cls.getDeclaredMethod("getPresentationName");
                 repN = (String) getRepNameMethod.invoke(o);
@@ -340,9 +340,10 @@ public class Tools {
         List<PublicRole> prActual = new ArrayList<>();
         
         UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
+        log.info("PUBBODYID:" + pubB.getId());
         
         List<PublicRole> pubRoles = prRepo.findByParam("public_body_id", "" + pubB.getId());
-        
+        log.info("PUBROLES:" + pubRoles.size());
         Integer tid;
         
         for (PublicRole pr : pubRoles){

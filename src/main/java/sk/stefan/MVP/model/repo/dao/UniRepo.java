@@ -18,9 +18,16 @@ import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.enums.FilterType;
+import sk.stefan.enums.NonEditableFields;
+import sk.stefan.enums.PublicUsefulness;
+import sk.stefan.enums.Stability;
+import sk.stefan.enums.UserType;
+import sk.stefan.enums.VoteAction;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.MyRepo;
-import sk.stefan.utils.PomDao;
+import sk.stefan.utils.Tools;
+import sk.stefan.utils.ToolsDao;
 
 public class UniRepo<T> implements MyRepo<T> {
 
@@ -49,6 +56,7 @@ public class UniRepo<T> implements MyRepo<T> {
     private void setTN(Class<?> cls) {
 
         try {
+            //getDeclaredMethod = pre staticke metody.
             Method getTnMethod = cls.getDeclaredMethod("getTN");
             TN = (String) getTnMethod.invoke(null);
         } catch (IllegalAccessException | IllegalArgumentException |
@@ -191,7 +199,7 @@ public class UniRepo<T> implements MyRepo<T> {
             // Map<String, String> mapPar;
             Map<String, Class<?>> mapPar;
 
-            mapPar = PomDao.getTypParametrov(clsT);
+            mapPar = ToolsDao.getTypParametrov(clsT);
 
             String sql, str;
 
@@ -216,10 +224,11 @@ public class UniRepo<T> implements MyRepo<T> {
                         (Integer) (entMethod.invoke(ent)));
                 update2.append(str);
             }
-            // cyklus:
+
+            // cyklus zistovania hodnot parametrov POJO-a:
             for (String pn : mapPar.keySet()) {
                 if ("password".equals(pn)) {
-                    //password s abude ukladat inym sposobom
+                    //password sa bude ukladat inym sposobom
                     continue;
                 }
                 if ("id".equals(pn)) {
@@ -234,21 +243,22 @@ public class UniRepo<T> implements MyRepo<T> {
                 }
                 zac = false;
 
-                entMetName = PomDao.getG_SetterName(pn, "get");
+                entMetName = ToolsDao.getG_SetterName(pn, "get");
                 entMethod = clsT.getDeclaredMethod(entMetName);
 
                 // pokial je entita nova, tj. este nebola ulozena v DB.:
                 String s = "" + entMethod.invoke(ent);
-//				if (entMethod.invoke(ent) != null){
-//					System.out.println("MENO: "+ (entMethod.invoke(ent)).getClass().getCanonicalName());
-//				}
+                Object obj = entMethod.invoke(ent);
 
 //                Doplnit java.sql.date
                 if (entMethod.invoke(ent) != null && "java.util.Date".equals((entMethod.invoke(ent)).getClass().getCanonicalName())) {
-                    s = "'" + PomDao.utilDateToString((Date) entMethod.invoke(ent)) + "'";
+                    s = "'" + ToolsDao.utilDateToString((Date) entMethod.invoke(ent)) + "'";
                 } else if (entMethod.invoke(ent) != null && "java.lang.Boolean".equals((entMethod.invoke(ent)).getClass().getCanonicalName())) {
                     s = " " + entMethod.invoke(ent) + " ";
                 } else {
+                    if (mapPar.get(pn).getCanonicalName().contains(".enums.")) {
+                        s = "" + ToolsDao.getShortFromEnum(mapPar.get(pn), obj);
+                    }
                     s = "'" + s + "'";
                 }
                 if (novy) {
@@ -285,7 +295,7 @@ public class UniRepo<T> implements MyRepo<T> {
 
             rs.close();
             st.close();
-            conn.commit();
+//            conn.commit();
             DoDBconn.releaseConnection(conn);
 
             return ent;
@@ -293,7 +303,7 @@ public class UniRepo<T> implements MyRepo<T> {
                 SecurityException | NoSuchMethodException |
                 IllegalArgumentException | InvocationTargetException | SQLException e) {
 //            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
             return null;
         }
 
@@ -326,7 +336,7 @@ public class UniRepo<T> implements MyRepo<T> {
             }
 
             st.close();
-            conn.commit();
+//            conn.commit();
             DoDBconn.releaseConnection(conn);
             return true;
 
@@ -354,27 +364,49 @@ public class UniRepo<T> implements MyRepo<T> {
         Class<?> rsCls = ResultSet.class;
 
         String entMetName, rsMetName;
-        // Map<String, String> mapPar;
+        
         Map<String, Class<?>> mapPar;
         try {
             @SuppressWarnings("unchecked")
             T ent = (T) clsT.newInstance();
-            mapPar = PomDao.getTypParametrov(clsT);
+            
+            mapPar = ToolsDao.getTypParametrov(clsT);
 
             while (rs.next()) {
 
                 for (String pn : mapPar.keySet()) {
 
-                    entMetName = PomDao.getG_SetterName(pn, "set");
-                    rsMetName = PomDao.getGettersForResultSet(mapPar.get(pn)
+                    entMetName = ToolsDao.getG_SetterName(pn, "set");
+                    rsMetName = ToolsDao.getGettersForResultSet(mapPar.get(pn)
                             .getCanonicalName());
 
-                    Method entMethod = clsT.getDeclaredMethod(entMetName,
-                            new Class<?>[]{mapPar.get(pn)});
-                    Method rsMethod = rsCls.getDeclaredMethod(rsMetName,
-                            new Class<?>[]{String.class});
+//                    Method entMethod = clsT.getDeclaredMethod(entMetName,
+//                            new Class<?>[]{mapPar.get(pn)});
+                    Method entMethod = clsT.getMethod(entMetName, mapPar.get(pn));
+//                    Method rsMethod = rsCls.getDeclaredMethod(rsMetName,
+//                            new Class<?>[]{String.class});
+                    Method rsMethod = rsCls.getMethod(rsMetName,String.class);
 
-                    entMethod.invoke(ent, rsMethod.invoke(rs, pn));
+//                    log.info("MISMATCH1 pn:" + pn);
+//                    log.info("MISMATCH2 entMetName:" + entMetName);
+//                    log.info("MISMATCH3 reMetName:" + rsMetName);
+//                    log.info("MISMATCH4 rs:" + rs);
+                    if ("getShort".equals(rsMetName)) {
+                        Short sh = (Short) rsMethod.invoke(rs, pn);
+                        
+                        Class<?> clsEnum = mapPar.get(pn);
+                        Method enumMethod = clsEnum.getDeclaredMethod("values");
+                        Object[] enumVals = (Object[]) (enumMethod.invoke(null));
+                        Object enumVal = enumVals[sh];
+                        
+                        entMethod.invoke(ent, enumVal);
+//                        entMethod.invoke(ent, VoteResult.values()[(Short) rsMethod.invoke(rs, pn)]);
+
+                    } else {
+                        entMethod.invoke(ent, rsMethod.invoke(rs, pn));
+                    }
+
+//                    entMethod.invoke(ent, rsMethod.invoke(rs, pn));
                 }
             }
 
@@ -400,47 +432,56 @@ public class UniRepo<T> implements MyRepo<T> {
 //        Class<?> rsCls = rs.getClass();
         Class<?> rsCls = ResultSet.class;
 
-        List<T> listEnt = new ArrayList<>();
+        List<T> listEnts = new ArrayList<>();
         String entMetName, rsMetName;
         Map<String, Class<?>> mapPar;
 
         try {
 
-            mapPar = PomDao.getTypParametrov(clsT);
+            mapPar = ToolsDao.getTypParametrov(clsT);
 
             while (rs.next()) {
                 @SuppressWarnings("unchecked")
                 T ent = (T) clsT.newInstance();
 
                 for (String pn : mapPar.keySet()) {
-//                    log.info("ParameterName: " +  mapPar.get(pn).getCanonicalName());
 
-                    entMetName = PomDao.getG_SetterName(pn, "set");
-                    rsMetName = PomDao.getGettersForResultSet(mapPar.get(pn)
+                    entMetName = ToolsDao.getG_SetterName(pn, "set");
+                    rsMetName = ToolsDao.getGettersForResultSet(mapPar.get(pn)
                             .getCanonicalName());
-                    Method entMethod = clsT.getDeclaredMethod(entMetName, new Class<?>[]{mapPar.get(pn)});
-                    Method rsMethod;
-                    rsMethod = rsCls.getDeclaredMethod(rsMetName, new Class<?>[]{String.class});
 
 //                    log.info("KYRYLENKO 1: " + rsMetName);
 //                    log.info("KYRYLENKO 2: " + clsT.getCanonicalName());
 //                    log.info("KYRYLENKO 3: " + pn);
 //                    log.info("KYRYLENKO 4: " + entMetName);
+//                    Method entMethod = clsT.getDeclaredMethod(entMetName, new Class<?>[]{mapPar.get(pn)});
+                    Method entMethod = clsT.getMethod(entMetName, mapPar.get(pn));
+                    
+//                  Method rsMethod = rsCls.getDeclaredMethod(rsMetName, new Class<?>[]{String.class});
+                    Method rsMethod = rsCls.getMethod(rsMetName, String.class);
+
+
                     if ("getShort".equals(rsMetName)) {
-
-                        //entMethod.invoke(ent, rsMethod.invoke(rs, pn));
-                        entMethod.invoke(ent, VoteResult.values()[(Short) rsMethod.invoke(rs, pn)]);
-
+                        
+                        Short sh = (Short) rsMethod.invoke(rs, pn);
+                        
+                        Class<?> clsEnum = mapPar.get(pn);
+                        Method enumMethod = clsEnum.getDeclaredMethod("values");
+                        Object[] enumVals = (Object[]) (enumMethod.invoke(null));
+                        Object enumVal = enumVals[sh];
+                        
+                        entMethod.invoke(ent, enumVal);
+                        
                     } else {
                         entMethod.invoke(ent, rsMethod.invoke(rs, pn));
                     }
 
                 }
 
-                listEnt.add(ent);
+                listEnts.add(ent);
             }
 
-            return listEnt;
+            return listEnts;
         } catch (InstantiationException | IllegalAccessException | NoSuchFieldException |
                 SecurityException | NoSuchMethodException | IllegalArgumentException |
                 InvocationTargetException | SQLException e) {
@@ -467,12 +508,12 @@ public class UniRepo<T> implements MyRepo<T> {
             String fromMetName, toMetName;
             Map<String, Class<?>> mapPar;
 
-            mapPar = PomDao.getTypParametrov(clsT);
+            mapPar = ToolsDao.getTypParametrov(clsT);
 
             for (String pn : mapPar.keySet()) {
 
-                fromMetName = PomDao.getG_SetterName(pn, "get");
-                toMetName = PomDao.getG_SetterName(pn, "set");
+                fromMetName = ToolsDao.getG_SetterName(pn, "get");
+                toMetName = ToolsDao.getG_SetterName(pn, "set");
 
                 Method fromMethod = clsT.getDeclaredMethod(fromMetName);
                 Method toMethod = clsT.getDeclaredMethod(toMetName,
@@ -572,7 +613,6 @@ public class UniRepo<T> implements MyRepo<T> {
     /**
      * Modifikuje iba password. Len pre tabulku a_user;
      *
-     * @param paramValue the new value of parameter
      * @param id id of row where the value is updated.
      * @return
      *
@@ -610,9 +650,9 @@ public class UniRepo<T> implements MyRepo<T> {
 
     /**
      * For specific filtering purposes.
-     * 
+     *
      * @param sql
-     * @return 
+     * @return
      */
     public List<Integer> findAllFilteringIds(String sql) {
 
@@ -668,6 +708,5 @@ public class UniRepo<T> implements MyRepo<T> {
             return null;
         }
     }
-
 
 }

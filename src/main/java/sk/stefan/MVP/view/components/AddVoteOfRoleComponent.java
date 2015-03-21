@@ -18,7 +18,6 @@ import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.VoteService;
-import sk.stefan.enums.NamesOfVoteDecisions;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.listeners.GeneralComponentListener;
 import sk.stefan.utils.PomT;
@@ -286,7 +285,8 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
         this.setComboVote(pr);
 
         // 3. combo: rozhodnutia
-        ldec = NamesOfVoteDecisions.getDecisions();
+//        ldec = NamesOfVoteDecisions.getDecisions();
+        ldec = VoteAction.getNames();
         PomVaadin.initComboStr(decisionCB, ldec);
 
     }

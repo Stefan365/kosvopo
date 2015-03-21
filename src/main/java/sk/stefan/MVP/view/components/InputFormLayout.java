@@ -489,8 +489,8 @@ public final class InputFormLayout<T> extends FormLayout {
         buttonsHL.setMargin(true);
         buttonsHL.setSpacing(true);
 
-        okBt = new Button("Save");
-        cancelBt = new Button("Edit");
+        okBt = new Button("Uložiť");
+        cancelBt = new Button("Zrušiť");
         cancelBt.setEnabled(true);
         okBt.setEnabled(true);
 

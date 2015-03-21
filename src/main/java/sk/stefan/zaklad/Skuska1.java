@@ -34,9 +34,13 @@ import sk.stefan.MVP.model.entity.dao.PublicPerson2;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
+import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.enums.Stability;
+import sk.stefan.enums.VoteAction;
 import sk.stefan.interfaces.PresentationName;
 import sk.stefan.utils.Tools;
+import sk.stefan.utils.ToolsDao;
 
 public class Skuska1<T> {
 
@@ -55,8 +59,12 @@ public class Skuska1<T> {
 //        log.info(b.getClass().getCanonicalName());
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:/context/BasicContext.xml");
 
-        Skuska1<VoteClassification> skc;
-        skc = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
+        Skuska1<VoteClassification> sk;
+        sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
+
+        sk.skusShortFromEnum();
+        sk.skusEnumFromShort();
+//        sk.skusVoteOfRole();
 
 //        skc.testAHierarchy();
 //        Skuska ska = (Skuska)ctx.getBean("skuskaApp");
@@ -72,8 +80,7 @@ public class Skuska1<T> {
 //        String s = skc.makeReference("t_location");
 //        log.info("*" + s + "*");
 //        skc.checkContains();
-        
-        skc.skusDate();
+//        skc.skusDate();
 //        sk.skusDepict();
 //        
 //        
@@ -84,7 +91,6 @@ public class Skuska1<T> {
 //        log.info("TRIEDA:" + byq.getClass().getCanonicalName());
 //        
         //sk.skusToArray();
-
 //        List<Location> loc = uniRepo.findAll();
 //        for (Location l: loc){
 //            log.info("L" + l.getMestka_cast());
@@ -887,34 +893,76 @@ public class Skuska1<T> {
     }
 
     private void skusDate() {
-        
+
 //        java.sql.Date dateA = java.sql.Date.valueOf("2008-06-18");
         Date d = new Date();
         java.sql.Date dateA = new java.sql.Date(d.getTime());
         java.sql.Date dateB;
-        
-        
+
         UniRepo<Tenure> ur = new UniRepo<>(Tenure.class);
-        
+
         Tenure t = ur.findOne(3);
         dateA = t.getSince();
         dateB = t.getTill();
         Date tdy = new Date();
         Long todays = tdy.getTime();
-        
+
         log.info("Date value : " + dateA); //prints out 2008-06-18
         log.info("Converted to Timestamp : " + dateA.getTime());
         log.info("Date value : " + dateB); //prints out 2008-06-18
         log.info("Converted to Timestamp : " + dateB.getTime());
         Long rozd = todays - dateA.getTime();
         log.info("Rozdiel ms: " + rozd);
-        log.info("Rozdiel sec: " + rozd/1000);
-        log.info("Rozdiel dni: " + rozd/1000/3600/24);
-        
-        
-        
-        
-        
+        log.info("Rozdiel sec: " + rozd / 1000);
+        log.info("Rozdiel dni: " + rozd / 1000 / 3600 / 24);
+
+    }
+
+    private void skusVoteOfRole() {
+        UniRepo<VoteOfRole> vorRepo = new UniRepo<>(VoteOfRole.class);
+
+        VoteOfRole vor = new VoteOfRole();
+        vor.setPublic_role_id(1);
+        vor.setVote_id(4);
+        vor.setDecision(VoteAction.REFAIN);
+        vor.setVisible(Boolean.TRUE);
+
+        vorRepo.save(vor);
+    }
+
+    private void skusShortFromEnum() {
+
+        VoteAction va = VoteAction.REFAIN;//3
+
+        int vas = ToolsDao.getShortFromEnum(VoteAction.class, va);
+
+        log.info("VAS:" + vas);
+
+    }
+
+    private void skusEnumFromShort() {
+
+        try {
+            Short sh = 1;
+
+            Object en = ToolsDao.getEnumVal(VoteAction.class, sh);
+
+            log.info("MENO: " + ((VoteAction) en).getName());
+
+            UniRepo<VoteOfRole> vorRepo = new UniRepo<>(VoteOfRole.class);
+            VoteOfRole vor = vorRepo.findOne(44);
+//            vor.setDecision(VoteAction.REFAIN);
+  
+            Method entMethod = (VoteOfRole.class).getMethod("setDecision", VoteAction.class);
+            entMethod.invoke(vor, en);
+            vorRepo.save(vor);
+
+        } catch (NoSuchMethodException | SecurityException |
+                IllegalArgumentException | InvocationTargetException |
+                IllegalAccessException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+
     }
 
 }

@@ -8,9 +8,16 @@ import sk.stefan.interfaces.PresentationName;
 
 public class Vote implements PresentationName {
 
-    public static final String TN = "t_vote";
+    private static final String TN = "t_vote";
 
-    public static final String PRES_NAME = "Hlasovanie";
+    private static final String PRES_NAME = "Hlasovanie";
+
+    /**
+     * @return the PRES_NAME
+     */
+    public static String getPRES_NAME() {
+        return PRES_NAME;
+    }
 
     private Integer id;
 
@@ -100,7 +107,7 @@ public class Vote implements PresentationName {
     }
     
 //    public void setResult_vote(Short rv) {
-//        this.result_vote = VoteResults.values()[rv];
+//        this.result_vote = VoteResult.values()[rv];
 //    }
 
     public void setFor_vote(Integer fv) {
@@ -129,15 +136,15 @@ public class Vote implements PresentationName {
 
         UniRepo<Subject> subRepo = new UniRepo<>(Subject.class);
         
-        if (subject_id != null) {
-            Subject sub = subRepo.findOne(subject_id);
+        if (getSubject_id() != null) {
+            Subject sub = subRepo.findOne(getSubject_id());
             
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            String dateStr = sdf.format(this.vote_date);
+            String dateStr = sdf.format(this.getVote_date());
 
             return sub.getPresentationName() + ", " + dateStr;
         } else {
-            return id + ", nedefinované";
+            return getId() + ", nedefinované";
         }
 
     }
