@@ -27,7 +27,7 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
         GeneralComponentListener {
 
     /**
-     *
+     * KUHOT JA SOM sTALE DOBUA
      */
     private static final long serialVersionUID = 3659971359822685378L;
 
