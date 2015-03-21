@@ -33,6 +33,7 @@ import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.Tenure;
+import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
@@ -59,10 +60,24 @@ public class Skuska1<T> {
 //        log.info(b.getClass().getCanonicalName());
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:/context/BasicContext.xml");
 
-        Skuska1<VoteClassification> sk;
-        sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
-
-        sk.skusDeclaredVsmethod();
+        Skuska ska = (Skuska)ctx.getBean("skuskaApp");        
+//        Skuska ska = new Skuska(4); //nefunguje!!! vsetko musi byt vytvorene v ramci springu 
+        ska.skusRepo();
+        
+//        Skuska1<VoteClassification> sk;
+//        sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
+//
+//        log.info("CLASS:*" + VoteClassification.class.getCanonicalName()+"*");
+//        
+//        UniRepo<Vote> votRepo;
+//        votRepo = (UniRepo<Vote>) ctx.getBean("uniRepo", UniRepo.class);
+////        
+//        Vote v = votRepo.findOne(4);
+//        log.info("VOTE: " + v.getPresentationName());
+//        
+//        
+        
+//        sk.skusDeclaredVsmethod();
 //        sk.skusShortFromEnum();
 //        sk.skusEnumFromShort();
 //        

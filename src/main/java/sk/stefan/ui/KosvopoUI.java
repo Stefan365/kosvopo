@@ -59,7 +59,12 @@ public class KosvopoUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
-
+        
+//        SpringContextHelper helper = 
+//                new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
+//         final MyBeanInterface bean = (MyBeanInterface) helper.getBean("myBean");
+         
+        
         navigator = new Navigator(this, this);
         NavigationComponent.createNavComp(navigator);
 

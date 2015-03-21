@@ -10,6 +10,7 @@ import java.util.List;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.enums.VoteAction;
 
 /**
@@ -27,23 +28,28 @@ public class PritomnyComponent extends HorizontalLayout {
     private final VoteOfRole hlasovanieVerOs;
     private VoteAction decision;
 
+    private final UniRepo<VoteOfRole> vorRepo;
+    
     //0. konstruktor
     /**
-     * @param pr
-     * @param hlas
+     * @param vor
      */
-//    public PritomnyComponent(PublicRole pr, Vote hlas, PritomniLayout lisnr) {
-    public PritomnyComponent(PublicRole pr, Vote hlas) {
+    public PritomnyComponent(PublicRole pr, Vote hlas, PritomniLayout lisnr) {
+//    public PritomnyComponent(VoteOfRole vor) {
 
+        vorRepo = new UniRepo<>(VoteOfRole.class);
+        
         this.pubRole = pr;
         this.hlasovanie = hlas;
         this.hlasovanieVerOs = new VoteOfRole();
         this.hlasovanieVerOs.setPublic_role_id(pr.getId());
         this.hlasovanieVerOs.setVote_id(hlas.getId());
+        this.hlasovanieVerOs.setVisible(Boolean.TRUE);
+        
         
         
 
-        this.initComp();
+//        this.initComp();
     }
 
     private void initComp() {
@@ -93,14 +99,37 @@ public class PritomnyComponent extends HorizontalLayout {
         decisionOg.setNullSelectionAllowed(false);
         
         decisionOg.setImmediate(true);
+        
+        VoteAction va;
+        if (this.hlasovanieVerOs.getDecision() != null){
+            va = this.hlasovanieVerOs.getDecision();
+        } else {
+            va = VoteAction.ABSENT;
+        }
+        
+        this.setValue(va);
 
     }
 
     private void initLabel() {
         
-        presentLb = new Label(this.pubRole.getPresentationName2());
+//        presentLb = new Label(this.hlasovanieVerOs.getpubRole.getPresentationName2());
 
     }
+    
+    /**
+     * Nastavi hodnotu v optionGroupe.
+     * 
+     * @param va
+//     */
+    private void setValue(VoteAction va){
+        
+        this.decisionOg.setValue(va);
+    
+    }
+    
+    
+    
 
     //Getters and Setters:
     public VoteOfRole getHlasovanieVerOs() {

@@ -11,6 +11,8 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.VerticalLayout;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowire;
+import org.springframework.beans.factory.annotation.Autowired;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Tenure;
@@ -18,6 +20,7 @@ import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.hlasovanie.PritomniLayout;
+import sk.stefan.utils.Tools;
 
 /**
  *
@@ -31,12 +34,16 @@ public class VotingView extends VerticalLayout implements View {
 
     private final List<PublicRole> hlasujuci;
 
+//    @Autowired
     private final UniRepo<PublicRole> prRepo;
 
+//    @Autowired
     private final UniRepo<Tenure> tenureRepo;
     
+//    @Autowired
     private final UniRepo<PublicBody> pbRepo;
     
+//    @Autowired
     private final UniRepo<Vote> voteRepo;
     
     
@@ -64,7 +71,7 @@ public class VotingView extends VerticalLayout implements View {
             
         hlasujuci = new ArrayList<>();
         
-        List<PublicRole> hlasci
+        List<PublicRole> hlasciAll
                 = this.prRepo.findByParam("public_body_id", "" + pubBody.getId());
         
         voteRepo = new UniRepo<>(Vote.class);
@@ -74,16 +81,16 @@ public class VotingView extends VerticalLayout implements View {
         
         this.addComponent(pritomniLy);
         
-//        Boolean isValid;
+        Boolean isValid;
 //        
 //        
-//        for (PublicRole pr: hlasci){
-//            
-//            isValid = Tools.isActual(pr.getTenure_id());
-//            if (isValid){
-//                hlasujuci.add(pr);
-//            }
-//        }
+        for (PublicRole pr: hlasciAll){
+            
+            isValid = Tools.isActual(pr.getTenure_id());
+            if (isValid){
+                hlasujuci.add(pr);
+            }
+        }
         
     }
 

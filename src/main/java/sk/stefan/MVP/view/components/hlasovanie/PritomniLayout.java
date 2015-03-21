@@ -83,9 +83,9 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
         
         log.info("INITLAYOUT PRITOMNI:" + prActual.size());
         for (PublicRole pr : prActual){
-            prComp = new PritomnyComponent(pr, hlasovanie);
-            this.pritomni.add(prComp);
-            this.addComponent(prComp);
+////            prComp = new PritomnyComponent(pr, hlasovanie);
+//            this.pritomni.add(prComp);
+//            this.addComponent(prComp);
         }
         
         this.initButtons();
