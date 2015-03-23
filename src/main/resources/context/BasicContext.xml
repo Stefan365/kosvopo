@@ -6,9 +6,7 @@
        default-lazy-init="true" default-autowire="byName"  
 >
     <!--default-autowire="byType"-->
-    <!--byType-->    
-    <!--    <import resource="UtilsContext.xml"/> -->
-    <!-- BoneCP configuration -->
+   <import resource="ViewsContext.xml"/> 
     
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">

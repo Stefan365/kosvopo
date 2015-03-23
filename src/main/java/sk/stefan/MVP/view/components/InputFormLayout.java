@@ -24,18 +24,23 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
+import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.view.converters.DateConverter;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.utils.Tools;
+import sk.stefan.utils.ToolsDao;
 
 /**
  *
@@ -47,18 +52,12 @@ import sk.stefan.utils.Tools;
  * @author Stefan
  * @param <T> Daná třída T, pro kterou se formulář vytvoří
  */
-public final class InputFormLayout<T> extends FormLayout {
+public class InputFormLayout<T> extends FormLayout {
 
     private static final Logger log = Logger.getLogger(InputFormLayout.class);
 
-    /**
-     * Identifikator:
-     */
     private static final long serialVersionUID = 4947104793788125920L;
 
-    /**
-     * Class dané třídy T
-     */
     private final Class<?> clsT;
 
     /**
@@ -90,7 +89,7 @@ public final class InputFormLayout<T> extends FormLayout {
      * Proměnná, která ukládá informaci o tom, jestli se bude upravovat již
      * existující položka(false), nebo vytvářet nová(true).
      */
-    private final boolean isNew;
+    private boolean isNew;
 
     /**
      * Vybraná položka ze SQLContaineru (řádek z tabulky)
@@ -119,7 +118,7 @@ public final class InputFormLayout<T> extends FormLayout {
     /**
      * Tlačítka pro potvrzení, resp. zrušení změn ve formuláři.
      */
-    private Button okBt, cancelBt;
+    private Button saveBt, editBt;
 
     /**
      * Tlacitka, ktore nemaju ist do formulara.
@@ -165,22 +164,33 @@ public final class InputFormLayout<T> extends FormLayout {
         this.okCancelListener = (OkCancelListener) cp;
         this.obnovFilterListener = (ObnovFilterListener) cp;
         this.item = item;
-        if (item == null) {
-            isNew = true;
-            sqlContainer.removeAllContainerFilters();
-            itemId = sqlContainer.addItem();
-            this.item = sqlContainer.getItem(itemId);
-            //sqlContainer.getItem(itemId).getItemProperty("title").setValue("název...");
-            //okCancelListener.obnovFilter();
+        if (item != null){
+            isNew = (item.getItemProperty("id").getValue() == null);
         } else {
             isNew = false;
         }
+        
+
+//        if (item == null) {
+//            isNew = true;
+//            sqlContainer.removeAllContainerFilters();
+//            itemId = sqlContainer.addItem();
+//            this.item = sqlContainer.getItem(itemId);
+//            //sqlContainer.getItem(itemId).getItemProperty("title").setValue("název...");
+//            log.info("TABLENAME:" + Tn);
+//            if(sqlContainer.getItem(itemId).getItemProperty("visible") != null){
+//                sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.TRUE);
+//            }
+//            if(obnovFilterListener!= null){
+//                obnovFilterListener.obnovFilter();
+//            }
+//            
+//        } else {
+//            isNew = false;
+//        }
         fg.setItemDataSource(this.item);
-        try {
-            this.initFieldsLayout();
-        } catch (IOException ex) {
-            log.error(ex);
-        }
+        
+        this.initFieldsLayout();
         this.addButtons();
 
         // upravy vzhladu:
@@ -197,7 +207,7 @@ public final class InputFormLayout<T> extends FormLayout {
      * @throws java.io.IOException
      */
     @SuppressWarnings("unchecked")
-    public void initFieldsLayout() throws IOException {
+    public void initFieldsLayout() {
 
         fieldsFL = new FormLayout();
         fieldsFL.setMargin(true);
@@ -227,12 +237,17 @@ public final class InputFormLayout<T> extends FormLayout {
             switch (propertyTypeName) {
                 case "java.lang.Integer":
                     if (pn.contains("_id")) {
-                        //POZN: parametry POJO by se meli jmenovat stejne ako 
+                            //POZN: parametry POJO by se meli jmenovat stejne ako
                         // stloupce tabulky a identifikator by se mel jmenovat jen 'id'..
-                        Class<?> cls = Tools.getClassFromName(pn);
-                        Map<String, Integer> map = Tools.findAllByClass(cls);
-                        InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
-                        cb.setValue(itemId);
+//                        InputNewComboBox<T> cb; - does not work;
+                        InputNewComboBox<?> cb;
+                        cb = new InputNewComboBox<>(fg, pn, clsT);
+//                      
+//                        Class<?> cls = Tools.getClassFromName(pn);
+//                        Map<String, Integer> map = Tools.findAllByClass(cls);
+//                        InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
+//                        cb.setValue(itemId);
+//
                         fieldMap.put(pn, cb);
                     } else {
                         Component fi = bindTextField(pn);
@@ -306,24 +321,25 @@ public final class InputFormLayout<T> extends FormLayout {
 
                     Class<?> cls = mapPar.get(pn);
                     try {
-                        Method getNm = cls.getDeclaredMethod("getNames");
-                        Method getOm = cls.getDeclaredMethod("getOrdinals");
+                        Method getNm = cls.getMethod("getNames");
+                        Method getOm = cls.getMethod("getOrdinals");
 
                         List<String> names = (List<String>) getNm.invoke(null);
                         List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
                         Map<String, Integer> map = Tools.makeEnumMap(names, ordinals);
-                        
+
                         InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
-                        if (itemId == null) {
-                             Property<?> prop = item.getItemProperty(pn);
+                        
+                        if (item != null) {
+                            Property<?> prop = item.getItemProperty(pn);
                             if (prop.getValue() != null) {
                                 cb.setValue(prop.getValue());
                             } else {
                                 cb.setValue(VoteResult.getOrdinals().get(0));
                             }
-                            
                         }
                         fieldMap.put(pn, cb);
+
                     } catch (IllegalAccessException | IllegalArgumentException |
                             InvocationTargetException | NoSuchMethodException e) {
                         log.error(e.getMessage());
@@ -331,15 +347,18 @@ public final class InputFormLayout<T> extends FormLayout {
                     break;
 
                 default:
-                    //ignore: passwords: java.lang.Byte[], byte[], etc...
+                        //ignore: passwords: java.lang.Byte[], byte[], etc...
                     // do nothing
                     break;
             }
         }
-
-        this.completeForm();
-        fieldsFL.setEnabled(true);
-        this.addComponent(fieldsFL);
+        try {
+            this.completeForm();
+            fieldsFL.setEnabled(true);
+            this.addComponent(fieldsFL);
+        } catch (IOException ex) {
+            log.error(ex.getMessage(), ex);
+        }
     }
 
     //2.
@@ -355,16 +374,16 @@ public final class InputFormLayout<T> extends FormLayout {
         Properties proDepict = Tools.getDepictParams(Tn);
 
 //        if ("t_tenure".equals(Tn)) {
-            for (String s : proDepict.stringPropertyNames()) {
-                log.info("ZOBRAZ:*" + s + "* : *" + proDepict.getProperty(s) + "*");
-            }
-            for (String s : proPoradie.stringPropertyNames()) {
-                log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
-            }
-            
-            log.info("TN:" + Tn);
-            log.info("SIZE PORADIE:" + proPoradie.size());
-            log.info("SIZE DEPICT:" + proDepict.size());
+        for (String s : proDepict.stringPropertyNames()) {
+            log.info("ZOBRAZ:*" + s + "* : *" + proDepict.getProperty(s) + "*");
+        }
+        for (String s : proPoradie.stringPropertyNames()) {
+            log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
+        }
+
+        log.info("TN:" + Tn);
+        log.info("SIZE PORADIE:" + proPoradie.size());
+        log.info("SIZE DEPICT:" + proDepict.size());
 //        }
         for (int i = 1; i < proPoradie.size(); i++) {
             key = proPoradie.getProperty("" + i);
@@ -489,33 +508,34 @@ public final class InputFormLayout<T> extends FormLayout {
         buttonsHL.setMargin(true);
         buttonsHL.setSpacing(true);
 
-        okBt = new Button("Uložiť");
-        cancelBt = new Button("Zrušiť");
-        cancelBt.setEnabled(true);
-        okBt.setEnabled(true);
+        saveBt = new Button("Uložiť");
+        editBt = new Button("Editovať");
+        editBt.setEnabled(true);
+        saveBt.setEnabled(true);
 
-        okBt.addClickListener(new ClickListener() {
+        saveBt.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             @SuppressWarnings("unchecked")
             public void buttonClick(ClickEvent event) {
-                if (isNew) {
-                    sqlContainer.removeAllContainerFilters();
-                    //sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.TRUE);
-                    if (obnovFilterListener != null) {
-                        obnovFilterListener.obnovFilter();
-                    }
-
-                }
+//                if (isNew) {
+//                    sqlContainer.removeAllContainerFilters();
+//                    dsfds
+//                    sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.TRUE);
+//                    if (obnovFilterListener != null) {
+//                        obnovFilterListener.obnovFilter();
+//                    }
+//
+//                }
 
                 // ulozenie zmien do DB:
                 try {
                     sqlContainer.commit();
                     fieldsFL.setEnabled(false);
                     fg.setEnabled(false);
-                    cancelBt.setEnabled(true);
-                    okBt.setEnabled(false);
+                    editBt.setEnabled(true);
+                    saveBt.setEnabled(false);
 
                     if (okCancelListener != null) {
                         okCancelListener.doOkAction();
@@ -528,35 +548,35 @@ public final class InputFormLayout<T> extends FormLayout {
             }
         });
 
-        cancelBt.addClickListener(new ClickListener() {
+        editBt.addClickListener(new ClickListener() {
+            
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(ClickEvent event) {
 
-                okBt.setEnabled(true);
+//                saveBt.setEnabled(true);
 
-                if (isNew) {
-                    sqlContainer.removeItem(itemId);
-                }
+//                if (isNew) {
+//                    sqlContainer.removeItem(itemId);
+//                }
                 fg.setEnabled(true);
                 fieldsFL.setEnabled(true);
 
-                cancelBt.setEnabled(false);
-                okBt.setEnabled(true);
+                editBt.setEnabled(false);
+                saveBt.setEnabled(true);
                 if (okCancelListener != null) {
                     okCancelListener.doCancelAction();
                 }
             }
         });
         //TodosView s;
-        buttonsHL.addComponent(okBt);
-        buttonsHL.addComponent(cancelBt);
+        buttonsHL.addComponent(saveBt);
+        buttonsHL.addComponent(editBt);
 
         this.addComponent(buttonsHL);
 
     }
-
 
     /**
      * Otvori okno na zmenu hesla:
@@ -564,6 +584,7 @@ public final class InputFormLayout<T> extends FormLayout {
      *
      */
     private void openPasswordWindow() {
+
         if (item != null) {
             this.passVl = new PasswordForm(item, cp);
             final OkCancelWindow window = new OkCancelWindow("Zmena hesla",
@@ -584,7 +605,14 @@ public final class InputFormLayout<T> extends FormLayout {
         this.okCancelListener = list;
     }
 
-    public void setItem(Item it) {
+    public void setItem(Object itId, Item it) {
+        if (it != null){
+            isNew = (it.getItemProperty("id").getValue() == null);
+        } else {
+            isNew = false;
+        }
+
+        this.itemId = itId;
         this.item = it;
         if (item != null) {
             fg.setItemDataSource(this.item);
@@ -594,10 +622,43 @@ public final class InputFormLayout<T> extends FormLayout {
     public void doEnableButtons() {
         fieldsFL.setEnabled(false);
         fg.setEnabled(false);
-        cancelBt.setEnabled(true);
-        okBt.setEnabled(false);
+        editBt.setEnabled(true);
+        saveBt.setEnabled(false);
 
         //this.refreshComboboxes();
+    }
+
+//    /**
+//     * Neuniverzalna metoda len pre potreby hlasovania. 
+//     * zuniverzalnit v buducnosti.
+//     * 
+//     * @param vot
+//     */
+//    public void updateVote(Vote vot){
+//        
+//        ToolsDao.updateVoteItem(item, vot);
+//        
+//    }
+//    
+//    /**
+//     * Neuniverzalna metoda na filtrovanie subject_id po zadani publicBody objektu.
+//     * Potom to zuniverzalnit.
+//     * Ta neuniverzalita vyplyva z poziadavku vyplnat Vote a Role of Vote naraz.
+//     * keby sa to nemuselo davat dohromady, takto by som to neprznil.
+//     */
+//    public void filterSubject(PublicBody pubBody){
+//        
+//        
+//    }
+    /**
+     * @return the fieldMap
+     */
+    public Map<String, Component> getFieldMap() {
+        return Collections.unmodifiableMap(fieldMap);
+    }
+
+    public Item getItem() {
+        return item;
     }
 
 }

@@ -28,7 +28,7 @@ import sk.stefan.MVP.view.Kos2View;
 import sk.stefan.MVP.view.Kos3View;
 import sk.stefan.MVP.view.LoginView;
 import sk.stefan.MVP.view.UniEditableTableView;
-import sk.stefan.MVP.view.VotingView;
+import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
 import sk.stefan.MVP.view.VstupniView;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.enums.NonEditableFields;
@@ -106,7 +106,7 @@ public class KosvopoUI extends UI {
                 new UniEditableTableView<>(VoteOfRole.class, NonEditableFields.VOTE_OF_ROLE.getNonEditableParams()));
 
         navigator.addView("adminview1", new AdministrationView(navigator));
-        navigator.addView("hlasovanie", new VotingView(navigator));
+//        navigator.addView("hlasovanie", new VotingLayout());
         
         navigator.addView("addressbook", new AddressbookView());
         navigator.addView("filamanager", new FilaManagerView());

@@ -20,7 +20,7 @@ public class RenewBackgroundListenerImpl implements RenewBackgroundListener {
     }
 
     @Override
-    public void refreshTodo() {
+    public void refreshBackGround() {
         //            updateTodoInfo();
     }
 

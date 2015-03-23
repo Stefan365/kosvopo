@@ -30,15 +30,6 @@ public final class InputComboBox<E> extends ComboBox {
     private static final Logger log = Logger.getLogger(InputComboBox.class);
 
     /**
-     * Aktuálně vybraný objekt ze SQLcontaineru
-     */
-    private Item item;
-    private Property<?> prop;
-
-    //logger: 
-    private final Logger logger = Logger.getLogger(InputComboBox.class);
-
-    /**
      * Název comboBoxu, je zhodný s názvem proměnné(property), která je typu E.
      */
     private String fn;
@@ -71,24 +62,10 @@ public final class InputComboBox<E> extends ComboBox {
 
         this.map = map;
         this.fg = fg;
+        
         this.involveFg();
-        try {
-            this.initCombo();
-            this.initComboVal();
-        } catch (SecurityException e) {
-            logger.warn(e.getLocalizedMessage(), e);
-        }
-    }
-
-    public InputComboBox(Map<String, E> map) {
-
-        this.map = map;
-        try {
-            this.initCombo();
-            this.setValue(0);
-        } catch (SecurityException e) {
-            logger.warn(e.getLocalizedMessage(), e);
-        }
+        this.initCombo();
+        this.initComboVal();
     }
 
     //1.
@@ -101,17 +78,9 @@ public final class InputComboBox<E> extends ComboBox {
         //fn - fieldname is name of property in Item.
         //it corresponds with the name of property of relevant entity
         this.fg.bind(this, fn);
-
         fg.setBuffered(false);
-        log.info("NASTAVUJEM HODNOTU");
-        this.initComboVal();
-        //this.setValue(fg.);
-
     }
 
-//    public void refreshFg() {
-//        this.initComboVal();
-//    }
     // 2.
     /**
      * Inicializuje combo box.
@@ -119,14 +88,14 @@ public final class InputComboBox<E> extends ComboBox {
      */
     public void initCombo() {
 
+        this.removeAllItems();
+
         if (map != null) {
             for (String key : map.keySet()) {
                 this.addItem(map.get(key));
                 this.setItemCaption(map.get(key), key);
             }
         }
-        //this.setValue(log);
-
 
         this.setImmediate(true);
         this.setNewItemsAllowed(false);
@@ -142,8 +111,9 @@ public final class InputComboBox<E> extends ComboBox {
     private void initComboVal() {
 
         if (fg.getItemDataSource() != null) {
-            item = fg.getItemDataSource();
-            prop = item.getItemProperty(fn);
+            //aktualne vybrany objekt zo SQLCOntaineru:
+            Item item = fg.getItemDataSource();
+            Property<?> prop = item.getItemProperty(fn);
             if (prop.getValue() != null) {
                 this.setValue(prop.getValue());
             } else {

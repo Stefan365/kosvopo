@@ -14,7 +14,7 @@ package sk.stefan.listeners;
  */
 public interface RenewBackgroundListener {
 
-    public void refreshTodo();
+    public void refreshBackGround();
 
     public void refreshFilters();
 

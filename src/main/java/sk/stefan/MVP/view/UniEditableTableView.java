@@ -89,7 +89,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
     private String Tn;
     private List<String> visibleFn;
     private final List<String> nonEditFn;
-    private final InputFormLayout<E> inputForm;
+    private InputFormLayout<E> inputForm;
     private final VerticalLayout linksVl;
 
     public UniEditableTableView(Class<E> clsq, String[] uneditCol) {
@@ -97,10 +97,10 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         securityService = new SecurityServiceImpl();
 
         this.clsE = clsq;
-        
+
         this.setMargin(true);
         this.setSpacing(true);
-        
+
         try {
             this.visibleFn = Tools.getClassProperties(clsE, true);
         } catch (NoSuchFieldException | SecurityException ex) {
@@ -117,20 +117,23 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
             log.error(e.getMessage());
         }
         this.nonEditFn = Arrays.asList(uneditCol);
-        this.inputForm = new InputFormLayout<>(clsE, item, sqlContainer, this, nonEditFn);
-
+        
+//        if (item != null){
+            this.inputForm = new InputFormLayout<>(clsE, item, sqlContainer, this, nonEditFn);
+//        }
+        
         initLayout();
         initUniTable();
         initEditor();
         initSearch();
         initAddRemoveButtons();
-        
+
         linksVl = new VerticalLayout();
         linksVl.setMargin(true);
         linksVl.setSpacing(true);
         linksVl.addComponent(backBt);
         this.addComponent(linksVl);
-        
+
     }
 
     //1.
@@ -166,8 +169,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         bottomLeftLayout.addComponent(addNewItemButton);
         bottomLeftLayout.addComponent(removeItemButton);
 
-        leftLayout.setSizeFull();
-
+        // leftLayout.setSizeFull();
         leftLayout.setExpandRatio(uniTable, 1);
         uniTable.setSizeFull();
 
@@ -175,11 +177,10 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         searchField.setWidth("100%");
         bottomLeftLayout.setExpandRatio(searchField, 1);
 
-        
         /* Put a little margin around the fields in the right side editor */
         editorLayout.setMargin(true);
         editorLayout.setVisible(false);
-        
+
     }
 
     //2.
@@ -187,7 +188,12 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
 
         //editorLayout.addComponent(removeItemButton);
         removeItemButton.setEnabled(true);
-        editorLayout.addComponent(inputForm);
+//        log.info("INITEDIOTR1:" + (editorLayout == null));
+//        log.info("INITEDIOTR2:" + (inputForm == null));
+        if (inputForm != null){
+           editorLayout.addComponent(inputForm);            
+        }
+
         fg.setBuffered(false);
     }
 
@@ -225,7 +231,9 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
      * Pridávanie základných tlačítiek "Pridaj" a "Odober"
      */
     private void initAddRemoveButtons() {
+        
         addNewItemButton.addClickListener(new Button.ClickListener() {
+            
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -234,9 +242,17 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
 
                 sqlContainer.removeAllContainerFilters();
                 itemId = sqlContainer.addItem();
+                item = sqlContainer.getItem(itemId);
+                if (item.getItemProperty("visible") != null) {
+                    item.getItemProperty("visible").setValue(Boolean.TRUE);
+                }
+                obnovFilter();
+                
 //              uniTable.getContainerProperty(itemId, visibleFn.get(2)).setValue("New");
-
                 uniTable.select(itemId);
+                
+                sqlContainer.refresh();
+                uniTable.refreshRowCache();
             }
         });
 
@@ -272,6 +288,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         uniTable.setImmediate(true);
 
         uniTable.addValueChangeListener(new Property.ValueChangeListener() {
+            
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -280,8 +297,7 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
                 item = uniTable.getItem(itemId);
 
                 if (itemId != null) {
-                    inputForm.setItem(uniTable.getItem(itemId));
-//                    editorFields.setItemDataSource(contactListTable.getItem(contactId));
+                    inputForm.setItem(itemId, uniTable.getItem(itemId));
                 }
                 editorLayout.setVisible(itemId != null);
                 fg.setEnabled(false);//to sa ozivi az tlacitkom Edit,
@@ -302,23 +318,29 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
         @SuppressWarnings({"unchecked"})
         public void doYesAction(Component.Event event) {
 
-            if (itemId != null) {
+            if (item != null) {
+                if(item.getItemProperty("id").getValue() == null){
+                    sqlContainer.removeItem(itemId);
+                }
                 try {
 //                  item.getItemProperty("visible").setValue(Boolean.FALSE);
 //                  sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);
                     UniRepo<E> unirepo = new UniRepo<>(clsE);
                     unirepo.updateParam("visible", "false", "" + item.getItemProperty("id").getValue());
-                    item = null;
-                    itemId = null;
+//                    item = null;
+//                    itemId = null;
                     Notification.show("Úkol úspešne vymazaný!");
                     doOkAction();
                 } catch (SQLException ex) {
                     Notification.show("Vymazanie sa nepodarilo!");
+                    
                 }
             } else {
                 Notification.show("Není co mazat!");
             }
         }
+        
+        //end of inner class:
     }
 
     @Override
@@ -335,15 +357,16 @@ public class UniEditableTableView<E> extends VerticalLayout implements OkCancelL
 
     @Override
     public void doOkAction() {
-//        Notification.show("KOKOSKO");
-//        sqlContainer.refresh();
-//        uniTable.refreshRowCache();
+        Notification.show("KOKOSKO");
+        sqlContainer.refresh();
+        uniTable.refreshRowCache();
     }
 
     @Override
     public void doCancelAction() {
-//        sqlContainer.refresh();
-//        uniTable.refreshRowCache();
+        Notification.show("PETERKO");
+        sqlContainer.refresh();
+        uniTable.refreshRowCache();
     }
 
     @Override

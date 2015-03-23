@@ -29,7 +29,6 @@ public final class FilterComboBox<E> extends ComboBox {
     private final Class<E> clsE;
 
     private Map<String, Integer> map;
-    private String table_name;
 
     //0.
     /**
@@ -109,6 +108,7 @@ public final class FilterComboBox<E> extends ComboBox {
     private void initComboValues(Map<String, Integer> mapa, Integer val) {
 
         this.removeAllItems();
+        
         if (mapa != null) {
             for (String key : mapa.keySet()) {
                 this.addItem(mapa.get(key));
@@ -116,6 +116,7 @@ public final class FilterComboBox<E> extends ComboBox {
             }
         }
         this.setValue(val);
+        
     }
 
     

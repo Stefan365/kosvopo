@@ -40,7 +40,7 @@ public class PrepDBconn {
 
             case MYSQL:
                 dbDriver = "com.mysql.jdbc.Driver";
-                dbURL = "jdbc:mysql://localhost/kosvopo5?zeroDateTimeBehavior=convertToNull";
+                dbURL = "jdbc:mysql://localhost/kosvopo7?zeroDateTimeBehavior=convertToNull";
                 dbUser = "root";
                 dbPwd = "";
 

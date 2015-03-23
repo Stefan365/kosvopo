@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sk.stefan.MVP.view.components.hlasovanie;
 
 import com.vaadin.navigator.Navigator;
@@ -34,21 +33,21 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
 
     private static final long serialVersionUID = 1L;
 
-    private final Navigator navigator;
 
-    private List<PritomnyComponent> pritomni;
+    private List<PritomnyComponent> pritomniComponents;
 
-    private final PublicBody pubBody;
-
+    //hlavne entity
+    private PublicBody pubBody;
     private Vote vote;
-
     private List<PublicRole> prActual;
 
-    private final List<VoteOfRole> votesOfRoles = new ArrayList<>();
+    private List<VoteOfRole> votesOfRoles;
 
     private Button saveBt;
 
     private Button cancelBt;
+
+    private final Boolean withButtons;
 
     private HorizontalLayout buttonsLayout;
 
@@ -63,30 +62,34 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
      *
      * @param pb
      * @param hlas
-     * @param nav
+     * @param wb
      */
-    public PritomniLayout(PublicBody pb, Vote hlas, Navigator nav) {
+    public PritomniLayout(PublicBody pb, Vote hlas, Boolean wb) {
 
         //dostat to z Vote by bolo zdlhave.
         this.pubBody = pb;
         this.vote = hlas;
-        this.navigator = nav;
-        
+        this.withButtons = wb;
 
         this.vorRepo = new UniRepo<>(VoteOfRole.class);
         this.voteRepo = new UniRepo<>(Vote.class);
 
-        this.initLayout();
-
+        if (vote != null && pubBody != null){
+            this.refreshLayout();
+        }
+        
     }
 
     /**
      * Vytvori layout a naplni ho prislusnymi komponentami.
      */
-    private void initLayout() {
+    private void refreshLayout() {
         
+        this.removeAllComponents();
+
         prActual = Tools.getActualPublicRoles(pubBody);
-        pritomni = new ArrayList<>();
+        pritomniComponents = new ArrayList<>();
+        votesOfRoles = new ArrayList<>();
 
         PritomnyComponent prComp;
 
@@ -116,27 +119,29 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
                 vor.setVisible(Boolean.TRUE);
             }
             this.votesOfRoles.add(vor);
-            
+
 //            pri ukladani najprv ulozit entitu Vote.
 //            potom z nej vyextrahovat id a pridat ho do Vote of role a ulozit.
             prComp = new PritomnyComponent(vor, vote);
-            this.pritomni.add(prComp);
+            this.pritomniComponents.add(prComp);
             this.addComponent(prComp);
         }
 
-        this.initButtons();
+        if (withButtons) {
+            this.initButtons();
+            buttonsLayout.setMargin(true);
+            buttonsLayout.setSpacing(true);
+            this.addComponent(buttonsLayout);
+        }
 
-        buttonsLayout.setMargin(true);
-        buttonsLayout.setSpacing(true);
-        this.addComponent(buttonsLayout);
     }
 
+//    ukladat sa to bude v ramci rodicovskej komponety, tj. nieje potreba davat tlacitka Ok/Cancel    
     private void initButtons() {
 
         buttonsLayout = new HorizontalLayout();
-
+        
         cancelBt = new Button("zrušiť");
-
         saveBt = new Button("uložiť", (Button.ClickEvent event) -> {
             doOkAction();
         });
@@ -146,16 +151,17 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
         });
 
         buttonsLayout.addComponents(saveBt, cancelBt);
-
     }
-
+    
+    
+    
     @Override
     public void doOkAction() {
         if (isNew) {
             //obohati hlasovanie o nove id, po ulozeni do DB.
             voteRepo.save(vote);
             isNew = false;
-            for (VoteOfRole vor : votesOfRoles ) {
+            for (VoteOfRole vor : votesOfRoles) {
                 vor.setVote_id(vote.getId());
                 vorRepo.save(vor);
             }
@@ -165,14 +171,28 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
         Notification.show("Uloženie prebehlo v poriadku!");
     }
 
-    
     @Override
     public void doCancelAction() {
-        navigator.navigateTo("A_inputAll");
+        //do nothing
+
+    }
+
+    /**
+     * 
+     * @param pb
+     * @param vot
+     */
+    public void updateEntities(PublicBody pb, Vote vot){
+        
+        this.pubBody = pb;
+        this.vote = vot;
+        
+        this.refreshLayout();
+        
     }
     
-    private void saveAllVoteOfRoles(){
-        for (VoteOfRole vor: votesOfRoles){
+    private void saveAllVoteOfRoles() {
+        for (VoteOfRole vor : votesOfRoles) {
             vor = vorRepo.save(vor);
         }
     }

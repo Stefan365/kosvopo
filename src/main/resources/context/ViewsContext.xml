@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+       default-lazy-init="true" default-autowire="byType"  
+>
+        
+<!--    <bean id="skuskaApp" class="sk.stefan.zaklad.Skuska" >
+        <property name="tickGrabberService" ref="tickGrabberService"/> 
+        <property name="updateDataBAPIService" ref="updateDataBAPIService"/>
+        <property name="getAnyDataService" ref="getAnyDataService"/> 
+       <constructor-arg index="0" type="int" value="12"/>
+    </bean>-->
+              
+
+<!--    A_Change repo:    
+    <bean id="achangeRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName" >
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.A_Change"></constructor-arg>
+    </bean>-->
+
+</beans>

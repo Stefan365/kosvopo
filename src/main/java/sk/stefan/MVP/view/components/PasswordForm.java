@@ -36,12 +36,15 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     private final Item item;
     private final UniRepo<A_User> uniRepo;
     private final OkCancelListener okCancelListener;
+    private OkCancelListener forWindowListener;
+    
     private final ObnovFilterListener obnovFilterListener;
     private final RefreshViewListener refreshViewListener;
     
     private final SecurityService securityService;
 
     public PasswordForm(Item it, Component cp) {
+        
         this.okCancelListener = (OkCancelListener)cp;
         this.obnovFilterListener = (ObnovFilterListener)cp;
         this.refreshViewListener = (RefreshViewListener)cp;
@@ -140,6 +143,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     public void doOkAction() {
         this.verifyPassword();
         this.okCancelListener.doOkAction();
+        this.forWindowListener.doOkAction();
         this.obnovFilterListener.obnovFilter();
         this.refreshViewListener.refreshView();
         
@@ -148,7 +152,12 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     @Override
     public void doCancelAction() {
         this.okCancelListener.doCancelAction();
+        this.forWindowListener.doOkAction();
         //do nothing
+    }
+
+    void setWindowOkCancelListener(OkCancelListener aThis) {
+        this.forWindowListener = aThis;
     }
 
 }

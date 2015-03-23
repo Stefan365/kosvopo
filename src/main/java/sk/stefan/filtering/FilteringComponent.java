@@ -133,17 +133,17 @@ public class FilteringComponent extends HorizontalLayout {
         locationVl.addComponent(locationCHb);
         locationVl.addComponent(locationCombo);
 //        locationVl.setSpacing(true);
-        locationVl.setMargin(true);
+//        locationVl.setMargin(true);
         
         pubBodyVl.addComponent(pubBodyCHb);
         pubBodyVl.addComponent(pubBodyCombo);
 //        pubBodyVl.setSpacing(true);
-        pubBodyVl.setMargin(true);
+//        pubBodyVl.setMargin(true);
         
         pubPersonVl.addComponent(pubPersonCHb);
         pubPersonVl.addComponent(pubPersonCombo);
 //        pubPersonVl.setSpacing(true);
-        pubPersonVl.setMargin(true);
+//        pubPersonVl.setMargin(true);
 
         //put it all together:
         this.addComponents(locationVl,pubBodyVl,pubPersonVl);

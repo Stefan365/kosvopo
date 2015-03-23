@@ -32,7 +32,9 @@ import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.listeners.InputButClickListener;
-import sk.stefan.utils.InputFormWrapper;
+import sk.stefan.listeners.ObnovFilterListener;
+import sk.stefan.listeners.OkCancelListener;
+import sk.stefan.wrappers.InputFormWrapper;
 
 /**
  *
@@ -156,7 +158,7 @@ public class InputAllView extends VerticalLayout implements View {
             InputFormWrapper<? extends Object> wr = allButtonsMap.get(b);
 
             b.setCaption(wr.getButtonName());
-            b.addClickListener(new InputButClickListener(wr.getClsE(), wr.getButtonName(), this));
+            b.addClickListener(new InputButClickListener(wr.getClsE(), wr.getButtonName()));
         }
     }
 
@@ -191,4 +193,17 @@ public class InputAllView extends VerticalLayout implements View {
 //        }
 //
 //    }
+
+//    @Override
+//    public void doOkAction() {
+//        //do nothing. to je tu len kvoli tomu, ze kazda komponenta, z ktorej vyskakuje okno 
+//        //musi tieto listenery implementovat, kvoli univerzalnosti.
+//    }
+//
+//    @Override
+//    public void doCancelAction() {
+//        //do nothing. to je tu len kvoli tomu, ze kazda komponenta, z ktorej vyskakuje okno 
+//        //musi tieto listenery implementovat, kvoli univerzalnosti.
+//    }
+
 }

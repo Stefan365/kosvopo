@@ -1,5 +1,6 @@
 package sk.stefan.utils;
 
+import com.vaadin.data.Item;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 
 public class ToolsDao {
@@ -170,7 +172,6 @@ public class ToolsDao {
 
         try {
             Method entMethod = cls.getMethod("ordinal");
-//          Method entMethod = cls.getDeclaredMethod("getOrdinal", cls); //for static methods
             Integer i = (Integer) entMethod.invoke(value);
             return i;
         } catch (NoSuchMethodException | SecurityException |
@@ -203,4 +204,30 @@ public class ToolsDao {
             return null;
         } 
     }
+    
+    
+    /**
+     * Neuniverzalna metoda len pre potreby hlasovania. 
+     * zuniverzalnit v buducnosti.
+     * 
+     * @param item
+     * @param vot
+     * @return 
+     */
+    public static void updateVoteItem(Item item, Vote vot){
+        
+//        item.getItemProperty("id").setValue(vot.getId()); //it is read only.
+        item.getItemProperty("vote_date").setValue(vot.getVote_date());
+        item.getItemProperty("subject_id").setValue(vot.getSubject_id());
+        item.getItemProperty("internal_nr").setValue(vot.getInternal_nr());
+        item.getItemProperty("result_vote").setValue(vot.getResult_vote().ordinal());
+        item.getItemProperty("for_vote").setValue(vot.getFor_vote());
+        item.getItemProperty("against_vote").setValue(vot.getAgainst_vote());
+        item.getItemProperty("refrain_vote").setValue(vot.getRefrain_vote());
+        item.getItemProperty("absent").setValue(vot.getAbsent());
+        item.getItemProperty("visible").setValue(vot.getVisible());
+        
+        
+    }
+
 }

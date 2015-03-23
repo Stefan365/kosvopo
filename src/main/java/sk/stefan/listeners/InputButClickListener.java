@@ -28,15 +28,19 @@ public class InputButClickListener implements Button.ClickListener {
 
     private final Class<?> cls;
     private final String title;
-    private final InputAllView iaw;
+//    private final InputAllView iaw;
     private SQLContainer sqlCont;
     private UniDlg tdlg;
     private String tn;
 
-    public InputButClickListener(Class<?> cls, String title, InputAllView iaw) {
+//    public InputButClickListener(Class<?> cls, String title, InputAllView iaw) {
+    public InputButClickListener(Class<?> cls, String title) {
+    
         this.cls = cls;
         this.title = title;
-        this.iaw = iaw;
+        //inputAllView nepotrebuje vediet o akcii pochadzajucej z komponenty InputForm layout,
+        //tj. nebude vyuzity ako listener.
+//        this.iaw = iaw;
     }
 
     @Override
@@ -49,9 +53,8 @@ public class InputButClickListener implements Button.ClickListener {
             sqlCont = DoDBconn.getContainer(tn);
             InputFormLayout<? extends Object> inputFl;
             inputFl = new InputFormLayout<>(cls, null, sqlCont, null, null);
-            tdlg = new UniDlg("Nový " + title, inputFl,
-                    new RenewBackgroundListenerImpl(iaw)
-            );
+            tdlg = new UniDlg("Nový " + title, inputFl);
+            
             UI.getCurrent().addWindow(tdlg);
             //POZOR na toto, malo by to dobehnut az potom, co sa ukonci vlakno 
             //UI okna:

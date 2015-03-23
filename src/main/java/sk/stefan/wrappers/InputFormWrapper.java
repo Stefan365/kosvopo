@@ -1,4 +1,4 @@
-package sk.stefan.utils;
+package sk.stefan.wrappers;
 
 /**
  * Wrapper, ktory zahrnuje vsetko potrebne na vytvorenie inputlaoutu danej

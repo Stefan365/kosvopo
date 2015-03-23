@@ -18,8 +18,8 @@ public class NavigationComponent extends HorizontalLayout {
      */
     private static final long serialVersionUID = 8811699550804144740L;
 
-    private final Button b1, b1a, b2, b3, b4, b6, b7, b8, b9, b10, b11, b12, badv, hlas;
-
+    private final Button b1, b1a, b2, b3, b4, b6, b7, b8, b9, b10, b11, b12, badv;
+    
     private SecurityService securityService;
 
     private static Navigator navigator;
@@ -105,9 +105,9 @@ public class NavigationComponent extends HorizontalLayout {
             navigator.navigateTo("adminview1");
         });
         
-        hlas = new Button("hlasovanie", (ClickEvent event) -> {
-            navigator.navigateTo("hlasovanie");
-        });
+//        hlas = new Button("hlasovanie", (ClickEvent event) -> {
+//            navigator.navigateTo("hlasovanie");
+//        });
         
         
         
@@ -145,7 +145,7 @@ public class NavigationComponent extends HorizontalLayout {
         b11.setStyleName(BaseTheme.BUTTON_LINK);
         b12.setStyleName(BaseTheme.BUTTON_LINK);
         badv.setStyleName(BaseTheme.BUTTON_LINK);
-        hlas.setStyleName(BaseTheme.BUTTON_LINK);
+//        hlas.setStyleName(BaseTheme.BUTTON_LINK);
         
 
         this.setSpacing(true);
@@ -157,7 +157,7 @@ public class NavigationComponent extends HorizontalLayout {
         this.addComponent(b6);
         this.addComponent(b8);
         this.addComponent(b9);
-        this.addComponent(hlas);
+//        this.addComponent(hlas);
 
     }
 

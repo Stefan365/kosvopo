@@ -2,8 +2,11 @@ package sk.stefan.zaklad;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Container.Filter;
+import com.vaadin.data.Item;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
+import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.OptionGroup;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
@@ -28,6 +32,7 @@ import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
 import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
@@ -46,7 +51,7 @@ import sk.stefan.utils.ToolsDao;
 public class Skuska1<T> {
 
     private A a, b, c;
-    
+
     private static final Logger log = Logger.getLogger(Skuska1.class);
 
     public Skuska1() {
@@ -62,13 +67,15 @@ public class Skuska1<T> {
 //        log.info(b.getClass().getCanonicalName());
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:/context/BasicContext.xml");
 
-        Skuska ska = (Skuska)ctx.getBean("skuskaApp");        
+        Skuska ska = (Skuska) ctx.getBean("skuskaApp");
 //        Skuska ska = new Skuska(4); //nefunguje!!! vsetko musi byt vytvorene v ramci springu 
 //        ska.skusRepo();
-        
+
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
-        sk.skusA();
+        
+        sk.skusItem();
+//        sk.skusA();
 //
 //        log.info("CLASS:*" + VoteClassification.class.getCanonicalName()+"*");
 //        
@@ -79,14 +86,12 @@ public class Skuska1<T> {
 //        log.info("VOTE: " + v.getPresentationName());
 //        
 //        
-        
+
 //        sk.skusDeclaredVsmethod();
 //        sk.skusShortFromEnum();
 //        sk.skusEnumFromShort();
 //        
-        
 //        sk.skusVoteOfRole();
-
 //        skc.testAHierarchy();
 //        Skuska ska = (Skuska)ctx.getBean("skuskaApp");
 //        
@@ -999,33 +1004,55 @@ public class Skuska1<T> {
         }
 
     }
-    
-    private void skusA(){
+
+    private void skusA() {
         List<A> lisa = new ArrayList<>();
         a = new A(1);
         b = new A(2);
         c = new A(3);
-        
+
         lisa.add(a);
         lisa.add(b);
         lisa.add(c);
-        
-        for (A a : lisa){
+
+        for (A a : lisa) {
             log.info("PRED: " + a.getNum());
         }
-        
+
         a = new A(5);
         b = new A(6);
         c = new A(7);
-        
+
 //        for (A a : lisa){
 //            a = new A(5);
 //        }
-        for (A a : lisa){
+        for (A a : lisa) {
             log.info("PO: " + a.getNum());
         }
+
+    }
+
+    private void skusItem() {
         
+        UniRepo<Vote> votRepo = new UniRepo<>(Vote.class);
         
+        try {
+            String tn = "t_vote";
+            SQLContainer sqlCont = DoDBconn.getContainer(tn);
+
+            Object itemId = sqlCont.addItem();
+            Item item = sqlCont.getItem(itemId);
+            
+            Vote vot = votRepo.findOne(4);
+            
+            ToolsDao.updateVoteItem(item, vot);
+            
+            sqlCont.commit();
+            
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(),ex);
+        }
+
     }
 
 }

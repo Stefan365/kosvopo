@@ -7,8 +7,10 @@ package sk.stefan.MVP.view.components;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.listeners.RenewBackgroundListener;
@@ -16,77 +18,113 @@ import sk.stefan.listeners.RenewBackgroundListener;
 /**
  * Dialog pro editaci vlastnosti jedne ulohy
  *
- * @author Marek Svarc
  * @author Stefan
  */
-public class UniDlg extends Window implements OkCancelListener, ObnovFilterListener {
+public class UniDlg extends Window implements OkCancelListener {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * Formulář na zadávání/úpravu úkolů.
-     */
-    //final private InputFormLayout<? extends Object> flInputForm;
 
     /**
      * Listener na obnovu základního view, ze kterého se do fromulářového okna
      * vstupuje, po vyplnění formuláře.
      */
-    private final RenewBackgroundListener listener;
+    private OkCancelListener parentListenerOc;
 
     //0.
     /**
-     * Konstruktor.
+     * Konstruktor. Okno pre vstupny formular. 
      *
      * @param caption nadpis okna
      * @param inputFl
-     * @param lis Listener na obnovu view.
      */
-    public UniDlg(String caption, InputFormLayout<? extends Object> inputFl, RenewBackgroundListener lis) {
-        this.listener = lis;
+//    public UniDlg(String caption, InputFormLayout<? extends Object> inputFl, OkCancelListener cp) {
+    public UniDlg(String caption, InputFormLayout<? extends Object> inputFl) {
+
         this.setCaption(caption);
         setModal(true);
         inputFl.setOkCancelListener(this);
-//        InputFormLayout<> InputFormFl = new InputFormLayout<>(cls, item, sqlCont, this, null);
 
         // obsah dialogu
-        VerticalLayout content = new VerticalLayout(inputFl);
-        content.setSpacing(true);
-        content.setMargin(true);
-
-        setContent(content);
+        addContent(inputFl);
     }
 
-    public UniDlg(PasswordForm passFm, String caption, RenewBackgroundListener lis) {
-        this.listener = lis;
+    /**
+     * Okno pre zmenu hesla.
+     * @param passFm
+     * @param caption
+     * @param lis
+     */
+    public UniDlg(PasswordForm passFm, String caption, OkCancelListener lis) {
+        
+        this.parentListenerOc = lis;
+        
         this.setCaption(caption);
+        passFm.setWindowOkCancelListener(this);
         setModal(true);
-//        flInputForm = new InputFormLayout<>(cls, item, sqlCont, this, null);
-
+        
         // obsah dialogu
-        VerticalLayout content = new VerticalLayout(passFm);
+        addContent(passFm);
+        
+    }
+    
+    /**
+     * Okno pre vlozenie hlasovania.
+     * nepotrebuje ziadny listener.
+     * 
+     * @param votingLy
+     * @param caption
+     */
+    public UniDlg(VotingLayout votingLy, String caption) {
+        
+        this.setCaption(caption);
+        votingLy.setWindowOkCancelListener(this);
+        setModal(true);
+        
+        addContent(votingLy);
+    
+    }
+
+    
+    //1.
+    /**Pomocna funkcia.
+     * Vlozi prislusnu komponentu do seba, tj. do okna. 
+     */
+    private void addContent(Component com){
+        
+        VerticalLayout content = new VerticalLayout(com);
         content.setSpacing(true);
         content.setMargin(true);
 
         setContent(content);
     }
 
+    
+    
     // pozri na popis OkCancelListener
     @Override
     public void doOkAction() {
-        listener.refreshTodo();
+        if (parentListenerOc != null) {
+            parentListenerOc.doOkAction();
+        }
         close();
     }
 
     @Override
     public void doCancelAction() {
-        //listener.refreshTodo();
+        if (parentListenerOc != null) {
+
+            parentListenerOc.doCancelAction();
+        }
         close();
     }
 
-    @Override
-    public void obnovFilter() {
-        listener.refreshFilters();
-    }
+//    @Override
+//    public void obnovFilter() {
+//        if (listenerOc != null) {
+//
+//            listenerF.obnovFilter();
+//        }
+//        //do nothing this will be done via OK Cancel listener;
+//    }
 
 }
