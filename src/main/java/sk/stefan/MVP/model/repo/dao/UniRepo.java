@@ -15,18 +15,9 @@ import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
-import sk.stefan.enums.FilterType;
-import sk.stefan.enums.NonEditableFields;
-import sk.stefan.enums.PublicUsefulness;
-import sk.stefan.enums.Stability;
-import sk.stefan.enums.UserType;
-import sk.stefan.enums.VoteAction;
-import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.MyRepo;
-import sk.stefan.utils.ToolsNazvy;
 import sk.stefan.utils.ToolsDao;
 
 public class UniRepo<T> implements MyRepo<T> {
@@ -78,7 +69,13 @@ public class UniRepo<T> implements MyRepo<T> {
             Statement st;
             st = conn.createStatement();
 
-            String sql = String.format("SELECT * FROM %s", TN);
+            String sql;
+            if (TN.contains("a_")){
+                sql = String.format("SELECT * FROM %s", TN);
+            } else {
+                sql = String.format("SELECT * FROM %s  WHERE visible = true", TN);
+            }
+            
             ResultSet rs;
             rs = st.executeQuery(sql);
             //log.info("PETER 7: " + rs.getClass().getCanonicalName());
@@ -110,8 +107,13 @@ public class UniRepo<T> implements MyRepo<T> {
             Statement st;
             st = conn.createStatement();
 
-            String sql = String
-                    .format("SELECT * FROM %s WHERE id = %d", TN, id);
+            String sql;
+            if (TN.contains("a_")){
+                sql = String.format("SELECT * FROM %s WHERE id = %d", TN, id);
+            } else {
+                sql = String.format("SELECT * FROM %s WHERE id = %d AND visible = true", TN, id);
+            }
+            
             ResultSet rs;
             rs = st.executeQuery(sql);
             // Notification.show(sql);
@@ -160,6 +162,13 @@ public class UniRepo<T> implements MyRepo<T> {
                 sql = String.format("SELECT * FROM %s WHERE %s = '%s'", TN,
                         paramName, paramValue);
             }
+            
+            if (TN.contains("a_")){
+                //do nothing
+            } else {
+                sql += " AND visible = true";
+            }
+
 
             // Notification.show(sql);
             System.out.println(sql);
@@ -367,6 +376,52 @@ public class UniRepo<T> implements MyRepo<T> {
 
     }
 
+    // 5.B
+    /**
+     * @param ent
+     * @return
+     */
+    @Override
+    public boolean deactivate(T ent) {
+//        try {
+//            Connection conn = DoDBconn.getConnection();
+//            Statement st = conn.createStatement();
+//
+//            Integer id = null;
+//
+//            if (ent != null) {
+//                Method entMethod = clsT.getMethod("getId");
+//                id = (Integer) entMethod.invoke(ent);
+//            }
+//
+//            if (id != null) {
+//                String sql = String.format("DELETE FROM %s WHERE id = %d", TN,
+//                        id);
+//                st.executeUpdate(sql);
+//                log.info("DELETE:" + sql);
+//            }
+//
+//            st.close();
+////            conn.commit();
+//            DoDBconn.releaseConnection(conn);
+//            return true;
+//
+//        } catch (IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
+//            Notification
+//                    .show("Chyba, uniRepo::delete(non SQL exception)", Type.ERROR_MESSAGE);
+//            log.error(e.getLocalizedMessage(), e);
+//            return false;
+//        } catch (SQLException e) {
+////            Notification.show("Chyba, uniRepo::delete(SQL exception)", Type.ERROR_MESSAGE);
+//            Notification.show("Danu entitu nieje mozne zatial vymazat, vymaz dalsie podentity");
+//            log.error(e.getLocalizedMessage(), e);
+//            return false;
+//        }
+//
+        return true;
+    }
+
+    
     /**
      * funkce na naplneni entity.
      * 
@@ -586,9 +641,16 @@ public class UniRepo<T> implements MyRepo<T> {
         PreparedStatement st = null;
 
         byte[] hash = null;
+        String sql;
+        if (TN.contains("a_")){
+                sql = "SELECT password FROM " + TN + " WHERE id = ?";
+            } else {
+                sql = "SELECT password FROM " + TN + " WHERE id = ? AND visible = true";
+            }
         try {
             conn = DoDBconn.getConnection();
-            st = conn.prepareStatement("SELECT password FROM " + TN + " WHERE id = ?");
+//            st = conn.prepareStatement("SELECT password FROM " + TN + " WHERE id = ?");
+            st = conn.prepareStatement(sql);
             st.setString(1, id);
             ResultSet result = st.executeQuery();
 

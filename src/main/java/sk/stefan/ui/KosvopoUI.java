@@ -4,6 +4,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import javax.servlet.annotation.WebServlet;
 import sk.stefan.MVP.model.entity.dao.*;
@@ -64,6 +65,7 @@ public class KosvopoUI extends UI {
 //                new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
 //         final MyBeanInterface bean = (MyBeanInterface) helper.getBean("myBean");
          
+        
         
         navigator = new Navigator(this, this);
         NavigationComponent.createNavComp(navigator);

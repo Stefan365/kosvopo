@@ -169,6 +169,7 @@ public class LoginView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeEvent event) {
+        Notification.show("VŠECHEN SPĚCH JEST OD ĎÁBLA!");
         passwordPf.setValue("");
     }
 

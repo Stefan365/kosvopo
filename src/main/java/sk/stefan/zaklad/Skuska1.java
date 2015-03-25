@@ -37,6 +37,7 @@ import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
 import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
 import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
@@ -74,7 +75,8 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusPole();
+        sk.skusUpdaredRepo();
+//        sk.skusPole();
 //        sk.skusSqlDate();
 
 //        sk.skusItem();
@@ -1079,11 +1081,21 @@ public class Skuska1<T> {
         
             
         }
+    }
+    
+    private void skusUpdaredRepo(){
+        UniRepo<PublicRole> prolRepo = new UniRepo<>(PublicRole.class);
+        PublicRole pr1 = prolRepo.findOne(2);
+        PublicRole pr2 = prolRepo.findOne(4);
         
-        
-        
+        log.debug("PROLE 1: " + pr1.getName());
+        log.debug("PROLE 2: " + pr2);
         
         
     }
+        
+        
+        
+    
 
 }

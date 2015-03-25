@@ -4,26 +4,68 @@ import java.util.List;
 
 public interface MyRepo<T> {
 
-	// 1.
-	public List<T> findAll();
+    // 1.
+    /**
+     * Najde vsetky entity daneho typu, tj. T.
+     * 
+     * @return 
+     */
+    public List<T> findAll();
 
-	// 2.
-	public T findOne(Integer id);
+    // 2.
+    /**
+     * Najde prave 1 entitu, podla ID.
+     * @param id
+     * @return 
+     */
+    public T findOne(Integer id);
+    
 
-	// 3.
-	public List<T> findByParam(String paramName, String paramValue);
+    // 3.
+    /**
+     * Vyhlada zoznam entit, splnajucich danu podmienku.
+     * 
+     * @param paramName
+     * @param paramValue
+     * @return 
+     */
+    public List<T> findByParam(String paramName, String paramValue);
 
-	// 4.
-        /**
-         * Zahrna update i vytvorenie novej entity.
-         */
-	public T save(T ent);
+    // 4.
+    /**
+     * Zahrna update i vytvorenie novej entity.
+     *
+     * @param ent
+     * @return
+     */
+    public T save(T ent);
 
-	// 5.
-	public boolean delete(T ent);
-	
-	// 6.
-	public boolean copy(T entFrom, T entTo);
+    // 5.
+    /**
+     * Zmaze entitu z databazy.
+     * @param ent
+     * @return 
+     */
+    public boolean delete(T ent);
 
+    //5.B
+    /**
+     * Deaktivuje entity, cely strom potomkov, pri deaktivacii danej entity.
+     *
+     * @param ent
+     * @return
+     */
+    public boolean deactivate(T ent);
+
+    // 6.
+    /**
+     * Zkopituje entitu do novej entity s totoznym vnutornym obsahom.
+     * 
+     * 
+     * @param entFrom
+     * @param entTo
+     * @return 
+     */
+    public boolean copy(T entFrom, T entTo);
 
 }

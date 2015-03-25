@@ -8,10 +8,15 @@ package sk.stefan.utils;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
+import com.vaadin.event.LayoutEvents;
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
+import sk.stefan.MVP.model.repo.dao.GeneralRepo;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 
 /**
@@ -336,11 +341,29 @@ public class ToolsFiltering {
         sql.append(value);
 
         //uzavretie dotazu:
-//        for (int i = 0; i < size - 1; i++) {
         for (int i = 0; i < size; i++) {
-            sql.append(")");
+            if (i == 0){
+                sql.append(")");
+            } else {
+                sql.append(" AND visible = true)");
+            }
         }
+        
+        Label l = new Label("kokos");
+        HorizontalLayout hl = new HorizontalLayout();
+        hl.addLayoutClickListener(new LayoutClickListener() {
+            private static final long serialVersionUID = -7430315482468088485L;
 
+
+            @Override
+            public void layoutClick(LayoutEvents.LayoutClickEvent event) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+//        stacilo by aj toto, lebo tam je sqlcontainer filter
+//        for (int i = 0; i < size; i++) {
+//            sql.append(")");
+//        }
         return sql.toString();
 
     }
@@ -356,19 +379,30 @@ public class ToolsFiltering {
         return replace;
     }
 
-    //11. pom
     /**
-     * Zisti, ktore checkboxu su prave zaskrtnute a podla toho zostavi aktualny
-     * zoznam tabuliek, ktore budu zohladnene.
+     * Deactivates
+     * @param ids
+     * @param tn
+     */
+    dsds
+    public static void deactivateIds(List<Integer> ids, String tn) {
+        GeneralRepo genRepo = new GeneralRepo();
+        for (Integer id : ids) {
+            genRepo.deactivate(tn, id);
+        }
+    }
+
+    /**
+     * PRe ucely deaktivacie stromu entit. TJ. stromu, ktoreho korenom je entita
+     *
+     * @param id
+     * @param currTn
+     * @param slaveTn
      *
      * @return
      */
-//    public static List<String> checkActualFilTns() {
-//
-//        List<String> aktualList = new ArrayList<>();
-//
-//        aktualList.addAll(Arrays.asList(relFilTns));
-//        return aktualList;
-//
-//    }
+    public static List<Integer> getNextLevelSlavesIds(Integer id, String currTn, String slaveTn) {
+        return null;
+    }
+
 }

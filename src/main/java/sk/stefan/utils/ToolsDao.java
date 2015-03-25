@@ -1,7 +1,6 @@
 package sk.stefan.utils;
 
 import com.vaadin.data.Item;
-import com.vaadin.ui.Notification;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
@@ -24,7 +22,6 @@ import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.filtering.FilterComboBox;
 import sk.stefan.interfaces.Filterable;
 
 public class ToolsDao {
@@ -40,7 +37,7 @@ public class ToolsDao {
      * @return
      * @throws java.lang.NoSuchFieldException
      */
-    public static Set<String> getClassProperties(Class<?> cls, boolean keepId)
+    public static synchronized Set<String> getClassProperties(Class<?> cls, boolean keepId)
             throws NoSuchFieldException, SecurityException {
 
         Set<String> properties = new HashSet<>();
@@ -71,7 +68,7 @@ public class ToolsDao {
      * @param type
      * @return
      */
-    public static String getG_SetterName(String p, String type) {
+    public static synchronized String getG_SetterName(String p, String type) {
 
         StringBuilder sb = new StringBuilder();
         sb.append(type);//'get' or 'set'
@@ -89,7 +86,7 @@ public class ToolsDao {
      * @return
      * @throws java.lang.NoSuchFieldException
      */
-    public static Map<String, Class<?>> getTypParametrov(Class<?> cls)
+    public static synchronized Map<String, Class<?>> getTypParametrov(Class<?> cls)
             throws NoSuchFieldException, SecurityException {
 
         Map<String, Class<?>> typy = new HashMap<>();
@@ -111,7 +108,7 @@ public class ToolsDao {
      * @param typ
      * @return
      */
-    public static String getShortTyp(String typ) {
+    public static synchronized String getShortTyp(String typ) {
         String[] parts = typ.split("\\.");
         List<String> str = new ArrayList<>(Arrays.asList(parts));
         return str.get(str.size() - 1);
@@ -123,7 +120,7 @@ public class ToolsDao {
      * @param typ
      * @return
      */
-    public static String getGettersForResultSet(String typ) {
+    public static synchronized String getGettersForResultSet(String typ) {
         StringBuilder sb = new StringBuilder();
         sb.append("get");
         if (null != typ) {
@@ -168,7 +165,7 @@ public class ToolsDao {
      * @param date
      * @return
      */
-    public static String utilDateToString(java.util.Date date) {
+    public static synchronized String utilDateToString(java.util.Date date) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date.getTime());
@@ -182,7 +179,7 @@ public class ToolsDao {
      * @param date
      * @return
      */
-    public static String sqlDateToString(java.sql.Date date) {
+    public static synchronized String sqlDateToString(java.sql.Date date) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date.getTime());
@@ -195,7 +192,7 @@ public class ToolsDao {
      * @param value
      * @return
      */
-    public static Integer getShortFromEnum(Class<?> cls, Object value) {
+    public static synchronized Integer getShortFromEnum(Class<?> cls, Object value) {
 
         try {
 
@@ -220,7 +217,7 @@ public class ToolsDao {
      * @param sh
      * @return
      */
-    public static Object getEnumVal(Class<?> clsEnum, Short sh) {
+    public static synchronized Object getEnumVal(Class<?> clsEnum, Short sh) {
 
         try {
 
@@ -245,7 +242,7 @@ public class ToolsDao {
      * @param vot
      */
     @SuppressWarnings("unchecked")
-    public static void updateVoteItem(Item item, Vote vot) {
+    public static synchronized void updateVoteItem(Item item, Vote vot) {
 
 //        item.getItemProperty("id").setValue(vot.getId()); //it is read only.
         item.getItemProperty("vote_date").setValue(vot.getVote_date());
@@ -267,7 +264,7 @@ public class ToolsDao {
      * @param touchingTn
      * @param intVal
      */
-    public static void addFiltersToTouched(Filterable c, String touchingTn, Integer intVal) {
+    public static synchronized void addFiltersToTouched(Filterable c, String touchingTn, Integer intVal) {
 
         String comboTouchedTn = c.getTableName();
         List<String> hSeq = ToolsFiltering.getHierarchicalSequence(comboTouchedTn, touchingTn);
@@ -283,7 +280,7 @@ public class ToolsDao {
      * @param clsE
      * @return
      */
-    public static String getTableName(Class<?> clsE) {
+    public static synchronized String getTableName(Class<?> clsE) {
         try {
             Field tnFld = clsE.getDeclaredField("TN");
             String tn = (String) tnFld.get(null);
@@ -304,7 +301,7 @@ public class ToolsDao {
      * @param clsE
      * @return
      */
-    public static String getTitleName(Class<?> clsE) {
+    public static synchronized String getTitleName(Class<?> clsE) {
         try {
             Field tnFld = clsE.getDeclaredField("PRES_NAME");
             String title = (String) tnFld.get(null);
@@ -321,7 +318,7 @@ public class ToolsDao {
      * @param cls
      * @return
      */
-    public static Map<String, Integer> findAllByClass(Class<?> cls) {
+    public static synchronized Map<String, Integer> findAllByClass(Class<?> cls) {
         Map<String, Integer> map = new HashMap<>();
         String repN;
         Integer id;
@@ -351,7 +348,7 @@ public class ToolsDao {
      * @param tenure_id
      * @return
      */
-    public static Boolean isActual(Integer tenure_id) {
+    public static synchronized Boolean isActual(Integer tenure_id) {
         UniRepo<Tenure> tenRepo = new UniRepo<>(Tenure.class);
         Tenure ten = tenRepo.findOne(tenure_id);
         if (ten != null) {
@@ -372,7 +369,7 @@ public class ToolsDao {
      * @param pubB
      * @return
      */
-    public static List<PublicRole> getActualPublicRoles(PublicBody pubB) {
+    public static synchronized List<PublicRole> getActualPublicRoles(PublicBody pubB) {
 
         List<PublicRole> prActual = new ArrayList<>();
         UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
@@ -386,5 +383,6 @@ public class ToolsDao {
         }
         return prActual;
     }
-
+    
+    
 }

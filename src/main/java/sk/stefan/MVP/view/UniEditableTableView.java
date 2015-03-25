@@ -339,7 +339,7 @@ public final class UniEditableTableView<E> extends VerticalLayout implements OkC
         this.visibleColDepictNames = dp.toArray(uneditCol);
         
         for (String s : visibleColDbNames){
-            log.debug("TABLE COLUMN: *"+ s +"*");
+//            log.debug("TABLE COLUMN: *"+ s +"*");
         }
         
     }
