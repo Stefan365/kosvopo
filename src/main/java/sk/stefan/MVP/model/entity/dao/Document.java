@@ -13,7 +13,8 @@ import sk.stefan.utils.ToolsNazvy;
 
 /**
  * reprezentuje dokumnet.
- *
+ * Elinecka je najlepsia vo vesmire.
+ * 
  * @author stefan
  */
 public class Document implements PresentationName {
