@@ -13,6 +13,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
 import sk.stefan.MVP.view.components.SilentCheckBox;
+import sk.stefan.interfaces.Filterable;
+import sk.stefan.utils.ToolsDao;
 import sk.stefan.utils.ToolsFiltering;
 
 /**
@@ -20,10 +22,10 @@ import sk.stefan.utils.ToolsFiltering;
  * @author stefan
  * @param <E>
  */
-public class FilterListener<E> implements Property.ValueChangeListener {
+public class FilterTableListener<E> implements Property.ValueChangeListener {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger log = Logger.getLogger(FilterListener.class);
+    private static final Logger log = Logger.getLogger(FilterTableListener.class);
 
     private final SQLContainer sqlCont;
     private final String touchedTn;
@@ -49,7 +51,7 @@ public class FilterListener<E> implements Property.ValueChangeListener {
      * @param sqlcont
      * @param touchedChBs
      */
-    public FilterListener(String tdTn, String tgTn, FilterComboBox<E> com, SilentCheckBox ch,
+    public FilterTableListener(String tdTn, String tgTn, FilterComboBox<E> com, SilentCheckBox ch,
             SQLContainer sqlcont, List<FilterComboBox<?>> touchedChBs) {
 
         this.touchedTn = tdTn;
@@ -69,7 +71,7 @@ public class FilterListener<E> implements Property.ValueChangeListener {
 
         if (o instanceof Boolean) {
             bolVal = (Boolean) o;
-            log.info("BOOLEAN: " + bolVal);
+//            log.info("BOOLEAN: " + bolVal);
             if (bolVal) {
                 intVal = (Integer) combo.getValue();
                 combo.setEnabled(true);
@@ -110,12 +112,6 @@ public class FilterListener<E> implements Property.ValueChangeListener {
             if (touchedChBs != null) {
                 addFiltersToTouched();
             }
-//                    comboTouchedTn = c.getTableName();
-//                    List<String> hSeq = ToolsFiltering.getHierarchicalSequence(comboTouchedTn, touchingTn);
-//                    List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
-//                    List<Integer> idsC = ToolsFiltering.getFinalIds(hASeq, intVal);
-//                    c.setNewValues(idsC);
-
         }
 
     }
@@ -126,12 +122,12 @@ public class FilterListener<E> implements Property.ValueChangeListener {
     private void addFiltersToTouched() {
 
         for (FilterComboBox<?> c : touchedChBs) {
-
-            String comboTouchedTn = c.getTableName();
-            List<String> hSeq = ToolsFiltering.getHierarchicalSequence(comboTouchedTn, touchingTn);
-            List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
-            List<Integer> idsC = ToolsFiltering.getFinalIds(hASeq, intVal);
-            c.setNewValues(idsC);
+            ToolsDao.addFiltersToTouched((Filterable)c, touchingTn, intVal);
+//            String comboTouchedTn = c.getTableName();
+//            List<String> hSeq = ToolsFiltering.getHierarchicalSequence(comboTouchedTn, touchingTn);
+//            List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
+//            List<Integer> idsC = ToolsFiltering.getFinalIds(hASeq, intVal);
+//            c.applyFilter(idsC);
         }
     }
 
@@ -142,7 +138,7 @@ public class FilterListener<E> implements Property.ValueChangeListener {
 
         if (touchedChBs != null) {
             for (FilterComboBox<?> c : touchedChBs) {
-                c.setNewValues();
+                c.applyFilter(null);
             }
         }
     }

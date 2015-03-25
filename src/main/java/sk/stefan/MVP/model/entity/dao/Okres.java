@@ -14,6 +14,8 @@ public final class Okres implements PresentationName {
 
     private Integer kraj_id;
 
+    private Boolean visible;
+    
     public Okres() {
     }
 
@@ -55,5 +57,13 @@ public final class Okres implements PresentationName {
     @Override
     public String getPresentationName() {
         return this.okres_name;
+    }
+
+    public Boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 }

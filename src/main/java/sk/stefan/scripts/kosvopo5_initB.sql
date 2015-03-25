@@ -11,14 +11,11 @@ COMMIT;
 
 
 -- 2.
-INSERT INTO a_role (role_name, rights_description)
-VALUES ('ADMIN', 'všetky práva, vrátane práv na priamy zásah do databázy');
-INSERT INTO a_role (role_name, rights_description)
-VALUES ('HELP_ADMIN', 'všetky práva (vkladanie nových entít, ...), okrem priameho vstupu do databázy');
-INSERT INTO a_role (role_name, rights_description)
-VALUES ('JUDGE', 'má právo dávať posudky a vkladať objasňujúce komentáre, + vkladanie domumentov');
-INSERT INTO a_role (role_name, rights_description)
-VALUES ('HELPER', 'práva aktivistu, tj. môže vkladať dokumenty');
+INSERT INTO a_role (role, role_name, rights_description)
+VALUES (0, 'USER', 'všetky práva (vkladanie nových entít, ...), okrem priameho vstupu do databázy');
+INSERT INTO a_role (role, role_name, rights_description)
+VALUES (1, 'ADMIN', 'všetky práva USER-a, vrátane práv na úpravu databázy');
+
 COMMIT; 
 
 -- 3.
@@ -27,7 +24,7 @@ VALUES (1, 1, NOW(), null);
 INSERT INTO a_user_role (role_id, user_id, since, till)
 VALUES (1, 2, NOW(), null);
 INSERT INTO a_user_role (role_id, user_id, since, till)
-VALUES (3, 3, NOW(), null);
+VALUES (2, 3, NOW(), null);
 COMMIT; 
 
 -- 5.
@@ -75,13 +72,13 @@ COMMIT;
 
 -- 7.
 INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness)
-VALUES (NOW(), 4, 8, 2);
+VALUES (NOW(), 4, 3, 3);
 INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness)
-VALUES (NOW(), 5, 3, 5);
+VALUES (NOW(), 5, 3, 4);
 INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness)
-VALUES (NOW(), 3, 9, 7);
+VALUES (NOW(), 3, 2, 2);
 INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness)
-VALUES (NOW(), 2, 10, 7);
+VALUES (NOW(), 2, 0, 0);
 INSERT INTO t_person_classification(classification_date, public_person_id, stability, public_usefulness)
 VALUES (NOW(), 1, 4, 2);
 COMMIT; 
@@ -93,26 +90,26 @@ INSERT INTO T_KRAJ(kraj_name) VALUES ('Východoslovenský');
 COMMIT;
 
 -- 8.1. 
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Bratislava', 1);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Trnava', 1);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Nitra', 1);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Trenčín', 1);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Prievidza', 2);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Banská Bystrica', 2);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Zvolen', 2);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Žarnovica', 2);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Lučenec', 2);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Kosice', 3);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Michalovce', 3);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Zvolen', 3);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Roznava', 3);
-INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Presov', 3);
-COMMIT;
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Bratislava', 1);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Trnava', 1);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Nitra', 1);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Trenčín', 1);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Prievidza', 2);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Banská Bystrica', 2);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Zvolen', 2);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Žarnovica', 2);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Lučenec', 2);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Kosice', 3);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Michalovce', 3);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Zvolen', 3);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Roznava', 3);
+ INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Presov', 3);
+ COMMIT;
 
 -- 8.2.
 INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Bratislava', 'Rača', 1);
 INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Bratislava', 'Dúbravka', 1);
-INSERT INTO T_location(obec_name, mestka_cast, okres_id) VALUES ('Handlová', null, 5);
+INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Handlová', null, 5);
 INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Nováky', null, 5);
 INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Patrizánske', null, 5);
 INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Ráztočno', null, 5);
@@ -165,59 +162,79 @@ COMMIT;
 
 
 -- 13. VOTE
-INSERT INTO t_vote(vote_date, public_body_id, subject_id, internal_nr, result_vote, 
-            for_vote, against_vote, refrain_vote, absent, link)			
-VALUES (NOW(), 5, 1, '957-AC',1, 4, 0, 1, 0, null);
-INSERT INTO t_vote(vote_date, public_body_id, subject_id, internal_nr, result_vote, 
-            for_vote, against_vote, refrain_vote, absent, link)			
-VALUES (NOW(), 5, 2, '958-AC',1, 3, 0, 2, 0, null);
-INSERT INTO t_vote(vote_date, public_body_id, subject_id, internal_nr, result_vote, 
-			for_vote, against_vote, refrain_vote, absent, link)			
-VALUES (NOW(), 5, 2, '959-AC',1, 1, 4, 0, 0, null);
-INSERT INTO t_vote(vote_date, public_body_id, subject_id, internal_nr, result_vote, 
-            for_vote, against_vote, refrain_vote, absent, link)			
-VALUES (NOW(), 5, 4, '963-AC',1, 3, 2, 0, 0, null);
+INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote, 
+            for_vote, against_vote, refrain_vote, absent)			
+VALUES (NOW(), 1, '957-AC',1, 4, 0, 1, 0);
+INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote, 
+            for_vote, against_vote, refrain_vote, absent)			
+VALUES (NOW(), 2, '958-AC',1, 3, 0, 2, 0);
+INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote, 
+			for_vote, against_vote, refrain_vote, absent)			
+VALUES (NOW(), 2, '959-AC',1, 1, 4, 0, 0);
+INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote, 
+            for_vote, against_vote, refrain_vote, absent)			
+VALUES (NOW(), 4, '963-AC',0, 3, 2, 0, 0);
 COMMIT;
 
 
 -- 14.
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (1, 1, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (2, 1, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (3, 1, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (4, 1, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (5, 1, 'ZDRZAL SA');
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (1, 1, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (2, 1, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (3, 1, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (4, 1, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (5, 1, 2);
 
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (1, 2, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (2, 2, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (3, 2, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (4, 2, 'ZDRZAL SA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (5, 2, 'ZDRZAL SA');
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (1, 2, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (2, 2, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (3, 2, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (4, 2, 2);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (5, 2, 2);
 
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (1, 3, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (2, 3, 'PROTI');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (3, 3, 'PROTI');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (4, 3, 'PROTI');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (5, 3, 'PROTI');
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (1, 3, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (2, 3, 1);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (3, 3, 3);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (4, 3, 1);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (5, 3, 1);
 
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (1, 4, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (2, 4, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (3, 4, 'ZA');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (4, 4, 'PROTI');
-INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (5, 4, 'PROTI');
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (1, 4, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (2, 4, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (3, 4, 0);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (4, 4, 1);
+INSERT INTO t_vote_of_role(public_role_id, vote_id, decision) VALUES (5, 4, 1);
 COMMIT;
 
 
 -- 15.
-INSERT INTO t_vote_classification(vote_id, public_malignity, brief_description)
-VALUES (1, 9, 'uplne na picu hlasovanie, akodlive jak das');
+INSERT INTO t_vote_classification(vote_id, public_usefulness, brief_description)
+VALUES (1, 0, 'uplne na picu hlasovanie, akodlive jak das');
 
-INSERT INTO t_vote_classification(vote_id, public_malignity, brief_description)
-VALUES (2, 0, 'hlasovanie naozaj v zaujme obcanov');
+INSERT INTO t_vote_classification(vote_id, public_usefulness, brief_description)
+VALUES (2, 4, 'hlasovanie naozaj v zaujme obcanov');
 
-INSERT INTO t_vote_classification(vote_id, public_malignity, brief_description)
-VALUES (3, 5, 'nieco medzi, asi v tom bude tunel, nicmene stale je to prospesne verejnosti');
+INSERT INTO t_vote_classification(vote_id, public_usefulness, brief_description)
+VALUES (3, 2, 'nieco medzi, asi v tom bude tunel, nicmene stale je to prospesne verejnosti');
 
-INSERT INTO t_vote_classification(vote_id, public_malignity, brief_description)
-VALUES (4, 3, 'nieco medzi, asi v tom bude tunel, nicmene stale je to prospesne verejnosti');
+INSERT INTO t_vote_classification(vote_id, public_usefulness, brief_description)
+VALUES (4, 1, 'nieco medzi, asi v tom bude tunel, nicmene stale je to prospesne verejnosti');
 
+COMMIT;
+
+-- 17.
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_tenure', null, null);
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_theme', null, null);
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_location', null, null);
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_public_person', null, null);
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_public_body', 't_location', 'location_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) 
+		VALUES ('t_person_classification', 't_public_person', 'public_person_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_public_role', 't_tenure', 'tenure_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_public_role', 't_public_body', 'public_body_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) 
+		VALUES ('t_public_role', 't_public_person', 'public_person_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_subject', 't_theme','theme_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_subject', 't_public_role', 'public_role_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_vote', 't_subject','subject_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_vote_classification', 't_vote', 'vote_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_vote_of_role', 't_vote','vote_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_vote_of_role', 't_public_role','public_role_id');
 COMMIT;

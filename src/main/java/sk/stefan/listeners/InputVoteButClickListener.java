@@ -5,63 +5,41 @@
  */
 package sk.stefan.listeners;
 
-import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
-import java.lang.reflect.Field;
-import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.view.InputAllView;
-import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.UniDlg;
-import sk.stefan.listenersImpl.RenewBackgroundListenerImpl;
+import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
 
 /**
  *
  * @author stefan
  */
 @SuppressWarnings("serial")
-public class InputVoteButClickListener implements Button.ClickListener {
+public class InputVoteButClickListener implements ClickListener {
 
     private static final Logger log = Logger.getLogger(InputButClickListener.class);
 
-    private final Class<?> cls;
     private final String title;
-//    private final InputAllView iaw;
-    
-    private SQLContainer sqlCont;
+    private VotingLayout votingLy;
     private UniDlg tdlg;
-    //table name
-    private String tn;
 
-    public InputVoteButClickListener(Class<?> cls, String title, InputAllView iaw) {
-    
-        this.cls = cls;
+    public InputVoteButClickListener(String title) {
+
         this.title = title;
- 
+
     }
 
     @Override
     public void buttonClick(Button.ClickEvent event) {
         
-        try {
-            Field tnFld = cls.getDeclaredField("TN");
+        this.votingLy = new VotingLayout(null);
 
-            tn = (String) tnFld.get(null);
-            sqlCont = DoDBconn.getContainer(tn);
-            
-            InputFormLayout<Vote> inputFl;
-            inputFl = new InputFormLayout<>(cls, null, sqlCont, null, null);
-            tdlg = new UniDlg("Nový " + title, inputFl);
-            UI.getCurrent().addWindow(tdlg);
-            //POZOR na toto, malo by to dobehnut az potom, co sa ukonci vlakno 
-            //UI okna:
-            //sqlCont = null;
-        } catch (IllegalAccessException | SQLException | NoSuchFieldException | SecurityException ex) {
-            log.error(ex.getMessage());
-        }
+        tdlg = new UniDlg("Nový " + title, votingLy);
+        tdlg.setSizeFull();
+        
+        UI.getCurrent().addWindow(tdlg);
 
     }
 

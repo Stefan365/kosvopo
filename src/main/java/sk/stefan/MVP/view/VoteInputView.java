@@ -8,9 +8,6 @@ package sk.stefan.MVP.view;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.VerticalLayout;
-import sk.stefan.listeners.ObnovFilterListener;
-import sk.stefan.listeners.OkCancelListener;
-import sk.stefan.listeners.RefreshViewListener;
 
 /**
  *

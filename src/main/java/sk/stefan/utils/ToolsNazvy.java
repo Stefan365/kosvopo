@@ -18,7 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.A_Role;
+import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.Kraj;
 import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.Okres;
@@ -35,18 +38,17 @@ import sk.stefan.MVP.model.repo.dao.UniRepo;
 /**
  * Trida obsahujici pomocne metody pro vytvareni GUI
  *
- * @author Marek Svarc
  */
-public class Tools {
+public class ToolsNazvy {
 
-    private static final Logger log = Logger.getLogger(Tools.class);
+    private static final Logger log = Logger.getLogger(ToolsNazvy.class);
 
     /**
      * Vytvori textove pole.
-     * 
+     *
      * @param caption
      * @param required
-     * @return 
+     * @return
      */
     public static TextField createFormTextField(String caption, boolean required) {
         TextField tf = new TextField(caption);
@@ -58,10 +60,11 @@ public class Tools {
     }
 
     /**
-     * Vytvori textove pole pro zadanie hesla 
+     * Vytvori textove pole pro zadanie hesla
+     *
      * @param caption
      * @param required
-     * @return 
+     * @return
      */
     public static PasswordField createFormPasswordField(String caption,
             boolean required) {
@@ -89,7 +92,6 @@ public class Tools {
         return la;
     }
 
-    // 3. stefan
     /**
      * Ziska mapu nazvov 'parameter : jeho typ' danej triedy ako string.
      *
@@ -102,7 +104,7 @@ public class Tools {
 
         Map<String, Class<?>> typy = new HashMap<>();
 
-        List<String> zozPar = Tools.getClassProperties(cls, false);
+        List<String> zozPar = ToolsNazvy.getClassProperties(cls, false);
 
         for (String p : zozPar) {
             Type typ = cls.getDeclaredField(p).getType();
@@ -159,9 +161,40 @@ public class Tools {
         return map;
     }
 
-    private static String getHtmlLabelText(String caption, String text) {
-        return String.format("<div class=v-label-%s><strong>%s</strong></div><i>%s</i>",
-                ValoTheme.LABEL_BOLD, caption, text);
+//    private static String getHtmlLabelText(String caption, String text) {
+//        return String.format("<div class=v-label-%s><strong>%s</strong></div><i>%s</i>",
+//                ValoTheme.LABEL_BOLD, caption, text);
+//    }
+
+    /**
+     * Method for getting the Properies
+     *
+     * @param tabName
+     * @return
+     */
+    public static Properties getDepictParams(String tabName) {
+        
+        InputStream input = null;
+        try {
+            String fileN;
+            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\"
+                    + tabName.toLowerCase() + ".properties";
+            Properties prop = new Properties();
+            input = new FileInputStream(fileN);
+            prop.load(input);
+            return prop;
+        } catch (IOException ex) {
+            log.error(ex.getMessage(), ex);
+            return null;
+        } finally {
+            try {
+                if (input != null){
+                    input.close();
+                }
+            } catch (IOException ex) {
+                log.error(ex.getMessage(), ex);
+            }
+        }
     }
 
     /**
@@ -169,51 +202,59 @@ public class Tools {
      *
      * @param tabName
      * @return
-     * @throws java.io.FileNotFoundException
      */
-    public static Properties getDepictParams(String tabName) throws FileNotFoundException, IOException {
-        String fileN;
+    public static Properties getPoradieParams(String tabName) {
 
-        fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\"
-                + tabName.toLowerCase() + ".properties";
-
-        Properties prop = new Properties();
-        InputStream input = new FileInputStream(fileN);
-
-        prop.load(input);
-        return prop;
+        InputStream input = null;
+        try {
+            String fileN;
+            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\poradieParametrov\\"
+                    + tabName.toLowerCase() + "_p.properties";
+            Properties prop = new Properties();
+            input = new FileInputStream(fileN);
+            prop.load(input);
+            input.close();
+            return prop;
+        } catch (IOException ex) {
+            log.error(ex.getMessage(), ex);
+            return null;
+        } finally {
+            try {
+                if (input != null){
+                    input.close();
+                }
+            } catch (IOException ex) {
+                log.error(ex.getMessage(), ex);
+            }
+        }
     }
 
-    /**
-     * Method for getting the Properies
-     *
-     * @param tabName
-     * @return
-     * @throws java.io.FileNotFoundException
-     */
-    public static Properties getPoradieParams(String tabName) throws FileNotFoundException, IOException {
-        InputStream input;
-        String fileN;
-        fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\poradieParametrov\\"
-                + tabName.toLowerCase() + "_p.properties";
-        Properties prop = new Properties();
-        input = new FileInputStream(fileN);
-        prop.load(input);
-        input.close();
-        return prop;
-    }
+//    neni treba, je to v tabulkach ako parameter PRES_NAME
+    public static String getTableDepictNames(String tabName) {
 
-    public static String getTableDepictNames(String tabName) throws FileNotFoundException, IOException {
-        InputStream input;
-        String fileN;
-        fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\nazvyTabuliek\\"
-                + tabName.toLowerCase() + ".properties";
-        Properties prop = new Properties();
-        input = new FileInputStream(fileN);
-        prop.load(input);
-        input.close();
-
-        return prop.getProperty(tabName);
+        InputStream input = null;
+        try {
+            String fileN;
+            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\nazvyTabuliek.properties";
+            
+            Properties prop = new Properties();
+            input = new FileInputStream(fileN);
+            prop.load(input);
+            input.close();
+            
+            return prop.getProperty(tabName);
+        } catch (IOException ex) {
+            log.error(ex.getMessage(), ex);
+            return null;
+        } finally {
+            try {
+                if (input != null){
+                    input.close();
+                }
+            } catch (IOException ex) {
+                log.error(ex.getMessage(), ex);
+            }
+        }
     }
 
     /**
@@ -221,12 +262,16 @@ public class Tools {
      *
      *
      * @param pn
-     * @return 
+     * @return
      */
     public static Class<?> getClassFromName(String pn) {
 
         switch (pn) {
 
+            case "user_id":
+                return A_User.class;
+            case "role_id":
+                return A_Role.class;
             case "kraj_id":
                 return Kraj.class;
             case "okres_id":
@@ -252,47 +297,15 @@ public class Tools {
         }
     }
 
-    /**
-     * @param cls
-     * @return 
-     */
-    @SuppressWarnings({"unchecked", "unchecked"})
-    public static Map<String, Integer> findAllByClass(Class<?> cls) {
-
-        Map<String, Integer> map = new HashMap<>();
-        String repN;
-        Integer id;
-
-        try {
-            Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
-            Constructor<UniRepo<? extends Object>> repoCtor;
-            repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
-            List<? extends Object> listObj;
-            listObj = repoCtor.newInstance(cls).findAll();
-            log.info("KARAMAZOV: " + (listObj == null));
-            for (Object o : listObj) {
-                Method getRepNameMethod = cls.getDeclaredMethod("getPresentationName");
-                repN = (String) getRepNameMethod.invoke(o);
-                Method getIdMethod = cls.getDeclaredMethod("getId");
-                id = (Integer) getIdMethod.invoke(o);
-                map.put(repN, id);
-            }
-            return map;
-        } catch (NoSuchMethodException | InvocationTargetException |
-                IllegalArgumentException | IllegalAccessException |
-                InstantiationException | SecurityException | ClassNotFoundException ex) {
-            log.error(ex.getMessage());
-        }
-        return null;
-    }
 
     /**
      * dekapits the tablename
+     *
      * @param tn
-     * @return 
+     * @return
      */
     public static String decapit(String tn) {
-        
+
         if (tn.contains("t_")) {
             return tn.replace("t_", "");
         } else if (tn.contains("a_")) {
@@ -300,63 +313,5 @@ public class Tools {
         } else {
             return "kokosko";
         }
-
     }
-    
-    /**
-     * Kontroluje, ci je volebne obdobie aktualne.
-     * 
-     * @param tenure_id
-     * @return 
-     */
-    public static Boolean isActual(Integer tenure_id) {
-   
-        UniRepo<Tenure> tenRepo = new UniRepo<>(Tenure.class);
-        Tenure ten = tenRepo.findOne(tenure_id);
-        
-        if (ten != null){
-            
-            Long today = (new Date()).getTime();
-            Long since = ten.getSince().getTime();
-            
-            if(since <= today && (ten.getTill() == null || ten.getTill().getTime() >= today)){
-                return Boolean.TRUE;
-            } else {
-                return Boolean.FALSE;
-            }
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Vrati verejne role, ktore aktualne patria do verejneho organu.
-     * 
-     * @param pubB
-     * @return 
-     */
-    public static List<PublicRole> getActualPublicRoles(PublicBody pubB){
-
-        List<PublicRole> prActual = new ArrayList<>();
-        
-        UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
-        log.info("PUBBODYID:" + pubB.getId());
-        
-        List<PublicRole> pubRoles = prRepo.findByParam("public_body_id", "" + pubB.getId());
-        log.info("PUBROLES:" + pubRoles.size());
-        Integer tid;
-        
-        for (PublicRole pr : pubRoles){
-            tid = pr.getTenure_id(); 
-            if (Tools.isActual(tid)){
-                prActual.add(pr);
-            }
-        }
-        
-        return prActual;
-        
-    }
-
-
-
 }

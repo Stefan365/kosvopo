@@ -26,7 +26,7 @@ import sk.stefan.enums.UserType;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.MyRepo;
-import sk.stefan.utils.Tools;
+import sk.stefan.utils.ToolsNazvy;
 import sk.stefan.utils.ToolsDao;
 
 public class UniRepo<T> implements MyRepo<T> {
@@ -115,7 +115,7 @@ public class UniRepo<T> implements MyRepo<T> {
             ResultSet rs;
             rs = st.executeQuery(sql);
             // Notification.show(sql);
-            log.info(sql);
+//            log.info(sql);
             T ent = this.fillEntity(rs);
 
             rs.close();
@@ -247,24 +247,34 @@ public class UniRepo<T> implements MyRepo<T> {
                 zac = false;
 
                 entMetName = ToolsDao.getG_SetterName(pn, "get");
-//                entMethod = clsT.getDeclaredMethod(entMetName);
                 entMethod = clsT.getMethod(entMetName);
 
                 // pokial je entita nova, tj. este nebola ulozena v DB.:
-                String s = "" + entMethod.invoke(ent);
+                String s;
                 Object obj = entMethod.invoke(ent);
-
-//                Doplnit java.sql.date
-                if (entMethod.invoke(ent) != null && "java.util.Date".equals((entMethod.invoke(ent)).getClass().getCanonicalName())) {
-                    s = "'" + ToolsDao.utilDateToString((Date) entMethod.invoke(ent)) + "'";
-                } else if (entMethod.invoke(ent) != null && "java.lang.Boolean".equals((entMethod.invoke(ent)).getClass().getCanonicalName())) {
-                    s = " " + entMethod.invoke(ent) + " ";
+                
+//                log.debug("KAROLKO entMetName:" + entMetName);
+//                log.debug("KAROLKO s:" + s);
+//                log.debug("KAROLKO obj" + obj);
+                
+                
+                if (null == obj){
+                    s = " " + obj + " ";
+                } else if ("java.util.Date".equals(obj.getClass().getCanonicalName())) {
+                    s = "'" + ToolsDao.utilDateToString((Date) obj) + "'";
+                } else if ("java.sql.Date".equals(obj.getClass().getCanonicalName())) {
+                    s = "'" + ToolsDao.sqlDateToString((java.sql.Date) obj) + "'";
+                } 
+                else if ("java.lang.Boolean".equals(obj.getClass().getCanonicalName())) {
+                    s = " " + obj + " ";
                 } else {
-                    if (mapPar.get(pn).getCanonicalName().contains(".enums.")) {
+                    if (obj.getClass().getCanonicalName().contains(".enums.")) {
                         s = "" + ToolsDao.getShortFromEnum(mapPar.get(pn), obj);
+                    } else {
+                        s = "'" + obj + "'";
                     }
-                    s = "'" + s + "'";
                 }
+                
                 if (novy) {
                     insert1.append(pn);
                     insert2.append(s);

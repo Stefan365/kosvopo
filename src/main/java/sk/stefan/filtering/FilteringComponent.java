@@ -32,14 +32,14 @@ public class FilteringComponent extends HorizontalLayout {
 
     private SilentCheckBox locationCHb;
     private FilterComboBox<Location> locationCombo;
-    private FilterListener<Location> locationLr;
+    private FilterTableListener<Location> locationLr;
     private final List<FilterComboBox<?>> locTouchedCombos = new ArrayList<>();
     private final VerticalLayout locationVl = new VerticalLayout();
     
     
     private SilentCheckBox pubBodyCHb;
     private FilterComboBox<PublicBody> pubBodyCombo;
-    private FilterListener<PublicBody> pubBodyLr;
+    private FilterTableListener<PublicBody> pubBodyLr;
     //toto je tu len pro forma, keby sa pridavalo filtrovanie 
     //ktore bude zavisle od PublicBody
     private final List<FilterComboBox<?>> pbTouchedCombos = null;
@@ -47,7 +47,7 @@ public class FilteringComponent extends HorizontalLayout {
     
     private SilentCheckBox pubPersonCHb;
     private FilterComboBox<PublicPerson> pubPersonCombo;
-    private FilterListener<PublicPerson> pubPersonLr;
+    private FilterTableListener<PublicPerson> pubPersonLr;
     private final List<FilterComboBox<?>> ppTouchedCombos = null;
     private final VerticalLayout pubPersonVl = new VerticalLayout();
         
@@ -87,21 +87,21 @@ public class FilteringComponent extends HorizontalLayout {
         
         locTouchedCombos.add(pubBodyCombo);
         
-        locationLr = new FilterListener<>(parentTn, 
+        locationLr = new FilterTableListener<>(parentTn, 
                 Location.TN, 
                 locationCombo, 
                 locationCHb, 
                 sqlContainer, 
                 locTouchedCombos);
 
-        pubBodyLr = new FilterListener<>(parentTn, 
+        pubBodyLr = new FilterTableListener<>(parentTn, 
                 PublicBody.TN, 
                 pubBodyCombo, 
                 pubBodyCHb, 
                 sqlContainer, 
                 pbTouchedCombos);
         
-        pubPersonLr = new FilterListener<>(parentTn, 
+        pubPersonLr = new FilterTableListener<>(parentTn, 
                 PublicPerson.TN, 
                 pubPersonCombo, 
                 pubPersonCHb, 

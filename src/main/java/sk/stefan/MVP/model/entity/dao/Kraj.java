@@ -11,6 +11,8 @@ public class Kraj implements PresentationName {
     private Integer id;
 
     private String kraj_name;
+    
+    private Boolean visible;
 
     //getters:
     public Integer getId() {
@@ -37,6 +39,20 @@ public class Kraj implements PresentationName {
     @Override
     public String getPresentationName() {
         return this.kraj_name;
+    }
+
+    /**
+     * @return the visible
+     */
+    public Boolean getVisible() {
+        return visible;
+    }
+
+    /**
+     * @param visible the visible to set
+     */
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 
 }

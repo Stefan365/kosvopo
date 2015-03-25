@@ -160,7 +160,7 @@ public class K4_PoslanciView extends VerticalLayout implements View {
 
                     tf.setEnabled(false);
 
-                    navigator.navigateTo("kos4");
+                    navigator.navigateTo("A_kos5");
 
                 }
             }

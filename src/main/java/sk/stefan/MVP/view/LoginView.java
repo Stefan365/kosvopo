@@ -28,7 +28,7 @@ import sk.stefan.MVP.view.components.InputOptionGroup;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.enums.UserType;
 import sk.stefan.enums.VoteResult;
-import sk.stefan.utils.Tools;
+import sk.stefan.utils.ToolsNazvy;
 
 /**
  * Třída komponenty pro přihlášení do systému
@@ -81,15 +81,15 @@ public class LoginView extends VerticalLayout implements View {
         formVl.setMargin(true);
         formVl.setSpacing(true);
 
-        this.addComponent(Tools.createPanelCaption("Prihlásenie sa do KOSVOPO5"));
+        this.addComponent(ToolsNazvy.createPanelCaption("Prihlásenie sa do KOSVOPO5"));
         this.addComponent(new Panel(formVl));
         this.setWidth(300, Sizeable.Unit.PIXELS);
     
     }
     private void initFields() {
         // Vytvareni komponent
-        emailTf = Tools.createFormTextField("login", true);
-        passwordPf = Tools.createFormPasswordField("Heslo", true);
+        emailTf = ToolsNazvy.createFormTextField("login", true);
+        passwordPf = ToolsNazvy.createFormPasswordField("Heslo", true);
 
         loginBt = new Button("Prihlásiť", new Button.ClickListener() {
 
@@ -138,7 +138,7 @@ public class LoginView extends VerticalLayout implements View {
             Method getOm = cls.getDeclaredMethod("getOrdinals");
             List<String> names = (List<String>) getNm.invoke(null);
             List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
-            Map<String, Integer> map = Tools.makeEnumMap(names, ordinals);
+            Map<String, Integer> map = ToolsNazvy.makeEnumMap(names, ordinals);
             
             this.userRoleOg = new InputOptionGroup<Integer>(map);
 //            this.userRoleOg.select(UserType.values()[0]);

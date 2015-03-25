@@ -1,12 +1,16 @@
 package sk.stefan.utils;
 
 import com.vaadin.data.Item;
+import com.vaadin.ui.Notification;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,8 +18,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
+import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.filtering.FilterComboBox;
+import sk.stefan.interfaces.Filterable;
 
 public class ToolsDao {
 
@@ -166,12 +176,34 @@ public class ToolsDao {
     }
 
     /**
+     * Metoda sluzi k prevodu java.sqlDate do stringu, ktory je ochotny
+     * spolknout typ MYSQL timestamp.
      *
+     * @param date
+     * @return
+     */
+    public static String sqlDateToString(java.sql.Date date) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date.getTime());
+
+    }
+
+    /**
+     *
+     * @param cls
+     * @param value
+     * @return
      */
     public static Integer getShortFromEnum(Class<?> cls, Object value) {
 
         try {
+
             Method entMethod = cls.getMethod("ordinal");
+//            log.info("KOKSKO1: " + entMethod.getName());
+//            log.info("KOKSKO2: " + value);
+//            log.info("KOKSKO3: " + cls.getCanonicalName());
+
             Integer i = (Integer) entMethod.invoke(value);
             return i;
         } catch (NoSuchMethodException | SecurityException |
@@ -186,36 +218,35 @@ public class ToolsDao {
      *
      * @param clsEnum
      * @param sh
-     * @return 
+     * @return
      */
     public static Object getEnumVal(Class<?> clsEnum, Short sh) {
-        
+
         try {
-            
+
             Method enumMethod = clsEnum.getDeclaredMethod("values");
             Object[] enumVals = (Object[]) (enumMethod.invoke(null));
             Object enumVal = enumVals[sh];
-            
+
             return enumVal;
         } catch (NoSuchMethodException | SecurityException |
                 IllegalArgumentException | InvocationTargetException |
                 IllegalAccessException ex) {
             log.error(ex.getMessage(), ex);
             return null;
-        } 
+        }
     }
-    
-    
+
     /**
-     * Neuniverzalna metoda len pre potreby hlasovania. 
-     * zuniverzalnit v buducnosti.
-     * 
+     * Neuniverzalna metoda len pre potreby hlasovania. zuniverzalnit v
+     * buducnosti.
+     *
      * @param item
      * @param vot
-     * @return 
      */
-    public static void updateVoteItem(Item item, Vote vot){
-        
+    @SuppressWarnings("unchecked")
+    public static void updateVoteItem(Item item, Vote vot) {
+
 //        item.getItemProperty("id").setValue(vot.getId()); //it is read only.
         item.getItemProperty("vote_date").setValue(vot.getVote_date());
         item.getItemProperty("subject_id").setValue(vot.getSubject_id());
@@ -226,8 +257,134 @@ public class ToolsDao {
         item.getItemProperty("refrain_vote").setValue(vot.getRefrain_vote());
         item.getItemProperty("absent").setValue(vot.getAbsent());
         item.getItemProperty("visible").setValue(vot.getVisible());
-        
-        
+
+    }
+
+    /**
+     * Nastavi filter na zdruzeny comboBox.
+     *
+     * @param c
+     * @param touchingTn
+     * @param intVal
+     */
+    public static void addFiltersToTouched(Filterable c, String touchingTn, Integer intVal) {
+
+        String comboTouchedTn = c.getTableName();
+        List<String> hSeq = ToolsFiltering.getHierarchicalSequence(comboTouchedTn, touchingTn);
+        List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
+        List<Integer> idsC = ToolsFiltering.getFinalIds(hASeq, intVal);
+        c.applyFilter(idsC);
+
+    }
+
+    /**
+     * pomocna funkcia.
+     *
+     * @param clsE
+     * @return
+     */
+    public static String getTableName(Class<?> clsE) {
+        try {
+            Field tnFld = clsE.getDeclaredField("TN");
+            String tn = (String) tnFld.get(null);
+
+//            Method getTnMethod = clsE.getDeclaredMethod("getTN");
+//            String Tn = (String) getTnMethod.invoke(null);
+            return tn;
+        } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | 
+                SecurityException e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    /**
+     * pomocna funkcia.
+     *
+     * @param clsE
+     * @return
+     */
+    public static String getTitleName(Class<?> clsE) {
+        try {
+            Field tnFld = clsE.getDeclaredField("PRES_NAME");
+            String title = (String) tnFld.get(null);
+            return title;
+        } catch (IllegalAccessException | IllegalArgumentException |
+                NoSuchFieldException | SecurityException e) {
+//            Notification.show("");
+            log.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    /**
+     * @param cls
+     * @return
+     */
+    public static Map<String, Integer> findAllByClass(Class<?> cls) {
+        Map<String, Integer> map = new HashMap<>();
+        String repN;
+        Integer id;
+        try {
+            Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
+            Constructor<UniRepo<? extends Object>> repoCtor;
+            repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
+            List<? extends Object> listObj;
+            listObj = repoCtor.newInstance(cls).findAll();
+            for (Object o : listObj) {
+                Method getRepNameMethod = cls.getMethod("getPresentationName");
+                repN = (String) getRepNameMethod.invoke(o);
+                Method getIdMethod = cls.getMethod("getId");
+                id = (Integer) getIdMethod.invoke(o);
+                map.put(repN, id);
+            }
+            return map;
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalArgumentException | IllegalAccessException | InstantiationException | SecurityException | ClassNotFoundException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+        return null;
+    }
+
+    /**
+     * Kontroluje, ci je volebne obdobie aktualne.
+     *
+     * @param tenure_id
+     * @return
+     */
+    public static Boolean isActual(Integer tenure_id) {
+        UniRepo<Tenure> tenRepo = new UniRepo<>(Tenure.class);
+        Tenure ten = tenRepo.findOne(tenure_id);
+        if (ten != null) {
+            Long today = (new Date()).getTime();
+            Long since = ten.getSince().getTime();
+            if (since <= today && (ten.getTill() == null || ten.getTill().getTime() >= today)) {
+                return Boolean.TRUE;
+            } else {
+                return Boolean.FALSE;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Vrati verejne role, ktore aktualne patria do verejneho organu.
+     *
+     * @param pubB
+     * @return
+     */
+    public static List<PublicRole> getActualPublicRoles(PublicBody pubB) {
+
+        List<PublicRole> prActual = new ArrayList<>();
+        UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
+        List<PublicRole> pubRoles = prRepo.findByParam("public_body_id", "" + pubB.getId());
+        Integer tid;
+        for (PublicRole pr : pubRoles) {
+            tid = pr.getTenure_id();
+            if (ToolsDao.isActual(tid)) {
+                prActual.add(pr);
+            }
+        }
+        return prActual;
     }
 
 }

@@ -5,8 +5,10 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
+import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.enums.VoteAction;
 
 /**
@@ -20,24 +22,26 @@ public class PritomnyComponent extends HorizontalLayout {
     private OptionGroup decisionOg;
 
 //    private final PublicRole pubRole;
-    private final Vote vote;
+//    private final Vote vote;
     private final VoteOfRole voteOfRole;
     private VoteAction decision;
 
-//    private final UniRepo<VoteOfRole> vorRepo;
+    private final UniRepo<PublicRole> prRepo;
     
+    private final PritomniLayout listener; 
     //0. konstruktor
     /**
      * @param vor
      * @param hlas
+     * @param lisnr
      */
-    public PritomnyComponent(VoteOfRole vor, Vote hlas) {
+    public PritomnyComponent(VoteOfRole vor, PritomniLayout lisnr) {
 //    public PritomnyComponent(VoteOfRole vor) {
 
-//        vorRepo = new UniRepo<>(VoteOfRole.class);
-        
+        prRepo = new UniRepo<>(PublicRole.class);
+        this.listener = lisnr;
 //        this.pubRole = pr;
-        this.vote = hlas;
+//        this.vote = hlas;
         this.voteOfRole = vor;
 //        this.hlasovanieVerOs.setPublic_role_id(pr.getId());
 //        this.hlasovanieVerOs.setVote_id(hlas.getId());
@@ -81,7 +85,8 @@ public class PritomnyComponent extends HorizontalLayout {
 
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
-                voteOfRole.setDecision((VoteAction) event.getProperty().getValue());
+               voteOfRole.setDecision((VoteAction) event.getProperty().getValue());
+               listener.updateResult();
             }
         });
 
@@ -109,7 +114,10 @@ public class PritomnyComponent extends HorizontalLayout {
 
     private void initLabel() {
         
-//        presentLb = new Label(this.hlasovanieVerOs.getpubRole.getPresentationName2());
+        Integer prId = this.voteOfRole.getPublic_role_id();
+        PublicRole prole = prRepo.findOne(prId);
+        
+        presentLb = new Label(prole.getPresentationName2());
 
     }
     
@@ -144,11 +152,8 @@ public class PritomnyComponent extends HorizontalLayout {
 //        return pubRole;
 //    }
 
-    /**
-     * @return the hlasovanie
-     */
-    public Vote getHlasovanie() {
-        return vote;
-    }
+//    public Vote getHlasovanie() {
+//        return vote;
+//    }
 
 }

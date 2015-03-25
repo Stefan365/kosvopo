@@ -9,10 +9,8 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +30,7 @@ import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.listeners.InputButClickListener;
+import sk.stefan.listeners.InputVoteButClickListener;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.wrappers.InputFormWrapper;
@@ -84,7 +83,7 @@ public class InputAllView extends VerticalLayout implements View {
 
         this.initMap();
         this.initButtons();
-        
+
         this.addComponent(NavigationComponent.getNavComp());
     }
 
@@ -143,22 +142,30 @@ public class InputAllView extends VerticalLayout implements View {
         hodnoteniaLy.addComponent(hodLb);
         hodnoteniaLy.addComponent(personClass1Bt);
         hodnoteniaLy.addComponent(voteClass5Bt);
-        
+
         this.addComponent(mainLayout);
 
     }
-
 
     /**
      * inicializacia tlacitiek:
      */
     private void initButtons() {
-
+        String s;
         for (Button b : allButtonsMap.keySet()) {
             InputFormWrapper<? extends Object> wr = allButtonsMap.get(b);
 
             b.setCaption(wr.getButtonName());
-            b.addClickListener(new InputButClickListener(wr.getClsE(), wr.getButtonName()));
+//            log.info("MENO: " + wr.getButtonName());
+            if ((Vote.class).equals(wr.getClsE())) {
+//                log.info("LSTENER1: " + wr.getClsE().getCanonicalName());
+                s = wr.getButtonName();
+                b.addClickListener(new InputVoteButClickListener(s));
+            } else {
+//                log.info("LSTENER2: " + wr.getClsE().getCanonicalName());
+                b.addClickListener(new InputButClickListener(wr.getClsE(), wr.getButtonName()));
+            }
+
         }
     }
 
@@ -166,44 +173,5 @@ public class InputAllView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
     }
-
-//    //skuska
-//    private void skusaj() {
-//
-//        this.skuskaBt.addClickListener(new MyCLickListener("Karol"));
-//        this.skuskaBt.addClickListener(new MyCLickListener("Peter"));
-//        this.skuskaBt.addClickListener(new MyCLickListener("Pavol"));
-//
-//        this.addComponent(skuskaBt);
-//
-//    }
-
-//    private class MyCLickListener implements ClickListener {
-//
-//        private static final long serialVersionUID = 1L;
-//        private final String val;
-//
-//        public MyCLickListener(String value) {
-//            val = value;
-//        }
-//
-//        @Override
-//        public void buttonClick(Button.ClickEvent event) {
-//            Notification.show(val);
-//        }
-//
-//    }
-
-//    @Override
-//    public void doOkAction() {
-//        //do nothing. to je tu len kvoli tomu, ze kazda komponenta, z ktorej vyskakuje okno 
-//        //musi tieto listenery implementovat, kvoli univerzalnosti.
-//    }
-//
-//    @Override
-//    public void doCancelAction() {
-//        //do nothing. to je tu len kvoli tomu, ze kazda komponenta, z ktorej vyskakuje okno 
-//        //musi tieto listenery implementovat, kvoli univerzalnosti.
-//    }
 
 }

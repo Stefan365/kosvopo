@@ -12,11 +12,13 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.themes.ValoTheme;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,15 +33,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.PublicBody;
-import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.view.converters.DateConverter;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
-import sk.stefan.utils.Tools;
+import sk.stefan.utils.ToolsNazvy;
 import sk.stefan.utils.ToolsDao;
 
 /**
@@ -67,9 +66,6 @@ public class InputFormLayout<T> extends FormLayout {
     private OkCancelListener okCancelListener;
     private ObnovFilterListener obnovFilterListener;
 
-    /**
-     * SQLcontainer, na kterém je postavena tabulka s úkoly.
-     */
     private final SQLContainer sqlContainer;
 
     /**
@@ -102,7 +98,7 @@ public class InputFormLayout<T> extends FormLayout {
      */
     private Object itemId;
 
-    private String Tn;
+    private String tn;
 
     /**
      * Layout, kde budou zobrazeny interaktivní komponenty všechny kromě
@@ -124,6 +120,8 @@ public class InputFormLayout<T> extends FormLayout {
      * Tlacitka, ktore nemaju ist do formulara.
      */
     private final List<String> nonEditFn;
+    
+    private final Label titleLb;
 
     //0.
     /**
@@ -140,14 +138,15 @@ public class InputFormLayout<T> extends FormLayout {
     public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont,
             Component cp, List<String> nEditFn) {
 
+        //titul:
+        String title = ToolsDao.getTitleName(clsT);
+        this.titleLb = new Label(title);
+        titleLb.setStyleName(ValoTheme.LABEL_BOLD);
+
+//        this.addComponent(titleLb);
+
         this.cp = cp;
-        try {
-            Method getTnMethod = clsT.getDeclaredMethod("getTN");
-            Tn = (String) getTnMethod.invoke(null);
-        } catch (IllegalAccessException | IllegalArgumentException |
-                InvocationTargetException | NoSuchMethodException e) {
-            log.error(e.getMessage());
-        }
+        tn = ToolsDao.getTableName(clsT);
 
         if (nEditFn == null) {
             this.nonEditFn = new ArrayList<>();
@@ -170,24 +169,6 @@ public class InputFormLayout<T> extends FormLayout {
             isNew = false;
         }
         
-
-//        if (item == null) {
-//            isNew = true;
-//            sqlContainer.removeAllContainerFilters();
-//            itemId = sqlContainer.addItem();
-//            this.item = sqlContainer.getItem(itemId);
-//            //sqlContainer.getItem(itemId).getItemProperty("title").setValue("název...");
-//            log.info("TABLENAME:" + Tn);
-//            if(sqlContainer.getItem(itemId).getItemProperty("visible") != null){
-//                sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.TRUE);
-//            }
-//            if(obnovFilterListener!= null){
-//                obnovFilterListener.obnovFilter();
-//            }
-//            
-//        } else {
-//            isNew = false;
-//        }
         fg.setItemDataSource(this.item);
         
         this.initFieldsLayout();
@@ -204,7 +185,6 @@ public class InputFormLayout<T> extends FormLayout {
      * Long, String(TextArea/TextField), Boolean(CheckBox), Date(DateField),
      * enum(ComboBox, SelectList, TwinColSelect...)).
      *
-     * @throws java.io.IOException
      */
     @SuppressWarnings("unchecked")
     public void initFieldsLayout() {
@@ -218,7 +198,7 @@ public class InputFormLayout<T> extends FormLayout {
         Map<String, Class<?>> mapPar = new HashMap<>();
         try {
             try {
-                mapPar = Tools.getTypParametrov(clsT);
+                mapPar = ToolsNazvy.getTypParametrov(clsT);
             } catch (NoSuchFieldException ex) {
                 log.error(ex.getMessage(), ex);
             }
@@ -228,7 +208,9 @@ public class InputFormLayout<T> extends FormLayout {
             return;
         }
 
+        //vyber vhodnych komponent do form layoutu:
         for (String pn : mapPar.keySet()) {
+            
             if (nonEditFn.contains(pn)) {
                 continue;
             }
@@ -239,15 +221,14 @@ public class InputFormLayout<T> extends FormLayout {
                     if (pn.contains("_id")) {
                             //POZN: parametry POJO by se meli jmenovat stejne ako
                         // stloupce tabulky a identifikator by se mel jmenovat jen 'id'..
-//                        InputNewComboBox<T> cb; - does not work;
                         InputNewComboBox<?> cb;
-                        cb = new InputNewComboBox<>(fg, pn, clsT);
-//                      
-//                        Class<?> cls = Tools.getClassFromName(pn);
-//                        Map<String, Integer> map = Tools.findAllByClass(cls);
-//                        InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
-//                        cb.setValue(itemId);
-//
+                        Class<?> cls = ToolsNazvy.getClassFromName(pn);
+//                        log.info("KOKOS1 clsT: "+clsT);
+//                        log.info("KOKOS2 cls: "+cls);
+//                        log.info("KOKOS3 pn: "+pn);
+                        
+                        cb = new InputNewComboBox<>(fg, pn, cls);
+                        
                         fieldMap.put(pn, cb);
                     } else {
                         Component fi = bindTextField(pn);
@@ -326,7 +307,7 @@ public class InputFormLayout<T> extends FormLayout {
 
                         List<String> names = (List<String>) getNm.invoke(null);
                         List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
-                        Map<String, Integer> map = Tools.makeEnumMap(names, ordinals);
+                        Map<String, Integer> map = ToolsNazvy.makeEnumMap(names, ordinals);
 
                         InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
                         
@@ -370,26 +351,31 @@ public class InputFormLayout<T> extends FormLayout {
     private void completeForm() throws IOException {
 
         String key;
-        Properties proPoradie = Tools.getPoradieParams(Tn);
-        Properties proDepict = Tools.getDepictParams(Tn);
+        Properties proPoradie = ToolsNazvy.getPoradieParams(tn);
+        Properties proDepict = ToolsNazvy.getDepictParams(tn);
 
 //        if ("t_tenure".equals(Tn)) {
-        for (String s : proDepict.stringPropertyNames()) {
-            log.info("ZOBRAZ:*" + s + "* : *" + proDepict.getProperty(s) + "*");
-        }
-        for (String s : proPoradie.stringPropertyNames()) {
-            log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
-        }
-
-        log.info("TN:" + Tn);
-        log.info("SIZE PORADIE:" + proPoradie.size());
-        log.info("SIZE DEPICT:" + proDepict.size());
+//        for (String s : proDepict.stringPropertyNames()) {
+//            log.info("ZOBRAZ:*" + s + "* : *" + proDepict.getProperty(s) + "*");
+//        }
+//        for (String s : proPoradie.stringPropertyNames()) {
+//            log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
+//        }
+//
+//        log.info("TN:" + tn);
+//        log.info("SIZE PORADIE:" + proPoradie.size());
+//        log.info("SIZE DEPICT:" + proDepict.size());
 //        }
         for (int i = 1; i < proPoradie.size(); i++) {
+            
             key = proPoradie.getProperty("" + i);
-            log.info("KEY: *" + key + "*");
+            if (nonEditFn.contains(key)){
+                continue;
+            }
+            
+//            log.info("KEY: *" + key + "*");
             String cap = proDepict.getProperty(key);
-            log.info("CAP: *" + cap + "*");
+//            log.info("CAP: *" + cap + "*");
             (fieldMap.get(key)).setCaption(cap);
             fieldsFL.addComponent(fieldMap.get(key));
         }
@@ -531,9 +517,25 @@ public class InputFormLayout<T> extends FormLayout {
 
                 // ulozenie zmien do DB:
                 try {
+                    Object ids = itemId;
+                    Item ite = item;
                     sqlContainer.commit();
+                    itemId = sqlContainer.lastItemId();
+                    item = sqlContainer.getItem(itemId);
+//                    toto je slabe miesto celeho systemu
+//                    tento drbnuty sqlcontainer po ulozeni neumoznuje 
+//                    vystopovat ktory item bol zmeneny, 
+//                    pretoze zavola metodu clear(), ktora vsetky stopy po itemoch vymaze.
+//                    tj. prave to, co je potrebne na zistenie id, ktore priradila databaza.
+//                        ked vtacka lapaju pekne mu spievaju
+//                    Kedze nastastie tento sqlcontainer pracuje len s 1 polozkou,
+//                    lastItemId() fungovat bude.
+//                    log.info("KOKOSKO ITEMID: " +  (itemId == ids));
+//                    log.info("KOKOSKO ITEM: " +  (item == ite));
+
+                    
                     fieldsFL.setEnabled(false);
-                    fg.setEnabled(false);
+                    getFg().setEnabled(false);
                     editBt.setEnabled(true);
                     saveBt.setEnabled(false);
 
@@ -560,7 +562,7 @@ public class InputFormLayout<T> extends FormLayout {
 //                if (isNew) {
 //                    sqlContainer.removeItem(itemId);
 //                }
-                fg.setEnabled(true);
+                getFg().setEnabled(true);
                 fieldsFL.setEnabled(true);
 
                 editBt.setEnabled(false);
@@ -659,6 +661,25 @@ public class InputFormLayout<T> extends FormLayout {
 
     public Item getItem() {
         return item;
+    }
+    
+    public Object getItemId() {
+        return itemId;
+    }
+
+
+    /**
+     * @return the fg
+     */
+    public FieldGroup getFg() {
+        return fg;
+    }
+
+    /**
+     * @return the sqlContainer
+     */
+    public SQLContainer getSqlContainer() {
+        return sqlContainer;
     }
 
 }

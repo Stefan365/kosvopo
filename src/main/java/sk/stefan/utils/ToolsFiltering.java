@@ -97,7 +97,7 @@ public class ToolsFiltering {
                 }
 //                log.info("PRED NEXT HIER LAYER: " + posledny);
                 pom = getNextHierarchLayer(posledny);
-                int f = 0;
+//                int f = 0;
 
 //                if ("t_public_body".equals(posledny)) {
 //                    log.info("ANO SOM TU: " + pom.size());
@@ -315,7 +315,7 @@ public class ToolsFiltering {
 
         StringBuilder sql = new StringBuilder();
 
-        log.info("HS SIZE:" + hs.size());
+//        log.info("HS SIZE:" + hs.size());
         String tn, br;
         int size = hs.size();
 

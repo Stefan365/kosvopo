@@ -8,26 +8,25 @@ package sk.stefan.MVP.model.entity.dao;
 import java.io.IOException;
 import java.util.Date;
 import org.apache.log4j.Logger;
-import static sk.stefan.MVP.model.entity.dao.Kraj.TN;
 import sk.stefan.interfaces.PresentationName;
-import sk.stefan.utils.Tools;
+import sk.stefan.utils.ToolsNazvy;
 
 /**
  * reprezentuje dokumnet.
  *
  * @author stefan
  */
-public class Document  implements PresentationName {
-    
-    private static final Logger log = Logger.getLogger(Document.class);
-    
-    private static final String TN = "t_document";
-    
-    private static final String PRES_NAME = "Dokument";
+public class Document implements PresentationName {
 
-    
-    public Document(){
+    private static final Logger log = Logger.getLogger(Document.class);
+
+    public static final String TN = "t_document";
+
+    public static final String PRES_NAME = "Dokument";
+
+    public Document() {
     }
+
     /**
      * @return the TN
      */
@@ -45,16 +44,15 @@ public class Document  implements PresentationName {
     private Integer id;
 
     private String table_name;
-    
+
     private Integer table_row_id;
-    
+
     private Date upload_date;
 
     private String link;
-    
+
     private Boolean visible;
 
-    
     public Integer getId() {
         return id;
     }
@@ -105,13 +103,10 @@ public class Document  implements PresentationName {
 
     @Override
     public String getPresentationName() {
-        try {
-            String tn = Tools.getTableDepictNames(table_name);
-            return tn + "-" + this.id;
-        } catch (IOException ex) {
-            log.error(ex.getMessage(),ex);
-            return null;
-        }
+        
+        String tn = ToolsNazvy.getTableDepictNames(table_name);
+        return tn + "-" + this.id;
+        
     }
-    
+
 }

@@ -5,6 +5,7 @@
  */
 package sk.stefan.listeners;
 
+import com.vaadin.data.Item;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
@@ -32,6 +33,9 @@ public class InputButClickListener implements Button.ClickListener {
     private SQLContainer sqlCont;
     private UniDlg tdlg;
     private String tn;
+    private Object itemId;
+    private Item item;
+    
 
 //    public InputButClickListener(Class<?> cls, String title, InputAllView iaw) {
     public InputButClickListener(Class<?> cls, String title) {
@@ -52,7 +56,9 @@ public class InputButClickListener implements Button.ClickListener {
             tn = (String) tnFld.get(null);
             sqlCont = DoDBconn.getContainer(tn);
             InputFormLayout<? extends Object> inputFl;
-            inputFl = new InputFormLayout<>(cls, null, sqlCont, null, null);
+            itemId = sqlCont.addItem();
+            item = sqlCont.getItem(itemId);
+            inputFl = new InputFormLayout<>(cls, item, sqlCont, null, null);
             tdlg = new UniDlg("Nový " + title, inputFl);
             
             UI.getCurrent().addWindow(tdlg);

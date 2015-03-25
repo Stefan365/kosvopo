@@ -74,7 +74,7 @@ public class UniDlg extends Window implements OkCancelListener {
      * @param votingLy
      * @param caption
      */
-    public UniDlg(VotingLayout votingLy, String caption) {
+    public UniDlg(String caption, VotingLayout votingLy) {
         
         this.setCaption(caption);
         votingLy.setWindowOkCancelListener(this);

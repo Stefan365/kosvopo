@@ -8,9 +8,9 @@ import sk.stefan.interfaces.PresentationName;
 
 public class Vote implements PresentationName {
 
-    private static final String TN = "t_vote";
+    public static final String TN = "t_vote";
 
-    private static final String PRES_NAME = "Hlasovanie";
+    public static final String PRES_NAME = "Hlasovanie";
 
     /**
      * @return the PRES_NAME

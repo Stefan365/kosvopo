@@ -45,7 +45,7 @@ import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.enums.Stability;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.interfaces.PresentationName;
-import sk.stefan.utils.Tools;
+import sk.stefan.utils.ToolsNazvy;
 import sk.stefan.utils.ToolsDao;
 
 public class Skuska1<T> {
@@ -73,8 +73,11 @@ public class Skuska1<T> {
 
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
-        
-        sk.skusItem();
+
+        sk.skusPole();
+//        sk.skusSqlDate();
+
+//        sk.skusItem();
 //        sk.skusA();
 //
 //        log.info("CLASS:*" + VoteClassification.class.getCanonicalName()+"*");
@@ -86,7 +89,6 @@ public class Skuska1<T> {
 //        log.info("VOTE: " + v.getPresentationName());
 //        
 //        
-
 //        sk.skusDeclaredVsmethod();
 //        sk.skusShortFromEnum();
 //        sk.skusEnumFromShort();
@@ -754,16 +756,13 @@ public class Skuska1<T> {
      *
      */
     public void skusDepict() {
-        try {
-            Properties pro = Tools.getDepictParams("t_vote");//.getProperty(key);
-            for (String s : pro.stringPropertyNames()) {
-                log.info(s + " : " + pro.getProperty(s));
+        
+        Properties pro = ToolsNazvy.getDepictParams("t_vote");//.getProperty(key);
+        for (String s : pro.stringPropertyNames()) {
+            log.info(s + " : " + pro.getProperty(s));
 
-            }
-
-        } catch (IOException ex) {
-            log.error(ex);
         }
+
     }
 
     public void optionSelect() {
@@ -1033,26 +1032,58 @@ public class Skuska1<T> {
     }
 
     private void skusItem() {
-        
+
         UniRepo<Vote> votRepo = new UniRepo<>(Vote.class);
-        
+
         try {
             String tn = "t_vote";
             SQLContainer sqlCont = DoDBconn.getContainer(tn);
 
             Object itemId = sqlCont.addItem();
             Item item = sqlCont.getItem(itemId);
-            
+
             Vote vot = votRepo.findOne(4);
-            
+
             ToolsDao.updateVoteItem(item, vot);
-            
+
             sqlCont.commit();
-            
+
         } catch (SQLException ex) {
-            log.error(ex.getMessage(),ex);
+            log.error(ex.getMessage(), ex);
         }
 
+    }
+
+    private void skusSqlDate() {
+        Date d = new Date();
+        java.sql.Date dateA = new java.sql.Date(d.getTime());
+
+        String s = ToolsDao.sqlDateToString(dateA);
+
+        log.debug("DATE:*" + s + "*");
+    }
+    
+    private void skusPole (){
+        
+        String[] uneditCol = new String[]{"c", "a", "b"};
+        List<String> ne = Arrays.asList(uneditCol);
+        for (String s: ne){
+            log.debug("NAME: " + s);
+        }
+        
+//        String[] stockArr = new String[ne.size()];
+        String[] stockArr = ne.toArray(uneditCol);
+        
+        for (String s: stockArr){
+            log.debug("NAME ARRAY: " + s);
+        
+            
+        }
+        
+        
+        
+        
+        
     }
 
 }

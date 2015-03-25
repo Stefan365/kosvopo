@@ -13,7 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
-import sk.stefan.utils.Tools;
+import sk.stefan.interfaces.Filterable;
+import sk.stefan.utils.ToolsNazvy;
+import sk.stefan.utils.ToolsDao;
 
 /**
  * Combobox, ktory ma schopnost transformovat presentation type (tj. String - to
@@ -26,12 +28,11 @@ import sk.stefan.utils.Tools;
  * @author stefan
  * @param <E> třída, představitelé které, se mají v comboBoxu zobrazit.
  */
-public final class InputNewComboBox<E> extends ComboBox {
+public final class InputNewComboBox<E> extends ComboBox implements Filterable {
 
     private static final long serialVersionUID = 1234324324L;
 
     private static final Logger log = Logger.getLogger(InputComboBox.class);
-
 
     /**
      * Název comboBoxu, je zhodný s názvem proměnné(property), která je typu E.
@@ -48,7 +49,6 @@ public final class InputNewComboBox<E> extends ComboBox {
 
     private Map<String, Integer> map;
 
-
     //0.
     /**
      *
@@ -61,20 +61,19 @@ public final class InputNewComboBox<E> extends ComboBox {
     public InputNewComboBox(FieldGroup fg, String fn, Class<E> cls) {
 
         super(fn);
-        
+
         this.fn = fn;
         this.fg = fg;
         this.clsE = cls;
-        this.mapAll = Tools.findAllByClass(clsE);
+        this.mapAll = ToolsDao.findAllByClass(clsE);
         this.map = mapAll;
-        
+
         this.involveFg();
-        
+
         this.initCombo();
         this.initComboValues(map, getInitVal());
-        
-    }
 
+    }
 
     //1.
     /**
@@ -96,7 +95,7 @@ public final class InputNewComboBox<E> extends ComboBox {
      *
      */
     public void initCombo() {
-        
+
         this.setImmediate(true);
         this.setNewItemsAllowed(false);
         this.setNullSelectionAllowed(false);
@@ -109,24 +108,22 @@ public final class InputNewComboBox<E> extends ComboBox {
      * již jsou hodnoty známy, nastaví je jako výchozí hodnoty.
      */
     private Integer getInitVal() {
-        
+
         //pociatocna hodnota:
         Integer val = 1;//null - prednastavenie hodnoty.
-        
+
         if (fg.getItemDataSource() != null) {
             Item item = fg.getItemDataSource();
             Property<?> prop = item.getItemProperty(fn);
             if (prop.getValue() != null) {
-                val = (Integer)prop.getValue();
+                val = (Integer) prop.getValue();
             } else {
                 //do nothing;
             }
         }
         return val;
     }
-    
-    
-    
+
     //6.
     /**
      * Inicializuje hodnoty v comboboxe:
@@ -134,56 +131,74 @@ public final class InputNewComboBox<E> extends ComboBox {
     private void initComboValues(Map<String, Integer> mapa, Integer val) {
 
         this.removeAllItems();
-        
+
         if (mapa != null) {
             for (String key : mapa.keySet()) {
                 this.addItem(mapa.get(key));
                 this.setItemCaption(mapa.get(key), key);
             }
+            if (mapa.values() != null && mapa.values().contains(val)) {
+                this.setValue(val);
+            }
+        } else {
+//            this.setValue(x);
+            //pokial je to not null, tak vloz inicializacnu hodnotu
         }
-        this.setValue(val);
-        
     }
 
-    
     // 5.
     /**
      * Slouzi na novyh hodnot ve vyberu.
      *
      * @param newIds
      */
-    public void setNewValues(List<Integer> newIds) {
+    private void setNewValues(List<Integer> newIds) {
 
-        Map<String, Integer> newMap = new HashMap<>();
+        
         //pre uchovanie tej istej entity
         Integer val = (Integer) this.getValue();
         if (val == null) {
-            val = 1;
+            //val = 1; nastavit hodnotu pre not null polozky, neskvor komplexne vyriesit.
         }
 
-        //tvorba novej mapy.
-        for (Map.Entry<String, Integer> e : mapAll.entrySet()) {
-            if (newIds.contains(e.getValue())) {
-                newMap.put(e.getKey(), e.getValue());
+        if (newIds != null) {
+            Map<String, Integer> newMap = new HashMap<>();
+
+            //tvorba novej mapy.
+            for (Map.Entry<String, Integer> e : mapAll.entrySet()) {
+                if (newIds.contains(e.getValue())) {
+                    newMap.put(e.getKey(), e.getValue());
+                }
             }
+            this.map = newMap;
+        } else {
+            this.map = mapAll;
         }
-        this.map = newMap;
         
-        this.initComboValues(map, val);
-
-    }
-    
-    public void setNewValues() {
-        
-        Integer val = (Integer) this.getValue();
-        if (val == null) {
-            val = 1;
-        }
         //zatial staci takto, keby dany combobox bol spolocny pre rozne filtre,
         //museli by sa vytvorit separatne mapy, ktore by sa aplikovali a deaplikovali.
         //napr. skrz map collector: tj. tiedu ktorej instancia by patrila 
         //do danej skupiny(podla retazca zavislosti) a na ktoru by mali odkaz comboboxy dotknute.
-        this.initComboValues(mapAll , val);
+        this.initComboValues(map, val);
+
+    }
+
+    /**
+     * pomocna funkcia.
+     *
+     * @return
+     */
+    @Override
+    public String getTableName() {
+        
+        return ToolsDao.getTableName(clsE);
+        
+    }
+
+
+    @Override
+    public void applyFilter(List<Integer> ids) {
+        this.setNewValues(ids);
     }
 
 }

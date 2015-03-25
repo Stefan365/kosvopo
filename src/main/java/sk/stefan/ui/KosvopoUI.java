@@ -32,7 +32,7 @@ import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
 import sk.stefan.MVP.view.VstupniView;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.enums.NonEditableFields;
-import sk.stefan.utils.Tools;
+import sk.stefan.utils.ToolsNazvy;
 
 @com.vaadin.annotations.Theme("mytheme")
 //@com.vaadin.annotations.Theme("mytheme1")
@@ -72,37 +72,37 @@ public class KosvopoUI extends UI {
         navigator.addView("vstupny", new VstupniView());
         navigator.addView("homo", new HomoView());
 
-        navigator.addView(Tools.decapit(A_User.TN),
+        navigator.addView(ToolsNazvy.decapit(A_User.TN),
                 new UniEditableTableView<>(A_User.class, NonEditableFields.A_USER.getNonEditableParams()));
-        navigator.addView(Tools.decapit(Okres.TN),
+        navigator.addView(ToolsNazvy.decapit(Okres.TN),
                 new UniEditableTableView<>(Okres.class, NonEditableFields.OKRES.getNonEditableParams()));
-        navigator.addView(Tools.decapit(Kraj.TN),
+        navigator.addView(ToolsNazvy.decapit(Kraj.TN),
                 new UniEditableTableView<>(Kraj.class, NonEditableFields.KRAJ.getNonEditableParams()));
-        navigator.addView(Tools.decapit(Location.TN),
+        navigator.addView(ToolsNazvy.decapit(Location.TN),
                 new UniEditableTableView<>(Location.class, NonEditableFields.LOCATION.getNonEditableParams()));
-        navigator.addView(Tools.decapit(PersonClassification.TN),
+        navigator.addView(ToolsNazvy.decapit(PersonClassification.TN),
                 new UniEditableTableView<>(PersonClassification.class, NonEditableFields.PERSON_CLASS.getNonEditableParams()));
-        navigator.addView(Tools.decapit(PublicBody.TN),
+        navigator.addView(ToolsNazvy.decapit(PublicBody.TN),
                 new UniEditableTableView<>(PublicBody.class, NonEditableFields.PUBLIC_BODY.getNonEditableParams()));
-        navigator.addView(Tools.decapit(PublicPerson.TN),
+        navigator.addView(ToolsNazvy.decapit(PublicPerson.TN),
                 new UniEditableTableView<>(PublicPerson.class, NonEditableFields.PUBLIC_PERSON.getNonEditableParams()));
-        navigator.addView(Tools.decapit(PublicRole.TN),
+        navigator.addView(ToolsNazvy.decapit(PublicRole.TN),
                 new UniEditableTableView<>(PublicRole.class, NonEditableFields.PUBLIC_ROLE.getNonEditableParams()));
-        navigator.addView(Tools.decapit(A_Role.TN),
+        navigator.addView(ToolsNazvy.decapit(A_Role.TN),
                 new UniEditableTableView<>(A_Role.class, NonEditableFields.A_ROLE.getNonEditableParams()));
-        navigator.addView(Tools.decapit(Subject.TN),
+        navigator.addView(ToolsNazvy.decapit(Subject.TN),
                 new UniEditableTableView<>(Subject.class, NonEditableFields.SUBJECT.getNonEditableParams()));
-        navigator.addView(Tools.decapit(Tenure.TN),
+        navigator.addView(ToolsNazvy.decapit(Tenure.TN),
                 new UniEditableTableView<>(Tenure.class, NonEditableFields.TENURE.getNonEditableParams()));
-        navigator.addView(Tools.decapit(Theme.TN),
+        navigator.addView(ToolsNazvy.decapit(Theme.TN),
                 new UniEditableTableView<>(Theme.class, NonEditableFields.THEME.getNonEditableParams()));
-        navigator.addView(Tools.decapit(A_UserRole.TN),
+        navigator.addView(ToolsNazvy.decapit(A_UserRole.TN),
                 new UniEditableTableView<>(A_UserRole.class, NonEditableFields.A_USER_ROLE.getNonEditableParams()));
-        navigator.addView(Tools.decapit(Vote.getTN()),
+        navigator.addView(ToolsNazvy.decapit(Vote.getTN()),
                 new UniEditableTableView<>(Vote.class, NonEditableFields.VOTE.getNonEditableParams()));
-        navigator.addView(Tools.decapit(VoteClassification.TN),
+        navigator.addView(ToolsNazvy.decapit(VoteClassification.TN),
                 new UniEditableTableView<>(VoteClassification.class, NonEditableFields.VOTE_CLASS.getNonEditableParams()));
-        navigator.addView(Tools.decapit(VoteOfRole.TN),
+        navigator.addView(ToolsNazvy.decapit(VoteOfRole.TN),
                 new UniEditableTableView<>(VoteOfRole.class, NonEditableFields.VOTE_OF_ROLE.getNonEditableParams()));
 
         navigator.addView("adminview1", new AdministrationView(navigator));

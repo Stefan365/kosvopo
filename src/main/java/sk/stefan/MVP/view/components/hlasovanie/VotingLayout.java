@@ -5,47 +5,67 @@
  */
 package sk.stefan.MVP.view.components.hlasovanie;
 
-import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.ComboBox;
+import com.vaadin.data.Item;
+import com.vaadin.data.util.sqlcontainer.SQLContainer;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowire;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vaadin.ui.themes.ValoTheme;
+import java.lang.reflect.Field;
+import java.sql.SQLException;
+import org.apache.log4j.Logger;
+import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.MVP.view.components.InputComboBox;
-import sk.stefan.MVP.view.components.InputFormLayout;
-import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.components.UniDlg;
 import sk.stefan.MVP.view.components.hlasovanie.PritomniLayout;
+import sk.stefan.filtering.FilterComboBox;
+import sk.stefan.filtering.FilterVoteListener;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
-import sk.stefan.utils.Tools;
 
 /**
- * Layout, ktory zahrnuje vsetky komponenty tykajuce sa vyplnovania noveho hlasovania.
+ * Layout, ktory zahrnuje vsetky komponenty tykajuce sa vyplnovania noveho
+ * hlasovania.
  *
  * @author stefan
  */
-public class VotingLayout extends VerticalLayout implements OkCancelListener, ObnovFilterListener {
+public class VotingLayout extends HorizontalLayout implements OkCancelListener, ObnovFilterListener {
+
+    private final GridLayout mainLayout = new GridLayout(3, 2);
+    
+    private final Label comboLb = new Label("Verejný orgán");
+    private final Label voteInputLb = new Label("Hlasovanie");
+    private final Label pritomniLb = new Label("Hlasovanie poslancov");
 
     private static final long serialVersionUID = 1L;
 
+    private static final Logger log = Logger.getLogger(VotingLayout.class);
+
 //    HLAVNE KOMPONENTY:
-    private InputComboBox<Integer> pubBodycCb;
-    private InputFormLayout<Vote> voteFormLy;
+    private final FilterComboBox<PublicBody> pubBodycCb;
+    private final InputVoteFormLayout<Vote> voteInputFormLy;
     private final PritomniLayout pritomniLy;
+
+//    private final VerticalLayout comboLy;
+    
+    
+    
+    
+    
 
 //    hlavne entity:
     private PublicBody pubBody;
     private Vote vote;
+    private SQLContainer sqlCont;
+    private String tn;
+    private final Object itemId;
+    private final Item item;
 
 //    REPA:
 //    @Autowired
@@ -61,29 +81,65 @@ public class VotingLayout extends VerticalLayout implements OkCancelListener, Ob
 
     //0. konstruktor
     /**
-     * @param nav
+     * @param vot
      */
-    public VotingLayout() {
+    public VotingLayout(Vote vot) {
+        
+        vote = vot;
 
+        this.addComponent(mainLayout);
+        
+        this.initRepos();
+        
+        
+        comboLb.setStyleName(ValoTheme.LABEL_BOLD);
+        voteInputLb.setStyleName(ValoTheme.LABEL_BOLD);
+        pritomniLb.setStyleName(ValoTheme.LABEL_BOLD);
+        
+
+        this.pubBodycCb = new FilterComboBox<>(PublicBody.class);
+
+        
         this.setSpacing(true);
         this.setMargin(true);
 
+        pritomniLy = new PritomniLayout(pubBody, vote, Boolean.FALSE, this);
 
-        this.initRepos();
-        this.initComponents();
+//        public VoteInputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont, Component cp, List<String> nEditFn) {
+        Class<Vote> cls = Vote.class;
+        try {
 
-        pubBody = pbRepo.findOne(5);
-        Vote hlas = voteRepo.findOne(4);
-        pritomniLy = new PritomniLayout(pubBody, hlas, Boolean.FALSE);
-        this.addComponent(pritomniLy);
+            Field tnFld = cls.getDeclaredField("TN");
+            tn = (String) tnFld.get(null);
+            sqlCont = DoDBconn.getContainer(tn);
 
-     }
+        } catch (IllegalAccessException | SQLException | NoSuchFieldException | SecurityException ex) {
+            log.error(ex.getMessage());
+        }
 
-    
+        itemId = sqlCont.addItem();
+        item = sqlCont.getItem(itemId);
+
+        this.voteInputFormLy = new InputVoteFormLayout<>(cls, item, sqlCont, this, null);
+        
+        FilterVoteListener lisnr = new FilterVoteListener(voteInputFormLy, pritomniLy, this);
+        this.pubBodycCb.addValueChangeListener(lisnr);
+        
+//        this.addComponents(comboLy, voteInputFormLy, pritomniLy);
+
+        pritomniLy.setEnabled(false);
+        this.voteInputFormLy.setEnabled(false);
+        
+        this.putAllInLayout();
+
+
+    }
+
     @Override
     public void doOkAction() {
         //musi to byt takto, pretoze ok button je v tej druhej komponente, tj.
         //v input form layoute.
+        Notification.show("VotingLayout: OkAction");
         this.pritomniLy.doOkAction();
         this.forWindowListener.doOkAction();
         Notification.show("Hlasovanie uložené");
@@ -97,32 +153,20 @@ public class VotingLayout extends VerticalLayout implements OkCancelListener, Ob
     }
 
     private void initRepos() {
-        
+
         pbRepo = new UniRepo<>(PublicBody.class);
         tenureRepo = new UniRepo<>(Tenure.class);
         voteRepo = new UniRepo<>(Vote.class);
         prRepo = new UniRepo<>(PublicRole.class);
-        
+
     }
 
-    /**
-     * @return the vote
-     */
     public Vote getVote() {
         return vote;
     }
 
-    /**
-     * @param vote the vote to set
-     */
     public void setVote(Vote vote) {
         this.vote = vote;
-    }
-
-    private void initComponents() {
-        
-//        this.pritomniLy = new PritomniLayout(pubBody, vote, navigator, Boolean.FALSE);
-        
     }
 
     @Override
@@ -134,6 +178,41 @@ public class VotingLayout extends VerticalLayout implements OkCancelListener, Ob
         this.forWindowListener = aThis;
     }
 
-    
+
+    public PublicBody getPubBody() {
+        return pubBody;
+    }
+    public void setPubBody(PublicBody pubBody) {
+        this.pubBody = pubBody;
+    }
+    public InputVoteFormLayout<Vote> getVoteInputFormLy() {
+        return voteInputFormLy;
+    }
+
+    private void putAllInLayout() {
+        
+        mainLayout.setMargin(true);
+        mainLayout.setSpacing(true);
+
+        
+        mainLayout.addComponent(comboLb, 0, 0);
+        mainLayout.addComponent(voteInputLb, 1, 0);
+        mainLayout.addComponent(pritomniLb, 2, 0);
+        
+        mainLayout.addComponent(pubBodycCb, 0, 1);
+        mainLayout.addComponent(voteInputFormLy, 1, 1);
+        mainLayout.addComponent(pritomniLy, 2, 1);
+        
+        mainLayout.setComponentAlignment(comboLb, Alignment.MIDDLE_LEFT);
+        mainLayout.setComponentAlignment(pubBodycCb, Alignment.TOP_LEFT);
+        
+        mainLayout.setComponentAlignment(voteInputLb, Alignment.MIDDLE_CENTER);
+        mainLayout.setComponentAlignment(voteInputFormLy, Alignment.TOP_CENTER);
+        
+        mainLayout.setComponentAlignment(pritomniLb, Alignment.MIDDLE_LEFT);
+        mainLayout.setComponentAlignment(pritomniLy, Alignment.TOP_LEFT);
+        
+        
+    }
 
 }
