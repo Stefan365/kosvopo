@@ -108,6 +108,7 @@ public class HomoView extends VerticalLayout implements View {
                     Okres okres = new Okres(newItemCaption, 1);
 
                     okresRepo.save(okres);
+        
                     okresBox.addItem(okres);
                     okresBox.setItemCaption(okres, okres.getOkres_name());
                     // okresBox.setValue(newItemCaption);

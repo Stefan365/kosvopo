@@ -220,10 +220,16 @@ VALUES (4, 1, 'nieco medzi, asi v tom bude tunel, nicmene stale je to prospesne 
 COMMIT;
 
 -- 17.
+
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_public_person', null, null);
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_tenure', null, null);
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_theme', null, null);
-INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_location', null, null);
-INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_public_person', null, null);
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_kraj', null, null);
+
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_okres', 't_kraj', 'kraj_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_location', 't_okres', 'okres_id');
+
+
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_public_body', 't_location', 'location_id');
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) 
 		VALUES ('t_person_classification', 't_public_person', 'public_person_id');

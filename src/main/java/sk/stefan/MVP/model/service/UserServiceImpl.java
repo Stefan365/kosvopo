@@ -33,7 +33,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public A_User save(A_User user) {
-        return uniRepo.save(user);
+        
+        A_User ret = uniRepo.save(user);
+        return ret; 
+        
     }
 
     @Override

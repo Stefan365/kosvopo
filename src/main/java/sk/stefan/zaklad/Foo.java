@@ -21,7 +21,7 @@ public class Foo<T> {
 		//System.out.println(pt);
         //System.out.println(Bara.class.getGenericSuperclass());
         String str = Bara.class.getCanonicalName();
-        System.out.println(str);
+//        System.out.println(str);
         try {
             Class<?> cls = Class.forName(str);
         } catch (ClassNotFoundException e) {

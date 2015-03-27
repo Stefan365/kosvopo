@@ -12,8 +12,12 @@ import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
 import sk.stefan.MVP.model.repo.dao.GeneralRepo;
@@ -27,7 +31,11 @@ public class ToolsFiltering {
 
     private static final Logger log = Logger.getLogger(ToolsFiltering.class);
 
-    private static final UniRepo<A_Hierarchy> uniRepo = new UniRepo<>(A_Hierarchy.class);
+    private static final UniRepo<A_Hierarchy> hierRepo = new UniRepo<>(A_Hierarchy.class);
+
+    private static final GeneralRepo genRepo = new GeneralRepo();
+
+    private static GeneralRepo invasiveGenRepo;
 
 //    private static final String[] relFilTns = new String[]{"t_location", "t_public_body", "t_public_person"};
     //1.
@@ -101,7 +109,7 @@ public class ToolsFiltering {
                     counter = -1;
                 }
 //                log.info("PRED NEXT HIER LAYER: " + posledny);
-                pom = getNextHierarchLayer(posledny);
+                pom = getBosses(posledny);
 //                int f = 0;
 
 //                if ("t_public_body".equals(posledny)) {
@@ -156,7 +164,7 @@ public class ToolsFiltering {
 
                 tn = hierarchicalSeq.get(i);
                 btn = hierarchicalSeq.get(i + 1);
-                ref = makeReference(btn);
+                ref = getParamName(btn);
                 ae = new A_Hierarchy(tn, btn, ref);
                 hs.add(ae);
 
@@ -182,10 +190,10 @@ public class ToolsFiltering {
     public static List<Integer> getFinalIds(List<A_Hierarchy> hs, Integer value) {
 
         String sql;
-        if (hs!=null && !hs.isEmpty()) {
+
+        if (hs != null && !hs.isEmpty()) {
             sql = createMySelect(hs, value);
-//            log.info("MEGASQL:*" + sql + "*");
-            return uniRepo.findAllFilteringIds(sql);
+            return genRepo.findAllFilteringIds(sql);
         } else {
             return null;
         }
@@ -199,6 +207,7 @@ public class ToolsFiltering {
      * @return
      */
     public static Filter createFilter(List<Integer> ids) {
+
         Filter o;
         List<Filter> fls = new ArrayList<>();
 
@@ -222,20 +231,20 @@ public class ToolsFiltering {
      * Ziska zoznam nazvov tabuliek na ktore sa dana tabulka odkazuje, tj.
      * zoznam jej bossov.
      */
-    private static List<String> getNextHierarchLayer(String tn) {
+    private static List<String> getBosses(String tn) {
 
-        List<A_Hierarchy> ret;
-        ret = uniRepo.findByParam("table_name", tn);
+        List<A_Hierarchy> bossesA;
+        bossesA = hierRepo.findByParam("table_name", tn);
 
 //        log.info("GETNEXTLEVEL1:" + tn);
 //        log.info("GETNEXTLEVEL2:" + ret.size());
-        List<String> hier = new ArrayList<>();
-        if (ret != null) {
-            for (A_Hierarchy h : ret) {
-                hier.add(h.getBoss_table());
+        List<String> bosses = new ArrayList<>();
+        if (bossesA != null) {
+            for (A_Hierarchy h : bossesA) {
+                bosses.add(h.getBoss_table());
             }
         }
-        return hier;
+        return bosses;
     }
 
     //6. pom
@@ -284,6 +293,7 @@ public class ToolsFiltering {
      * @return
      */
     private static List<List<String>> pripoj(List<String> list, List<String> pom) {
+
         List<List<String>> pripojene;
         pripojene = new ArrayList<>();
 
@@ -342,18 +352,17 @@ public class ToolsFiltering {
 
         //uzavretie dotazu:
         for (int i = 0; i < size; i++) {
-            if (i == 0){
+            if (i == 0) {
                 sql.append(")");
             } else {
                 sql.append(" AND visible = true)");
             }
         }
-        
+
         Label l = new Label("kokos");
         HorizontalLayout hl = new HorizontalLayout();
         hl.addLayoutClickListener(new LayoutClickListener() {
             private static final long serialVersionUID = -7430315482468088485L;
-
 
             @Override
             public void layoutClick(LayoutEvents.LayoutClickEvent event) {
@@ -370,39 +379,100 @@ public class ToolsFiltering {
 
     //10. pom
     /**
-     * vrati referenciu na sefa, tj, napr. ked sa z tabulky
+     * vrati nazov referencie na sefa, tj, napr. ked sa sefovska tabulka vola
+     * t_location, vrati location_id;
      */
-    private static String makeReference(String tn) {
+    private static String getParamName(String tn) {
 
         String replace = tn.replace("t_", "");
         replace += "_id";
         return replace;
     }
 
+    //5. pom
     /**
-     * Deactivates
-     * @param ids
-     * @param tn
+     * Ziska zoznam nazvov tabuliek ktore na vstupnu tabulku odkazuju. tj.
+     * zoznam jej podriadenych.
      */
-    dsds
-    public static void deactivateIds(List<Integer> ids, String tn) {
-        GeneralRepo genRepo = new GeneralRepo();
-        for (Integer id : ids) {
-            genRepo.deactivate(tn, id);
+    private static List<String> getSlaves(String tn) {
+
+        List<A_Hierarchy> ret;
+        ret = hierRepo.findByParam("boss_table", tn);
+
+        List<String> slaves = new ArrayList<>();
+        if (ret != null) {
+            for (A_Hierarchy h : ret) {
+                slaves.add(h.getTable_name());
+            }
+        }
+        return slaves;
+    }
+
+    //6.
+    /**
+     * Deaktivuje cely strom entit, pricom vrcholom stromu je entita na vstupe.
+     *
+     * @param tn
+     * @param id
+     * @throws java.sql.SQLException
+     */
+    public static void deactivateSlavesTree(String tn, Integer id) throws SQLException {
+
+        if (invasiveGenRepo == null) {
+            invasiveGenRepo = new GeneralRepo();
+        }
+
+        invasiveGenRepo.deactivateOne(tn, id);
+
+        List<String> slaveTns = ToolsFiltering.getSlaves(tn);
+
+        if (!slaveTns.isEmpty()) {
+
+            Map<String, List<Integer>> slavesIdsMap = new HashMap<>();
+            List<Integer> slvIds;
+
+            String paramN = ToolsFiltering.getParamName(tn);
+
+            for (String slv : slaveTns) {
+                slvIds = genRepo.findTnAllByParam(slv, paramN, "" + id);
+                slavesIdsMap.put(slv, slvIds);
+
+            }
+//            //deaktivuj otrokov: - netreba vid. prvy riadok.
+//            for (String key : slavesIdsMap.keySet()) {
+//
+//                slvIds = slavesIdsMap.get(key);
+//                for (Integer aid : slvIds) {
+//                    genRepo.deactivateOne(key, aid);
+//                }
+//            }
+            //      najdime dalsich podotrokov:
+            for (String key : slavesIdsMap.keySet()) {
+                slvIds = slavesIdsMap.get(key);
+                for (Integer aid : slvIds) {
+                    deactivateSlavesTree(key, aid);
+                }
+            }
         }
     }
 
     /**
-     * PRe ucely deaktivacie stromu entit. TJ. stromu, ktoreho korenom je entita
-     *
-     * @param id
-     * @param currTn
-     * @param slaveTn
-     *
-     * @return
+     * commituje zmeny do DB.
      */
-    public static List<Integer> getNextLevelSlavesIds(Integer id, String currTn, String slaveTn) {
-        return null;
+    public static void doCommit() {
+        invasiveGenRepo.doCommit();
+        //aby vzdy bral nove genRepo a tak sa vyhol moznosti interferencie.
+        invasiveGenRepo = null;
+
+    }
+
+    /**
+     * rollbackuje zmeny.
+     */
+    public static void doRollback() {
+        invasiveGenRepo.doRollback();
+        //aby vzdy bral nove genRepo a tak sa vyhol moznosti interferencie.
+        invasiveGenRepo = null;
     }
 
 }
