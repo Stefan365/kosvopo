@@ -12,7 +12,6 @@ import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -235,7 +235,8 @@ id INT(11) AUTO_INCREMENT,
 table_name VARCHAR(30),
 table_row_id INT(11),
 upload_date DATE,
-link TEXT,
+document MEDIUMBLOB,
+-- link TEXT,
 visible BIT DEFAULT 1,
 
 CONSTRAINT doc_PK PRIMARY KEY(id)

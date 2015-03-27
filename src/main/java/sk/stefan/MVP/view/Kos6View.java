@@ -2,7 +2,7 @@ package sk.stefan.MVP.view;
 
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.utils.ImageUploader;
-import sk.stefan.utils.ImageUploaderA;
+import sk.stefan.utils.FileUploader;
 import sk.stefan.utils.MyImageSource;
 import sk.stefan.utils.Take5;
 
@@ -38,7 +38,11 @@ import java.io.File;
 import java.io.Serializable;
 import sk.stefan.MVP.model.entity.dao.A_User;
 
+/**
+ * 
+ */
 public class Kos6View extends VerticalLayout implements View {
+    private static final long serialVersionUID = 1L;
 
     private VerticalLayout layout;
     private MenuBar menubar;
@@ -267,7 +271,7 @@ public class Kos6View extends VerticalLayout implements View {
         // B.2
         // Implement both receiver that saves upload in a file and
         // listener for successful upload
-        ImageUploaderA uploadera = new ImageUploaderA();
+        FileUploader uploadera = new FileUploader();
 
         // Create the upload with a caption and set receiver later
         uploada = new Upload("Upload Image Here", uploadera);

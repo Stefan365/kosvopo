@@ -55,7 +55,7 @@ public class InputButClickListener implements Button.ClickListener {
 
             tn = (String) tnFld.get(null);
             sqlCont = DoDBconn.getContainer(tn);
-            InputFormLayout<? extends Object> inputFl;
+            InputFormLayout<?> inputFl;
             itemId = sqlCont.addItem();
             item = sqlCont.getItem(itemId);
             inputFl = new InputFormLayout<>(cls, item, sqlCont, null, null);

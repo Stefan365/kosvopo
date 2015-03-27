@@ -38,6 +38,8 @@ public class ImageUploader implements Receiver, SucceededListener {
             // Open the file for writing.: sem sa dany subor uploaduje. tj. napr. na server
             setFile(new File("C:\\Users\\User\\Desktop\\kosvopo\\mavenproject2\\"+filename));
             fos = new FileOutputStream(getFile());
+            
+            
         } catch (final java.io.FileNotFoundException e) {
             new Notification("Could not open file<br/>",
                              e.getMessage(),
@@ -45,13 +47,16 @@ public class ImageUploader implements Receiver, SucceededListener {
                 .show(Page.getCurrent());
             return null;
         }
+        
         return fos; // Return the output stream to write to
     }
 
     public void uploadSucceeded(SucceededEvent event) {
         // Show the uploaded file in the image viewer
+        
         image.setVisible(true);
         image.setSource(new FileResource(getFile()));
+        
     }
 
     /**
