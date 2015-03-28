@@ -1,4 +1,4 @@
-package sk.stefan.utils;
+package sk.stefan.files;
 
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
@@ -17,6 +17,9 @@ import java.io.OutputStream;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.repo.dao.GeneralRepo;
 
+/**
+ * 
+ */
 public class FileUploader implements Receiver, SucceededListener {
 
     private static final Logger log = Logger.getLogger(FileUploader.class);
@@ -28,9 +31,12 @@ public class FileUploader implements Receiver, SucceededListener {
     private final Integer rid = 2;
 
     private InputStream inStream;
+    private String fileName;
     
     private final GeneralRepo genRepo = new GeneralRepo();
 
+    
+    
     public FileUploader() {
 
         image = new Embedded("Uploaded Image");
@@ -44,7 +50,9 @@ public class FileUploader implements Receiver, SucceededListener {
 
     @Override
     public OutputStream receiveUpload(String filename, String mimeType) {
-
+        
+        this.fileName = filename;
+                
         // Create upload stream
         FileOutputStream fos; // Stream to write to
 
@@ -83,7 +91,7 @@ public class FileUploader implements Receiver, SucceededListener {
         try {
         
             inStream = new FileInputStream(this.getFile());
-            genRepo.insertFileInDB(inStream, tn, rid);
+            genRepo.insertFileInDB(inStream, tn, rid, fileName);
             Notification.show("File saved to Database!");
         
         } catch (FileNotFoundException ex) {

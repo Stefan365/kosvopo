@@ -133,6 +133,7 @@ public class ToolsDao {
                     break;
                 case "byte[]":
                 case "java.lang.Byte[]":
+                case "java.io.InputStream":                    
                     sb.append("Bytes");
                     break;
                 case "sk.stefan.enums.VoteResult":
@@ -145,6 +146,8 @@ public class ToolsDao {
 
                     sb.append("Short");
                     break;
+//                    sb.append("d");
+//                    break;
                 default:
                     String fields[] = typ.split("\\.");
                     sb.append(fields[fields.length - 1]);

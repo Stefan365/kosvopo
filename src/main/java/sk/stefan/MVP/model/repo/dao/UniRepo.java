@@ -2,6 +2,9 @@ package sk.stefan.MVP.model.repo.dao;
 
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -447,7 +450,6 @@ public class UniRepo<T> implements MyRepo<T> {
      */
     private List<T> fillListEntity(ResultSet rs) {
 
-//        Class<?> rsCls = rs.getClass();
         Class<?> rsCls = ResultSet.class;
 
         List<T> listEnts = new ArrayList<>();
@@ -489,6 +491,15 @@ public class UniRepo<T> implements MyRepo<T> {
                         Object enumVal = enumVals[sh];
                         
                         entMethod.invoke(ent, enumVal);
+                        
+                    } else if ("getBytes".equals(rsMetName) && "document".equals(pn)){
+//                        InputStream myInputStream = new ByteArrayInputStream(myBytes);
+                        byte[] bytes;
+                        bytes = (byte[]) rsMethod.invoke(rs, pn);
+                        InputStream myInputStream = new ByteArrayInputStream(bytes);
+//                        InputStream myInputStream1 = new FileInputStream(myInputStream);
+                        
+                        entMethod.invoke(ent, myInputStream);
                         
                     } else {
                         entMethod.invoke(ent, rsMethod.invoke(rs, pn));

@@ -5,7 +5,7 @@
  */
 package sk.stefan.MVP.model.entity.dao;
 
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import org.apache.log4j.Logger;
 import sk.stefan.interfaces.PresentationName;
@@ -24,35 +24,29 @@ public class Document implements PresentationName {
     public static final String TN = "t_document";
 
     public static final String PRES_NAME = "Dokument";
+    
+    private Integer id;
+    
+    private String table_name;
+
+    private Integer table_row_id;
+    
+    private String file_name;
+    
+    private Date upload_date;
+    
+    private InputStream document;
+    
+    private Boolean visible;    
+    
+    
+    
 
     public Document() {
     }
 
-    /**
-     * @return the TN
-     */
-    public static String getTN() {
-        return TN;
-    }
-
-    /**
-     * @return the PRES_NAME
-     */
-    public static String getPRES_NAME() {
-        return PRES_NAME;
-    }
-
-    private Integer id;
-
-    private String table_name;
-
-    private Integer table_row_id;
-
-    private Date upload_date;
-
-    private String link;
-
-    private Boolean visible;
+    
+    
 
     public Integer getId() {
         return id;
@@ -70,13 +64,6 @@ public class Document implements PresentationName {
         this.upload_date = upload_date;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
 
     public Integer getTable_id() {
         return table_row_id;
@@ -108,6 +95,34 @@ public class Document implements PresentationName {
         String tn = ToolsNazvy.getTableDepictNames(table_name);
         return tn + "-" + this.id;
         
+    }
+
+    /**
+     * @return the file_name
+     */
+    public String getFile_name() {
+        return file_name;
+    }
+
+    /**
+     * @param file_name the file_name to set
+     */
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
+    }
+
+    /**
+     * @return the document
+     */
+    public InputStream getDocument() {
+        return document;
+    }
+
+    /**
+     * @param document the document to set
+     */
+    public void setDocument(InputStream document) {
+        this.document = document;
     }
 
 }

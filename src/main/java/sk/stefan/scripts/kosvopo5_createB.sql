@@ -253,6 +253,7 @@ CREATE TABLE t_document
 id INT(11) NOT NULL  AUTO_INCREMENT,
 table_name VARCHAR(30) NOT NULL,
 table_row_id INT(11) NOT NULL,
+file_name VARCHAR(30) NOT NULL,
 upload_date DATE,
 document MEDIUMBLOB NOT NULL,
 visible BIT NOT NULL DEFAULT 1,

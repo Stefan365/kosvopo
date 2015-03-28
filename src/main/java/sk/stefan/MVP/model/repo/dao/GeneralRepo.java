@@ -258,8 +258,9 @@ public class GeneralRepo {
      * @param inputStream
      * @param tn
      * @param rid
+     * @param fn
      */
-    public void insertFileInDB(InputStream inputStream, String tn, Integer rid) {
+    public void insertFileInDB(InputStream inputStream, String tn, Integer rid, String fn) {
 
         Connection conn = DoDBconn.getConnection();
 
@@ -276,15 +277,16 @@ public class GeneralRepo {
         String inputDate = formatter.format(new Date());
             
         
-        String sql = "INSERT INTO t_document (document, table_name, table_row_id, upload_date) "
-                + " values (?, ?, ?, ?) ";
+        String sql = "INSERT INTO t_document (document, file_name, table_name, table_row_id, upload_date) "
+                + " values (?, ?, ?, ?, ?) ";
         try {
             st = conn.prepareStatement(sql);
             
             st.setBlob(1, inputStream);
             st.setString(2, tn);
             st.setInt(3, rid);
-            st.setString(4, inputDate);
+            st.setString(4, fn);
+            st.setString(5, inputDate);
             
             st.executeUpdate();
 

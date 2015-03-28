@@ -234,6 +234,7 @@ CREATE TABLE t_document
 id INT(11) AUTO_INCREMENT,
 table_name VARCHAR(30),
 table_row_id INT(11),
+file_name VARCHAR(30),
 upload_date DATE,
 document MEDIUMBLOB,
 -- link TEXT,
