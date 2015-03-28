@@ -8,8 +8,15 @@ import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.OptionGroup;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -37,6 +44,7 @@ import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
 import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
 import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Vote;
@@ -75,7 +83,8 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusUpdaredRepo();
+        sk.skusFileDownload();
+//        sk.skusUpdaredRepo();
 //        sk.skusPole();
 //        sk.skusSqlDate();
 
@@ -758,7 +767,7 @@ public class Skuska1<T> {
      *
      */
     public void skusDepict() {
-        
+
         Properties pro = ToolsNazvy.getDepictParams("t_vote");//.getProperty(key);
         for (String s : pro.stringPropertyNames()) {
             log.info(s + " : " + pro.getProperty(s));
@@ -1064,38 +1073,58 @@ public class Skuska1<T> {
 
         log.debug("DATE:*" + s + "*");
     }
-    
-    private void skusPole (){
-        
+
+    private void skusPole() {
+
         String[] uneditCol = new String[]{"c", "a", "b"};
         List<String> ne = Arrays.asList(uneditCol);
-        for (String s: ne){
+        for (String s : ne) {
             log.debug("NAME: " + s);
         }
-        
+
 //        String[] stockArr = new String[ne.size()];
         String[] stockArr = ne.toArray(uneditCol);
-        
-        for (String s: stockArr){
+
+        for (String s : stockArr) {
             log.debug("NAME ARRAY: " + s);
-        
-            
+
         }
     }
-    
-    private void skusUpdaredRepo(){
+
+    private void skusUpdaredRepo() {
         UniRepo<PublicRole> prolRepo = new UniRepo<>(PublicRole.class);
         PublicRole pr1 = prolRepo.findOne(2);
         PublicRole pr2 = prolRepo.findOne(4);
-        
+
         log.debug("PROLE 1: " + pr1.getName());
         log.debug("PROLE 2: " + pr2);
-        
-        
-    }
-        
-        
-        
-    
 
+    }
+
+    private void skusFileDownload() {
+
+        FileOutputStream fos = null;
+        try {
+            UniRepo<Document> docRepo = new UniRepo<>(Document.class);
+            Document doc = docRepo.findOne(4);
+            log.debug("DOKUMENT: " + doc.getFile_name());
+//        FileOutputStream outStream = new ByteArrayOutputStream(doc.getDocument());
+            String fileN = "C:\\Users\\stefan\\Desktop\\downloads\\" + doc.getFile_name();
+            fos = new FileOutputStream(fileN);
+            fos.write(doc.getDocument());
+            fos.flush();
+            
+        } catch (IOException  ex) {
+            log.error(ex.getMessage(),ex);
+        } finally {
+            try {
+                if (fos != null){
+                    fos.close();
+                }
+                
+            } catch (IOException ex) {
+                log.error(ex.getMessage(),ex);
+            }
+        }
+    }
 }

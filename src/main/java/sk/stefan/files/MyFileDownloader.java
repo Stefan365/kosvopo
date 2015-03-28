@@ -9,6 +9,7 @@ import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Button;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -75,7 +76,9 @@ public class MyFileDownloader {
 //                File file = new File(document.getFile_name());
 //                try {
 //                    inputStream = new FileInputStream(file);
-                inputStream = document.getDocument();
+                        
+                inputStream = new ByteArrayInputStream(document.getDocument());
+                
                 return inputStream;
 //                } catch (FileNotFoundException ex) {
 //                    log.error(ex.getMessage(), ex);

@@ -260,7 +260,7 @@ public class GeneralRepo {
      * @param rid
      * @param fn
      */
-    public void insertFileInDB(InputStream inputStream, String tn, Integer rid, String fn) {
+    public void insertFileInDB(InputStream inputStream, String fn, String tn, Integer rid) {
 
         Connection conn = DoDBconn.getConnection();
 
@@ -283,9 +283,9 @@ public class GeneralRepo {
             st = conn.prepareStatement(sql);
             
             st.setBlob(1, inputStream);
-            st.setString(2, tn);
-            st.setInt(3, rid);
-            st.setString(4, fn);
+            st.setString(2, fn);
+            st.setString(3, tn);
+            st.setInt(4, rid);
             st.setString(5, inputDate);
             
             st.executeUpdate();

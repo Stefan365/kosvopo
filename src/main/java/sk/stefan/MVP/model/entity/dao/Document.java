@@ -35,7 +35,8 @@ public class Document implements PresentationName {
     
     private Date upload_date;
     
-    private InputStream document;
+//    private InputStream document;
+    private byte[] document;
     
     private Boolean visible;    
     
@@ -65,12 +66,12 @@ public class Document implements PresentationName {
     }
 
 
-    public Integer getTable_id() {
+    public Integer getTable_row_id() {
         return table_row_id;
     }
 
-    public void setTable_id(Integer table_id) {
-        this.table_row_id = table_id;
+    public void setTable_row_id(Integer rid) {
+        this.table_row_id = rid;
     }
 
     public String getTable_name() {
@@ -114,14 +115,14 @@ public class Document implements PresentationName {
     /**
      * @return the document
      */
-    public InputStream getDocument() {
+    public byte[] getDocument() {
         return document;
     }
 
     /**
      * @param document the document to set
      */
-    public void setDocument(InputStream document) {
+    public void setDocument(byte[] document) {
         this.document = document;
     }
 
