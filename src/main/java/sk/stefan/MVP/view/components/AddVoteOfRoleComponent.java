@@ -224,7 +224,6 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
 
         sestavVor();
         vor = vorRepo.save(vor);
-        
         enableSave(false);
         if (vor != null) {
             Notification.show("Hlasovani Verejneho cinitele Uspesne ulozeno!");

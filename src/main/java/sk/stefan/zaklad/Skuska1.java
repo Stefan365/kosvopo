@@ -32,7 +32,6 @@ import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.annotation.Transactional;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
 import sk.stefan.MVP.model.entity.dao.Location;
@@ -49,7 +48,6 @@ import sk.stefan.enums.VoteAction;
 import sk.stefan.interfaces.PresentationName;
 import sk.stefan.utils.ToolsNazvy;
 import sk.stefan.utils.ToolsDao;
-import sk.stefan.utils.ToolsFiltering;
 
 public class Skuska1<T> {
 
@@ -77,14 +75,7 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-
-        
-        sk.skusDeactivateTree();
-        
-//        log.info("CYSLEDOK: " + sk.skusFibonachi(10));
-        
-//        sk.skusTransaction();
-//        sk.skusUpdaredRepo();
+        sk.skusUpdaredRepo();
 //        sk.skusPole();
 //        sk.skusSqlDate();
 
@@ -436,7 +427,6 @@ public class Skuska1<T> {
         @SuppressWarnings("unchecked")
         T ent1 = (T) cls.newInstance();
         T ent2 = uniRepo.save(ent1);
-        
         log.info("4. PASSED! *" + ((PresentationName) ent2).getPresentationName() + "*");
 
         log.info("\nXXXXX: 5.SAVE ALREDY IN DB");
@@ -450,7 +440,6 @@ public class Skuska1<T> {
         // 6.
         uniRepo.delete(ent1);
         uniRepo.delete(ent2);
-        
         log.info("\nXXXXX: 6. PASSED!");
 
         log.info("\nXXXXX: 7.COPY");
@@ -734,10 +723,10 @@ public class Skuska1<T> {
             uniRepo.updateParam("mestka_cast", "KOKOSOVO", "6");
             uniRepo.updateParam("visible", "false", "6");
             uniRepo.updateParam("mestka_cast", null, "8");
-            
+
             UniRepo<A_User> uniRepo1 = new UniRepo<>(A_User.class);
             uniRepo.updateParam("password", "KOKOSOVO", "1");
-            
+
             List<A_User> allUs = uniRepo1.findAll();
             for (A_User u : allUs) {
                 log.info(u.getPresentationName() + " : " + Arrays.toString(u.getPassword()));
@@ -1101,51 +1090,8 @@ public class Skuska1<T> {
         
         log.debug("PROLE 1: " + pr1.getName());
         log.debug("PROLE 2: " + pr2);
-    }
-    
-    @Transactional
-    private void skusTransaction(){
-        try {
-            
-            UniRepo<Location> locRepo = new UniRepo<>(Location.class);
-            
-            locRepo.updateParam("mestka_cast", "MA", "3");
-//            throw new SQLException();
-            locRepo.updateParam("mestka_cast", "PAVOL", "4");
-            
-        } catch (SQLException ex) {
-            log.error(ex.getMessage(),ex);
-        }
         
         
-        
-    }
-    
-    private int skusFibonachi(int i){
-        List<Integer> lis = new ArrayList<>();
-        
-        lis.add(i);
-        for (int j : lis){
-            log.debug("J:" + j);
-        }
-        if (i == 1){
-            return 1;
-        } else {
-            return i + skusFibonachi(i - 1);
-        }
-
-    }
-
-    private void skusDeactivateTree() {
-        
-        try {
-            ToolsFiltering.deactivateSlavesTree("t_kraj", 3);
-            ToolsFiltering.doCommit();
-        } catch (SQLException ex) {
-            log.error(ex.getMessage(),ex);
-            ToolsFiltering.doRollback();
-        }
-
     }
         
         

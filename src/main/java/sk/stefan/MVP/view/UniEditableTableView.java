@@ -49,7 +49,6 @@ import sk.stefan.listeners.RefreshViewListener;
 import sk.stefan.listeners.YesNoWindowListener;
 import sk.stefan.utils.ToolsNazvy;
 import sk.stefan.utils.ToolsDao;
-import sk.stefan.utils.ToolsFiltering;
 
 /**
  *
@@ -101,6 +100,8 @@ public final class UniEditableTableView<E> extends VerticalLayout implements OkC
 
     public UniEditableTableView(Class<E> clsq, String[] uneditCol) {
 
+
+
         basicFilter = new Compare.Equal("visible", Boolean.TRUE);
 
         securityService = new SecurityServiceImpl();
@@ -110,9 +111,9 @@ public final class UniEditableTableView<E> extends VerticalLayout implements OkC
 //        log.debug("DEBUG 1 clsE: " + clsE);
         tn = ToolsDao.getTableName(clsE);
 //        log.debug("DEBUG 2 tn: " + tn);
-
+        
         this.initTableLists(uneditCol);
-
+        
         try {
 
             sqlContainer = DoDBconn.getContainer(tn);
@@ -317,12 +318,14 @@ public final class UniEditableTableView<E> extends VerticalLayout implements OkC
         this.nonEditFn = Arrays.asList(uneditCol);
         List<String> db = new ArrayList<>();
         List<String> dp = new ArrayList<>();
+        
 
 //        log.debug("DEBUG tn: " + tn);
         String key;
         Properties proPoradie = ToolsNazvy.getPoradieParams(tn);
         Properties proDepict = ToolsNazvy.getDepictParams(tn);
 
+        
         for (int i = 0; i < proPoradie.size(); i++) {
 
             key = proPoradie.getProperty("" + i);
@@ -334,11 +337,11 @@ public final class UniEditableTableView<E> extends VerticalLayout implements OkC
         }
         this.visibleColDbNames = db.toArray(uneditCol);
         this.visibleColDepictNames = dp.toArray(uneditCol);
-
-        for (String s : visibleColDbNames) {
+        
+        for (String s : visibleColDbNames){
 //            log.debug("TABLE COLUMN: *"+ s +"*");
         }
-
+        
     }
 
     /**
@@ -359,25 +362,16 @@ public final class UniEditableTableView<E> extends VerticalLayout implements OkC
                 }
                 try {
 //                  item.getItemProperty("visible").setValue(Boolean.FALSE);
-                    sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);
-                    
-                    Integer id = (Integer) item.getItemProperty("id").getValue();
-                    ToolsFiltering.deactivateSlavesTree(tn, id);
-                    ToolsFiltering.doCommit();
-                    
-                    //musi tu byt i tento commit, inak to bude v SQLcontaineri matat a pri editacii 
-                    //inej polozky sa to vrati spat do databaze v povodnej tj. visible = true verzii.
-                    sqlContainer.commit();
-//                    UniRepo<E> unirepo = new UniRepo<>(clsE);
-//                    unirepo.updateParam("visible", "false", "" + item.getItemProperty("id").getValue());
-////                    item = null;
-////                    itemId = null;
+//                  sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);
+                    UniRepo<E> unirepo = new UniRepo<>(clsE);
+                    unirepo.updateParam("visible", "false", "" + item.getItemProperty("id").getValue());
+//                    item = null;
+//                    itemId = null;
                     Notification.show("Úkol úspešne vymazaný!");
                     doOkAction();
                 } catch (SQLException ex) {
-                    log.error(ex.getMessage(), ex);
-                    ToolsFiltering.doRollback();
                     Notification.show("Vymazanie sa nepodarilo!");
+
                 }
             } else {
                 Notification.show("Není co mazat!");

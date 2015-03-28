@@ -13,8 +13,6 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vaadin.version>7.4.2</vaadin.version>
-        <!--<vaadin.version>7.1.9</vaadin.version>-->
-        
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
         
     </properties>
@@ -63,8 +61,7 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
-            <version>7.5-SNAPSHOT</version>
-            <type>jar</type>
+            <version>${vaadin.version}</version>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -141,12 +138,7 @@
             <version>5.2.0.Alpha1</version>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin</artifactId>
-            <version>6.4-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
+        
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>

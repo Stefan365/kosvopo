@@ -276,7 +276,7 @@ public class GeneralRepo {
         String inputDate = formatter.format(new Date());
             
         
-        String sql = "INSERT INTO a_document (document, table_name, table_row_id, upload_date) "
+        String sql = "INSERT INTO t_document (document, table_name, table_row_id, upload_date) "
                 + " values (?, ?, ?, ?) ";
         try {
             st = conn.prepareStatement(sql);

@@ -84,6 +84,7 @@ public class FileUploader implements Receiver, SucceededListener {
         
             inStream = new FileInputStream(this.getFile());
             genRepo.insertFileInDB(inStream, tn, rid);
+            Notification.show("File saved to Database!");
         
         } catch (FileNotFoundException ex) {
             log.error(ex.getMessage(), ex);
@@ -94,7 +95,6 @@ public class FileUploader implements Receiver, SucceededListener {
                 log.error(ex.getMessage(), ex);
             }
         }
-
     }
 
     /**

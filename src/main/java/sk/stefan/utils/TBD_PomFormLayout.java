@@ -296,7 +296,6 @@ public class TBD_PomFormLayout<T> extends FormLayout {
                 try {
                     bfg.commit();
                     entRepo.save(ent);
-        
                     Notification.show("Entita úspešne uložená!");
                 } catch (CommitException e1) {
                     Notification.show("Nepodarilo sa commitnut field group!",
@@ -315,7 +314,6 @@ public class TBD_PomFormLayout<T> extends FormLayout {
             @Override
             public void buttonClick(ClickEvent event) {
                 if (entRepo.delete(ent)) {
-                    
                     Notification.show("Entita úspešne vymazaná!");
                     setVisible(false);
                 } else {

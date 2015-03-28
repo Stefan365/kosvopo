@@ -19,7 +19,7 @@ public class NavigationComponent extends HorizontalLayout {
     private static final long serialVersionUID = 8811699550804144740L;
 
     private final Button b1, b1a, b2, b3, b4, b6, b7, b8, b9, b10, b11, b12, badv, doc;
-    
+
     private SecurityService securityService;
 
     private static Navigator navigator;
@@ -100,22 +100,18 @@ public class NavigationComponent extends HorizontalLayout {
         b12 = new Button("A_kos6", (ClickEvent event) -> {
             navigator.navigateTo("A_kos6");
         });
-        
+
         badv = new Button("admin_view_1", (ClickEvent event) -> {
             navigator.navigateTo("adminview1");
         });
-        
+
         doc = new Button("documents", (ClickEvent event) -> {
             navigator.navigateTo("docview");
         });
-        
+
 //        hlas = new Button("hlasovanie", (ClickEvent event) -> {
 //            navigator.navigateTo("hlasovanie");
 //        });
-        
-        
-        
-
 //        b13 = new Button("download", (ClickEvent event) -> {
 //            navigator.navigateTo("download");
 //        });
@@ -135,7 +131,6 @@ public class NavigationComponent extends HorizontalLayout {
 //        b17 = new Button("welcome", (ClickEvent event) -> {
 //            navigator.navigateTo("welcome");
 //        });
-        
         b1.setStyleName(BaseTheme.BUTTON_LINK);
         b1a.setStyleName(BaseTheme.BUTTON_LINK);
         b2.setStyleName(BaseTheme.BUTTON_LINK);
@@ -150,10 +145,8 @@ public class NavigationComponent extends HorizontalLayout {
         b12.setStyleName(BaseTheme.BUTTON_LINK);
         badv.setStyleName(BaseTheme.BUTTON_LINK);
         doc.setStyleName(BaseTheme.BUTTON_LINK);
-        
-//        hlas.setStyleName(BaseTheme.BUTTON_LINK);
-        
 
+//        hlas.setStyleName(BaseTheme.BUTTON_LINK);
         this.setSpacing(true);
         this.setMargin(true);
 
@@ -164,9 +157,8 @@ public class NavigationComponent extends HorizontalLayout {
         this.addComponent(b8);
         this.addComponent(b9);
         this.addComponent(doc);
-        
-//        this.addComponent(hlas);
 
+//        this.addComponent(hlas);
     }
 
     /**
@@ -195,7 +187,7 @@ public class NavigationComponent extends HorizontalLayout {
         navComp.addComponent(b10);
         navComp.addComponent(b11);
         navComp.addComponent(b12);
-        navComp.addComponent(badv);        
+        navComp.addComponent(badv);
     }
 
     /**
@@ -208,7 +200,6 @@ public class NavigationComponent extends HorizontalLayout {
         navigator.removeView("A_kos6");
         navigator.removeView("adminview1");
 
-        
         navComp.removeComponent(b1a);
         navComp.removeComponent(b10);
         navComp.removeComponent(b11);

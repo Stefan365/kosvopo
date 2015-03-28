@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.interfaces.MyRepo;
 import sk.stefan.utils.ToolsDao;
 
@@ -22,25 +24,37 @@ public class UniRepo<T> implements MyRepo<T> {
 
     private static final Logger log = Logger.getLogger(UniRepo.class);
     // table name:
-    private final String TN;
+    private String TN;
     private final Class<?> clsT;
+    private final SecurityService securityService;
 
-    //connection musi byt centralne, inak nenudu fungovat transactional operacie
-    //bude tam odkaz na DoDBconn.conn
-//    private static Connection conn = DoDBconn.getConn();
     /**
      * Konstruktor:
      *
      * @param cls
      */
     public UniRepo(Class<?> cls) {
-
         this.clsT = cls;
-        this.TN = ToolsDao.getTableName(cls);
-        if (DoDBconn.getNonInvasiveConn() == null) {
-            DoDBconn.createNoninvasiveConnection();
-        }
+        this.setTN(cls);
+        this.securityService = new SecurityServiceImpl();
+    }
 
+    /**
+     *
+     * Nastavi meno DB tabulky.
+     *
+     */
+    private void setTN(Class<?> cls) {
+
+        try {
+            
+            Method getTnMethod = cls.getDeclaredMethod("getTN");
+            TN = (String) getTnMethod.invoke(null);
+        
+        } catch (IllegalAccessException | IllegalArgumentException |
+                InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     // 1.
@@ -51,21 +65,17 @@ public class UniRepo<T> implements MyRepo<T> {
     @Override
     public List<T> findAll() {
         try {
-//            Connection conn = DoDBconn.getConnection();
+            Connection conn = DoDBconn.getConnection();
             Statement st;
-            //pre pripad, ze by spojenie spadlo.
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
-            st = DoDBconn.getNonInvasiveConn().createStatement();
+            st = conn.createStatement();
 
             String sql;
-            if (TN.contains("a_")) {
+            if (TN.contains("a_")){
                 sql = String.format("SELECT * FROM %s", TN);
             } else {
                 sql = String.format("SELECT * FROM %s  WHERE visible = true", TN);
             }
-
+            
             ResultSet rs;
             rs = st.executeQuery(sql);
             //log.info("PETER 7: " + rs.getClass().getCanonicalName());
@@ -77,7 +87,7 @@ public class UniRepo<T> implements MyRepo<T> {
 
             rs.close();
             st.close();
-//            DoDBconn.releaseConnection(conn);
+            DoDBconn.releaseConnection(conn);
 
             return listEnt;
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
@@ -93,21 +103,17 @@ public class UniRepo<T> implements MyRepo<T> {
     @Override
     public T findOne(Integer id) {
         try {
-            //pre pripad, ze by spojenie spadlo.
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
-
+            Connection conn = DoDBconn.getConnection();
             Statement st;
-            st = DoDBconn.getNonInvasiveConn().createStatement();
+            st = conn.createStatement();
 
             String sql;
-            if (TN.contains("a_")) {
+            if (TN.contains("a_")){
                 sql = String.format("SELECT * FROM %s WHERE id = %d", TN, id);
             } else {
                 sql = String.format("SELECT * FROM %s WHERE id = %d AND visible = true", TN, id);
             }
-
+            
             ResultSet rs;
             rs = st.executeQuery(sql);
             // Notification.show(sql);
@@ -116,7 +122,7 @@ public class UniRepo<T> implements MyRepo<T> {
 
             rs.close();
             st.close();
-//            DoDBconn.getPool().releaseConnection(conn);
+            DoDBconn.getPool().releaseConnection(conn);
 
             return ent;
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
@@ -140,12 +146,9 @@ public class UniRepo<T> implements MyRepo<T> {
     public List<T> findByParam(String paramName, String paramValue) {
 
         try {
-            //pre pripad, ze by spojenie spadlo.
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
+            Connection conn = DoDBconn.getConnection();
             Statement st;
-            st = DoDBconn.getNonInvasiveConn().createStatement();
+            st = conn.createStatement();
 
             // Notification.show("SOM TU!");
             String sql;
@@ -159,24 +162,26 @@ public class UniRepo<T> implements MyRepo<T> {
                 sql = String.format("SELECT * FROM %s WHERE %s = '%s'", TN,
                         paramName, paramValue);
             }
-
-            if (TN.contains("a_")) {
+            
+            if (TN.contains("a_")){
                 //do nothing
             } else {
                 sql += " AND visible = true";
             }
 
+
             // Notification.show(sql);
-//            System.out.println(sql);
+            System.out.println(sql);
+
             ResultSet rs;
             rs = st.executeQuery(sql);
 
-//            System.out.println(sql);
+            System.out.println(sql);
             List<T> listEnt = this.fillListEntity(rs);
 
             rs.close();
             st.close();
-//            DoDBconn.releaseConnection(conn);
+            DoDBconn.releaseConnection(conn);
 
             return listEnt;
 
@@ -192,16 +197,14 @@ public class UniRepo<T> implements MyRepo<T> {
     // 4.
     /**
      * Vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
-     *
+     * 
      * @param ent
      * @return
      */
     @Override
     public T save(T ent) {
         try {
-
             Connection conn = DoDBconn.getConnection();
-
             Statement st = conn.createStatement();
 
             String entMetName;
@@ -258,17 +261,20 @@ public class UniRepo<T> implements MyRepo<T> {
                 // pokial je entita nova, tj. este nebola ulozena v DB.:
                 String s;
                 Object obj = entMethod.invoke(ent);
-
+                
 //                log.debug("KAROLKO entMetName:" + entMetName);
 //                log.debug("KAROLKO s:" + s);
 //                log.debug("KAROLKO obj" + obj);
-                if (null == obj) {
+                
+                
+                if (null == obj){
                     s = " " + obj + " ";
                 } else if ("java.util.Date".equals(obj.getClass().getCanonicalName())) {
                     s = "'" + ToolsDao.utilDateToString((Date) obj) + "'";
                 } else if ("java.sql.Date".equals(obj.getClass().getCanonicalName())) {
                     s = "'" + ToolsDao.sqlDateToString((java.sql.Date) obj) + "'";
-                } else if ("java.lang.Boolean".equals(obj.getClass().getCanonicalName())) {
+                } 
+                else if ("java.lang.Boolean".equals(obj.getClass().getCanonicalName())) {
                     s = " " + obj + " ";
                 } else {
                     if (obj.getClass().getCanonicalName().contains(".enums.")) {
@@ -277,7 +283,7 @@ public class UniRepo<T> implements MyRepo<T> {
                         s = "'" + obj + "'";
                     }
                 }
-
+                
                 if (novy) {
                     insert1.append(pn);
                     insert2.append(s);
@@ -294,14 +300,13 @@ public class UniRepo<T> implements MyRepo<T> {
             } else {
                 sql = String.format("UPDATE %s SET %s WHERE %s", TN,
                         update1.toString(), update2.toString());
-//                System.out.println(sql);
+                System.out.println(sql);
             }
 
             // Notification.show(sql);
             log.info("SAVE:" + sql);
 
             st.executeUpdate(sql);
-
             ResultSet rs = st.getGeneratedKeys();
             if (novy && rs.next()) {
                 Integer newId = rs.getInt(1);
@@ -310,14 +315,13 @@ public class UniRepo<T> implements MyRepo<T> {
                 // ent.setId(newId);
             }
 
-            conn.commit();
             rs.close();
             st.close();
-
+//            conn.commit();
             DoDBconn.releaseConnection(conn);
 
             return ent;
-
+            
         } catch (IllegalAccessException | NoSuchFieldException |
                 SecurityException | NoSuchMethodException |
                 IllegalArgumentException | InvocationTargetException | SQLException e) {
@@ -336,9 +340,7 @@ public class UniRepo<T> implements MyRepo<T> {
     @Override
     public boolean delete(T ent) {
         try {
-            
             Connection conn = DoDBconn.getConnection();
-
             Statement st = conn.createStatement();
 
             Integer id = null;
@@ -349,13 +351,14 @@ public class UniRepo<T> implements MyRepo<T> {
             }
 
             if (id != null) {
-                String sql = String.format("DELETE FROM %s WHERE id = %d", TN, id);
+                String sql = String.format("DELETE FROM %s WHERE id = %d", TN,
+                        id);
                 st.executeUpdate(sql);
                 log.info("DELETE:" + sql);
             }
-            conn.commit();
+
             st.close();
-            
+//            conn.commit();
             DoDBconn.releaseConnection(conn);
             return true;
 
@@ -380,97 +383,56 @@ public class UniRepo<T> implements MyRepo<T> {
      */
     @Override
     public boolean deactivate(T ent) {
-        
-        Connection conn = DoDBconn.getConnection();
-        
-        try {
-            
-            Statement st = conn.createStatement();
-
-            Integer id = null;
-
-            if (ent != null) {
-                Method entMethod = clsT.getMethod("getId");
-                id = (Integer) entMethod.invoke(ent);
-            }
-
-            if (id != null) {
-                String sql = String.format("UPDATE %s SET visible = false WHERE id = %d", TN, id);
-                st.executeUpdate(sql);
-            }
-
-
-            conn.commit();
-            
-            st.close();
-            DoDBconn.releaseConnection(conn);
-            return true;
-
-        } catch (SQLException | IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
-            Notification
-                    .show("Chyba, uniRepo::delete(non SQL exception)", Type.ERROR_MESSAGE);
-            log.error(e.getLocalizedMessage(), e);
-            return false;
-        }
-
+//        try {
+//            Connection conn = DoDBconn.getConnection();
+//            Statement st = conn.createStatement();
+//
+//            Integer id = null;
+//
+//            if (ent != null) {
+//                Method entMethod = clsT.getMethod("getId");
+//                id = (Integer) entMethod.invoke(ent);
+//            }
+//
+//            if (id != null) {
+//                String sql = String.format("DELETE FROM %s WHERE id = %d", TN,
+//                        id);
+//                st.executeUpdate(sql);
+//                log.info("DELETE:" + sql);
+//            }
+//
+//            st.close();
+////            conn.commit();
+//            DoDBconn.releaseConnection(conn);
+//            return true;
+//
+//        } catch (IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
+//            Notification
+//                    .show("Chyba, uniRepo::delete(non SQL exception)", Type.ERROR_MESSAGE);
+//            log.error(e.getLocalizedMessage(), e);
+//            return false;
+//        } catch (SQLException e) {
+////            Notification.show("Chyba, uniRepo::delete(SQL exception)", Type.ERROR_MESSAGE);
+//            Notification.show("Danu entitu nieje mozne zatial vymazat, vymaz dalsie podentity");
+//            log.error(e.getLocalizedMessage(), e);
+//            return false;
+//        }
+//
+        return true;
     }
 
-    /**
-     * Modifikuje iba specifikovany parameter.
-     *
-     * @param paramName the name of parameter.
-     * @param paramValue the new value of parameter
-     * @param id id of row where the value is updated.
-     * @throws java.sql.SQLException
-     */
-    public void updateParam(String paramName, String paramValue, String id) throws SQLException {
-
-        Connection conn = DoDBconn.getConnection();
-        Statement st = null;
-        try {
-
-            st = conn.createStatement();
-
-            // Notification.show("SOM TU!");
-            String sql;
-            if (paramValue == null) {
-                sql = String.format("UPDATE %s SET %s = NULL WHERE id =%s", TN, paramName, id);
-            } else if ("null".equalsIgnoreCase(paramValue) || "true".equalsIgnoreCase(paramValue) || "false".equalsIgnoreCase(paramValue)) {
-                sql = String.format("UPDATE %s SET %s = %s WHERE id =%s", TN, paramName, paramValue, id);
-            } else {
-                sql = String.format("UPDATE %s SET %s = '%s' WHERE  id =%s", TN, paramName, paramValue, id);
-            }
-
-            int i = st.executeUpdate(sql);
-            
-            conn.commit();
-            DoDBconn.releaseConnection(conn);            
-            
-        } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("Chyba, uniRepo::findByParam(...)",
-                    Type.ERROR_MESSAGE);
-            log.error(e.getLocalizedMessage(), e);
-            throw e;
-        } finally {
-            if (st != null) {
-                st.close();
-            }
-        }
-    }
-
-    
     
     /**
      * funkce na naplneni entity.
-     *
+     * 
      * @param rs
-     * @return
+     * @return 
      *
      */
     private T fillEntity(ResultSet rs) {
-
+        
         List<T> ents = this.fillListEntity(rs);
-        if (ents.size() > 0) {
+        if (ents.size() > 0){
             return ents.get(0);
         } else {
             return null;
@@ -481,7 +443,7 @@ public class UniRepo<T> implements MyRepo<T> {
      * naplna zoznam entit
      *
      * @param rs
-     * @return
+     * @return 
      */
     private List<T> fillListEntity(ResultSet rs) {
 
@@ -512,21 +474,22 @@ public class UniRepo<T> implements MyRepo<T> {
 //                    log.info("KYRYLENKO 4: " + entMetName);
 //                    Method entMethod = clsT.getDeclaredMethod(entMetName, new Class<?>[]{mapPar.get(pn)});
                     Method entMethod = clsT.getMethod(entMetName, mapPar.get(pn));
-
+                    
 //                  Method rsMethod = rsCls.getDeclaredMethod(rsMetName, new Class<?>[]{String.class});
                     Method rsMethod = rsCls.getMethod(rsMetName, String.class);
 
+
                     if ("getShort".equals(rsMetName)) {
-
+                        
                         Short sh = (Short) rsMethod.invoke(rs, pn);
-
+                        
                         Class<?> clsEnum = mapPar.get(pn);
                         Method enumMethod = clsEnum.getDeclaredMethod("values");
                         Object[] enumVals = (Object[]) (enumMethod.invoke(null));
                         Object enumVal = enumVals[sh];
-
+                        
                         entMethod.invoke(ent, enumVal);
-
+                        
                     } else {
                         entMethod.invoke(ent, rsMethod.invoke(rs, pn));
                     }
@@ -536,7 +499,7 @@ public class UniRepo<T> implements MyRepo<T> {
             }
 
             return listEnts;
-
+            
         } catch (InstantiationException | IllegalAccessException | NoSuchFieldException |
                 SecurityException | NoSuchMethodException | IllegalArgumentException |
                 InvocationTargetException | SQLException e) {
@@ -555,7 +518,6 @@ public class UniRepo<T> implements MyRepo<T> {
      */
     @Override
     public boolean copy(T entFrom, T entTo) {
-        
         try {
             if (entFrom.getClass() != entTo.getClass()) {
                 throw new NoSuchFieldException();
@@ -572,7 +534,7 @@ public class UniRepo<T> implements MyRepo<T> {
                 toMetName = ToolsDao.getG_SetterName(pn, "set");
 
                 Method fromMethod = clsT.getMethod(fromMetName);
-                Method toMethod = clsT.getMethod(toMetName, mapPar.get(pn));
+                Method toMethod = clsT.getMethod(toMetName,mapPar.get(pn));
 
                 toMethod.invoke(entTo, fromMethod.invoke(entFrom));
             }
@@ -585,10 +547,190 @@ public class UniRepo<T> implements MyRepo<T> {
         }
     }
 
-//    /**
-//     * commituje zmeny do DB.
-//     */
-//    public void doCommit() {
-////        DoDBconn.doCommit();
-//    }
+    /**
+     * Modifikuje iba specifikovany parameter.
+     *
+     * @param paramName the name of parameter.
+     * @param paramValue the new value of parameter
+     * @param id id of row where the value is updated.
+     * @throws java.sql.SQLException
+     */
+    public void updateParam(String paramName, String paramValue, String id) throws SQLException {
+        Connection conn = null;
+        Statement st = null;
+        try {
+            conn = DoDBconn.getConnection();
+
+            st = conn.createStatement();
+
+            // Notification.show("SOM TU!");
+            String sql;
+            if (paramValue == null) {
+                sql = String.format("UPDATE %s SET %s = NULL WHERE id =%s", TN, paramName, id);
+            } else if ("null".equalsIgnoreCase(paramValue) || "true".equalsIgnoreCase(paramValue) || "false".equalsIgnoreCase(paramValue)) {
+                sql = String.format("UPDATE %s SET %s = %s WHERE id =%s", TN, paramName, paramValue, id);
+            } else {
+                sql = String.format("UPDATE %s SET %s = '%s' WHERE  id =%s", TN, paramName, paramValue, id);
+            }
+
+            // Notification.show(sql);
+            //log.info("UPDATEPARAM, SQL: *" + sql + "*");
+            int i = st.executeUpdate(sql);
+            //st.execute(sql);
+            //log.info("UPDATEPARAM, affected rows: *" + i + "*");
+
+        } catch (SecurityException | IllegalArgumentException | SQLException e) {
+            Notification.show("Chyba, uniRepo::findByParam(...)",
+                    Type.ERROR_MESSAGE);
+            log.error(e.getLocalizedMessage(), e);
+            throw e;
+        } finally {
+            if (st != null) {
+                st.close();
+            }
+            if (conn != null) {
+                DoDBconn.releaseConnection(conn);
+            }
+        }
+    }
+
+    /**
+     * Modifikuje iba password. Vynimka z univerzalnosti, plati len pre tabulku
+     * a_user;
+     *
+     * @param rawPwd
+     * @param id id of row where the value is updated.
+     *
+     * @throws java.sql.SQLException
+     */
+    public void updatePassword(String rawPwd, String id) throws SQLException {
+
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        try {
+            conn = DoDBconn.getConnection();
+
+            st = conn.prepareStatement("UPDATE " + TN + " SET password = ? WHERE id = " + id);
+            st.setBytes(1, securityService.encryptPassword(rawPwd));
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(), ex);
+            throw new SQLException();
+        } finally {
+            if (st != null) {
+                st.close();
+            }
+            if (conn != null) {
+                DoDBconn.releaseConnection(conn);
+            }
+        }
+    }
+
+    /**
+     * Modifikuje iba password. Len pre tabulku a_user;
+     *
+     * @param id id of row where the value is updated.
+     * @return
+     *
+     * @throws java.sql.SQLException
+     */
+    public byte[] getPassword(String id) throws SQLException {
+
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        byte[] hash = null;
+        String sql;
+        if (TN.contains("a_")){
+                sql = "SELECT password FROM " + TN + " WHERE id = ?";
+            } else {
+                sql = "SELECT password FROM " + TN + " WHERE id = ? AND visible = true";
+            }
+        try {
+            conn = DoDBconn.getConnection();
+//            st = conn.prepareStatement("SELECT password FROM " + TN + " WHERE id = ?");
+            st = conn.prepareStatement(sql);
+            st.setString(1, id);
+            ResultSet result = st.executeQuery();
+
+            if (result.next()) {
+                hash = result.getBytes("password");
+            }
+            return hash;
+        } catch (SQLException ex) {
+            log.error(ex.getLocalizedMessage(), ex);
+            throw new SQLException(ex);
+        } finally {
+            if (st != null) {
+                st.close();
+            }
+            if (conn != null) {
+                DoDBconn.releaseConnection(conn);
+            }
+        }
+
+    }
+
+    /**
+     * For specific filtering purposes.
+     *
+     * @param sql
+     * @return
+     */
+    public List<Integer> findAllFilteringIds(String sql) {
+
+        try {
+            Connection conn = DoDBconn.getConnection();
+            Statement st;
+            st = conn.createStatement();
+
+            List<Integer> listIds;
+            // Notification.show(sql);
+            log.info("MEGASQL:*" + sql + "*");
+
+            ResultSet rs;
+            rs = st.executeQuery(sql);
+
+            System.out.println(sql);
+            listIds = this.fillListIds(rs);
+
+            rs.close();
+            st.close();
+            DoDBconn.releaseConnection(conn);
+
+            return listIds;
+
+        } catch (SecurityException | IllegalArgumentException | SQLException e) {
+            Notification.show("Chyba, filterRepo::findAllIds(...)",
+                    Notification.Type.ERROR_MESSAGE);
+            log.error(e.getMessage());
+            return null;
+        }
+
+    }
+
+    /**
+     *
+     */
+    private List<Integer> fillListIds(ResultSet rs) {
+
+        List<Integer> listIds = new ArrayList<>();
+        int id;
+
+        try {
+            while (rs.next()) {
+                id = rs.getInt("id");
+                listIds.add(id);
+            }
+
+            return listIds;
+        } catch (SecurityException | IllegalArgumentException | SQLException e) {
+            Notification.show("Chyba, FilterRepo, fillListIds(ResultSet rs)",
+                    Notification.Type.ERROR_MESSAGE);
+            log.error(e.getLocalizedMessage(), e);
+            return null;
+        }
+    }
+
 }

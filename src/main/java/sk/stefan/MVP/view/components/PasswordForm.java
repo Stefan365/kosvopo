@@ -13,7 +13,6 @@ import com.vaadin.ui.VerticalLayout;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.repo.dao.GeneralRepo;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
@@ -35,7 +34,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     private PasswordField newPwd2Tf;
 
     private final Item item;
-    private final GeneralRepo auserRepo;
+    private final UniRepo<A_User> uniRepo;
     private final OkCancelListener okCancelListener;
     private OkCancelListener forWindowListener;
     
@@ -52,7 +51,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
                 
         this.item = it;
         this.securityService = new SecurityServiceImpl();
-        this.auserRepo = new GeneralRepo();
+        this.uniRepo = new UniRepo<>(A_User.class);
         this.initLayout();
     }
 
@@ -75,7 +74,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
         String rawPwd = oldPwdTf.getValue();
 
         try {
-            byte[] pwd = auserRepo.getPassword("" + id);
+            byte[] pwd = uniRepo.getPassword("" + id);
             boolean isGood = securityService.checkPassword(rawPwd, pwd);
             isGood = true;
             log.info("ISGOOD: " + (isGood));
@@ -95,7 +94,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     }
 
     private void addToDB(String newPwd, String id) throws SQLException {
-        auserRepo.updatePassword(newPwd, id);
+        uniRepo.updatePassword(newPwd, id);
     }
 
     /**

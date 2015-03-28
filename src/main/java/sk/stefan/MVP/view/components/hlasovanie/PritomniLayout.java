@@ -240,7 +240,6 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
         for (VoteOfRole vor : votesOfRoles) {
             vor = vorRepo.save(vor);
         }
-        
     }
 
     /**
