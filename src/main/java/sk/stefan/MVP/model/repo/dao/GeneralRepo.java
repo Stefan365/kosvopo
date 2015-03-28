@@ -23,6 +23,7 @@ import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
 
 /**
+ * zahrna metody, ktore su univerzalne, ale nie su zavisle od Triedy entity.
  *
  * @author stefan
  */

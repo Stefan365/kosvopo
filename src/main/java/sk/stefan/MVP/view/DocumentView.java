@@ -19,8 +19,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.Document;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.files.FileUploader;
+import sk.stefan.files.MyFileDownloader;
 
 /**
  *
@@ -29,27 +32,32 @@ import sk.stefan.files.FileUploader;
 public class DocumentView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = 1L;
-    
+
     private static final Logger log = Logger.getLogger(DocumentView.class);
 
     private Upload upload;
-    
+
     private FileUploader uploadera;
 
-    
-    
-    
-    
+    private FileDownloader downloader;
+
+    private Button downloadBt;
+
+    private MyFileDownloader myDownloader;
+
     public DocumentView() {
 
-        this.initLayout();
+        this.setMargin(true);
+        this.setSpacing(true);
+        
+        this.initUploader();
+        this.initDownloader();
 
     }
 
-    private void initLayout() {
+    private void initUploader() {
 
         uploadera = new FileUploader();
-        
 
         // Create the upload with a caption and set receiver later
         upload = new Upload("Upload Image Here", uploadera);
@@ -65,16 +73,22 @@ public class DocumentView extends VerticalLayout implements View {
 
         upload.addSucceededListener(uploadera);
         this.addComponents(upload, uploadera.getImage());
-        
-        
 
     }
 
-    
-    private String getFileName(){
+    /**
+     * 
+     */
+    private void initDownloader() {
+
+        Button but = new Button("Download");
+        UniRepo<Document> docRepo = new UniRepo<>(Document.class);
+        Document doc = docRepo.findOne(8);
+
+        this.myDownloader = new MyFileDownloader(doc, but);
+        this.addComponent(but);
+
         
-        return "filename";
-    
     }
 
     @Override

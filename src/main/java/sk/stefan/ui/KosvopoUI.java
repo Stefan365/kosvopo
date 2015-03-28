@@ -20,7 +20,6 @@ import sk.stefan.MVP.model.entity.dao.A_UserRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
-import sk.stefan.MVP.view.AddressbookView;
 import sk.stefan.MVP.view.AdministrationView;
 import sk.stefan.MVP.view.DocumentView;
 import sk.stefan.MVP.view.FilaManagerView;
@@ -115,7 +114,6 @@ public class KosvopoUI extends UI {
         
 //        navigator.addView("hlasovanie", new VotingLayout());
         
-        navigator.addView("addressbook", new AddressbookView());
         navigator.addView("filamanager", new FilaManagerView());
         navigator.addView("kos2", new Kos2View());
         navigator.addView("kos3", new Kos3View());

@@ -17,6 +17,7 @@ import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.enums.Stability;
 
 public class DruhyView extends VerticalLayout implements View {
+    private static final long serialVersionUID = 1L;
 
     //private Navigator navigator;
     public DruhyView(Navigator nav) {

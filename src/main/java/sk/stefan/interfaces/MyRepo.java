@@ -21,7 +21,7 @@ public interface MyRepo<T> {
     public T findOne(Integer id);
     
 
-    // 3.
+    // 3.A
     /**
      * Vyhlada zoznam entit, splnajucich danu podmienku.
      * 
@@ -31,6 +31,20 @@ public interface MyRepo<T> {
      */
     public List<T> findByParam(String paramName, String paramValue);
 
+    // 3.A
+    /**
+     * Vyhlada zoznam entit, splnajucich danu podmienku.
+     * 
+     * @param p1Name
+     * @param p1Value
+     * @param p2Name
+     * @param p2Value
+     * @return 
+     */
+    public List<T> findByTwoParams(String p1Name, String p1Value, 
+            String p2Name, String p2Value);
+
+    
     // 4.
     /**
      * Zahrna update i vytvorenie novej entity.

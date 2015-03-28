@@ -155,7 +155,7 @@ id INT(11) AUTO_INCREMENT,
 public_body_id INT(11),
 tenure_id INT(11),
 public_person_id INT(11),
-name VARCHAR(50) ,
+name SMALLINT DEFAULT 0,
 visible BIT  DEFAULT 1,
 
 CONSTRAINT PRIMARY KEY (id)
@@ -252,4 +252,18 @@ boss_table VARCHAR(30),
 boss_reference VARCHAR(30),
 
 CONSTRAINT hie_PK PRIMARY KEY(id)
+);
+
+-- 18.
+CREATE TABLE t_note
+(
+id INT(11) NOT NULL  AUTO_INCREMENT,
+table_name VARCHAR(30) NOT NULL,
+table_row_id INT(11) NOT NULL,
+title VARCHAR(30) NOT NULL,
+note_date DATE NOT NULL,
+note TEXT NOT NULL,
+visible BIT NOT NULL DEFAULT 1,
+
+CONSTRAINT not_PK PRIMARY KEY(id)
 );

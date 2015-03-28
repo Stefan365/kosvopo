@@ -143,6 +143,7 @@ public class ToolsDao {
                 case "sk.stefan.enums.PublicUsefulness":
                 case "sk.stefan.enums.FilterType":
                 case "sk.stefan.enums.NonEditableFields":
+                case "sk.stefan.enums.PublicRoleType":
 
                     sb.append("Short");
                     break;
@@ -284,6 +285,7 @@ public class ToolsDao {
      * @return
      */
     public static synchronized String getTableName(Class<?> clsE) {
+        
         try {
             Field tnFld = clsE.getDeclaredField("TN");
             String tn = (String) tnFld.get(null);

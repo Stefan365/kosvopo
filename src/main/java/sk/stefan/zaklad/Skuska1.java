@@ -45,6 +45,7 @@ import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.Document;
+import sk.stefan.MVP.model.entity.dao.Okres;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Vote;
@@ -83,7 +84,9 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusFileDownload();
+        
+        sk.skusRepo();
+//        sk.skusFileDownload();
 //        sk.skusUpdaredRepo();
 //        sk.skusPole();
 //        sk.skusSqlDate();
@@ -1108,23 +1111,43 @@ public class Skuska1<T> {
             UniRepo<Document> docRepo = new UniRepo<>(Document.class);
             Document doc = docRepo.findOne(4);
             log.debug("DOKUMENT: " + doc.getFile_name());
-//        FileOutputStream outStream = new ByteArrayOutputStream(doc.getDocument());
+
+            //tuto logiku skryva FileDOwnloader:
             String fileN = "C:\\Users\\stefan\\Desktop\\downloads\\" + doc.getFile_name();
             fos = new FileOutputStream(fileN);
             fos.write(doc.getDocument());
             fos.flush();
-            
-        } catch (IOException  ex) {
-            log.error(ex.getMessage(),ex);
+
+        } catch (IOException ex) {
+            log.error(ex.getMessage(), ex);
         } finally {
             try {
-                if (fos != null){
+                if (fos != null) {
                     fos.close();
                 }
-                
+
             } catch (IOException ex) {
-                log.error(ex.getMessage(),ex);
+                log.error(ex.getMessage(), ex);
             }
         }
+    }
+
+    private void skusRepo() {
+        try {
+            UniRepo<Okres> uniRepo = new UniRepo<>(Okres.class);
+//        List<Okres> listEnt = uniRepo.findByParam("id", "7");
+            List<Okres> listEnt = uniRepo.findByTwoParams("id", "7", "kraj_id", "2");
+            
+            
+            for (Okres o: listEnt){
+                log.info("OKRES:" + o.getOkres_name());
+            }
+            
+            uniRepo.updateParam("okres_name", "ZVOLENA", "7");
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(),ex);
+                    
+        }
+        
     }
 }

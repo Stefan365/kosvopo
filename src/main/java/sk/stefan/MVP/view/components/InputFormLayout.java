@@ -38,8 +38,8 @@ import sk.stefan.MVP.view.converters.DateConverter;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
-import sk.stefan.utils.ToolsNazvy;
 import sk.stefan.utils.ToolsDao;
+import sk.stefan.utils.ToolsNazvy;
 
 /**
  *
@@ -299,6 +299,10 @@ public class InputFormLayout<T> extends FormLayout {
                 case "sk.stefan.enums.Stability":
                 case "sk.stefan.enums.UserType":
                 case "sk.stefan.enums.PublicUsefulness":
+                case "sk.stefan.enums.PublicRoleType":
+                case "sk.stefan.enums.FilterType":
+                case "sk.stefan.enums.NonEditableFields":
+
 
                     Class<?> cls = mapPar.get(pn);
                     try {

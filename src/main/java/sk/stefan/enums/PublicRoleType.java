@@ -12,13 +12,13 @@ import java.util.List;
  *
  * @author stefan
  */
-public enum Stability {
-    
-    S1("1. nespoľahlivý"), S2("2. podľa počasia"), S3("3. priemer"), S4("4. vcelku stabilný"), S5("5. stabilný");
+public enum PublicRoleType {
+
+    POSLANEC("poslanec"), TAJOMNIK("tajomník"), PODPREDSEDA("podpredseda"), PREDSEDA("predseda");
 
     public final String name;
 
-    Stability(String name) {
+    PublicRoleType(String name) {
         this.name = name;
     }
 
@@ -28,29 +28,30 @@ public enum Stability {
 
     /**
      * vrací seznam jmen daných enumů
-     * @return 
+     *
+     * @return
      */
     public static List<String> getNames() {
         List<String> list = new ArrayList<>();
 
-        for (Stability s : Stability.values()) {
-            list.add(s.getName());
+        for (PublicRoleType prt : PublicRoleType.values()) {
+            list.add(prt.getName());
         }
         return list;
     }
 
     /**
      * vrací seznam short hodnot daných enumů
-     * @return 
+     *
+     * @return
      */
     public static List<Integer> getOrdinals() {
+
         List<Integer> list = new ArrayList<>();
-        for (Stability s : Stability.values()) {
-            list.add(s.ordinal());
+        for (PublicRoleType prt : PublicRoleType.values()) {
+            list.add(prt.ordinal());
         }
         return list;
     }
 
-
-    
 }

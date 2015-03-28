@@ -131,11 +131,11 @@ COMMIT;
 
 
 -- 10.
-INSERT INTO t_public_role(public_body_id, tenure_id, public_person_id, name) VALUES (5, 1, 1, 'poslanec');
-INSERT INTO t_public_role(public_body_id, tenure_id, public_person_id, name) VALUES (5, 1, 2, 'poslanec');
-INSERT INTO t_public_role(public_body_id, tenure_id, public_person_id, name) VALUES (5, 1, 3, 'predseda');
-INSERT INTO t_public_role(public_body_id, tenure_id, public_person_id, name) VALUES (5, 1, 4, 'poslanec');
-INSERT INTO t_public_role(public_body_id, tenure_id, public_person_id, name) VALUES (5, 1, 5, 'poslanec');
+INSERT INTO t_public_role(public_body_id, tenure_id, public_person_id, name) VALUES (5, 1, 1, 0);
+INSERT INTO t_public_role(public_body_id, tenure_id, public_person_id, name) VALUES (5, 1, 2, 0);
+INSERT INTO t_public_role(public_body_id, tenure_id, public_person_id, name) VALUES (5, 1, 3, 3);
+INSERT INTO t_public_role(public_body_id, tenure_id, public_person_id, name) VALUES (5, 1, 4, 0);
+INSERT INTO t_public_role(public_body_id, tenure_id, public_person_id, name) VALUES (5, 1, 5, 0);
 COMMIT;
 
 

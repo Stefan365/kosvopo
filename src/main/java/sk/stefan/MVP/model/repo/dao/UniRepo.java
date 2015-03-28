@@ -146,31 +146,76 @@ public class UniRepo<T> implements MyRepo<T> {
             Statement st;
             st = DoDBconn.getNonInvasiveConn().createStatement();
 
-            // Notification.show("SOM TU!");
-            String sql;
-            if (paramValue == null) {
-                sql = String.format("SELECT * FROM %s WHERE %s is NULL", TN,
-                        paramName);
-            } else if ("null".equalsIgnoreCase(paramValue) || "true".equalsIgnoreCase(paramValue) || "false".equalsIgnoreCase(paramValue)) {
-                sql = String.format("SELECT * FROM %s WHERE %s = %s", TN,
-                        paramName, paramValue);
-            } else {
-                sql = String.format("SELECT * FROM %s WHERE %s = '%s'", TN,
-                        paramName, paramValue);
-            }
+            StringBuilder sql = new StringBuilder();
 
+            sql.append(String.format("SELECT * FROM %s WHERE ", TN));
+            sql.append(this.getFindByParamQuery(paramName, paramValue));
             if (TN.contains("a_")) {
                 //do nothing
             } else {
-                sql += " AND visible = true";
+                sql.append(" AND visible = true");
             }
 
-            // Notification.show(sql);
-//            System.out.println(sql);
+            log.info("SQL: *"+ sql.toString() +"*");
             ResultSet rs;
-            rs = st.executeQuery(sql);
+            
+            rs = st.executeQuery(sql.toString());
 
-//            System.out.println(sql);
+            List<T> listEnt = this.fillListEntity(rs);
+
+            rs.close();
+            st.close();
+
+            return listEnt;
+
+        } catch (SecurityException | IllegalArgumentException | SQLException e) {
+            Notification.show("Chyba, uniRepo::findByParam(...)",
+                    Type.ERROR_MESSAGE);
+            log.error(e.getMessage());
+            return null;
+        }
+
+    }
+
+    // 3.
+    /**
+     * Najde entitu podla zadaneho parametra.
+     *
+     * @param p1Name
+     * @param p1Value
+     * @param p2Name
+     * @param p2Value
+     * @return
+     */
+    @Override
+    public List<T> findByTwoParams(String p1Name, String p1Value,
+            String p2Name, String p2Value) {
+
+        try {
+            //pre pripad, ze by spojenie spadlo.
+            if (DoDBconn.getNonInvasiveConn() == null) {
+                DoDBconn.createNoninvasiveConnection();
+            }
+            Statement st;
+            st = DoDBconn.getNonInvasiveConn().createStatement();
+
+            // Notification.show("SOM TU!");
+            StringBuilder sql = new StringBuilder();
+
+            sql.append(String.format("SELECT * FROM %s WHERE ", TN));
+            sql.append(this.getFindByParamQuery(p1Name, p1Value));
+            sql.append(" AND ");
+            sql.append(this.getFindByParamQuery(p2Name, p2Value));
+            if (TN.contains("a_")) {
+                //do nothing
+            } else {
+                sql.append(" AND visible = true");
+            }
+
+            ResultSet rs;
+            rs = st.executeQuery(sql.toString());
+
+            log.info("SQL: *"+ sql.toString() +"*");
             List<T> listEnt = this.fillListEntity(rs);
 
             rs.close();
@@ -185,6 +230,29 @@ public class UniRepo<T> implements MyRepo<T> {
             log.error(e.getMessage());
             return null;
         }
+
+    }
+
+    /**
+     * Vrati SQL dotaz, pre zadany parameter a jeho hodnotu.
+     *
+     * @param pn parameter name
+     * @param pv parameter value
+     * @return
+     */
+    private String getFindByParamQuery(String pn, String pv) {
+
+        String sql;
+
+        if (pv == null) {
+            sql = String.format(" %s is NULL ", pn);
+        } else if ("null".equalsIgnoreCase(pv) || "true".equalsIgnoreCase(pv) || "false".equalsIgnoreCase(pv)) {
+            sql = String.format(" %s = %s ", pn, pv);
+        } else {
+            sql = String.format(" %s = '%s'", pn, pv);
+        }
+        
+        return sql;
 
     }
 
@@ -429,17 +497,14 @@ public class UniRepo<T> implements MyRepo<T> {
 
             st = conn.createStatement();
 
-            // Notification.show("SOM TU!");
-            String sql;
-            if (paramValue == null) {
-                sql = String.format("UPDATE %s SET %s = NULL WHERE id =%s", TN, paramName, id);
-            } else if ("null".equalsIgnoreCase(paramValue) || "true".equalsIgnoreCase(paramValue) || "false".equalsIgnoreCase(paramValue)) {
-                sql = String.format("UPDATE %s SET %s = %s WHERE id =%s", TN, paramName, paramValue, id);
-            } else {
-                sql = String.format("UPDATE %s SET %s = '%s' WHERE  id =%s", TN, paramName, paramValue, id);
-            }
+            StringBuilder sql = new StringBuilder();
 
-            int i = st.executeUpdate(sql);
+            sql.append(String.format("UPDATE %s SET ", TN));
+            sql.append(this.getFindByParamQuery(paramName, paramValue));
+            sql.append(String.format(" WHERE id =%s", id));
+
+            log.info("SQL:*" + sql + "*");
+            int i = st.executeUpdate(sql.toString());
 
             conn.commit();
             DoDBconn.releaseConnection(conn);

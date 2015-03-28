@@ -1,8 +1,13 @@
+-- 18.
+DROP TABLE IF EXISTS t_note;
+
 -- 17.
 DROP TABLE IF EXISTS a_hierarchy;
 
 -- 16.
-DROP TABLE IF EXISTS t_document;
+-- DROP TABLE IF EXISTS t_document;
+
+
 
 -- 15.
 DROP TABLE IF EXISTS t_vote_classification;

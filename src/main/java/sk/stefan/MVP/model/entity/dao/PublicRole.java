@@ -1,6 +1,7 @@
 package sk.stefan.MVP.model.entity.dao;
 
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.enums.PublicRoleType;
 import sk.stefan.interfaces.PresentationName;
 
 public class PublicRole implements PresentationName {
@@ -17,7 +18,7 @@ public class PublicRole implements PresentationName {
 
     private Integer public_person_id;
 
-    private String name;
+    private PublicRoleType name;
 
     private Boolean visible;
 
@@ -38,7 +39,7 @@ public class PublicRole implements PresentationName {
         return this.public_person_id;
     }
 
-    public String getName() {
+    public PublicRoleType getName() {
         return this.name;
     }
 
@@ -67,8 +68,8 @@ public class PublicRole implements PresentationName {
         this.public_person_id = ppid;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(PublicRoleType nam) {
+        this.name = nam;
     }
 
     public void setVisible(Boolean vis) {

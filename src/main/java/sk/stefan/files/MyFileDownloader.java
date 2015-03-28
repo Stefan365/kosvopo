@@ -9,10 +9,8 @@ import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.themes.BaseTheme;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
@@ -27,15 +25,9 @@ public class MyFileDownloader {
 
     private FileDownloader fileDownloader;
 
-    private StreamSource source;
+    private final Button downlBt;
 
-    private StreamResource resource;
-
-    private Button downlBt;
-
-    private Document document;
-
-    private InputStream inputStream;
+    private final Document document;
 
     
     //0.konstruktor.
@@ -43,17 +35,33 @@ public class MyFileDownloader {
      * 
      * @param doc
      */
-    public MyFileDownloader(Document doc){
+    public MyFileDownloader(Document doc, Button but){
+        
         this.document = doc;
+        this.downlBt = but;
+        
+        this.setButton();
+        this.initDownload();
+        
+    }
+    
+
+    /**
+     * Sets buttons properties
+     */
+    private void setButton(){
+        
+        this.downlBt.setStyleName(BaseTheme.BUTTON_LINK);
+        this.downlBt.setCaption(document.getFile_name());
+        
     }
     
     /**
      * Method to download file.
      */
-    private void fileDownload() {
+    private void initDownload() {
 
-        downlBt = new Button("Link to pdf");
-        resource = getInputResource();
+        StreamResource resource = getInputResource();
         fileDownloader = new FileDownloader(resource);
         fileDownloader.extend(downlBt);
 
@@ -64,26 +72,18 @@ public class MyFileDownloader {
      *
      */
     private StreamResource getInputResource() {
+        
+        StreamSource source;
+        StreamResource resource;
 
-        source = new StreamResource.StreamSource() {
+        source = new StreamSource() {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             public InputStream getStream() {
-                // return your file/bytearray as an InputStream
-
-//                File file = new File(document.getFile_name());
-//                try {
-//                    inputStream = new FileInputStream(file);
-                        
-                inputStream = new ByteArrayInputStream(document.getDocument());
-                
+                InputStream inputStream = new ByteArrayInputStream(document.getDocument());
                 return inputStream;
-//                } catch (FileNotFoundException ex) {
-//                    log.error(ex.getMessage(), ex);
-//                    return null;
-//                }
             }
         };
 
@@ -96,7 +96,7 @@ public class MyFileDownloader {
      * return s filename;
      */
     private String getFileName() {
-        return document.getFile_name() + "kokotnar";
+        return document.getFile_name();
     }
 
 }
