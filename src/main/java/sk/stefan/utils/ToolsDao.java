@@ -145,42 +145,6 @@ public class ToolsDao {
 
     }
     
-//    /**
-//     * 
-//     * @param o
-//     * @param cls
-//     * @return 
-//     */
-//    public static Object transformToAppropValue(Object o, Class<?> cls) {
-//
-//        String typ = cls.getCanonicalName();
-//
-//        switch (typ) {
-//            case "java.lang.Integer":
-//                return int.class;
-//                return Integer.valueOf(o+"");
-//                
-//            case "java.lang.Byte[]":
-//                return byte[].class;
-//            case "java.lang.Short":
-//            case "sk.stefan.enums.VoteResult":
-//            case "sk.stefan.enums.VoteAction":
-//            case "sk.stefan.enums.Stability":
-//            case "sk.stefan.enums.UserType":
-//            case "sk.stefan.enums.PublicUsefulness":
-//            case "sk.stefan.enums.FilterType":
-//            case "sk.stefan.enums.NonEditableFields":
-//            case "sk.stefan.enums.PublicRoleType":
-//                return short.class;
-//            case "java.lang.Long":
-//                return long.class;
-//            case "java.lang.Boolean":
-//                return boolean.class;
-//            default:
-//                return o;
-//        }
-//
-//    }
 
 
     /**
