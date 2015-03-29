@@ -1,3 +1,5 @@
+package sk.stefan.documents;
+
 //package sk.stefan.files;
 //
 //import java.io.File;

@@ -21,7 +21,7 @@ import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.view.AdministrationView;
-import sk.stefan.MVP.view.DocumentView;
+import sk.stefan.documents.DocumentView;
 import sk.stefan.MVP.view.FilaManagerView;
 import sk.stefan.MVP.view.HomoView;
 import sk.stefan.MVP.view.InputAllView;

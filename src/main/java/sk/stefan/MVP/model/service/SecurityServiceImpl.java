@@ -33,6 +33,7 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public void login(A_User user) {
     	VaadinSession.getCurrent().setAttribute(A_User.class, user);
+//       	VaadinSession.getCurrent().setAttribute(Object.class, user);
     }
 
     /**

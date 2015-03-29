@@ -2,7 +2,7 @@ package sk.stefan.MVP.view;
 
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.utils.ImageUploader;
-import sk.stefan.files.FileUploader;
+import sk.stefan.documents.FileUploader;
 import sk.stefan.utils.MyImageSource;
 import sk.stefan.utils.Take5;
 

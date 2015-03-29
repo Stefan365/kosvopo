@@ -1,4 +1,4 @@
-package sk.stefan.files;
+package sk.stefan.documents;
 
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;

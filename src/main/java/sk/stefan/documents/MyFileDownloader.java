@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.files;
+package sk.stefan.documents;
 
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;

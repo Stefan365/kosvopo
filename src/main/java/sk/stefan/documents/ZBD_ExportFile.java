@@ -1,3 +1,5 @@
+package sk.stefan.documents;
+
 //
 //import com.vaadin.server.FileDownloader;
 //import com.vaadin.ui.Button;

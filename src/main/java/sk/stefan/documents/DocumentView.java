@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.MVP.view;
+package sk.stefan.documents;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -22,8 +22,8 @@ import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.files.FileUploader;
-import sk.stefan.files.MyFileDownloader;
+import sk.stefan.documents.FileUploader;
+import sk.stefan.documents.MyFileDownloader;
 
 /**
  *
@@ -35,15 +35,17 @@ public class DocumentView extends VerticalLayout implements View {
 
     private static final Logger log = Logger.getLogger(DocumentView.class);
 
+//    uploader:
     private Upload upload;
-
     private FileUploader uploadera;
 
+//    downloader:
     private FileDownloader downloader;
-
     private Button downloadBt;
-
     private MyFileDownloader myDownloader;
+    
+    
+    
 
     public DocumentView() {
 
