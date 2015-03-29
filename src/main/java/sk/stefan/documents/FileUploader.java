@@ -7,6 +7,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,11 +15,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.repo.dao.GeneralRepo;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 
 /**
- * 
+ *
  */
 public class FileUploader implements Receiver, SucceededListener {
 
@@ -32,10 +37,11 @@ public class FileUploader implements Receiver, SucceededListener {
 
     private InputStream inStream;
     private String fileName;
-    
+
     private final GeneralRepo genRepo = new GeneralRepo();
 
-    
+    private final UniRepo<Document> docRepo = new UniRepo<>(Document.class);
+
     
     public FileUploader() {
 
@@ -50,13 +56,12 @@ public class FileUploader implements Receiver, SucceededListener {
 
     @Override
     public OutputStream receiveUpload(String filename, String mimeType) {
-        
+
         this.fileName = filename;
         FileOutputStream fos;
-        
 
         try {
-            
+
             file = new File(fileName);
             fos = new FileOutputStream(file);
 
@@ -79,16 +84,30 @@ public class FileUploader implements Receiver, SucceededListener {
         image.setVisible(true);
         image.setSource(new FileResource(file));
 
-        
+        Document doc;
         try {
-        
+            doc = new Document();
+            doc.setFile_name(fileName);
+            doc.setTable_name(tn);
+            doc.setTable_row_id(rid);
+
             inStream = new FileInputStream(this.getFile());
-            genRepo.insertFileInDB(inStream, fileName, tn, rid);
+            byte[] bFile = new byte[inStream.available()];
+            try {
+                inStream.read(bFile);
+                doc.setDocument(bFile);
+            } catch (IOException ex) {
+                
+            }
+            docRepo.save(doc);
+//            genRepo.insertFileInDB(inStream, fileName, tn, rid);
+
             Notification.show("File saved to Database!");
-        
-        } catch (FileNotFoundException ex) {
+
+        } catch (IOException ex) {
             log.error(ex.getMessage(), ex);
-        } finally {
+        } 
+        finally {
             try {
                 inStream.close();
             } catch (IOException ex) {

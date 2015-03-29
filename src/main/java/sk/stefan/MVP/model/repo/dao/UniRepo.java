@@ -10,14 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.model.entity.dao.Okres;
 import sk.stefan.interfaces.MyRepo;
 import sk.stefan.utils.ToolsDao;
 
@@ -260,7 +259,146 @@ public class UniRepo<E> implements MyRepo<E> {
 
     }
 
-    // 4.
+//    // 4.
+//    /**
+//     * Vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
+//     *
+//     * @param ent
+//     * @return
+//     */
+//    @Override
+//    public E save(E ent) {
+//        try {
+//
+//            Connection conn = DoDBconn.getConnection();
+//
+//            Statement st = conn.createStatement();
+//
+//            String entMetName;
+//            // Map<String, String> mapPar;
+//            Map<String, Class<?>> mapPar;
+//
+//            mapPar = ToolsDao.getTypParametrov(clsE);
+//
+//            String sql, str;
+//
+//            Boolean novy, zac = true;
+//            StringBuilder insert1 = new StringBuilder();
+//            StringBuilder insert2 = new StringBuilder();
+//
+//            StringBuilder update1 = new StringBuilder();
+//            StringBuilder update2 = new StringBuilder();
+//
+//            insert1.append("(");
+//            insert2.append("(");
+//
+//            // kontrola o jakou entitu se jedna (nova/uz pouzita):
+//            entMetName = "getId";
+//            Method entMethod = clsE.getMethod(entMetName);
+//            if (entMethod.invoke(ent) == null) {
+//                novy = true;
+//            } else {
+//                novy = false;
+//                str = String.format(" id = %d",
+//                        (Integer) (entMethod.invoke(ent)));
+//                update2.append(str);
+//            }
+//
+//            // cyklus zistovania hodnot parametrov POJO-a:
+//            for (String pn : mapPar.keySet()) {
+//                if ("password".equals(pn)) {
+//                    //password sa bude ukladat inym sposobom
+//                    continue;
+//                }
+//                if ("id".equals(pn)) {
+//                    continue;
+//                }
+//
+//                if (zac == false && !novy) {
+//                    update1.append(", ");
+//                } else if (zac == false && novy) {
+//                    insert1.append(", ");
+//                    insert2.append(", ");
+//                }
+//                zac = false;
+//
+//                entMetName = ToolsDao.getG_SetterName(pn, "get");
+//                entMethod = clsE.getMethod(entMetName);
+//
+//                // pokial je entita nova, tj. este nebola ulozena v DB.:
+//                String s;
+//                Object obj = entMethod.invoke(ent);
+//
+////                log.debug("KAROLKO entMetName:" + entMetName);
+////                log.debug("KAROLKO s:" + s);
+////                log.debug("KAROLKO obj" + obj);
+//                if (null == obj) {
+//                    s = " " + obj + " ";
+//                } else if ("java.util.Date".equals(obj.getClass().getCanonicalName())) {
+//                    s = "'" + ToolsDao.utilDateToString((Date) obj) + "'";
+//                } else if ("java.sql.Date".equals(obj.getClass().getCanonicalName())) {
+//                    s = "'" + ToolsDao.sqlDateToString((java.sql.Date) obj) + "'";
+//                } else if ("java.lang.Boolean".equals(obj.getClass().getCanonicalName())) {
+//                    s = " " + obj + " ";
+//                } else {
+//                    if (obj.getClass().getCanonicalName().contains(".enums.")) {
+//                        s = "" + ToolsDao.getShortFromEnum(mapPar.get(pn), obj);
+//                    } else {
+//                        s = "'" + obj + "'";
+//                    }
+//                }
+//
+//                if (novy) {
+//                    insert1.append(pn);
+//                    insert2.append(s);
+//                } else {
+//                    update1.append(pn).append(" = ").append(s);
+//                }
+//            }
+//
+//            if (novy) {
+//                insert1.append(")");
+//                insert2.append(")");
+//                sql = String.format("INSERT INTO %s %s VALUES %s ", TN,
+//                        insert1.toString(), insert2.toString());
+//            } else {
+//                sql = String.format("UPDATE %s SET %s WHERE %s", TN,
+//                        update1.toString(), update2.toString());
+////                System.out.println(sql);
+//            }
+//
+//            // Notification.show(sql);
+//            log.info("SAVE:" + sql);
+//
+//            st.executeUpdate(sql);
+//
+//            ResultSet rs = st.getGeneratedKeys();
+//            if (novy && rs.next()) {
+//                Integer newId = rs.getInt(1);
+//                entMethod = clsE.getMethod("setId", Integer.class);
+//                entMethod.invoke(ent, newId);
+//                // ent.setId(newId);
+//            }
+//
+//            conn.commit();
+//            rs.close();
+//            st.close();
+//
+//            DoDBconn.releaseConnection(conn);
+//
+//            return ent;
+//
+//        } catch (IllegalAccessException | NoSuchFieldException |
+//                SecurityException | NoSuchMethodException |
+//                IllegalArgumentException | InvocationTargetException | SQLException e) {
+//            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
+//            log.error(e.getMessage(), e);
+//            return null;
+//        }
+//
+//    }
+
+    // 4.B
     /**
      * Vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
      *
@@ -272,146 +410,7 @@ public class UniRepo<E> implements MyRepo<E> {
         try {
 
             Connection conn = DoDBconn.getConnection();
-
-            Statement st = conn.createStatement();
-
-            String entMetName;
-            // Map<String, String> mapPar;
-            Map<String, Class<?>> mapPar;
-
-            mapPar = ToolsDao.getTypParametrov(clsE);
-
-            String sql, str;
-
-            Boolean novy, zac = true;
-            StringBuilder insert1 = new StringBuilder();
-            StringBuilder insert2 = new StringBuilder();
-
-            StringBuilder update1 = new StringBuilder();
-            StringBuilder update2 = new StringBuilder();
-
-            insert1.append("(");
-            insert2.append("(");
-
-            // kontrola o jakou entitu se jedna (nova/uz pouzita):
-            entMetName = "getId";
-            Method entMethod = clsE.getMethod(entMetName);
-            if (entMethod.invoke(ent) == null) {
-                novy = true;
-            } else {
-                novy = false;
-                str = String.format(" id = %d",
-                        (Integer) (entMethod.invoke(ent)));
-                update2.append(str);
-            }
-
-            // cyklus zistovania hodnot parametrov POJO-a:
-            for (String pn : mapPar.keySet()) {
-                if ("password".equals(pn)) {
-                    //password sa bude ukladat inym sposobom
-                    continue;
-                }
-                if ("id".equals(pn)) {
-                    continue;
-                }
-
-                if (zac == false && !novy) {
-                    update1.append(", ");
-                } else if (zac == false && novy) {
-                    insert1.append(", ");
-                    insert2.append(", ");
-                }
-                zac = false;
-
-                entMetName = ToolsDao.getG_SetterName(pn, "get");
-                entMethod = clsE.getMethod(entMetName);
-
-                // pokial je entita nova, tj. este nebola ulozena v DB.:
-                String s;
-                Object obj = entMethod.invoke(ent);
-
-//                log.debug("KAROLKO entMetName:" + entMetName);
-//                log.debug("KAROLKO s:" + s);
-//                log.debug("KAROLKO obj" + obj);
-                if (null == obj) {
-                    s = " " + obj + " ";
-                } else if ("java.util.Date".equals(obj.getClass().getCanonicalName())) {
-                    s = "'" + ToolsDao.utilDateToString((Date) obj) + "'";
-                } else if ("java.sql.Date".equals(obj.getClass().getCanonicalName())) {
-                    s = "'" + ToolsDao.sqlDateToString((java.sql.Date) obj) + "'";
-                } else if ("java.lang.Boolean".equals(obj.getClass().getCanonicalName())) {
-                    s = " " + obj + " ";
-                } else {
-                    if (obj.getClass().getCanonicalName().contains(".enums.")) {
-                        s = "" + ToolsDao.getShortFromEnum(mapPar.get(pn), obj);
-                    } else {
-                        s = "'" + obj + "'";
-                    }
-                }
-
-                if (novy) {
-                    insert1.append(pn);
-                    insert2.append(s);
-                } else {
-                    update1.append(pn).append(" = ").append(s);
-                }
-            }
-
-            if (novy) {
-                insert1.append(")");
-                insert2.append(")");
-                sql = String.format("INSERT INTO %s %s VALUES %s ", TN,
-                        insert1.toString(), insert2.toString());
-            } else {
-                sql = String.format("UPDATE %s SET %s WHERE %s", TN,
-                        update1.toString(), update2.toString());
-//                System.out.println(sql);
-            }
-
-            // Notification.show(sql);
-            log.info("SAVE:" + sql);
-
-            st.executeUpdate(sql);
-
-            ResultSet rs = st.getGeneratedKeys();
-            if (novy && rs.next()) {
-                Integer newId = rs.getInt(1);
-                entMethod = clsE.getMethod("setId", Integer.class);
-                entMethod.invoke(ent, newId);
-                // ent.setId(newId);
-            }
-
-            conn.commit();
-            rs.close();
-            st.close();
-
-            DoDBconn.releaseConnection(conn);
-
-            return ent;
-
-        } catch (IllegalAccessException | NoSuchFieldException |
-                SecurityException | NoSuchMethodException |
-                IllegalArgumentException | InvocationTargetException | SQLException e) {
-            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
-            log.error(e.getMessage(), e);
-            return null;
-        }
-
-    }
-
-    // 4.B
-    /**
-     * Vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
-     *
-     * @param ent
-     * @return
-     */
-//    @Override
-    public E saveU(E ent) {
-        try {
-
-            Connection conn = DoDBconn.getConnection();
-            Statement st;
+            PreparedStatement st;
             Map<String, Class<?>> mapPar;
             String sql;
 
@@ -427,7 +426,7 @@ public class UniRepo<E> implements MyRepo<E> {
             }
             st = this.createStatement(mapPar, conn, sql, ent);
 
-            st.executeUpdate(sql);
+            st.executeUpdate();
 
             ResultSet rs = st.getGeneratedKeys();
             if (novy && rs.next()) {
@@ -463,14 +462,13 @@ public class UniRepo<E> implements MyRepo<E> {
      * @param ent
      * @return
      */
-    private Statement createStatement(Map<String, Class<?>> mapPar,
+    private PreparedStatement createStatement(Map<String, Class<?>> mapPar,
             Connection conn, String sql, E ent) {
 
         try {
 
             PreparedStatement st = conn.prepareStatement(sql);
             Class<?> stCls = st.getClass();
-//            Class<?> stCls = Statement.class;
 
             Method stMethod;
             Method entMethod;
@@ -490,67 +488,21 @@ public class UniRepo<E> implements MyRepo<E> {
                 pomCls = ToolsDao.transformToPrimitive(mapPar.get(pn));
                 log.info("STAT MET NAME: " + stMetName);
                 stMethod = stCls.getMethod(stMetName, int.class, pomCls);
+//                stMethod = stCls.getMethod(stMetName, int.class, mapPar.get(pn)); //nefunguje
 
-//                stMethod = stCls.getMethod(stMetName, int.class, mapPar.get(pn));
-//              Method entMethod = clsT.getMethod(entMetName, mapPar.get(pn));
-//                                    if ("getShort".equals(rsMetName)) {
-//
-//                        Short sh = (Short) rsMethod.invoke(rs, pn);
-//
-//                        Class<?> clsEnum = mapPar.get(pn);
-//                        Method enumMethod = clsEnum.getDeclaredMethod("values");
-//                        Object[] enumVals = (Object[]) (enumMethod.invoke(null));
-//                        Object enumVal = enumVals[sh];
-//
-//                        entMethod.invoke(ent, enumVal);
                 entMetName = ToolsDao.getG_SetterName(pn, "get");
                 entMethod = clsE.getMethod(entMetName);
 
-                log.info("ENT METHOD: " + entMethod.getName());
-                log.info("ENT MET NAME: " + entMetName);
-                log.info("ENT MET NAME: " + ((Okres) ent).getOkres_name());
-
                 Object o = entMethod.invoke(ent);
-
-//                //bohuzial sa to neda spravit cez reflexion, pretoze 
-////                tam situaciu komplikuje prevod Integer na int (statement.setInt ma parametre int a 
-////                nie Integer. )
-//                switch (stMetName){
-//                    case "setBytes":
-//                        st.setBytes(i, (byte[]) o);
-//                        break;
-//                    case "setString":
-//                        st.setString(i,((Okres)ent).getOkres_name());
-//                        break;
-//                    case "setInt":
-//                        st.setInt(i, ((Okres)ent).getId());
-//                        break;
-//                    case "setTimestamp":
-//                        st.setTimestamp(i, (Timestamp) o);
-//                        break;
-//                    case "setShort":
-//                        st.setShort(i, (short) o);
-//                        break;
-//                    default:
-//                    break;
-//                }
-//                if (o != null) {
-                    
-//                    log.info("NULL: " + (o == null));
-//                    Integer aj = (Integer) o;
-//                    log.info("INTEGER: " + (aj));
-
-//                    int ajo = aj + 1;
-
-//                stMethod.invoke(st, i, entMethod.invoke(ent));
-                    stMethod.invoke(st, i, o);
-//                } 
-//                else {
-//                    stMethod.invoke(st, i, null);
-//                }
                 
-              i++;
-//                  st.setBlob(1, inputStream);
+                if (o == null){
+                    st.setNull(i, Types.NULL);
+                } else {
+//                    o = ToolsDao.transformToAppropValue(o, mapPar.get(pn));
+                    stMethod.invoke(st, i, o);
+                }
+                i++;
+              
             }
 //            st.setString(5, inputDate);
             return st;
@@ -624,7 +576,7 @@ public class UniRepo<E> implements MyRepo<E> {
             StringBuilder udpate = new StringBuilder();
             StringBuilder update2 = new StringBuilder();
 
-            udpate.append("(");
+//            udpate.append("(");
             boolean zac = true;
 
             for (String pn : mapPar.keySet()) {
@@ -638,11 +590,11 @@ public class UniRepo<E> implements MyRepo<E> {
                 udpate.append(pn);
                 udpate.append(" = ?");
             }
-            udpate.append(")");
+//            udpate.append(")");
 
-            update2.append("(id = ");
+            update2.append("id = ");
             update2.append(eid);
-            update2.append(")");
+//            update2.append("");
 
             String sql = String.format("UPDATE %s SET %s WHERE %s", TN,
                     udpate.toString(), update2.toString());

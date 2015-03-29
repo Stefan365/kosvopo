@@ -17,9 +17,11 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.repo.dao.GeneralRepo;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 
 /**
  * @author stefan
@@ -36,8 +38,8 @@ public class MyFileUploader<E> implements Receiver, SucceededListener {
 //    private InputStream inStream;
     private String fileName;
     private final Class<?> clsE;
-    private final GeneralRepo genRepo = new GeneralRepo();
-
+//    private final GeneralRepo genRepo = new GeneralRepo();
+    private final UniRepo<Document> docRepo = new UniRepo<>(Document.class);
     private final MyFileDownloader listener;
      
     public MyFileUploader(Class<?> cls, E en, MyFileDownloader lisnr) {
@@ -85,15 +87,23 @@ public class MyFileUploader<E> implements Receiver, SucceededListener {
             Field tnFld = clsE.getDeclaredField("TN");
             String tn = (String) tnFld.get(null);
 
+            Document doc = new Document();
+            doc.setFile_name(fileName);
+            doc.setTable_name(tn);
+            doc.setTable_row_id(rid);
+
             inStream = new FileInputStream(this.getFile());
-            Document doc = genRepo.insertFileInDB(inStream, fileName, tn, rid);
+            byte[] bFile = new byte[inStream.available()];
+            inStream.read(bFile);
+            doc.setDocument(bFile);
             
+            doc = docRepo.save(doc);
             Notification.show("File saved to Database!");
             
             //druhy krok: zmena nastavenie v MyFileUploaderi:
-            listener.refreshDownloader(null);
+            listener.refreshDownloader(doc);
 
-        } catch (FileNotFoundException | IllegalAccessException | IllegalArgumentException |
+        } catch (IOException | IllegalAccessException | IllegalArgumentException |
                 SecurityException | NoSuchMethodException | InvocationTargetException |
                 NoSuchFieldException e) {
             log.error(e.getMessage(), e);

@@ -1159,9 +1159,11 @@ public class Skuska1<T> {
     private void skusUser(){
         
         UserServiceImpl userv = new UserServiceImpl();
+        UniRepo<A_User> usrRepo = new UniRepo<>(A_User.class);
 
         A_User u = new A_User("jojo", "kajo", "jojo@kajo.com", "kajo", "kokos");
-        userv.save(u);
+//        userv.save(u);
+        usrRepo.save(u);
         
     }
     
@@ -1187,9 +1189,13 @@ public class Skuska1<T> {
         UniRepo<Okres> okresRepo = new UniRepo<>(Okres.class);
         
         Okres o = new Okres();
+        o.setId(5);
         o.setOkres_name("KOLAROVO");
+        o.setKraj_id(3);
+        o.setVisible(Boolean.TRUE);
         
-        okresRepo.saveU(o);
+        
+        okresRepo.save(o);
         
         
         

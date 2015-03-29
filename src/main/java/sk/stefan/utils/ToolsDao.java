@@ -102,15 +102,24 @@ public class ToolsDao {
         return typy;
     }
 
+    /**
+     * 
+     * @param cls
+     * @return 
+     */
     public static Class<?> transformToPrimitive(Class<?> cls) {
 
         String typ = cls.getCanonicalName();
 
         switch (typ) {
             case "java.lang.Integer":
-                return int.class;
+//                return int.class;
+                return Integer.TYPE;
+                
             case "java.lang.Byte[]":
                 return byte[].class;
+//                return Byte[].TYPE;
+            
             case "java.lang.Short":
             case "sk.stefan.enums.VoteResult":
             case "sk.stefan.enums.VoteAction":
@@ -120,16 +129,59 @@ public class ToolsDao {
             case "sk.stefan.enums.FilterType":
             case "sk.stefan.enums.NonEditableFields":
             case "sk.stefan.enums.PublicRoleType":
-                return short.class;
+//                return short.class;
+                return Short.TYPE;
+                
             case "java.lang.Long":
-                return long.class;
+//                return long.class;
+                return Long.TYPE;
+            
             case "java.lang.Boolean":
-                return boolean.class;
+//                return boolean.class;
+                return Boolean.TYPE;
             default:
                 return cls;
         }
 
     }
+    
+//    /**
+//     * 
+//     * @param o
+//     * @param cls
+//     * @return 
+//     */
+//    public static Object transformToAppropValue(Object o, Class<?> cls) {
+//
+//        String typ = cls.getCanonicalName();
+//
+//        switch (typ) {
+//            case "java.lang.Integer":
+//                return int.class;
+//                return Integer.valueOf(o+"");
+//                
+//            case "java.lang.Byte[]":
+//                return byte[].class;
+//            case "java.lang.Short":
+//            case "sk.stefan.enums.VoteResult":
+//            case "sk.stefan.enums.VoteAction":
+//            case "sk.stefan.enums.Stability":
+//            case "sk.stefan.enums.UserType":
+//            case "sk.stefan.enums.PublicUsefulness":
+//            case "sk.stefan.enums.FilterType":
+//            case "sk.stefan.enums.NonEditableFields":
+//            case "sk.stefan.enums.PublicRoleType":
+//                return short.class;
+//            case "java.lang.Long":
+//                return long.class;
+//            case "java.lang.Boolean":
+//                return boolean.class;
+//            default:
+//                return o;
+//        }
+//
+//    }
+
 
     /**
      * Ziska mapu parameter : typ danej triedy.
