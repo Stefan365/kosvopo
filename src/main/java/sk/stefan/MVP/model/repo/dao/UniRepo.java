@@ -5,24 +5,28 @@ import com.vaadin.ui.Notification.Type;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.entity.dao.Okres;
 import sk.stefan.interfaces.MyRepo;
 import sk.stefan.utils.ToolsDao;
 
-public class UniRepo<T> implements MyRepo<T> {
+public class UniRepo<E> implements MyRepo<E> {
 
     private static final Logger log = Logger.getLogger(UniRepo.class);
     // table name:
     private final String TN;
-    private final Class<?> clsT;
+    private final Class<?> clsE;
 
     //connection musi byt centralne, inak nenudu fungovat transactional operacie
     //bude tam odkaz na DoDBconn.conn
@@ -34,7 +38,7 @@ public class UniRepo<T> implements MyRepo<T> {
      */
     public UniRepo(Class<?> cls) {
 
-        this.clsT = cls;
+        this.clsE = cls;
         this.TN = ToolsDao.getTableName(cls);
         if (DoDBconn.getNonInvasiveConn() == null) {
             DoDBconn.createNoninvasiveConnection();
@@ -48,7 +52,7 @@ public class UniRepo<T> implements MyRepo<T> {
      * @return
      */
     @Override
-    public List<T> findAll() {
+    public List<E> findAll() {
         try {
 //            Connection conn = DoDBconn.getConnection();
             Statement st;
@@ -72,7 +76,7 @@ public class UniRepo<T> implements MyRepo<T> {
 
             //JDBC4ResultSet
             //log.info(sql + " DONE!");
-            List<T> listEnt = this.fillListEntity(rs);
+            List<E> listEnt = this.fillListEntity(rs);
 
             rs.close();
             st.close();
@@ -90,7 +94,7 @@ public class UniRepo<T> implements MyRepo<T> {
 
     // 2.
     @Override
-    public T findOne(Integer id) {
+    public E findOne(Integer id) {
         try {
             //pre pripad, ze by spojenie spadlo.
             if (DoDBconn.getNonInvasiveConn() == null) {
@@ -111,7 +115,7 @@ public class UniRepo<T> implements MyRepo<T> {
             rs = st.executeQuery(sql);
             // Notification.show(sql);
 //            log.info(sql);
-            T ent = this.fillEntity(rs);
+            E ent = this.fillEntity(rs);
 
             rs.close();
             st.close();
@@ -136,7 +140,7 @@ public class UniRepo<T> implements MyRepo<T> {
      * @return
      */
     @Override
-    public List<T> findByParam(String paramName, String paramValue) {
+    public List<E> findByParam(String paramName, String paramValue) {
 
         try {
             //pre pripad, ze by spojenie spadlo.
@@ -156,12 +160,12 @@ public class UniRepo<T> implements MyRepo<T> {
                 sql.append(" AND visible = true");
             }
 
-            log.info("SQL: *"+ sql.toString() +"*");
+            log.info("SQL: *" + sql.toString() + "*");
             ResultSet rs;
-            
+
             rs = st.executeQuery(sql.toString());
 
-            List<T> listEnt = this.fillListEntity(rs);
+            List<E> listEnt = this.fillListEntity(rs);
 
             rs.close();
             st.close();
@@ -188,7 +192,7 @@ public class UniRepo<T> implements MyRepo<T> {
      * @return
      */
     @Override
-    public List<T> findByTwoParams(String p1Name, String p1Value,
+    public List<E> findByTwoParams(String p1Name, String p1Value,
             String p2Name, String p2Value) {
 
         try {
@@ -215,8 +219,8 @@ public class UniRepo<T> implements MyRepo<T> {
             ResultSet rs;
             rs = st.executeQuery(sql.toString());
 
-            log.info("SQL: *"+ sql.toString() +"*");
-            List<T> listEnt = this.fillListEntity(rs);
+            log.info("SQL: *" + sql.toString() + "*");
+            List<E> listEnt = this.fillListEntity(rs);
 
             rs.close();
             st.close();
@@ -251,7 +255,7 @@ public class UniRepo<T> implements MyRepo<T> {
         } else {
             sql = String.format(" %s = '%s'", pn, pv);
         }
-        
+
         return sql;
 
     }
@@ -264,7 +268,7 @@ public class UniRepo<T> implements MyRepo<T> {
      * @return
      */
     @Override
-    public T save(T ent) {
+    public E save(E ent) {
         try {
 
             Connection conn = DoDBconn.getConnection();
@@ -275,7 +279,7 @@ public class UniRepo<T> implements MyRepo<T> {
             // Map<String, String> mapPar;
             Map<String, Class<?>> mapPar;
 
-            mapPar = ToolsDao.getTypParametrov(clsT);
+            mapPar = ToolsDao.getTypParametrov(clsE);
 
             String sql, str;
 
@@ -291,7 +295,7 @@ public class UniRepo<T> implements MyRepo<T> {
 
             // kontrola o jakou entitu se jedna (nova/uz pouzita):
             entMetName = "getId";
-            Method entMethod = clsT.getMethod(entMetName);
+            Method entMethod = clsE.getMethod(entMetName);
             if (entMethod.invoke(ent) == null) {
                 novy = true;
             } else {
@@ -320,7 +324,7 @@ public class UniRepo<T> implements MyRepo<T> {
                 zac = false;
 
                 entMetName = ToolsDao.getG_SetterName(pn, "get");
-                entMethod = clsT.getMethod(entMetName);
+                entMethod = clsE.getMethod(entMetName);
 
                 // pokial je entita nova, tj. este nebola ulozena v DB.:
                 String s;
@@ -372,7 +376,7 @@ public class UniRepo<T> implements MyRepo<T> {
             ResultSet rs = st.getGeneratedKeys();
             if (novy && rs.next()) {
                 Integer newId = rs.getInt(1);
-                entMethod = clsT.getMethod("setId", Integer.class);
+                entMethod = clsE.getMethod("setId", Integer.class);
                 entMethod.invoke(ent, newId);
                 // ent.setId(newId);
             }
@@ -395,13 +399,279 @@ public class UniRepo<T> implements MyRepo<T> {
 
     }
 
-    // 5.
+    // 4.B
+    /**
+     * Vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
+     *
+     * @param ent
+     * @return
+     */
+//    @Override
+    public E saveU(E ent) {
+        try {
+
+            Connection conn = DoDBconn.getConnection();
+            Statement st;
+            Map<String, Class<?>> mapPar;
+            String sql;
+
+            mapPar = ToolsDao.getTypParametrov(clsE);
+
+            Integer eid = this.isNew(ent);
+            boolean novy = (eid == null);
+
+            if (novy) {
+                sql = this.createInsertQueryPrepared(mapPar);
+            } else {
+                sql = this.createUpdateQueryPrepared(mapPar, eid);
+            }
+            st = this.createStatement(mapPar, conn, sql, ent);
+
+            st.executeUpdate(sql);
+
+            ResultSet rs = st.getGeneratedKeys();
+            if (novy && rs.next()) {
+                Integer newId = rs.getInt(1);
+                Method entMethod = clsE.getMethod("setId", Integer.class);
+
+                entMethod.invoke(ent, newId);
+            }
+
+            conn.commit();
+            rs.close();
+            st.close();
+
+            DoDBconn.releaseConnection(conn);
+
+            return ent;
+
+        } catch (IllegalAccessException | NoSuchFieldException |
+                SecurityException | NoSuchMethodException |
+                IllegalArgumentException | InvocationTargetException | SQLException e) {
+//            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
+            log.error(e.getMessage(), e);
+            return null;
+        }
+
+    }
+
+    /**
+     *
+     * @param mapPar
+     * @param conn
+     * @param sql
+     * @param ent
+     * @return
+     */
+    private Statement createStatement(Map<String, Class<?>> mapPar,
+            Connection conn, String sql, E ent) {
+
+        try {
+
+            PreparedStatement st = conn.prepareStatement(sql);
+            Class<?> stCls = st.getClass();
+//            Class<?> stCls = Statement.class;
+
+            Method stMethod;
+            Method entMethod;
+
+            String stMetName;
+            String entMetName;
+
+            Class<?> pomCls;
+
+            int i = 1;
+
+            for (String pn : mapPar.keySet()) {
+                if ("id".equals(pn)) {
+                    continue;
+                }
+                stMetName = ToolsDao.getG_SettersForResultSet(mapPar.get(pn), "set");
+                pomCls = ToolsDao.transformToPrimitive(mapPar.get(pn));
+                log.info("STAT MET NAME: " + stMetName);
+                stMethod = stCls.getMethod(stMetName, int.class, pomCls);
+
+//                stMethod = stCls.getMethod(stMetName, int.class, mapPar.get(pn));
+//              Method entMethod = clsT.getMethod(entMetName, mapPar.get(pn));
+//                                    if ("getShort".equals(rsMetName)) {
+//
+//                        Short sh = (Short) rsMethod.invoke(rs, pn);
+//
+//                        Class<?> clsEnum = mapPar.get(pn);
+//                        Method enumMethod = clsEnum.getDeclaredMethod("values");
+//                        Object[] enumVals = (Object[]) (enumMethod.invoke(null));
+//                        Object enumVal = enumVals[sh];
+//
+//                        entMethod.invoke(ent, enumVal);
+                entMetName = ToolsDao.getG_SetterName(pn, "get");
+                entMethod = clsE.getMethod(entMetName);
+
+                log.info("ENT METHOD: " + entMethod.getName());
+                log.info("ENT MET NAME: " + entMetName);
+                log.info("ENT MET NAME: " + ((Okres) ent).getOkres_name());
+
+                Object o = entMethod.invoke(ent);
+
+//                //bohuzial sa to neda spravit cez reflexion, pretoze 
+////                tam situaciu komplikuje prevod Integer na int (statement.setInt ma parametre int a 
+////                nie Integer. )
+//                switch (stMetName){
+//                    case "setBytes":
+//                        st.setBytes(i, (byte[]) o);
+//                        break;
+//                    case "setString":
+//                        st.setString(i,((Okres)ent).getOkres_name());
+//                        break;
+//                    case "setInt":
+//                        st.setInt(i, ((Okres)ent).getId());
+//                        break;
+//                    case "setTimestamp":
+//                        st.setTimestamp(i, (Timestamp) o);
+//                        break;
+//                    case "setShort":
+//                        st.setShort(i, (short) o);
+//                        break;
+//                    default:
+//                    break;
+//                }
+//                if (o != null) {
+                    
+//                    log.info("NULL: " + (o == null));
+//                    Integer aj = (Integer) o;
+//                    log.info("INTEGER: " + (aj));
+
+//                    int ajo = aj + 1;
+
+//                stMethod.invoke(st, i, entMethod.invoke(ent));
+                    stMethod.invoke(st, i, o);
+//                } 
+//                else {
+//                    stMethod.invoke(st, i, null);
+//                }
+                
+              i++;
+//                  st.setBlob(1, inputStream);
+            }
+//            st.setString(5, inputDate);
+            return st;
+        } catch (IllegalAccessException |
+                SecurityException | NoSuchMethodException |
+                IllegalArgumentException | InvocationTargetException | SQLException e) {
+//            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
+            log.error(e.getMessage(), e);
+            return null;
+        }
+
+    }
+
+    /**
+     * Creates Insert Query for
+     *
+     * @param mapPar
+     * @return
+     */
+    private String createInsertQueryPrepared(Map<String, Class<?>> mapPar) {
+
+        try {
+
+            StringBuilder insert1 = new StringBuilder();
+            StringBuilder insert2 = new StringBuilder();
+
+            insert1.append("(");
+            insert2.append("(");
+
+            boolean zac = true;
+            for (String pn : mapPar.keySet()) {
+                if ("id".equals(pn)) {
+                    continue;
+                }
+                if (!zac) {
+                    insert1.append(", ");
+                    insert2.append(", ");
+                }
+                zac = false;
+                insert1.append(pn);
+                insert2.append("?");
+            }
+            insert1.append(")");
+            insert2.append(")");
+
+            String sql = String.format("INSERT INTO %s %s VALUES %s", TN,
+                    insert1.toString(), insert2.toString());
+
+//            Statement st = conn.prepareStatement(sql);
+            log.debug("SQL:*" + sql + "*");
+            return sql;
+
+        } catch (SecurityException ex) {
+//            Notification.show("Chyba, create Insert", Type.ERROR_MESSAGE);
+            log.error(ex.getMessage(), ex);
+            return null;
+        }
+
+    }
+
+    /**
+     *
+     * @param mapPar
+     * @param eid
+     * @return
+     */
+    public String createUpdateQueryPrepared(Map<String, Class<?>> mapPar, Integer eid) {
+
+        try {
+
+            StringBuilder udpate = new StringBuilder();
+            StringBuilder update2 = new StringBuilder();
+
+            udpate.append("(");
+            boolean zac = true;
+
+            for (String pn : mapPar.keySet()) {
+                if ("id".equals(pn)) {
+                    continue;
+                }
+                if (!zac) {
+                    udpate.append(", ");
+                }
+                zac = false;
+                udpate.append(pn);
+                udpate.append(" = ?");
+            }
+            udpate.append(")");
+
+            update2.append("(id = ");
+            update2.append(eid);
+            update2.append(")");
+
+            String sql = String.format("UPDATE %s SET %s WHERE %s", TN,
+                    udpate.toString(), update2.toString());
+
+            log.debug("SQL:*" + sql + "*");
+            return sql;
+
+        } catch (SecurityException ex) {
+//            Notification.show("Chyba, create Insert", Type.ERROR_MESSAGE);
+            log.error(ex.getMessage(), ex);
+            return null;
+        }
+
+    }
+
+//            st.executeUpdate();
+//
+//            ResultSet rs = st.getGeneratedKeys();
+//            if (rs.next()) {
+//                int iid = rs.getInt(1);
+//                log.debug("PRIDELENE ID: " + iid);
+//            }
+// 5.
     /**
      * @param ent
      * @return
      */
     @Override
-    public boolean delete(T ent) {
+    public boolean delete(E ent) {
         try {
 
             Connection conn = DoDBconn.getConnection();
@@ -411,7 +681,7 @@ public class UniRepo<T> implements MyRepo<T> {
             Integer id = null;
 
             if (ent != null) {
-                Method entMethod = clsT.getMethod("getId");
+                Method entMethod = clsE.getMethod("getId");
                 id = (Integer) entMethod.invoke(ent);
             }
 
@@ -446,7 +716,7 @@ public class UniRepo<T> implements MyRepo<T> {
      * @return
      */
     @Override
-    public boolean deactivate(T ent) {
+    public boolean deactivate(E ent) {
 
         Connection conn = DoDBconn.getConnection();
 
@@ -457,7 +727,7 @@ public class UniRepo<T> implements MyRepo<T> {
             Integer id = null;
 
             if (ent != null) {
-                Method entMethod = clsT.getMethod("getId");
+                Method entMethod = clsE.getMethod("getId");
                 id = (Integer) entMethod.invoke(ent);
             }
 
@@ -528,9 +798,9 @@ public class UniRepo<T> implements MyRepo<T> {
      * @return
      *
      */
-    private T fillEntity(ResultSet rs) {
+    private E fillEntity(ResultSet rs) {
 
-        List<T> ents = this.fillListEntity(rs);
+        List<E> ents = this.fillListEntity(rs);
         if (ents.size() > 0) {
             return ents.get(0);
         } else {
@@ -544,35 +814,34 @@ public class UniRepo<T> implements MyRepo<T> {
      * @param rs
      * @return
      */
-    private List<T> fillListEntity(ResultSet rs) {
+    private List<E> fillListEntity(ResultSet rs) {
 
 //        Class<?> rsCls = rs.getClass();
         Class<?> rsCls = ResultSet.class;
 
-        List<T> listEnts = new ArrayList<>();
+        List<E> listEnts = new ArrayList<>();
         String entMetName, rsMetName;
         Map<String, Class<?>> mapPar;
 
         try {
 
-            mapPar = ToolsDao.getTypParametrov(clsT);
+            mapPar = ToolsDao.getTypParametrov(clsE);
 
             while (rs.next()) {
                 @SuppressWarnings("unchecked")
-                T ent = (T) clsT.newInstance();
+                E ent = (E) clsE.newInstance();
 
                 for (String pn : mapPar.keySet()) {
 
                     entMetName = ToolsDao.getG_SetterName(pn, "set");
-                    rsMetName = ToolsDao.getGettersForResultSet(mapPar.get(pn)
-                            .getCanonicalName());
+                    rsMetName = ToolsDao.getG_SettersForResultSet(mapPar.get(pn), "get");
 
 //                    log.info("KYRYLENKO 1: " + rsMetName);
 //                    log.info("KYRYLENKO 2: " + clsT.getCanonicalName());
 //                    log.info("KYRYLENKO 3: " + pn);
 //                    log.info("KYRYLENKO 4: " + entMetName);
 //                    Method entMethod = clsT.getDeclaredMethod(entMetName, new Class<?>[]{mapPar.get(pn)});
-                    Method entMethod = clsT.getMethod(entMetName, mapPar.get(pn));
+                    Method entMethod = clsE.getMethod(entMetName, mapPar.get(pn));
 
 //                  Method rsMethod = rsCls.getDeclaredMethod(rsMetName, new Class<?>[]{String.class});
                     Method rsMethod = rsCls.getMethod(rsMetName, String.class);
@@ -620,7 +889,7 @@ public class UniRepo<T> implements MyRepo<T> {
      * @return
      */
     @Override
-    public boolean copy(T entFrom, T entTo) {
+    public boolean copy(E entFrom, E entTo) {
 
         try {
             if (entFrom.getClass() != entTo.getClass()) {
@@ -630,15 +899,15 @@ public class UniRepo<T> implements MyRepo<T> {
             String fromMetName, toMetName;
             Map<String, Class<?>> mapPar;
 
-            mapPar = ToolsDao.getTypParametrov(clsT);
+            mapPar = ToolsDao.getTypParametrov(clsE);
 
             for (String pn : mapPar.keySet()) {
 
                 fromMetName = ToolsDao.getG_SetterName(pn, "get");
                 toMetName = ToolsDao.getG_SetterName(pn, "set");
 
-                Method fromMethod = clsT.getMethod(fromMetName);
-                Method toMethod = clsT.getMethod(toMetName, mapPar.get(pn));
+                Method fromMethod = clsE.getMethod(fromMetName);
+                Method toMethod = clsE.getMethod(toMetName, mapPar.get(pn));
 
                 toMethod.invoke(entTo, fromMethod.invoke(entFrom));
             }
@@ -657,4 +926,18 @@ public class UniRepo<T> implements MyRepo<T> {
 //    public void doCommit() {
 ////        DoDBconn.doCommit();
 //    }
+    private Integer isNew(E ent) {
+        try {
+
+            String entMetName = "getId";
+            Method entMethod = clsE.getMethod(entMetName);
+            boolean novy = entMethod.invoke(ent) == null;
+            return (Integer) entMethod.invoke(ent);
+
+        } catch (IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
+            Notification.show("Chyba, uniRepo, copy(...)", Type.ERROR_MESSAGE);
+            log.error(e.getMessage(), e);
+            return null;
+        }
+    }
 }

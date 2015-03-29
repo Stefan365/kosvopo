@@ -102,6 +102,35 @@ public class ToolsDao {
         return typy;
     }
 
+    public static Class<?> transformToPrimitive(Class<?> cls) {
+
+        String typ = cls.getCanonicalName();
+
+        switch (typ) {
+            case "java.lang.Integer":
+                return int.class;
+            case "java.lang.Byte[]":
+                return byte[].class;
+            case "java.lang.Short":
+            case "sk.stefan.enums.VoteResult":
+            case "sk.stefan.enums.VoteAction":
+            case "sk.stefan.enums.Stability":
+            case "sk.stefan.enums.UserType":
+            case "sk.stefan.enums.PublicUsefulness":
+            case "sk.stefan.enums.FilterType":
+            case "sk.stefan.enums.NonEditableFields":
+            case "sk.stefan.enums.PublicRoleType":
+                return short.class;
+            case "java.lang.Long":
+                return long.class;
+            case "java.lang.Boolean":
+                return boolean.class;
+            default:
+                return cls;
+        }
+
+    }
+
     /**
      * Ziska mapu parameter : typ danej triedy.
      *
@@ -117,12 +146,18 @@ public class ToolsDao {
     /**
      * Ziska getter pre result set.
      *
-     * @param typ
+     * @param cls
+     * @param setGet get or set
      * @return
      */
-    public static synchronized String getGettersForResultSet(String typ) {
+    public static synchronized String getG_SettersForResultSet(Class<?> cls, String setGet) {
+
+        String typ = cls.getCanonicalName();
+
         StringBuilder sb = new StringBuilder();
-        sb.append("get");
+
+        sb.append(setGet);
+
         if (null != typ) {
             switch (typ) {
                 case "java.lang.Integer":
@@ -133,8 +168,10 @@ public class ToolsDao {
                     break;
                 case "byte[]":
                 case "java.lang.Byte[]":
-                case "java.io.InputStream":                    
+                case "java.io.InputStream":
                     sb.append("Bytes");
+//                    sb.append("Blob");
+
                     break;
                 case "sk.stefan.enums.VoteResult":
                 case "sk.stefan.enums.VoteAction":
@@ -285,7 +322,7 @@ public class ToolsDao {
      * @return
      */
     public static synchronized String getTableName(Class<?> clsE) {
-        
+
         try {
             Field tnFld = clsE.getDeclaredField("TN");
             String tn = (String) tnFld.get(null);
@@ -293,7 +330,7 @@ public class ToolsDao {
 //            Method getTnMethod = clsE.getDeclaredMethod("getTN");
 //            String Tn = (String) getTnMethod.invoke(null);
             return tn;
-        } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | 
+        } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException |
                 SecurityException e) {
             log.error(e.getMessage(), e);
             return null;
@@ -388,6 +425,5 @@ public class ToolsDao {
         }
         return prActual;
     }
-    
-    
+
 }

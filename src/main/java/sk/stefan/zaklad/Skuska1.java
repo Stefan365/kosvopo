@@ -52,6 +52,9 @@ import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.MVP.model.service.UserServiceImpl;
 import sk.stefan.enums.Stability;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.interfaces.PresentationName;
@@ -84,8 +87,10 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        
-        sk.skusRepo();
+        sk.skusSaveU();
+//        sk.skusUniRepo();
+//        sk.skusUser();
+//        sk.skusRepo();
 //        sk.skusFileDownload();
 //        sk.skusUpdaredRepo();
 //        sk.skusPole();
@@ -1148,6 +1153,47 @@ public class Skuska1<T> {
             log.error(ex.getMessage(),ex);
                     
         }
+    }
+    
+    
+    private void skusUser(){
+        
+        UserServiceImpl userv = new UserServiceImpl();
+
+        A_User u = new A_User("jojo", "kajo", "jojo@kajo.com", "kajo", "kokos");
+        userv.save(u);
         
     }
+    
+    /**
+     * 
+     */
+    private void skusUniRepo(){
+        
+        UniRepo<Okres> uniRepo = new UniRepo<>(Okres.class);
+        
+//        String a = uniRepo.createInsertQueryPrepared();
+//        String b = uniRepo.createUpdateQueryPrepared("7");
+//        
+//        log.debug("A:*"+a+"*");
+//        log.debug("B:*"+b+"*");
+        
+//      
+        
+    }
+    
+    private void skusSaveU(){
+        
+        UniRepo<Okres> okresRepo = new UniRepo<>(Okres.class);
+        
+        Okres o = new Okres();
+        o.setOkres_name("KOLAROVO");
+        
+        okresRepo.saveU(o);
+        
+        
+        
+    }
+    
+    
 }

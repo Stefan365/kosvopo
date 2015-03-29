@@ -52,20 +52,12 @@ public class FileUploader implements Receiver, SucceededListener {
     public OutputStream receiveUpload(String filename, String mimeType) {
         
         this.fileName = filename;
-                
-        // Create upload stream
-        FileOutputStream fos; // Stream to write to
+        FileOutputStream fos;
+        
 
         try {
-            // Open the file for writing.
-            // file = new File("/tmp/uploads/" + filename);
-            String fileN = "C:\\Users\\stefan\\Desktop\\obrazky\\" + filename;
-
-//            Properties prop = new Properties();
-//            input = new FileInputStream(fileN);
-//            prop.load(input);
-//            input.close();
-            file = new File(fileN);
+            
+            file = new File(fileName);
             fos = new FileOutputStream(file);
 
         } catch (final java.io.FileNotFoundException e) {

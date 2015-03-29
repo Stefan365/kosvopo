@@ -27,13 +27,14 @@ public class MyFileDownloader {
 
     private final Button downlBt;
 
-    private final Document document;
+    private Document document;
 
     
     //0.konstruktor.
     /**
      * 
      * @param doc
+     * @param but
      */
     public MyFileDownloader(Document doc, Button but){
         
@@ -65,6 +66,18 @@ public class MyFileDownloader {
         fileDownloader = new FileDownloader(resource);
         fileDownloader.extend(downlBt);
 
+    }
+    
+    /**
+     *
+     * @param doc
+     */
+    public void refreshDownloader(Document doc){
+        
+        this.document = doc;
+        StreamResource resource = getInputResource();
+        fileDownloader.setFileDownloadResource(resource);
+ 
     }
 
     /**

@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
 
@@ -256,12 +257,16 @@ public class GeneralRepo {
 
     /**
      * Inputs file into the database.
+     *
      * @param inputStream
      * @param tn
      * @param rid
      * @param fn
+     * @return
      */
-    public void insertFileInDB(InputStream inputStream, String fn, String tn, Integer rid) {
+    public Document insertFileInDB(InputStream inputStream, String fn, String tn, Integer rid) {
+
+        Document doc = new Document();
 
         Connection conn = DoDBconn.getConnection();
 
@@ -269,37 +274,48 @@ public class GeneralRepo {
 
 //        String filePath = "D:/Photos/Tom.jpg";
 //        InputStream inputStream = new FileInputStream(new File(filePath));
-        
 //        table_name VARCHAR(30) NOT NULL,
 //        table_row_id INT(11) NOT NULL,
 //        upload_date DATE
 //        document MEDIUMBLOB NOT NULL,
         Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String inputDate = formatter.format(new Date());
-            
-        
+
         String sql = "INSERT INTO t_document (document, file_name, table_name, table_row_id, upload_date) "
                 + " values (?, ?, ?, ?, ?) ";
+        log.debug("SQL :*" + sql + "*");
+
         try {
             st = conn.prepareStatement(sql);
-            
+
             st.setBlob(1, inputStream);
+//            st.setBytes(1, inputStream);
+//            
             st.setString(2, fn);
             st.setString(3, tn);
             st.setInt(4, rid);
             st.setString(5, inputDate);
-            
+
             st.executeUpdate();
 
+            ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                int iid = rs.getInt(1);
+                log.debug("PRIDELENE ID: " + iid);
+            }
+//            int iid = rs.getInt(1);
+
+//             
             conn.commit();
             st.close();
             DoDBconn.releaseConnection(conn);
-                    
+
+            return doc;
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            
+
             Notification.show("insertFile(...)", Notification.Type.ERROR_MESSAGE);
             log.error(e.getMessage(), e);
-        
+            return null;
         }
     }
 
