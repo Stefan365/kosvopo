@@ -364,6 +364,10 @@ public class UniRepo<E> implements MyRepo<E> {
 
     // 5.B
     /**
+     * deaktivuje len 1 entitu.
+     * pokial potrebujete deaktivovat cely strom zavislych entit, 
+     * pouzite generalRepo...deactivateAll
+     * 
      * @param ent
      * @return
      */

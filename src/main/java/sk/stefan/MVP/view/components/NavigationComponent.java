@@ -18,7 +18,7 @@ public class NavigationComponent extends HorizontalLayout {
      */
     private static final long serialVersionUID = 8811699550804144740L;
 
-    private final Button b1, b1a, b2, b3, b4, b6, b7, b8, b9, b10, b11, b12, badv, doc;
+    private final Button b1, b1a, b2, b3, b4, b6, b7, b8, b9, b10, b11, b12, badv, doc, docSk;
 
     private SecurityService securityService;
 
@@ -108,6 +108,12 @@ public class NavigationComponent extends HorizontalLayout {
         doc = new Button("documents", (ClickEvent event) -> {
             navigator.navigateTo("docview");
         });
+        
+        docSk = new Button("documentsSk", (ClickEvent event) -> {
+            navigator.navigateTo("docskview");
+        });
+        
+        
 
 //        hlas = new Button("hlasovanie", (ClickEvent event) -> {
 //            navigator.navigateTo("hlasovanie");
@@ -145,6 +151,7 @@ public class NavigationComponent extends HorizontalLayout {
         b12.setStyleName(BaseTheme.BUTTON_LINK);
         badv.setStyleName(BaseTheme.BUTTON_LINK);
         doc.setStyleName(BaseTheme.BUTTON_LINK);
+        docSk.setStyleName(BaseTheme.BUTTON_LINK);
 
 //        hlas.setStyleName(BaseTheme.BUTTON_LINK);
         this.setSpacing(true);
@@ -157,6 +164,7 @@ public class NavigationComponent extends HorizontalLayout {
         this.addComponent(b8);
         this.addComponent(b9);
         this.addComponent(doc);
+        this.addComponent(docSk);
 
 //        this.addComponent(hlas);
     }

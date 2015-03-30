@@ -8,22 +8,14 @@ package sk.stefan.documents;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileDownloader;
-import com.vaadin.server.StreamResource;
-import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.Upload.ProgressListener;
 import com.vaadin.ui.VerticalLayout;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.documents.FileUploader;
-import sk.stefan.documents.MyFileDownloader;
 
 /**
  *

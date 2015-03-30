@@ -9,6 +9,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
@@ -34,14 +35,14 @@ public class DownloaderLayout<E> extends VerticalLayout {
 
     private List<DownloaderComponent> downloadComponents;
 
-    private List<Document> documents;
+    private List<Document> entDocuments;
 
     private final UniRepo<Document> docRepo;
     
 
     public DownloaderLayout(Class<?> cls) {
 
-//        this.setMargin(true);
+        this.setMargin(true);
         this.setSpacing(true);
 
         this.clsE = cls;
@@ -70,6 +71,8 @@ public class DownloaderLayout<E> extends VerticalLayout {
         
             this.removeAllComponents();
 
+            this.downloadComponents = new ArrayList<>();
+
             Integer rid;
             String tn;
 
@@ -81,11 +84,12 @@ public class DownloaderLayout<E> extends VerticalLayout {
 
                 if (rid != null && tn != null) {
 
-                    documents = docRepo.findByTwoParams("table_name", tn, "table_row_id", "" + rid);
-
+                    entDocuments = docRepo.findByTwoParams("table_name", tn, "table_row_id", "" + rid);
+                    log.debug("DOOOWNentDocmsts:" + (entDocuments == null) + " : " + entDocuments.size());
+                    
                     DownloaderComponent fc;
-                    if (documents != null && !documents.isEmpty()) {
-                        for (Document d : documents) {
+                    if (entDocuments != null && !entDocuments.isEmpty()) {
+                        for (Document d : entDocuments) {
                             fc = new DownloaderComponent(d);
                             this.downloadComponents.add(fc);
                             this.addComponent(fc);

@@ -2,21 +2,18 @@ package sk.stefan.documents;
 
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.logging.Level;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.repo.dao.GeneralRepo;
@@ -47,6 +44,12 @@ public class FileUploader implements Receiver, SucceededListener {
 
         image = new Embedded("Uploaded Image");
         image.setVisible(true);
+        String basepath = VaadinService.getCurrent()
+                  .getBaseDirectory().getAbsolutePath();
+        FileResource res = new FileResource(new File(basepath +
+                        "/WEB-INF/images/Bobo_ta_sleduje.JPG"));
+        image.setSource(res);
+
 
     }
 
@@ -81,8 +84,14 @@ public class FileUploader implements Receiver, SucceededListener {
     @Override
     public void uploadSucceeded(SucceededEvent event) {
 
-        image.setVisible(true);
-        image.setSource(new FileResource(file));
+//        image.setVisible(true);
+//        String basepath = VaadinService.getCurrent()
+//                  .getBaseDirectory().getAbsolutePath();
+//        FileResource res = new FileResource(new File(basepath +
+//                        "/WEB-INF/images/Bobo_ta_sleduje.JPG"));
+//        image.setSource(res);
+
+//        image.setSource(new FileResource(file));
 
         Document doc;
         try {

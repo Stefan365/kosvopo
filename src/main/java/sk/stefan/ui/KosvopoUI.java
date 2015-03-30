@@ -4,7 +4,6 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import javax.servlet.annotation.WebServlet;
 import sk.stefan.MVP.model.entity.dao.*;
@@ -29,9 +28,9 @@ import sk.stefan.MVP.view.Kos2View;
 import sk.stefan.MVP.view.Kos3View;
 import sk.stefan.MVP.view.LoginView;
 import sk.stefan.MVP.view.UniEditableTableView;
-import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
 import sk.stefan.MVP.view.VstupniView;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.documents.DocumentSkusView;
 import sk.stefan.enums.NonEditableFields;
 import sk.stefan.utils.ToolsNazvy;
 
@@ -109,7 +108,7 @@ public class KosvopoUI extends UI {
 
         navigator.addView("adminview1", new AdministrationView(navigator));
         navigator.addView("docview", new DocumentView());
-        
+        navigator.addView("docskview", new DocumentSkusView());        
         
         
 //        navigator.addView("hlasovanie", new VotingLayout());

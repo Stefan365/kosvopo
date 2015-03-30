@@ -5,13 +5,12 @@
  */
 package sk.stefan.documents;
 
-import com.vaadin.server.FileDownloader;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
@@ -23,43 +22,34 @@ import sk.stefan.MVP.model.repo.dao.UniRepo;
  * @param <E>
  */
 public class UploaderLayout<E> extends VerticalLayout {
-    
+
     private static final Logger log = Logger.getLogger(UploaderLayout.class);
 
     private static final long serialVersionUID = 1L;
-    
-    
+
     //Common:
     /**
      * entita, na ktoru sa budu vztahovat dokumenty.
      */
-    private E ent; 
-    private final Class<?> clsE;
+    private E ent;
+    private final Class<E> clsE;
     private List<DownAndUploaderComponent<E>> uploadComponents;
-    private List<Document> documents;
+    private List<Document> entDocuments;
     private final UniRepo<Document> docRepo;
+    private Button addDocBt;
+    private final UploaderLayout<E> thisS;
     
 
-//    //1. Uploader:
-//    private Upload upload;
-//    private FileUploader uploadera;
-//
-//    //2. Downloader:
-//    private FileDownloader downloader;
-//    private Button downloadBt;
-//    private MyFileDownloader myDownloader;
-//
-//    //3.Delete button
-//    private Button removeBt;
-    
+    public UploaderLayout(Class<E> cls) {
 
-    public UploaderLayout(Class<?> cls) {
-
-//        this.setMargin(true);
+        this.setMargin(true);
         this.setSpacing(true);
+
+        this.initAddButton();
 
         this.clsE = cls;
         this.docRepo = new UniRepo<>(Document.class);
+        thisS = this;
 
     }
 
@@ -79,10 +69,15 @@ public class UploaderLayout<E> extends VerticalLayout {
      *
      */
     private void initLayout() {
-        
+
         if (ent != null) {
-        
+
             this.removeAllComponents();
+            
+            this.initAddButton();
+            this.addComponent(addDocBt);
+            
+            this.uploadComponents = new ArrayList<>();
 
             Integer rid;
             String tn;
@@ -95,11 +90,11 @@ public class UploaderLayout<E> extends VerticalLayout {
 
                 if (rid != null && tn != null) {
 
-                    documents = docRepo.findByTwoParams("table_name", tn, "table_row_id", "" + rid);
-
+                    entDocuments = docRepo.findByTwoParams("table_name", tn, "table_row_id", "" + rid);
+                    log.debug("entDocmsts:" + (entDocuments == null) + " : " + entDocuments.size());
                     DownAndUploaderComponent<E> fc;
-                    if (documents != null && !documents.isEmpty()) {
-                        for (Document d : documents) {
+                    if (entDocuments != null && !entDocuments.isEmpty()) {
+                        for (Document d : entDocuments) {
                             fc = new DownAndUploaderComponent<>(d, this);
                             this.uploadComponents.add(fc);
                             this.addComponent(fc);
@@ -116,6 +111,24 @@ public class UploaderLayout<E> extends VerticalLayout {
     }
 
 
+    /**
+     * 
+     */
+    private void initAddButton() {
+        this.addDocBt = new Button("pridaj");
+        
+        this.addDocBt.addClickListener(new Button.ClickListener() {
+            
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                DownAndUploaderComponent<E> newComp = new DownAndUploaderComponent<>(null, thisS);
+                boolean add = thisS.getUploadComponents().add(newComp);
+                thisS.addComponent(thisS);
+            }
+        });
+    }
 
     //*****************************************************88
 //    GETTERS AND SETTERS:
@@ -124,11 +137,24 @@ public class UploaderLayout<E> extends VerticalLayout {
         return ent;
     }
 
+    public Class<E> getClsE() {
+        return clsE;
+    }
+
+    public UniRepo<Document> getDocRepo() {
+        return docRepo;
+    }
+
     public void setEnt(E ent) {
         this.ent = ent;
     }
 
-    
-    
+    /**
+     * @return the uploadComponents
+     */
+    public List<DownAndUploaderComponent<E>> getUploadComponents() {
+        return uploadComponents;
+    }
+
     
 }
