@@ -22,6 +22,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -87,7 +89,8 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusSaveU();
+        sk.skusFormatter();
+//        sk.skusSaveU();
 //        sk.skusUniRepo();
 //        sk.skusUser();
 //        sk.skusRepo();
@@ -1142,64 +1145,72 @@ public class Skuska1<T> {
             UniRepo<Okres> uniRepo = new UniRepo<>(Okres.class);
 //        List<Okres> listEnt = uniRepo.findByParam("id", "7");
             List<Okres> listEnt = uniRepo.findByTwoParams("id", "7", "kraj_id", "2");
-            
-            
-            for (Okres o: listEnt){
+
+            for (Okres o : listEnt) {
                 log.info("OKRES:" + o.getOkres_name());
             }
-            
+
             uniRepo.updateParam("okres_name", "ZVOLENA", "7");
         } catch (SQLException ex) {
-            log.error(ex.getMessage(),ex);
-                    
+            log.error(ex.getMessage(), ex);
+
         }
     }
-    
-    
-    private void skusUser(){
-        
+
+    private void skusUser() {
+
         UserServiceImpl userv = new UserServiceImpl();
         UniRepo<A_User> usrRepo = new UniRepo<>(A_User.class);
 
         A_User u = new A_User("jojo", "kajo", "jojo@kajo.com", "kajo", "kokos");
 //        userv.save(u);
         usrRepo.save(u);
-        
+
     }
-    
+
     /**
-     * 
+     *
      */
-    private void skusUniRepo(){
-        
+    private void skusUniRepo() {
+
         UniRepo<Okres> uniRepo = new UniRepo<>(Okres.class);
-        
+
 //        String a = uniRepo.createInsertQueryPrepared();
 //        String b = uniRepo.createUpdateQueryPrepared("7");
 //        
 //        log.debug("A:*"+a+"*");
 //        log.debug("B:*"+b+"*");
-        
 //      
-        
     }
-    
-    private void skusSaveU(){
-        
+
+    private void skusSaveU() {
+
         UniRepo<Okres> okresRepo = new UniRepo<>(Okres.class);
-        
+
         Okres o = new Okres();
         o.setId(5);
         o.setOkres_name("KOLAROVO");
         o.setKraj_id(3);
         o.setVisible(Boolean.TRUE);
-        
-        
+
         okresRepo.save(o);
-        
-        
-        
     }
-    
-    
+
+    private void skusFormatter() {
+        
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Object o = new Date();
+        Object b = new java.sql.Date(new Date().getTime());
+        
+        log.info("OBJEKT DATUMU: " + o);
+        String createDate = formatter.format(o);
+        log.info("UTIL DATE: *" + createDate + "*");
+
+        String rate = formatter.format(b);
+
+        log.info("SQL DATE: *" +rate + "*");
+        
+
+    }
+
 }

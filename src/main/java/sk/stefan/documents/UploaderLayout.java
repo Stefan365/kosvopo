@@ -115,6 +115,7 @@ public class UploaderLayout<E> extends VerticalLayout {
      * 
      */
     private void initAddButton() {
+        
         this.addDocBt = new Button("pridaj");
         
         this.addDocBt.addClickListener(new Button.ClickListener() {
@@ -125,7 +126,7 @@ public class UploaderLayout<E> extends VerticalLayout {
             public void buttonClick(Button.ClickEvent event) {
                 DownAndUploaderComponent<E> newComp = new DownAndUploaderComponent<>(null, thisS);
                 boolean add = thisS.getUploadComponents().add(newComp);
-                thisS.addComponent(thisS);
+                thisS.addComponent(newComp);
             }
         });
     }

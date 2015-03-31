@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -259,7 +261,6 @@ public class UniRepo<E> implements MyRepo<E> {
 
     }
 
-
     // 4.
     /**
      * Vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
@@ -316,7 +317,6 @@ public class UniRepo<E> implements MyRepo<E> {
 
     }
 
-
 // 5.
     /**
      * @param ent
@@ -364,10 +364,9 @@ public class UniRepo<E> implements MyRepo<E> {
 
     // 5.B
     /**
-     * deaktivuje len 1 entitu.
-     * pokial potrebujete deaktivovat cely strom zavislych entit, 
-     * pouzite generalRepo...deactivateAll
-     * 
+     * deaktivuje len 1 entitu. pokial potrebujete deaktivovat cely strom
+     * zavislych entit, pouzite generalRepo...deactivateAll
+     *
      * @param ent
      * @return
      */
@@ -447,16 +446,7 @@ public class UniRepo<E> implements MyRepo<E> {
         }
     }
 
-    
-    
-    
-    
-    
-    
-    
 //    POMOCNE METODY:    
-    
-    
     /**
      *
      * @param mapPar
@@ -469,6 +459,9 @@ public class UniRepo<E> implements MyRepo<E> {
             Connection conn, String sql, E ent) {
 
         try {
+            Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                Format formatterSql = new SimpleDateFormat("yyyy-MM-dd");
+            String date;
 
             PreparedStatement st = conn.prepareStatement(sql);
             Class<?> stCls = st.getClass();
@@ -487,9 +480,10 @@ public class UniRepo<E> implements MyRepo<E> {
                 if ("id".equals(pn)) {
                     continue;
                 }
-                stMetName = ToolsDao.getG_SettersForResultSet(mapPar.get(pn), "set");
+//                st.setd
+                stMetName = ToolsDao.getSetterForPreparedStatement(mapPar.get(pn));
                 pomCls = ToolsDao.transformToPrimitive(mapPar.get(pn));
-                log.info("STAT MET NAME: " + stMetName);
+//                log.info("STAT MET NAME: " + stMetName);
                 stMethod = stCls.getMethod(stMetName, int.class, pomCls);
 //                stMethod = stCls.getMethod(stMetName, int.class, mapPar.get(pn)); //nefunguje
 
@@ -497,15 +491,22 @@ public class UniRepo<E> implements MyRepo<E> {
                 entMethod = clsE.getMethod(entMetName);
 
                 Object o = entMethod.invoke(ent);
+                String namec = (mapPar.get(pn)).getCanonicalName();
+                log.info("DATUM1: " + namec + " : " + o);
                 
-                if (o == null){
+                if (o == null) {
                     st.setNull(i, Types.NULL);
+                } else if ("java.util.Date".equals(namec) || "java.sql.Date".equals(namec)) {
+                    
+                    date = formatter.format(o);
+                    log.info("DATUM: " + date);
+                    st.setString(i, date);
                 } else {
 //                    o = ToolsDao.transformToAppropValue(o, mapPar.get(pn));
                     stMethod.invoke(st, i, o);
                 }
                 i++;
-              
+
             }
 //            st.setString(5, inputDate);
             return st;
@@ -513,7 +514,7 @@ public class UniRepo<E> implements MyRepo<E> {
                 SecurityException | NoSuchMethodException |
                 IllegalArgumentException | InvocationTargetException | SQLException e) {
 //            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
-            log.error(e.getMessage(), e);
+            log.error("KAROLKO" + e.getMessage(), e);
             return null;
         }
 
@@ -613,9 +614,6 @@ public class UniRepo<E> implements MyRepo<E> {
 
     }
 
-    
-    
-    
     /**
      * funkce na naplneni entity.
      *
@@ -659,7 +657,7 @@ public class UniRepo<E> implements MyRepo<E> {
                 for (String pn : mapPar.keySet()) {
 
                     entMetName = ToolsDao.getG_SetterName(pn, "set");
-                    rsMetName = ToolsDao.getG_SettersForResultSet(mapPar.get(pn), "get");
+                    rsMetName = ToolsDao.getGettersForResultSet(mapPar.get(pn));
 
 //                    log.info("KYRYLENKO 1: " + rsMetName);
 //                    log.info("KYRYLENKO 2: " + clsT.getCanonicalName());
@@ -745,11 +743,11 @@ public class UniRepo<E> implements MyRepo<E> {
         }
     }
 
-
     /**
      * Zisti, ci je entita nova, pokial nie, vrati jej id.
+     *
      * @param ent
-     * @return 
+     * @return
      */
     private Integer isNew(E ent) {
         try {

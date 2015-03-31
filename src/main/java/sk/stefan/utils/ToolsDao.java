@@ -119,7 +119,15 @@ public class ToolsDao {
             case "java.lang.Byte[]":
                 return byte[].class;
 //                return Byte[].TYPE;
+            case "java.util.Date":
+                
+                 return String.class;
+            case "java.sql.Timestamp":
+                 return String.class;
+            case "java.sql.Date":
+                 return String.class;
             
+                
             case "java.lang.Short":
             case "sk.stefan.enums.VoteResult":
             case "sk.stefan.enums.VoteAction":
@@ -163,16 +171,15 @@ public class ToolsDao {
      * Ziska getter pre result set.
      *
      * @param cls
-     * @param setGet get or set
      * @return
      */
-    public static synchronized String getG_SettersForResultSet(Class<?> cls, String setGet) {
+    public static synchronized String getGettersForResultSet(Class<?> cls) {
 
         String typ = cls.getCanonicalName();
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(setGet);
+        sb.append("get");
 
         if (null != typ) {
             switch (typ) {
@@ -181,6 +188,10 @@ public class ToolsDao {
                     break;
                 case "java.util.Date":
                     sb.append("Timestamp");
+//                    sb.append("Date");
+                    break;
+                case "java.sql.Date":
+                    sb.append("Date");
                     break;
                 case "byte[]":
                 case "java.lang.Byte[]":
@@ -215,6 +226,62 @@ public class ToolsDao {
         return s;
     }
 
+    /**
+     * Ziska getter pre result set.
+     *
+     * @param cls
+     * @return
+     */
+    public static synchronized String getSetterForPreparedStatement(Class<?> cls) {
+
+        String typ = cls.getCanonicalName();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("set");
+
+        if (null != typ) {
+            switch (typ) {
+                case "java.lang.Integer":
+                    sb.append("Int");
+                    break;
+                case "java.util.Date":
+                case "java.sql.Date":
+                    //toto nieje potreba, ale budiz.
+                    sb.append("String");
+                    break;
+                case "byte[]":
+                case "java.lang.Byte[]":
+                case "java.io.InputStream":
+                    sb.append("Bytes");
+
+                    break;
+                case "sk.stefan.enums.VoteResult":
+                case "sk.stefan.enums.VoteAction":
+                case "sk.stefan.enums.Stability":
+                case "sk.stefan.enums.UserType":
+                case "sk.stefan.enums.PublicUsefulness":
+                case "sk.stefan.enums.FilterType":
+                case "sk.stefan.enums.NonEditableFields":
+                case "sk.stefan.enums.PublicRoleType":
+
+                    sb.append("Short");
+                    break;
+                    
+                default:
+                    String fields[] = typ.split("\\.");
+                    sb.append(fields[fields.length - 1]);
+                    break;
+            }
+        }
+
+        String s = sb.toString();
+        //System.out.println("SKACU: " + s);
+        // ResultSet#getTimestamp() you need java.sql.Timestamp
+        return s;
+    }
+
+    
     /**
      * Metoda sluzi k prevodu java.util.Date do stringu, ktory je ochotny
      * spolknout typ MYSQL timestamp.

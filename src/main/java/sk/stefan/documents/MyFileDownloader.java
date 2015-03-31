@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
+import sk.stefan.MVP.model.repo.dao.UniRepo;
 
 /**
  *
@@ -29,6 +30,7 @@ public class MyFileDownloader {
 
     private Document document;
 
+    private final UniRepo<Document> docRepo = new UniRepo<>(Document.class);
     
     //0.konstruktor.
     /**
@@ -53,6 +55,9 @@ public class MyFileDownloader {
     private void setButton(){
         
         this.downlBt.setStyleName(BaseTheme.BUTTON_LINK);
+//        log.info("BUTTON: " + (downlBt == null));
+//        log.info("DOCUMENT: " + (document == null));
+        
         this.downlBt.setCaption(document.getFile_name());
         
     }
@@ -73,9 +78,17 @@ public class MyFileDownloader {
      * @param doc
      */
     public void refreshDownloader(Document doc){
+
+        //deaktivacia starej entity:
+        if (document.getId() != null){
+            this.document.setVisible(Boolean.FALSE);
+            docRepo.save(document);
+        }
         
         this.document = doc;
         StreamResource resource = getInputResource();
+
+        this.downlBt.setCaption(doc.getFile_name());
         fileDownloader.setFileDownloadResource(resource);
  
     }

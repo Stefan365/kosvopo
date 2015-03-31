@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.repo.dao.GeneralRepo;
@@ -99,7 +100,11 @@ public class FileUploader implements Receiver, SucceededListener {
             doc.setFile_name(fileName);
             doc.setTable_name(tn);
             doc.setTable_row_id(rid);
+            doc.setUpload_date(new Date());
+//            log.info("DATUM UPLOAD:" + doc.getUpload_date());
+            doc.setVisible(Boolean.TRUE);
 
+            
             inStream = new FileInputStream(this.getFile());
             byte[] bFile = new byte[inStream.available()];
             try {

@@ -42,8 +42,8 @@ public class DownloaderLayout<E> extends VerticalLayout {
 
     public DownloaderLayout(Class<?> cls) {
 
-        this.setMargin(true);
-        this.setSpacing(true);
+//        this.setMargin(true);
+//        this.setSpacing(true);
 
         this.clsE = cls;
         this.docRepo = new UniRepo<>(Document.class);

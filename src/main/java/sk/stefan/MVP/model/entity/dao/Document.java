@@ -5,7 +5,8 @@
  */
 package sk.stefan.MVP.model.entity.dao;
 
-import java.io.InputStream;
+//import java.sql.Timestamp;
+
 import java.util.Date;
 import org.apache.log4j.Logger;
 import sk.stefan.interfaces.PresentationName;
@@ -32,6 +33,8 @@ public class Document implements PresentationName {
     private Integer table_row_id;
     
     private String file_name;
+    
+//    private Timestamp upload_date;
     
     private Date upload_date;
     

@@ -10,6 +10,7 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.Upload;
 import java.io.File;
 import org.apache.log4j.Logger;
@@ -19,15 +20,17 @@ import sk.stefan.MVP.model.entity.dao.Document;
  *
  * @author stefan
  */
+//public class DownAndUploaderComponent<E> extends HorizontalLayout {
 public class DownAndUploaderComponent<E> extends HorizontalLayout {
-
+    
+    Panel p; 
     private static final long serialVersionUID = 1L;
 
     private static final Logger log = Logger.getLogger(DownloaderComponent.class);
 
     //spolocne:
     private final UploaderLayout<E> listener;
-    private final Document document;
+    private Document document;
     private final E ent;
     private final Class<E> clsE;
     private final DownAndUploaderComponent<E> thisS;
@@ -52,9 +55,11 @@ public class DownAndUploaderComponent<E> extends HorizontalLayout {
      */
     public DownAndUploaderComponent(Document doc, UploaderLayout<E> lisnr) {
 
-        this.setMargin(true);
-        this.setSpacing(true);
-
+//        this.setMargin(true);
+//        this.setSpacing(true);
+//        this.addStyleName("horizontal-separator");
+//        this.addStyleName("vertical-separator");
+                
         this.thisS = this;
         this.listener = lisnr;
         if (doc == null) {
@@ -78,8 +83,9 @@ public class DownAndUploaderComponent<E> extends HorizontalLayout {
      * Inicializuje uploader.
      */
     private void initUploader() {
-
-        myUploader = new MyFileUploader<>(ent, this.myDownloader);
+        
+        myUploader = new MyFileUploader<>(ent, this);
+//        myUploader = new MyFileUploader<>(ent, this.myDownloader);
 
         // Create the upload with a caption and set receiver later
         upload = new Upload("nahraj dokumnet", myUploader);
@@ -121,7 +127,7 @@ public class DownAndUploaderComponent<E> extends HorizontalLayout {
         String basepath = VaadinService.getCurrent()
                 .getBaseDirectory().getAbsolutePath();
         FileResource resource = new FileResource(new File(basepath
-                + "/WEB-INF/images/close.png"));
+                + "/WEB-INF/images/close.gif"));
         this.removeBt.setIcon(resource);
 
         this.removeBt.addClickListener(new Button.ClickListener() {
@@ -132,7 +138,7 @@ public class DownAndUploaderComponent<E> extends HorizontalLayout {
             public void buttonClick(Button.ClickEvent event) {
 
 //                deaktivuje dokument v DB:
-                boolean isDone = listener.getDocRepo().deactivate(document);
+                boolean isDone = listener.getDocRepo().deactivate(getDocument());
                 //odstrani komponentu D&Uploader z Layoutu:
                 if (isDone) {
                     boolean add = listener.getUploadComponents().remove(thisS);
@@ -162,6 +168,14 @@ public class DownAndUploaderComponent<E> extends HorizontalLayout {
 
     public void setDownloadBt(Button downloadBt) {
         this.downloadBt = downloadBt;
+    }
+
+    public Document getDocument() {
+        return document;
+    }
+
+    public void setDocument(Document document) {
+        this.document = document;
     }
 
 }

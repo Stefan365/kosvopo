@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Date;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
@@ -35,9 +36,11 @@ public class MyFileUploader<E> implements Receiver, SucceededListener {
     private final Class<?> clsE;
 //    private final GeneralRepo genRepo = new GeneralRepo();
     private final UniRepo<Document> docRepo = new UniRepo<>(Document.class);
-    private final MyFileDownloader listener;
+//    private final MyFileDownloader listener;
+    private final DownAndUploaderComponent<E> listener;
      
-    public MyFileUploader(E en, MyFileDownloader lisnr) {
+//    public MyFileUploader(E en, MyFileDownloader lisnr) {
+    public MyFileUploader(E en, DownAndUploaderComponent<E> lisnr) {
 
         this.clsE = en.getClass();
         this.ent = en;
@@ -86,7 +89,11 @@ public class MyFileUploader<E> implements Receiver, SucceededListener {
             doc.setFile_name(fileName);
             doc.setTable_name(tn);
             doc.setTable_row_id(rid);
-
+            doc.setUpload_date(new Date());
+//            log.info("DATUM UPLOAD:" + doc.getUpload_date());
+            doc.setVisible(Boolean.TRUE);
+            
+            
             inStream = new FileInputStream(this.getFile());
             byte[] bFile = new byte[inStream.available()];
             inStream.read(bFile);
@@ -96,7 +103,8 @@ public class MyFileUploader<E> implements Receiver, SucceededListener {
             Notification.show("File saved to Database!");
             
             //druhy krok: zmena nastavenie v MyFileUploaderi:
-            listener.refreshDownloader(doc);
+            listener.setDocument(doc);
+            listener.getMyDownloader().refreshDownloader(doc);
 
         } catch (IOException | IllegalAccessException | IllegalArgumentException |
                 SecurityException | NoSuchMethodException | InvocationTargetException |

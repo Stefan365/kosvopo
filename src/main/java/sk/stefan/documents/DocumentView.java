@@ -77,7 +77,7 @@ public class DocumentView extends VerticalLayout implements View {
 
         Button but = new Button("Download");
         UniRepo<Document> docRepo = new UniRepo<>(Document.class);
-        Document doc = docRepo.findOne(23);
+        Document doc = docRepo.findOne(35);
 
         this.myDownloader = new MyFileDownloader(doc, but);
         this.addComponent(but);
