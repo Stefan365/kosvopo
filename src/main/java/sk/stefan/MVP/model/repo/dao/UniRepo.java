@@ -493,14 +493,17 @@ public class UniRepo<E> implements MyRepo<E> {
                 Object o = entMethod.invoke(ent);
                 String namec = (mapPar.get(pn)).getCanonicalName();
                 log.info("DATUM1: " + namec + " : " + o);
-                
+
                 if (o == null) {
                     st.setNull(i, Types.NULL);
                 } else if ("java.util.Date".equals(namec) || "java.sql.Date".equals(namec)) {
-                    
+
                     date = formatter.format(o);
                     log.info("DATUM: " + date);
                     st.setString(i, date);
+                } else if (namec.contains(".enums")) {
+                    Integer sh = ToolsDao.getShortFromEnum(mapPar.get(pn), o);
+                    st.setInt(i, sh);
                 } else {
 //                    o = ToolsDao.transformToAppropValue(o, mapPar.get(pn));
                     stMethod.invoke(st, i, o);

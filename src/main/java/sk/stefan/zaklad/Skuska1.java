@@ -59,6 +59,7 @@ import sk.stefan.MVP.model.service.SecurityServiceImpl;
 import sk.stefan.MVP.model.service.UserServiceImpl;
 import sk.stefan.enums.Stability;
 import sk.stefan.enums.VoteAction;
+import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.PresentationName;
 import sk.stefan.utils.ToolsNazvy;
 import sk.stefan.utils.ToolsDao;
@@ -89,7 +90,8 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusFormatter();
+        sk.skusVoteSave();
+//        sk.skusFormatter();
 //        sk.skusSaveU();
 //        sk.skusUniRepo();
 //        sk.skusUser();
@@ -1211,6 +1213,20 @@ public class Skuska1<T> {
         log.info("SQL DATE: *" +rate + "*");
         
 
+    }
+    
+    private void skusVoteSave() {
+        
+        UniRepo<Vote> voteRepo = new UniRepo<>(Vote.class);
+
+        Vote v = voteRepo.findOne(2);
+        
+        v.setResult_vote(VoteResult.APPROVED);
+        
+        v = voteRepo.save(v);
+        
+        log.info("RESULT:" + v.getResult_vote());
+            
     }
 
 }

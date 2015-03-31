@@ -138,7 +138,7 @@ public class ToolsDao {
             case "sk.stefan.enums.NonEditableFields":
             case "sk.stefan.enums.PublicRoleType":
 //                return short.class;
-                return Short.TYPE;
+                return Integer.TYPE;
                 
             case "java.lang.Long":
 //                return long.class;
@@ -265,7 +265,7 @@ public class ToolsDao {
                 case "sk.stefan.enums.NonEditableFields":
                 case "sk.stefan.enums.PublicRoleType":
 
-                    sb.append("Short");
+                    sb.append("Int");
                     break;
                     
                 default:
