@@ -50,7 +50,7 @@ import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.VoteOfRoleService;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.components.TBD_YesNoWindow;
+import sk.stefan.MVP.view.components.ZBD_YesNoWindow;
 import sk.stefan.listeners.GeneralComponentListener;
 import sk.stefan.utils.ToolsDao;
 import sk.stefan.utils.TBD_PomFormLayout;
@@ -361,7 +361,7 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
         removeVoteOfRoleBT.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                final TBD_YesNoWindow window = new TBD_YesNoWindow("Upozornenie",
+                final ZBD_YesNoWindow window = new ZBD_YesNoWindow("Upozornenie",
                         "Chcete Hlasovanie Vymazať?",
                         (GeneralComponentListener) event.getButton()
                         .getParent().getParent().getParent());

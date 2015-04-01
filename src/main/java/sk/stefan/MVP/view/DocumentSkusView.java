@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.documents;
+package sk.stefan.MVP.view;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.HorizontalLayout;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.documents.DownloaderLayout;
+import sk.stefan.documents.UploaderLayout;
 
 /**
  *

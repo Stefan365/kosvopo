@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.documents;
+package sk.stefan.MVP.view;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -16,6 +16,8 @@ import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.documents.FileUploader;
+import sk.stefan.documents.MyFileDownloader;
 
 /**
  *
@@ -77,7 +79,7 @@ public class DocumentView extends VerticalLayout implements View {
 
         Button but = new Button("Download");
         UniRepo<Document> docRepo = new UniRepo<>(Document.class);
-        Document doc = docRepo.findOne(35);
+        Document doc = docRepo.findOne(37);
 
         this.myDownloader = new MyFileDownloader(doc, but);
         this.addComponent(but);

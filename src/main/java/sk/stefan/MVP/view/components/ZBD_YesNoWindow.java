@@ -12,7 +12,7 @@ import com.vaadin.ui.*;
  *
  * @author stefan
  */
-public class TBD_YesNoWindow extends Window {
+public class ZBD_YesNoWindow extends Window {
 
 	
 	Button yesBT, noBT;
@@ -27,7 +27,7 @@ public class TBD_YesNoWindow extends Window {
      * @param caption nadpis okna
      * @param message zpráva, která má být zobrazena
      */
-    public TBD_YesNoWindow(String caption, String message, GeneralComponentListener listener) {
+    public ZBD_YesNoWindow(String caption, String message, GeneralComponentListener listener) {
     	
         super(caption);
         

@@ -20,7 +20,7 @@ import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.view.AdministrationView;
-import sk.stefan.documents.DocumentView;
+import sk.stefan.MVP.view.DocumentView;
 import sk.stefan.MVP.view.FilaManagerView;
 import sk.stefan.MVP.view.HomoView;
 import sk.stefan.MVP.view.InputAllView;
@@ -30,7 +30,8 @@ import sk.stefan.MVP.view.LoginView;
 import sk.stefan.MVP.view.UniEditableTableView;
 import sk.stefan.MVP.view.VstupniView;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.documents.DocumentSkusView;
+import sk.stefan.MVP.view.DocumentSkusView;
+import sk.stefan.MVP.view.TimeLineView;
 import sk.stefan.enums.NonEditableFields;
 import sk.stefan.utils.ToolsNazvy;
 
@@ -51,7 +52,9 @@ public class KosvopoUI extends UI {
      *
      */
     @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = KosvopoUI.class)
+    @VaadinServletConfiguration(productionMode = false, ui = KosvopoUI.class, 
+            widgetset="sk.stefan.ui.AppWidgetSet")
+
     public static class Servlet extends VaadinServlet {
     }
 
@@ -109,6 +112,7 @@ public class KosvopoUI extends UI {
         navigator.addView("adminview1", new AdministrationView(navigator));
         navigator.addView("docview", new DocumentView());
         navigator.addView("docskview", new DocumentSkusView());        
+        navigator.addView("timeline", new TimeLineView());        
         
         
 //        navigator.addView("hlasovanie", new VotingLayout());

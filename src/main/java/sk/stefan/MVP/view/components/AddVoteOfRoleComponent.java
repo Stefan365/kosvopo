@@ -160,7 +160,7 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
                     enableSave(true);
                     setVisible(false);
                 } else {
-                    final TBD_YesNoWindow window = new TBD_YesNoWindow("Upozornenie",
+                    final ZBD_YesNoWindow window = new ZBD_YesNoWindow("Upozornenie",
                             "Chcete uložiť zmeny?",
                             (GeneralComponentListener) event.getButton()
                             .getParent().getParent());

@@ -15,7 +15,7 @@ import com.vaadin.data.util.converter.StringToBooleanConverter;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.TextField;
 
-public class TBD_ComboBox<T, E> extends ComboBox {
+public class ZBD_ComboBox<T, E> extends ComboBox {
 
     private String fn; // field name
     private TextField tf; // pomocny field, nebude viditelny. kvoli konvertoru,
@@ -33,7 +33,7 @@ public class TBD_ComboBox<T, E> extends ComboBox {
      *
      * Konstruktor
      */
-    public TBD_ComboBox(Class<?> clsT, Class<?> clsE, BeanFieldGroup<T> bfg, String fn, List<E> listEnt) {
+    public ZBD_ComboBox(Class<?> clsT, Class<?> clsE, BeanFieldGroup<T> bfg, String fn, List<E> listEnt) {
         super(fn);
         this.fn = fn;
 

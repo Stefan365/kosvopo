@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.MVP.view.components.TBD_ComboBox;
+import sk.stefan.MVP.view.components.ZBD_ComboBox;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -147,7 +147,7 @@ public class TBD_PomFormLayout<T> extends FormLayout {
                     bolList.add(Boolean.FALSE);
                     bolList.add(Boolean.TRUE);
 
-                    TBD_ComboBox<T, Boolean> cb = new TBD_ComboBox<>(clsT,
+                    ZBD_ComboBox<T, Boolean> cb = new ZBD_ComboBox<>(clsT,
                             Boolean.class, bfg, pn, bolList);
                     fieldsFL.addComponent(cb);
                     break;
