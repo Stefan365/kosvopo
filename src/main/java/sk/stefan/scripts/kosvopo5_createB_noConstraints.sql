@@ -46,7 +46,8 @@ user_id INT(11),
 table_name VARCHAR(30),
 column_name VARCHAR(30),
 row_id INT(11),
-new_value VARCHAR(30),
+old_value BLOB,
+new_value BLOB,
 
 CONSTRAINT PRIMARY KEY (id)
 );

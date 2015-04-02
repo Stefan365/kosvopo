@@ -48,7 +48,8 @@ user_id INT(11) NOT NULL,
 table_name VARCHAR(30) NOT NULL,
 column_name VARCHAR(30) NOT NULL,
 row_id INT(11) NOT NULL,
-new_value VARCHAR(30) NOT NULL,
+old_value BLOB,
+new_value BLOB,
 
 CONSTRAINT chg_PK PRIMARY KEY(id),
 CONSTRAINT chg_FK FOREIGN KEY(user_id) REFERENCES a_user(id)
