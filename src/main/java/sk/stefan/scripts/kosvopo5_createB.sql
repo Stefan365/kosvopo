@@ -7,6 +7,7 @@ last_name VARCHAR(20) NOT NULL,
 e_mail VARCHAR(50) NOT NULL,
 login VARCHAR(50) NOT NULL,
 password BLOB NOT NULL,
+active BIT NOT NULL DEFAULT 1,
 
 CONSTRAINT usr_PK PRIMARY KEY (id)
 ); 
@@ -19,6 +20,7 @@ id INT(11) NOT NULL AUTO_INCREMENT,
 role SMALLINT NOT NULL DEFAULT 0, 
 role_name VARCHAR(30) NOT NULL,
 rights_description VARCHAR(500) NOT NULL,
+active BIT NOT NULL DEFAULT 1,
 
 CONSTRAINT rol_PK PRIMARY KEY (id)
 ); 
@@ -31,6 +33,7 @@ role_id INT(11) NOT NULL,
 user_id INT(11) NOT NULL,
 since DATE NOT NULL,
 till DATE,
+active BIT NOT NULL DEFAULT 1,
 
 CONSTRAINT uro_PK PRIMARY KEY (id),
 CONSTRAINT uro_FK1 FOREIGN KEY(user_id) REFERENCES a_user(id),
@@ -45,11 +48,13 @@ CREATE TABLE a_change
 id INT(11) NOT NULL AUTO_INCREMENT,
 date_stamp DATE NOT NULL,
 user_id INT(11) NOT NULL,
+public_body_id INT(11),
 table_name VARCHAR(30) NOT NULL,
 column_name VARCHAR(30) NOT NULL,
 row_id INT(11) NOT NULL,
 old_value BLOB,
 new_value BLOB,
+active BIT NOT NULL DEFAULT 1,
 
 CONSTRAINT chg_PK PRIMARY KEY(id),
 CONSTRAINT chg_FK FOREIGN KEY(user_id) REFERENCES a_user(id)

@@ -21,7 +21,13 @@ public class A_Change implements PresentationName {
     
     private Integer row_id;
 
+    private String old_value;
+    
     private String new_value;
+    
+    private Boolean active;
+    
+    
 
     //getters:
     public Integer getId() {
@@ -90,17 +96,29 @@ public class A_Change implements PresentationName {
         this.column_name = column_name;
     }
 
-    /**
-     * @return the old_value
-     */
     public String getOld_value() {
+        return old_value;
+    }
+
+    public void setOld_value(String old_value) {
+        this.old_value = old_value;
+    }
+    
+    
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public String getNew_value() {
         return new_value;
     }
 
-    /**
-     * @param old_value the old_value to set
-     */
-    public void setOld_value(String old_value) {
-        this.new_value = old_value;
+    public void setNew_value(String new_value) {
+        this.new_value = new_value;
     }
 }

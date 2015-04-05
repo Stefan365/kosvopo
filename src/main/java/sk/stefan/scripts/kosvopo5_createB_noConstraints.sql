@@ -7,6 +7,7 @@ last_name VARCHAR(20),
 e_mail VARCHAR(50),
 login VARCHAR(50),
 password BLOB,
+active BIT DEFAULT 1,
  
 CONSTRAINT PRIMARY KEY (id)
 ); 
@@ -19,6 +20,7 @@ id INT(11) AUTO_INCREMENT,
 role SMALLINT,
 role_name VARCHAR(30),
 rights_description TEXT,
+active BIT DEFAULT 1,
 
 CONSTRAINT PRIMARY KEY (id) 
 ); 
@@ -31,6 +33,7 @@ role_id INT(11),
 user_id INT(11),
 since DATE,
 till DATE, 
+active BIT DEFAULT 1,
 
 CONSTRAINT PRIMARY KEY (id)
 ); 
@@ -43,11 +46,14 @@ CREATE TABLE a_change
 id INT(11) AUTO_INCREMENT,
 date_stamp DATE,
 user_id INT(11),
+public_body_id INT(11),
 table_name VARCHAR(30),
 column_name VARCHAR(30),
 row_id INT(11),
 old_value BLOB,
 new_value BLOB,
+
+active BIT DEFAULT 1,
 
 CONSTRAINT PRIMARY KEY (id)
 );
@@ -59,7 +65,7 @@ CREATE TABLE t_tenure
 id INT(11) AUTO_INCREMENT,
 since DATE,
 till DATE,
-visible BIT  DEFAULT 1, 
+visible BIT DEFAULT 1, 
 
 CONSTRAINT PRIMARY KEY (id)
 );
@@ -76,17 +82,6 @@ visible BIT DEFAULT 1,
 CONSTRAINT PRIMARY KEY (id)
 );
 
--- 6.B
-CREATE TABLE t_public_person2
-(
-id INT(11) AUTO_INCREMENT,
-first_name VARCHAR(50),
-last_name VARCHAR(50),
-date_of_birth DATE,
-visible BIT DEFAULT 1,
- 
-CONSTRAINT PRIMARY KEY (id)
-);
 
 -- 7.
 CREATE TABLE t_person_classification
@@ -238,7 +233,6 @@ table_row_id INT(11),
 file_name VARCHAR(30),
 upload_date DATE,
 document MEDIUMBLOB,
--- link TEXT,
 visible BIT DEFAULT 1,
 
 CONSTRAINT doc_PK PRIMARY KEY(id)
