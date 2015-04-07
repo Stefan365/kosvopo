@@ -2,26 +2,27 @@ package sk.stefan.MVP.model.entity.dao;
 
 import sk.stefan.interfaces.PresentationName;
 
-public final class Okres implements PresentationName {
+public final class District implements PresentationName {
 
-    public static final String TN = "t_okres";
+    public static final String TN = "t_district";
     
     public static final String PRES_NAME = "Okres";
 
     private Integer id;
 
-    private String okres_name;
+    private String district_name;
 
-    private Integer kraj_id;
+    private Integer region_id;
 
     private Boolean visible;
     
-    public Okres() {
+    public District() {
     }
 
-    public Okres(String on, Integer kid) {
-        this.setOkres_name(on);
-        this.setKraj_id(kid);
+    public District(String on, Integer rid) {
+        
+        this.setDistrict_name(on);
+        this.setRegion_id(rid);
     }
 
     //getters:
@@ -29,12 +30,12 @@ public final class Okres implements PresentationName {
         return this.id;
     }
 
-    public String getOkres_name() {
-        return this.okres_name;
+    public String getDistrict_name() {
+        return this.district_name;
     }
 
-    public Integer getKraj_id() {
-        return this.kraj_id;
+    public Integer getRegion_id() {
+        return this.region_id;
     }
 
     public static String getTN() {
@@ -46,17 +47,17 @@ public final class Okres implements PresentationName {
         this.id = id;
     }
 
-    public void setOkres_name(String on) {
-        this.okres_name = on;
+    public void setDistrict_name(String on) {
+        this.district_name = on;
     }
 
-    public void setKraj_id(Integer kr) {
-        this.kraj_id = kr;
+    public void setRegion_id(Integer kr) {
+        this.region_id = kr;
     }
 
     @Override
     public String getPresentationName() {
-        return this.okres_name;
+        return this.district_name;
     }
 
     public Boolean getVisible() {

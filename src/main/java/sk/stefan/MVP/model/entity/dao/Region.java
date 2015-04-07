@@ -2,7 +2,7 @@ package sk.stefan.MVP.model.entity.dao;
 
 import sk.stefan.interfaces.PresentationName;
 
-public class Kraj implements PresentationName {
+public class Region implements PresentationName {
 
     public static final String TN = "t_kraj";
     
@@ -10,7 +10,7 @@ public class Kraj implements PresentationName {
 
     private Integer id;
 
-    private String kraj_name;
+    private String region_name;
     
     private Boolean visible;
 
@@ -19,8 +19,8 @@ public class Kraj implements PresentationName {
         return this.id;
     }
 
-    public String getKraj_name() {
-        return this.kraj_name;
+    public String getRegion_name() {
+        return this.region_name;
     }
 
     public static String getTN() {
@@ -32,13 +32,13 @@ public class Kraj implements PresentationName {
         this.id = id;
     }
 
-    public void setKraj_name(String kn) {
-        this.kraj_name = kn;
+    public void setRegion_name(String kn) {
+        this.region_name = kn;
     }
 
     @Override
     public String getPresentationName() {
-        return this.kraj_name;
+        return this.region_name;
     }
 
     /**

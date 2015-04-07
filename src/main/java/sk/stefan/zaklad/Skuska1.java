@@ -47,7 +47,7 @@ import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PublicPerson2;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.Document;
-import sk.stefan.MVP.model.entity.dao.Okres;
+import sk.stefan.MVP.model.entity.dao.District;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Vote;
@@ -1144,12 +1144,12 @@ public class Skuska1<T> {
 
     private void skusRepo() {
         try {
-            UniRepo<Okres> uniRepo = new UniRepo<>(Okres.class);
+            UniRepo<District> uniRepo = new UniRepo<>(District.class);
 //        List<Okres> listEnt = uniRepo.findByParam("id", "7");
-            List<Okres> listEnt = uniRepo.findByTwoParams("id", "7", "kraj_id", "2");
+            List<District> listEnt = uniRepo.findByTwoParams("id", "7", "kraj_id", "2");
 
-            for (Okres o : listEnt) {
-                log.info("OKRES:" + o.getOkres_name());
+            for (District o : listEnt) {
+                log.info("OKRES:" + o.getDistrict_name());
             }
 
             uniRepo.updateParam("okres_name", "ZVOLENA", "7");
@@ -1175,7 +1175,7 @@ public class Skuska1<T> {
      */
     private void skusUniRepo() {
 
-        UniRepo<Okres> uniRepo = new UniRepo<>(Okres.class);
+        UniRepo<District> uniRepo = new UniRepo<>(District.class);
 
 //        String a = uniRepo.createInsertQueryPrepared();
 //        String b = uniRepo.createUpdateQueryPrepared("7");
@@ -1187,12 +1187,12 @@ public class Skuska1<T> {
 
     private void skusSaveU() {
 
-        UniRepo<Okres> okresRepo = new UniRepo<>(Okres.class);
+        UniRepo<District> okresRepo = new UniRepo<>(District.class);
 
-        Okres o = new Okres();
+        District o = new District();
         o.setId(5);
-        o.setOkres_name("KOLAROVO");
-        o.setKraj_id(3);
+        o.setDistrict_name("KOLAROVO");
+        o.setRegion_id(3);
         o.setVisible(Boolean.TRUE);
 
         okresRepo.save(o);

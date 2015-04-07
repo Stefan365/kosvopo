@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import sk.stefan.MVP.model.entity.dao.Kraj;
+import sk.stefan.MVP.model.entity.dao.Region;
 import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
@@ -18,7 +18,7 @@ public class Skuska {
     private UniRepo<Location> locRepo;
     
     @Autowired
-    private UniRepo<Kraj> krRepo;
+    private UniRepo<Region> krRepo;
     
     
 
@@ -44,8 +44,8 @@ public class Skuska {
         Location l = locRepo.findOne(4);
         log.info("LOC SKUSKA: " + l.getObec_name());
         
-        Kraj k = krRepo.findOne(3);
-        log.info("KRAJ SKUSKA: " + k.getKraj_name());
+        Region k = krRepo.findOne(3);
+        log.info("KRAJ SKUSKA: " + k.getRegion_name());
         
 
     }
@@ -81,14 +81,14 @@ public class Skuska {
     /**
      * @return the krRepo
      */
-    public UniRepo<Kraj> getKrajRepo() {
+    public UniRepo<Region> getKrajRepo() {
         return krRepo;
     }
 
     /**
      * @param krRepo the krRepo to set
      */
-    public void setKrajRepo(UniRepo<Kraj> krRepo) {
+    public void setKrajRepo(UniRepo<Region> krRepo) {
         this.krRepo = krRepo;
     }
 }

@@ -15,9 +15,9 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.Kraj;
+import sk.stefan.MVP.model.entity.dao.Region;
 import sk.stefan.MVP.model.entity.dao.Location;
-import sk.stefan.MVP.model.entity.dao.Okres;
+import sk.stefan.MVP.model.entity.dao.District;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
@@ -89,8 +89,8 @@ public class InputAllView extends VerticalLayout implements View {
 
     private void initMap() {
 
-        allButtonsMap.put(krajBt, new InputFormWrapper<>(Kraj.class, Kraj.PRES_NAME, Kraj.TN));
-        allButtonsMap.put(okresBt, new InputFormWrapper<>(Okres.class, Okres.PRES_NAME, Okres.TN));
+        allButtonsMap.put(krajBt, new InputFormWrapper<>(Region.class, Region.PRES_NAME, Region.TN));
+        allButtonsMap.put(okresBt, new InputFormWrapper<>(District.class, District.PRES_NAME, District.TN));
         allButtonsMap.put(location0Bt, new InputFormWrapper<>(Location.class, Location.PRES_NAME, Location.TN));
         allButtonsMap.put(tenure0Bt, new InputFormWrapper<>(Tenure.class, Tenure.PRES_NAME, Tenure.TN));
         allButtonsMap.put(theme0Bt, new InputFormWrapper<>(Theme.class, Theme.PRES_NAME, Theme.getTN()));

@@ -78,10 +78,10 @@ public class KosvopoUI extends UI {
 
         navigator.addView(ToolsNazvy.decapit(A_User.TN),
                 new UniEditableTableView<>(A_User.class, NonEditableFields.A_USER.getNonEditableParams()));
-        navigator.addView(ToolsNazvy.decapit(Okres.TN),
-                new UniEditableTableView<>(Okres.class, NonEditableFields.OKRES.getNonEditableParams()));
-        navigator.addView(ToolsNazvy.decapit(Kraj.TN),
-                new UniEditableTableView<>(Kraj.class, NonEditableFields.KRAJ.getNonEditableParams()));
+        navigator.addView(ToolsNazvy.decapit(District.TN),
+                new UniEditableTableView<>(District.class, NonEditableFields.OKRES.getNonEditableParams()));
+        navigator.addView(ToolsNazvy.decapit(Region.TN),
+                new UniEditableTableView<>(Region.class, NonEditableFields.KRAJ.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(Location.TN),
                 new UniEditableTableView<>(Location.class, NonEditableFields.LOCATION.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(PersonClassification.TN),

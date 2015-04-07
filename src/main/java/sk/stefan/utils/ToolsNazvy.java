@@ -22,9 +22,9 @@ import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_Role;
 import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.entity.dao.Kraj;
+import sk.stefan.MVP.model.entity.dao.Region;
 import sk.stefan.MVP.model.entity.dao.Location;
-import sk.stefan.MVP.model.entity.dao.Okres;
+import sk.stefan.MVP.model.entity.dao.District;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
@@ -273,9 +273,9 @@ public class ToolsNazvy {
             case "role_id":
                 return A_Role.class;
             case "kraj_id":
-                return Kraj.class;
+                return Region.class;
             case "okres_id":
-                return Okres.class;
+                return District.class;
             case "public_person_id":
                 return PublicPerson.class;
             case "location_id":

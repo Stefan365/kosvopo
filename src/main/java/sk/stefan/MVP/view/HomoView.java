@@ -18,7 +18,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.entity.dao.Okres;
+import sk.stefan.MVP.model.entity.dao.District;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
@@ -35,17 +35,17 @@ public class HomoView extends VerticalLayout implements View {
 
     private ComboBox okresBox;
     private Label lab;
-    private BeanFieldGroup<Okres> bfg, bfg2;
+    private BeanFieldGroup<District> bfg, bfg2;
     private TextField tf, tf1, tf2; // = new TextField("TOTONTO");
-    private Okres okres, o2;
-    private Property<Okres> property;
+    private District okres, o2;
+    private Property<District> property;
     private Button save, enter;
     private Button edit;
     private Button remove;
 
     private HorizontalLayout hl1, hl2;
     // OkresRepo okresRepo;
-    private UniRepo<Okres> okresRepo;
+    private UniRepo<District> okresRepo;
 
     private Button secondViewButton, firstViewButton;
 
@@ -54,7 +54,7 @@ public class HomoView extends VerticalLayout implements View {
         
         securityService = new SecurityServiceImpl();
 
-        okresRepo = new UniRepo<>(Okres.class);
+        okresRepo = new UniRepo<>(District.class);
 
         this.setMargin(true);
 
@@ -68,13 +68,13 @@ public class HomoView extends VerticalLayout implements View {
 
     public void initCombo(ComboBox com) {
         // List<Okres> okresy = okresRepo.findAllDao();
-        List<Okres> okresy = okresRepo.findAll();
+        List<District> okresy = okresRepo.findAll();
 
         com.removeAllItems();
         if (okresy != null) {
-            for (Okres o : okresy) {
+            for (District o : okresy) {
                 com.addItem(o);
-                com.setItemCaption(o, o.getOkres_name());
+                com.setItemCaption(o, o.getDistrict_name());
             }
         }
 
@@ -105,11 +105,11 @@ public class HomoView extends VerticalLayout implements View {
                     }
                 }
                 if (newItem) {
-                    Okres okres = new Okres(newItemCaption, 1);
+                    District okres = new District(newItemCaption, 1);
 
                     okresRepo.save(okres);
                     okresBox.addItem(okres);
-                    okresBox.setItemCaption(okres, okres.getOkres_name());
+                    okresBox.setItemCaption(okres, okres.getDistrict_name());
                     // okresBox.setValue(newItemCaption);
 
                 }
@@ -121,7 +121,7 @@ public class HomoView extends VerticalLayout implements View {
             @Override
             public void valueChange(ValueChangeEvent event) {
 
-                okres = (Okres) event.getProperty().getValue();
+                okres = (District) event.getProperty().getValue();
                 if (okres != null) {
                     // Notification.show(okres.toString());
                     bfg.setItemDataSource(okres);
@@ -141,7 +141,7 @@ public class HomoView extends VerticalLayout implements View {
         okresBox.setNullSelectionAllowed(false);
 
         // Text Field:
-        bfg = new BeanFieldGroup<Okres>(Okres.class);
+        bfg = new BeanFieldGroup<District>(District.class);
 
         tf = new TextField("TOTONTO");
         bfg.bind(tf, "okres_name");
@@ -157,7 +157,7 @@ public class HomoView extends VerticalLayout implements View {
                         tf.setEnabled(false);
                         event.getButton().setEnabled(false);
                         edit.setEnabled(true);
-                        okresBox.setItemCaption(okres, okres.getOkres_name());
+                        okresBox.setItemCaption(okres, okres.getDistrict_name());
 
                         Notification.show("Uspesne ulozeno!");
 
@@ -225,7 +225,7 @@ public class HomoView extends VerticalLayout implements View {
         tf1 = new TextField("Find by id or name");
         tf2 = new TextField("Okres:");
 
-        bfg2 = new BeanFieldGroup<Okres>(Okres.class);
+        bfg2 = new BeanFieldGroup<District>(District.class);
         bfg2.bind(tf2, "okres_name");
 
         // enter button:

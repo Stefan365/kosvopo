@@ -14,7 +14,7 @@ public class Location implements PresentationName {
 
     private String mestka_cast;
 
-    private Integer okres_id;
+    private Integer district_id;
 
     private Boolean visible;
 
@@ -31,8 +31,8 @@ public class Location implements PresentationName {
         return this.mestka_cast;
     }
 
-    public Integer getOkres_id() {
-        return this.okres_id;
+    public Integer getDistrict_id() {
+        return this.district_id;
     }
 
     public Boolean getVisible() {
@@ -56,8 +56,8 @@ public class Location implements PresentationName {
         this.mestka_cast = mc;
     }
 
-    public void setOkres_id(Integer okrid) {
-        this.okres_id = okrid;
+    public void setDistrict_id(Integer okrid) {
+        this.district_id = okrid;
     }
 
     public void setVisible(Boolean vis) {

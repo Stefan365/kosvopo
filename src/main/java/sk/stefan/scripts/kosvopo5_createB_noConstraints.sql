@@ -97,10 +97,10 @@ CONSTRAINT PRIMARY KEY (id)
 );
 
 -- 8.0.
-CREATE TABLE T_KRAJ 
+CREATE TABLE t_region 
 (
 id INT(11) AUTO_INCREMENT, 
-kraj_name VARCHAR(20), 
+region_name VARCHAR(20), 
 visible BIT DEFAULT 1,
 
 
@@ -109,14 +109,14 @@ CONSTRAINT PRIMARY KEY (id)
 
 
 -- 8.1.
-CREATE TABLE T_OKRES 
+CREATE TABLE t_district 
 (
 id INT(11) AUTO_INCREMENT, 
-okres_name VARCHAR(20), 
-kraj_id INT(11),
+district_name VARCHAR(20), 
+region_id INT(11),
 visible BIT DEFAULT 1,
 
-CONSTRAINT PRIMARY KEY (id)
+CONSTRAINT dis_PK PRIMARY KEY (id),
 );
 
 

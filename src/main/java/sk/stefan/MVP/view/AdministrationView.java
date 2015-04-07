@@ -16,9 +16,9 @@ import com.vaadin.ui.themes.BaseTheme;
 import sk.stefan.MVP.model.entity.dao.A_Role;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.A_UserRole;
-import sk.stefan.MVP.model.entity.dao.Kraj;
+import sk.stefan.MVP.model.entity.dao.Region;
 import sk.stefan.MVP.model.entity.dao.Location;
-import sk.stefan.MVP.model.entity.dao.Okres;
+import sk.stefan.MVP.model.entity.dao.District;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
@@ -89,11 +89,11 @@ public class AdministrationView extends VerticalLayout implements View {
             getNavigator().navigateTo(ToolsNazvy.decapit(A_User.getTN()));
         });
 
-        okresBt = new Button(Okres.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(Okres.TN));
+        okresBt = new Button(District.PRES_NAME, (Button.ClickEvent event) -> {
+            getNavigator().navigateTo(ToolsNazvy.decapit(District.TN));
         });
-        krajBt = new Button(Kraj.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(Kraj.TN));
+        krajBt = new Button(Region.PRES_NAME, (Button.ClickEvent event) -> {
+            getNavigator().navigateTo(ToolsNazvy.decapit(Region.TN));
         });
         locBt = new Button(Location.PRES_NAME, (Button.ClickEvent event) -> {
             getNavigator().navigateTo(ToolsNazvy.decapit(Location.TN));

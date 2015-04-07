@@ -112,27 +112,27 @@ CONSTRAINT pcl_FK FOREIGN KEY(public_person_id) REFERENCES t_public_person(id)
 );
 
 -- 8.0.
-CREATE TABLE T_KRAJ 
+CREATE TABLE t_region
 (
 id INT(11) NOT NULL AUTO_INCREMENT, 
-kraj_name VARCHAR(20) NOT NULL, 
+region_name VARCHAR(20) NOT NULL, 
 visible BIT NOT NULL DEFAULT 1,
 
 
-CONSTRAINT kra_PK PRIMARY KEY (id)
+CONSTRAINT reg_PK PRIMARY KEY (id)
 );
 
 
 -- 8.1.
- CREATE TABLE T_OKRES 
+ CREATE TABLE t_district
  (
  id INT(11) NOT NULL AUTO_INCREMENT, 
- okres_name VARCHAR(20) NOT NULL, 
- kraj_id INT(11) NOT NULL, 
+ district_name VARCHAR(20) NOT NULL, 
+ region_id INT(11), 
  visible BIT NOT NULL DEFAULT 1,
 
-CONSTRAINT okr_PK PRIMARY KEY (id),
-CONSTRAINT okr_FK FOREIGN KEY(kraj_id) REFERENCES T_KRAJ(id)
+CONSTRAINT dis_PK PRIMARY KEY (id),
+CONSTRAINT dis_FK FOREIGN KEY(region_id) REFERENCES t_region(id)
 );
 
 -- 8.2.
@@ -175,8 +175,7 @@ visible BIT NOT NULL DEFAULT 1,
 CONSTRAINT pur_PK PRIMARY KEY(id),
 CONSTRAINT pur_FK1 FOREIGN KEY(public_body_id) REFERENCES t_public_body(id),
 CONSTRAINT pur_FK2 FOREIGN KEY(tenure_id) REFERENCES t_tenure(id),
-CONSTRAINT pur_FK3 FOREIGN KEY(public_person_id) REFERENCES t_public_person(id),
-CONSTRAINT pur_UN UNIQUE(public_body_id, public_person_id, tenure_id)
+CONSTRAINT pur_FK3 FOREIGN KEY(public_person_id) REFERENCES t_public_person(id)
 );
 
 -- 11.
@@ -259,7 +258,7 @@ CREATE TABLE t_document
 id INT(11) NOT NULL  AUTO_INCREMENT,
 table_name VARCHAR(30) NOT NULL,
 table_row_id INT(11) NOT NULL,
-file_name VARCHAR(30) NOT NULL,
+file_name VARCHAR(150) NOT NULL,
 upload_date DATE,
 document MEDIUMBLOB NOT NULL,
 visible BIT NOT NULL DEFAULT 1,
