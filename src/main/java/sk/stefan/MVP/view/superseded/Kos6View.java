@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view;
+package sk.stefan.MVP.view.superseded;
 
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.utils.ImageUploader;

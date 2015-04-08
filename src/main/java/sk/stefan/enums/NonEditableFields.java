@@ -11,9 +11,9 @@ package sk.stefan.enums;
  */
 public enum NonEditableFields {
 
-    KRAJ("t_kraj"),
+    REGION("t_region"),
     LOCATION("t_location"),
-    OKRES("t_okres"),
+    DISTRICT("t_district"),
     PERSON_CLASS("t_person_classification"),
     PUBLIC_BODY("t_public_body"),
     PUBLIC_PERSON("t_public_person"),
@@ -36,14 +36,16 @@ public enum NonEditableFields {
 
     public String[] getNonEditableParams() {
         switch (this) {
-            case KRAJ:
+            case REGION:
                 
-                return new String[]{};
+                return new String[]{"visible"};
+////              
+//                return new String[]{};
             
             case LOCATION:
                 return new String[]{"visible"};
                 
-            case OKRES:
+            case DISTRICT:
                 return new String[]{"visible"};
 //                
 //                return new String[]{};
@@ -71,21 +73,22 @@ public enum NonEditableFields {
                 return new String[]{"visible"};
             case VOTE:
 //                return new String[]{};
-                return new String[]{"visible", "link"};
+                return new String[]{"visible"};
             case VOTE_CLASS:
 //                return new String[]{};
                 return new String[]{"visible"};
             case VOTE_OF_ROLE:
 //                return new String[]{};
                 return new String[]{"visible"};
+                
             case A_USER:
-                return new String[]{"password"};
+                return new String[]{"password", "active"};
 //                return new String[]{};
             case A_ROLE:
-                return new String[]{};
+                return new String[]{"active"};
             case A_USER_ROLE:
 //                return new String[]{};
-                return new String[]{"since", "till"};
+                return new String[]{"since", "till","active"};
             default:
                 return null;
         }

@@ -4,7 +4,7 @@ import sk.stefan.interfaces.PresentationName;
 
 public class Region implements PresentationName {
 
-    public static final String TN = "t_kraj";
+    public static final String TN = "t_region";
     
     public static final String PRES_NAME = "Kraj";
 
@@ -41,16 +41,10 @@ public class Region implements PresentationName {
         return this.region_name;
     }
 
-    /**
-     * @return the visible
-     */
     public Boolean getVisible() {
         return visible;
     }
 
-    /**
-     * @param visible the visible to set
-     */
     public void setVisible(Boolean visible) {
         this.visible = visible;
     }

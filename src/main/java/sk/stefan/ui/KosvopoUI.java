@@ -21,14 +21,14 @@ import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.view.AdministrationView;
 import sk.stefan.MVP.view.DocumentView;
-import sk.stefan.MVP.view.FilaManagerView;
-import sk.stefan.MVP.view.HomoView;
+import sk.stefan.MVP.view.superseded.FilaManagerView;
+import sk.stefan.MVP.view.superseded.HomoView;
 import sk.stefan.MVP.view.InputAllView;
-import sk.stefan.MVP.view.Kos2View;
-import sk.stefan.MVP.view.Kos3View;
+import sk.stefan.MVP.view.superseded.Kos2View;
+import sk.stefan.MVP.view.superseded.Kos3View;
 import sk.stefan.MVP.view.LoginView;
 import sk.stefan.MVP.view.UniEditableTableView;
-import sk.stefan.MVP.view.VstupniView;
+import sk.stefan.MVP.view.EnterView;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.DocumentSkusView;
 import sk.stefan.MVP.view.TimeLineView;
@@ -73,15 +73,15 @@ public class KosvopoUI extends UI {
         NavigationComponent.createNavComp(navigator);
 
         navigator.addView("login", new LoginView(navigator));
-        navigator.addView("vstupny", new VstupniView());
+        navigator.addView("vstupny", new EnterView());
         navigator.addView("homo", new HomoView());
 
         navigator.addView(ToolsNazvy.decapit(A_User.TN),
                 new UniEditableTableView<>(A_User.class, NonEditableFields.A_USER.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(District.TN),
-                new UniEditableTableView<>(District.class, NonEditableFields.OKRES.getNonEditableParams()));
+                new UniEditableTableView<>(District.class, NonEditableFields.DISTRICT.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(Region.TN),
-                new UniEditableTableView<>(Region.class, NonEditableFields.KRAJ.getNonEditableParams()));
+                new UniEditableTableView<>(Region.class, NonEditableFields.REGION.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(Location.TN),
                 new UniEditableTableView<>(Location.class, NonEditableFields.LOCATION.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(PersonClassification.TN),

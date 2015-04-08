@@ -82,6 +82,17 @@ visible BIT DEFAULT 1,
 CONSTRAINT PRIMARY KEY (id)
 );
 
+-- 6.2
+CREATE TABLE t_public_person2
+(
+id INT(11) AUTO_INCREMENT,
+first_name VARCHAR(50) ,
+last_name VARCHAR(50) ,
+date_of_birth  DATE ,
+visible BIT DEFAULT 1,
+ 
+CONSTRAINT PRIMARY KEY (id)
+);
 
 -- 7.
 CREATE TABLE t_person_classification
@@ -103,7 +114,6 @@ id INT(11) AUTO_INCREMENT,
 region_name VARCHAR(20), 
 visible BIT DEFAULT 1,
 
-
 CONSTRAINT PRIMARY KEY (id)
 );
 
@@ -116,7 +126,7 @@ district_name VARCHAR(20),
 region_id INT(11),
 visible BIT DEFAULT 1,
 
-CONSTRAINT dis_PK PRIMARY KEY (id),
+CONSTRAINT PRIMARY KEY (id)
 );
 
 
@@ -126,7 +136,7 @@ CREATE TABLE t_location
 id INT(11)  AUTO_INCREMENT, 
 obec_name VARCHAR(50), 
 mestka_cast VARCHAR(50), 
-okres_id INT(11), 
+district_id INT(11), 
 visible BIT  DEFAULT 1,
 
 CONSTRAINT PRIMARY KEY (id)

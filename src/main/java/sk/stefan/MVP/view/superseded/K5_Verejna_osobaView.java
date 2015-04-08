@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view;
+package sk.stefan.MVP.view.superseded;
 
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Property;

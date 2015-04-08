@@ -16,6 +16,9 @@ public class A_Role implements PresentationName {
     private String role_name;
 
     private String rights_description;
+    
+    private Boolean active;
+    
 
     //getters:
     public Integer getId() {
@@ -55,6 +58,15 @@ public class A_Role implements PresentationName {
         this.rights_description = rights_description;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    
     @Override
     public String getPresentationName() {
 

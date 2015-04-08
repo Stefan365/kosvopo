@@ -65,7 +65,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
             String sql;
             if (TN.contains("a_")) {
-                sql = String.format("SELECT * FROM %s", TN);
+                sql = String.format("SELECT * FROM %s WHERE active = true", TN);
             } else {
                 sql = String.format("SELECT * FROM %s  WHERE visible = true", TN);
             }
@@ -107,7 +107,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
             String sql;
             if (TN.contains("a_")) {
-                sql = String.format("SELECT * FROM %s WHERE id = %d", TN, id);
+                sql = String.format("SELECT * FROM %s WHERE id = %d AND active = true", TN, id);
             } else {
                 sql = String.format("SELECT * FROM %s WHERE id = %d AND visible = true", TN, id);
             }
@@ -156,6 +156,7 @@ public class UniRepo<E> implements MyRepo<E> {
             sql.append(String.format("SELECT * FROM %s WHERE ", TN));
             sql.append(this.getFindByParamQuery(paramName, paramValue));
             if (TN.contains("a_")) {
+                sql.append(" AND active = true");
                 //do nothing
             } else {
                 sql.append(" AND visible = true");
@@ -212,6 +213,7 @@ public class UniRepo<E> implements MyRepo<E> {
             sql.append(" AND ");
             sql.append(this.getFindByParamQuery(p2Name, p2Value));
             if (TN.contains("a_")) {
+                sql.append(" AND active = true");
                 //do nothing
             } else {
                 sql.append(" AND visible = true");

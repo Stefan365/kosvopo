@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_Role;
 import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.dao.A_UserRole;
 import sk.stefan.MVP.model.entity.dao.Region;
 import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.District;
@@ -265,16 +266,18 @@ public class ToolsNazvy {
      * @return
      */
     public static Class<?> getClassFromName(String pn) {
-
+        log.info("MARTINKO:" + pn);
         switch (pn) {
 
             case "user_id":
                 return A_User.class;
             case "role_id":
                 return A_Role.class;
-            case "kraj_id":
+            case "user_role_id":
+                return A_UserRole.class;
+            case "region_id":
                 return Region.class;
-            case "okres_id":
+            case "district_id":
                 return District.class;
             case "public_person_id":
                 return PublicPerson.class;

@@ -1146,13 +1146,13 @@ public class Skuska1<T> {
         try {
             UniRepo<District> uniRepo = new UniRepo<>(District.class);
 //        List<Okres> listEnt = uniRepo.findByParam("id", "7");
-            List<District> listEnt = uniRepo.findByTwoParams("id", "7", "kraj_id", "2");
+            List<District> listEnt = uniRepo.findByTwoParams("id", "7", "region_id", "2");
 
             for (District o : listEnt) {
                 log.info("OKRES:" + o.getDistrict_name());
             }
 
-            uniRepo.updateParam("okres_name", "ZVOLENA", "7");
+            uniRepo.updateParam("district_name", "ZVOLENA", "7");
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
 

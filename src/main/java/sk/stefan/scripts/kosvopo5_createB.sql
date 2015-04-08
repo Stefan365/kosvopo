@@ -85,16 +85,16 @@ CONSTRAINT pup_PK PRIMARY KEY(id)
 );
 
 -- 6.B
--- CREATE TABLE t_public_person2
--- (
--- id INT(11) NOT NULL AUTO_INCREMENT,
--- first_name VARCHAR(50) NOT NULL,
--- last_name VARCHAR(50) NOT NULL,
--- date_of_birth DATE,
--- visible BIT NOT NULL DEFAULT 1,
+ CREATE TABLE t_public_person2
+ (
+ id INT(11) NOT NULL AUTO_INCREMENT,
+ first_name VARCHAR(50) NOT NULL,
+ last_name VARCHAR(50) NOT NULL,
+ date_of_birth DATE,
+ visible BIT NOT NULL DEFAULT 1,
 
--- CONSTRAINT pup2_PK PRIMARY KEY(id)
--- );
+ CONSTRAINT pup2_PK PRIMARY KEY(id)
+ );
 
 
 -- 7.
@@ -141,11 +141,11 @@ CREATE TABLE t_location
 id INT(11) NOT NULL AUTO_INCREMENT, 
 obec_name VARCHAR(50) NOT NULL, 
 mestka_cast VARCHAR(50), 
-okres_id INT(11) NOT NULL, 
+district_id INT(11) NOT NULL, 
 visible BIT NOT NULL DEFAULT 1,
 
 CONSTRAINT loc_PK PRIMARY KEY (id),
-CONSTRAINT loc_FK FOREIGN KEY(okres_id) REFERENCES T_OKRES(id),
+CONSTRAINT loc_FK FOREIGN KEY(district_id) REFERENCES t_district(id),
 CONSTRAINT loc_UN UNIQUE(obec_name, mestka_cast)
 );
 

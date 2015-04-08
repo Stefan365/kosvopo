@@ -1,5 +1,8 @@
 package sk.stefan.MVP.view;
 
+import sk.stefan.MVP.view.superseded.Kos6View;
+import sk.stefan.MVP.view.superseded.K5_Verejna_osobaView;
+import sk.stefan.MVP.view.superseded.K4_PoslanciView;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;

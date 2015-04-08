@@ -84,38 +84,38 @@ VALUES (NOW(), 1, 4, 2);
 COMMIT; 
 
 -- 8.0
-INSERT INTO T_KRAJ(kraj_name) VALUES ('Západoslovenský');
-INSERT INTO T_KRAJ(kraj_name) VALUES ('Stredoslovenský');
-INSERT INTO T_KRAJ(kraj_name) VALUES ('Východoslovenský');
+INSERT INTO t_region(region_name) VALUES ('Západoslovenský');
+INSERT INTO t_region(region_name) VALUES ('Stredoslovenský');
+INSERT INTO t_region(region_name) VALUES ('Východoslovenský');
 COMMIT;
 
 -- 8.1. 
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Bratislava', 1);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Trnava', 1);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Nitra', 1);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Trenčín', 1);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Prievidza', 2);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Banská Bystrica', 2);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Zvolen', 2);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Žarnovica', 2);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Lučenec', 2);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Kosice', 3);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Michalovce', 3);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Zvolen', 3);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Roznava', 3);
- INSERT INTO T_OKRES(okres_name, kraj_id) VALUES ('Presov', 3);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Bratislava', 1);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Trnava', 1);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Nitra', 1);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Trenčín', 1);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Prievidza', 2);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Banská Bystrica', 2);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Zvolen', 2);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Žarnovica', 2);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Lučenec', 2);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Kosice', 3);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Michalovce', 3);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Zvolen', 3);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Roznava', 3);
+ INSERT INTO t_district(district_name, region_id) VALUES ('Presov', 3);
  COMMIT;
 
 -- 8.2.
-INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Bratislava', 'Rača', 1);
-INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Bratislava', 'Dúbravka', 1);
-INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Handlová', null, 5);
-INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Nováky', null, 5);
-INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Patrizánske', null, 5);
-INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Ráztočno', null, 5);
-INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Topoľčany', null, 3);
-INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Košice', 'Záhumienok', 10);
-INSERT INTO t_location(obec_name, mestka_cast, okres_id) VALUES ('Sereď', null, 1);
+INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Bratislava', 'Rača', 1);
+INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Bratislava', 'Dúbravka', 1);
+INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Handlová', null, 5);
+INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Nováky', null, 5);
+INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Patrizánske', null, 5);
+INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Ráztočno', null, 5);
+INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Topoľčany', null, 3);
+INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Košice', 'Záhumienok', 10);
+INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Sereď', null, 1);
 COMMIT;
 
 
@@ -224,10 +224,10 @@ COMMIT;
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_public_person', null, null);
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_tenure', null, null);
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_theme', null, null);
-INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_kraj', null, null);
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_region', null, null);
 
-INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_okres', 't_kraj', 'kraj_id');
-INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_location', 't_okres', 'okres_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_district', 't_region', 'region_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_location', 't_district', 'district_id');
 
 
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_public_body', 't_location', 'location_id');

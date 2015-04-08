@@ -59,7 +59,7 @@
     
     <!--Kraj repo:-->    
     <bean id="krajRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.Kraj"></constructor-arg>
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.Region"></constructor-arg>
     </bean>
     
     <!--Location repo:-->    
@@ -69,7 +69,7 @@
     
     <!--Okres repo:-->    
     <bean id="okresRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.Okres"></constructor-arg>
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.District"></constructor-arg>
     </bean>
     
     <!--Person Classification repo:-->    

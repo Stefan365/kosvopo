@@ -20,6 +20,8 @@ public class A_UserRole implements PresentationName {
     private Date since;
 
     private Date till;
+    
+    private Boolean active;
 
     // getters:
     public Integer getId() {
@@ -66,6 +68,15 @@ public class A_UserRole implements PresentationName {
     public void setTill(Date till) {
         this.till = till;
     }
+    
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
 
     @Override
     public String getPresentationName() {

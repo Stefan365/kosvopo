@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view;
+package sk.stefan.MVP.view.superseded;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

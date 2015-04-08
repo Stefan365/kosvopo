@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class PublicPerson2 implements PresentationName {
 
-    public static final String TN = "T_Public_Person2";
+    public static final String TN = "t_public_person2";
     
     public static final String PRES_NAME = "Verejná osoba 2";
 

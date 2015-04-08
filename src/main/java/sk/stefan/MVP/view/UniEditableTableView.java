@@ -254,6 +254,11 @@ public final class UniEditableTableView<E> extends VerticalLayout implements OkC
                 if (item.getItemProperty("visible") != null) {
                     item.getItemProperty("visible").setValue(Boolean.TRUE);
                 }
+                //docasne riesenie:
+                if (item.getItemProperty("active") != null) {
+                    item.getItemProperty("active").setValue(Boolean.TRUE);
+                }
+                
                 obnovFilter();
 
 //              uniTable.getContainerProperty(itemId, visibleFn.get(2)).setValue("New");
@@ -289,6 +294,11 @@ public final class UniEditableTableView<E> extends VerticalLayout implements OkC
     private void initUniTable() {
 
         uniTable.setContainerDataSource(sqlContainer);
+        
+        log.info("CLASS:" + clsE.getCanonicalName());
+        for (String s : visibleColDbNames){
+            log.info("VISIBLE COLS:" + s);
+        }
         uniTable.setVisibleColumns((Object[]) visibleColDbNames);
         uniTable.setColumnHeaders(visibleColDepictNames);
         uniTable.setSelectable(true);
@@ -363,6 +373,10 @@ public final class UniEditableTableView<E> extends VerticalLayout implements OkC
                 try {
 //                  item.getItemProperty("visible").setValue(Boolean.FALSE);
 //                  sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);
+//                  item.getItemProperty("active").setValue(Boolean.FALSE);
+//                  sqlContainer.getItem(itemId).getItemProperty("active").setValue(Boolean.FALSE);
+                    
+                    
                     UniRepo<E> unirepo = new UniRepo<>(clsE);
                     unirepo.updateParam("visible", "false", "" + item.getItemProperty("id").getValue());
 //                    item = null;

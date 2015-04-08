@@ -452,6 +452,7 @@ public class ToolsDao {
             Constructor<UniRepo<? extends Object>> repoCtor;
             repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
             List<? extends Object> listObj;
+            log.info("KAROLKO, CLS:" + (cls.getCanonicalName()));
             listObj = repoCtor.newInstance(cls).findAll();
             for (Object o : listObj) {
                 Method getRepNameMethod = cls.getMethod("getPresentationName");

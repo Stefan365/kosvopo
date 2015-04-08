@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view;
+package sk.stefan.MVP.view.superseded;
 
 import sk.stefan.MVP.view.components.NavigationComponent;
 
@@ -13,14 +13,18 @@ import com.vaadin.ui.Link;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 
-public class Kos3View extends VerticalLayout implements View {
+public class Kos2View extends VerticalLayout implements View {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8488411174808029573L;
     private VerticalLayout layout;
     private MenuBar menubar;
-    private Link linka;
     private Label selection;
+    private Link linka;
 
-    public Kos3View() {
+    public Kos2View() {
         this.initLayout();
         this.addComponent(NavigationComponent.getNavComp());
     }
@@ -50,48 +54,36 @@ public class Kos3View extends VerticalLayout implements View {
         };
 
         // Hlavna zalozka A.
-        MenuBar.MenuItem hlasovania = menubar.addItem("HLASOVANIA", null, null);
+        MenuBar.MenuItem vykonneOR = menubar.addItem("VYKONNE ORGANY", null, null);
         // Podzalozky:
-        MenuBar.MenuItem hlasovaniaAbc = hlasovania.addItem("Podla abecedy", null, mycommand);
-        MenuBar.MenuItem hlasovaniaCas = hlasovania.addItem("Podla casu", null, mycommand);
+        MenuBar.MenuItem vykonneORreg = vykonneOR.addItem("Podla regionu", null, mycommand);
+        MenuBar.MenuItem vykonneORabc = vykonneOR.addItem("Podla abecedy", null, mycommand);
 
         // Hlavna zalozka B.
-        MenuBar.MenuItem hodnotenia = menubar.addItem("HODNOTENIA", null, null);
+        MenuBar.MenuItem ludia = menubar.addItem("VEREJNE OSOBY", null, null);
         // Podzalozky:
-        MenuBar.MenuItem hodnoteniaCas = hodnotenia.addItem("Podla casu", null, mycommand);
+        MenuBar.MenuItem ludiaReg = ludia.addItem("Podla regionu", null, mycommand);
+        MenuBar.MenuItem ludiaAbc = ludia.addItem("Podla abecedy", null, mycommand);
 
         // Hlavna zalozka C.
-        MenuBar.MenuItem verOrg = menubar.addItem("VEREJNE ORGANY", null, null);
+        MenuBar.MenuItem hlasovania = menubar.addItem("HLASOVANIA", null, null);
         // Podzalozky:
-        MenuBar.MenuItem verOrgCas = verOrg.addItem("Podla casu", null, mycommand);
-
-        // Hlavna zalozka D.
-        MenuBar.MenuItem strana = menubar.addItem("STRANY", null, null);
-        // Podzalozky:
-        MenuBar.MenuItem stranaCas = strana.addItem("Podla casu", null, mycommand);
+        MenuBar.MenuItem hlasovaniaTem = hlasovania.addItem("Podla temy", null, mycommand);
+        MenuBar.MenuItem hlasovaniaReg = hlasovania.addItem("Podla regionu", null, mycommand);
+        MenuBar.MenuItem hlasovaniaAbc = hlasovania.addItem("Podla abecedy", null, mycommand);
+        MenuBar.MenuItem hlasovaniaLud = hlasovania.addItem("Podla osob ktore hlasovali", null, mycommand);
 
         layout.addComponent(menubar);
-
-        //LABELS:
-        // A feedback component
-        Label meno = new Label("MENO:");
-        Label priezvisko = new Label("PRIEZVISKO:");
-        Label datumNar = new Label("DATUM_NARODENIA:");
-        Label verejnyOrg = new Label("VEREJNY_ORGAN:");
-
-        layout.addComponents(meno, priezvisko, datumNar, verejnyOrg);
 
         linka = new Link("Log in", new ExternalResource("http://vaadin.com/"));
         linka.setTargetName("_blank");
 
         layout.addComponent(linka);
-
     }
 
     @Override
     public void enter(ViewChangeEvent event) {
         this.addComponent(NavigationComponent.getNavComp());
-
     }
 
 }

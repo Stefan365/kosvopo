@@ -255,9 +255,8 @@ public class InputFormLayout<T> extends FormLayout {
 
                 case "java.lang.Boolean":
                     switch (pn) {
-                        case "deleted":
-                        case "completed":
-                            break;
+//                        case "active":
+//                            break;
                         default:
                             fieldMap.put(pn, bindCheckBox(pn));
                     }
@@ -366,7 +365,7 @@ public class InputFormLayout<T> extends FormLayout {
 //            log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
 //        }
 //
-//        log.info("TN:" + tn);
+        log.info("TN:" + tn);
 //        log.info("SIZE PORADIE:" + proPoradie.size());
 //        log.info("SIZE DEPICT:" + proDepict.size());
 //        }
@@ -377,9 +376,9 @@ public class InputFormLayout<T> extends FormLayout {
                 continue;
             }
             
-//            log.info("KEY: *" + key + "*");
+            log.info("KEY: *" + key + "*");
             String cap = proDepict.getProperty(key);
-//            log.info("CAP: *" + cap + "*");
+            log.info("CAP: *" + cap + "*");
             (fieldMap.get(key)).setCaption(cap);
             fieldsFL.addComponent(fieldMap.get(key));
         }

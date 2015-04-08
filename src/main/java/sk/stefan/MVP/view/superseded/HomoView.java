@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view;
+package sk.stefan.MVP.view.superseded;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -125,7 +125,7 @@ public class HomoView extends VerticalLayout implements View {
                 if (okres != null) {
                     // Notification.show(okres.toString());
                     bfg.setItemDataSource(okres);
-                    bfg.bind(tf, "okres_name");
+                    bfg.bind(tf, "district_name");
                     save.setEnabled(true);
                     edit.setEnabled(false);
 
@@ -144,7 +144,7 @@ public class HomoView extends VerticalLayout implements View {
         bfg = new BeanFieldGroup<District>(District.class);
 
         tf = new TextField("TOTONTO");
-        bfg.bind(tf, "okres_name");
+        bfg.bind(tf, "district_name");
 
         // save button:
         save = new Button("save");
@@ -226,7 +226,7 @@ public class HomoView extends VerticalLayout implements View {
         tf2 = new TextField("Okres:");
 
         bfg2 = new BeanFieldGroup<District>(District.class);
-        bfg2.bind(tf2, "okres_name");
+        bfg2.bind(tf2, "district_name");
 
         // enter button:
         enter = new Button("enter");
@@ -245,7 +245,7 @@ public class HomoView extends VerticalLayout implements View {
 
                 } catch (java.lang.NumberFormatException | java.util.IllegalFormatConversionException e) {
                     try {
-                        o2 = okresRepo.findByParam("okres_name", str).get(0);
+                        o2 = okresRepo.findByParam("district_name", str).get(0);
                     } catch (IllegalArgumentException e1) {
                         e1.printStackTrace();
                     }

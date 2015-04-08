@@ -26,8 +26,8 @@ DROP TABLE IF EXISTS t_public_body;
 
 -- 8.
 DROP TABLE IF EXISTS t_location;
-DROP TABLE IF EXISTS t_okres;
-DROP TABLE IF EXISTS t_kraj;
+DROP TABLE IF EXISTS t_district;
+DROP TABLE IF EXISTS t_region;
 
 -- 7.
 DROP TABLE IF EXISTS t_person_classification;
