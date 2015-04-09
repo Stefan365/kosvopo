@@ -58,10 +58,10 @@ import sk.stefan.utils.ToolsDao;
  * @param <E> type of UniEditableTableView
  *
  */
-public final class UniEditableTableView<E> extends VerticalLayout implements OkCancelListener,
+public final class V8_UniEditableTableView<E> extends VerticalLayout implements OkCancelListener,
         RefreshViewListener, ObnovFilterListener, View {
 
-    private static final Logger log = Logger.getLogger(UniEditableTableView.class);
+    private static final Logger log = Logger.getLogger(V8_UniEditableTableView.class);
     private static final long serialVersionUID = 1L;
 
     private A_User user;
@@ -98,7 +98,7 @@ public final class UniEditableTableView<E> extends VerticalLayout implements OkC
 
     private final Filter basicFilter;
 
-    public UniEditableTableView(Class<E> clsq, String[] uneditCol) {
+    public V8_UniEditableTableView(Class<E> clsq, String[] uneditCol) {
 
 
 

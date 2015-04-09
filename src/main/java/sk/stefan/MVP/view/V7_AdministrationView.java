@@ -39,7 +39,7 @@ import sk.stefan.utils.ToolsNazvy;
  *
  * @author stefan
  */
-public class AdministrationView extends VerticalLayout implements View {
+public class V7_AdministrationView extends VerticalLayout implements View {
 
     /**
      *
@@ -69,7 +69,11 @@ public class AdministrationView extends VerticalLayout implements View {
 
     private static NavigationComponent navComp;
 
-    public AdministrationView(Navigator nav) {
+    //0. konstruktor
+    /**
+     * @param nav
+     */
+    public V7_AdministrationView(Navigator nav) {
 
         this.securityService = new SecurityServiceImpl();
 

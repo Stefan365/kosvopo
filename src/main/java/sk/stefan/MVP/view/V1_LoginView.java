@@ -30,16 +30,15 @@ import sk.stefan.MVP.model.service.UserServiceImpl;
 import sk.stefan.MVP.view.components.InputOptionGroup;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.enums.UserType;
-import sk.stefan.enums.VoteResult;
 import sk.stefan.utils.ToolsNazvy;
 
 /**
  * Třída komponenty pro přihlášení do systému
  */
 @SuppressWarnings("serial")
-public class LoginView extends VerticalLayout implements View {
+public class V1_LoginView extends VerticalLayout implements View {
 
-    private static final Logger log = Logger.getLogger(LoginView.class);
+    private static final Logger log = Logger.getLogger(V1_LoginView.class);
 
     private SecurityService securityService;
 
@@ -60,7 +59,7 @@ public class LoginView extends VerticalLayout implements View {
     private VerticalLayout formVl;
     
     
-    public LoginView(final Navigator nav) {
+    public V1_LoginView(final Navigator nav) {
 
         this.nav = nav;
         this.addComponent(NavigationComponent.getNavComp());

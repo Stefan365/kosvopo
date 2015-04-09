@@ -4,6 +4,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import javax.servlet.annotation.WebServlet;
 import sk.stefan.MVP.model.entity.dao.*;
@@ -19,19 +20,22 @@ import sk.stefan.MVP.model.entity.dao.A_UserRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
-import sk.stefan.MVP.view.AdministrationView;
+import sk.stefan.MVP.view.V7_AdministrationView;
 import sk.stefan.MVP.view.DocumentView;
 import sk.stefan.MVP.view.superseded.FilaManagerView;
 import sk.stefan.MVP.view.superseded.HomoView;
 import sk.stefan.MVP.view.InputAllView;
 import sk.stefan.MVP.view.superseded.Kos2View;
 import sk.stefan.MVP.view.superseded.Kos3View;
-import sk.stefan.MVP.view.LoginView;
-import sk.stefan.MVP.view.UniEditableTableView;
-import sk.stefan.MVP.view.EnterView;
+import sk.stefan.MVP.view.V1_LoginView;
+import sk.stefan.MVP.view.V8_UniEditableTableView;
+import sk.stefan.MVP.view.V2_EnterView;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.DocumentSkusView;
-import sk.stefan.MVP.view.TimeLineView;
+import sk.stefan.MVP.view.V3_PublicBodyView;
+import sk.stefan.MVP.view.V4_PublicPersonView;
+import sk.stefan.MVP.view.V5_PublicRoleView;
+import sk.stefan.MVP.view.V6_VoteView;
 import sk.stefan.enums.NonEditableFields;
 import sk.stefan.utils.ToolsNazvy;
 
@@ -67,61 +71,51 @@ public class KosvopoUI extends UI {
 //                new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
 //         final MyBeanInterface bean = (MyBeanInterface) helper.getBean("myBean");
          
-        
-        
         navigator = new Navigator(this, this);
         NavigationComponent.createNavComp(navigator);
 
-        navigator.addView("login", new LoginView(navigator));
-        navigator.addView("vstupny", new EnterView());
-        navigator.addView("homo", new HomoView());
-
+        //zakladne views:
+        navigator.addView("V1_LoginView", new V1_LoginView(navigator));
+        navigator.addView("V2_EnterView", new V2_EnterView());
+        navigator.addView("V3_PublicBodyView", new V3_PublicBodyView());
+        navigator.addView("V4_PublicPersonView", new V4_PublicPersonView());
+        navigator.addView("V5_PublicRoleView", new V5_PublicRoleView());
+        navigator.addView("V6_VoteView", new V6_VoteView());
+        
+        //views zodpovedajuce univerzalnym editacnym tabulkam:
         navigator.addView(ToolsNazvy.decapit(A_User.TN),
-                new UniEditableTableView<>(A_User.class, NonEditableFields.A_USER.getNonEditableParams()));
+                new V8_UniEditableTableView<>(A_User.class, NonEditableFields.A_USER.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(District.TN),
-                new UniEditableTableView<>(District.class, NonEditableFields.DISTRICT.getNonEditableParams()));
+                new V8_UniEditableTableView<>(District.class, NonEditableFields.DISTRICT.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(Region.TN),
-                new UniEditableTableView<>(Region.class, NonEditableFields.REGION.getNonEditableParams()));
+                new V8_UniEditableTableView<>(Region.class, NonEditableFields.REGION.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(Location.TN),
-                new UniEditableTableView<>(Location.class, NonEditableFields.LOCATION.getNonEditableParams()));
+                new V8_UniEditableTableView<>(Location.class, NonEditableFields.LOCATION.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(PersonClassification.TN),
-                new UniEditableTableView<>(PersonClassification.class, NonEditableFields.PERSON_CLASS.getNonEditableParams()));
+                new V8_UniEditableTableView<>(PersonClassification.class, NonEditableFields.PERSON_CLASS.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(PublicBody.TN),
-                new UniEditableTableView<>(PublicBody.class, NonEditableFields.PUBLIC_BODY.getNonEditableParams()));
+                new V8_UniEditableTableView<>(PublicBody.class, NonEditableFields.PUBLIC_BODY.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(PublicPerson.TN),
-                new UniEditableTableView<>(PublicPerson.class, NonEditableFields.PUBLIC_PERSON.getNonEditableParams()));
+                new V8_UniEditableTableView<>(PublicPerson.class, NonEditableFields.PUBLIC_PERSON.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(PublicRole.TN),
-                new UniEditableTableView<>(PublicRole.class, NonEditableFields.PUBLIC_ROLE.getNonEditableParams()));
+                new V8_UniEditableTableView<>(PublicRole.class, NonEditableFields.PUBLIC_ROLE.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(A_Role.TN),
-                new UniEditableTableView<>(A_Role.class, NonEditableFields.A_ROLE.getNonEditableParams()));
+                new V8_UniEditableTableView<>(A_Role.class, NonEditableFields.A_ROLE.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(Subject.TN),
-                new UniEditableTableView<>(Subject.class, NonEditableFields.SUBJECT.getNonEditableParams()));
+                new V8_UniEditableTableView<>(Subject.class, NonEditableFields.SUBJECT.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(Tenure.TN),
-                new UniEditableTableView<>(Tenure.class, NonEditableFields.TENURE.getNonEditableParams()));
+                new V8_UniEditableTableView<>(Tenure.class, NonEditableFields.TENURE.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(Theme.TN),
-                new UniEditableTableView<>(Theme.class, NonEditableFields.THEME.getNonEditableParams()));
+                new V8_UniEditableTableView<>(Theme.class, NonEditableFields.THEME.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(A_UserRole.TN),
-                new UniEditableTableView<>(A_UserRole.class, NonEditableFields.A_USER_ROLE.getNonEditableParams()));
+                new V8_UniEditableTableView<>(A_UserRole.class, NonEditableFields.A_USER_ROLE.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(Vote.getTN()),
-                new UniEditableTableView<>(Vote.class, NonEditableFields.VOTE.getNonEditableParams()));
+                new V8_UniEditableTableView<>(Vote.class, NonEditableFields.VOTE.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(VoteClassification.TN),
-                new UniEditableTableView<>(VoteClassification.class, NonEditableFields.VOTE_CLASS.getNonEditableParams()));
+                new V8_UniEditableTableView<>(VoteClassification.class, NonEditableFields.VOTE_CLASS.getNonEditableParams()));
         navigator.addView(ToolsNazvy.decapit(VoteOfRole.TN),
-                new UniEditableTableView<>(VoteOfRole.class, NonEditableFields.VOTE_OF_ROLE.getNonEditableParams()));
+                new V8_UniEditableTableView<>(VoteOfRole.class, NonEditableFields.VOTE_OF_ROLE.getNonEditableParams()));
 
-        navigator.addView("adminview1", new AdministrationView(navigator));
-        navigator.addView("docview", new DocumentView());
-        navigator.addView("docskview", new DocumentSkusView());        
-        navigator.addView("timeline", new TimeLineView());        
-        
-        
-//        navigator.addView("hlasovanie", new VotingLayout());
-        
-        navigator.addView("filamanager", new FilaManagerView());
-        navigator.addView("kos2", new Kos2View());
-        navigator.addView("kos3", new Kos3View());
-        navigator.addView("A_inputAll", new InputAllView(navigator));
-        
         
         //pociatocna navigacia:
         navigator.navigateTo("vstupny");

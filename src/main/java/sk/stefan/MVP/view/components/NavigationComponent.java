@@ -6,10 +6,10 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.BaseTheme;
-import java.util.ArrayList;
-import java.util.List;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.MVP.view.InputAllView;
+import sk.stefan.MVP.view.V7_AdministrationView;
 
 public class NavigationComponent extends HorizontalLayout {
 
@@ -18,8 +18,7 @@ public class NavigationComponent extends HorizontalLayout {
      */
     private static final long serialVersionUID = 8811699550804144740L;
 
-    private final Button b1, b1a, b2, b3, b4, b6, b7, b8, b9, b10, b11, b12, 
-            badv, doc, docSk, timeL;
+    private Button b1, b1a, b2, b3, b4, b5, b6, b7;
 
     private SecurityService securityService;
 
@@ -27,11 +26,24 @@ public class NavigationComponent extends HorizontalLayout {
 
     private static NavigationComponent navComp;
 
+    //0.konstruktor.
+    /**
+     *
+     */
     private NavigationComponent(Navigator nav) {
 
         this.securityService = new SecurityServiceImpl();
         navigator = nav;
 
+        this.initButtons();
+
+    }
+
+    /**
+     * Inicializuje potrebne navigacne tlacitka.
+     */
+    private void initButtons() {
+        
         b1 = new Button("login");
         b1.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 7834517499543650204L;
@@ -49,7 +61,7 @@ public class NavigationComponent extends HorizontalLayout {
                         ochudobniNavigator();
                         event.getButton().setCaption("login");
                         Notification.show("odhlásenie prebehlo úspešne!");
-                        nav.navigateTo("vstupny");
+                        navigator.navigateTo("V2_EnterView");
 
                         break;
                     default:
@@ -57,90 +69,35 @@ public class NavigationComponent extends HorizontalLayout {
             }
         });
 
-        b1a = new Button("A_inputAll", (ClickEvent event) -> {
-            navigator.navigateTo("A_inputAll");
+        b1a = new Button("Input", (ClickEvent event) -> {
+            navigator.navigateTo("inputAllView");
         });
 
-        b2 = new Button("vstupny", (ClickEvent event) -> {
-            navigator.navigateTo("vstupny");
+        b2 = new Button("Vstup", (ClickEvent event) -> {
+            navigator.navigateTo("V2_EnterView");
         });
 
-        b3 = new Button("druhy", (ClickEvent event) -> {
-            navigator.navigateTo("druhy");
+        b3 = new Button("Verejný orgán", (ClickEvent event) -> {
+            navigator.navigateTo("V3_PublicBodyView");
         });
 
-        b4 = new Button("homo", (ClickEvent event) -> {
-            navigator.navigateTo("homo");
+        b4 = new Button("Verejná osoba", (ClickEvent event) -> {
+            navigator.navigateTo("V4_PublicPersonView");
         });
 
-        b6 = new Button("fila", (ClickEvent event) -> {
-            navigator.navigateTo("filamanager");
+        b5 = new Button("Verejná funkcia", (ClickEvent event) -> {
+            navigator.navigateTo("V5_PublicRoleView");
         });
 
-        List<String> ls = new ArrayList<>();
-        b7 = new Button("kos1", (ClickEvent event) -> {
-            navigator.navigateTo("kos1");
+        b6 = new Button("Hlasovanie", (ClickEvent event) -> {
+            navigator.navigateTo("V6_VoteView");
         });
 
-        b8 = new Button("kos2", (ClickEvent event) -> {
-            navigator.navigateTo("kos2");
+        b7 = new Button("Administrácia", (ClickEvent event) -> {
+            navigator.navigateTo("V7_AdministrationView");
         });
 
-        b9 = new Button("kos3", (ClickEvent event) -> {
-            navigator.navigateTo("kos3");
-        });
 
-        b10 = new Button("A_kos4", (ClickEvent event) -> {
-            navigator.navigateTo("A_kos4");
-        });
-
-        b11 = new Button("A_kos5", (ClickEvent event) -> {
-            navigator.navigateTo("A_kos5");
-        });
-
-        b12 = new Button("A_kos6", (ClickEvent event) -> {
-            navigator.navigateTo("A_kos6");
-        });
-
-        badv = new Button("admin_view_1", (ClickEvent event) -> {
-            navigator.navigateTo("adminview1");
-        });
-
-        doc = new Button("documents", (ClickEvent event) -> {
-            navigator.navigateTo("docview");
-        });
-        
-        docSk = new Button("documentsSk", (ClickEvent event) -> {
-            navigator.navigateTo("docskview");
-        });
-        
-        timeL = new Button("timeline", (ClickEvent event) -> {
-            navigator.navigateTo("timeline");
-        });
-        
-
-//        hlas = new Button("hlasovanie", (ClickEvent event) -> {
-//            navigator.navigateTo("hlasovanie");
-//        });
-//        b13 = new Button("download", (ClickEvent event) -> {
-//            navigator.navigateTo("download");
-//        });
-//
-//        b14 = new Button("kos8", (ClickEvent event) -> {
-//            navigator.navigateTo("kos8");
-//        });
-//
-//        b15 = new Button("page1", (ClickEvent event) -> {
-//            navigator.navigateTo("page1");
-//        });
-//
-//        b16 = new Button("page2", (ClickEvent event) -> {
-//            navigator.navigateTo("page2");
-//        });
-//
-//        b17 = new Button("welcome", (ClickEvent event) -> {
-//            navigator.navigateTo("welcome");
-//        });
         b1.setStyleName(BaseTheme.BUTTON_LINK);
         b1a.setStyleName(BaseTheme.BUTTON_LINK);
         b2.setStyleName(BaseTheme.BUTTON_LINK);
@@ -148,31 +105,17 @@ public class NavigationComponent extends HorizontalLayout {
         b4.setStyleName(BaseTheme.BUTTON_LINK);
         b6.setStyleName(BaseTheme.BUTTON_LINK);
         b7.setStyleName(BaseTheme.BUTTON_LINK);
-        b8.setStyleName(BaseTheme.BUTTON_LINK);
-        b9.setStyleName(BaseTheme.BUTTON_LINK);
-        b10.setStyleName(BaseTheme.BUTTON_LINK);
-        b11.setStyleName(BaseTheme.BUTTON_LINK);
-        b12.setStyleName(BaseTheme.BUTTON_LINK);
-        badv.setStyleName(BaseTheme.BUTTON_LINK);
-        doc.setStyleName(BaseTheme.BUTTON_LINK);
-        docSk.setStyleName(BaseTheme.BUTTON_LINK);
-        timeL.setStyleName(BaseTheme.BUTTON_LINK);
-        
-//        hlas.setStyleName(BaseTheme.BUTTON_LINK);
+
         this.setSpacing(true);
         this.setMargin(true);
 
         this.addComponent(b1);
         this.addComponent(b2);
+        this.addComponent(b3);
         this.addComponent(b4);
+        this.addComponent(b5);
         this.addComponent(b6);
-        this.addComponent(b8);
-        this.addComponent(b9);
-        this.addComponent(doc);
-        this.addComponent(docSk);
-        this.addComponent(timeL);
 
-//        this.addComponent(hlas);
     }
 
     /**
@@ -197,27 +140,23 @@ public class NavigationComponent extends HorizontalLayout {
     }
 
     public void addAdminButtons() {
+
+        navigator.addView("V7_AdministrationView", new V7_AdministrationView(navigator));
+        navigator.addView("inputAllView", new InputAllView(navigator));
+
         navComp.addComponent(b1a);
-        navComp.addComponent(b10);
-        navComp.addComponent(b11);
-        navComp.addComponent(b12);
-        navComp.addComponent(badv);
+        navComp.addComponent(b7);
     }
 
     /**
      * Ochudobni navigator o views, ktore nepatria do administracie.
      */
     private void ochudobniNavigator() {
-        navigator.removeView("A_inputAll");
-        navigator.removeView("A_kos5");
-        navigator.removeView("A_kos4");
-        navigator.removeView("A_kos6");
-        navigator.removeView("adminview1");
+        navigator.removeView("V7_AdministrationView");
+        navigator.removeView("inputAllView");
 
         navComp.removeComponent(b1a);
-        navComp.removeComponent(b10);
-        navComp.removeComponent(b11);
-        navComp.removeComponent(b12);
+        navComp.removeComponent(b7);
 
     }
 

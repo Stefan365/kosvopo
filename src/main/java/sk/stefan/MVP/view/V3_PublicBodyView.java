@@ -11,17 +11,16 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
 
 /**
  *
  * @author stefan
  */
-public final class TimeLineView extends VerticalLayout implements View {
+public final class V3_PublicBodyView extends VerticalLayout implements View {
 
     
     private static final long serialVersionUID = 121322L;
-    private static final Logger log = Logger.getLogger(TimeLineView.class);
+    private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);
 
     
     private IndexedContainer container;
@@ -33,7 +32,7 @@ public final class TimeLineView extends VerticalLayout implements View {
     private Timeline timeline;
     
     //konstruktor:
-    public TimeLineView(){
+    public V3_PublicBodyView(){
         
         this.initAll();
         
