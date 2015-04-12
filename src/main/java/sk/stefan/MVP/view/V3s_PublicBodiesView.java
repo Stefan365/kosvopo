@@ -14,10 +14,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import sk.stefan.MVP.model.entity.dao.District;
-import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.service.PublicBodyService;
 import sk.stefan.MVP.model.service.PublicBodyServiceImpl;
-import sk.stefan.MVP.view.components.InputClassComboBox;
 import sk.stefan.MVP.view.components.PublicBodiesComponent;
 import sk.stefan.filtering.FilterComboBox;
 
@@ -33,7 +31,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
     
     private PublicBodiesComponent publicBodiesComp;
     
-    private FilterComboBox<District> districtCb; 
+//    private FilterComboBox<District> districtCb; 
     
     private TextField searchFd; 
     
@@ -42,7 +40,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         this.publicBodyService = new PublicBodyServiceImpl();
         
         this.initLayout();
-        this.initComboListener();
+//        this.initComboListener();
         this.initSearchListener();
         
     }
@@ -56,7 +54,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         this.setSpacing(true);
         
         this.publicBodiesComp = new PublicBodiesComponent(publicBodyService.findAll(), publicBodyService);
-        this.districtCb = new FilterComboBox<>(District.class);
+//        this.districtCb = new FilterComboBox<>(District.class);
         this.searchFd = new TextField("Vyhľadávanie");
         this.initSearch();
         
@@ -66,22 +64,22 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         
     }
     
-    private void initComboListener(){
-        
-        this.districtCb.addValueChangeListener(new Property.ValueChangeListener() {
-            
-            private static final long serialVersionUID = 1345322L;
-
-            @Override
-            public void valueChange(Property.ValueChangeEvent event) {
-                
-                Integer distrId = (Integer)event.getProperty().getValue();
-                List<Integer> pbIds = publicBodyService.findNewPublicBodyIds(distrId);
-                publicBodiesComp.applyFilter(pbIds);
-                
-            }
-        });
-    }
+//    private void initComboListener(){
+//        
+//        this.districtCb.addValueChangeListener(new Property.ValueChangeListener() {
+//            
+//            private static final long serialVersionUID = 1345322L;
+//
+//            @Override
+//            public void valueChange(Property.ValueChangeEvent event) {
+//                
+//                Integer distrId = (Integer)event.getProperty().getValue();
+//                List<Integer> pbIds = publicBodyService.findNewPublicBodyIds(distrId);
+//                publicBodiesComp.applyFilter(pbIds);
+//                
+//            }
+//        });
+//    }
     
     /**
      * Initializes listener
