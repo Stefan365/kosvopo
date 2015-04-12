@@ -17,7 +17,7 @@ import sk.stefan.interfaces.Filterable;
  *
  * @author stefan
  */
-public class PublicBodiesComponent extends VerticalLayout implements Filterable {
+public class PublicBodiesLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 43565321L;
     
@@ -26,7 +26,7 @@ public class PublicBodiesComponent extends VerticalLayout implements Filterable 
     private final PublicBodyService publicBodyService; 
     
     //0.konstruktor
-    public PublicBodiesComponent(List<PublicBody> pubBodies, PublicBodyService pbs){
+    public PublicBodiesLayout(List<PublicBody> pubBodies, PublicBodyService pbs){
         
         this.publicBodyService = pbs;
         initLayout(pubBodies);
@@ -53,26 +53,6 @@ public class PublicBodiesComponent extends VerticalLayout implements Filterable 
         
     }
     
-    /**
-     * @param pb
-     */
-    public void addPublicBody(PublicBody pb){
-        
-        if(!publicBodiesMap.containsKey(pb)){
-            
-            PublicBodyComponent pbCom = new PublicBodyComponent(pb, publicBodyService);
-            publicBodiesMap.put(pb, pbCom);
-        }
-    }
-    
-    /**
-     * @param pb
-     */
-    public void removePublicBody(PublicBody pb){
-        if(publicBodiesMap.containsKey(pb)){
-            publicBodiesMap.remove(pb);
-        }
-    }
     
     /**
      * @param pbs

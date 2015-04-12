@@ -16,7 +16,7 @@ import java.util.List;
 import sk.stefan.MVP.model.entity.dao.District;
 import sk.stefan.MVP.model.service.PublicBodyService;
 import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
-import sk.stefan.MVP.view.components.PublicBodiesComponent;
+import sk.stefan.MVP.view.components.PublicBodiesLayout;
 import sk.stefan.filtering.FilterComboBox;
 
 /**
@@ -29,7 +29,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
     
     private final PublicBodyService publicBodyService;
     
-    private PublicBodiesComponent publicBodiesComp;
+    private PublicBodiesLayout publicBodiesLayout;
     
 //    private FilterComboBox<District> districtCb; 
     
@@ -53,14 +53,14 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         this.setMargin(true);
         this.setSpacing(true);
         
-        this.publicBodiesComp = new PublicBodiesComponent(publicBodyService.findAll(), publicBodyService);
+        this.publicBodiesLayout = new PublicBodiesLayout(publicBodyService.findAll(), publicBodyService);
 //        this.districtCb = new FilterComboBox<>(District.class);
         this.searchFd = new TextField("Vyhľadávanie");
         this.initSearch();
         
     
 //        this.addComponents(districtCb, searchFd, publicBodiesComp);
-        this.addComponents(searchFd, publicBodiesComp);
+        this.addComponents(searchFd, publicBodiesLayout);
         
     }
     
@@ -94,7 +94,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         
                 String tx = event.getText();
                 List<Integer> pbIds = publicBodyService.findNewPublicBodyIdsByFilter(tx);
-                publicBodiesComp.applyFilter(pbIds);
+                publicBodiesLayout.applyFilter(pbIds);
                 
             }
         });
@@ -112,8 +112,8 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
 
     
 
-    public PublicBodiesComponent getPbComp() {
-        return publicBodiesComp;
+    public PublicBodiesLayout getPbComp() {
+        return publicBodiesLayout;
     }
 
     @Override

@@ -23,5 +23,10 @@ public interface PublicRoleService {
     
     public String getTenure(PublicRole pubRole);
     
+    public List<PublicRole> findNewPublicRoles(List<Integer> ids);
+    
+    public List<Integer> findPublicRoleIdsByPubBodyId(Integer publicBodyId);
+    
+    public List<Integer> findPublicRoleIdsByFilter(String tx);
 
 }

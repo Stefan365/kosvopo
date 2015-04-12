@@ -18,7 +18,7 @@ import sk.stefan.interfaces.Filterable;
  *
  * @author stefan
  */
-public class PublicPersonsComponent extends VerticalLayout implements Filterable {
+public class PublicPersonsLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 43565321L;
     
@@ -28,7 +28,7 @@ public class PublicPersonsComponent extends VerticalLayout implements Filterable
     
     
     //0.konstruktor
-    public PublicPersonsComponent(List<PublicPerson> pubPersons, PublicPersonService pps){
+    public PublicPersonsLayout(List<PublicPerson> pubPersons, PublicPersonService pps){
         
         this.publicPersonService = pps;
         initLayout(pubPersons);

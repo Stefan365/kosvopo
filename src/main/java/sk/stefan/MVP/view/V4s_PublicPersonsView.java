@@ -14,7 +14,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
-import sk.stefan.MVP.view.components.PublicPersonsComponent;
+import sk.stefan.MVP.view.components.PublicPersonsLayout;
 
 /**
  *
@@ -27,7 +27,7 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
     
     private final PublicPersonService publicPersonService;
     
-    private PublicPersonsComponent publicPersonsComp;
+    private PublicPersonsLayout publicPersonsLayout;
     
     private TextField searchFd; 
     
@@ -50,11 +50,11 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
         this.setMargin(true);
         this.setSpacing(true);
         
-        this.publicPersonsComp = new PublicPersonsComponent(publicPersonService.findAll(), publicPersonService);
+        this.publicPersonsLayout = new PublicPersonsLayout(publicPersonService.findAll(), publicPersonService);
         this.searchFd = new TextField("Vyhľadávač");
         this.initSearch();
         
-        this.addComponents(searchFd, publicPersonsComp);
+        this.addComponents(searchFd, publicPersonsLayout);
         
     }
     
@@ -71,7 +71,7 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
         
                 String tx = event.getText();
                 List<Integer> ppIds = publicPersonService.findNewPublicPersonsIds(tx);
-                publicPersonsComp.applyFilter(ppIds);
+                publicPersonsLayout.applyFilter(ppIds);
                 
             }
         });
@@ -89,8 +89,8 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
 
     
     
-    public PublicPersonsComponent getPublicPersonsComponent() {
-        return publicPersonsComp;
+    public PublicPersonsLayout getPublicPersonsComponent() {
+        return publicPersonsLayout;
     }
 
     

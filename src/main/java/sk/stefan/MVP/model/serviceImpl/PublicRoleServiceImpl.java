@@ -3,23 +3,32 @@ package sk.stefan.MVP.model.serviceImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Tenure;
+import sk.stefan.MVP.model.repo.dao.GeneralRepo;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.PublicRoleService;
 
 
 public class PublicRoleServiceImpl implements PublicRoleService {
 
+    private final GeneralRepo generalRepo;
     private final UniRepo<PublicRole> publicRoleRepo;
     private final UniRepo<Tenure> tenureRepo;
+    private final UniRepo<PublicBody> publicBodyRepo;
+    
+    
 
     
     public PublicRoleServiceImpl() {
 
+        generalRepo = new GeneralRepo();
         publicRoleRepo = new UniRepo<>(PublicRole.class);
         tenureRepo = new UniRepo<>(Tenure.class);
+        publicBodyRepo = new UniRepo<>(PublicBody.class);
+        
 
     }
 
@@ -75,15 +84,78 @@ public class PublicRoleServiceImpl implements PublicRoleService {
     @Override
     public String getPublicBody(PublicRole pubRole) {
         
-        return "MENO VEREJNEHO ORGANu";
+        Integer pbId = pubRole.getPublic_body_id();
         
+        PublicBody pb = publicBodyRepo.findOne(pbId);
+        if (pb != null){
+            return pb.getPresentationName();
+        } else {
+            return "žiadny verejný orgán";
+        }
+    
     }
     
     @Override
     public String getTenure(PublicRole pubRole){
         
-        return "TENURE";
+        Integer tenId = pubRole.getTenure_id();
+
+        Tenure ten = tenureRepo.findOne(tenId);
+        if (ten != null){
+            return ten.getPresentationName();
+        } else {
+            return "žiadne volebné obdobie";
+        }
     
+    }
+
+    @Override
+    public List<Integer> findPublicRoleIdsByPubBodyId(Integer publicBodyId) {
+
+        List<Integer> prIds;
+
+        String sql = "SELECT id FROM t_public_role WHERE public_body_id = " + publicBodyId;
+          
+        prIds = this.generalRepo.findAllFilteringIds(sql);
+
+        return prIds;
+
+    }
+    
+    /**
+     *
+     * @param tx
+     * @return
+     */
+    @Override
+    public List<Integer> findPublicRoleIdsByFilter(String tx) {
+
+        List<Integer> prIds;
+
+        String sql = "SELECT pr.id FROM t_public_role pr JOIN t_public_person pp "
+                + " ON (pr.public_person_id = pp.id) "
+                + " WHERE pp.first_name like '%" + tx + "%'"
+                + " OR pp.last_name like '%" + tx + "%'";
+        
+        prIds = this.generalRepo.findAllFilteringIds(sql);
+
+        return prIds;
+
+    }
+
+    
+    @Override
+    public List<PublicRole> findNewPublicRoles(List<Integer> prIds) {
+        
+        List<PublicRole> publicRoles = new ArrayList<>();
+
+        for (Integer i : prIds) {
+            publicRoles.add(publicRoleRepo.findOne(i));
+        }
+
+        return publicRoles;
+
+
     }
 
 }

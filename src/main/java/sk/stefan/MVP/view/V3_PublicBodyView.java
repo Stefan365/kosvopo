@@ -9,10 +9,19 @@ import com.vaadin.addon.timeline.Timeline;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.VerticalLayout;
+import java.util.List;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
-import sk.stefan.MVP.view.components.PublicRolesComponent;
+import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.service.PublicRoleService;
+import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
+import sk.stefan.MVP.view.components.PublicRolesLayout;
+import sk.stefan.MVP.view.components.VotesLayout;
 
 /**
  *
@@ -24,10 +33,17 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);
 
-    //komponenta pre zobrazeneie aktivnych verejnych roli: 
+    //hlavna entita tohoto VIew
     private PublicBody publicBody;
     
-    private PublicRolesComponent publicRolesCompoment;
+    //komponenty pre zobrazeneie aktivnych verejnych roli: 
+    private PublicRolesLayout publicRolesLayout;
+    
+    private VotesLayout votesLayout;
+    
+    private final PublicRoleService publicRoleService;
+    private final VoteService voteService;
+    
     
     
             
@@ -48,12 +64,37 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     //konstruktor:
     public V3_PublicBodyView(){
         
-        this.initAll();
+        this.publicRoleService = new PublicRoleServiceImpl();
+        this.voteService = new VoteServiceImpl();
+        
+        
+        this.initPublicRolesLayout();
+        this.initVoteLayout();
+        this.initTimeline();
         
     }
     
-    //
-    public void initAll() {
+    private void initPublicRolesLayout() {
+        
+        List<Integer> prIds = publicRoleService.findPublicRoleIdsByPubBodyId(publicBody.getId());
+        
+        List<PublicRole> publicRoles = publicRoleService.findNewPublicRoles(prIds);
+        
+        this.publicRolesLayout = new PublicRolesLayout(publicRoles, publicRoleService);
+        
+    }
+
+    private void initVoteLayout() {
+        
+        List<Integer> votIds = voteService.findPublicRoleIdsByPubBodyId(publicBody.getId());
+        
+        List<PublicRole> publicRoles = publicRoleService.findNewPublicRoles(votIds);
+        
+        this.publicRolesLayout = new PublicRolesLayout(publicRoles, publicRoleService);
+        
+    }
+
+    public void initTimeline() {
         // Construct a container which implements Container.Indexed       
         container = new IndexedContainer();
 
@@ -76,37 +117,28 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         this.addComponent(timeline);
     }
 
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
-        
-    }
-
-    /**
-     * @return the publicBody
-     */
+    
     public PublicBody getPublicBody() {
         return publicBody;
     }
 
-    /**
-     * @param publicBody the publicBody to set
-     */
     public void setPublicBody(PublicBody publicBody) {
         this.publicBody = publicBody;
     }
 
-    /**
-     * @return the publicRolesCompoment
-     */
-    public PublicRolesComponent getPublicRolesCompoment() {
-        return publicRolesCompoment;
+    public PublicRolesLayout getPublicRolesLayout() {
+        return publicRolesLayout;
     }
 
-    /**
-     * @param publicRolesCompoment the publicRolesCompoment to set
-     */
-    public void setPublicRolesCompoment(PublicRolesComponent publicRolesCompoment) {
-        this.publicRolesCompoment = publicRolesCompoment;
+    public void setPublicRolesLayout(PublicRolesLayout publicRolesLy) {
+        this.publicRolesLayout = publicRolesLy;
+    }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        
+        this.publicBody = VaadinSession.getCurrent().getAttribute(PublicBody.class);
+    
     }
 
 }
