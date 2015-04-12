@@ -11,6 +11,8 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
+import sk.stefan.MVP.view.components.PublicRolesComponent;
 
 /**
  *
@@ -22,7 +24,17 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);
 
+    //komponenta pre zobrazeneie aktivnych verejnych roli: 
+    private PublicBody publicBody;
     
+    private PublicRolesComponent publicRolesCompoment;
+    
+    
+            
+    
+    
+    
+    //componenty pre TimeLine:
     private IndexedContainer container;
     
     private Object timestampProperty;
@@ -30,6 +42,8 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     private Object valueProperty;
     
     private Timeline timeline;
+
+    
     
     //konstruktor:
     public V3_PublicBodyView(){
@@ -65,6 +79,34 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         
+    }
+
+    /**
+     * @return the publicBody
+     */
+    public PublicBody getPublicBody() {
+        return publicBody;
+    }
+
+    /**
+     * @param publicBody the publicBody to set
+     */
+    public void setPublicBody(PublicBody publicBody) {
+        this.publicBody = publicBody;
+    }
+
+    /**
+     * @return the publicRolesCompoment
+     */
+    public PublicRolesComponent getPublicRolesCompoment() {
+        return publicRolesCompoment;
+    }
+
+    /**
+     * @param publicRolesCompoment the publicRolesCompoment to set
+     */
+    public void setPublicRolesCompoment(PublicRolesComponent publicRolesCompoment) {
+        this.publicRolesCompoment = publicRolesCompoment;
     }
 
 }

@@ -30,7 +30,7 @@ import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import static sk.stefan.MVP.view.components.NavigationComponent.getNavigator;
 import sk.stefan.utils.ToolsNazvy;

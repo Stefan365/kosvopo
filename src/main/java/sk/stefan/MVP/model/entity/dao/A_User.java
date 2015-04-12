@@ -2,7 +2,7 @@ package sk.stefan.MVP.model.entity.dao;
 
 import java.io.Serializable;
 import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.interfaces.PresentationName;
 
 public class A_User implements Serializable, PresentationName {

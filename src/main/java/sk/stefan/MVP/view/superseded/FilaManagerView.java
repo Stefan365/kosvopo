@@ -16,7 +16,7 @@ import com.vaadin.ui.Table;
 import java.io.File;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 
 public class FilaManagerView extends VerticalLayout implements View {
 

@@ -15,7 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import sk.stefan.MVP.model.entity.dao.District;
 import sk.stefan.MVP.model.service.PublicBodyService;
-import sk.stefan.MVP.model.service.PublicBodyServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.MVP.view.components.PublicBodiesComponent;
 import sk.stefan.filtering.FilterComboBox;
 

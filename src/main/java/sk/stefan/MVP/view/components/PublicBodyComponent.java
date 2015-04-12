@@ -12,7 +12,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.service.PublicBodyService;
-import sk.stefan.MVP.model.service.PublicBodyServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
 
 /**
  *

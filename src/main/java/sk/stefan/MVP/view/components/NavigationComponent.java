@@ -7,7 +7,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.BaseTheme;
 import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.view.InputAllView;
 import sk.stefan.MVP.view.V7_AdministrationView;
 

@@ -1,14 +1,14 @@
-package sk.stefan.MVP.model.service;
+package sk.stefan.MVP.model.serviceImpl;
 
-import sk.stefan.MVP.model.service.SecurityService;
 import com.vaadin.server.VaadinSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.service.SecurityService;
 
 /**
- * Bezpečnostní Informační Služba.
+ * SLuzi na zabezpecenie aplikacie pred nepovolanymi vstupmi.
  *
  * @author stefan
  */

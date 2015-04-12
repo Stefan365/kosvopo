@@ -13,7 +13,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import sk.stefan.MVP.model.service.PublicPersonService;
-import sk.stefan.MVP.model.service.PublicPersonServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
 import sk.stefan.MVP.view.components.PublicPersonsComponent;
 
 /**

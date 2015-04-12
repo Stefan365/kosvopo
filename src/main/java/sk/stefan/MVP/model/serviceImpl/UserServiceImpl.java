@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.MVP.model.service;
+package sk.stefan.MVP.model.serviceImpl;
 
 import com.vaadin.ui.Notification;
 import java.sql.SQLException;
@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.service.UserService;
 
 /**
  *

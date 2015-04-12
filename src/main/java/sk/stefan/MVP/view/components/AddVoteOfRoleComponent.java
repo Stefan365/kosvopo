@@ -16,8 +16,8 @@ import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.MVP.model.service.PublicRoleService;
-import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.listeners.GeneralComponentListener;
 import sk.stefan.utils.PomT;
@@ -35,8 +35,8 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
     private UniRepo<VoteOfRole> vorRepo;
 
     // services:
-    private VoteService voteService;
-    private PublicRoleService publicRoleService;
+    private VoteServiceImpl voteService;
+    private PublicRoleServiceImpl publicRoleService;
 
     // zoznamy, na ktore su napojene vyberove komboboxy:
     private List<PublicRole> lpr;
@@ -87,8 +87,8 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
     public void initComponent() {
 
         vorRepo = new UniRepo<>(VoteOfRole.class);
-        voteService = new VoteService();
-        publicRoleService = new PublicRoleService();
+        voteService = new VoteServiceImpl();
+        publicRoleService = new PublicRoleServiceImpl();
 
         publicRoleCB = new ComboBox("Verejná rola");
         voteCB = new ComboBox("Hlasovania");

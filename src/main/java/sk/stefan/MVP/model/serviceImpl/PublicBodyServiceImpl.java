@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.MVP.model.service;
+package sk.stefan.MVP.model.serviceImpl;
 
 import com.vaadin.ui.Notification;
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.repo.dao.GeneralRepo;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.service.PublicBodyService;
 
 /**
  *

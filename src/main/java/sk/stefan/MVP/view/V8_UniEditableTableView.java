@@ -36,7 +36,7 @@ import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.MyTable;
 import sk.stefan.MVP.view.components.NavigationComponent;

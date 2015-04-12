@@ -16,7 +16,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.service.SecurityServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 
 /**
  * zahrna metody, ktore su univerzalne, ale nie su zavisle od Triedy entity.

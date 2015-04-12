@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view.superseded;
+package sk.stefan.MVP.view;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -14,13 +14,13 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Date;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.enums.Stability;
 
-public class DruhyView extends VerticalLayout implements View {
+public class ExternalLinkView extends VerticalLayout implements View {
+    
     private static final long serialVersionUID = 1L;
 
     //private Navigator navigator;
-    public DruhyView(Navigator nav) {
+    public ExternalLinkView(Navigator nav) {
 
         //navigator = nav;
         this.setMargin(true);

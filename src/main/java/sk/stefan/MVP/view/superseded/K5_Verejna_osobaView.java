@@ -48,7 +48,8 @@ import sk.stefan.MVP.model.entity.dao.PublicPerson2;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.MVP.model.service.VoteOfRoleService;
+import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.ZBD_YesNoWindow;
 import sk.stefan.listeners.GeneralComponentListener;
@@ -115,9 +116,9 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
     private UniRepo<PublicPerson2> publicPersonRepo;
     private UniRepo<PublicRole> publicRoleRepo;
     private UniRepo<VoteOfRole> voteOfRoleRepo;
-    private VoteOfRoleService voteOfRoleService;// = new VoteOfRoleService();
+    private VoteService voteService;// = new VoteOfRoleService();
 
-    SQLContainer sqlContainer;
+    private SQLContainer sqlContainer;
 
 	// Class<T> persistentClass = (Class<T>) ((ParameterizedType)
     // getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -128,10 +129,10 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
      */
     public K5_Verejna_osobaView(Navigator nav) {
 
-        publicPersonRepo = new UniRepo<PublicPerson2>(PublicPerson2.class);
-        publicRoleRepo = new UniRepo<PublicRole>(PublicRole.class);
-        voteOfRoleRepo = new UniRepo<VoteOfRole>(VoteOfRole.class);
-        voteOfRoleService = new VoteOfRoleService();
+        publicPersonRepo = new UniRepo<>(PublicPerson2.class);
+        publicRoleRepo = new UniRepo<>(PublicRole.class);
+        voteOfRoleRepo = new UniRepo<>(VoteOfRole.class);
+        voteService = new VoteServiceImpl();
 
         try {
             sqlContainer = DoDBconn.getContainer("t_vote_of_role");

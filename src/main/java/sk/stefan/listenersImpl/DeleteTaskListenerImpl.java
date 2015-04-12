@@ -6,15 +6,12 @@
 package sk.stefan.listenersImpl;
 
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Notification;
-import java.sql.SQLException;
-import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.listeners.YesNoWindowListener;
 
 /**
  * Vnitřní třída implementující Yes-No Listener
  */
-public class DeleteTaskListener implements YesNoWindowListener {
+public class DeleteTaskListenerImpl implements YesNoWindowListener {
 
     @Override
     public void doYesAction(Component.Event event) {
