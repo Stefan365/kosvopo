@@ -42,7 +42,7 @@ public class Skuska {
         log.info("VOTE SKUSKA: " + v.getPresentationName());
         
         Location l = locRepo.findOne(4);
-        log.info("LOC SKUSKA: " + l.getObec_name());
+        log.info("LOC SKUSKA: " + l.getLocation_name());
         
         Region k = krRepo.findOne(3);
         log.info("KRAJ SKUSKA: " + k.getRegion_name());

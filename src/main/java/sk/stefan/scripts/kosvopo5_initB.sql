@@ -107,15 +107,15 @@ COMMIT;
  COMMIT;
 
 -- 8.2.
-INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Bratislava', 'Rača', 1);
-INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Bratislava', 'Dúbravka', 1);
-INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Handlová', null, 5);
-INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Nováky', null, 5);
-INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Patrizánske', null, 5);
-INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Ráztočno', null, 5);
-INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Topoľčany', null, 3);
-INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Košice', 'Záhumienok', 10);
-INSERT INTO t_location(obec_name, mestka_cast, district_id) VALUES ('Sereď', null, 1);
+INSERT INTO t_location(location_name, town_section, district_id) VALUES ('Bratislava', 'Rača', 1);
+INSERT INTO t_location(location_name, town_section, district_id) VALUES ('Bratislava', 'Dúbravka', 1);
+INSERT INTO t_location(location_name, town_section, district_id) VALUES ('Handlová', null, 5);
+INSERT INTO t_location(location_name, town_section, district_id) VALUES ('Nováky', null, 5);
+INSERT INTO t_location(location_name, town_section, district_id) VALUES ('Patrizánske', null, 5);
+INSERT INTO t_location(location_name, town_section, district_id) VALUES ('Ráztočno', null, 5);
+INSERT INTO t_location(location_name, town_section, district_id) VALUES ('Topoľčany', null, 3);
+INSERT INTO t_location(location_name, town_section, district_id) VALUES ('Košice', 'Záhumienok', 10);
+INSERT INTO t_location(location_name, town_section, district_id) VALUES ('Sereď', null, 1);
 COMMIT;
 
 

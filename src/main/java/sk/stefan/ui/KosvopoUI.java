@@ -33,7 +33,9 @@ import sk.stefan.MVP.view.V2_EnterView;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.DocumentSkusView;
 import sk.stefan.MVP.view.V3_PublicBodyView;
+import sk.stefan.MVP.view.V3s_PublicBodiesView;
 import sk.stefan.MVP.view.V4_PublicPersonView;
+import sk.stefan.MVP.view.V4s_PublicPersonsView;
 import sk.stefan.MVP.view.V5_PublicRoleView;
 import sk.stefan.MVP.view.V6_VoteView;
 import sk.stefan.enums.NonEditableFields;
@@ -78,7 +80,9 @@ public class KosvopoUI extends UI {
         navigator.addView("V1_LoginView", new V1_LoginView(navigator));
         navigator.addView("V2_EnterView", new V2_EnterView());
         navigator.addView("V3_PublicBodyView", new V3_PublicBodyView());
+        navigator.addView("V3s_PublicBodiesView", new V3s_PublicBodiesView());
         navigator.addView("V4_PublicPersonView", new V4_PublicPersonView());
+        navigator.addView("V4s_PublicPersonsView", new V4s_PublicPersonsView());
         navigator.addView("V5_PublicRoleView", new V5_PublicRoleView());
         navigator.addView("V6_VoteView", new V6_VoteView());
         
@@ -118,7 +122,7 @@ public class KosvopoUI extends UI {
 
         
         //pociatocna navigacia:
-        navigator.navigateTo("vstupny");
+        navigator.navigateTo("V2_EnterView");
 
     }
 

@@ -82,7 +82,7 @@ public class FilaManagerView extends VerticalLayout implements View {
         if (user != null) {
             //do nothing
         } else {
-            NavigationComponent.getNavigator().navigateTo("vstupny");
+            NavigationComponent.getNavigator().navigateTo("V2_EnterView");
         }
     }
 

@@ -134,8 +134,8 @@ CONSTRAINT PRIMARY KEY (id)
 CREATE TABLE t_location 
 (
 id INT(11)  AUTO_INCREMENT, 
-obec_name VARCHAR(50), 
-mestka_cast VARCHAR(50), 
+location_name VARCHAR(50), 
+town_section VARCHAR(50), 
 district_id INT(11), 
 visible BIT  DEFAULT 1,
 

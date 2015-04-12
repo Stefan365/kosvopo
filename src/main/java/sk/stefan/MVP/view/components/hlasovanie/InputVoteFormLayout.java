@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.view.components.InputFormLayout;
-import sk.stefan.MVP.view.components.InputNewComboBox;
+import sk.stefan.MVP.view.components.InputClassComboBox;
 import sk.stefan.utils.ToolsDao;
 
 /**
@@ -58,7 +58,7 @@ public class InputVoteFormLayout<T> extends InputFormLayout<T> {
      */
     private void filterSubject(PublicBody pb) {
 
-        InputNewComboBox<?> combo = (InputNewComboBox<?>) this.getFieldMap().get("subject_id");
+        InputClassComboBox<?> combo = (InputClassComboBox<?>) this.getFieldMap().get("subject_id");
 
         ToolsDao.addFiltersToTouched(combo, PublicBody.TN, pb.getId());
 

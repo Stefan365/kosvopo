@@ -18,9 +18,9 @@ public class NavigationComponent extends HorizontalLayout {
      */
     private static final long serialVersionUID = 8811699550804144740L;
 
-    private Button b1, b1a, b2, b3, b4, b5, b6, b7;
+    private Button b1, b1a, b2, b3a, b3, b4a, b4, b5, b6, b7;
 
-    private SecurityService securityService;
+    private final SecurityService securityService;
 
     private static Navigator navigator;
 
@@ -77,8 +77,16 @@ public class NavigationComponent extends HorizontalLayout {
             navigator.navigateTo("V2_EnterView");
         });
 
+        b3a = new Button("Verejné orgány", (ClickEvent event) -> {
+            navigator.navigateTo("V3s_PublicBodiesView");
+        });
+        
         b3 = new Button("Verejný orgán", (ClickEvent event) -> {
             navigator.navigateTo("V3_PublicBodyView");
+        });
+
+        b4a = new Button("Verejné osoby", (ClickEvent event) -> {
+            navigator.navigateTo("V4s_PublicPersonsView");
         });
 
         b4 = new Button("Verejná osoba", (ClickEvent event) -> {
@@ -99,20 +107,22 @@ public class NavigationComponent extends HorizontalLayout {
 
 
         b1.setStyleName(BaseTheme.BUTTON_LINK);
-        b1a.setStyleName(BaseTheme.BUTTON_LINK);
-        b2.setStyleName(BaseTheme.BUTTON_LINK);
-        b3.setStyleName(BaseTheme.BUTTON_LINK);
-        b4.setStyleName(BaseTheme.BUTTON_LINK);
-        b6.setStyleName(BaseTheme.BUTTON_LINK);
-        b7.setStyleName(BaseTheme.BUTTON_LINK);
+//        b1a.setStyleName(BaseTheme.BUTTON_LINK);
+//        b2.setStyleName(BaseTheme.BUTTON_LINK);
+//        b3a.setStyleName(BaseTheme.BUTTON_LINK);
+//        b3.setStyleName(BaseTheme.BUTTON_LINK);
+//        
+//        b4.setStyleName(BaseTheme.BUTTON_LINK);
+//        b6.setStyleName(BaseTheme.BUTTON_LINK);
+//        b7.setStyleName(BaseTheme.BUTTON_LINK);
 
         this.setSpacing(true);
         this.setMargin(true);
 
         this.addComponent(b1);
         this.addComponent(b2);
-        this.addComponent(b3);
-        this.addComponent(b4);
+        this.addComponent(b3a);
+        this.addComponent(b4a);
         this.addComponent(b5);
         this.addComponent(b6);
 

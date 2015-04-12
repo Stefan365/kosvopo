@@ -10,9 +10,9 @@ public class Location implements PresentationName {
 
     private Integer id;
 
-    private String obec_name;
+    private String location_name;
 
-    private String mestka_cast;
+    private String town_section;
 
     private Integer district_id;
 
@@ -23,12 +23,12 @@ public class Location implements PresentationName {
         return this.id;
     }
 
-    public String getObec_name() {
-        return this.obec_name;
+    public String getLocation_name() {
+        return this.location_name;
     }
 
-    public String getMestka_cast() {
-        return this.mestka_cast;
+    public String getTown_section() {
+        return this.town_section;
     }
 
     public Integer getDistrict_id() {
@@ -48,12 +48,12 @@ public class Location implements PresentationName {
         this.id = id;
     }
 
-    public void setObec_name(String obn) {
-        this.obec_name = obn;
+    public void setLocation_name(String ln) {
+        this.location_name = ln;
     }
 
-    public void setMestka_cast(String mc) {
-        this.mestka_cast = mc;
+    public void setTown_section(String ts) {
+        this.town_section = ts;
     }
 
     public void setDistrict_id(Integer okrid) {
@@ -67,10 +67,10 @@ public class Location implements PresentationName {
     @Override
     public String getPresentationName() {
         String rn;
-        if (mestka_cast== null || "".equals(mestka_cast)){
-            rn = obec_name;
+        if (town_section== null || "".equals(town_section)){
+            rn = location_name;
         } else {
-            rn = obec_name + "-"+mestka_cast;
+            rn = location_name + "-"+town_section;
         }
         return rn;
     }

@@ -16,6 +16,10 @@ public class PublicPerson implements PresentationName {
     private String last_name;
 
     private Date date_of_birth;
+    
+    //potom pridat
+//    private byte[] photo;
+    
 
     private Boolean visible;
 

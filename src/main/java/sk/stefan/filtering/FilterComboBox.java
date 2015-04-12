@@ -98,7 +98,10 @@ public final class FilterComboBox<E> extends ComboBox implements Filterable {
         this.initComboValues(map, val);
 
     }
-
+    
+    /**
+     * pre aplikaciu filtra (zvonka)
+     */ 
     @Override
     public void applyFilter(List<Integer> ids) {
         this.setNewValues(ids);

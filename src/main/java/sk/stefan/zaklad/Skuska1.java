@@ -931,7 +931,7 @@ public class Skuska1<T> {
 
         try {
             Location ent = (Location) cls.newInstance();
-            log.info("HIERARCHIA3:" + ent.getObec_name());
+            log.info("HIERARCHIA3:" + ent.getLocation_name());
 
         } catch (InstantiationException ex) {
             log.error(ex);

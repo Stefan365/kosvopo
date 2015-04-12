@@ -444,6 +444,7 @@ public class ToolsDao {
      * @return
      */
     public static synchronized Map<String, Integer> findAllByClass(Class<?> cls) {
+    
         Map<String, Integer> map = new HashMap<>();
         String repN;
         Integer id;

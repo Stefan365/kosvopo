@@ -111,7 +111,7 @@ public class V1_LoginView extends VerticalLayout implements View {
                         obohatNavigator();
                         NavigationComponent.getLoginBut().setCaption("logout");
                         Notification.show("prihlásenie prebehlo úspešne!");
-                        nav.navigateTo("vstupny");
+                        nav.navigateTo("V2_EnterView");
                     } else {
                         Notification.show("Neplatné prihlasovacie údaje!");
                     }

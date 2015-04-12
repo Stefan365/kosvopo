@@ -47,8 +47,8 @@ import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.listeners.RefreshViewListener;
 import sk.stefan.listeners.YesNoWindowListener;
-import sk.stefan.utils.ToolsNazvy;
 import sk.stefan.utils.ToolsDao;
+import sk.stefan.utils.ToolsNazvy;
 
 /**
  *
@@ -402,7 +402,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         if (user != null) {
             //do nothing
         } else {
-            NavigationComponent.getNavigator().navigateTo("vstupny");
+            NavigationComponent.getNavigator().navigateTo("V2_EnterView");
         }
 
     }

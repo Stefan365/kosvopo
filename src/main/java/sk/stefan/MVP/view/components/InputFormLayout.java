@@ -120,7 +120,7 @@ public class InputFormLayout<T> extends FormLayout {
      * Tlacitka, ktore nemaju ist do formulara.
      */
     private final List<String> nonEditFn;
-    
+
     private final Label titleLb;
 
     //0.
@@ -144,7 +144,6 @@ public class InputFormLayout<T> extends FormLayout {
         titleLb.setStyleName(ValoTheme.LABEL_BOLD);
 
 //        this.addComponent(titleLb);
-
         this.cp = cp;
         tn = ToolsDao.getTableName(clsT);
 
@@ -155,6 +154,7 @@ public class InputFormLayout<T> extends FormLayout {
         }
 
         this.fieldMap = new HashMap<>();
+        
         //securityService = new SecurityServiceImpl();
         this.fg = new FieldGroup();
         this.fg.setBuffered(false);
@@ -163,14 +163,14 @@ public class InputFormLayout<T> extends FormLayout {
         this.okCancelListener = (OkCancelListener) cp;
         this.obnovFilterListener = (ObnovFilterListener) cp;
         this.item = item;
-        if (item != null){
+        if (item != null) {
             isNew = (item.getItemProperty("id").getValue() == null);
         } else {
             isNew = false;
         }
-        
+
         fg.setItemDataSource(this.item);
-        
+
         this.initFieldsLayout();
         this.addButtons();
 
@@ -210,7 +210,7 @@ public class InputFormLayout<T> extends FormLayout {
 
         //vyber vhodnych komponent do form layoutu:
         for (String pn : mapPar.keySet()) {
-            
+
             if (nonEditFn.contains(pn)) {
                 continue;
             }
@@ -219,16 +219,13 @@ public class InputFormLayout<T> extends FormLayout {
             switch (propertyTypeName) {
                 case "java.lang.Integer":
                     if (pn.contains("_id")) {
-                            //POZN: parametry POJO by se meli jmenovat stejne ako
+                        //POZN: parametry POJO by se meli jmenovat stejne ako
                         // stloupce tabulky a identifikator by se mel jmenovat jen 'id'..
-                        InputNewComboBox<?> cb;
+                        InputClassComboBox<?> cb;
                         Class<?> cls = ToolsNazvy.getClassFromName(pn);
-//                        log.info("KOKOS1 clsT: "+clsT);
-//                        log.info("KOKOS2 cls: "+cls);
-//                        log.info("KOKOS3 pn: "+pn);
-                        
-                        cb = new InputNewComboBox<>(fg, pn, cls);
-                        
+
+                        cb = new InputClassComboBox<>(fg, pn, cls);
+
                         fieldMap.put(pn, cb);
                     } else {
                         Component fi = bindTextField(pn);
@@ -302,7 +299,6 @@ public class InputFormLayout<T> extends FormLayout {
                 case "sk.stefan.enums.FilterType":
                 case "sk.stefan.enums.NonEditableFields":
 
-
                     Class<?> cls = mapPar.get(pn);
                     try {
                         Method getNm = cls.getMethod("getNames");
@@ -313,7 +309,7 @@ public class InputFormLayout<T> extends FormLayout {
                         Map<String, Integer> map = ToolsNazvy.makeEnumMap(names, ordinals);
 
                         InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
-                        
+
                         if (item != null) {
                             Property<?> prop = item.getItemProperty(pn);
                             if (prop.getValue() != null) {
@@ -331,7 +327,7 @@ public class InputFormLayout<T> extends FormLayout {
                     break;
 
                 default:
-                        //ignore: passwords: java.lang.Byte[], byte[], etc...
+                    //ignore: passwords: java.lang.Byte[], byte[], etc...
                     // do nothing
                     break;
             }
@@ -370,12 +366,12 @@ public class InputFormLayout<T> extends FormLayout {
 //        log.info("SIZE DEPICT:" + proDepict.size());
 //        }
         for (int i = 1; i < proPoradie.size(); i++) {
-            
+
             key = proPoradie.getProperty("" + i);
-            if (nonEditFn.contains(key)){
+            if (nonEditFn.contains(key)) {
                 continue;
             }
-            
+
             log.info("KEY: *" + key + "*");
             String cap = proDepict.getProperty(key);
             log.info("CAP: *" + cap + "*");
@@ -536,7 +532,6 @@ public class InputFormLayout<T> extends FormLayout {
 //                    log.info("KOKOSKO ITEMID: " +  (itemId == ids));
 //                    log.info("KOKOSKO ITEM: " +  (item == ite));
 
-                    
                     fieldsFL.setEnabled(false);
                     getFg().setEnabled(false);
                     editBt.setEnabled(true);
@@ -554,14 +549,13 @@ public class InputFormLayout<T> extends FormLayout {
         });
 
         editBt.addClickListener(new ClickListener() {
-            
+
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(ClickEvent event) {
 
 //                saveBt.setEnabled(true);
-
 //                if (isNew) {
 //                    sqlContainer.removeItem(itemId);
 //                }
@@ -611,7 +605,7 @@ public class InputFormLayout<T> extends FormLayout {
     }
 
     public void setItem(Object itId, Item it) {
-        if (it != null){
+        if (it != null) {
             isNew = (it.getItemProperty("id").getValue() == null);
         } else {
             isNew = false;
@@ -665,11 +659,10 @@ public class InputFormLayout<T> extends FormLayout {
     public Item getItem() {
         return item;
     }
-    
+
     public Object getItemId() {
         return itemId;
     }
-
 
     /**
      * @return the fg

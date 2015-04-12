@@ -18,6 +18,9 @@ import sk.stefan.utils.ToolsNazvy;
 import sk.stefan.utils.ToolsDao;
 
 /**
+ * Je to svojbytny objekt, tj. nieje napojeny na vonkajsie EntityServisy.
+ * 
+ * 
  * Combobox, ktory ma schopnost transformovat presentation type (tj. String - to
  * co v comboboxu vidime na type, ktery reprezentuje, napr. Boolean, ale muze
  * byt i komplikovanejsi entita) Duvod, proc neni converter navazany primo na
@@ -28,11 +31,12 @@ import sk.stefan.utils.ToolsDao;
  * @author stefan
  * @param <E> třída, představitelé které, se mají v comboBoxu zobrazit.
  */
-public final class InputNewComboBox<E> extends ComboBox implements Filterable {
-
+public final class InputClassComboBox<E> extends ComboBox implements Filterable {
+    
+    
     private static final long serialVersionUID = 1234324324L;
 
-    private static final Logger log = Logger.getLogger(InputComboBox.class);
+    private static final Logger log = Logger.getLogger(InputClassComboBox.class);
 
     /**
      * Název comboBoxu, je zhodný s názvem proměnné(property), která je typu E.
@@ -58,7 +62,7 @@ public final class InputNewComboBox<E> extends ComboBox implements Filterable {
      * @param fn Field name
      * @param cls Slovník reprezentativní jméno/entita
      */
-    public InputNewComboBox(FieldGroup fg, String fn, Class<E> cls) {
+    public InputClassComboBox(FieldGroup fg, String fn, Class<E> cls) {
 
         super(fn);
 
@@ -188,7 +192,6 @@ public final class InputNewComboBox<E> extends ComboBox implements Filterable {
      *
      * @return
      */
-    @Override
     public String getTableName() {
         
         return ToolsDao.getTableName(clsE);

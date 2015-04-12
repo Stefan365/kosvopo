@@ -139,14 +139,14 @@ CONSTRAINT dis_FK FOREIGN KEY(region_id) REFERENCES t_region(id)
 CREATE TABLE t_location 
 (
 id INT(11) NOT NULL AUTO_INCREMENT, 
-obec_name VARCHAR(50) NOT NULL, 
-mestka_cast VARCHAR(50), 
+location_name VARCHAR(50) NOT NULL, 
+town_section VARCHAR(50), 
 district_id INT(11) NOT NULL, 
 visible BIT NOT NULL DEFAULT 1,
 
 CONSTRAINT loc_PK PRIMARY KEY (id),
 CONSTRAINT loc_FK FOREIGN KEY(district_id) REFERENCES t_district(id),
-CONSTRAINT loc_UN UNIQUE(obec_name, mestka_cast)
+CONSTRAINT loc_UN UNIQUE(location_name, town_section)
 );
 
 
