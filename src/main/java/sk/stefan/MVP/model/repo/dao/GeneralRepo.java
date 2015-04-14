@@ -132,7 +132,7 @@ public class GeneralRepo {
      * @param sql
      * @return
      */
-    public List<Integer> findAllFilteringIds(String sql) {
+    public List<Integer> findIds(String sql) {
         try {
             if (DoDBconn.getNonInvasiveConn() == null) {
                 DoDBconn.createNoninvasiveConnection();
@@ -143,7 +143,7 @@ public class GeneralRepo {
             log.info("MEGASQL:*" + sql + "*");
             ResultSet rs;
             rs = st.executeQuery(sql);
-
+//            log.info("KAROLKO RESULT SET is null?: " + (rs==null));
             listIds = fillListIds(rs);
             rs.close();
             st.close();
@@ -168,7 +168,8 @@ public class GeneralRepo {
         List<Integer> listIds;
 
 //        st = DoDBconn.getConn().prepareStatement("UPDATE a_user SET password = ? WHERE id = " + id);
-        String sql = "SELECT id FROM " + tn + " WHERE " + paramName + " = " + paramVal;
+        String sql = "SELECT id FROM " + tn + " WHERE " + paramName + " = " + paramVal +
+                " AND visible = true";
         ResultSet rs;
         Statement st;
 
@@ -202,12 +203,16 @@ public class GeneralRepo {
 
         List<Integer> listIds = new ArrayList<>();
         int id;
+        int i = 0;
         try {
-            while (rs.next()) {
+            while (rs.next()) {                
+//                log.info("KAMILKO: " + i);
+                i++;
                 id = rs.getInt("id");
                 listIds.add(id);
             }
             return listIds;
+            
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
             Notification.show("Chyba, FilterRepo, fillListIds(ResultSet rs)", Notification.Type.ERROR_MESSAGE);
             log.error(e.getLocalizedMessage(), e);

@@ -161,10 +161,11 @@ public class VoteServiceImpl implements VoteService {
         
         Integer votId = vote.getId();
                 
-        String sql = "SELECT pr.public_body_id FROM t_public_role pr JOIN t_subject sub "
+        String sql = "SELECT pb.id FROM t_public_body pb JOIN t_public_role pr ON "
+                + "(pb.id = pr.public_body_id) JOIN t_subject sub "
                 + "ON (pr.id = sub.public_role_id) JOIN t_vote vot ON (sub.id = vot.subject_id) WHERE "
-                + " vot.id = " + votId;
-        List<Integer> pbIds = generalRepo.findAllFilteringIds(sql);
+                + " vot.id = " + votId +" AND pb.visible = true";
+        List<Integer> pbIds = generalRepo.findIds(sql);
         
 //        Integer subId = vote.getSubject_id();
 //        Subject sub = subjectRepo.findOne(subId);
@@ -245,14 +246,37 @@ public class VoteServiceImpl implements VoteService {
 //        SELECT pr.public_body_id FROM t_public_role pr JOIN t_subject sub ON (pr.id = sub.public_role_id) JOIN t_vote vot ON (sub.id = vot.subject_id) WHERE vot.id = 4;
         String sql = "SELECT vot.id FROM t_vote vot WHERE vot.subject_id IN "
                 + "(SELECT sub.id FROM t_subject sub WHERE sub.public_role_id IN "
-                + "(SELECT pr.id FROM t_public_role pr WHERE pr.public_body_id = " + publicBodyId +" ))";
+                + "(SELECT pr.id FROM t_public_role pr WHERE pr.public_body_id = " + publicBodyId +" AND visible = true) "
+                + "AND visible = true)"
+                + " AND vot.visible = true";
         
-        prIds = this.generalRepo.findAllFilteringIds(sql);
+        prIds = this.generalRepo.findIds(sql);
 
         return prIds;
 
     }
-    
+
+    @Override
+    public List<Integer> findVoteIdsByPubPersonId(Integer ppId) {
+
+        List<Integer> prIds;
+
+        //SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
+//        zdola naho a zhora nadol.
+        //viacnasobne viible je tam kvoli bezpecnosti.
+        String sql = "SELECT vot.id FROM t_vote vot WHERE vot.subject_id IN "
+                + "(SELECT sub.id FROM t_subject sub WHERE sub.public_role_id IN "
+                + "(SELECT pr.id FROM t_public_role pr WHERE pr.public_person_id = " + ppId +" "
+                + "AND pr.visible = true) "
+                + "AND sub.visible = true) "
+                + "AND vot.visible = true";
+        
+        prIds = this.generalRepo.findIds(sql);
+
+        return prIds;
+        
+    }
+
     /**
      *
      * @param tx
@@ -266,13 +290,14 @@ public class VoteServiceImpl implements VoteService {
         String sql = "SELECT pr.id FROM t_public_role pr JOIN t_public_person pp "
                 + " ON (pr.public_person_id = pp.id) "
                 + " WHERE pp.first_name like '%" + tx + "%'"
-                + " OR pp.last_name like '%" + tx + "%'";
+                + " OR pp.last_name like '%" + tx + "%' AND visible = true";
         
-        prIds = this.generalRepo.findAllFilteringIds(sql);
+        prIds = this.generalRepo.findIds(sql);
 
         return prIds;
 
     }
+
 
 
 }

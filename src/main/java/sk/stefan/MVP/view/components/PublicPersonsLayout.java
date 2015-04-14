@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.service.PublicPersonService;
-import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.interfaces.Filterable;
 
 /**

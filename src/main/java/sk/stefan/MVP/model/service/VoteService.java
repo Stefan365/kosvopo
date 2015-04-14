@@ -47,6 +47,8 @@ public interface VoteService {
     public String getVoteResult(Vote vote);
      
     public String getVoteNumbers(Vote vote);
+
+    public List<Integer> findVoteIdsByPubPersonId(Integer id);
     
     
 

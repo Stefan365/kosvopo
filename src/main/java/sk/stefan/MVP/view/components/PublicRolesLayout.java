@@ -63,10 +63,22 @@ public class PublicRolesLayout extends VerticalLayout implements Filterable {
         
     }
 
+    public void setActual(PublicRole actualPublicRole) {
+        
+        Integer aprId = actualPublicRole.getId();
+        
+        for (PublicRole pr : publicRolesMap.keySet()){
+            if( pr.getId().compareTo(aprId) == 0){
+                publicRolesMap.get(pr).setIsActual(Boolean.TRUE);
+                break;
+            }
+        }
+    }
+    
     @Override
     public void applyFilter(List<Integer> ids) {
         
-        this.setpublicRoles(publicRoleService.findNewPublicRoles(ids));
+        this.setpublicRoles(publicRoleService.getPublicRoles(ids));
         
     }
 
@@ -77,6 +89,9 @@ public class PublicRolesLayout extends VerticalLayout implements Filterable {
         return null;
     
     }
+
+    
+    
 
     
 }

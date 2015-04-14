@@ -26,6 +26,8 @@ public class PublicRoleComponent extends HorizontalLayout {
     private final PublicRole pubRole;
 
     private final Navigator navigator;
+    
+    private Boolean isActual = Boolean.FALSE;
 
     //service, ktory bude zdedeny z nadradenej komponenty.
     private final PublicRoleService publicRoleService; 
@@ -81,5 +83,13 @@ public class PublicRoleComponent extends HorizontalLayout {
             }
         });
 
+    }
+
+    public Boolean getIsActual() {
+        return isActual;
+    }
+
+    public void setIsActual(Boolean isActual) {
+        this.isActual = isActual;
     }
 }

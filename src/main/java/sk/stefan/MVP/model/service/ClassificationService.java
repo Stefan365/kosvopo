@@ -9,6 +9,6 @@ package sk.stefan.MVP.model.service;
  *
  * @author stefan
  */
-public interface ClasificationService {
+public interface ClassificationService {
     
 }

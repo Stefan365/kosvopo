@@ -13,9 +13,9 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
@@ -57,7 +57,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     
     private Object valueProperty;
     
-    private Timeline timeline;
+    private Timeline timeLine;
 
     
     
@@ -67,30 +67,42 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
         
+        if (publicBody != null){
+            initAll();
+        }
+        
+    }
+    
+    private void initAll(){
+        
+        this.removeAllComponents();
         
         this.initPublicRolesLayout();
         this.initVoteLayout();
         this.initTimeline();
         
+        this.addComponents(publicRolesLayout, votesLayout, timeLine);
+        
     }
-    
     private void initPublicRolesLayout() {
         
         List<Integer> prIds = publicRoleService.findPublicRoleIdsByPubBodyId(publicBody.getId());
+        log.info("KAROLKO1: " + prIds.size());
         
-        List<PublicRole> publicRoles = publicRoleService.findNewPublicRoles(prIds);
-        
+        List<PublicRole> publicRoles = publicRoleService.getPublicRoles(prIds);
+        log.info("KAROLKO2: " + publicRoles.size());
         this.publicRolesLayout = new PublicRolesLayout(publicRoles, publicRoleService);
+        
         
     }
 
     private void initVoteLayout() {
         
-        List<Integer> votIds = voteService.findPublicRoleIdsByPubBodyId(publicBody.getId());
+        List<Integer> votIds = voteService.findVoteIdsByPubBodyId(publicBody.getId());
         
-        List<PublicRole> publicRoles = publicRoleService.findNewPublicRoles(votIds);
+        List<Vote> votes = voteService.findNewVotes(votIds);
         
-        this.publicRolesLayout = new PublicRolesLayout(publicRoles, publicRoleService);
+        this.votesLayout = new VotesLayout(votes, voteService);
         
     }
 
@@ -108,13 +120,12 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         container.addContainerProperty(valueProperty, Float.class, null);
 
         // Our timeline
-        timeline = new Timeline();
+        timeLine = new Timeline();
 
         // Add the container as a graph container
-        timeline.addGraphDataSource(container, timestampProperty,
+        timeLine.addGraphDataSource(container, timestampProperty,
                 valueProperty);
         
-        this.addComponent(timeline);
     }
 
     
@@ -138,6 +149,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         
         this.publicBody = VaadinSession.getCurrent().getAttribute(PublicBody.class);
+        initAll();
     
     }
 

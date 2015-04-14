@@ -76,8 +76,9 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         List<Integer> pbIds;
 
         String sql = "SELECT id FROM t_public_body WHERE location_id IN "
-                + "(SELECT id FROM t_location WHERE district_id = " + distrId + ")";
-        pbIds = this.generalRepo.findAllFilteringIds(sql);
+                + "(SELECT id FROM t_location WHERE district_id = " + distrId + " AND visible = true) "
+                + "AND visible = true";
+        pbIds = this.generalRepo.findIds(sql);
 
         return pbIds;
 
@@ -96,8 +97,8 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         String sql = "SELECT pb.id FROM t_public_body pb JOIN t_location loc "
                 + " ON (pb.location_id = loc.id) "
                 + " WHERE loc.location_name like '%" + tx + "%'"
-                + " OR loc.town_section like '%" + tx + "%'";
-        pbIds = this.generalRepo.findAllFilteringIds(sql);
+                + " OR loc.town_section like '%" + tx + "%' AND visible = true";
+        pbIds = this.generalRepo.findIds(sql);
 
         return pbIds;
 

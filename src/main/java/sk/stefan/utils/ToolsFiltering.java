@@ -192,7 +192,7 @@ public class ToolsFiltering {
 
         if (hs != null && !hs.isEmpty()) {
             sql = createMySelect(hs, value);
-            return genRepo.findAllFilteringIds(sql);
+            return genRepo.findIds(sql);
         } else {
             return null;
         }

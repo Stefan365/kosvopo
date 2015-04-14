@@ -3,6 +3,7 @@ package sk.stefan.MVP.model.serviceImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
@@ -80,6 +81,27 @@ public class PublicRoleServiceImpl implements PublicRoleService {
 
         return lprAct;
     }
+    
+    /**
+     * 
+     * @param pp
+     * @param pb
+     * @return 
+     */
+    
+    @Override
+    public PublicRole getActualRoleForPublicBody(PublicPerson pp, PublicBody pb){
+        
+        List<PublicRole> pubRoles = this.getActualPublicRolesOfPublicPerson(pp);
+        
+        Integer pbId = pb.getId();
+        for (PublicRole pr : pubRoles){
+            if(pr.getPublic_body_id().compareTo(pbId)==0){
+                return pr;
+            }
+        }
+        return null;
+    }
 
     @Override
     public String getPublicBody(PublicRole pubRole) {
@@ -114,13 +136,28 @@ public class PublicRoleServiceImpl implements PublicRoleService {
 
         List<Integer> prIds;
 
-        String sql = "SELECT id FROM t_public_role WHERE public_body_id = " + publicBodyId;
+        String sql = "SELECT id FROM t_public_role WHERE public_body_id = " + publicBodyId +
+                " AND visible = true";
           
-        prIds = this.generalRepo.findAllFilteringIds(sql);
+        prIds = this.generalRepo.findIds(sql);
 
         return prIds;
 
     }
+    
+    @Override
+    public List<Integer> findPublicRoleIdsByPubPersonId(Integer ppId) {
+
+        List<Integer> prIds;
+
+        String sql = "SELECT id FROM t_public_role WHERE public_person_id = " + ppId +
+                    " AND visible = true";
+        prIds = this.generalRepo.findIds(sql);
+
+        return prIds;
+        
+    }
+
     
     /**
      *
@@ -135,9 +172,9 @@ public class PublicRoleServiceImpl implements PublicRoleService {
         String sql = "SELECT pr.id FROM t_public_role pr JOIN t_public_person pp "
                 + " ON (pr.public_person_id = pp.id) "
                 + " WHERE pp.first_name like '%" + tx + "%'"
-                + " OR pp.last_name like '%" + tx + "%'";
+                + " OR pp.last_name like '%" + tx + "%' AND visible = true";
         
-        prIds = this.generalRepo.findAllFilteringIds(sql);
+        prIds = this.generalRepo.findIds(sql);
 
         return prIds;
 
@@ -145,7 +182,7 @@ public class PublicRoleServiceImpl implements PublicRoleService {
 
     
     @Override
-    public List<PublicRole> findNewPublicRoles(List<Integer> prIds) {
+    public List<PublicRole> getPublicRoles(List<Integer> prIds) {
         
         List<PublicRole> publicRoles = new ArrayList<>();
 
@@ -157,5 +194,6 @@ public class PublicRoleServiceImpl implements PublicRoleService {
 
 
     }
+
 
 }

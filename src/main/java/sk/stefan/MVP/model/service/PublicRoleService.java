@@ -6,6 +6,7 @@
 package sk.stefan.MVP.model.service;
 
 import java.util.List;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 
@@ -23,10 +24,14 @@ public interface PublicRoleService {
     
     public String getTenure(PublicRole pubRole);
     
-    public List<PublicRole> findNewPublicRoles(List<Integer> ids);
+    public List<PublicRole> getPublicRoles(List<Integer> ids);
     
-    public List<Integer> findPublicRoleIdsByPubBodyId(Integer publicBodyId);
+    public List<Integer> findPublicRoleIdsByPubBodyId(Integer pbId);
     
+    public List<Integer> findPublicRoleIdsByPubPersonId(Integer ppId);
+
     public List<Integer> findPublicRoleIdsByFilter(String tx);
 
+    public PublicRole getActualRoleForPublicBody(PublicPerson pp, PublicBody pb);
+    
 }
