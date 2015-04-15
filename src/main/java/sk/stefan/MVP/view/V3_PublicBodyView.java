@@ -13,6 +13,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.A_UserRole;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
@@ -22,6 +23,8 @@ import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
+import sk.stefan.documents.DownloaderLayout;
+import sk.stefan.documents.UploaderLayout;
 
 /**
  *
@@ -58,6 +61,12 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     private Object valueProperty;
     
     private Timeline timeLine;
+    
+    //pre uzivatela obcan   
+    private DownloaderLayout<PublicBody> downoaderLayout;
+    
+    //pre uzivatela admin a dobrovolnik
+    private UploaderLayout<PublicBody> uploaderLayout;
 
     
     
@@ -67,13 +76,14 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
         
-        if (publicBody != null){
-            initAll();
-        }
+//        if (publicBody != null){
+//            initAllBasic();
+//        }
         
     }
     
-    private void initAll(){
+    private void initAllBasic(Boolean isVolunteer){
+        
         
         this.removeAllComponents();
         
@@ -83,6 +93,14 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         this.addComponents(publicRolesLayout, votesLayout, timeLine);
         
+        if(isVolunteer){
+            
+            this.initNewEntityButtons();
+            this.initUploadLayout();
+            
+        } else {
+            this.initDownloadLayout();
+        }
     }
     private void initPublicRolesLayout() {
         
@@ -149,8 +167,34 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         
         this.publicBody = VaadinSession.getCurrent().getAttribute(PublicBody.class);
-        initAll();
+        A_UserRole userRole = VaadinSession.getCurrent().getAttribute(A_UserRole.class);
+        Boolean isVolunteer = userRole.getRole_id() == 1;
+        
+        if (publicBody != null){
+            initAllBasic(isVolunteer);
+        }
+        
+        
     
+    }
+
+    private void initNewEntityButtons() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void initUploadLayout() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * Komponenta na zobrazovanie dokumentov prisluchajucich 
+     */
+    private void initDownloadLayout() {
+        
+        this.downoaderLayout = new DownloaderLayout<>(PublicBody.class);
+        
+        this.addComponent(downoaderLayout);
+        
     }
 
 }

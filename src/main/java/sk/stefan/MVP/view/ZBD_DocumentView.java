@@ -16,22 +16,22 @@ import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.documents.FileUploader;
+import sk.stefan.documents.ZBD_FileUploader;
 import sk.stefan.documents.MyFileDownloader;
 
 /**
  *
  * @author stefan
  */
-public class DocumentView extends VerticalLayout implements View {
+public class ZBD_DocumentView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = 1L;
 
-    private static final Logger log = Logger.getLogger(DocumentView.class);
+    private static final Logger log = Logger.getLogger(ZBD_DocumentView.class);
 
 //    uploader:
     private Upload upload;
-    private FileUploader uploadera;
+    private ZBD_FileUploader uploadera;
 
 //    downloader:
     private FileDownloader downloader;
@@ -41,7 +41,7 @@ public class DocumentView extends VerticalLayout implements View {
     
     
 
-    public DocumentView() {
+    public ZBD_DocumentView() {
 
         this.setMargin(true);
         this.setSpacing(true);
@@ -53,7 +53,7 @@ public class DocumentView extends VerticalLayout implements View {
 
     private void initUploader() {
 
-        uploadera = new FileUploader();
+        uploadera = new ZBD_FileUploader();
 
         // Create the upload with a caption and set receiver later
         upload = new Upload("Upload Image Here", uploadera);

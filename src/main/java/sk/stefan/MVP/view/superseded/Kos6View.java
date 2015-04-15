@@ -2,7 +2,7 @@ package sk.stefan.MVP.view.superseded;
 
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.utils.ImageUploader;
-import sk.stefan.documents.FileUploader;
+import sk.stefan.documents.ZBD_FileUploader;
 import sk.stefan.utils.MyImageSource;
 import sk.stefan.utils.Take5;
 
@@ -271,7 +271,7 @@ public class Kos6View extends VerticalLayout implements View {
         // B.2
         // Implement both receiver that saves upload in a file and
         // listener for successful upload
-        FileUploader uploadera = new FileUploader();
+        ZBD_FileUploader uploadera = new ZBD_FileUploader();
 
         // Create the upload with a caption and set receiver later
         uploada = new Upload("Upload Image Here", uploadera);

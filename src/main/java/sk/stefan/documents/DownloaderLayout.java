@@ -6,16 +6,16 @@
 package sk.stefan.documents;
 
 import com.vaadin.ui.VerticalLayout;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.service.DocumentService;
+import sk.stefan.MVP.model.serviceImpl.DocumentServiceImpl;
 
 /**
+ * Trieda ktoa predstavuje dokumenty ktore prisluchaju danej entite bez moznosti
+ * editacie. Tj. len pre uzivatela "obcan".
  *
  * @author stefan
  * @param <E>
@@ -29,24 +29,18 @@ public class DownloaderLayout<E> extends VerticalLayout {
     /**
      * entita, ktorej budu zodpovedat dokumenty.
      */
-    private E ent; 
-
-    private final Class<?> clsE;
+    private E ent;
 
     private List<DownloaderComponent> downloadComponents;
 
     private List<Document> entDocuments;
 
-    private final UniRepo<Document> docRepo;
-    
+    private final DocumentService<E> documentService;
 
-    public DownloaderLayout(Class<?> cls) {
+    @SuppressWarnings("unchecked")
+    public DownloaderLayout(Class<E> cls) {
 
-//        this.setMargin(true);
-//        this.setSpacing(true);
-
-        this.clsE = cls;
-        this.docRepo = new UniRepo<>(Document.class);
+        documentService = new DocumentServiceImpl<>(cls);
 
     }
 
@@ -59,6 +53,7 @@ public class DownloaderLayout<E> extends VerticalLayout {
 
         this.ent = en;
         this.initLayout();
+        this.initDownloaderComponents();
 
     }
 
@@ -66,43 +61,33 @@ public class DownloaderLayout<E> extends VerticalLayout {
      *
      */
     private void initLayout() {
-        
+
         if (ent != null) {
-        
+
             this.removeAllComponents();
 
             this.downloadComponents = new ArrayList<>();
 
-            Integer rid;
-            String tn;
+            Integer rid = documentService.getEntityId(ent);
+            String tn = documentService.getClassTableName();
 
-            try {
-                Method entMethod = clsE.getMethod("getId");
-                rid = (Integer) entMethod.invoke(ent);
-                Field tnFld = clsE.getDeclaredField("TN");
-                tn = (String) tnFld.get(null);
+            entDocuments = documentService.findAllEntityDocuments(tn, rid);
 
-                if (rid != null && tn != null) {
-
-                    entDocuments = docRepo.findByTwoParams("table_name", tn, "table_row_id", "" + rid);
-                    log.debug("DOOOWNentDocmsts:" + (entDocuments == null) + " : " + entDocuments.size());
-                    
-                    DownloaderComponent fc;
-                    if (entDocuments != null && !entDocuments.isEmpty()) {
-                        for (Document d : entDocuments) {
-                            fc = new DownloaderComponent(d);
-                            this.downloadComponents.add(fc);
-                            this.addComponent(fc);
-                        }
-                    }
-                }
-
-            } catch (IllegalAccessException | IllegalArgumentException |
-                    SecurityException | NoSuchMethodException | InvocationTargetException |
-                    NoSuchFieldException e) {
-                log.error(e.getMessage(), e);
-            }
         }
+    }
+
+    /**
+     */
+    private void initDownloaderComponents() {
+
+        DownloaderComponent fc;
+        if (entDocuments != null && !entDocuments.isEmpty()) {
+            for (Document d : entDocuments) {
+                fc = new DownloaderComponent(d);
+                this.downloadComponents.add(fc);
+                this.addComponent(fc);
+            }
+        }        
     }
 
     //*****************************************************88

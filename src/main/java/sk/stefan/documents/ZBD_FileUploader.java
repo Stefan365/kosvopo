@@ -19,13 +19,14 @@ import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
 import sk.stefan.MVP.model.repo.dao.GeneralRepo;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.service.DocumentService;
 
 /**
  *
  */
-public class FileUploader implements Receiver, SucceededListener {
+public class ZBD_FileUploader implements Receiver, SucceededListener {
 
-    private static final Logger log = Logger.getLogger(FileUploader.class);
+    private static final Logger log = Logger.getLogger(ZBD_FileUploader.class);
     private static final long serialVersionUID = 1L;
     private File file;
     private final Embedded image;
@@ -35,14 +36,17 @@ public class FileUploader implements Receiver, SucceededListener {
 
     private InputStream inStream;
     private String fileName;
+    
+    private final UniRepo<Document> docRepo;
+    
 
-    private final GeneralRepo genRepo = new GeneralRepo();
 
-    private final UniRepo<Document> docRepo = new UniRepo<>(Document.class);
+//    private final UniRepo<Document> docRepo = new UniRepo<>(Document.class);
 
     
-    public FileUploader() {
+    public ZBD_FileUploader() {
 
+        this.docRepo = new UniRepo<>(Document.class);
         image = new Embedded("Uploaded Image");
         image.setVisible(true);
         String basepath = VaadinService.getCurrent()

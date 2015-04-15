@@ -15,15 +15,16 @@ import com.vaadin.ui.Upload;
 import java.io.File;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
+import sk.stefan.MVP.model.service.DocumentService;
 
 /**
  *
  * @author stefan
+ * @param <E>
  */
-//public class DownAndUploaderComponent<E> extends HorizontalLayout {
 public class DownAndUploaderComponent<E> extends HorizontalLayout {
     
-    Panel p; 
+//    Panel p; 
     private static final long serialVersionUID = 1L;
 
     private static final Logger log = Logger.getLogger(DownloaderComponent.class);
@@ -32,7 +33,10 @@ public class DownAndUploaderComponent<E> extends HorizontalLayout {
     private final UploaderLayout<E> listener;
     private Document document;
     private final E ent;
-    private final Class<E> clsE;
+    
+    private final DocumentService<E> documentService;
+    
+//    private final Class<E> clsE;
     private final DownAndUploaderComponent<E> thisS;
 
     //1. Uploader:
@@ -52,23 +56,26 @@ public class DownAndUploaderComponent<E> extends HorizontalLayout {
      *
      * @param doc
      * @param lisnr
+     * @param docS
      */
-    public DownAndUploaderComponent(Document doc, UploaderLayout<E> lisnr) {
+    public DownAndUploaderComponent(Document doc, UploaderLayout<E> lisnr, DocumentService<E> docS) {
 
 //        this.setMargin(true);
 //        this.setSpacing(true);
 //        this.addStyleName("horizontal-separator");
 //        this.addStyleName("vertical-separator");
-                
+
+        
         this.thisS = this;
         this.listener = lisnr;
+        this.documentService = docS;
         if (doc == null) {
             document = new Document();
         } else {
             this.document = doc;
         }
         this.ent = listener.getEnt();
-        this.clsE = listener.getClsE();
+//        this.clsE = documentService.getEntityClass();
 
         this.initDownloader();
         this.initUploader();
@@ -84,7 +91,7 @@ public class DownAndUploaderComponent<E> extends HorizontalLayout {
      */
     private void initUploader() {
         
-        myUploader = new MyFileUploader<>(ent, this);
+        myUploader = new MyFileUploader<>(ent, this,documentService);
 //        myUploader = new MyFileUploader<>(ent, this.myDownloader);
 
         // Create the upload with a caption and set receiver later
@@ -138,7 +145,7 @@ public class DownAndUploaderComponent<E> extends HorizontalLayout {
             public void buttonClick(Button.ClickEvent event) {
 
 //                deaktivuje dokument v DB:
-                boolean isDone = listener.getDocRepo().deactivate(getDocument());
+                boolean isDone = documentService.deactivate(document);
                 //odstrani komponentu D&Uploader z Layoutu:
                 if (isDone) {
                     boolean add = listener.getUploadComponents().remove(thisS);

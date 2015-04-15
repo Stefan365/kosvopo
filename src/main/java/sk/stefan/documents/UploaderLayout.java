@@ -7,16 +7,16 @@ package sk.stefan.documents;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.Document;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.service.DocumentService;
+import sk.stefan.MVP.model.serviceImpl.DocumentServiceImpl;
 
 /**
+ * Trieda ktora predstavuje dokumenty ktore prisluchaju danej entite s moznostou
+ * editacie, tj. vkladania a mazania. pre uzivatelov "dobrovolnik" a "admin".
  *
  * @author stefan
  * @param <E>
@@ -32,23 +32,29 @@ public class UploaderLayout<E> extends VerticalLayout {
      * entita, na ktoru sa budu vztahovat dokumenty.
      */
     private E ent;
-    private final Class<E> clsE;
+//    private final Class<E> clsE;
+
     private List<DownAndUploaderComponent<E>> uploadComponents;
+
     private List<Document> entDocuments;
-    private final UniRepo<Document> docRepo;
+
+    private final DocumentService<E> documentService;
+
+//    private final UniRepo<Document> docRepo;
     private Button addDocBt;
+
     private final UploaderLayout<E> thisS;
-    
 
     public UploaderLayout(Class<E> cls) {
 
+        documentService = new DocumentServiceImpl<>(cls);
         this.setMargin(true);
         this.setSpacing(true);
 
         this.initAddButton();
 
-        this.clsE = cls;
-        this.docRepo = new UniRepo<>(Document.class);
+//        this.clsE = cls;
+//        this.docRepo = new UniRepo<>(Document.class);
         thisS = this;
 
     }
@@ -62,7 +68,8 @@ public class UploaderLayout<E> extends VerticalLayout {
 
         this.ent = en;
         this.initLayout();
-
+        this.initUploaderComponents();
+    
     }
 
     /**
@@ -73,58 +80,49 @@ public class UploaderLayout<E> extends VerticalLayout {
         if (ent != null) {
 
             this.removeAllComponents();
-            
+
             this.initAddButton();
             this.addComponent(addDocBt);
-            
+
             this.uploadComponents = new ArrayList<>();
 
-            Integer rid;
-            String tn;
+            Integer rid = documentService.getEntityId(ent);
+            String tn = documentService.getClassTableName();
 
-            try {
-                Method entMethod = clsE.getMethod("getId");
-                rid = (Integer) entMethod.invoke(ent);
-                Field tnFld = clsE.getDeclaredField("TN");
-                tn = (String) tnFld.get(null);
+            entDocuments = documentService.findAllEntityDocuments(tn, rid);
 
-                if (rid != null && tn != null) {
+        }
+    }
 
-                    entDocuments = docRepo.findByTwoParams("table_name", tn, "table_row_id", "" + rid);
-                    log.debug("entDocmsts:" + (entDocuments == null) + " : " + entDocuments.size());
-                    DownAndUploaderComponent<E> fc;
-                    if (entDocuments != null && !entDocuments.isEmpty()) {
-                        for (Document d : entDocuments) {
-                            fc = new DownAndUploaderComponent<>(d, this);
-                            this.uploadComponents.add(fc);
-                            this.addComponent(fc);
-                        }
-                    }
-                }
+    /**
+     */
+    private void initUploaderComponents() {
 
-            } catch (IllegalAccessException | IllegalArgumentException |
-                    SecurityException | NoSuchMethodException | InvocationTargetException |
-                    NoSuchFieldException e) {
-                log.error(e.getMessage(), e);
+        DownAndUploaderComponent<E> fc;
+        
+        if (entDocuments != null && !entDocuments.isEmpty()) {
+            for (Document d : entDocuments) {
+                fc = new DownAndUploaderComponent<>(d, this, documentService);
+                this.uploadComponents.add(fc);
+                this.addComponent(fc);
             }
         }
     }
 
-
     /**
-     * 
+     *
      */
     private void initAddButton() {
-        
+
         this.addDocBt = new Button("pridaj");
-        
+
         this.addDocBt.addClickListener(new Button.ClickListener() {
-            
+
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                DownAndUploaderComponent<E> newComp = new DownAndUploaderComponent<>(null, thisS);
+                DownAndUploaderComponent<E> newComp = new DownAndUploaderComponent<>(null, thisS, documentService);
                 boolean add = thisS.getUploadComponents().add(newComp);
                 thisS.addComponent(newComp);
             }
@@ -138,14 +136,6 @@ public class UploaderLayout<E> extends VerticalLayout {
         return ent;
     }
 
-    public Class<E> getClsE() {
-        return clsE;
-    }
-
-    public UniRepo<Document> getDocRepo() {
-        return docRepo;
-    }
-
     public void setEnt(E ent) {
         this.ent = ent;
     }
@@ -157,5 +147,4 @@ public class UploaderLayout<E> extends VerticalLayout {
         return uploadComponents;
     }
 
-    
 }
