@@ -13,7 +13,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author stefan
  */
-public class VoteInputView extends VerticalLayout implements View {
+public class ZBD_VoteInputView extends VerticalLayout implements View {
     
     private static final long serialVersionUID = 1L;
 

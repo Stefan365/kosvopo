@@ -4,10 +4,8 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import javax.servlet.annotation.WebServlet;
-import sk.stefan.MVP.model.entity.dao.*;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
@@ -17,21 +15,17 @@ import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.A_UserRole;
+import sk.stefan.MVP.model.entity.dao.District;
+import sk.stefan.MVP.model.entity.dao.Location;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
+import sk.stefan.MVP.model.entity.dao.Region;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
-import sk.stefan.MVP.view.V7_AdministrationView;
-import sk.stefan.MVP.view.ZBD_DocumentView;
-import sk.stefan.MVP.view.superseded.FilaManagerView;
-import sk.stefan.MVP.view.superseded.HomoView;
-import sk.stefan.MVP.view.InputAllView;
-import sk.stefan.MVP.view.superseded.Kos2View;
-import sk.stefan.MVP.view.superseded.Kos3View;
 import sk.stefan.MVP.view.V1_LoginView;
 import sk.stefan.MVP.view.V8_UniEditableTableView;
 import sk.stefan.MVP.view.V2_EnterView;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.DocumentSkusView;
 import sk.stefan.MVP.view.V3_PublicBodyView;
 import sk.stefan.MVP.view.V3s_PublicBodiesView;
 import sk.stefan.MVP.view.V4_PublicPersonView;
@@ -60,7 +54,6 @@ public class KosvopoUI extends UI {
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = KosvopoUI.class, 
             widgetset="sk.stefan.ui.AppWidgetSet")
-
     public static class Servlet extends VaadinServlet {
     }
 

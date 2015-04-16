@@ -45,6 +45,10 @@ public class UploaderLayout<E> extends VerticalLayout {
 
     private final UploaderLayout<E> thisS;
 
+    //0. konstruktor
+    /**
+     *
+     */
     public UploaderLayout(Class<E> cls) {
 
         documentService = new DocumentServiceImpl<>(cls);

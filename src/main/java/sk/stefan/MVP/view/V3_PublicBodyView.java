@@ -10,6 +10,7 @@ import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -21,6 +22,7 @@ import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
+import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
 import sk.stefan.documents.DownloaderLayout;
@@ -44,12 +46,18 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     
     private VotesLayout votesLayout;
     
+    //tlacitko na pridavanie novej entity:
+    private Button addNewPublicBodyBt;
+    
+
+        //pre uzivatela obcan   
+    private DownloaderLayout<PublicBody> downoaderLayout;
+    
+    //pre uzivatela admin a dobrovolnik
+    private UploaderLayout<PublicBody> uploaderLayout;
+
     private final PublicRoleService publicRoleService;
     private final VoteService voteService;
-    
-    
-    
-            
     
     
     
@@ -62,11 +70,6 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     
     private Timeline timeLine;
     
-    //pre uzivatela obcan   
-    private DownloaderLayout<PublicBody> downoaderLayout;
-    
-    //pre uzivatela admin a dobrovolnik
-    private UploaderLayout<PublicBody> uploaderLayout;
 
     
     
@@ -95,7 +98,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         if(isVolunteer){
             
-            this.initNewEntityButtons();
+            this.initNewPublicBodyButton();
             this.initUploadLayout();
             
         } else {
@@ -159,8 +162,41 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         return publicRolesLayout;
     }
 
+    
     public void setPublicRolesLayout(PublicRolesLayout publicRolesLy) {
         this.publicRolesLayout = publicRolesLy;
+    }
+
+
+    /**
+     * Prida tlacitko na pridavanie novej entity PublicBody.
+     */
+    private void initNewPublicBodyButton() {
+        
+        this.addNewPublicBodyBt = InputNewEntityButtonFactory.createMyButton(PublicBody.class);
+    
+    }
+
+    /**
+     * Inicializuje editovatelny layout s dokumentami prisluchajucimi entite PublicBody
+     */
+    private void initUploadLayout() {
+        
+        this.uploaderLayout = new UploaderLayout<>(PublicBody.class);
+        
+        this.addComponent(uploaderLayout);
+        
+    }
+
+    /**
+     * Komponenta na zobrazovanie dokumentov prisluchajucich entite PublicBody.
+     */
+    private void initDownloadLayout() {
+        
+        this.downoaderLayout = new DownloaderLayout<>(PublicBody.class);
+        
+        this.addComponent(downoaderLayout);
+        
     }
 
     @Override
@@ -178,23 +214,5 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     
     }
 
-    private void initNewEntityButtons() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void initUploadLayout() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * Komponenta na zobrazovanie dokumentov prisluchajucich 
-     */
-    private void initDownloadLayout() {
-        
-        this.downoaderLayout = new DownloaderLayout<>(PublicBody.class);
-        
-        this.addComponent(downoaderLayout);
-        
-    }
 
 }

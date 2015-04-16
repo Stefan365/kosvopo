@@ -8,7 +8,6 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.BaseTheme;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
-import sk.stefan.MVP.view.InputAllView;
 import sk.stefan.MVP.view.V7_AdministrationView;
 
 public class NavigationComponent extends HorizontalLayout {
@@ -152,7 +151,6 @@ public class NavigationComponent extends HorizontalLayout {
     public void addAdminButtons() {
 
         navigator.addView("V7_AdministrationView", new V7_AdministrationView(navigator));
-        navigator.addView("inputAllView", new InputAllView(navigator));
 
         navComp.addComponent(b1a);
         navComp.addComponent(b7);

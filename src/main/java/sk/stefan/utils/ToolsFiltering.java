@@ -26,8 +26,9 @@ import sk.stefan.MVP.model.repo.dao.UniRepo;
  *
  * @author stefan
  */
-public class ToolsFiltering {
+public abstract class ToolsFiltering {
 
+    
     private static final Logger log = Logger.getLogger(ToolsFiltering.class);
 
     private static final UniRepo<A_Hierarchy> hierRepo = new UniRepo<>(A_Hierarchy.class);

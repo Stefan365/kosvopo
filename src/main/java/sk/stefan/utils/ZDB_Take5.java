@@ -7,7 +7,7 @@ import java.util.Random;
  *
  * @author User
  */
-public class Take5 {
+public class ZDB_Take5 {
     
     private static int[] zoznamKariet = new int[5];
     

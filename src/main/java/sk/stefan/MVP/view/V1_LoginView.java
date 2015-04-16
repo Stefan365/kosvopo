@@ -1,5 +1,6 @@
 package sk.stefan.MVP.view;
 
+import sk.stefan.MVP.view.components.InputNewEntityButtonsPoolImpl;
 import sk.stefan.MVP.view.superseded.Kos6View;
 import sk.stefan.MVP.view.superseded.K5_Verejna_osobaView;
 import sk.stefan.MVP.view.superseded.K4_PoslanciView;
@@ -160,7 +161,6 @@ public class V1_LoginView extends VerticalLayout implements View {
      *
      */
     private void obohatNavigator() {
-        nav.addView("A_inputAll", new InputAllView(nav));
         nav.addView("A_kos5", new K5_Verejna_osobaView(nav));
         nav.addView("A_kos4", new K4_PoslanciView(nav));
         nav.addView("A_kos6", new Kos6View(nav));

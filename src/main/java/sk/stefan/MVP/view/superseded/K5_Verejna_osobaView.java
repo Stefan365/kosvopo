@@ -54,7 +54,7 @@ import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.ZBD_YesNoWindow;
 import sk.stefan.listeners.GeneralComponentListener;
 import sk.stefan.utils.ToolsDao;
-import sk.stefan.utils.TBD_PomFormLayout;
+import sk.stefan.utils.ZBD_PomFormLayout;
 
 /**
  * Rozhraní pro zobrazeni udaju o konkretni verejne osobe (poslancovi)
@@ -75,7 +75,7 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
     private VerticalSplitPanel layoutVertSp;
     private VerticalLayout layout, leftLayout;
 
-    private TBD_PomFormLayout<PublicPerson2> fl;
+    private ZBD_PomFormLayout<PublicPerson2> fl;
 
     private MenuBar menubar;
     private Link linka;
@@ -330,7 +330,7 @@ public class K5_Verejna_osobaView extends HorizontalSplitPanel implements View,
         if (poslanec != null) {
             bfg2.setItemDataSource(poslanec);
         }
-        fl = new TBD_PomFormLayout<PublicPerson2>(PublicPerson2.class, bfg2);
+        fl = new ZBD_PomFormLayout<PublicPerson2>(PublicPerson2.class, bfg2);
         leftLayout.addComponent(fl);
 
         this.addComponent(leftLayout);

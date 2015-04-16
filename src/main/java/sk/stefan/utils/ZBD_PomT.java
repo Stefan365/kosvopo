@@ -11,13 +11,13 @@ import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.ListSelect;
 
-public class PomT<T extends Object> {
+public class ZBD_PomT<T extends Object> {
 
     private UniRepo<T> uniRepo;
     private T obj;
     private Class<?> cls;
 
-    public PomT(Class<?> cls, T obj) {
+    public ZBD_PomT(Class<?> cls, T obj) {
 
         this.obj = obj;
         this.cls = cls;
@@ -44,7 +44,7 @@ public class PomT<T extends Object> {
             }
         }
 
-        PomT.doladSelectList(sel);
+        ZBD_PomT.doladSelectList(sel);
         if (true) { // dat tam podmienku, pokial uz
             this.nastavListener(sel);
         }

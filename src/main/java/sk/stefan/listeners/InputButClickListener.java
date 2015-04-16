@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.view.InputAllView;
+import sk.stefan.MVP.view.components.InputNewEntityButtonsPoolImpl;
 import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.UniDlg;
 import sk.stefan.listenersImpl.RenewBackgroundListenerImpl;

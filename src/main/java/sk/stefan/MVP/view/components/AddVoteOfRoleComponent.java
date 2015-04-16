@@ -20,8 +20,8 @@ import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.listeners.GeneralComponentListener;
-import sk.stefan.utils.PomT;
-import sk.stefan.utils.PomVaadin;
+import sk.stefan.utils.ZBD_PomT;
+import sk.stefan.utils.ZBD_PomVaadin;
 
 public final class AddVoteOfRoleComponent extends VerticalLayout implements
         GeneralComponentListener {
@@ -96,9 +96,9 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
 
         historyCHB = new CheckBox("História", false);
 
-        PomT.doladSelectList(publicRoleCB);
-        PomT.doladSelectList(voteCB);
-        PomT.doladSelectList(decisionCB);
+        ZBD_PomT.doladSelectList(publicRoleCB);
+        ZBD_PomT.doladSelectList(voteCB);
+        ZBD_PomT.doladSelectList(decisionCB);
 
         // lista s tlacitkami:
         buttonLY = new HorizontalLayout();
@@ -287,7 +287,7 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
         // 3. combo: rozhodnutia
 //        ldec = NamesOfVoteDecisions.getDecisions();
         ldec = VoteAction.getNames();
-        PomVaadin.initComboStr(decisionCB, ldec);
+        ZBD_PomVaadin.initComboStr(decisionCB, ldec);
 
     }
 
@@ -302,7 +302,7 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
         } else {
             lpr = publicRoleService.getActualPublicRolesOfPublicPerson(pp);
         }
-        PomVaadin.initCombo(publicRoleCB, lpr);
+        ZBD_PomVaadin.initCombo(publicRoleCB, lpr);
     }
 
     /**
@@ -314,7 +314,7 @@ public final class AddVoteOfRoleComponent extends VerticalLayout implements
         lvot = voteService.getAllVotesForPublicRole(pr);
         //Notification.show("VELKOST:" + lvot.size());
         // }
-        PomVaadin.initCombo(voteCB, lvot);
+        ZBD_PomVaadin.initCombo(voteCB, lvot);
     }
 
     // 7.

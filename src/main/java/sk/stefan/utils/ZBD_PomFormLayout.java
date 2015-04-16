@@ -29,7 +29,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Notification.Type;
 
-public class TBD_PomFormLayout<T> extends FormLayout {
+public class ZBD_PomFormLayout<T> extends FormLayout {
 
     /**
      * Identifikator:
@@ -49,7 +49,7 @@ public class TBD_PomFormLayout<T> extends FormLayout {
     /**
      *
      */
-    public TBD_PomFormLayout(Class<?> clsT, BeanFieldGroup<T> bfg) {
+    public ZBD_PomFormLayout(Class<?> clsT, BeanFieldGroup<T> bfg) {
 
         this.clsT = clsT;
         this.entRepo = new UniRepo<>(clsT);

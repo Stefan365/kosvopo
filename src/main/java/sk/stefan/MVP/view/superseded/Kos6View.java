@@ -1,10 +1,10 @@
 package sk.stefan.MVP.view.superseded;
 
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.utils.ImageUploader;
+import sk.stefan.utils.ZBD_ImageUploader;
 import sk.stefan.documents.ZBD_FileUploader;
-import sk.stefan.utils.MyImageSource;
-import sk.stefan.utils.Take5;
+import sk.stefan.utils.ZBD_MyImageSource;
+import sk.stefan.utils.ZDB_Take5;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -53,7 +53,7 @@ public class Kos6View extends VerticalLayout implements View {
     private StreamResource.StreamSource imagesource;
     private StreamResource resource;
     private MenuBar.Command mycommand;
-    private ImageUploader receiver;
+    private ZBD_ImageUploader receiver;
     private Panel panel;
     private Upload uploada, upload;
     private Label counter;
@@ -82,7 +82,7 @@ public class Kos6View extends VerticalLayout implements View {
         layout.addComponent(sample);
 
         // kruhovity obrazok:
-        imagesource = new MyImageSource();
+        imagesource = new ZBD_MyImageSource();
         resource = new StreamResource(imagesource, "myimage.png");
         layout.addComponent(new Image("OBRAZOK", resource));
 
@@ -300,8 +300,8 @@ public class Kos6View extends VerticalLayout implements View {
         final Label tarot = new Label("TAROT");
         b3.addClickListener(new Button.ClickListener() {
             public void buttonClick(ClickEvent event) {
-                Take5.nakrmzoznam();
-                tarot.setValue(Take5.zobraz());
+                ZDB_Take5.nakrmzoznam();
+                tarot.setValue(ZDB_Take5.zobraz());
                 layout.addComponent(new Label(s));
             }
         });

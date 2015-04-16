@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 
-public class MyImageSource implements StreamResource.StreamSource {
+public class ZBD_MyImageSource implements StreamResource.StreamSource {
 
     /**
 	 * 

@@ -5,42 +5,35 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_Role;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.A_UserRole;
-import sk.stefan.MVP.model.entity.dao.Region;
-import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.District;
+import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.entity.dao.Region;
 import sk.stefan.MVP.model.entity.dao.Subject;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
-//import sk.stefan.MVP.view.components.InputFormLayout;
 
 /**
  * Trida obsahujici pomocne metody pro vytvareni GUI
  *
  */
-public class ToolsNazvy {
+public abstract class ToolsNazvy {
 
     private static final Logger log = Logger.getLogger(ToolsNazvy.class);
 

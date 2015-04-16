@@ -24,7 +24,7 @@ import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.interfaces.Filterable;
 
-public class ToolsDao {
+public abstract class ToolsDao {
 
     private static final Logger log = Logger.getLogger(ToolsDao.class);
 

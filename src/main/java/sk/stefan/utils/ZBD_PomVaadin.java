@@ -28,7 +28,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
-public class PomVaadin {
+public class ZBD_PomVaadin {
 
     public static void initCombo(AbstractSelect sel,
             List<? extends PresentationName> list) {

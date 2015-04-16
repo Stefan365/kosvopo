@@ -21,7 +21,7 @@ import java.io.OutputStream;
 
 // Implement both receiver that saves upload in a file and
 // listener for successful upload
-public class ImageUploader implements Receiver, SucceededListener {
+public class ZBD_ImageUploader implements Receiver, SucceededListener {
     private static final long serialVersionUID = 1L;
 	
     private File file;
