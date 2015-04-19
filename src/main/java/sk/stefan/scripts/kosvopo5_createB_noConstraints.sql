@@ -102,6 +102,7 @@ classification_date DATE ,
 public_person_id INT(11) ,
 stability SMALLINT DEFAULT 2,
 public_usefulness SMALLINT DEFAULT 2,
+actual BIT DEFAULT 1,
 visible BIT DEFAULT 1,
  
 CONSTRAINT PRIMARY KEY (id)

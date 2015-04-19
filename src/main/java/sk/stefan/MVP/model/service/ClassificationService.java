@@ -5,10 +5,18 @@
  */
 package sk.stefan.MVP.model.service;
 
+import java.util.List;
+import sk.stefan.MVP.model.entity.dao.PersonClassification;
+import sk.stefan.MVP.model.entity.dao.PublicPerson;
+
 /**
  *
  * @author stefan
  */
 public interface ClassificationService {
+
+    public PersonClassification findActualClass(PublicPerson pp);
+
+    public List<PersonClassification> findNewPersonClass(List<Integer> ids);
     
 }

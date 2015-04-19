@@ -10,22 +10,31 @@ import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.dao.A_UserRole;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.MVP.model.service.PublicRoleService;
+import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
+import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.PublicPersonComponent;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
+import sk.stefan.documents.DownloaderLayout;
+import sk.stefan.documents.UploaderLayout;
+import sk.stefan.enums.UserType;
 
 /**
  *
@@ -57,33 +66,44 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
 
     //servisy:
     private final PublicRoleService publicRoleService;
-
     private final VoteService voteService;
+    private final UserService userService;
 
 //    private final PublicPersonService publicPersonService;
     //componenty pre TimeLine:
     private IndexedContainer container;
-
     private Object timestampProperty;
-
     private Object valueProperty;
-
     private Timeline timeLine;
 
+    
+    //tlacitko na pridavanie novej entity:
+    private Button addNewPublicRoleBt;
+    
+    //pre uzivatela obcan   
+    private DownloaderLayout<PublicPerson> downoaderLayout;
+    
+    //pre uzivatela admin a dobrovolnik
+    private UploaderLayout<PublicPerson> uploaderLayout;
+
+    
     //konstruktor:
     public V4_PublicPersonView() {
 
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
+        this.userService = new UserServiceImpl();
 //        this.publicPersonService = new PublicPersonServiceImpl();
 
         if (publicPerson != null) {
-            initAll();
+            initAllBasic(Boolean.FALSE);
         }
 
     }
 
-    private void initAll() {
+    /**
+     */
+    private void initAllBasic(Boolean isVolunteer) {
 
         this.removeAllComponents();
         
@@ -94,6 +114,15 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
         this.initTimeline();
 
         this.addComponents(publicPersonComponent, publicRolesLayout, votesLayout, timeLine);
+        
+        if(isVolunteer){
+            
+            this.initNewPublicRoleButton();
+            this.initUploadLayout();
+            
+        } else {
+            this.initDownloadLayout();
+        }
 
     }
     
@@ -175,13 +204,59 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
     public void setPublicRolesLayout(PublicRolesLayout publicRolesLy) {
         this.publicRolesLayout = publicRolesLy;
     }
+    /**
+     * Prida tlacitko na pridavanie novej entity PublicBody.
+     */
+    private void initNewPublicRoleButton() {
+        
+        this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyButton(PublicRole.class);
+        
+        this.addComponent(addNewPublicRoleBt);
+
+    }
+
+    /**
+     * Inicializuje editovatelny layout s dokumentami prisluchajucimi entite PublicBody
+     */
+    private void initUploadLayout() {
+        
+        this.uploaderLayout = new UploaderLayout<>(PublicPerson.class);
+        
+        this.addComponent(uploaderLayout);
+        
+    }
+
+    /**
+     * Komponenta na zobrazovanie dokumentov prisluchajucich entite PublicBody.
+     */
+    private void initDownloadLayout() {
+        
+        this.downoaderLayout = new DownloaderLayout<>(PublicPerson.class);
+        
+        this.addComponent(downoaderLayout);
+        
+    }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         this.publicPerson = VaadinSession.getCurrent().getAttribute(PublicPerson.class);
-        initAll();
+        
+        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
+
+        UserType utype = userService.getUserType(user);
+                
+        Boolean isVolunteer = Boolean.FALSE;
+        if (user != null){
+            //moze byt dobrovolnik, alebo admin.
+            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+        }
+        
+        if (publicPerson != null){
+            initAllBasic(isVolunteer);
+        }
 
     }
+
 
 }

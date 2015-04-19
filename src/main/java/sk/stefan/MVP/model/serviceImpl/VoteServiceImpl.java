@@ -197,7 +197,7 @@ public class VoteServiceImpl implements VoteService {
 
 
     @Override
-    public String getVoteResult(Vote vote) {
+    public String getVoteResultAsString(Vote vote) {
         
         VoteResult vr = vote.getResult_vote();
         if (vr != null){
@@ -296,6 +296,68 @@ public class VoteServiceImpl implements VoteService {
 
         return prIds;
 
+    }
+
+    @Override
+    public Vote getVote (VoteOfRole vor) {
+        
+        Integer votId = vor.getVote_id();
+        
+        return voteRepo.findOne(votId);
+    }
+
+    @Override
+    public List<VoteOfRole> findNewVotesOfRole(List<Integer> votesOfRoleIds) {
+
+        List<VoteOfRole> votesOfRole = new ArrayList<>();
+
+        for (Integer i : votesOfRoleIds) {
+            votesOfRole.add(voteOfRoleRepo.findOne(i));
+        }
+
+        return votesOfRole;
+    
+    }
+
+    @Override
+    public List<Integer> findVoteIdsByPubRoleId(Integer pubRoleId) {
+        
+        List<Integer> votIds;
+
+        //SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
+//        zdola naho a zhora nadol.
+        //viacnasobne viible je tam kvoli bezpecnosti.
+        String sql = "SELECT vot.id FROM t_vote vot JOIN t_vote_of_role vor ON "
+                + "(vot.id = vor.vote_id) JOIN t_public_role pr ON "
+                + "(pr.id = vor.public_role_id) "
+                + "WHERE pr.id = " + pubRoleId + " "
+                + "AND pr.visible = true "
+                + "AND vor.visible = true "
+                + "AND vot.visible = true";
+        
+        votIds = this.generalRepo.findIds(sql);
+
+        return votIds;
+        
+    }
+
+    @Override
+    public List<Integer> findVoteOfRoleIdsByPubRoleId(Integer pubRoleId) {
+        
+        List<Integer> vorIds;
+
+        //SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
+//        zdola naho a zhora nadol.
+        //viacnasobne viible je tam kvoli bezpecnosti.
+        String sql = "SELECT vor.id FROM t_vote_of_role vor JOIN t_public_role pr ON "
+                + "(pr.id = vor.public_role_id) "
+                + "WHERE pr.id = " + pubRoleId + " "
+                + "AND pr.visible = true "
+                + "AND vor.visible = true ";
+        
+        vorIds = this.generalRepo.findIds(sql);
+
+        return vorIds;
     }
 
 

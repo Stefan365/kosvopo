@@ -29,13 +29,13 @@ public class PublicPersonsLayout extends VerticalLayout implements Filterable {
     //0.konstruktor
     public PublicPersonsLayout(List<PublicPerson> pubPersons, PublicPersonService pps){
         
-        this.publicPersonService = pps;
-        initLayout(pubPersons);
-
         this.setSpacing(true);
         this.setMargin(true);
 
+        this.publicPersonService = pps;
         
+        initLayout(pubPersons);
+
     } 
     
     /**
@@ -55,26 +55,6 @@ public class PublicPersonsLayout extends VerticalLayout implements Filterable {
         
     }
     
-    /**
-     * @param pb
-     */
-    public void addPublicPerson(PublicPerson pb){
-        
-        if(!publicPersonsMap.containsKey(pb)){
-            
-            PublicPersonComponent pbCom = new PublicPersonComponent(pb, publicPersonService);
-            publicPersonsMap.put(pb, pbCom);
-        }
-    }
-    
-    /**
-     * @param pb
-     */
-    public void removePublicPerson(PublicPerson pb){
-        if(publicPersonsMap.containsKey(pb)){
-            publicPersonsMap.remove(pb);
-        }
-    }
     
     /**
      * @param pbs

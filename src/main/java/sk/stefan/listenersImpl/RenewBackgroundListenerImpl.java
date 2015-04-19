@@ -5,7 +5,7 @@
  */
 package sk.stefan.listenersImpl;
 
-import sk.stefan.MVP.view.components.InputNewEntityButtonsPoolImpl;
+import sk.stefan.MVP.view.components.ZBD_InputNewEntityButtonsPoolImpl;
 import sk.stefan.listeners.RenewBackgroundListener;
 
 /**
@@ -13,9 +13,9 @@ import sk.stefan.listeners.RenewBackgroundListener;
  */
 public class RenewBackgroundListenerImpl implements RenewBackgroundListener {
 
-    private final InputNewEntityButtonsPoolImpl outer;
+    private final ZBD_InputNewEntityButtonsPoolImpl outer;
 
-    public RenewBackgroundListenerImpl(final InputNewEntityButtonsPoolImpl outer) {
+    public RenewBackgroundListenerImpl(final ZBD_InputNewEntityButtonsPoolImpl outer) {
         this.outer = outer;
     }
 

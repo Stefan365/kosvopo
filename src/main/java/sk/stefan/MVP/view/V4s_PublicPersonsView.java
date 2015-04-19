@@ -8,13 +8,21 @@ package sk.stefan.MVP.view;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.AbstractTextField;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
+import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.service.PublicPersonService;
+import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
+import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.PublicPersonsLayout;
+import sk.stefan.enums.UserType;
 
 /**
  *
@@ -26,21 +34,46 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
     private static final long serialVersionUID = 10903884L;
     
     private final PublicPersonService publicPersonService;
-    
+    private final UserService userService;
+
     private PublicPersonsLayout publicPersonsLayout;
     
     private TextField searchFd; 
+    
+    //tlacitko na pridavanie novej verejne osoby:
+    private Button addNewPublicPersonBt;
+
     
 //    private TextField searchField;// = new TextField();
         
     public V4s_PublicPersonsView (){
         
         this.publicPersonService = new PublicPersonServiceImpl();
+        this.userService = new UserServiceImpl();
+        
+//        this.initAllBasic(Boolean.FALSE);
+        
+    }
+    
+    /**
+     * 
+     * @param isVolunteer
+     */
+    private void initAllBasic(Boolean isVolunteer) {
+
+        this.removeAllComponents();
         
         this.initLayout();
         this.initListener();
         
+        this.addComponents(searchFd, publicPersonsLayout);
+        
+        if(isVolunteer){
+            this.initNewPublicPersonButton();
+        }
+        
     }
+
     
     /**
      * 
@@ -54,7 +87,7 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
         this.searchFd = new TextField("Vyhľadávač");
         this.initSearch();
         
-        this.addComponents(searchFd, publicPersonsLayout);
+        
         
     }
     
@@ -93,10 +126,33 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
         return publicPersonsLayout;
     }
 
+    /**
+     * Inicializuje tlacitko na pridavanie novej verejnej osoby.
+     */
+    private void initNewPublicPersonButton() {
+        
+                
+        this.addNewPublicPersonBt = InputNewEntityButtonFactory.createMyButton(PublicPerson.class);
+        
+        this.addComponent(addNewPublicPersonBt);
+    }
     
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         
+        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
+
+        UserType utype = userService.getUserType(user);
+                
+        Boolean isVolunteer = Boolean.FALSE;
+        if (user != null){
+            //moze byt dobrovolnik, alebo admin.
+            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+        }
+        
+        initAllBasic(isVolunteer);
+      
     }
+
     
 }

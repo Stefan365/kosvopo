@@ -29,12 +29,12 @@ public class VoteComponent extends GridLayout {
     private final VoteService voteService;
     
     //graficke komponenty:
-    private Label dateLb; //r1
-    private Label internalNrLb; //r1
-    private Label publicBodyLb;//r2
-    private Label subjectLb;//r3
-    private Label resultLb;//r4
-    private Label numbersLb;//r4
+    private Label dateLb; 
+    private Label internalNrLb;
+    private Label publicBodyLb;
+    private Label subjectLb;
+    private Label resultLb;
+    private Label numbersLb;
 
     //0.konstruktor:
     public VoteComponent(Vote pb, VoteService vs) {
@@ -52,13 +52,15 @@ public class VoteComponent extends GridLayout {
      */
     private void initLayout() {
 
+        this.removeAllComponents();
+        
         this.setSpacing(true);
 
         this.dateLb = new Label(voteService.getVoteDate(vote));
         this.internalNrLb = new Label(voteService.getVoteIntNr(vote));
         this.publicBodyLb = new Label(voteService.getVotePublicBodyName(vote));
         this.subjectLb = new Label(voteService.getVoteSubjectName(vote)); 
-        this.resultLb = new Label(voteService.getVoteResult(vote));
+        this.resultLb = new Label(voteService.getVoteResultAsString(vote));
         this.numbersLb = new Label(voteService.getVoteNumbers(vote));
         
         this.addComponent(dateLb, 0, 0);

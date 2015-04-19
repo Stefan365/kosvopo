@@ -11,6 +11,7 @@ import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
+import sk.stefan.enums.VoteResult;
 
 /**
  *
@@ -44,11 +45,20 @@ public interface VoteService {
      
     public String getVoteSubjectName(Vote vote);
      
-    public String getVoteResult(Vote vote);
-     
+    public String getVoteResultAsString(Vote vote);
+    
+//    public VoteResult getVoteResult(VoteOfRole vor);
+    public Vote getVote(VoteOfRole vor);
+    
     public String getVoteNumbers(Vote vote);
 
     public List<Integer> findVoteIdsByPubPersonId(Integer id);
+
+    public List<VoteOfRole> findNewVotesOfRole(List<Integer> votesOfRoleIds);
+
+    public List<Integer> findVoteIdsByPubRoleId(Integer pubRoleId);
+
+    public List<Integer> findVoteOfRoleIdsByPubRoleId(Integer pubRoleId);
     
     
 

@@ -12,9 +12,9 @@ COMMIT;
 
 -- 2.
 INSERT INTO a_role (role, role_name, rights_description)
-VALUES (0, 'USER', 'všetky práva (vkladanie nových entít, ...), okrem priameho vstupu do databázy');
+VALUES (0, 'Dobrovoľník', 'všetky práva (vkladanie nových entít, ...), okrem priameho vstupu do databázy');
 INSERT INTO a_role (role, role_name, rights_description)
-VALUES (1, 'ADMIN', 'všetky práva USER-a, vrátane práv na úpravu databázy');
+VALUES (1, 'Admin', 'všetky práva Dobrovoľník-a, vrátane práv na úpravu databázy');
 
 COMMIT; 
 
@@ -24,7 +24,7 @@ VALUES (1, 1, NOW(), null);
 INSERT INTO a_user_role (role_id, user_id, since, till)
 VALUES (1, 2, NOW(), null);
 INSERT INTO a_user_role (role_id, user_id, since, till)
-VALUES (2, 3, NOW(), null);
+VALUES (2, 2, NOW(), null);
 COMMIT; 
 
 -- 5.
@@ -71,16 +71,16 @@ COMMIT;
 
 
 -- 7.
-INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness)
-VALUES (NOW(), 4, 3, 3);
-INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness)
-VALUES (NOW(), 5, 3, 4);
-INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness)
-VALUES (NOW(), 3, 2, 2);
-INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness)
-VALUES (NOW(), 2, 0, 0);
-INSERT INTO t_person_classification(classification_date, public_person_id, stability, public_usefulness)
-VALUES (NOW(), 1, 4, 2);
+INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness, actual)
+VALUES (NOW(), 4, 3, 3, 1);
+INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness, actual)
+VALUES (NOW(), 5, 3, 4, 0);
+INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness, actual)
+VALUES (NOW(), 3, 2, 2, 0);
+INSERT INTO t_person_classification(classification_date, public_person_id, stability,  public_usefulness, actual)
+VALUES (NOW(), 2, 0, 0, 0);
+INSERT INTO t_person_classification(classification_date, public_person_id, stability, public_usefulness, actual)
+VALUES (NOW(), 1, 4, 2, 0);
 COMMIT; 
 
 -- 8.0

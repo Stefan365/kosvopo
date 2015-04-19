@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.interfaces;
-
-import com.vaadin.ui.Button;
+package sk.stefan.MVP.view.components;
 
 /**
  *
  * @author stefan
  */
-public interface InputNewEntityButtonsPool {
-    
-    public Button getMyButton(Class<?> cls);
+public class ClassVoteComponent {
     
 }

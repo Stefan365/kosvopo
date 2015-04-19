@@ -9,15 +9,23 @@ import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.AbstractTextField;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
+import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.District;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
+import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.service.PublicBodyService;
+import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
+import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.PublicBodiesLayout;
-import sk.stefan.filtering.FilterComboBox;
+import sk.stefan.enums.UserType;
 
 /**
  *
@@ -31,19 +39,39 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
     
     private PublicBodiesLayout publicBodiesLayout;
     
-//    private FilterComboBox<District> districtCb; 
+    //tlacitko na pridavanie novej verejne osoby:
+    private Button addNewPublicBodyBt;
+    private final UserService userService;
+
     
     private TextField searchFd; 
     
     public V3s_PublicBodiesView (){
         
         this.publicBodyService = new PublicBodyServiceImpl();
-        
+        this.userService = new UserServiceImpl();
+
+    }
+    
+       /**
+     * 
+     * @param isVolunteer
+     */
+    private void initAllBasic(Boolean isVolunteer) {
+
+        this.removeAllComponents();
+
         this.initLayout();
-//        this.initComboListener();
         this.initSearchListener();
         
+        this.addComponents(searchFd, publicBodiesLayout);
+        
+        if(isVolunteer){
+            this.initNewPublicBodyButton();
+        }
+        
     }
+
     
     /**
      * 
@@ -59,27 +87,9 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         this.initSearch();
         
     
-//        this.addComponents(districtCb, searchFd, publicBodiesComp);
-        this.addComponents(searchFd, publicBodiesLayout);
         
     }
     
-//    private void initComboListener(){
-//        
-//        this.districtCb.addValueChangeListener(new Property.ValueChangeListener() {
-//            
-//            private static final long serialVersionUID = 1345322L;
-//
-//            @Override
-//            public void valueChange(Property.ValueChangeEvent event) {
-//                
-//                Integer distrId = (Integer)event.getProperty().getValue();
-//                List<Integer> pbIds = publicBodyService.findNewPublicBodyIds(distrId);
-//                publicBodiesComp.applyFilter(pbIds);
-//                
-//            }
-//        });
-//    }
     
     /**
      * Initializes listener
@@ -102,6 +112,8 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
     
 
     //3.
+    /**
+     */
     private void initSearch() {
         
         searchFd.setWidth("40%");
@@ -110,15 +122,36 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         
     }
 
-    
-
     public PublicBodiesLayout getPbComp() {
         return publicBodiesLayout;
+    }
+    
+    /**
+     * Inicializuje tlacitko na pridavanie novej verejnej osoby.
+     */
+    private void initNewPublicBodyButton() {
+        
+        this.addNewPublicBodyBt = InputNewEntityButtonFactory.createMyButton(PublicBody.class);
+        
+        this.addComponent(addNewPublicBodyBt);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         
+        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
+
+        UserType utype = userService.getUserType(user);
+                
+        Boolean isVolunteer = Boolean.FALSE;
+        if (user != null){
+            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+        }
+        
+        initAllBasic(isVolunteer);
+
     }
+    
+ 
     
 }

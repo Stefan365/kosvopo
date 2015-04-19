@@ -14,19 +14,24 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.A_UserRole;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
+import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.service.PublicRoleService;
+import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
 import sk.stefan.documents.DownloaderLayout;
 import sk.stefan.documents.UploaderLayout;
+import sk.stefan.enums.UserType;
 
 /**
  *
@@ -46,31 +51,24 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     
     private VotesLayout votesLayout;
     
-    //tlacitko na pridavanie novej entity:
-    private Button addNewPublicBodyBt;
-    
-
-        //pre uzivatela obcan   
-    private DownloaderLayout<PublicBody> downoaderLayout;
-    
-    //pre uzivatela admin a dobrovolnik
-    private UploaderLayout<PublicBody> uploaderLayout;
 
     private final PublicRoleService publicRoleService;
     private final VoteService voteService;
-    
+    private final UserService userService;
     
     
     //componenty pre TimeLine:
     private IndexedContainer container;
-    
     private Object timestampProperty;
-    
     private Object valueProperty;
-    
     private Timeline timeLine;
     
+    //tlacitko na pridavanie novej entity:
+    private Button addNewPublicRoleBt;
+    private DownloaderLayout<PublicBody> downoaderLayout;
+    private UploaderLayout<PublicBody> uploaderLayout;
 
+    
     
     
     //konstruktor:
@@ -78,6 +76,8 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
+        this.userService = new UserServiceImpl();
+        
         
 //        if (publicBody != null){
 //            initAllBasic();
@@ -98,13 +98,15 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         if(isVolunteer){
             
-            this.initNewPublicBodyButton();
+            this.initNewPublicRoleButton();
             this.initUploadLayout();
             
         } else {
             this.initDownloadLayout();
         }
     }
+    
+    
     private void initPublicRolesLayout() {
         
         List<Integer> prIds = publicRoleService.findPublicRoleIdsByPubBodyId(publicBody.getId());
@@ -171,9 +173,11 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     /**
      * Prida tlacitko na pridavanie novej entity PublicBody.
      */
-    private void initNewPublicBodyButton() {
+    private void initNewPublicRoleButton() {
         
-        this.addNewPublicBodyBt = InputNewEntityButtonFactory.createMyButton(PublicBody.class);
+        this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyButton(PublicRole.class);
+        
+        this.addComponent(addNewPublicRoleBt);
     
     }
 
@@ -203,16 +207,21 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         
         this.publicBody = VaadinSession.getCurrent().getAttribute(PublicBody.class);
-        A_UserRole userRole = VaadinSession.getCurrent().getAttribute(A_UserRole.class);
-        Boolean isVolunteer = userRole.getRole_id() == 1;
+
+        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
+        
+        UserType utype = userService.getUserType(user);
+                
+        Boolean isVolunteer = Boolean.FALSE;
+        if (user != null){
+            //moze byt dobrovolnik, alebo admin.
+            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+        }
         
         if (publicBody != null){
             initAllBasic(isVolunteer);
         }
         
-        
-    
     }
-
 
 }

@@ -32,8 +32,9 @@ public class SecurityServiceImpl implements SecurityService {
      */
     @Override
     public void login(A_User user) {
-    	VaadinSession.getCurrent().setAttribute(A_User.class, user);
-//       	VaadinSession.getCurrent().setAttribute(Object.class, user);
+    	
+        VaadinSession.getCurrent().setAttribute(A_User.class, user);
+        
     }
 
     /**
@@ -41,8 +42,11 @@ public class SecurityServiceImpl implements SecurityService {
      */
     @Override
     public void logout() {
-	VaadinSession.getCurrent().setAttribute(A_User.class, null);
+	
+        VaadinSession.getCurrent().setAttribute(A_User.class, null);
+    
     }
+    
 
     /**
      * Vrátí aktuálně přihlášeného uživatele, uloženého v session.
@@ -62,10 +66,10 @@ public class SecurityServiceImpl implements SecurityService {
      * @return TRUE, pokud jsou hesla stejná
      */
     @Override
-    public boolean checkPassword(String rawPassword, byte[] hashPassword) {
+    public Boolean checkPassword(String rawPassword, byte[] hashPassword) {
 	
         if (hashPassword == null || rawPassword == null) {
-	    return false;
+	    return Boolean.FALSE;
 	}
 	//return true;
         return MessageDigest.isEqual(hashPassword, encryptPassword(rawPassword));
@@ -85,6 +89,7 @@ public class SecurityServiceImpl implements SecurityService {
             String saltedPassword = password;//.toUpperCase() + "KAROLKO";
             md.update(saltedPassword.getBytes("UTF-8"));
 	    return md.digest();
+            
 	} catch (UnsupportedEncodingException ex) {
 	    throw new RuntimeException(ex);
 	}

@@ -22,6 +22,8 @@ public class PersonClassification implements PresentationName {
 
     private PublicUsefulness public_usefulness;
 
+    private Boolean actual;
+
     private Boolean visible;
 
     // getters:
@@ -78,6 +80,14 @@ public class PersonClassification implements PresentationName {
         this.visible = vis;
     }
 
+    public Boolean getActual() {
+        return actual;
+    }
+
+    public void setActual(Boolean actual) {
+        this.actual = actual;
+    }
+
     @Override
     public String getPresentationName() {
 
@@ -91,5 +101,6 @@ public class PersonClassification implements PresentationName {
         }
 
     }
+
 
 }

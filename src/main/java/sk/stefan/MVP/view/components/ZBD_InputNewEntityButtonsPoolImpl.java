@@ -27,7 +27,7 @@ import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
-import sk.stefan.interfaces.InputNewEntityButtonsPool;
+import sk.stefan.interfaces.ZBD_InputNewEntityButtonsPool;
 import sk.stefan.listeners.InputButClickListener;
 import sk.stefan.listeners.InputVoteButClickListener;
 import sk.stefan.wrappers.InputFormWrapper;
@@ -40,9 +40,9 @@ import sk.stefan.wrappers.InputFormWrapper;
  *
  * @author stefan
  */
-public class InputNewEntityButtonsPoolImpl implements InputNewEntityButtonsPool {
+public class ZBD_InputNewEntityButtonsPoolImpl implements ZBD_InputNewEntityButtonsPool {
 
-    private static final Logger log = Logger.getLogger(InputNewEntityButtonsPoolImpl.class);
+    private static final Logger log = Logger.getLogger(ZBD_InputNewEntityButtonsPoolImpl.class);
 
     private static final long serialVersionUID = 1L;
 
@@ -66,7 +66,7 @@ public class InputNewEntityButtonsPoolImpl implements InputNewEntityButtonsPool 
     private final Map<Class<?>, Button> allButtonsPoolMap = new HashMap<>();
     private final Map<Button, InputFormWrapper<? extends Object>> allButtonsInitMap = new HashMap<>();
 
-    private static InputNewEntityButtonsPool pool;
+    private static ZBD_InputNewEntityButtonsPool pool;
 
     static{
         createPool();
@@ -75,17 +75,17 @@ public class InputNewEntityButtonsPoolImpl implements InputNewEntityButtonsPool 
     
     private static void createPool(){
         
-        pool = new InputNewEntityButtonsPoolImpl();
+        pool = new ZBD_InputNewEntityButtonsPoolImpl();
         
     }
     
-    public static InputNewEntityButtonsPool getPool(){
+    public static ZBD_InputNewEntityButtonsPool getPool(){
         
         return pool;
     
     }
     
-    private InputNewEntityButtonsPoolImpl() {
+    private ZBD_InputNewEntityButtonsPoolImpl() {
 
         this.initMap();
         this.initButtons();

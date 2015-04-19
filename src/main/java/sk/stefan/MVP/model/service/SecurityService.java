@@ -19,7 +19,7 @@ public interface SecurityService {
 
     public A_User getCurrentUser();
 
-    public boolean checkPassword(String rawPassword, byte[] hashPassword);
+    public Boolean checkPassword(String rawPassword, byte[] hashPassword);
 
     public byte[] encryptPassword(String password);
     

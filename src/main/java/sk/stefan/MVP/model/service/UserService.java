@@ -7,6 +7,8 @@ package sk.stefan.MVP.model.service;
 
 import java.util.List;
 import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.dao.A_UserRole;
+import sk.stefan.enums.UserType;
 
 /**
  *
@@ -57,5 +59,7 @@ public interface UserService {
      */
     public byte[] getEncPasswordByLogin(String login);
 
+    public UserType getUserType(A_User user);
+     
     
 }

@@ -22,7 +22,9 @@ role_name VARCHAR(30) NOT NULL,
 rights_description VARCHAR(500) NOT NULL,
 active BIT NOT NULL DEFAULT 1,
 
-CONSTRAINT rol_PK PRIMARY KEY (id)
+CONSTRAINT rol_PK PRIMARY KEY (id),
+CONSTRAINT rol_UK1 UNIQUE(role),
+CONSTRAINT rol_UK2 UNIQUE(role_name)
 ); 
 
 -- 3.
@@ -105,6 +107,7 @@ classification_date DATE NOT NULL,
 public_person_id INT(11) NOT NULL,
 stability SMALLINT NOT NULL DEFAULT 2,
 public_usefulness SMALLINT NOT NULL DEFAULT 2,
+actual BIT NOT NULL DEFAULT 1,
 visible BIT NOT NULL DEFAULT 1,
 
 CONSTRAINT pcl_PK PRIMARY KEY(id),

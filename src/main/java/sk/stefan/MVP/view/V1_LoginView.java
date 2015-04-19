@@ -1,9 +1,5 @@
 package sk.stefan.MVP.view;
 
-import sk.stefan.MVP.view.components.InputNewEntityButtonsPoolImpl;
-import sk.stefan.MVP.view.superseded.Kos6View;
-import sk.stefan.MVP.view.superseded.K5_Verejna_osobaView;
-import sk.stefan.MVP.view.superseded.K4_PoslanciView;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -25,11 +21,14 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.service.UserService;
+import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.InputOptionGroup;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.MVP.view.superseded.K4_PoslanciView;
+import sk.stefan.MVP.view.superseded.K5_Verejna_osobaView;
+import sk.stefan.MVP.view.superseded.Kos6View;
 import sk.stefan.enums.UserType;
 import sk.stefan.utils.ToolsNazvy;
 
@@ -40,10 +39,6 @@ import sk.stefan.utils.ToolsNazvy;
 public class V1_LoginView extends VerticalLayout implements View {
 
     private static final Logger log = Logger.getLogger(V1_LoginView.class);
-
-    private SecurityService securityService;
-
-    private UserService userService;
 
     private final Navigator nav;
 
@@ -58,7 +53,12 @@ public class V1_LoginView extends VerticalLayout implements View {
     private HorizontalLayout buttonsHl;
     
     private VerticalLayout formVl;
-    
+
+    //servisy:
+    private SecurityService securityService;
+
+    private UserService userService;
+
     
     public V1_LoginView(final Navigator nav) {
 
@@ -84,7 +84,7 @@ public class V1_LoginView extends VerticalLayout implements View {
         formVl.setMargin(true);
         formVl.setSpacing(true);
 
-        this.addComponent(ToolsNazvy.createPanelCaption("Prihlásenie sa do KOSVOPO5"));
+        this.addComponent(ToolsNazvy.createPanelCaption("Prihlásenie sa do KOSVOPO"));
         this.addComponent(new Panel(formVl));
         this.setWidth(300, Sizeable.Unit.PIXELS);
     
@@ -106,8 +106,8 @@ public class V1_LoginView extends VerticalLayout implements View {
                 if (user != null) {
                     byte[] userPwHash = userService.getEncPasswordByLogin(user.getLogin());
                     
-                    if (true) {
-//                    if (securityService.checkPassword(passwordPf.getValue(), userPwHash)) {
+//                    if (true) {
+                    if (securityService.checkPassword(passwordPf.getValue(), userPwHash)) {
                         securityService.login(user);
                         obohatNavigator();
                         NavigationComponent.getLoginBut().setCaption("logout");
