@@ -3,7 +3,7 @@ package sk.stefan.MVP.view.components;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 
-import sk.stefan.listeners.GeneralComponentListener;
+import sk.stefan.listeners.ZBD_GeneralComponentListener;
 
 import com.vaadin.ui.*;
 
@@ -16,7 +16,7 @@ public class ZBD_YesNoWindow extends Window {
 
 	
 	Button yesBT, noBT;
-	GeneralComponentListener listener;
+	ZBD_GeneralComponentListener listener;
 	HorizontalLayout buttonLayout;
 	VerticalLayout content;
 	Label msgLB;
@@ -27,7 +27,7 @@ public class ZBD_YesNoWindow extends Window {
      * @param caption nadpis okna
      * @param message zpráva, která má být zobrazena
      */
-    public ZBD_YesNoWindow(String caption, String message, GeneralComponentListener listener) {
+    public ZBD_YesNoWindow(String caption, String message, ZBD_GeneralComponentListener listener) {
     	
         super(caption);
         

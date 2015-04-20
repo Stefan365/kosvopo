@@ -11,6 +11,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 import sk.stefan.MVP.model.entity.dao.A_Role;
@@ -32,7 +33,6 @@ import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import static sk.stefan.MVP.view.components.NavigationComponent.getNavigator;
 import sk.stefan.utils.ToolsNazvy;
 
 /**
@@ -65,23 +65,32 @@ public class V7_AdministrationView extends VerticalLayout implements View {
     private final Label miestLb = new Label("Miesto");
     private final Label polLb = new Label("Politika");
 
-    private static Navigator navigator;
-
-    private static NavigationComponent navComp;
+    private final Navigator nav;
+    
+    private final VerticalLayout temporaryLy;
+    
+    private final NavigationComponent navComp;
 
     //0. konstruktor
     /**
-     * @param nav
      */
-    public V7_AdministrationView(Navigator nav) {
+    public V7_AdministrationView() {
+        
+        this.nav = UI.getCurrent().getNavigator();
 
+        navComp = NavigationComponent.createNavigationComponent();
+        this.addComponent(navComp);
+        
+        temporaryLy = new VerticalLayout();
+        this.addComponent(temporaryLy);
+
+        
         this.securityService = new SecurityServiceImpl();
-
-        navigator = nav;
 
         this.setSpacing(true);
         this.setMargin(true);
-        this.addComponent(mainLayout);
+        
+        temporaryLy.addComponent(mainLayout);
         
         initButtons();
         initLayout();
@@ -90,60 +99,60 @@ public class V7_AdministrationView extends VerticalLayout implements View {
     private void initButtons() {
         
         auserBt = new Button(A_User.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(A_User.getTN()));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(A_User.getTN()));
         });
 
         okresBt = new Button(District.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(District.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(District.TN));
         });
         krajBt = new Button(Region.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(Region.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(Region.TN));
         });
         locBt = new Button(Location.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(Location.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(Location.TN));
         });
 
         pClassBt = new Button(PersonClassification.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(PersonClassification.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(PersonClassification.TN));
         });
 
         pubBodyBt = new Button(PublicBody.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(PublicBody.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(PublicBody.TN));
         });
 
         pubRoleBt = new Button(PublicRole.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(PublicRole.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(PublicRole.TN));
         });
         aroleBt = new Button(A_Role.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(A_Role.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(A_Role.TN));
         });
         subjectBt = new Button(Subject.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(Subject.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(Subject.TN));
         });
         tenureBt = new Button(Tenure.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(Tenure.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(Tenure.TN));
         });
 
         themeBt = new Button(Theme.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(Theme.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(Theme.TN));
         });
         auserRoleBt = new Button(A_UserRole.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(A_UserRole.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(A_UserRole.TN));
         });
 
         voteBt = new Button(Vote.getPRES_NAME(), (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(Vote.getTN()));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(Vote.getTN()));
         });
 
         vClassBt = new Button(VoteClassification.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(VoteClassification.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(VoteClassification.TN));
         });
 
         vorBt = new Button(VoteOfRole.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(VoteOfRole.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(VoteOfRole.TN));
         });
         pubPersonBt = new Button(PublicPerson.PRES_NAME, (Button.ClickEvent event) -> {
-            getNavigator().navigateTo(ToolsNazvy.decapit(PublicPerson.TN));
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(PublicPerson.TN));
         });
 
         auserBt.setStyleName(BaseTheme.BUTTON_LINK);
@@ -212,12 +221,11 @@ public class V7_AdministrationView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        this.addComponent(NavigationComponent.getNavComp());
         user = securityService.getCurrentUser();
         if (user != null) {
             //do nothing
         } else {
-            NavigationComponent.getNavigator().navigateTo("V2_EnterView");
+            UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
         }
 
     }

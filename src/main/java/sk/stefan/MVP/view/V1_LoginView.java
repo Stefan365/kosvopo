@@ -12,6 +12,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import java.lang.reflect.InvocationTargetException;
@@ -26,10 +27,11 @@ import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.InputOptionGroup;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.superseded.K4_PoslanciView;
-import sk.stefan.MVP.view.superseded.K5_Verejna_osobaView;
-import sk.stefan.MVP.view.superseded.Kos6View;
+import sk.stefan.MVP.view.superseded.ZBD_K4_PoslanciView;
+import sk.stefan.MVP.view.superseded.ZBD_K5_Verejna_osobaView;
+import sk.stefan.MVP.view.superseded.ZBD_Kos6View;
 import sk.stefan.enums.UserType;
+import sk.stefan.utils.ToolsNavigation;
 import sk.stefan.utils.ToolsNazvy;
 
 /**
@@ -40,8 +42,11 @@ public class V1_LoginView extends VerticalLayout implements View {
 
     private static final Logger log = Logger.getLogger(V1_LoginView.class);
 
+    private final NavigationComponent navComp;
+
     private final Navigator nav;
 
+    
     private Button loginBt;
 
     private TextField emailTf;
@@ -51,7 +56,7 @@ public class V1_LoginView extends VerticalLayout implements View {
     private InputOptionGroup<Integer> userRoleOg;
 
     private HorizontalLayout buttonsHl;
-    
+
     private VerticalLayout formVl;
 
     //servisy:
@@ -60,10 +65,18 @@ public class V1_LoginView extends VerticalLayout implements View {
     private UserService userService;
 
     
-    public V1_LoginView(final Navigator nav) {
+    private VerticalLayout temporaryLy;
+    
+    
+    public V1_LoginView() {
+        
+        this.nav = UI.getCurrent().getNavigator();
 
-        this.nav = nav;
-        this.addComponent(NavigationComponent.getNavComp());
+        navComp = NavigationComponent.createNavigationComponent();
+        this.addComponent(navComp);
+        
+        temporaryLy = new VerticalLayout();
+        this.addComponent(temporaryLy);
 
         //inicializace BIS
         securityService = new SecurityServiceImpl();
@@ -78,17 +91,18 @@ public class V1_LoginView extends VerticalLayout implements View {
         }
     }
 
-    private void initLayout(){
-        
+    private void initLayout() {
+
         formVl = new VerticalLayout(emailTf, passwordPf, this.userRoleOg, buttonsHl);
         formVl.setMargin(true);
         formVl.setSpacing(true);
 
-        this.addComponent(ToolsNazvy.createPanelCaption("Prihlásenie sa do KOSVOPO"));
-        this.addComponent(new Panel(formVl));
-        this.setWidth(300, Sizeable.Unit.PIXELS);
-    
+        temporaryLy.addComponent(ToolsNazvy.createPanelCaption("Prihlásenie sa do KOSVOPO"));
+        temporaryLy.addComponent(new Panel(formVl));
+        temporaryLy.setWidth(300, Sizeable.Unit.PIXELS);
+
     }
+
     private void initFields() {
         // Vytvareni komponent
         emailTf = ToolsNazvy.createFormTextField("login", true);
@@ -105,12 +119,12 @@ public class V1_LoginView extends VerticalLayout implements View {
 
                 if (user != null) {
                     byte[] userPwHash = userService.getEncPasswordByLogin(user.getLogin());
-                    
+
 //                    if (true) {
                     if (securityService.checkPassword(passwordPf.getValue(), userPwHash)) {
                         securityService.login(user);
-                        obohatNavigator();
-                        NavigationComponent.getLoginBut().setCaption("logout");
+                        navComp.obohatNavigator();
+                        navComp.getLoginBut().setCaption("logout");
                         Notification.show("prihlásenie prebehlo úspešne!");
                         nav.navigateTo("V2_EnterView");
                     } else {
@@ -134,38 +148,17 @@ public class V1_LoginView extends VerticalLayout implements View {
 
     }
 
+    /**
+     * toto je vlastne zbytočné, pretože náš systém podporuje len 1 roľu naraz.
+     */
     private void initOptionGroup() throws NoSuchMethodException {
-        try {
-            Class<?> cls = UserType.class;
-            Method getNm = cls.getDeclaredMethod("getNames");
-            Method getOm = cls.getDeclaredMethod("getOrdinals");
-            List<String> names = (List<String>) getNm.invoke(null);
-            List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
-            Map<String, Integer> map = ToolsNazvy.makeEnumMap(names, ordinals);
-            
-            this.userRoleOg = new InputOptionGroup<Integer>(map);
+
+        Map<String, Integer> map = ToolsNazvy.getUserTypes();
+
+        this.userRoleOg = new InputOptionGroup<Integer>(map);
 //            this.userRoleOg.select(UserType.values()[0]);
 //            this.userRoleOg.select(0);
-              this.userRoleOg.setValue(0);
-            
-            
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            log.error(ex.getMessage(), ex);
-        }
-
-    }
-
-    /**
-     * Po uspesnom nalogovani, obohati navigator o stranky, ktore su beznym
-     * uzivatelom neviditelne.
-     *
-     */
-    private void obohatNavigator() {
-        nav.addView("A_kos5", new K5_Verejna_osobaView(nav));
-        nav.addView("A_kos4", new K4_PoslanciView(nav));
-        nav.addView("A_kos6", new Kos6View(nav));
-
-        NavigationComponent.getNavComp().addAdminButtons();
+        this.userRoleOg.setValue(0);
 
     }
 

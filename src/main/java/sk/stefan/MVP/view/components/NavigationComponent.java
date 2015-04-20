@@ -5,10 +5,14 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.BaseTheme;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.view.V7_AdministrationView;
+import sk.stefan.MVP.view.superseded.ZBD_K4_PoslanciView;
+import sk.stefan.MVP.view.superseded.ZBD_K5_Verejna_osobaView;
+import sk.stefan.MVP.view.superseded.ZBD_Kos6View;
 
 public class NavigationComponent extends HorizontalLayout {
 
@@ -17,17 +21,16 @@ public class NavigationComponent extends HorizontalLayout {
      */
     private static final long serialVersionUID = 8811699550804144740L;
 
-    private Button b1, b1a, b2, b3a, b3, b4a, b4, b5, b6, b7;
+    private Button b1, b1a, b2, b3s, b3, b4s, b4, b5, b6, b7;
 
     private final SecurityService securityService;
 
-    private static Navigator navigator;
-
-    private static NavigationComponent navComp;
+    private final Navigator navigator;
 
     //0.konstruktor.
     /**
      *
+     * @param nav
      */
     private NavigationComponent(Navigator nav) {
 
@@ -38,6 +41,14 @@ public class NavigationComponent extends HorizontalLayout {
 
     }
 
+    public static NavigationComponent createNavigationComponent() {
+        
+        Navigator nav = UI.getCurrent().getNavigator(); 
+        return new NavigationComponent(nav);
+    
+    }
+
+    
     /**
      * Inicializuje potrebne navigacne tlacitka.
      */
@@ -52,7 +63,7 @@ public class NavigationComponent extends HorizontalLayout {
                 String butN = event.getButton().getCaption();
                 switch (butN) {
                     case "login":
-                        navigator.navigateTo("login");
+                        navigator.navigateTo("V1_LoginView");
                         break;
 
                     case "logout":
@@ -68,15 +79,11 @@ public class NavigationComponent extends HorizontalLayout {
             }
         });
 
-        b1a = new Button("Input", (ClickEvent event) -> {
-            navigator.navigateTo("inputAllView");
-        });
-
         b2 = new Button("Vstup", (ClickEvent event) -> {
             navigator.navigateTo("V2_EnterView");
         });
 
-        b3a = new Button("Verejné orgány", (ClickEvent event) -> {
+        b3s = new Button("Verejné orgány", (ClickEvent event) -> {
             navigator.navigateTo("V3s_PublicBodiesView");
         });
         
@@ -84,7 +91,7 @@ public class NavigationComponent extends HorizontalLayout {
             navigator.navigateTo("V3_PublicBodyView");
         });
 
-        b4a = new Button("Verejné osoby", (ClickEvent event) -> {
+        b4s = new Button("Verejné osoby", (ClickEvent event) -> {
             navigator.navigateTo("V4s_PublicPersonsView");
         });
 
@@ -120,58 +127,47 @@ public class NavigationComponent extends HorizontalLayout {
 
         this.addComponent(b1);
         this.addComponent(b2);
-        this.addComponent(b3a);
-        this.addComponent(b4a);
+        this.addComponent(b3s);
+        this.addComponent(b4s);
         this.addComponent(b5);
         this.addComponent(b6);
 
     }
 
-    /**
-     *
-     * @param nav
-     */
-    public static void createNavComp(Navigator nav) {
-        navComp = new NavigationComponent(nav);
+
+    public Button getLoginBut() {
+        return this.b1;
     }
 
-    public static Button getLoginBut() {
-        return navComp.b1;
-    }
-
-    /**
-     * provides the singleton. //later to be done by Spring.
-     *
-     * @return
-     */
-    public static NavigationComponent getNavComp() {
-        return navComp;
-    }
-
-    public void addAdminButtons() {
-
-        navigator.addView("V7_AdministrationView", new V7_AdministrationView(navigator));
-
-        navComp.addComponent(b1a);
-        navComp.addComponent(b7);
-    }
 
     /**
      * Ochudobni navigator o views, ktore nepatria do administracie.
      */
-    private void ochudobniNavigator() {
+    public void ochudobniNavigator() {
+        
+        
         navigator.removeView("V7_AdministrationView");
-        navigator.removeView("inputAllView");
 
-        navComp.removeComponent(b1a);
-        navComp.removeComponent(b7);
+        this.removeComponent(b7);
 
     }
+    
+    /**
+     * Po uspesnom nalogovani, obohati navigator o stranky, kt
+     *
+     */
+    public void obohatNavigator() {
+        
+        navigator.addView("V7_AdministrationView", new V7_AdministrationView());
+
+        this.addComponent(b7);
+    }
+
 
     /**
      * @return the navigator
      */
-    public static Navigator getNavigator() {
+    public Navigator getNavigator() {
         return navigator;
     }
 

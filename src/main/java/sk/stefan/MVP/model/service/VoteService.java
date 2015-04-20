@@ -5,13 +5,14 @@
  */
 package sk.stefan.MVP.model.service;
 
-import com.vaadin.ui.Label;
 import java.util.List;
+import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.entity.dao.Subject;
+import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
-import sk.stefan.enums.VoteResult;
 
 /**
  *
@@ -20,7 +21,7 @@ import sk.stefan.enums.VoteResult;
 public interface VoteService {
 
     //vote itself:
-    public List<Vote> getAllRelevantVotesForPublicPerson(PublicPerson pp);
+    public List<Vote> getAllVotesForPublicPerson(PublicPerson pp);
 
     public List<Vote> getAllVotesForPublicRole(PublicRole pr);
 
@@ -29,7 +30,6 @@ public interface VoteService {
 
     public List<PublicRole> getAllPublicRolesOfPublicPerson(PublicPerson pp);
 
-    public List<Vote> findNewVotes(List<Integer> voteIds);
     
     public List<Integer> findVoteIdsByPubBodyId(Integer publicBodyId);
     
@@ -54,12 +54,34 @@ public interface VoteService {
 
     public List<Integer> findVoteIdsByPubPersonId(Integer id);
 
-    public List<VoteOfRole> findNewVotesOfRole(List<Integer> votesOfRoleIds);
-
+    
     public List<Integer> findVoteIdsByPubRoleId(Integer pubRoleId);
 
     public List<Integer> findVoteOfRoleIdsByPubRoleId(Integer pubRoleId);
+
+    public String getThemeNameById(Integer theme_id);
     
+    public Theme getThemeById(Integer theme_id);
+    
+    public PublicRole getPublicRoleById(Integer theme_id);
+
+    public List<Vote> findNewVotes(List<Integer> voteIds);
+    
+    public List<VoteOfRole> findNewVotesOfRole(List<Integer> votesOfRoleIds);
+
+    public List<Theme> findNewThemes(List<Integer> themeIds);
+    
+    public List<Subject> findNewSubjects(List<Integer> subjectIds);
+    
+    //find All:
+
+    public List<Theme> findAllThemes();
+    
+    public List<Subject> findAllSubjectsForPublicBody(PublicBody pb);
+
+    public List<Integer> findNewThemeIdsByFilter(String tx);
+    
+    public List<Integer> findNewTSubjectIdsByFilter(String tx);   
     
 
 }

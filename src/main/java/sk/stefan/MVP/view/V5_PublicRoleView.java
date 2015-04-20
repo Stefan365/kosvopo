@@ -7,9 +7,11 @@ package sk.stefan.MVP.view;
 
 import com.vaadin.addon.timeline.Timeline;
 import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -22,6 +24,7 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
+import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicRoleComponent;
 import sk.stefan.MVP.view.components.VotesOfRoleLayout;
 import sk.stefan.documents.DownloaderLayout;
@@ -61,6 +64,12 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
     private DownloaderLayout<PublicRole> downoaderLayout;
     //pre uzivatela admin a dobrovolnik
     private UploaderLayout<PublicRole> uploaderLayout;
+    
+    private final VerticalLayout temporaryLy;
+    
+    private final NavigationComponent navComp;
+    
+    private final Navigator nav;
 
     
     //konstruktor:
@@ -68,6 +77,14 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
      * 
      */
     public V5_PublicRoleView() {
+
+        this.nav = UI.getCurrent().getNavigator();
+
+        navComp = NavigationComponent.createNavigationComponent();
+        this.addComponent(navComp);
+        
+        temporaryLy = new VerticalLayout();
+        this.addComponent(temporaryLy);
 
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
@@ -79,13 +96,13 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        this.removeAllComponents();
+        temporaryLy.removeAllComponents();
         
         this.initPublicPersonComponent();
         this.initVotesOrRoleLayout();
         this.initTimeline();
 
-        this.addComponents(publicRoleComponent, votesOfRoleLayout, timeLine);
+        temporaryLy.addComponents(publicRoleComponent, votesOfRoleLayout, timeLine);
         
         if(isVolunteer){
             
@@ -165,7 +182,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
         
         this.uploaderLayout = new UploaderLayout<>(PublicRole.class);
         
-        this.addComponent(uploaderLayout);
+        temporaryLy.addComponent(uploaderLayout);
         
     }
 
@@ -176,7 +193,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
         
         this.downoaderLayout = new DownloaderLayout<>(PublicRole.class);
         
-        this.addComponent(downoaderLayout);
+        temporaryLy.addComponent(downoaderLayout);
         
     }
 

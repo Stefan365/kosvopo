@@ -14,6 +14,7 @@ import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.event.FieldEvents;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.AbstractTextField;
@@ -40,7 +41,6 @@ import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.MyTable;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import static sk.stefan.MVP.view.components.NavigationComponent.getNavigator;
 import sk.stefan.MVP.view.components.YesNoWindow;
 import sk.stefan.filtering.FilteringComponent;
 import sk.stefan.listeners.ObnovFilterListener;
@@ -94,52 +94,80 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     private String[] visibleColDbNames;
 
     private final InputFormLayout<E> inputForm;
-    private final VerticalLayout linksVl;
+    private VerticalLayout linksVl;
 
     private final Filter basicFilter;
 
+    private final VerticalLayout temporaryLy;
+
+    private final NavigationComponent navComp;
+
+    private final Navigator nav;
+
+    
+    //0.Konstruktor
+    /**
+     * 
+     * @param clsq
+     * @param uneditCol
+     */
     public V8_UniEditableTableView(Class<E> clsq, String[] uneditCol) {
+        
+        this.setMargin(true);
+        this.setSpacing(true);
 
 
+        this.nav = UI.getCurrent().getNavigator();
 
+        navComp = NavigationComponent.createNavigationComponent();
+        this.addComponent(navComp);
+
+        temporaryLy = new VerticalLayout();
+        this.addComponent(temporaryLy);
+        
         basicFilter = new Compare.Equal("visible", Boolean.TRUE);
-
         securityService = new SecurityServiceImpl();
-
+        
         this.clsE = clsq;
-
-//        log.debug("DEBUG 1 clsE: " + clsE);
         tn = ToolsDao.getTableName(clsE);
-//        log.debug("DEBUG 2 tn: " + tn);
-        
         this.initTableLists(uneditCol);
-        
-        try {
 
-            sqlContainer = DoDBconn.getContainer(tn);
-            obnovFilter();
-        } catch (SecurityException | SQLException e) {
-            log.error(e.getMessage());
-        }
-
-//        if (item != null){
         this.inputForm = new InputFormLayout<>(clsE, item, sqlContainer, this, nonEditFn);
-//        }
+
+        
+
+    }
+
+    /**
+     */
+    private void initTableContainer() {
+
+    }
+
+    private void initLinks() {
+        linksVl = new VerticalLayout();
+        linksVl.setMargin(true);
+        linksVl.setSpacing(true);
+        linksVl.addComponent(backBt);
+    }
+
+    /**
+     *
+     * @param isVolunteer
+     */
+    private void initAllBasic(Boolean isVolunteer) {
+
+        temporaryLy.removeAllComponents();
 
         initLayout();
+        initLinks();
         initUniTable();
         initEditor();
         initSearch();
         initAddRemoveButtons();
 
-        linksVl = new VerticalLayout();
-        linksVl.setMargin(true);
-        linksVl.setSpacing(true);
-        linksVl.addComponent(backBt);
-        this.addComponent(linksVl);
+        temporaryLy.addComponents(splitPanel, linksVl);
 
-        this.setMargin(true);
-        this.setSpacing(true);
 
     }
 
@@ -150,7 +178,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     private void initLayout() {
 
         backBt = new Button("naspať", (Button.ClickEvent event) -> {
-            getNavigator().navigateTo("adminview1");
+            UI.getCurrent().getNavigator().navigateTo("V7_AdministrationView");
         });
 
         uniTable = new MyTable();
@@ -160,8 +188,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         editorLayout = new FormLayout();
 
         splitPanel = new HorizontalSplitPanel();
-        this.addComponent(splitPanel);
-
+        
         leftLayout = new VerticalLayout();
         splitPanel.addComponent(leftLayout);
         splitPanel.addComponent(editorLayout);
@@ -258,7 +285,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                 if (item.getItemProperty("active") != null) {
                     item.getItemProperty("active").setValue(Boolean.TRUE);
                 }
-                
+
                 obnovFilter();
 
 //              uniTable.getContainerProperty(itemId, visibleFn.get(2)).setValue("New");
@@ -292,11 +319,21 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
      * Inicializuje tabulku na danu entitu.
      */
     private void initUniTable() {
+        
+
+        try {
+
+            sqlContainer = DoDBconn.getContainer(tn);
+            obnovFilter();
+        } catch (SecurityException | SQLException e) {
+            log.error(e.getMessage());
+        }
+
 
         uniTable.setContainerDataSource(sqlContainer);
-        
+
         log.info("CLASS:" + clsE.getCanonicalName());
-        for (String s : visibleColDbNames){
+        for (String s : visibleColDbNames) {
             log.info("VISIBLE COLS:" + s);
         }
         uniTable.setVisibleColumns((Object[]) visibleColDbNames);
@@ -323,19 +360,20 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         });
     }
 
+    /**
+     * Pomocne zoznamy pre tabulku.
+     */
     private void initTableLists(String[] uneditCol) {
 
         this.nonEditFn = Arrays.asList(uneditCol);
         List<String> db = new ArrayList<>();
         List<String> dp = new ArrayList<>();
-        
 
 //        log.debug("DEBUG tn: " + tn);
         String key;
         Properties proPoradie = ToolsNazvy.getPoradieParams(tn);
         Properties proDepict = ToolsNazvy.getDepictParams(tn);
 
-        
         for (int i = 0; i < proPoradie.size(); i++) {
 
             key = proPoradie.getProperty("" + i);
@@ -347,11 +385,11 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         }
         this.visibleColDbNames = db.toArray(uneditCol);
         this.visibleColDepictNames = dp.toArray(uneditCol);
-        
-        for (String s : visibleColDbNames){
+
+        for (String s : visibleColDbNames) {
 //            log.debug("TABLE COLUMN: *"+ s +"*");
         }
-        
+
     }
 
     /**
@@ -375,8 +413,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 //                  sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);
 //                  item.getItemProperty("active").setValue(Boolean.FALSE);
 //                  sqlContainer.getItem(itemId).getItemProperty("active").setValue(Boolean.FALSE);
-                    
-                    
+
                     UniRepo<E> unirepo = new UniRepo<>(clsE);
                     unirepo.updateParam("visible", "false", "" + item.getItemProperty("id").getValue());
 //                    item = null;
@@ -397,12 +434,12 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-//        this.linksVl.addComponent(NavigationComponent.getNavComp());
+        
         user = securityService.getCurrentUser();
         if (user != null) {
             //do nothing
         } else {
-            NavigationComponent.getNavigator().navigateTo("V2_EnterView");
+            UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
         }
 
     }

@@ -10,6 +10,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.service.PublicBodyService;
 import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
@@ -40,7 +41,7 @@ public class PublicBodyComponent extends HorizontalLayout {
     //0.konstruktor:
     public PublicBodyComponent(PublicBody pb, PublicBodyService ps) {
 
-        this.navigator = NavigationComponent.getNavigator();
+        this.navigator = UI.getCurrent().getNavigator();
         this.pubBody = pb;
         this.publicBodyService = ps;
 

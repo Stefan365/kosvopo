@@ -10,6 +10,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.service.VoteService;
 
@@ -37,11 +38,11 @@ public class VoteComponent extends GridLayout {
     private Label numbersLb;
 
     //0.konstruktor:
-    public VoteComponent(Vote pb, VoteService vs) {
+    public VoteComponent(Vote vot, VoteService vs) {
 
         super(2, 4);//column , row
-        this.navigator = NavigationComponent.getNavigator();
-        this.vote = pb;
+        this.navigator = UI.getCurrent().getNavigator();
+        this.vote = vot;
         this.voteService = vs;
 
         this.initLayout();

@@ -7,6 +7,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_Role;
 import sk.stefan.MVP.model.entity.dao.A_User;
@@ -28,6 +30,8 @@ import sk.stefan.MVP.model.entity.dao.Subject;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
+import sk.stefan.MVP.view.components.InputOptionGroup;
+import sk.stefan.enums.UserType;
 
 /**
  * Trida obsahujici pomocne metody pro vytvareni GUI
@@ -139,6 +143,30 @@ public abstract class ToolsNazvy {
         return properties;
     }
 
+    /**
+     * Vrati mapu nazvov uzovatelov vhodnu pre ucely logout.
+     * 
+     * @return 
+     */
+    public static Map<String, Integer> getUserTypes() {
+
+        try {
+            Class<?> cls = UserType.class;
+            Method getNm = cls.getDeclaredMethod("getNames");
+            Method getOm = cls.getDeclaredMethod("getOrdinals");
+            List<String> names = (List<String>) getNm.invoke(null);
+            List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
+
+            Map<String, Integer> map = ToolsNazvy.makeEnumMap(names, ordinals);
+            return map;
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
+                NoSuchMethodException | SecurityException ex) {
+            log.error(ex.getMessage(), ex);
+            return null;
+        } 
+        
+    }
+
     //5.
     /**
      * Makes map of String / Enum for list of enums.
@@ -159,7 +187,6 @@ public abstract class ToolsNazvy {
 //        return String.format("<div class=v-label-%s><strong>%s</strong></div><i>%s</i>",
 //                ValoTheme.LABEL_BOLD, caption, text);
 //    }
-
     /**
      * Method for getting the Properies
      *
@@ -167,7 +194,7 @@ public abstract class ToolsNazvy {
      * @return
      */
     public static Properties getDepictParams(String tabName) {
-        
+
         InputStream input = null;
         try {
             String fileN;
@@ -182,7 +209,7 @@ public abstract class ToolsNazvy {
             return null;
         } finally {
             try {
-                if (input != null){
+                if (input != null) {
                     input.close();
                 }
             } catch (IOException ex) {
@@ -214,7 +241,7 @@ public abstract class ToolsNazvy {
             return null;
         } finally {
             try {
-                if (input != null){
+                if (input != null) {
                     input.close();
                 }
             } catch (IOException ex) {
@@ -230,19 +257,19 @@ public abstract class ToolsNazvy {
         try {
             String fileN;
             fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\nazvyTabuliek.properties";
-            
+
             Properties prop = new Properties();
             input = new FileInputStream(fileN);
             prop.load(input);
             input.close();
-            
+
             return prop.getProperty(tabName);
         } catch (IOException ex) {
             log.error(ex.getMessage(), ex);
             return null;
         } finally {
             try {
-                if (input != null){
+                if (input != null) {
                     input.close();
                 }
             } catch (IOException ex) {
@@ -292,7 +319,6 @@ public abstract class ToolsNazvy {
                 return null;
         }
     }
-
 
     /**
      * dekapits the tablename

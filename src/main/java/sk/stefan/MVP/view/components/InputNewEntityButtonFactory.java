@@ -12,12 +12,8 @@ import sk.stefan.listeners.InputVoteButClickListener;
 import sk.stefan.utils.ToolsDao;
 
 /**
- * Trieda, ktorá uchováva v zálohe všetky tlačítka na pridávanie nových entít.
- * Má to tú výhodu, že všetko je na jednom mieste, a v prípade potreby si View,
- * potrebné tlačítko vypýta (na jednej stránke bude max. 1 tlačítko druhu danej
- * entity.
- *
- *
+ * Trieda, vytvara tlacitka na pridavanie novych entit.
+ * 
  * @author stefan
  */
 public abstract class InputNewEntityButtonFactory {

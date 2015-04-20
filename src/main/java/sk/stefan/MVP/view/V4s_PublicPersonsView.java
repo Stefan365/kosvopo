@@ -6,12 +6,14 @@
 package sk.stefan.MVP.view;
 
 import com.vaadin.event.FieldEvents;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import sk.stefan.MVP.model.entity.dao.A_User;
@@ -21,6 +23,7 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
+import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicPersonsLayout;
 import sk.stefan.enums.UserType;
 
@@ -42,11 +45,26 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
     
     //tlacitko na pridavanie novej verejne osoby:
     private Button addNewPublicPersonBt;
+    
+        private final VerticalLayout temporaryLy;
+    
+    private final NavigationComponent navComp;
 
+
+    private final Navigator nav;
     
 //    private TextField searchField;// = new TextField();
         
     public V4s_PublicPersonsView (){
+    
+        this.nav = UI.getCurrent().getNavigator();
+
+        navComp = NavigationComponent.createNavigationComponent();
+        this.addComponent(navComp);
+        
+        temporaryLy = new VerticalLayout();
+        this.addComponent(temporaryLy);
+
         
         this.publicPersonService = new PublicPersonServiceImpl();
         this.userService = new UserServiceImpl();
@@ -61,12 +79,12 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        this.removeAllComponents();
+        temporaryLy.removeAllComponents();
         
         this.initLayout();
         this.initListener();
         
-        this.addComponents(searchFd, publicPersonsLayout);
+        temporaryLy.addComponents(searchFd, publicPersonsLayout);
         
         if(isVolunteer){
             this.initNewPublicPersonButton();
@@ -134,7 +152,7 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
                 
         this.addNewPublicPersonBt = InputNewEntityButtonFactory.createMyButton(PublicPerson.class);
         
-        this.addComponent(addNewPublicPersonBt);
+        temporaryLy.addComponent(addNewPublicPersonBt);
     }
     
     @Override

@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import sk.stefan.MVP.view.converters.MyBooleanConverter;
+import sk.stefan.MVP.view.converters.ZBD_MyBooleanConverter;
 import sk.stefan.utils.ToolsDao;
 
 import com.vaadin.data.Item;
@@ -147,7 +147,7 @@ public class ZBD_FGMyComboBox<T, E> extends ComboBox {
                 switch (propertyETypeName) {
                     case "java.lang.Boolean":
                         //String s = (tf.getConverter()).convertToPresentation((Boolean) val, String.class, new Locale("EN"));
-                        String s = MyBooleanConverter.convertToPresentation((Boolean) val);
+                        String s = ZBD_MyBooleanConverter.convertToPresentation((Boolean) val);
                         tf.setValue(s);
                         break;
                     default:

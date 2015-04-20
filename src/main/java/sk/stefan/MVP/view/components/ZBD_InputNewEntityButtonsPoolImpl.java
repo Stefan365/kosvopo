@@ -30,7 +30,7 @@ import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.interfaces.ZBD_InputNewEntityButtonsPool;
 import sk.stefan.listeners.InputButClickListener;
 import sk.stefan.listeners.InputVoteButClickListener;
-import sk.stefan.wrappers.InputFormWrapper;
+import sk.stefan.wrappers.ZBD_InputFormWrapper;
 
 /**
  * Trieda, ktorá uchováva v zálohe všetky tlačítka na pridávanie nových entít.
@@ -64,7 +64,7 @@ public class ZBD_InputNewEntityButtonsPoolImpl implements ZBD_InputNewEntityButt
     private final Button voteClassBt = new Button();
 
     private final Map<Class<?>, Button> allButtonsPoolMap = new HashMap<>();
-    private final Map<Button, InputFormWrapper<? extends Object>> allButtonsInitMap = new HashMap<>();
+    private final Map<Button, ZBD_InputFormWrapper<? extends Object>> allButtonsInitMap = new HashMap<>();
 
     private static ZBD_InputNewEntityButtonsPool pool;
 
@@ -110,19 +110,19 @@ public class ZBD_InputNewEntityButtonsPoolImpl implements ZBD_InputNewEntityButt
         allButtonsPoolMap.put(VoteClassification.class, voteClassBt);
         
         
-        allButtonsInitMap.put(regionBt, new InputFormWrapper<>(Region.class, District.PRES_NAME, District.TN));
-        allButtonsInitMap.put(districtBt, new InputFormWrapper<>(District.class, District.PRES_NAME, District.TN));
-        allButtonsInitMap.put(locationBt, new InputFormWrapper<>(Location.class, Location.PRES_NAME, Location.TN));
-        allButtonsInitMap.put(tenureBt, new InputFormWrapper<>(Tenure.class, Tenure.PRES_NAME, Tenure.TN));
-        allButtonsInitMap.put(themeBt, new InputFormWrapper<>(Theme.class, Theme.PRES_NAME, Theme.getTN()));
-        allButtonsInitMap.put(publicPersonBt, new InputFormWrapper<>(PublicPerson.class, PublicPerson.PRES_NAME, PublicPerson.TN));
-        allButtonsInitMap.put(publicBodyBt, new InputFormWrapper<>(PublicBody.class, PublicBody.PRES_NAME, PublicBody.TN));
-        allButtonsInitMap.put(personClassBt, new InputFormWrapper<>(PersonClassification.class, PersonClassification.PRES_NAME, PersonClassification.TN));
-        allButtonsInitMap.put(publicRoleBt, new InputFormWrapper<>(PublicRole.class, PublicRole.PRES_NAME, PublicRole.TN));
-        allButtonsInitMap.put(subjectBt, new InputFormWrapper<>(Subject.class, Subject.PRES_NAME, Subject.TN));
-        allButtonsInitMap.put(voteBt, new InputFormWrapper<>(Vote.class, Vote.getPRES_NAME(), Vote.getTN()));
-        allButtonsInitMap.put(voteOfRoleBt, new InputFormWrapper<>(VoteOfRole.class, VoteOfRole.PRES_NAME, VoteOfRole.getTN()));
-        allButtonsInitMap.put(voteClassBt, new InputFormWrapper<>(VoteClassification.class, VoteClassification.PRES_NAME, VoteClassification.TN));
+        allButtonsInitMap.put(regionBt, new ZBD_InputFormWrapper<>(Region.class, District.PRES_NAME, District.TN));
+        allButtonsInitMap.put(districtBt, new ZBD_InputFormWrapper<>(District.class, District.PRES_NAME, District.TN));
+        allButtonsInitMap.put(locationBt, new ZBD_InputFormWrapper<>(Location.class, Location.PRES_NAME, Location.TN));
+        allButtonsInitMap.put(tenureBt, new ZBD_InputFormWrapper<>(Tenure.class, Tenure.PRES_NAME, Tenure.TN));
+        allButtonsInitMap.put(themeBt, new ZBD_InputFormWrapper<>(Theme.class, Theme.PRES_NAME, Theme.getTN()));
+        allButtonsInitMap.put(publicPersonBt, new ZBD_InputFormWrapper<>(PublicPerson.class, PublicPerson.PRES_NAME, PublicPerson.TN));
+        allButtonsInitMap.put(publicBodyBt, new ZBD_InputFormWrapper<>(PublicBody.class, PublicBody.PRES_NAME, PublicBody.TN));
+        allButtonsInitMap.put(personClassBt, new ZBD_InputFormWrapper<>(PersonClassification.class, PersonClassification.PRES_NAME, PersonClassification.TN));
+        allButtonsInitMap.put(publicRoleBt, new ZBD_InputFormWrapper<>(PublicRole.class, PublicRole.PRES_NAME, PublicRole.TN));
+        allButtonsInitMap.put(subjectBt, new ZBD_InputFormWrapper<>(Subject.class, Subject.PRES_NAME, Subject.TN));
+        allButtonsInitMap.put(voteBt, new ZBD_InputFormWrapper<>(Vote.class, Vote.getPRES_NAME(), Vote.getTN()));
+        allButtonsInitMap.put(voteOfRoleBt, new ZBD_InputFormWrapper<>(VoteOfRole.class, VoteOfRole.PRES_NAME, VoteOfRole.getTN()));
+        allButtonsInitMap.put(voteClassBt, new ZBD_InputFormWrapper<>(VoteClassification.class, VoteClassification.PRES_NAME, VoteClassification.TN));
 
         
     }
@@ -134,7 +134,7 @@ public class ZBD_InputNewEntityButtonsPoolImpl implements ZBD_InputNewEntityButt
     private void initButtons() {
         String s;
         for (Button b : allButtonsInitMap.keySet()) {
-            InputFormWrapper<? extends Object> wr = allButtonsInitMap.get(b);
+            ZBD_InputFormWrapper<? extends Object> wr = allButtonsInitMap.get(b);
 
             b.setCaption(wr.getButtonName());
 //            log.info("MENO: " + wr.getButtonName());

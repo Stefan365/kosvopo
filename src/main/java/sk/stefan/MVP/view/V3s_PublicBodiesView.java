@@ -5,25 +5,25 @@
  */
 package sk.stefan.MVP.view;
 
-import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.entity.dao.District;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
-import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.service.PublicBodyService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
+import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicBodiesLayout;
 import sk.stefan.enums.UserType;
 
@@ -41,13 +41,28 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
     
     //tlacitko na pridavanie novej verejne osoby:
     private Button addNewPublicBodyBt;
+    
     private final UserService userService;
 
+    private final Navigator nav;
     
     private TextField searchFd; 
     
+    private final VerticalLayout temporaryLy;
+    
+    private final NavigationComponent navComp;
+
+    
     public V3s_PublicBodiesView (){
+    
+        this.nav = UI.getCurrent().getNavigator();
+
+        navComp = NavigationComponent.createNavigationComponent();
+        this.addComponent(navComp);
         
+        temporaryLy = new VerticalLayout();
+        this.addComponent(temporaryLy);
+
         this.publicBodyService = new PublicBodyServiceImpl();
         this.userService = new UserServiceImpl();
 
@@ -59,12 +74,12 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        this.removeAllComponents();
+        temporaryLy.removeAllComponents();
 
         this.initLayout();
         this.initSearchListener();
         
-        this.addComponents(searchFd, publicBodiesLayout);
+        temporaryLy.addComponents(searchFd, publicBodiesLayout);
         
         if(isVolunteer){
             this.initNewPublicBodyButton();
@@ -133,7 +148,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         
         this.addNewPublicBodyBt = InputNewEntityButtonFactory.createMyButton(PublicBody.class);
         
-        this.addComponent(addNewPublicBodyBt);
+        temporaryLy.addComponent(addNewPublicBodyBt);
     }
 
     @Override

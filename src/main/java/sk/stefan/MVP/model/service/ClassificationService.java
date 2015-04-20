@@ -15,8 +15,9 @@ import sk.stefan.MVP.model.entity.dao.PublicPerson;
  */
 public interface ClassificationService {
 
-    public PersonClassification findActualClass(PublicPerson pp);
+    public List<PersonClassification> findNewPersonClass(List<Integer> pclId);
 
-    public List<PersonClassification> findNewPersonClass(List<Integer> ids);
+    public List<Integer> findActualPersonClassIds(Integer ppId);
+//    public Integer findActualPersonClassId(Integer id);
     
 }

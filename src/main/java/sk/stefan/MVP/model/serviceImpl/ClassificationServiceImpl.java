@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
+import sk.stefan.MVP.model.repo.dao.GeneralRepo;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.ClassificationService;
 
@@ -20,18 +21,18 @@ public class ClassificationServiceImpl implements ClassificationService {
     
     
     private final UniRepo<PersonClassification> classRepo;
+    private final GeneralRepo generalRepo;
     
-    
+    //0.konstruktor
+    /**
+     */
     public ClassificationServiceImpl(){
         
         classRepo = new UniRepo<>(PersonClassification.class) ;
+        generalRepo = new GeneralRepo();
     
     } 
 
-    @Override
-    public PersonClassification findActualClass(PublicPerson pp) {
-        return null;
-    }
 
     @Override
     public List<PersonClassification> findNewPersonClass(List<Integer> pclIds) {
@@ -45,5 +46,21 @@ public class ClassificationServiceImpl implements ClassificationService {
         return personClass;
 
     }
+
+    @Override
+    public List<Integer> findActualPersonClassIds(Integer ppId) {
+        
+        
+        List<Integer> pclIds;
+
+        String sql = "SELECT id FROM t_person_classification WHERE public_person_id = " + ppId 
+                +" AND actual = true AND visible = true";
+        pclIds = this.generalRepo.findIds(sql);
+
+        return pclIds;
+
+        
+    }
+
     
 }

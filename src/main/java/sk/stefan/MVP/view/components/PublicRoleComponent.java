@@ -10,6 +10,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.service.PublicRoleService;
 
@@ -42,7 +43,7 @@ public class PublicRoleComponent extends HorizontalLayout {
     //0.konstruktor:
     public PublicRoleComponent(PublicRole pb, PublicRoleService ps) {
 
-        this.navigator = NavigationComponent.getNavigator();
+        this.navigator = UI.getCurrent().getNavigator();
         this.pubRole = pb;
         this.publicRoleService = ps;
 

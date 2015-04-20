@@ -66,11 +66,11 @@ public class KosvopoUI extends UI {
 //                new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
 //         final MyBeanInterface bean = (MyBeanInterface) helper.getBean("myBean");
          
-        navigator = new Navigator(this, this);
-        NavigationComponent.createNavComp(navigator);
+        navigator = new Navigator(this.getUI(), this);
+//        NavigationComponent.createNavComp();
 
         //zakladne views:
-        navigator.addView("V1_LoginView", new V1_LoginView(navigator));
+        navigator.addView("V1_LoginView", new V1_LoginView());
         navigator.addView("V2_EnterView", new V2_EnterView());
         navigator.addView("V3_PublicBodyView", new V3_PublicBodyView());
         navigator.addView("V3s_PublicBodiesView", new V3s_PublicBodiesView());

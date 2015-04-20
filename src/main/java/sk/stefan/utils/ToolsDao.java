@@ -399,6 +399,24 @@ public abstract class ToolsDao {
     }
 
     /**
+     * Nastavi filter na zdruzeny comboBox.
+     *
+     * @param touchedTn
+     * @param touchingTn
+     * @param intVal
+     * @return 
+     */
+    public static synchronized List<Integer> getLeavesIds(String touchedTn, String touchingTn, Integer intVal) {
+
+        List<String> hSeq = ToolsFiltering.getHierarchicalSequence(touchedTn, touchingTn);
+        List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
+        List<Integer> touchedIds = ToolsFiltering.getFinalIds(hASeq, intVal);
+        return touchedIds;
+
+    }
+
+    
+    /**
      * pomocna funkcia.
      *
      * @param clsE

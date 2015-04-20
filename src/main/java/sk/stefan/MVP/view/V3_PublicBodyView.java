@@ -7,10 +7,12 @@ package sk.stefan.MVP.view;
 
 import com.vaadin.addon.timeline.Timeline;
 import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -27,6 +29,7 @@ import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
+import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
 import sk.stefan.documents.DownloaderLayout;
@@ -46,11 +49,16 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     //hlavna entita tohoto VIew
     private PublicBody publicBody;
     
+    
+    private final VerticalLayout temporaryLy;
+    
+    private final NavigationComponent navComp;
     //komponenty pre zobrazeneie aktivnych verejnych roli: 
     private PublicRolesLayout publicRolesLayout;
     
     private VotesLayout votesLayout;
     
+    private final Navigator nav;
 
     private final PublicRoleService publicRoleService;
     private final VoteService voteService;
@@ -74,27 +82,31 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     //konstruktor:
     public V3_PublicBodyView(){
         
+        this.nav = UI.getCurrent().getNavigator();
+
+        navComp = NavigationComponent.createNavigationComponent();
+        this.addComponent(navComp);
+        
+        temporaryLy = new VerticalLayout();
+        this.addComponent(temporaryLy);
+        
+        
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
-        
-        
-//        if (publicBody != null){
-//            initAllBasic();
-//        }
         
     }
     
     private void initAllBasic(Boolean isVolunteer){
         
         
-        this.removeAllComponents();
+        temporaryLy.removeAllComponents();
         
         this.initPublicRolesLayout();
         this.initVoteLayout();
         this.initTimeline();
         
-        this.addComponents(publicRolesLayout, votesLayout, timeLine);
+        temporaryLy.addComponents(publicRolesLayout, votesLayout, timeLine);
         
         if(isVolunteer){
             
@@ -177,7 +189,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyButton(PublicRole.class);
         
-        this.addComponent(addNewPublicRoleBt);
+        temporaryLy.addComponent(addNewPublicRoleBt);
     
     }
 
@@ -188,7 +200,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         this.uploaderLayout = new UploaderLayout<>(PublicBody.class);
         
-        this.addComponent(uploaderLayout);
+        temporaryLy.addComponent(uploaderLayout);
         
     }
 
@@ -199,7 +211,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         this.downoaderLayout = new DownloaderLayout<>(PublicBody.class);
         
-        this.addComponent(downoaderLayout);
+        temporaryLy.addComponent(downoaderLayout);
         
     }
 

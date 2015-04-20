@@ -5,10 +5,12 @@
  */
 package sk.stefan.MVP.view;
 
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.Upload.ProgressListener;
 import com.vaadin.ui.VerticalLayout;
@@ -38,10 +40,24 @@ public class ZBD_DocumentView extends VerticalLayout implements View {
     private Button downloadBt;
     private MyFileDownloader myDownloader;
     
+    private final VerticalLayout temporaryLy;
+    
+    private final NavigationComponent navComp;
+    
+    private final Navigator nav;
     
     
 
     public ZBD_DocumentView() {
+        
+        this.nav = UI.getCurrent().getNavigator();
+
+        navComp = NavigationComponent.createNavigationComponent();
+        this.addComponent(navComp);
+        
+        temporaryLy = new VerticalLayout();
+        this.addComponent(temporaryLy);
+
 
         this.setMargin(true);
         this.setSpacing(true);
@@ -90,6 +106,6 @@ public class ZBD_DocumentView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        this.addComponent(NavigationComponent.getNavComp());
+        
     }
 }

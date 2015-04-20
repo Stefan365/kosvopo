@@ -11,6 +11,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.service.PublicPersonService;
@@ -46,7 +47,7 @@ public class PublicPersonComponent extends HorizontalLayout{
         this.setSpacing(true);
 //        this.setMargin(true);
 
-        this.navigator = NavigationComponent.getNavigator();
+        this.navigator = UI.getCurrent().getNavigator();
         this.pubPerson = pp;
         this.publicPersonService = pps;
         

@@ -5,15 +5,11 @@
  */
 package sk.stefan.MVP.view.components;
 
-import com.vaadin.data.Item;
-import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
-import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
-import sk.stefan.listeners.RenewBackgroundListener;
 
 /**
  * Dialog pro editaci vlastnosti jedne ulohy

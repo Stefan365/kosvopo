@@ -7,28 +7,35 @@ package sk.stefan.MVP.view;
 
 import com.vaadin.addon.timeline.Timeline;
 import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.A_UserRole;
+import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
+import sk.stefan.MVP.model.service.ClassificationService;
 import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.MVP.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
+import sk.stefan.MVP.view.components.ClassPersonLayout;
 import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
+import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicPersonComponent;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
@@ -68,33 +75,49 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
     private final PublicRoleService publicRoleService;
     private final VoteService voteService;
     private final UserService userService;
-
+    private final ClassificationService classificationService;  
+    
 //    private final PublicPersonService publicPersonService;
     //componenty pre TimeLine:
     private IndexedContainer container;
     private Object timestampProperty;
     private Object valueProperty;
     private Timeline timeLine;
+    
+    private ClassPersonLayout classPersonLayout;
 
     
     //tlacitko na pridavanie novej entity:
     private Button addNewPublicRoleBt;
-    
     //pre uzivatela obcan   
     private DownloaderLayout<PublicPerson> downoaderLayout;
-    
     //pre uzivatela admin a dobrovolnik
     private UploaderLayout<PublicPerson> uploaderLayout;
 
+        private final VerticalLayout temporaryLy;
+    
+    private final NavigationComponent navComp;
+    private final Navigator nav;
     
     //konstruktor:
     public V4_PublicPersonView() {
+        
+        this.nav = UI.getCurrent().getNavigator();
+
+        navComp = NavigationComponent.createNavigationComponent();
+        this.addComponent(navComp);
+        
+        temporaryLy = new VerticalLayout();
+        this.addComponent(temporaryLy);
+
 
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
-//        this.publicPersonService = new PublicPersonServiceImpl();
+        this.classificationService = new ClassificationServiceImpl();  
 
+        
+        
         if (publicPerson != null) {
             initAllBasic(Boolean.FALSE);
         }
@@ -105,15 +128,17 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        this.removeAllComponents();
+        temporaryLy.removeAllComponents();
         
         this.setActualPublicRole();
         this.initPublicPersonComponent();
         this.initPublicRolesLayout();
         this.initVoteLayout();
         this.initTimeline();
+        this.classPersonLayout();
 
-        this.addComponents(publicPersonComponent, publicRolesLayout, votesLayout, timeLine);
+        
+        temporaryLy.addComponents(publicPersonComponent, publicRolesLayout, votesLayout, classPersonLayout, timeLine);
         
         if(isVolunteer){
             
@@ -211,7 +236,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
         
         this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyButton(PublicRole.class);
         
-        this.addComponent(addNewPublicRoleBt);
+        temporaryLy.addComponent(addNewPublicRoleBt);
 
     }
 
@@ -222,7 +247,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
         
         this.uploaderLayout = new UploaderLayout<>(PublicPerson.class);
         
-        this.addComponent(uploaderLayout);
+        temporaryLy.addComponent(uploaderLayout);
         
     }
 
@@ -233,7 +258,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
         
         this.downoaderLayout = new DownloaderLayout<>(PublicPerson.class);
         
-        this.addComponent(downoaderLayout);
+        temporaryLy.addComponent(downoaderLayout);
         
     }
 
@@ -256,6 +281,17 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
             initAllBasic(isVolunteer);
         }
 
+    }
+
+    private void classPersonLayout() {
+        
+        List<Integer> pclIds = classificationService.findActualPersonClassIds(publicPerson.getId());
+
+        List<PersonClassification> pcls = classificationService.findNewPersonClass(pclIds);
+
+        this.classPersonLayout = new ClassPersonLayout(pcls, classificationService);
+        
+        
     }
 
 

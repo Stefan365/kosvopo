@@ -32,14 +32,14 @@ public class FilteringComponent extends HorizontalLayout {
 
     private SilentCheckBox locationCHb;
     private FilterComboBox<Location> locationCombo;
-    private FilterTableListener<Location> locationLr;
+    private FilterTableListener<Location> locationListener;
     private final List<FilterComboBox<?>> locTouchedCombos = new ArrayList<>();
     private final VerticalLayout locationVl = new VerticalLayout();
     
     
     private SilentCheckBox pubBodyCHb;
     private FilterComboBox<PublicBody> pubBodyCombo;
-    private FilterTableListener<PublicBody> pubBodyLr;
+    private FilterTableListener<PublicBody> pubBodyListener;
     //toto je tu len pro forma, keby sa pridavalo filtrovanie 
     //ktore bude zavisle od PublicBody
     private final List<FilterComboBox<?>> pbTouchedCombos = null;
@@ -47,7 +47,7 @@ public class FilteringComponent extends HorizontalLayout {
     
     private SilentCheckBox pubPersonCHb;
     private FilterComboBox<PublicPerson> pubPersonCombo;
-    private FilterTableListener<PublicPerson> pubPersonLr;
+    private FilterTableListener<PublicPerson> pubPersonListener;
     private final List<FilterComboBox<?>> ppTouchedCombos = null;
     private final VerticalLayout pubPersonVl = new VerticalLayout();
         
@@ -87,21 +87,21 @@ public class FilteringComponent extends HorizontalLayout {
         
         locTouchedCombos.add(pubBodyCombo);
         
-        locationLr = new FilterTableListener<>(parentTn, 
+        locationListener = new FilterTableListener<>(parentTn, 
                 Location.TN, 
                 locationCombo, 
                 locationCHb, 
                 sqlContainer, 
                 locTouchedCombos);
 
-        pubBodyLr = new FilterTableListener<>(parentTn, 
+        pubBodyListener = new FilterTableListener<>(parentTn, 
                 PublicBody.TN, 
                 pubBodyCombo, 
                 pubBodyCHb, 
                 sqlContainer, 
                 pbTouchedCombos);
         
-        pubPersonLr = new FilterTableListener<>(parentTn, 
+        pubPersonListener = new FilterTableListener<>(parentTn, 
                 PublicPerson.TN, 
                 pubPersonCombo, 
                 pubPersonCHb, 
@@ -110,16 +110,16 @@ public class FilteringComponent extends HorizontalLayout {
         
         
         locationCHb.setCaption("Miesto");
-        locationCHb.addValueChangeListener(locationLr);
-        locationCombo.addValueChangeListener(locationLr);
+        locationCHb.addValueChangeListener(locationListener);
+        locationCombo.addValueChangeListener(locationListener);
         
         pubBodyCHb.setCaption("Verejný orgán");
-        pubBodyCHb.addValueChangeListener(pubBodyLr);
-        pubBodyCombo.addValueChangeListener(pubBodyLr);
+        pubBodyCHb.addValueChangeListener(pubBodyListener);
+        pubBodyCombo.addValueChangeListener(pubBodyListener);
                 
         pubPersonCHb.setCaption("Verejná osoba");
-        pubPersonCHb.addValueChangeListener(pubPersonLr);
-        pubPersonCombo.addValueChangeListener(pubPersonLr);
+        pubPersonCHb.addValueChangeListener(pubPersonListener);
+        pubPersonCombo.addValueChangeListener(pubPersonListener);
         
         this.checkboxes.add(locationCHb);
         this.checkboxes.add(pubBodyCHb);

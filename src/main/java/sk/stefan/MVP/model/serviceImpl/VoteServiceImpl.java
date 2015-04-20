@@ -10,6 +10,7 @@ import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Subject;
 import sk.stefan.MVP.model.entity.dao.Tenure;
+import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.repo.dao.GeneralRepo;
@@ -17,6 +18,7 @@ import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.enums.VoteResult;
+import sk.stefan.utils.ToolsDao;
 
 public class VoteServiceImpl implements VoteService {
 
@@ -25,6 +27,7 @@ public class VoteServiceImpl implements VoteService {
     
     private final UniRepo<Vote> voteRepo;
     private final UniRepo<Tenure> tenureRepo;
+    private final UniRepo<Theme> themeRepo;
     private final UniRepo<Subject> subjectRepo;
     private final UniRepo<PublicBody> publicBodyRepo;
 
@@ -40,6 +43,7 @@ public class VoteServiceImpl implements VoteService {
 
         voteRepo = new UniRepo<>(Vote.class);
         tenureRepo = new UniRepo<>(Tenure.class);
+        themeRepo = new UniRepo<>(Theme.class);
         subjectRepo = new UniRepo<>(Subject.class);
         publicBodyRepo = new UniRepo<>(PublicBody.class);
         
@@ -58,7 +62,7 @@ public class VoteServiceImpl implements VoteService {
      * @return
      */
     @Override
-    public List<Vote> getAllRelevantVotesForPublicPerson(PublicPerson pp) {
+    public List<Vote> getAllVotesForPublicPerson(PublicPerson pp) {
         //mozno zbytocne - preverit
         if (pp == null) {
             return new ArrayList<>();
@@ -360,6 +364,112 @@ public class VoteServiceImpl implements VoteService {
         return vorIds;
     }
 
+    @Override
+    public String getThemeNameById(Integer theme_id) {
+        
+        Theme th = themeRepo.findOne(theme_id);
+        
+        return th.getPresentationName();
+        
+    }
 
+    @Override
+    public Theme getThemeById(Integer theme_id) {
+        
+        Theme th = themeRepo.findOne(theme_id);
+        
+        return th;
+
+    }
+
+    @Override
+    public PublicRole getPublicRoleById(Integer prId) {
+        
+        PublicRole pr = publicRoleRepo.findOne(prId);
+        return pr;
+        
+    }
+
+    @Override
+    public List<Theme> findNewThemes(List<Integer> themeIds) {
+    
+        List<Theme> themes = new ArrayList<>();
+
+        for (Integer i : themeIds) {
+            themes.add(themeRepo.findOne(i));
+        }
+
+        return themes;
+    
+    }
+
+    @Override
+    public List<Subject> findNewSubjects(List<Integer> subjectIds) {
+    
+        List<Subject> subjects = new ArrayList<>();
+
+        for (Integer i : subjectIds) {
+            subjects.add(subjectRepo.findOne(i));
+        }
+
+        return subjects;
+    
+    }
+
+    @Override
+    public List<Theme> findAllThemes() {
+        
+        List<Theme> ret = themeRepo.findAll();
+        return ret;
+        
+    }
+
+    @Override
+    public List<Subject> findAllSubjectsForPublicBody(PublicBody pb) {
+        
+        Integer pbId = pb.getId();
+        List<Integer> ids = ToolsDao.getLeavesIds("t_subject", "t_public_body", pbId);
+        List<Subject> ret = this.findNewSubjects(ids);
+        
+        return ret;
+        
+    }
+
+    @Override
+    public List<Integer> findNewThemeIdsByFilter(String tx) {
+        
+        List<Integer> thIds;
+
+        String sql = "SELECT id FROM t_theme "
+                + " WHERE brief_description like '%" + tx + "%'"
+                + " AND visible = true";
+        
+        thIds = this.generalRepo.findIds(sql);
+
+        return thIds;
+    }
+
+    @Override
+    public List<Integer> findNewTSubjectIdsByFilter(String tx) {
+        
+        List<Integer> subIds;
+
+        String sql = "SELECT sub.id FROM t_subject sub JOIN t_theme th "
+                + " ON (sub.theme_id = th.id) JOIN t_public_role pr "
+                + " ON (sub.public_role_id = pr.id) JOIN t_public_person pp "
+                + " ON (pr.public_person_id = pp.id) "
+                + " WHERE sub.brief_description like '%" + tx + "%' "
+                + " OR th.brief_description like '%" + tx + "%' "
+                + " OR pp.first_name like '%" + tx + "%' "
+                + " OR pp.last_name like '%" + tx + "%' "
+                + " AND sub.visible = true"
+                + " AND th.visible = true"
+                + " AND pr.visible = true"
+                + " AND pp.visible = true";
+        
+        subIds = this.generalRepo.findIds(sql);
+
+        return subIds;
+    }
 
 }
