@@ -18,42 +18,40 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
-import sk.stefan.MVP.model.service.PublicBodyService;
+import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.service.UserService;
-import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
+import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicBodiesLayout;
+import sk.stefan.MVP.view.components.VotesLayout;
 import sk.stefan.enums.UserType;
 
 /**
  *
  * @author stefan
  */
-public class V3s_PublicBodiesView extends VerticalLayout implements View {
+public class V6s_VotesView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
     
-    private final PublicBodyService publicBodyService;
+    private final VoteService voteService;
     
-    private PublicBodiesLayout publicBodiesLayout;
+    private VotesLayout votesLayout;
     
     //tlacitko na pridavanie novej verejne osoby:
-    private Button addNewPublicBodyBt;
+    private Button addVoteBt;
     
     private final UserService userService;
-
-    private final Navigator nav;
-    
     private TextField searchFd; 
     
-    private final VerticalLayout temporaryLy;
-    
+    private final VerticalLayout temporaryLy;   
     private final NavigationComponent navComp;
-
+    private final Navigator nav;
     
-    public V3s_PublicBodiesView (){
+    public V6s_VotesView (){
     
         this.nav = UI.getCurrent().getNavigator();
 
@@ -63,7 +61,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);
 
-        this.publicBodyService = new PublicBodyServiceImpl();
+        this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
 
     }
@@ -79,7 +77,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         this.initLayout();
         this.initSearchListener();
         
-        temporaryLy.addComponents(searchFd, publicBodiesLayout);
+        temporaryLy.addComponents(searchFd, votesLayout);
         
         if(isVolunteer){
             this.initNewPublicBodyButton();
@@ -96,15 +94,22 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         this.setMargin(true);
         this.setSpacing(true);
         
-        this.publicBodiesLayout = new PublicBodiesLayout(publicBodyService.findAll(), publicBodyService);
-//        this.districtCb = new FilterComboBox<>(District.class);
+        this.votesLayout = new VotesLayout(voteService.findAll(), voteService);
         this.searchFd = new TextField("Vyhľadávanie");
         this.initSearch();
         
-    
-        
     }
     
+    //3.
+    /**
+     */
+    private void initSearch() {
+        
+        searchFd.setWidth("40%");
+        searchFd.setInputPrompt("možeš použiť vyhľadávanie");
+        searchFd.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
+        
+    }
     
     /**
      * Initializes listener
@@ -118,37 +123,23 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
             public void textChange(final FieldEvents.TextChangeEvent event) {
         
                 String tx = event.getText();
-                List<Integer> pbIds = publicBodyService.findNewPublicBodyIdsByFilter(tx);
-                publicBodiesLayout.applyFilter(pbIds);
+                List<Integer> votIds = voteService.findNewVoteIdsByFilter(tx);
+                votesLayout.applyFilter(votIds);
                 
             }
         });
     }
     
 
-    //3.
-    /**
-     */
-    private void initSearch() {
-        
-        searchFd.setWidth("40%");
-        searchFd.setInputPrompt("možeš použiť vyhľadávanie podľa názvu obce");
-        searchFd.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
-        
-    }
 
-    public PublicBodiesLayout getPbComp() {
-        return publicBodiesLayout;
-    }
-    
     /**
      * Inicializuje tlacitko na pridavanie novej verejnej osoby.
      */
     private void initNewPublicBodyButton() {
         
-        this.addNewPublicBodyBt = InputNewEntityButtonFactory.createMyButton(PublicBody.class);
+        this.addVoteBt = InputNewEntityButtonFactory.createMyButton(Vote.class);
         
-        temporaryLy.addComponent(addNewPublicBodyBt);
+        temporaryLy.addComponent(addVoteBt);
     }
 
     @Override
@@ -165,7 +156,5 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         initAllBasic(isVolunteer);
 
     }
-    
- 
     
 }

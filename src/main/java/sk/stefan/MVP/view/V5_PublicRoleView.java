@@ -113,9 +113,16 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
             this.initDownloadLayout();
         
         }
-
     }
     
+    /**
+     */
+    private void setPublicRoleValue(PublicRole pr) {
+        
+        this.publicRole = pr;
+        
+    }
+
     /**
      */
     private void initPublicPersonComponent() {
@@ -200,23 +207,27 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        this.publicRole = VaadinSession.getCurrent().getAttribute(PublicRole.class);
+        PublicRole pr = VaadinSession.getCurrent().getAttribute(PublicRole.class);
         
         A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
 
-        UserType utype = userService.getUserType(user);
                 
         Boolean isVolunteer = Boolean.FALSE;
         if (user != null){
+            UserType utype = userService.getUserType(user);
             //moze byt dobrovolnik, alebo admin.
             isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
         }
         
-        if (publicRole != null){
+        if (pr != null){
+            setPublicRoleValue(pr);
             initAllBasic(isVolunteer);
+        } else {
+            UI.getCurrent().getNavigator().navigateTo("V4s_PublicPersonsView");
         }
 
     }
+
 
 
 }

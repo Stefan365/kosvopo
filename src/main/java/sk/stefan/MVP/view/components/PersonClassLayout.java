@@ -10,25 +10,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
-import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.service.ClassificationService;
-import sk.stefan.MVP.model.service.PublicBodyService;
 import sk.stefan.interfaces.Filterable;
 
 /**
  *
  * @author stefan
  */
-public class ClassPersonLayout extends VerticalLayout implements Filterable {
+public class PersonClassLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 243432565321L;
     
-    private Map<PersonClassification, ClassPersonComponent> personClassMap;
+    private Map<PersonClassification, PersonClassComponent> personClassMap;
 
     private final ClassificationService classificationService; 
     
     //0.konstruktor
-    public ClassPersonLayout(List<PersonClassification> personClass, ClassificationService pcls){
+    public PersonClassLayout(List<PersonClassification> personClass, ClassificationService pcls){
 
         this.setSpacing(true);
         this.setMargin(true);
@@ -43,11 +41,11 @@ public class ClassPersonLayout extends VerticalLayout implements Filterable {
 
         this.removeAllComponents();
         
-        ClassPersonComponent pclComp;
+        PersonClassComponent pclComp;
         this.personClassMap = new HashMap<>();
         
         for (PersonClassification pcl : personClassS){
-            pclComp = new ClassPersonComponent(pcl, classificationService);
+            pclComp = new PersonClassComponent(pcl, classificationService);
             this.personClassMap.put(pcl, pclComp);
             this.addComponent(pclComp);
         }

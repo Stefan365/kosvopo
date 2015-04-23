@@ -391,6 +391,13 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         }
 
     }
+    
+    private void setUserValue(A_User usr) {
+
+        this.user = usr;
+    
+    }
+
 
     /**
      *
@@ -432,17 +439,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         //end of inner class:
     }
 
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
-        
-        user = securityService.getCurrentUser();
-        if (user != null) {
-            //do nothing
-        } else {
-            UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
-        }
-
-    }
 
     @Override
     public void doOkAction() {
@@ -472,5 +468,19 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         sqlContainer.refresh();
         uniTable.refreshRowCache();
     }
+    
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        
+        A_User usr = securityService.getCurrentUser();
+        if (usr != null) {
+            setUserValue(usr);
+            //do nothing
+        } else {
+            UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
+        }
+
+    }
+
 
 }

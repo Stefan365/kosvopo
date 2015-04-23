@@ -160,10 +160,10 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
         
         A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
 
-        UserType utype = userService.getUserType(user);
                 
         Boolean isVolunteer = Boolean.FALSE;
         if (user != null){
+            UserType utype = userService.getUserType(user);
             //moze byt dobrovolnik, alebo admin.
             isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
         }

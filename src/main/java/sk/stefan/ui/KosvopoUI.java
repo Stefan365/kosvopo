@@ -22,6 +22,8 @@ import sk.stefan.MVP.model.entity.dao.Region;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
+import sk.stefan.MVP.view.V10_ThemeView;
+import sk.stefan.MVP.view.V10s_ThemesView;
 import sk.stefan.MVP.view.V1_LoginView;
 import sk.stefan.MVP.view.V8_UniEditableTableView;
 import sk.stefan.MVP.view.V2_EnterView;
@@ -32,6 +34,9 @@ import sk.stefan.MVP.view.V4_PublicPersonView;
 import sk.stefan.MVP.view.V4s_PublicPersonsView;
 import sk.stefan.MVP.view.V5_PublicRoleView;
 import sk.stefan.MVP.view.V6_VoteView;
+import sk.stefan.MVP.view.V6s_VotesView;
+import sk.stefan.MVP.view.V9_SubjectView;
+import sk.stefan.MVP.view.V9s_SubjectsView;
 import sk.stefan.enums.NonEditableFields;
 import sk.stefan.utils.ToolsNazvy;
 
@@ -78,6 +83,13 @@ public class KosvopoUI extends UI {
         navigator.addView("V4s_PublicPersonsView", new V4s_PublicPersonsView());
         navigator.addView("V5_PublicRoleView", new V5_PublicRoleView());
         navigator.addView("V6_VoteView", new V6_VoteView());
+        navigator.addView("V6s_VotesView", new V6s_VotesView());
+        navigator.addView("V9_SubjectView", new V9_SubjectView());
+        navigator.addView("V9s_SubjectsView", new V9s_SubjectsView());
+        navigator.addView("V10_ThemeView", new V10_ThemeView());
+        navigator.addView("V10s_ThemesView", new V10s_ThemesView());
+        
+        
         
         //views zodpovedajuce univerzalnym editacnym tabulkam:
         navigator.addView(ToolsNazvy.decapit(A_User.TN),

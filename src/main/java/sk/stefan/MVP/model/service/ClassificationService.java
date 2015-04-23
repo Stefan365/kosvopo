@@ -7,7 +7,8 @@ package sk.stefan.MVP.model.service;
 
 import java.util.List;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
-import sk.stefan.MVP.model.entity.dao.PublicPerson;
+import sk.stefan.MVP.model.entity.dao.Vote;
+import sk.stefan.MVP.model.entity.dao.VoteClassification;
 
 /**
  *
@@ -18,6 +19,9 @@ public interface ClassificationService {
     public List<PersonClassification> findNewPersonClass(List<Integer> pclId);
 
     public List<Integer> findActualPersonClassIds(Integer ppId);
-//    public Integer findActualPersonClassId(Integer id);
+
+    public VoteClassification findVoteClassByVoteId(Integer votId);
+
+    public Vote findVoteByVoteId(Integer id);
     
 }

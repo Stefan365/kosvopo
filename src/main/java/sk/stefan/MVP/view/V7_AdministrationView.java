@@ -17,13 +17,13 @@ import com.vaadin.ui.themes.BaseTheme;
 import sk.stefan.MVP.model.entity.dao.A_Role;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.A_UserRole;
-import sk.stefan.MVP.model.entity.dao.Region;
-import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.District;
+import sk.stefan.MVP.model.entity.dao.Location;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.entity.dao.Region;
 import sk.stefan.MVP.model.entity.dao.Subject;
 import sk.stefan.MVP.model.entity.dao.Tenure;
 import sk.stefan.MVP.model.entity.dao.Theme;
@@ -217,17 +217,24 @@ public class V7_AdministrationView extends VerticalLayout implements View {
 
 
     }
+    
+    private void setUserValue(A_User usr) {
+
+        this.user = usr;
+    
+    }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        user = securityService.getCurrentUser();
-        if (user != null) {
-            //do nothing
+        A_User usr = securityService.getCurrentUser();
+        if (usr != null) {
+            setUserValue(usr);
         } else {
             UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
         }
 
     }
 
+    
 }

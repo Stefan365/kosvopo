@@ -14,14 +14,12 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.EditEntityButtonFactory;
-import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.ThemeDetailedComponent;
 import sk.stefan.documents.DownloaderLayout;
@@ -37,15 +35,17 @@ public final class V10_ThemeView extends VerticalLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V10_ThemeView.class);
 
-    //hlavna entita tohoto VIew
-    private Theme theme;
-    
-    private ThemeDetailedComponent themeDetailedComp;
-    private Button editThemeBt;
-    
     //servisy:
     private final VoteService voteService;
     private final UserService userService;
+
+    //hlavna entita tohoto VIew
+    private Theme theme;
+    
+    
+    //komponenty:
+    private ThemeDetailedComponent themeDetailedComp;
+    private Button editThemeBt;
     
     private DownloaderLayout<Theme> downoaderLayout;
     private UploaderLayout<Theme> uploaderLayout;
@@ -91,6 +91,10 @@ public final class V10_ThemeView extends VerticalLayout implements View {
 
     }
     
+    private void setThemeValue(Theme th) {
+        theme = th;
+    }
+
 
     /**
      */
@@ -137,7 +141,7 @@ public final class V10_ThemeView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        this.theme = VaadinSession.getCurrent().getAttribute(Theme.class);
+        Theme th = VaadinSession.getCurrent().getAttribute(Theme.class);
         
         A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
 
@@ -149,12 +153,16 @@ public final class V10_ThemeView extends VerticalLayout implements View {
             isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
         }
         
-        if (theme != null){
+        if (th != null){
+            setThemeValue(th);
             initAllBasic(isVolunteer);
+        } else {
+            UI.getCurrent().getNavigator().navigateTo("V10s_ThemesView");
         }
 
     }
 
+    
 
 
 }

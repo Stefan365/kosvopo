@@ -17,9 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.entity.dao.A_UserRole;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
-import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.service.PublicRoleService;
@@ -46,24 +44,15 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);
 
-    //hlavna entita tohoto VIew
-    private PublicBody publicBody;
-    
-    
-    private final VerticalLayout temporaryLy;
-    
-    private final NavigationComponent navComp;
-    //komponenty pre zobrazeneie aktivnych verejnych roli: 
-    private PublicRolesLayout publicRolesLayout;
-    
-    private VotesLayout votesLayout;
-    
-    private final Navigator nav;
-
     private final PublicRoleService publicRoleService;
     private final VoteService voteService;
     private final UserService userService;
+
+    //hlavna entita tohoto VIew
+    private PublicBody publicBody;
     
+    private PublicRolesLayout publicRolesLayout;
+    private VotesLayout votesLayout;
     
     //componenty pre TimeLine:
     private IndexedContainer container;
@@ -76,7 +65,10 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     private DownloaderLayout<PublicBody> downoaderLayout;
     private UploaderLayout<PublicBody> uploaderLayout;
 
-    
+    private final VerticalLayout temporaryLy;
+    private final NavigationComponent navComp;
+    private final Navigator nav;
+
     
     
     //konstruktor:
@@ -118,6 +110,9 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         }
     }
     
+    private void setPublicBodyValue(PublicBody pb) {
+        this.publicBody = pb;
+    }    
     
     private void initPublicRolesLayout() {
         
@@ -218,20 +213,23 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         
-        this.publicBody = VaadinSession.getCurrent().getAttribute(PublicBody.class);
+        PublicBody pb = VaadinSession.getCurrent().getAttribute(PublicBody.class);
 
         A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
         
-        UserType utype = userService.getUserType(user);
-                
         Boolean isVolunteer = Boolean.FALSE;
         if (user != null){
+            UserType utype = userService.getUserType(user);
+        
             //moze byt dobrovolnik, alebo admin.
             isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
         }
         
-        if (publicBody != null){
+        if (pb != null){
+            setPublicBodyValue(pb);
             initAllBasic(isVolunteer);
+        } else {
+            UI.getCurrent().getNavigator().navigateTo("V3s_PublicBodiesView");
         }
         
     }

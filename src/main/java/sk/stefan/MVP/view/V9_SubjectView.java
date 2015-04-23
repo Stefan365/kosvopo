@@ -14,21 +14,16 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Subject;
-import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.EditEntityButtonFactory;
-import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.SubjectDetailedComponent;
-import sk.stefan.MVP.view.components.ThemeDetailedComponent;
 import sk.stefan.documents.DownloaderLayout;
 import sk.stefan.documents.UploaderLayout;
-import sk.stefan.enums.UserType;
 
 /**
  *
@@ -39,15 +34,17 @@ public final class V9_SubjectView extends VerticalLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V9_SubjectView.class);
 
+        //servisy:
+    private final VoteService voteService;
+    private final UserService userService;
+
+    
     //hlavna entita tohoto VIew
     private Subject subject;
     
+    //komponenty
     private SubjectDetailedComponent subjectDetailedComp;
     private Button editSubjectBt;
-    
-    //servisy:
-    private final VoteService voteService;
-    private final UserService userService;
     
     private DownloaderLayout<Subject> downoaderLayout;
     private UploaderLayout<Subject> uploaderLayout;
@@ -55,6 +52,7 @@ public final class V9_SubjectView extends VerticalLayout implements View {
     private final VerticalLayout temporaryLy;
     private final NavigationComponent navComp;
     private final Navigator nav;
+    
     
     //konstruktor:
     public V9_SubjectView() {
@@ -92,6 +90,11 @@ public final class V9_SubjectView extends VerticalLayout implements View {
         }
 
     }
+    
+    private void setSubjectValue(Subject sub) {
+        subject = sub;
+    }
+
     
 
     /**
@@ -139,7 +142,7 @@ public final class V9_SubjectView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        this.subject = VaadinSession.getCurrent().getAttribute(Subject.class);
+        Subject sub = VaadinSession.getCurrent().getAttribute(Subject.class);
         
         A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
 
@@ -147,18 +150,14 @@ public final class V9_SubjectView extends VerticalLayout implements View {
         if (user != null){
             isVolunteer = Boolean.TRUE;
         }
-//        UserType utype = userService.getUserType(user);
-//                
-//        Boolean isVolunteer = Boolean.FALSE;
-//        if (user != null){
-//            //moze byt dobrovolnik, alebo admin.
-//            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
-//        }
-        
-        if (subject != null){
+        if (sub != null){
+            setSubjectValue(sub);
             initAllBasic(isVolunteer);
+        } else {
+            UI.getCurrent().getNavigator().navigateTo("V9s_SubjectsView");
         }
 
     }
+
 
 }

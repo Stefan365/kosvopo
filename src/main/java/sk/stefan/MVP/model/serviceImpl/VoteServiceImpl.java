@@ -287,14 +287,29 @@ public class VoteServiceImpl implements VoteService {
      * @return
      */
     @Override
-    public List<Integer> findVoteIdsByFilter(String tx) {
+    public List<Integer> findNewVoteIdsByFilter(String tx) {
 
         List<Integer> prIds;
 
-        String sql = "SELECT pr.id FROM t_public_role pr JOIN t_public_person pp "
+//        String sql = "SELECT pr.id FROM t_public_role pr JOIN t_public_person pp "
+//                + " ON (pr.public_person_id = pp.id) "
+//                + " WHERE pp.first_name like '%" + tx + "%'"
+//                + " OR pp.last_name like '%" + tx + "%' AND pr.visible = true";
+        String sql = "SELECT vot.id FROM t_vote vot JOIN t_subject sub "
+                + " ON (vot.subject_id = sub.id) JOIN t_public_role pr "
+                + " ON (sub.public_role_id = pr.id) JOIN t_public_body pb "
+                + " ON (pr.public_body_id = pb.id) JOIN t_public_person pp "
                 + " ON (pr.public_person_id = pp.id) "
-                + " WHERE pp.first_name like '%" + tx + "%'"
-                + " OR pp.last_name like '%" + tx + "%' AND visible = true";
+                
+                + " WHERE sub.brief_description like '%" + tx + "%'"
+                + " OR pp.last_name like '%" + tx + "%' "
+                + " OR pp.first_name like '%" + tx + "%' "
+                + " OR pb.name like '%" + tx + "%' "
+                + " AND vot.visible = true"
+                + " AND sub.visible = true"
+                + " AND pr.visible = true"
+                + " AND pb.visible = true"
+                + " AND pp.visible = true";
         
         prIds = this.generalRepo.findIds(sql);
 
@@ -450,7 +465,7 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public List<Integer> findNewTSubjectIdsByFilter(String tx) {
+    public List<Integer> findNewSubjectIdsByFilter(String tx) {
         
         List<Integer> subIds;
 
@@ -471,5 +486,38 @@ public class VoteServiceImpl implements VoteService {
 
         return subIds;
     }
+
+    @Override
+    public Subject findSubjectById(Integer subject_id) {
+        
+        return subjectRepo.findOne(subject_id);
+        
+    }
+
+    @Override
+    public Theme findThemeBySubjectId(Integer subject_id) {
+        
+        Subject sub = subjectRepo.findOne(subject_id);
+        
+        return themeRepo.findOne(sub.getTheme_id());
+        
+        
+    }
+
+    @Override
+    public List<VoteOfRole> findVoteOfRolesByVoteId(Integer vote_id) {
+        
+        List<VoteOfRole> hlasovaniaOsob = voteOfRoleRepo.findByParam("vote_id", "" + vote_id);
+        
+        return hlasovaniaOsob;
+        
+    }
+
+    @Override
+    public List<Vote> findAll() {
+        
+        return voteRepo.findAll();
+    }
+
 
 }

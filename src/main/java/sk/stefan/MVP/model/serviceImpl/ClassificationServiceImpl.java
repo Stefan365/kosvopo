@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
+import sk.stefan.MVP.model.entity.dao.Vote;
+import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.repo.dao.GeneralRepo;
 import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.ClassificationService;
@@ -20,7 +22,11 @@ import sk.stefan.MVP.model.service.ClassificationService;
 public class ClassificationServiceImpl implements ClassificationService {
     
     
-    private final UniRepo<PersonClassification> classRepo;
+    private final UniRepo<PersonClassification> personClassRepo;
+    private final UniRepo<VoteClassification> voteClassRepo;
+    private final UniRepo<Vote> voteRepo;
+    
+    
     private final GeneralRepo generalRepo;
     
     //0.konstruktor
@@ -28,7 +34,10 @@ public class ClassificationServiceImpl implements ClassificationService {
      */
     public ClassificationServiceImpl(){
         
-        classRepo = new UniRepo<>(PersonClassification.class) ;
+        personClassRepo = new UniRepo<>(PersonClassification.class) ;
+        voteClassRepo = new UniRepo<>(VoteClassification.class) ;
+        voteRepo = new UniRepo<>(Vote.class) ;
+        
         generalRepo = new GeneralRepo();
     
     } 
@@ -40,7 +49,7 @@ public class ClassificationServiceImpl implements ClassificationService {
         List<PersonClassification> personClass = new ArrayList<>();
 
         for (Integer i : pclIds) {
-            personClass.add(classRepo.findOne(i));
+            personClass.add(personClassRepo.findOne(i));
         }
 
         return personClass;
@@ -59,6 +68,26 @@ public class ClassificationServiceImpl implements ClassificationService {
 
         return pclIds;
 
+        
+    }
+
+    @Override
+    public VoteClassification findVoteClassByVoteId(Integer votId) {
+        
+        List<VoteClassification> vcls = voteClassRepo.findByParam("vote_id", ""+votId);
+        
+        if (vcls != null && !vcls.isEmpty()){
+            //predpoklada sa, ze je len 1 clasifikacia daneho hlasovania. a tak by to malo byt.
+            return vcls.get(0);
+        }
+        return null;
+        
+    }
+
+    @Override
+    public Vote findVoteByVoteId(Integer voteId) {
+        
+        return voteRepo.findOne(voteId);
         
     }
 

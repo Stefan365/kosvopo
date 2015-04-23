@@ -8,15 +8,13 @@ package sk.stefan.MVP.view.components;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
-import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.service.ClassificationService;
-import sk.stefan.MVP.model.serviceImpl.ClassificationServiceImpl;
 
 /**
  *
  * @author stefan
  */
-public class ClassPersonComponent extends GridLayout {
+public class PersonClassComponent extends GridLayout {
     
     private static final long serialVersionUID = 1729L;
     
@@ -31,7 +29,7 @@ public class ClassPersonComponent extends GridLayout {
     private Label usefulnessLb;
     
             
-    public ClassPersonComponent(PersonClassification pcl, ClassificationService pcls){
+    public PersonClassComponent(PersonClassification pcl, ClassificationService pcls){
         
         super(2,2);
 

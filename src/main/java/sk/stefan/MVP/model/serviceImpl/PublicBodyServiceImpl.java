@@ -97,7 +97,10 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         String sql = "SELECT pb.id FROM t_public_body pb JOIN t_location loc "
                 + " ON (pb.location_id = loc.id) "
                 + " WHERE loc.location_name like '%" + tx + "%'"
-                + " OR loc.town_section like '%" + tx + "%' AND visible = true";
+                + " OR loc.town_section like '%" + tx + "%' "
+                + " AND pb.visible = true"
+                + " AND loc.visible = true";
+        
         pbIds = this.generalRepo.findIds(sql);
 
         return pbIds;

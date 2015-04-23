@@ -21,7 +21,7 @@ public class NavigationComponent extends HorizontalLayout {
      */
     private static final long serialVersionUID = 8811699550804144740L;
 
-    private Button b1, b1a, b2, b3s, b3, b4s, b4, b5, b6, b7;
+    private Button b1, b1a, b2, b3s, b3, b4s, b4, b5, b6s, b7;
 
     private final SecurityService securityService;
 
@@ -79,9 +79,9 @@ public class NavigationComponent extends HorizontalLayout {
             }
         });
 
-        b2 = new Button("Vstup", (ClickEvent event) -> {
-            navigator.navigateTo("V2_EnterView");
-        });
+//        b2 = new Button("Vstup", (ClickEvent event) -> {
+//            navigator.navigateTo("V2_EnterView");
+//        });
 
         b3s = new Button("Verejné orgány", (ClickEvent event) -> {
             navigator.navigateTo("V3s_PublicBodiesView");
@@ -95,16 +95,19 @@ public class NavigationComponent extends HorizontalLayout {
             navigator.navigateTo("V4s_PublicPersonsView");
         });
 
-        b4 = new Button("Verejná osoba", (ClickEvent event) -> {
-            navigator.navigateTo("V4_PublicPersonView");
-        });
+//        b4 = new Button("Verejná osoba", (ClickEvent event) -> {
+//            navigator.navigateTo("V4_PublicPersonView");
+//        });
 
-        b5 = new Button("Verejná funkcia", (ClickEvent event) -> {
-            navigator.navigateTo("V5_PublicRoleView");
-        });
+//        b5 = new Button("Verejná funkcia", (ClickEvent event) -> {
+//            navigator.navigateTo("V5_PublicRoleView");
+//        });
 
-        b6 = new Button("Hlasovanie", (ClickEvent event) -> {
-            navigator.navigateTo("V6_VoteView");
+//        b6 = new Button("Hlasovanie", (ClickEvent event) -> {
+//            navigator.navigateTo("V6_VoteView");
+//        });
+        b6s = new Button("Hlasovania", (ClickEvent event) -> {
+            navigator.navigateTo("V6s_VotesView");
         });
 
         b7 = new Button("Administrácia", (ClickEvent event) -> {
@@ -126,11 +129,11 @@ public class NavigationComponent extends HorizontalLayout {
         this.setMargin(true);
 
         this.addComponent(b1);
-        this.addComponent(b2);
+//        this.addComponent(b2);
         this.addComponent(b3s);
         this.addComponent(b4s);
-        this.addComponent(b5);
-        this.addComponent(b6);
+//        this.addComponent(b5);
+        this.addComponent(b6s);
 
     }
 

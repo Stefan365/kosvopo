@@ -33,7 +33,7 @@ public interface VoteService {
     
     public List<Integer> findVoteIdsByPubBodyId(Integer publicBodyId);
     
-    public List<Integer> findVoteIdsByFilter(String tx);
+    public List<Integer> findNewVoteIdsByFilter(String tx);
 
     
     //for componets reason: 
@@ -81,7 +81,16 @@ public interface VoteService {
 
     public List<Integer> findNewThemeIdsByFilter(String tx);
     
-    public List<Integer> findNewTSubjectIdsByFilter(String tx);   
+    public List<Integer> findNewSubjectIdsByFilter(String tx);   
+
+    public Subject findSubjectById(Integer subject_id);
+
+    public Theme findThemeBySubjectId(Integer subject_id);
+
+    public List<VoteOfRole> findVoteOfRolesByVoteId(Integer vote_id);
+
+    public List<Vote> findAll();
+
     
 
 }

@@ -17,25 +17,22 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.entity.dao.A_UserRole;
 import sk.stefan.MVP.model.entity.dao.PersonClassification;
 import sk.stefan.MVP.model.entity.dao.PublicBody;
 import sk.stefan.MVP.model.entity.dao.PublicPerson;
 import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.service.ClassificationService;
-import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.ClassificationServiceImpl;
-import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.ClassPersonLayout;
 import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.MVP.view.components.PersonClassLayout;
 import sk.stefan.MVP.view.components.PublicPersonComponent;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
@@ -60,6 +57,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
     private PublicRole actualPublicRole;
     
 
+    
     //komponenty pre zobrazeneie verejnych roli dane osoby (tj. jedna aktivna a 
     //zvysok stare): 
     private PublicRolesLayout publicRolesLayout;
@@ -84,7 +82,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
     private Object valueProperty;
     private Timeline timeLine;
     
-    private ClassPersonLayout classPersonLayout;
+    private PersonClassLayout classPersonLayout;
 
     
     //tlacitko na pridavanie novej entity:
@@ -94,8 +92,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
     //pre uzivatela admin a dobrovolnik
     private UploaderLayout<PublicPerson> uploaderLayout;
 
-        private final VerticalLayout temporaryLy;
-    
+    private final VerticalLayout temporaryLy;
     private final NavigationComponent navComp;
     private final Navigator nav;
     
@@ -130,7 +127,6 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
 
         temporaryLy.removeAllComponents();
         
-        this.setActualPublicRole();
         this.initPublicPersonComponent();
         this.initPublicRolesLayout();
         this.initVoteLayout();
@@ -152,9 +148,10 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
     }
     
     //
-    private void setActualPublicRole(){
+    private void setPublicPersonValue(PublicPerson pp){
         
-        PublicBody pb = VaadinSession.getCurrent().getAttribute(PublicBody.class);
+        this.publicPerson = pp;
+        PublicBody pb = UI.getCurrent().getSession().getAttribute(PublicBody.class);
         this.actualPublicRole = publicRoleService.getActualRoleForPublicBody(publicPerson, pb);
         
     }
@@ -262,37 +259,43 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
         
     }
 
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
-
-        this.publicPerson = VaadinSession.getCurrent().getAttribute(PublicPerson.class);
-        
-        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
-
-        UserType utype = userService.getUserType(user);
-                
-        Boolean isVolunteer = Boolean.FALSE;
-        if (user != null){
-            //moze byt dobrovolnik, alebo admin.
-            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
-        }
-        
-        if (publicPerson != null){
-            initAllBasic(isVolunteer);
-        }
-
-    }
-
+    /**
+     */
     private void classPersonLayout() {
         
         List<Integer> pclIds = classificationService.findActualPersonClassIds(publicPerson.getId());
 
         List<PersonClassification> pcls = classificationService.findNewPersonClass(pclIds);
 
-        this.classPersonLayout = new ClassPersonLayout(pcls, classificationService);
+        this.classPersonLayout = new PersonClassLayout(pcls, classificationService);
         
         
     }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+
+        PublicPerson pp = UI.getCurrent().getSession().getAttribute(PublicPerson.class);
+         
+        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
+
+                
+        Boolean isVolunteer = Boolean.FALSE;
+        if (user != null){
+            UserType utype = userService.getUserType(user);
+            //moze byt dobrovolnik, alebo admin.
+            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+        }
+        
+        if (pp != null){
+            setPublicPersonValue(pp);
+            initAllBasic(isVolunteer);
+        } else {
+            UI.getCurrent().getNavigator().navigateTo("V4s_PublicPersonsView");
+        }
+
+    }
+
 
 
 }
