@@ -5,10 +5,19 @@
  */
 package sk.stefan.MVP.model.service;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author stefan
  */
-public interface UniTableService {
+public interface UniTableService<E> {
+
+    
+    public String getClassTableName();
+
+    public void deactivateById(Integer entId) throws SQLException;
+    
+    
     
 }

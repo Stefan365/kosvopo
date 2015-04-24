@@ -150,7 +150,7 @@ public final class V10_ThemeView extends VerticalLayout implements View {
         Boolean isVolunteer = Boolean.FALSE;
         if (user != null){
             //moze byt dobrovolnik, alebo admin.
-            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
         }
         
         if (th != null){

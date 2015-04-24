@@ -75,9 +75,9 @@ public class PublicBodyServiceImpl implements PublicBodyService {
 
         List<Integer> pbIds;
 
-        String sql = "SELECT id FROM t_public_body WHERE location_id IN "
-                + "(SELECT id FROM t_location WHERE district_id = " + distrId + " AND visible = true) "
-                + "AND visible = true";
+        String sql = "SELECT pb.id FROM t_public_body pb WHERE pb.location_id IN "
+                + "(SELECT loc.id FROM t_location loc WHERE loc.district_id = " + distrId + " AND loc.visible = true) "
+                + "AND pb.visible = true";
         pbIds = this.generalRepo.findIds(sql);
 
         return pbIds;

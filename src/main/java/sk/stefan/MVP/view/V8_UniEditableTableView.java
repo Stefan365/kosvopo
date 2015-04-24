@@ -35,19 +35,22 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.UniTableService;
+import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.MyTable;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.YesNoWindow;
+import sk.stefan.enums.UserType;
 import sk.stefan.filtering.FilteringComponent;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.listeners.RefreshViewListener;
 import sk.stefan.listeners.YesNoWindowListener;
-import sk.stefan.utils.ToolsDao;
 import sk.stefan.utils.ToolsNazvy;
 
 /**
@@ -64,11 +67,14 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     private static final Logger log = Logger.getLogger(V8_UniEditableTableView.class);
     private static final long serialVersionUID = 1L;
 
-    private A_User user;
-    private SecurityService securityService;
+    private final SecurityService securityService;
+    private final UniTableService<E> uniTableService;
+    private final UserService userService;
 
+    private final Boolean isForAdminOnly;
+    
     /* User interface components are stored in session. */
-    private Class<E> clsE;
+//    private Class<E> clsE;
     private Object itemId;
     private Item item;
     private MyTable uniTable;// = new MyTable();
@@ -98,10 +104,9 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
     private final Filter basicFilter;
 
+//    vseobecne komponenty
     private final VerticalLayout temporaryLy;
-
     private final NavigationComponent navComp;
-
     private final Navigator nav;
 
     
@@ -111,12 +116,13 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
      * @param clsq
      * @param uneditCol
      */
-    public V8_UniEditableTableView(Class<E> clsq, String[] uneditCol) {
+    public V8_UniEditableTableView(Class<E> clsq, String[] uneditCol, Boolean isAdm) {
         
         this.setMargin(true);
         this.setSpacing(true);
 
-
+        
+//        zakladne komponenty
         this.nav = UI.getCurrent().getNavigator();
 
         navComp = NavigationComponent.createNavigationComponent();
@@ -124,15 +130,24 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);
+
+
+//        servicy:
+        this.securityService = new SecurityServiceImpl();
+        this.uniTableService = new UniTableServiceImpl<>(clsq);
+        this.userService = new UserServiceImpl();
+    
+        //je to komponenta len pre admina?
+        this.isForAdminOnly = isAdm;
         
+        //dalsie komponenty:
         basicFilter = new Compare.Equal("visible", Boolean.TRUE);
-        securityService = new SecurityServiceImpl();
         
-        this.clsE = clsq;
-        tn = ToolsDao.getTableName(clsE);
+//        this.clsE = clsq;
+        tn = uniTableService.getClassTableName(); //ToolsDao.getTableName(clsE);
         this.initTableLists(uneditCol);
 
-        this.inputForm = new InputFormLayout<>(clsE, item, sqlContainer, this, nonEditFn);
+        this.inputForm = new InputFormLayout<>(clsq, item, sqlContainer, this, nonEditFn);
 
         
 
@@ -332,10 +347,10 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
         uniTable.setContainerDataSource(sqlContainer);
 
-        log.info("CLASS:" + clsE.getCanonicalName());
-        for (String s : visibleColDbNames) {
-            log.info("VISIBLE COLS:" + s);
-        }
+//        log.info("CLASS:" + clsE.getCanonicalName());
+//        for (String s : visibleColDbNames) {
+//            log.info("VISIBLE COLS:" + s);
+//        }
         uniTable.setVisibleColumns((Object[]) visibleColDbNames);
         uniTable.setColumnHeaders(visibleColDepictNames);
         uniTable.setSelectable(true);
@@ -393,8 +408,8 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     }
     
     private void setUserValue(A_User usr) {
-
-        this.user = usr;
+//
+//        this.user = usr;
     
     }
 
@@ -416,33 +431,26 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                     sqlContainer.removeItem(itemId);
                 }
                 try {
-//                  item.getItemProperty("visible").setValue(Boolean.FALSE);
-//                  sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.FALSE);
-//                  item.getItemProperty("active").setValue(Boolean.FALSE);
-//                  sqlContainer.getItem(itemId).getItemProperty("active").setValue(Boolean.FALSE);
-
-                    UniRepo<E> unirepo = new UniRepo<>(clsE);
-                    unirepo.updateParam("visible", "false", "" + item.getItemProperty("id").getValue());
-//                    item = null;
-//                    itemId = null;
+                    Integer id = (Integer) item.getItemProperty("id").getValue();
+                    uniTableService.deactivateById(id);
+                            
+                    item = null;
                     Notification.show("Úkol úspešne vymazaný!");
                     doOkAction();
                 } catch (SQLException ex) {
                     Notification.show("Vymazanie sa nepodarilo!");
-
                 }
             } else {
                 Notification.show("Není co mazat!");
             }
         }
 
-        //end of inner class:
     }
 
 
     @Override
     public void doOkAction() {
-//        Notification.show("KOKOSKO");
+        
         sqlContainer.refresh();
         uniTable.refreshRowCache();
     }
@@ -459,9 +467,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         this.sqlContainer.addContainerFilter(basicFilter);
     }
 
-//    public void odstranFilter() {
-//        this.sqlContainer.removeContainerFilter(basicFilter);
-//    }
     @Override
     public void refreshView() {
 //        Notification.show("MAKOSKO");
@@ -473,9 +478,14 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         
         A_User usr = securityService.getCurrentUser();
+        
         if (usr != null) {
-            setUserValue(usr);
-            //do nothing
+            
+            UserType utype = userService.getUserType(usr);
+        
+            if (utype != UserType.ADMIN){
+                UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
+            }
         } else {
             UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
         }

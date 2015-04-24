@@ -4,11 +4,8 @@ import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.data.util.sqlcontainer.connection.JDBCConnectionPool;
 import com.vaadin.data.util.sqlcontainer.connection.SimpleJDBCConnectionPool;
 import com.vaadin.data.util.sqlcontainer.query.TableQuery;
-import com.vaadin.ui.Notification;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import org.apache.log4j.Logger;
 
 /**
@@ -24,30 +21,14 @@ public class DoDBconn {
 
     private static final Logger log = Logger.getLogger(DoDBconn.class);
         
-    private static final Locale locale = new Locale("cz", "CZ");
-    // načtení properties
-    private static ResourceBundle properties;
     
     private static Connection nonInvasiveConn;
 
     private static JDBCConnectionPool connectionPool = null;
-    private static final JDBCConnectionPool connectionPoolCont = null;
 
-//    private static final String driver;
-//    private static final String url;
-//    private static final String user;
-//    private static final String passwd;
 
     static {
         connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 55);
-        //connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 55);
-        
-//        properties = ResourceBundle.getBundle("dbconnection", locale);
-//        driver = properties.getString("dbDriver");
-//        url = properties.getString("dbUrl");
-//        user = properties.getString("dbUser");
-//        passwd = properties.getString("dbPwd");
-//        connectToDb(driver, url, user, passwd, 2, 55);
     }
 
     /**
@@ -69,12 +50,6 @@ public class DoDBconn {
 
         connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 55);
         
-//        properties = ResourceBundle.getBundle("dbconnection", locale);
-//        String driver = properties.getString("dbDriver");
-//        String url = properties.getString("dbUrl");
-//        String user = properties.getString("dbUser");
-//        String passwd = properties.getString("dbPwd");
-//        connectToDb(driver, url, user, passwd, 2, 55);
     }
 
     // 1.
@@ -127,34 +102,5 @@ public class DoDBconn {
         return tableContainer;
 
     }
-    
-//    /**
-//     * commituje zmeny do DB.
-//     */
-//    public static synchronized void doCommit() {
-//        try {
-//            nonInvasiveConn.commit();
-//        } catch (SQLException ex) {
-//            try {
-//                nonInvasiveConn.rollback();
-//                log.error(ex.getMessage(), ex);
-//                Notification.show("Ukladanie sa nevydarilo, SPRAVIL SA ROLLBACK!");
-//            } catch (SQLException ex1) {
-//                log.error(ex.getMessage(), ex);
-//                Notification.show("ANI TEN BLBY ROLLBACK SA NEPODARIL!");
-//            }
-//        }
-//    }
-//    /**
-//     * commituje zmeny do DB.
-//     */
-//    public static synchronized void doRollback() {
-//        try {
-//            nonInvasiveConn.rollback();
-//        } catch (SQLException ex) {
-//            log.error(ex.getMessage(), ex);
-//        }
-//        
-//    }
 
 }

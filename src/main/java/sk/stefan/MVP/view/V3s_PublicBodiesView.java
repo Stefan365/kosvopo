@@ -159,7 +159,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         Boolean isVolunteer = Boolean.FALSE;
         if (user != null){
             UserType utype = userService.getUserType(user);
-            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
         } 
         
         initAllBasic(isVolunteer);

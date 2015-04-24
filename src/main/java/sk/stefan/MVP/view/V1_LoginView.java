@@ -15,9 +15,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
@@ -27,11 +24,6 @@ import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.InputOptionGroup;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.superseded.ZBD_K4_PoslanciView;
-import sk.stefan.MVP.view.superseded.ZBD_K5_Verejna_osobaView;
-import sk.stefan.MVP.view.superseded.ZBD_Kos6View;
-import sk.stefan.enums.UserType;
-import sk.stefan.utils.ToolsNavigation;
 import sk.stefan.utils.ToolsNazvy;
 
 /**
@@ -42,30 +34,27 @@ public class V1_LoginView extends VerticalLayout implements View {
 
     private static final Logger log = Logger.getLogger(V1_LoginView.class);
 
-    private final NavigationComponent navComp;
+    //servisy:
+    private SecurityService securityService;
+    private UserService userService;
 
-    private final Navigator nav;
-
-    
     private Button loginBt;
 
     private TextField emailTf;
 
     private PasswordField passwordPf;
 
-    private InputOptionGroup<Integer> userRoleOg;
+//    private InputOptionGroup<Integer> userRoleOg;
 
     private HorizontalLayout buttonsHl;
 
     private VerticalLayout formVl;
 
-    //servisy:
-    private SecurityService securityService;
-
-    private UserService userService;
 
     
     private VerticalLayout temporaryLy;
+    private final NavigationComponent navComp;
+    private final Navigator nav;
     
     
     public V1_LoginView() {
@@ -82,18 +71,18 @@ public class V1_LoginView extends VerticalLayout implements View {
         securityService = new SecurityServiceImpl();
         userService = new UserServiceImpl();
 
-        try {
-            this.initOptionGroup();
+//        try {
+//            this.initOptionGroup();
             this.initFields();
             this.initLayout();
-        } catch (NoSuchMethodException ex) {
-            log.error(ex.getMessage(), ex);
-        }
+//        } catch (NoSuchMethodException ex) {
+//            log.error(ex.getMessage(), ex);
+//        }
     }
 
     private void initLayout() {
 
-        formVl = new VerticalLayout(emailTf, passwordPf, this.userRoleOg, buttonsHl);
+        formVl = new VerticalLayout(emailTf, passwordPf, buttonsHl);
         formVl.setMargin(true);
         formVl.setSpacing(true);
 
@@ -148,19 +137,19 @@ public class V1_LoginView extends VerticalLayout implements View {
 
     }
 
-    /**
-     * toto je vlastne zbytočné, pretože náš systém podporuje len 1 roľu naraz.
-     */
-    private void initOptionGroup() throws NoSuchMethodException {
-
-        Map<String, Integer> map = ToolsNazvy.getUserTypes();
-
-        this.userRoleOg = new InputOptionGroup<Integer>(map);
-//            this.userRoleOg.select(UserType.values()[0]);
-//            this.userRoleOg.select(0);
-        this.userRoleOg.setValue(0);
-
-    }
+//    /**
+//     * toto je vlastne zbytočné, pretože náš systém podporuje len 1 roľu naraz.
+//     */
+//    private void initOptionGroup() throws NoSuchMethodException {
+//
+//        Map<String, Integer> map = ToolsNazvy.getUserTypes();
+//
+//        this.userRoleOg = new InputOptionGroup<Integer>(map);
+////            this.userRoleOg.select(UserType.values()[0]);
+////            this.userRoleOg.select(0);
+//        this.userRoleOg.setValue(0);
+//
+//    }
 
     @Override
     public void enter(ViewChangeEvent event) {

@@ -165,7 +165,7 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
         if (user != null){
             UserType utype = userService.getUserType(user);
             //moze byt dobrovolnik, alebo admin.
-            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
         }
         
         initAllBasic(isVolunteer);

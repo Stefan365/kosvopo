@@ -149,7 +149,7 @@ public class NavigationComponent extends HorizontalLayout {
     public void ochudobniNavigator() {
         
         
-        navigator.removeView("V7_AdministrationView");
+//        navigator.removeView("V7_AdministrationView");
 
         this.removeComponent(b7);
 
@@ -161,7 +161,7 @@ public class NavigationComponent extends HorizontalLayout {
      */
     public void obohatNavigator() {
         
-        navigator.addView("V7_AdministrationView", new V7_AdministrationView());
+
 
         this.addComponent(b7);
     }

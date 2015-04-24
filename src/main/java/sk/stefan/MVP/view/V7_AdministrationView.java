@@ -31,8 +31,11 @@ import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.enums.UserType;
 import sk.stefan.utils.ToolsNazvy;
 
 /**
@@ -52,23 +55,27 @@ public class V7_AdministrationView extends VerticalLayout implements View {
             subjectBt, tenureBt, themeBt, auserRoleBt, voteBt, vClassBt, vorBt, pubPersonBt;
 
     private final SecurityService securityService;
+    private final UserService userService;
 
-    private final GridLayout mainLayout = new GridLayout(2, 2);
+    private final GridLayout mainLayout = new GridLayout(2, 3);
 
     private final VerticalLayout hodnoteniaLy = new VerticalLayout();
     private final VerticalLayout hlasovanieLy = new VerticalLayout();
     private final VerticalLayout miestoLy = new VerticalLayout();
     private final VerticalLayout politikaLy = new VerticalLayout();
+    private final VerticalLayout adminLy = new VerticalLayout();
+    
+    
 
     private final Label hodLb = new Label("Hodnotenia");
     private final Label hlasLb = new Label("Hlasovanie");
     private final Label miestLb = new Label("Miesto");
     private final Label polLb = new Label("Politika");
+    private final Label adminLb = new Label("Administrácia");
+    
 
     private final Navigator nav;
-    
     private final VerticalLayout temporaryLy;
-    
     private final NavigationComponent navComp;
 
     //0. konstruktor
@@ -86,6 +93,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
 
         
         this.securityService = new SecurityServiceImpl();
+        this.userService = new UserServiceImpl();
 
         this.setSpacing(true);
         this.setMargin(true);
@@ -93,7 +101,6 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         temporaryLy.addComponent(mainLayout);
         
         initButtons();
-        initLayout();
     }
 
     private void initButtons() {
@@ -101,7 +108,14 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         auserBt = new Button(A_User.PRES_NAME, (Button.ClickEvent event) -> {
             UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(A_User.getTN()));
         });
+        aroleBt = new Button(A_Role.PRES_NAME, (Button.ClickEvent event) -> {
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(A_Role.TN));
+        });
+        auserRoleBt = new Button(A_UserRole.PRES_NAME, (Button.ClickEvent event) -> {
+            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(A_UserRole.TN));
+        });
 
+        
         okresBt = new Button(District.PRES_NAME, (Button.ClickEvent event) -> {
             UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(District.TN));
         });
@@ -123,9 +137,6 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         pubRoleBt = new Button(PublicRole.PRES_NAME, (Button.ClickEvent event) -> {
             UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(PublicRole.TN));
         });
-        aroleBt = new Button(A_Role.PRES_NAME, (Button.ClickEvent event) -> {
-            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(A_Role.TN));
-        });
         subjectBt = new Button(Subject.PRES_NAME, (Button.ClickEvent event) -> {
             UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(Subject.TN));
         });
@@ -136,10 +147,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         themeBt = new Button(Theme.PRES_NAME, (Button.ClickEvent event) -> {
             UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(Theme.TN));
         });
-        auserRoleBt = new Button(A_UserRole.PRES_NAME, (Button.ClickEvent event) -> {
-            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(A_UserRole.TN));
-        });
-
+        
         voteBt = new Button(Vote.getPRES_NAME(), (Button.ClickEvent event) -> {
             UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(Vote.getTN()));
         });
@@ -156,17 +164,18 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         });
 
         auserBt.setStyleName(BaseTheme.BUTTON_LINK);
+        aroleBt.setStyleName(BaseTheme.BUTTON_LINK);
+        auserRoleBt.setStyleName(BaseTheme.BUTTON_LINK);
+        
         okresBt.setStyleName(BaseTheme.BUTTON_LINK);
         krajBt.setStyleName(BaseTheme.BUTTON_LINK);
         locBt.setStyleName(BaseTheme.BUTTON_LINK);
         pClassBt.setStyleName(BaseTheme.BUTTON_LINK);
         pubBodyBt.setStyleName(BaseTheme.BUTTON_LINK);
         pubRoleBt.setStyleName(BaseTheme.BUTTON_LINK);
-        aroleBt.setStyleName(BaseTheme.BUTTON_LINK);
         subjectBt.setStyleName(BaseTheme.BUTTON_LINK);
         tenureBt.setStyleName(BaseTheme.BUTTON_LINK);
         themeBt.setStyleName(BaseTheme.BUTTON_LINK);
-        auserRoleBt.setStyleName(BaseTheme.BUTTON_LINK);
         voteBt.setStyleName(BaseTheme.BUTTON_LINK);
         vClassBt.setStyleName(BaseTheme.BUTTON_LINK);
         vorBt.setStyleName(BaseTheme.BUTTON_LINK);
@@ -174,7 +183,20 @@ public class V7_AdministrationView extends VerticalLayout implements View {
 
     }
 
-    private void initLayout() {
+    
+    /**
+     */
+    private void initAllBasic(Boolean isAdmin) {
+        
+        temporaryLy.removeAllComponents();
+        
+        this.initLayout(isAdmin);
+        
+        temporaryLy.addComponents(mainLayout);
+        
+    }
+    
+    private void initLayout(Boolean isAdmin) {
 
         mainLayout.setMargin(true);
         mainLayout.setSpacing(true);
@@ -183,6 +205,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         mainLayout.addComponent(politikaLy, 1, 0);
         mainLayout.addComponent(hlasovanieLy, 0, 1);
         mainLayout.addComponent(hodnoteniaLy, 1, 1);
+        
 
         miestoLy.setMargin(true);
         miestoLy.setSpacing(true);
@@ -207,15 +230,20 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         hlasovanieLy.addComponent(voteBt);
         hlasovanieLy.addComponent(vorBt);
         
-
         hodnoteniaLy.setMargin(true);
         hodnoteniaLy.setSpacing(true);
         hodnoteniaLy.addComponent(hodLb);
         hodnoteniaLy.addComponent(pClassBt);
         hodnoteniaLy.addComponent(vClassBt);
 
-
-
+        if(isAdmin){
+            mainLayout.addComponent(adminLy, 1, 2);
+            adminLy.setMargin(true);
+            adminLy.setSpacing(true);
+            adminLy.addComponent(auserBt);
+            adminLy.addComponent(auserBt);
+            adminLy.addComponent(auserRoleBt);
+        }
     }
     
     private void setUserValue(A_User usr) {
@@ -228,13 +256,28 @@ public class V7_AdministrationView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         A_User usr = securityService.getCurrentUser();
-        if (usr != null) {
+        Boolean isAdmin = Boolean.FALSE;
+        
+        if (usr != null){
+            
+            UserType utype = userService.getUserType(user);
+        
+            switch (utype){
+                case ADMIN:
+                    isAdmin = Boolean.TRUE;
+                    break;
+                default:
+            }
+            
             setUserValue(usr);
+            initAllBasic(isAdmin);
+        
         } else {
             UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
         }
 
     }
+
 
     
 }

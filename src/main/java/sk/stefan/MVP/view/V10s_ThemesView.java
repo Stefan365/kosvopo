@@ -150,7 +150,7 @@ public class V10s_ThemesView extends VerticalLayout implements View {
                 
         Boolean isVolunteer = Boolean.FALSE;
         if (user != null){
-            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
         }
         
         initAllBasic(isVolunteer);

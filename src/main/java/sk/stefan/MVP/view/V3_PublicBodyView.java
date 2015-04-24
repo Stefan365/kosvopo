@@ -222,7 +222,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
             UserType utype = userService.getUserType(user);
         
             //moze byt dobrovolnik, alebo admin.
-            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
         }
         
         if (pb != null){

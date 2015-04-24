@@ -222,7 +222,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
         if (user != null) {
             UserType utype = userService.getUserType(user);
             //moze byt dobrovolnik, alebo admin.
-            isVolunteer = ((UserType.USER).equals(utype) || (UserType.ADMIN).equals(utype));
+            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
         }
 
         if (vot != null) {

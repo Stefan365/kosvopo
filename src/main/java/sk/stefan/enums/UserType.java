@@ -13,7 +13,7 @@ import java.util.List;
  * @author stefan
  */
 public enum UserType {
-    USER("dobrovoľník"), ADMIN("admin");
+    VOLUNTEER("dobrovoľník"), ADMIN("admin");
 
     public final String name;
 
