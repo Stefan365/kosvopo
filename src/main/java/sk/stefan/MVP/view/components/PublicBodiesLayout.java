@@ -9,7 +9,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import sk.stefan.MVP.model.entity.dao.PublicBody;
+import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.service.PublicBodyService;
 import sk.stefan.interfaces.Filterable;
 

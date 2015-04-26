@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.view.converters.DateConverter;
+import sk.stefan.converters.DateConverter;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;

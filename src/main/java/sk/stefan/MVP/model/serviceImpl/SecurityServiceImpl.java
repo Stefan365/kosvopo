@@ -4,7 +4,7 @@ import com.vaadin.server.VaadinSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.service.SecurityService;
 
 /**

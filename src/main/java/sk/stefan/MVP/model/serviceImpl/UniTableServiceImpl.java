@@ -8,7 +8,7 @@ package sk.stefan.MVP.model.serviceImpl;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.UniTableService;
 import sk.stefan.utils.ToolsDao;
 

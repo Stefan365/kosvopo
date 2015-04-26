@@ -17,7 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import java.util.Map;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;

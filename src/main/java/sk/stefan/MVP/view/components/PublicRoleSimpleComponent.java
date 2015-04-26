@@ -11,7 +11,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
+import sk.stefan.MVP.model.entity.PublicRole;
 import sk.stefan.MVP.model.service.PublicRoleService;
 
 /**

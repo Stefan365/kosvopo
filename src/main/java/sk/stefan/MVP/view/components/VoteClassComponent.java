@@ -7,7 +7,7 @@ package sk.stefan.MVP.view.components;
 
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
-import sk.stefan.MVP.model.entity.dao.VoteClassification;
+import sk.stefan.MVP.model.entity.VoteClassification;
 import sk.stefan.MVP.model.service.ClassificationService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;

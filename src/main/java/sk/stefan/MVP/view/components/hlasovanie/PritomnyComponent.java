@@ -5,10 +5,10 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
-import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.entity.dao.VoteOfRole;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.entity.PublicRole;
+import sk.stefan.MVP.model.entity.Vote;
+import sk.stefan.MVP.model.entity.VoteOfRole;
+import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.enums.VoteAction;
 
 /**

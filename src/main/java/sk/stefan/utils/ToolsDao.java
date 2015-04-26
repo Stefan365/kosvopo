@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
-import sk.stefan.MVP.model.entity.dao.PublicBody;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
-import sk.stefan.MVP.model.entity.dao.Tenure;
-import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.entity.A_Hierarchy;
+import sk.stefan.MVP.model.entity.PublicBody;
+import sk.stefan.MVP.model.entity.PublicRole;
+import sk.stefan.MVP.model.entity.Tenure;
+import sk.stefan.MVP.model.entity.Vote;
+import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.interfaces.Filterable;
 
 public abstract class ToolsDao {

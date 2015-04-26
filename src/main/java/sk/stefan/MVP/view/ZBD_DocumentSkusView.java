@@ -8,10 +8,10 @@ package sk.stefan.MVP.view;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.HorizontalLayout;
-import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
-import sk.stefan.documents.DownloaderLayout;
-import sk.stefan.documents.UploaderLayout;
+import sk.stefan.MVP.model.entity.Vote;
+import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.view.components.documents.DownloaderLayout;
+import sk.stefan.MVP.view.components.documents.UploaderLayout;
 
 /**
  *

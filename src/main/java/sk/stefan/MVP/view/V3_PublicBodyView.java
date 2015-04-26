@@ -16,10 +16,10 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.entity.dao.PublicBody;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
-import sk.stefan.MVP.model.entity.dao.Vote;
+import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.MVP.model.entity.PublicBody;
+import sk.stefan.MVP.model.entity.PublicRole;
+import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
@@ -30,8 +30,8 @@ import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
-import sk.stefan.documents.DownloaderLayout;
-import sk.stefan.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.documents.DownloaderLayout;
+import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
 
 /**

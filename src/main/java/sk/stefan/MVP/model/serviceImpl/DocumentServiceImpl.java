@@ -10,8 +10,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.Document;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.entity.Document;
+import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.DocumentService;
 
 /**

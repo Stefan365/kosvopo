@@ -9,10 +9,6 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.BaseTheme;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
-import sk.stefan.MVP.view.V7_AdministrationView;
-import sk.stefan.MVP.view.superseded.ZBD_K4_PoslanciView;
-import sk.stefan.MVP.view.superseded.ZBD_K5_Verejna_osobaView;
-import sk.stefan.MVP.view.superseded.ZBD_Kos6View;
 
 public class NavigationComponent extends HorizontalLayout {
 

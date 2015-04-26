@@ -10,8 +10,8 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import java.util.List;
-import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.entity.dao.VoteOfRole;
+import sk.stefan.MVP.model.entity.Vote;
+import sk.stefan.MVP.model.entity.VoteOfRole;
 import sk.stefan.MVP.model.service.VoteService;
 
 /**

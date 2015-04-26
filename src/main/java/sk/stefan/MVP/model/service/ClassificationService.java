@@ -6,9 +6,9 @@
 package sk.stefan.MVP.model.service;
 
 import java.util.List;
-import sk.stefan.MVP.model.entity.dao.PersonClassification;
-import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.entity.dao.VoteClassification;
+import sk.stefan.MVP.model.entity.PersonClassification;
+import sk.stefan.MVP.model.entity.Vote;
+import sk.stefan.MVP.model.entity.VoteClassification;
 
 /**
  *

@@ -6,8 +6,8 @@
 package sk.stefan.MVP.model.service;
 
 import java.util.List;
-import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.entity.dao.A_UserRole;
+import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.enums.UserType;
 
 /**

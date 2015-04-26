@@ -11,9 +11,9 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
-import sk.stefan.MVP.model.entity.dao.Subject;
-import sk.stefan.MVP.model.entity.dao.Theme;
+import sk.stefan.MVP.model.entity.PublicRole;
+import sk.stefan.MVP.model.entity.Subject;
+import sk.stefan.MVP.model.entity.Theme;
 import sk.stefan.MVP.model.service.VoteService;
 
 /**

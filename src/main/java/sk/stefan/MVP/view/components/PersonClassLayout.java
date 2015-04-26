@@ -9,7 +9,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import sk.stefan.MVP.model.entity.dao.PersonClassification;
+import sk.stefan.MVP.model.entity.PersonClassification;
 import sk.stefan.MVP.model.service.ClassificationService;
 import sk.stefan.interfaces.Filterable;
 

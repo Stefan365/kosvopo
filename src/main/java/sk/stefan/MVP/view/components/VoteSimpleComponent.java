@@ -11,7 +11,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import sk.stefan.MVP.model.entity.dao.Vote;
+import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.service.VoteService;
 
 /**

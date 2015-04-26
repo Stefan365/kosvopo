@@ -7,12 +7,12 @@ package sk.stefan.MVP.model.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import sk.stefan.MVP.model.entity.dao.PersonClassification;
-import sk.stefan.MVP.model.entity.dao.PublicPerson;
-import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.entity.dao.VoteClassification;
-import sk.stefan.MVP.model.repo.dao.GeneralRepo;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.entity.PersonClassification;
+import sk.stefan.MVP.model.entity.PublicPerson;
+import sk.stefan.MVP.model.entity.Vote;
+import sk.stefan.MVP.model.entity.VoteClassification;
+import sk.stefan.MVP.model.repo.GeneralRepo;
+import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.ClassificationService;
 
 /**

@@ -8,11 +8,11 @@ package sk.stefan.MVP.model.serviceImpl;
 import com.vaadin.ui.Notification;
 import java.util.ArrayList;
 import java.util.List;
-import sk.stefan.MVP.model.entity.dao.PublicBody;
-import sk.stefan.MVP.model.entity.dao.PublicPerson;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
-import sk.stefan.MVP.model.repo.dao.GeneralRepo;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.entity.PublicBody;
+import sk.stefan.MVP.model.entity.PublicPerson;
+import sk.stefan.MVP.model.entity.PublicRole;
+import sk.stefan.MVP.model.repo.GeneralRepo;
+import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.PublicBodyService;
 
 /**

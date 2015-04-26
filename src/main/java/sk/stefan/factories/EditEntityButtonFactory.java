@@ -6,7 +6,7 @@
 package sk.stefan.factories;
 
 import com.vaadin.ui.Button;
-import sk.stefan.listeners.EditWrapper;
+import sk.stefan.wrappers.EditWrapper;
 
 /**
  * Trieda, vytvara tlacitka na editaciu entit. 

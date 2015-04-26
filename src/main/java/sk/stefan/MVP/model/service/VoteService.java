@@ -6,13 +6,13 @@
 package sk.stefan.MVP.model.service;
 
 import java.util.List;
-import sk.stefan.MVP.model.entity.dao.PublicBody;
-import sk.stefan.MVP.model.entity.dao.PublicPerson;
-import sk.stefan.MVP.model.entity.dao.PublicRole;
-import sk.stefan.MVP.model.entity.dao.Subject;
-import sk.stefan.MVP.model.entity.dao.Theme;
-import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.entity.dao.VoteOfRole;
+import sk.stefan.MVP.model.entity.PublicBody;
+import sk.stefan.MVP.model.entity.PublicPerson;
+import sk.stefan.MVP.model.entity.PublicRole;
+import sk.stefan.MVP.model.entity.Subject;
+import sk.stefan.MVP.model.entity.Theme;
+import sk.stefan.MVP.model.entity.Vote;
+import sk.stefan.MVP.model.entity.VoteOfRole;
 
 /**
  *

@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.A_Hierarchy;
-import sk.stefan.MVP.model.repo.dao.GeneralRepo;
-import sk.stefan.MVP.model.repo.dao.UniRepo;
+import sk.stefan.MVP.model.entity.A_Hierarchy;
+import sk.stefan.MVP.model.repo.GeneralRepo;
+import sk.stefan.MVP.model.repo.UniRepo;
 
 /**
  *

@@ -14,8 +14,8 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.dao.A_User;
-import sk.stefan.MVP.model.entity.dao.Theme;
+import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.MVP.model.entity.Theme;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
@@ -23,10 +23,10 @@ import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.ThemeDetailedComponent;
-import sk.stefan.documents.DownloaderLayout;
-import sk.stefan.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.documents.DownloaderLayout;
+import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
-import sk.stefan.listeners.EditWrapper;
+import sk.stefan.wrappers.EditWrapper;
 
 /**
  *

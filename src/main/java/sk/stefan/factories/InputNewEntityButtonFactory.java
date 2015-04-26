@@ -6,7 +6,7 @@
 package sk.stefan.factories;
 
 import com.vaadin.ui.Button;
-import sk.stefan.MVP.model.entity.dao.Vote;
+import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.listeners.InputVoteButClickListener;
 import sk.stefan.listeners.Input_EditButClickListener;
 import sk.stefan.utils.ToolsDao;

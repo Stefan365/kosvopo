@@ -5,7 +5,7 @@
  */
 package sk.stefan.MVP.model.service;
 
-import sk.stefan.MVP.model.entity.dao.A_User;
+import sk.stefan.MVP.model.entity.A_User;
 
 /**
  *
