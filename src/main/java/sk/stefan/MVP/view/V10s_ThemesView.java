@@ -22,7 +22,7 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.ThemesLayout;
 import sk.stefan.enums.UserType;
@@ -50,6 +50,9 @@ public class V10s_ThemesView extends VerticalLayout implements View {
 
     
     public V10s_ThemesView (){
+
+        this.setMargin(true);
+        this.setSpacing(true);
     
         this.nav = UI.getCurrent().getNavigator();
 
@@ -135,7 +138,7 @@ public class V10s_ThemesView extends VerticalLayout implements View {
      */
     private void initNewThemeButton() {
         
-        this.addNewThemeBt = InputNewEntityButtonFactory.createMyButton(PublicBody.class);
+        this.addNewThemeBt = InputNewEntityButtonFactory.createMyInputButton(PublicBody.class);
         
         temporaryLy.addComponent(addNewThemeBt);
     }

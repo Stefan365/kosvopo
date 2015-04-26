@@ -22,7 +22,7 @@ import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicPersonsLayout;
 import sk.stefan.enums.UserType;
@@ -57,6 +57,9 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
         
     public V4s_PublicPersonsView (){
     
+        this.setMargin(true);
+        this.setSpacing(true);
+
         this.nav = UI.getCurrent().getNavigator();
 
         navComp = NavigationComponent.createNavigationComponent();
@@ -150,7 +153,7 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
     private void initNewPublicPersonButton() {
         
                 
-        this.addNewPublicPersonBt = InputNewEntityButtonFactory.createMyButton(PublicPerson.class);
+        this.addNewPublicPersonBt = InputNewEntityButtonFactory.createMyInputButton(PublicPerson.class);
         
         temporaryLy.addComponent(addNewPublicPersonBt);
     }

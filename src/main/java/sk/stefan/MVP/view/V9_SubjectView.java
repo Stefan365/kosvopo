@@ -15,15 +15,17 @@ import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.dao.A_User;
 import sk.stefan.MVP.model.entity.dao.Subject;
+import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.EditEntityButtonFactory;
+import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.SubjectDetailedComponent;
 import sk.stefan.documents.DownloaderLayout;
 import sk.stefan.documents.UploaderLayout;
+import sk.stefan.listeners.EditWrapper;
 
 /**
  *
@@ -56,7 +58,10 @@ public final class V9_SubjectView extends VerticalLayout implements View {
     
     //konstruktor:
     public V9_SubjectView() {
-        
+
+        this.setMargin(true);
+        this.setSpacing(true);
+
         this.nav = UI.getCurrent().getNavigator();
 
         navComp = NavigationComponent.createNavigationComponent();
@@ -111,7 +116,8 @@ public final class V9_SubjectView extends VerticalLayout implements View {
      */
     private void initEditSubjectButton() {
         
-        this.editSubjectBt = EditEntityButtonFactory.createMyButton(Subject.class, subject);
+        EditWrapper<Subject> ew = new EditWrapper<>(editSubjectBt, Subject.class, subject);
+        this.editSubjectBt = EditEntityButtonFactory.createMyEditButton(ew);
         
         temporaryLy.addComponent(editSubjectBt);
 

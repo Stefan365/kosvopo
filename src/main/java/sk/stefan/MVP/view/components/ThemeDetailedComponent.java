@@ -8,6 +8,7 @@ package sk.stefan.MVP.view.components;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import sk.stefan.MVP.model.entity.dao.Theme;
 import sk.stefan.MVP.model.service.VoteService;
@@ -22,13 +23,13 @@ public class ThemeDetailedComponent extends GridLayout {
 
     private final Theme theme;
 
-    private final Navigator navigator;
+    private final Navigator nav;
 
     private final VoteService voteService;
     
     //graficke komponenty:
     private Label titleLb; 
-    private Label DescriptionLb;
+    private Label descriptionLb;
 
     //0.konstruktor:
     /**
@@ -36,9 +37,13 @@ public class ThemeDetailedComponent extends GridLayout {
      * @param vs
      */
     public ThemeDetailedComponent(Theme th, VoteService vs) {
+        
 
         super(1, 2);//column , row
-        this.navigator = UI.getCurrent().getNavigator();
+
+        Notification.show("ThemeDetailedComponent");
+
+        this.nav = UI.getCurrent().getNavigator();
         this.theme = th;
         this.voteService = vs;
 
@@ -55,10 +60,13 @@ public class ThemeDetailedComponent extends GridLayout {
         this.setSpacing(true);
 
         this.titleLb = new Label(theme.getBrief_description());
-        this.DescriptionLb = new Label(theme.getDescription());
-        
+        Notification.show("BRIEF: " + theme.getBrief_description());
+        this.titleLb.setCaption("Stručný popis"); 
+        this.descriptionLb = new Label(theme.getDescription());
+        this.descriptionLb.setCaption("Popis"); 
+
         this.addComponent(titleLb, 0, 0);
-        this.addComponent(DescriptionLb, 0, 1);
+        this.addComponent(descriptionLb, 0, 1);
         
     }
 

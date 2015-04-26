@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.MVP.view.components;
+package sk.stefan.factories;
 
 import com.vaadin.ui.Button;
 import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.listeners.InputButClickListener;
 import sk.stefan.listeners.InputVoteButClickListener;
+import sk.stefan.listeners.Input_EditButClickListener;
 import sk.stefan.utils.ToolsDao;
 
 /**
@@ -22,13 +22,21 @@ public abstract class InputNewEntityButtonFactory {
 
     private static final long serialVersionUID = 1645436L;
 
+
     /**
-     *
+     * 
+     * @param cls
+     * @return 
      */
-    public InputNewEntityButtonFactory() {
+    public static Button createMyInputButton(Class<?> cls) {
+        
+        Button b = new Button();
+        
+        return initButton(b, cls);
+        
     }
 
-
+    
     /**
      * inicializacia tlacitiek:
      */
@@ -40,7 +48,8 @@ public abstract class InputNewEntityButtonFactory {
         if ((Vote.class).equals(cls)) {
             b.addClickListener(new InputVoteButClickListener(title));
         } else {
-            b.addClickListener(new InputButClickListener(cls, title));
+//            b.addClickListener(new Input_EditButClickListener<>(cls, title, null));
+            b.addClickListener(new Input_EditButClickListener<>(cls, title, null));
         }
         
         return b;
@@ -48,12 +57,5 @@ public abstract class InputNewEntityButtonFactory {
     }
 
 
-    public static Button createMyButton(Class<?> cls) {
-        
-        Button b = new Button();
-        
-        return initButton(b, cls);
-        
-    }
 
 }

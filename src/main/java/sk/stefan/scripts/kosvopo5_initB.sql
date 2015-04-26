@@ -2,11 +2,11 @@
 
 -- 1.
 INSERT INTO a_user (first_name, last_name, e_mail, login, password)
-VALUES ('Peter', 'Sarkoci', 'peter.sarkoci@gmail.com', 'petak', 'petak');
+VALUES ('Peter', 'Sarkoci', 'peter.sarkoci@gmail.com', 'petak', md5('petak'));
 INSERT INTO a_user (first_name, last_name, e_mail, login, password)
-VALUES ('Štefan', 'Vereš', 'stefan.veres@gmail.com', 'stefan63', 'stefan63');
+VALUES ('Štefan', 'Vereš', 'stefan.veres@gmail.com', 'stefan63', md5('stefan63'));
 INSERT INTO a_user (first_name, last_name, e_mail, login, password)
-VALUES ('Miro', 'Sčibrányi', 'miro.scibranyi@gmail.com', 'mito108', 'miro108');
+VALUES ('Miro', 'Sčibrányi', 'miro.scibranyi@gmail.com', 'mito108', md5('miro108'));
 COMMIT; 
 
 

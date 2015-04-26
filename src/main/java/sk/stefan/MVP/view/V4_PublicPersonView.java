@@ -12,6 +12,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
@@ -30,7 +31,7 @@ import sk.stefan.MVP.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PersonClassLayout;
 import sk.stefan.MVP.view.components.PublicPersonComponent;
@@ -98,6 +99,9 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
     
     //konstruktor:
     public V4_PublicPersonView() {
+
+        this.setMargin(true);
+        this.setSpacing(true);
         
         this.nav = UI.getCurrent().getNavigator();
 
@@ -231,7 +235,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
      */
     private void initNewPublicRoleButton() {
         
-        this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyButton(PublicRole.class);
+        this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyInputButton(PublicRole.class);
         
         temporaryLy.addComponent(addNewPublicRoleBt);
 
@@ -279,7 +283,8 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
          
         A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
 
-                
+        Notification.show("V4: " + (pp==null));
+        
         Boolean isVolunteer = Boolean.FALSE;
         if (user != null){
             UserType utype = userService.getUserType(user);

@@ -5,56 +5,50 @@
  */
 package sk.stefan.MVP.view.components;
 
+import com.vaadin.event.LayoutEvents;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import java.util.List;
 import sk.stefan.MVP.model.entity.dao.Vote;
-import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.MVP.model.service.VoteService;
 
 /**
  *
  * @author stefan
  */
-public class VoteDetailedComponent extends GridLayout {
+public class VoteSimpleComponent extends GridLayout {
 
     private static final long serialVersionUID = 1L;
 
-    //hlavna entita:
     private final Vote vote;
 
-    
+    private final Navigator navigator;
+
     //service, ktory bude zdedeny z nadradenej komponenty.
     private final VoteService voteService;
     
     //graficke komponenty:
-    private List<VoteOfRole> voteOfRoles;
-    private VoteOfRolesLayout voteOfRolesLy;
-    
     private Label dateLb; 
     private Label internalNrLb;
     private Label publicBodyLb;
-    private Label resultLb;
     private Label numbersLb;
 
-    private final Navigator nav;
-
     //0.konstruktor:
-    public VoteDetailedComponent(Vote vot, VoteService vs) {
-        
-        super(2, 5);//column , row
+    public VoteSimpleComponent(Vote vot, VoteService vs) {
+
+        super(2, 4);//column , row
         
         this.setMargin(true);
         this.setSpacing(true);
         
-        this.voteService = vs;
-        this.nav = UI.getCurrent().getNavigator();
+        this.navigator = UI.getCurrent().getNavigator();
         this.vote = vot;
-        
+        this.voteService = vs;
+
         this.initLayout();
-        
+        this.initListener();
     }
 
     /**
@@ -68,21 +62,31 @@ public class VoteDetailedComponent extends GridLayout {
         this.dateLb = new Label(voteService.getVoteDate(vote));
         this.internalNrLb = new Label(voteService.getVoteIntNr(vote));
         this.publicBodyLb = new Label(voteService.getVotePublicBodyName(vote));
-        this.resultLb = new Label(voteService.getVoteResultAsString(vote));
         this.numbersLb = new Label(voteService.getVoteNumbers(vote));
-        
-        this.voteOfRoles = voteService.findVoteOfRolesByVoteId(vote.getId());
-        this.voteOfRolesLy = new VoteOfRolesLayout(voteOfRoles,voteService);
-         
         
         this.addComponent(dateLb, 0, 0);
         this.addComponent(internalNrLb, 1, 0);
         this.addComponent(publicBodyLb, 0, 1);
-        this.addComponent(resultLb, 0, 3);
         this.addComponent(numbersLb, 1, 3);
-        
-        this.addComponent(voteOfRolesLy, 0, 4);
         
     }
 
+    /**
+     *
+     */
+    private void initListener() {
+
+        this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void layoutClick(LayoutEvents.LayoutClickEvent event) {
+                VaadinSession.getCurrent().setAttribute(Vote.class, vote);
+                navigator.navigateTo("V6_VoteView");
+
+            }
+        });
+
+    }
 }

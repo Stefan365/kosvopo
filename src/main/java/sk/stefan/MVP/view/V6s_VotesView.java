@@ -23,7 +23,7 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicBodiesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
@@ -52,6 +52,9 @@ public class V6s_VotesView extends VerticalLayout implements View {
     private final Navigator nav;
     
     public V6s_VotesView (){
+
+        this.setMargin(true);
+        this.setSpacing(true);
     
         this.nav = UI.getCurrent().getNavigator();
 
@@ -137,7 +140,7 @@ public class V6s_VotesView extends VerticalLayout implements View {
      */
     private void initNewPublicBodyButton() {
         
-        this.addVoteBt = InputNewEntityButtonFactory.createMyButton(Vote.class);
+        this.addVoteBt = InputNewEntityButtonFactory.createMyInputButton(Vote.class);
         
         temporaryLy.addComponent(addVoteBt);
     }

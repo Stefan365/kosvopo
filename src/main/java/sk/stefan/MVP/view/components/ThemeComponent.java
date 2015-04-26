@@ -38,8 +38,11 @@ public class ThemeComponent extends GridLayout {
      * @param vs
      */
     public ThemeComponent(Theme th, VoteService vs) {
-
         super(1, 2);//column , row
+
+        this.setMargin(true);
+        this.setSpacing(true);
+        
         this.navigator = UI.getCurrent().getNavigator();
         this.theme = th;
         this.voteService = vs;
@@ -57,6 +60,7 @@ public class ThemeComponent extends GridLayout {
         this.setSpacing(true);
 
         this.titleLb = new Label(theme.getBrief_description());
+        this.titleLb.setCaption("Tématický okruh");
         this.DescriptionLb = new Label(theme.getDescription());
         
         this.addComponent(titleLb, 0, 0);

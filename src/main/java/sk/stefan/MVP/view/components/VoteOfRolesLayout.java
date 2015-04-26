@@ -17,7 +17,7 @@ import sk.stefan.interfaces.Filterable;
  *
  * @author stefan
  */
-public class VotesOfRoleLayout extends VerticalLayout implements Filterable {
+public class VoteOfRolesLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 43565321L;
     
@@ -30,7 +30,7 @@ public class VotesOfRoleLayout extends VerticalLayout implements Filterable {
      * @param votesOfRole
      * @param vots
      */
-    public VotesOfRoleLayout(List<VoteOfRole> votesOfRole, VoteService vots){
+    public VoteOfRolesLayout(List<VoteOfRole> votesOfRole, VoteService vots){
         
         this.setSpacing(true);
         this.setMargin(true);

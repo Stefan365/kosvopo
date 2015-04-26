@@ -254,6 +254,21 @@ public class GeneralRepo {
 
         }
     }
+    
+    public List<Integer> findMeAdminAndAllVolunteers(Integer adminId){
+    
+        List<Integer> uIds;
+        
+//        najdi vsetkych uzivatelov s aktualnou rolou dobrovolnik. + sameho seba (pohladu aministratora). 
+        String sql = "select u.id from a_user u JOIN a_user_role ur ON(u.id = ur.user_id) "
+                + " where ur.role_id = 1 "
+                + " AND ur.actual = true "
+                + " AND u.active = true";
+        
+        return null;
+        
+        
+    }
 
 //    /**
 //     * Inputs file into the database.
@@ -312,5 +327,22 @@ public class GeneralRepo {
 //            return null;
 //        }
 //    }
+
+    /**
+     * Deactivates all documents related to entity.
+     * @param tn
+     * @param rid
+     * @throws java.sql.SQLException
+     */
+    public void deactivateEntityDocuments(String tn, Integer rid) throws SQLException {
+        
+        Statement st = transConn.createStatement();
+
+        String sql = String.format("UPDATE t_document "
+                + " SET visible = false WHERE table_name = %s AND table_row_id = %d", tn, rid);
+        st.executeUpdate(sql);
+
+        st.close();
+    }
 
 }

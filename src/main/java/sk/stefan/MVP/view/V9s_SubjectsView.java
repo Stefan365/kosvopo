@@ -22,7 +22,7 @@ import sk.stefan.MVP.model.service.PublicBodyService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicBodiesLayout;
 import sk.stefan.enums.UserType;
@@ -54,6 +54,9 @@ public class V9s_SubjectsView extends VerticalLayout implements View {
 
     
     public V9s_SubjectsView (){
+
+        this.setMargin(true);
+        this.setSpacing(true);
     
         this.nav = UI.getCurrent().getNavigator();
 
@@ -146,7 +149,7 @@ public class V9s_SubjectsView extends VerticalLayout implements View {
      */
     private void initNewPublicBodyButton() {
         
-        this.addNewPublicBodyBt = InputNewEntityButtonFactory.createMyButton(PublicBody.class);
+        this.addNewPublicBodyBt = InputNewEntityButtonFactory.createMyInputButton(PublicBody.class);
         
         temporaryLy.addComponent(addNewPublicBodyBt);
     }

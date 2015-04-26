@@ -23,6 +23,8 @@ public class V2_EnterView extends VerticalLayout implements View {
 
     public V2_EnterView() {
    
+        this.setMargin(true);
+        this.setSpacing(true);
         
         this.nav = UI.getCurrent().getNavigator();
 

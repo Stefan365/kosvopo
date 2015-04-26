@@ -252,7 +252,10 @@ public class InputFormLayout<T> extends FormLayout {
 
                 case "java.lang.Boolean":
                     switch (pn) {
-//                        case "active":
+//                        case "role_id":
+//                            nieje potreb to nejak nastavovat, lebo 
+//                             sa o to stara vlastne databaza, tj. DEFAULT= 1;
+//                            
 //                            break;
                         default:
                             fieldMap.put(pn, bindCheckBox(pn));

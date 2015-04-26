@@ -423,6 +423,9 @@ public abstract class ToolsFiltering {
         }
 
         invasiveGenRepo.deactivateOne(tn, id);
+        //deactivate documents;
+        invasiveGenRepo.deactivateEntityDocuments(tn, id);
+        
 
         List<String> slaveTns = ToolsFiltering.getSlaves(tn);
 
@@ -446,7 +449,7 @@ public abstract class ToolsFiltering {
 //                    genRepo.deactivateOne(key, aid);
 //                }
 //            }
-            //      najdime dalsich podotrokov:
+            //      najdime dalsich pod-otrokov:
             for (String key : slavesIdsMap.keySet()) {
                 slvIds = slavesIdsMap.get(key);
                 for (Integer aid : slvIds) {

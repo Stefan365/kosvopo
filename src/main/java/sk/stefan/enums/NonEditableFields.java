@@ -88,8 +88,9 @@ public enum NonEditableFields {
                 return new String[]{"active"};
             case A_USER_ROLE:
 //                return new String[]{};
-                return new String[]{"since", "till","active"};
+                return new String[]{"actual","since", "till","active"};
             default:
+                
                 return null;
         }
     }

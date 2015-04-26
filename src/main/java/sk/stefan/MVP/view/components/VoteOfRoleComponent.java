@@ -7,9 +7,12 @@ package sk.stefan.MVP.view.components;
 
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
+import sk.stefan.MVP.model.entity.dao.PublicRole;
 import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
+import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 
 /**
  *
@@ -21,10 +24,12 @@ public class VoteOfRoleComponent extends GridLayout {
 
     private final VoteOfRole voteOfRole;
 
+//    servisy:
     private final VoteService voteService;
+//    private final PublicRoleService pubRoleService;
     
     //graficke komponenty:
-    private VoteComponent voteComp;
+    private PublicRoleSimpleComponent pubRoleComp;
     private Label roleDecisionLb; 
 
     //0.konstruktor:
@@ -37,6 +42,7 @@ public class VoteOfRoleComponent extends GridLayout {
         super(2, 1);//column , row
         this.voteOfRole = vor;
         this.voteService = vs;
+//        this.pubRoleService = new PublicRoleServiceImpl();
 
         this.initLayout();
      
@@ -51,10 +57,12 @@ public class VoteOfRoleComponent extends GridLayout {
         this.setSpacing(true);
 
         Vote vot = voteService.getVote(voteOfRole);//voteService.getVoteResultAsString(, voteService);
-        this.voteComp = new VoteComponent(vot, voteService);
         this.roleDecisionLb = new Label(voteOfRole.getDecision().getName());
         
-        this.addComponent(voteComp, 0, 0);
+        PublicRole pr = voteService.getPublicRoleById(voteOfRole.getPublic_role_id());
+        pubRoleComp = new PublicRoleSimpleComponent(pr, null);
+        
+        this.addComponent(pubRoleComp, 0, 0);
         this.addComponent(roleDecisionLb, 1, 0);
         
     }

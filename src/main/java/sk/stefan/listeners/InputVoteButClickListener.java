@@ -19,7 +19,7 @@ import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
 @SuppressWarnings("serial")
 public class InputVoteButClickListener implements ClickListener {
 
-    private static final Logger log = Logger.getLogger(InputButClickListener.class);
+    private static final Logger log = Logger.getLogger(InputVoteButClickListener.class);
 
     private final String title;
     private VotingLayout votingLy;

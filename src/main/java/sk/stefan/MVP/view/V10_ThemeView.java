@@ -10,6 +10,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
@@ -19,12 +20,13 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.EditEntityButtonFactory;
+import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.ThemeDetailedComponent;
 import sk.stefan.documents.DownloaderLayout;
 import sk.stefan.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.listeners.EditWrapper;
 
 /**
  *
@@ -57,6 +59,9 @@ public final class V10_ThemeView extends VerticalLayout implements View {
     //konstruktor:
     public V10_ThemeView() {
         
+        this.setMargin(true);
+        this.setSpacing(true);
+                
         this.nav = UI.getCurrent().getNavigator();
 
         navComp = NavigationComponent.createNavigationComponent();
@@ -110,7 +115,8 @@ public final class V10_ThemeView extends VerticalLayout implements View {
      */
     private void initEditThemeButton() {
         
-        this.editThemeBt = EditEntityButtonFactory.createMyButton(Theme.class, theme);
+        EditWrapper<Theme> ew = new EditWrapper<>(editThemeBt, Theme.class, theme);
+        this.editThemeBt = EditEntityButtonFactory.createMyEditButton(ew);
         
         temporaryLy.addComponent(editThemeBt);
 
@@ -140,19 +146,20 @@ public final class V10_ThemeView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-
+//        Notification.show("ThemeView");
+        
         Theme th = VaadinSession.getCurrent().getAttribute(Theme.class);
         
         A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
-
-        UserType utype = userService.getUserType(user);
-                
+        
         Boolean isVolunteer = Boolean.FALSE;
         if (user != null){
+            UserType utype = userService.getUserType(user);
             //moze byt dobrovolnik, alebo admin.
             isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
         }
-        
+//        Notification.show("ThemeView, theme is null" + (th == null));
+
         if (th != null){
             setThemeValue(th);
             initAllBasic(isVolunteer);

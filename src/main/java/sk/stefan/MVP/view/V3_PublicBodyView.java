@@ -26,7 +26,7 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.InputNewEntityButtonFactory;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
@@ -74,6 +74,9 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     //konstruktor:
     public V3_PublicBodyView(){
         
+        this.setMargin(true);
+        this.setSpacing(true);
+
         this.nav = UI.getCurrent().getNavigator();
 
         navComp = NavigationComponent.createNavigationComponent();
@@ -182,7 +185,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
      */
     private void initNewPublicRoleButton() {
         
-        this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyButton(PublicRole.class);
+        this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyInputButton(PublicRole.class);
         
         temporaryLy.addComponent(addNewPublicRoleBt);
     

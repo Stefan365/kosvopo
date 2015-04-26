@@ -28,8 +28,8 @@ import sk.stefan.MVP.model.entity.dao.Vote;
 import sk.stefan.MVP.model.entity.dao.VoteClassification;
 import sk.stefan.MVP.model.entity.dao.VoteOfRole;
 import sk.stefan.interfaces.ZBD_InputNewEntityButtonsPool;
-import sk.stefan.listeners.InputButClickListener;
 import sk.stefan.listeners.InputVoteButClickListener;
+import sk.stefan.listeners.Input_EditButClickListener;
 import sk.stefan.wrappers.ZBD_InputFormWrapper;
 
 /**
@@ -144,7 +144,7 @@ public class ZBD_InputNewEntityButtonsPoolImpl implements ZBD_InputNewEntityButt
                 b.addClickListener(new InputVoteButClickListener(s));
             } else {
 //                log.info("LSTENER2: " + wr.getClsE().getCanonicalName());
-                b.addClickListener(new InputButClickListener(wr.getClsE(), wr.getButtonName()));
+                b.addClickListener(new Input_EditButClickListener<>(wr.getClsE(), wr.getButtonName(), null));
             }
 
         }

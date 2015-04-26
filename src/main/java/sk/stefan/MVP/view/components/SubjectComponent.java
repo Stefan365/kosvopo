@@ -31,7 +31,7 @@ public class SubjectComponent extends HorizontalLayout{
     private final VoteService voteService; 
 
     //graficke komponenty:
-    private Label BriefDescriptionLb;
+    private Label briefDescriptionLb;
     private Label descriptionLb;
     private HorizontalLayout themeInternalLy;
     private Label themeLb;
@@ -49,7 +49,7 @@ public class SubjectComponent extends HorizontalLayout{
     public SubjectComponent(Subject sub, VoteService vots) {
 
         this.setSpacing(true);
-//        this.setMargin(true);
+        this.setMargin(true);
 
         this.navigator = UI.getCurrent().getNavigator();
         this.subject = sub;
@@ -64,7 +64,8 @@ public class SubjectComponent extends HorizontalLayout{
      */
     private void initLayout() {
         
-        this.BriefDescriptionLb = new Label(subject.getBrief_description());
+        this.briefDescriptionLb = new Label(subject.getBrief_description());
+        this.briefDescriptionLb.setCaption("Predmet hlasovania");
         this.descriptionLb = new Label(subject.getDescription());
         
         //theme:
@@ -84,7 +85,7 @@ public class SubjectComponent extends HorizontalLayout{
         themeInternalLy.addComponent(themeLb);
         
         
-        this.addComponents(BriefDescriptionLb, descriptionLb);
+        this.addComponents(briefDescriptionLb, descriptionLb);
         
     }
 
@@ -95,6 +96,7 @@ public class SubjectComponent extends HorizontalLayout{
      */
     private void initListeners() {
 
+        
         //1. Listener pre cely Subejct component.
         this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
 
@@ -103,7 +105,7 @@ public class SubjectComponent extends HorizontalLayout{
             @Override
             public void layoutClick(LayoutEvents.LayoutClickEvent event) {
                 VaadinSession.getCurrent().setAttribute(Subject.class, subject);
-                navigator.navigateTo("V9s_SubjectsView");
+                navigator.navigateTo("V9_SubjectView");
  
             }
         });
@@ -119,7 +121,7 @@ public class SubjectComponent extends HorizontalLayout{
             public void layoutClick(LayoutEvents.LayoutClickEvent event) {
                 
                 VaadinSession.getCurrent().setAttribute(Theme.class, voteService.getThemeById(subject.getTheme_id()));
-                navigator.navigateTo("V10s_ThemesView"); 
+                navigator.navigateTo("V10_ThemeView"); 
             }
         });
         

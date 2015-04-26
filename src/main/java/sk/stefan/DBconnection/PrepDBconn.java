@@ -27,10 +27,7 @@ public class PrepDBconn {
         switch (db) {
 
             case MYSQL:
-//                dbDriver = "com.mysql.jdbc.Driver";
-//                dbURL = "jdbc:mysql://localhost/kosvopo7?zeroDateTimeBehavior=convertToNull";
-//                dbUser = "root";
-//                dbPwd = "";
+                
                 dbDriver = props.getString("dbDriver");
                 dbURL = props.getString("dbUrl");
                 dbUser = props.getString("dbUser");

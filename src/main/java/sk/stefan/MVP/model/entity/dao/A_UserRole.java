@@ -16,6 +16,8 @@ public class A_UserRole implements PresentationName {
     private Integer user_id;
 
     private Integer role_id;
+    
+    private Boolean actual;
 
     private Date since;
 
@@ -77,6 +79,13 @@ public class A_UserRole implements PresentationName {
         this.active = active;
     }
 
+    public Boolean getActual() {
+        return actual;
+    }
+
+    public void setActual(Boolean actual) {
+        this.actual = actual;
+    }
 
     @Override
     public String getPresentationName() {
@@ -92,7 +101,5 @@ public class A_UserRole implements PresentationName {
         } else {
             return id + ", nedefinované";
         }
-
     }
-
 }

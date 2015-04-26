@@ -45,25 +45,24 @@ public class V1_LoginView extends VerticalLayout implements View {
     private PasswordField passwordPf;
 
 //    private InputOptionGroup<Integer> userRoleOg;
-
     private HorizontalLayout buttonsHl;
 
     private VerticalLayout formVl;
 
-
-    
     private VerticalLayout temporaryLy;
     private final NavigationComponent navComp;
     private final Navigator nav;
-    
-    
+
     public V1_LoginView() {
-        
+
+        this.setMargin(true);
+        this.setSpacing(true);
+
         this.nav = UI.getCurrent().getNavigator();
 
         navComp = NavigationComponent.createNavigationComponent();
         this.addComponent(navComp);
-        
+
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);
 
@@ -71,13 +70,8 @@ public class V1_LoginView extends VerticalLayout implements View {
         securityService = new SecurityServiceImpl();
         userService = new UserServiceImpl();
 
-//        try {
-//            this.initOptionGroup();
-            this.initFields();
-            this.initLayout();
-//        } catch (NoSuchMethodException ex) {
-//            log.error(ex.getMessage(), ex);
-//        }
+        this.initFields();
+        this.initLayout();
     }
 
     private void initLayout() {
@@ -150,7 +144,6 @@ public class V1_LoginView extends VerticalLayout implements View {
 //        this.userRoleOg.setValue(0);
 //
 //    }
-
     @Override
     public void enter(ViewChangeEvent event) {
         Notification.show("VŠECHEN SPĚCH JEST OD ĎÁBLA!");
