@@ -88,7 +88,7 @@ public class Subject implements PresentationName {
         }
         String s = this.brief_description;
         if (pb != null){
-            s += pb.getPresentationName();
+            s += " " + pb.getPresentationName();
         }
         return s;
     }

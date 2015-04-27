@@ -5,29 +5,23 @@
  */
 package sk.stefan.MVP.view;
 
-import com.vaadin.event.FieldEvents;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import java.util.List;
 import sk.stefan.MVP.model.entity.A_User;
-import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.components.PublicBodiesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 
 /**
  *
@@ -45,7 +39,6 @@ public class V6s_VotesView extends VerticalLayout implements View {
     private Button addVoteBt;
     
     private final UserService userService;
-    private TextField searchFd; 
     
     private final VerticalLayout temporaryLy;   
     private final NavigationComponent navComp;
@@ -78,9 +71,8 @@ public class V6s_VotesView extends VerticalLayout implements View {
         temporaryLy.removeAllComponents();
 
         this.initLayout();
-        this.initSearchListener();
         
-        temporaryLy.addComponents(searchFd, votesLayout);
+        temporaryLy.addComponents(votesLayout);
         
         if(isVolunteer){
             this.initNewPublicBodyButton();
@@ -98,40 +90,10 @@ public class V6s_VotesView extends VerticalLayout implements View {
         this.setSpacing(true);
         
         this.votesLayout = new VotesLayout(voteService.findAll(), voteService);
-        this.searchFd = new TextField("Vyhľadávanie");
-        this.initSearch();
+        
         
     }
     
-    //3.
-    /**
-     */
-    private void initSearch() {
-        
-        searchFd.setWidth("40%");
-        searchFd.setInputPrompt("možeš použiť vyhľadávanie");
-        searchFd.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
-        
-    }
-    
-    /**
-     * Initializes listener
-     */
-    private void initSearchListener(){
-        
-        searchFd.addTextChangeListener(new FieldEvents.TextChangeListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void textChange(final FieldEvents.TextChangeEvent event) {
-        
-                String tx = event.getText();
-                List<Integer> votIds = voteService.findNewVoteIdsByFilter(tx);
-                votesLayout.applyFilter(votIds);
-                
-            }
-        });
-    }
     
 
 

@@ -12,7 +12,6 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.PublicPerson;
@@ -21,7 +20,6 @@ import sk.stefan.MVP.model.entity.Subject;
 import sk.stefan.MVP.model.entity.Theme;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteClassification;
-import sk.stefan.MVP.model.entity.VoteOfRole;
 import sk.stefan.MVP.model.service.ClassificationService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
@@ -51,7 +49,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
     //hlavna entita tohoto VIew
     private Vote vote;
 
-    private List<VoteOfRole> voteOfRoles;
+//    private List<VoteOfRole> voteOfRoles;
 
     private Subject subject;
     
@@ -145,7 +143,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
         this.vote = vot;
         this.subject = voteService.findSubjectById(vote.getSubject_id());
         this.theme = voteService.findThemeBySubjectId(vote.getSubject_id());
-        this.voteOfRoles = voteService.findVoteOfRolesByVoteId(vote.getId());
+//        this.voteOfRoles = voteService.findVoteOfRolesByVoteId(vote.getId());
         this.voteClassification = classificationService.findVoteClassByVoteId(vote.getId());
         
     }

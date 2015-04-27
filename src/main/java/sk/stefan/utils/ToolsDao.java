@@ -467,7 +467,7 @@ public abstract class ToolsDao {
         String repN;
         Integer id;
         try {
-            Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
+            Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.UniRepo");
             Constructor<UniRepo<? extends Object>> repoCtor;
             repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
             List<? extends Object> listObj;

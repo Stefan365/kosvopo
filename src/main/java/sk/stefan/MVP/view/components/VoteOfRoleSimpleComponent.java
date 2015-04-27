@@ -10,15 +10,13 @@ import com.vaadin.ui.Label;
 import sk.stefan.MVP.model.entity.PublicRole;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteOfRole;
-import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.VoteService;
-import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 
 /**
  *
  * @author stefan
  */
-public class VoteOfRoleComponent extends GridLayout {
+public class VoteOfRoleSimpleComponent extends GridLayout {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +35,7 @@ public class VoteOfRoleComponent extends GridLayout {
      * @param vor
      * @param vs
      */
-    public VoteOfRoleComponent(VoteOfRole vor, VoteService vs) {
+    public VoteOfRoleSimpleComponent(VoteOfRole vor, VoteService vs) {
 
         super(2, 1);//column , row
         this.voteOfRole = vor;

@@ -26,13 +26,13 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 
 /**
  *
@@ -56,7 +56,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     
     //componenty pre TimeLine:
     private IndexedContainer container;
-    private Object timestampProperty;
+    private Object timeStampProperty;
     private Object valueProperty;
     private Timeline timeLine;
     
@@ -144,20 +144,19 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         container = new IndexedContainer();
 
         // Add the Timestamp property to the container
-        timestampProperty = "Our timestamp property";
-        container.addContainerProperty(timestampProperty,
-                java.util.Date.class, null);
+        timeStampProperty = "vote_date";
+        container.addContainerProperty(timeStampProperty, java.util.Date.class, null);
 
         // Add the value property
-        valueProperty = "Our value property";
-        container.addContainerProperty(valueProperty, Float.class, null);
+        valueProperty = "for_vote";
+        container.addContainerProperty(valueProperty, java.lang.Integer.class, null);
 
         // Our timeline
         timeLine = new Timeline();
+        timeLine.addStyleName(null);
 
         // Add the container as a graph container
-        timeLine.addGraphDataSource(container, timestampProperty,
-                valueProperty);
+        timeLine.addGraphDataSource(container, timeStampProperty, valueProperty);
         
     }
 

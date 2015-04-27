@@ -26,7 +26,8 @@ import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicRoleComponent;
-import sk.stefan.MVP.view.components.VoteOfRolesLayout;
+import sk.stefan.MVP.view.components.VoteOfRolesDetailedLayout;
+import sk.stefan.MVP.view.components.VoteOfRolesSimpleLayout;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
@@ -58,7 +59,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
 
     //layout pre zobrazenie zakladnych udajov danej osoby.
     private PublicRoleComponent publicRoleComponent;
-    private VoteOfRolesLayout votesOfRoleLayout;
+    private VoteOfRolesDetailedLayout votesOfRoleLayout;
     
     //pre uzivatela obcan   
     private DownloaderLayout<PublicRole> downoaderLayout;
@@ -102,7 +103,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
         temporaryLy.removeAllComponents();
         
         this.initPublicPersonComponent();
-        this.initVotesOrRoleLayout();
+        this.initVotesOfRoleLayout();
         this.initTimeline();
 
         temporaryLy.addComponents(publicRoleComponent, votesOfRoleLayout, timeLine);
@@ -137,13 +138,13 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
     /**
      * 
      */
-    private void initVotesOrRoleLayout() {
+    private void initVotesOfRoleLayout() {
 
         List<Integer> vorIds = voteService.findVoteOfRoleIdsByPubRoleId(publicRole.getId());
 
         List<VoteOfRole> votesOfRole = voteService.findNewVotesOfRole(vorIds);
 
-        this.votesOfRoleLayout = new VoteOfRolesLayout(votesOfRole, voteService);
+        this.votesOfRoleLayout = new VoteOfRolesDetailedLayout(votesOfRole, voteService);
 
     }
 

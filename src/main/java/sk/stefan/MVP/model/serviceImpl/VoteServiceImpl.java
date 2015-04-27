@@ -192,7 +192,7 @@ public class VoteServiceImpl implements VoteService {
         
         Subject sub = subjectRepo.findOne(subId);
         if (sub != null){
-            return sub.getPresentationName();
+            return sub.getBrief_description();
         } else {
             return "žiadny predmet";
         }

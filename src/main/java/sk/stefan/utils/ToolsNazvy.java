@@ -29,7 +29,6 @@ import sk.stefan.MVP.model.entity.Subject;
 import sk.stefan.MVP.model.entity.Tenure;
 import sk.stefan.MVP.model.entity.Theme;
 import sk.stefan.MVP.model.entity.Vote;
-import sk.stefan.MVP.view.components.InputOptionGroup;
 import sk.stefan.enums.UserType;
 
 /**

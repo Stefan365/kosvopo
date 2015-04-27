@@ -31,7 +31,7 @@ public class VoteDetailedComponent extends GridLayout {
     
     //graficke komponenty:
     private List<VoteOfRole> voteOfRoles;
-    private VoteOfRolesLayout voteOfRolesLy;
+    private VoteOfRolesSimpleLayout voteOfRolesLy;
     
     private Label dateLb; 
     private Label internalNrLb;
@@ -72,7 +72,7 @@ public class VoteDetailedComponent extends GridLayout {
         this.numbersLb = new Label(voteService.getVoteNumbers(vote));
         
         this.voteOfRoles = voteService.findVoteOfRolesByVoteId(vote.getId());
-        this.voteOfRolesLy = new VoteOfRolesLayout(voteOfRoles,voteService);
+        this.voteOfRolesLy = new VoteOfRolesSimpleLayout(voteOfRoles,voteService);
          
         
         this.addComponent(dateLb, 0, 0);
