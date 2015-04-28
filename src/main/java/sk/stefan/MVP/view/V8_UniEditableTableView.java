@@ -338,7 +338,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
         try {
 
-            sqlContainer = DoDBconn.getContainer(tn);
+            sqlContainer = DoDBconn.createSqlContainer(tn);
             obnovFilter();
         } catch (SecurityException | SQLException e) {
             log.error(e.getMessage());

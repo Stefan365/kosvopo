@@ -94,7 +94,13 @@ public class DoDBconn {
     }
 
     // 5.
-    public static SQLContainer getContainer(String TableName) throws SQLException {
+    /**
+     * Factory metoda na tvorbu sql containeru.
+     * @param TableName
+     * @return 
+     * @throws java.sql.SQLException
+     */
+    public static SQLContainer createSqlContainer(String TableName) throws SQLException {
 
         TableQuery q1 = new TableQuery(TableName, connectionPool);
         q1.setVersionColumn("id");
