@@ -195,7 +195,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
      */
     private void initUploadLayout() {
         
-        this.uploaderLayout = new UploaderLayout<>(PublicBody.class);
+        this.uploaderLayout = new UploaderLayout<>(PublicBody.class, this.publicBody);
         
         temporaryLy.addComponent(uploaderLayout);
         
@@ -206,7 +206,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
      */
     private void initDownloadLayout() {
         
-        this.downoaderLayout = new DownloaderLayout<>(PublicBody.class);
+        this.downoaderLayout = new DownloaderLayout<>(PublicBody.class, this.publicBody);
         
         temporaryLy.addComponent(downoaderLayout);
         

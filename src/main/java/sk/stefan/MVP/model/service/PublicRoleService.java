@@ -32,6 +32,6 @@ public interface PublicRoleService {
 
     public List<Integer> findPublicRoleIdsByFilter(String tx);
 
-    public PublicRole getActualRoleForPublicBody(PublicPerson pp, PublicBody pb);
+    public PublicRole getActualRole(PublicPerson pp, PublicBody pb);
     
 }

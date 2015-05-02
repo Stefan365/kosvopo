@@ -48,7 +48,7 @@ public class DoDBconn {
     // 0.A konstruktor:
     public DoDBconn() {
 
-        connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 55);
+        connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 255);
         
     }
 
@@ -100,7 +100,7 @@ public class DoDBconn {
      * @return 
      * @throws java.sql.SQLException
      */
-    public static SQLContainer createSqlContainer(String TableName) throws SQLException {
+    public static SQLContainer createSqlContainera(String TableName) throws SQLException {
 
         TableQuery q1 = new TableQuery(TableName, connectionPool);
         q1.setVersionColumn("id");

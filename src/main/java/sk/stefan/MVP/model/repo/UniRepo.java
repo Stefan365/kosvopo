@@ -64,9 +64,11 @@ public class UniRepo<E> implements MyRepo<E> {
             st = DoDBconn.getNonInvasiveConn().createStatement();
 
             String sql;
-            if (TN.contains("a_")) {
+            if (TN.contains("a_")&& !"a_hierarchy".equals(TN)) {
                 sql = String.format("SELECT * FROM %s WHERE active = true", TN);
-            } else {
+            } else if ("a_hierarchy".equals(TN)){
+                sql = String.format("SELECT * FROM %s", TN);
+            } else {    
                 sql = String.format("SELECT * FROM %s  WHERE visible = true", TN);
             }
 
@@ -106,8 +108,10 @@ public class UniRepo<E> implements MyRepo<E> {
             st = DoDBconn.getNonInvasiveConn().createStatement();
 
             String sql;
-            if (TN.contains("a_")) {
+            if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
                 sql = String.format("SELECT * FROM %s WHERE id = %d AND active = true", TN, id);
+            } else if ("a_hierarchy".equals(TN)){
+                sql = String.format("SELECT * FROM %s WHERE id = %d", TN, id);
             } else {
                 sql = String.format("SELECT * FROM %s WHERE id = %d AND visible = true", TN, id);
             }
@@ -145,6 +149,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
         try {
             //pre pripad, ze by spojenie spadlo.
+            
             if (DoDBconn.getNonInvasiveConn() == null) {
                 DoDBconn.createNoninvasiveConnection();
             }
@@ -155,8 +160,10 @@ public class UniRepo<E> implements MyRepo<E> {
 
             sql.append(String.format("SELECT * FROM %s WHERE ", TN));
             sql.append(this.getFindByParamQuery(paramName, paramValue));
-            if (TN.contains("a_")) {
+            if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
                 sql.append(" AND active = true");
+                //do nothing
+            } else if ("a_hierarchy".equals(TN)){
                 //do nothing
             } else {
                 sql.append(" AND visible = true");
@@ -212,8 +219,10 @@ public class UniRepo<E> implements MyRepo<E> {
             sql.append(this.getFindByParamQuery(p1Name, p1Value));
             sql.append(" AND ");
             sql.append(this.getFindByParamQuery(p2Name, p2Value));
-            if (TN.contains("a_")) {
+            if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
                 sql.append(" AND active = true");
+                //do nothing
+            } else if ("a_hierarchy".equals(TN)){
                 //do nothing
             } else {
                 sql.append(" AND visible = true");

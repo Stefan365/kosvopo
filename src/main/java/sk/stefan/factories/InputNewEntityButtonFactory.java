@@ -42,7 +42,7 @@ public abstract class InputNewEntityButtonFactory {
      */
     private static Button initButton(Button b, Class<?> cls) {
 
-        String title = ToolsDao.getTitleName(cls);
+        String title = "pridaj " + ToolsDao.getTitleName(cls);
 
         b.setCaption(title);
         if ((Vote.class).equals(cls)) {

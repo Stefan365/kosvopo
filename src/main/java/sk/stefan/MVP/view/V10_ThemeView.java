@@ -127,18 +127,19 @@ public final class V10_ThemeView extends VerticalLayout implements View {
      */
     private void initUploadLayout() {
         
-        this.uploaderLayout = new UploaderLayout<>(Theme.class);
+        this.uploaderLayout = new UploaderLayout<>(Theme.class, this.theme);
         
         temporaryLy.addComponent(uploaderLayout);
         
     }
+    
 
     /**
      * Komponenta na zobrazovanie dokumentov prisluchajucich entite PublicBody.
      */
     private void initDownloadLayout() {
         
-        this.downoaderLayout = new DownloaderLayout<>(Theme.class);
+        this.downoaderLayout = new DownloaderLayout<>(Theme.class, this.theme);
         
         temporaryLy.addComponent(downoaderLayout);
         

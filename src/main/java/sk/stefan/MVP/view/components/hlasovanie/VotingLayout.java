@@ -111,7 +111,7 @@ public class VotingLayout extends HorizontalLayout implements OkCancelListener, 
 
             Field tnFld = cls.getDeclaredField("TN");
             tn = (String) tnFld.get(null);
-            sqlCont = DoDBconn.createSqlContainer(tn);
+            sqlCont = DoDBconn.createSqlContainera(tn);
 
         } catch (IllegalAccessException | SQLException | NoSuchFieldException | SecurityException ex) {
             log.error(ex.getMessage());

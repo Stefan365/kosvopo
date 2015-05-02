@@ -30,8 +30,8 @@ public class ZBD_DocumentSkusView extends HorizontalLayout implements View {
         
         this.voteRepo = new UniRepo<>(Vote.class);
         this.hlasovanie = voteRepo.findOne(2);
-        this.upLy = new UploaderLayout<>(Vote.class);
-        this.dwLy = new DownloaderLayout<>(Vote.class);
+        this.upLy = new UploaderLayout<>(Vote.class, null);
+        this.dwLy = new DownloaderLayout<>(Vote.class, null);
         this.upLy.setEntity(hlasovanie);
         this.dwLy.setEntity(hlasovanie);
         

@@ -48,14 +48,18 @@ public class UploaderLayout<E> extends VerticalLayout {
     //0. konstruktor
     /**
      *
+     * @param cls
+     * @param entit
      */
-    public UploaderLayout(Class<E> cls) {
+    public UploaderLayout(Class<E> cls, E entit){
 
         documentService = new DocumentServiceImpl<>(cls);
         this.setMargin(true);
         this.setSpacing(true);
 
-        this.initAddButton();
+        this.ent = entit;
+        this.initLayout();
+//        this.initAddButton();
 
 //        this.clsE = cls;
 //        this.docRepo = new UniRepo<>(Document.class);
@@ -64,6 +68,7 @@ public class UploaderLayout<E> extends VerticalLayout {
     }
 
     /**
+     * ZBYTOCNE< POTOM VYMAZAT!!!!!
      * NAdstavi entitu do filesLayoutu
      *
      * @param en
@@ -75,6 +80,7 @@ public class UploaderLayout<E> extends VerticalLayout {
         this.initUploaderComponents();
     
     }
+//    **** ZBYTOCNE< POTOM VYMAZAT!!!!
 
     /**
      *
@@ -94,8 +100,10 @@ public class UploaderLayout<E> extends VerticalLayout {
             String tn = documentService.getClassTableName();
 
             entDocuments = documentService.findAllEntityDocuments(tn, rid);
+            
+            this.initUploaderComponents();
 
-        }
+        } 
     }
 
     /**

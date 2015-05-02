@@ -90,7 +90,7 @@ public class PublicRoleServiceImpl implements PublicRoleService {
      */
     
     @Override
-    public PublicRole getActualRoleForPublicBody(PublicPerson pp, PublicBody pb){
+    public PublicRole getActualRole(PublicPerson pp, PublicBody pb){
         
         List<PublicRole> pubRoles = this.getActualPublicRolesOfPublicPerson(pp);
         

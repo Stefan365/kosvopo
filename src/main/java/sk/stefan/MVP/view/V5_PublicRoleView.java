@@ -191,7 +191,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
      */
     private void initUploadLayout() {
         
-        this.uploaderLayout = new UploaderLayout<>(PublicRole.class);
+        this.uploaderLayout = new UploaderLayout<>(PublicRole.class, this.publicRole);
         
         temporaryLy.addComponent(uploaderLayout);
         
@@ -202,7 +202,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
      */
     private void initDownloadLayout() {
         
-        this.downoaderLayout = new DownloaderLayout<>(PublicRole.class);
+        this.downoaderLayout = new DownloaderLayout<>(PublicRole.class, this.publicRole);
         
         temporaryLy.addComponent(downoaderLayout);
         

@@ -128,7 +128,7 @@ public final class V9_SubjectView extends VerticalLayout implements View {
      */
     private void initUploadLayout() {
         
-        this.uploaderLayout = new UploaderLayout<>(Subject.class);
+        this.uploaderLayout = new UploaderLayout<>(Subject.class, this.subject);
         
         temporaryLy.addComponent(uploaderLayout);
         
@@ -139,7 +139,7 @@ public final class V9_SubjectView extends VerticalLayout implements View {
      */
     private void initDownloadLayout() {
         
-        this.downoaderLayout = new DownloaderLayout<>(Subject.class);
+        this.downoaderLayout = new DownloaderLayout<>(Subject.class, this.subject);
         
         temporaryLy.addComponent(downoaderLayout);
         

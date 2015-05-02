@@ -60,7 +60,7 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
             Field tnFld = clsE.getDeclaredField("TN");
 
             tn = (String) tnFld.get(null);
-            sqlCont = DoDBconn.createSqlContainer(tn);
+            sqlCont = DoDBconn.createSqlContainera(tn);
             InputFormLayout<E> inputFl;
             if (ent == null){
                 itemId = sqlCont.addItem();

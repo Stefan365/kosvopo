@@ -12,7 +12,7 @@ public class V2_EnterView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = -2001141270398193257L;
     
-    private final Label vstupniLab;
+//    private final Label vstupniLab;
     
     private final VerticalLayout temporaryLy;
     
@@ -34,12 +34,12 @@ public class V2_EnterView extends VerticalLayout implements View {
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);
 
-        this.vstupniLab = new Label("KAMIL");
-        this.vstupniLab.setCaption("Marcel Z Maleho Mesta JE Tu!!! Je, je, je jeee....");
-        this.vstupniLab.setValue("HODNOTA");
+//        this.vstupniLab = new Label("KAMIL");
+//        this.vstupniLab.setCaption("Marcel Z Maleho Mesta JE Tu!!! Je, je, je jeee....");
+//        this.vstupniLab.setValue("HODNOTA");
         
 
-        temporaryLy.addComponent(vstupniLab);
+//        temporaryLy.addComponent(vstupniLab);
         
         
     }

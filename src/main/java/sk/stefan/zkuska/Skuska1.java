@@ -1061,7 +1061,7 @@ public class Skuska1<T> {
 
         try {
             String tn = "t_vote";
-            SQLContainer sqlCont = DoDBconn.createSqlContainer(tn);
+            SQLContainer sqlCont = DoDBconn.createSqlContainera(tn);
 
             Object itemId = sqlCont.addItem();
             Item item = sqlCont.getItem(itemId);

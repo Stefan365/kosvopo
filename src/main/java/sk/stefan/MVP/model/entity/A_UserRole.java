@@ -71,6 +71,7 @@ public class A_UserRole implements PresentationName {
         this.till = till;
     }
     
+
     public Boolean getActive() {
         return active;
     }

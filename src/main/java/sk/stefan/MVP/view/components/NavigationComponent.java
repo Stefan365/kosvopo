@@ -130,6 +130,8 @@ public class NavigationComponent extends HorizontalLayout {
         this.addComponent(b4s);
 //        this.addComponent(b5);
         this.addComponent(b6s);
+        this.addComponent(b7);
+        
 
     }
 

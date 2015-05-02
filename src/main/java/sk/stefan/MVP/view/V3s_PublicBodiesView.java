@@ -136,6 +136,8 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
         
         searchFd.setWidth("40%");
         searchFd.setInputPrompt("možeš použiť vyhľadávanie podľa názvu obce");
+//          searchFd.setInputPrompt("všechen spěch jest od ďábla!");
+        
         searchFd.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
         
     }

@@ -14,7 +14,6 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
-import sk.stefan.MVP.model.entity.PublicPerson;
 import sk.stefan.MVP.model.entity.PublicRole;
 import sk.stefan.MVP.model.entity.Subject;
 import sk.stefan.MVP.model.entity.Theme;
@@ -26,7 +25,6 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.SubjectComponent;
 import sk.stefan.MVP.view.components.ThemeComponent;
@@ -35,6 +33,7 @@ import sk.stefan.MVP.view.components.VoteDetailedComponent;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 
 
 /**
@@ -77,8 +76,8 @@ public final class V6_VoteView extends VerticalLayout implements View {
     private VoteClassComponent voteClassComponent;
     
     private Button editVoteBt;
-    private DownloaderLayout<PublicPerson> downoaderLayout;
-    private UploaderLayout<PublicPerson> uploaderLayout;
+    private DownloaderLayout<Vote> downoaderLayout;
+    private UploaderLayout<Vote> uploaderLayout;
 
     //zakladne, vseobecne:
     private final VerticalLayout temporaryLy;
@@ -196,7 +195,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
      */
     private void initUploadLayout() {
 
-        this.uploaderLayout = new UploaderLayout<>(PublicPerson.class);
+        this.uploaderLayout = new UploaderLayout<>(Vote.class, this.vote);
 
         temporaryLy.addComponent(uploaderLayout);
 
@@ -207,7 +206,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
      */
     private void initDownloadLayout() {
 
-        this.downoaderLayout = new DownloaderLayout<>(PublicPerson.class);
+        this.downoaderLayout = new DownloaderLayout<>(Vote.class, this.vote);
 
         temporaryLy.addComponent(downoaderLayout);
 
@@ -232,6 +231,8 @@ public final class V6_VoteView extends VerticalLayout implements View {
         if (vot != null) {
             this.setVoteValue(vot);
             initAllBasic(isVolunteer);
+//            initAllBasic(true);
+
         } else {
             UI.getCurrent().getNavigator().navigateTo("V6s_VotesView");
         }

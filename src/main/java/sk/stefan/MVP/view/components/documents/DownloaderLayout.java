@@ -38,13 +38,20 @@ public class DownloaderLayout<E> extends VerticalLayout {
     private final DocumentService<E> documentService;
 
     @SuppressWarnings("unchecked")
-    public DownloaderLayout(Class<E> cls) {
+    public DownloaderLayout(Class<E> cls, E entit) {
 
         documentService = new DocumentServiceImpl<>(cls);
 
+        this.ent = entit;
+        this.initLayout();
+
+
     }
 
+    
     /**
+     * ZBYTOCNE< POTOM VYMAZAT!!!!!
+
      * NAdstavi entitu do filesLayoutu
      *
      * @param en
@@ -72,6 +79,8 @@ public class DownloaderLayout<E> extends VerticalLayout {
             String tn = documentService.getClassTableName();
 
             entDocuments = documentService.findAllEntityDocuments(tn, rid);
+
+            this.initDownloaderComponents();
 
         }
     }

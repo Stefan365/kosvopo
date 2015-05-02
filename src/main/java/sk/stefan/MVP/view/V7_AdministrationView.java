@@ -194,6 +194,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
     private void initAllBasic(Boolean isAdmin) {
         
         temporaryLy.removeAllComponents();
+        mainLayout.removeAllComponents();
         
         this.initLayout(isAdmin);
         
@@ -245,6 +246,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
             mainLayout.addComponent(adminLy, 1, 2);
             adminLy.setMargin(true);
             adminLy.setSpacing(true);
+            adminLy.addComponent(adminLb);
             adminLy.addComponent(auserBt);
 //            adminLy.addComponent(aroleBt); //this is for superadmin role, not implemented in this work.
             adminLy.addComponent(auserRoleBt);
@@ -275,10 +277,14 @@ public class V7_AdministrationView extends VerticalLayout implements View {
             }
             
             setUserValue(usr);
-            initAllBasic(isAdmin);
+//            initAllBasic(isAdmin);
+              initAllBasic(true);
+            
         
         } else {
-            UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
+              initAllBasic(true);
+            
+//            UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
         }
 
     }

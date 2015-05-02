@@ -65,7 +65,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
 
     //hlasovania ktorych sa dana osoba zucastnila, filtrovane podla osoby.
     //tj. aj historicke, v inych roliach.
-    private VotesLayout votesLayout;
+//    private VotesLayout votesLayout;
 
     //layout pre zobrazenie zakladnych udajov danej osoby.
     private PublicPersonComponent publicPersonComponent;
@@ -133,12 +133,12 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
         
         this.initPublicPersonComponent();
         this.initPublicRolesLayout();
-        this.initVoteLayout();
+//        this.initVoteLayout();
         this.initTimeline();
         this.classPersonLayout();
 
         
-        temporaryLy.addComponents(publicPersonComponent, publicRolesLayout, votesLayout, classPersonLayout, timeLine);
+        temporaryLy.addComponents(publicPersonComponent, publicRolesLayout, classPersonLayout, timeLine);
         
         if(isVolunteer){
             
@@ -155,8 +155,12 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
     private void setPublicPersonValue(PublicPerson pp){
         
         this.publicPerson = pp;
-        PublicBody pb = UI.getCurrent().getSession().getAttribute(PublicBody.class);
-        this.actualPublicRole = publicRoleService.getActualRoleForPublicBody(publicPerson, pb);
+        List<PublicRole> proles = publicRoleService.getActualPublicRolesOfPublicPerson(pp);
+        if (proles != null && !proles.isEmpty()){
+            this.actualPublicRole = proles.get(0);
+        } else {
+            this.actualPublicRole = null;
+        }
         
     }
 
@@ -179,19 +183,21 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
 
         this.publicRolesLayout = new PublicRolesLayout(publicRoles, publicRoleService);
         
-        this.publicRolesLayout.setActual(actualPublicRole);
-
+        if (actualPublicRole != null){
+            this.publicRolesLayout.setActual(actualPublicRole);
+        }
+        
     }
 
-    private void initVoteLayout() {
-
-        List<Integer> votIds = voteService.findVoteIdsByPubPersonId(publicPerson.getId());
-
-        List<Vote> votes = voteService.findNewVotes(votIds);
-
-        this.votesLayout = new VotesLayout(votes, voteService);
-
-    }
+//    private void initVoteLayout() {
+//
+//        List<Integer> votIds = voteService.findVoteIdsByPubPersonId(publicPerson.getId());
+//
+//        List<Vote> votes = voteService.findNewVotes(votIds);
+//
+//        this.votesLayout = new VotesLayout(votes, voteService);
+//
+//    }
 
     public void initTimeline() {
         // Construct a container which implements Container.Indexed       
@@ -246,7 +252,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
      */
     private void initUploadLayout() {
         
-        this.uploaderLayout = new UploaderLayout<>(PublicPerson.class);
+        this.uploaderLayout = new UploaderLayout<>(PublicPerson.class, this.publicPerson);
         
         temporaryLy.addComponent(uploaderLayout);
         
@@ -257,7 +263,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
      */
     private void initDownloadLayout() {
         
-        this.downoaderLayout = new DownloaderLayout<>(PublicPerson.class);
+        this.downoaderLayout = new DownloaderLayout<>(PublicPerson.class, this.publicPerson);
         
         temporaryLy.addComponent(downoaderLayout);
         
