@@ -21,6 +21,7 @@ public class DoDBconn {
 
     private static final Logger log = Logger.getLogger(DoDBconn.class);
         
+    private static int count =0;
     
     private static Connection nonInvasiveConn;
 
@@ -66,6 +67,8 @@ public class DoDBconn {
     public static void createNoninvasiveConnection() {
         try {
             nonInvasiveConn = connectionPool.reserveConnection();
+            count++;
+            log.info("VYTVORIL SOM NEINVAZIVNE CONN: " + count);
         } catch (SQLException ex) {
             log.error(ex.getMessage(),ex);
         }
@@ -75,6 +78,8 @@ public class DoDBconn {
     public static Connection getConnection() {
         try {
             Connection conn = connectionPool.reserveConnection();
+            count++;
+            log.info("VYTVORIL SOM INVAZIVNE CONNECTION:" + count );
             return conn;
         } catch (SQLException ex) {
             log.error(ex.getMessage(),ex);
@@ -90,7 +95,11 @@ public class DoDBconn {
 
     // 4.
     public static void releaseConnection(Connection conn) throws SQLException {
+        
         connectionPool.releaseConnection(conn);
+        count--;
+        log.info("UVOLNIL SOM INVAZIVNE CONNECTION: " + count);
+
     }
 
     // 5.

@@ -33,6 +33,7 @@ import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.InputNewEntityButtonFactory;
+import sk.stefan.ui.KosvopoUI;
 
 /**
  *
@@ -66,7 +67,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     private UploaderLayout<PublicBody> uploaderLayout;
 
     private final VerticalLayout temporaryLy;
-    private final NavigationComponent navComp;
+//    private final NavigationComponent navComp;
     private final Navigator nav;
 
     
@@ -79,8 +80,8 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
 
         this.nav = UI.getCurrent().getNavigator();
 
-        navComp = NavigationComponent.createNavigationComponent();
-        this.addComponent(navComp);
+//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
+//        this.addComponent(navComp);
         
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);
@@ -221,11 +222,12 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         Boolean isVolunteer = Boolean.FALSE;
         if (user != null){
+//            navComp.getLoginBut().setCaption("logout");            
             UserType utype = userService.getUserType(user);
         
             //moze byt dobrovolnik, alebo admin.
             isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
-        }
+        } 
         
         if (pb != null){
             setPublicBodyValue(pb);

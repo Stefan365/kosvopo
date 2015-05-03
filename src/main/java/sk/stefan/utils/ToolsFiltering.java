@@ -381,8 +381,10 @@ public abstract class ToolsFiltering {
     /**
      * vrati nazov referencie na sefa, tj, napr. ked sa sefovska tabulka vola
      * t_location, vrati location_id;
+     * @param tn
+     * @return 
      */
-    private static String getParamName(String tn) {
+    public static String getParamName(String tn) {
 
         String replace = tn.replace("t_", "");
         replace += "_id";
@@ -393,8 +395,10 @@ public abstract class ToolsFiltering {
     /**
      * Ziska zoznam nazvov tabuliek ktore na vstupnu tabulku odkazuju. tj.
      * zoznam jej podriadenych.
+     * @param tn
+     * @return 
      */
-    private static List<String> getSlaves(String tn) {
+    public static List<String> getSlaves(String tn) {
 
         List<A_Hierarchy> ret;
         ret = hierRepo.findByParam("boss_table", tn);
@@ -408,74 +412,74 @@ public abstract class ToolsFiltering {
         return slaves;
     }
 
-    //6.
-    /**
-     * Deaktivuje cely strom entit, pricom vrcholom stromu je entita na vstupe.
-     *
-     * @param tn
-     * @param id
-     * @throws java.sql.SQLException
-     */
-    public static void deactivateSlavesTree(String tn, Integer id) throws SQLException {
-
-        if (invasiveGenRepo == null) {
-            invasiveGenRepo = new GeneralRepo();
-        }
-
-        invasiveGenRepo.deactivateOne(tn, id);
-        //deactivate documents;
-        invasiveGenRepo.deactivateEntityDocuments(tn, id);
-        
-
-        List<String> slaveTns = ToolsFiltering.getSlaves(tn);
-
-        if (!slaveTns.isEmpty()) {
-
-            Map<String, List<Integer>> slavesIdsMap = new HashMap<>();
-            List<Integer> slvIds;
-
-            String paramN = ToolsFiltering.getParamName(tn);
-
-            for (String slv : slaveTns) {
-                slvIds = genRepo.findTnAllByParam(slv, paramN, "" + id);
-                slavesIdsMap.put(slv, slvIds);
-
-            }
-//            //deaktivuj otrokov: - netreba vid. prvy riadok.
-//            for (String key : slavesIdsMap.keySet()) {
+//    //6.
+//    /**
+//     * Deaktivuje cely strom entit, pricom vrcholom stromu je entita na vstupe.
+//     *
+//     * @param tn
+//     * @param id
+//     * @throws java.sql.SQLException
+//     */
+//    public static void deactivateSlavesTree(String tn, Integer id) throws SQLException {
 //
+//        if (invasiveGenRepo == null) {
+//            invasiveGenRepo = new GeneralRepo();
+//        }
+//
+//        invasiveGenRepo.deactivateOne(tn, id);
+//        //deactivate documents;
+//        invasiveGenRepo.deactivateEntityDocuments(tn, id);
+//        
+//
+//        List<String> slaveTns = ToolsFiltering.getSlaves(tn);
+//
+//        if (!slaveTns.isEmpty()) {
+//
+//            Map<String, List<Integer>> slavesIdsMap = new HashMap<>();
+//            List<Integer> slvIds;
+//
+//            String paramN = ToolsFiltering.getParamName(tn);
+//
+//            for (String slv : slaveTns) {
+//                slvIds = genRepo.findTnAllByParam(slv, paramN, "" + id);
+//                slavesIdsMap.put(slv, slvIds);
+//
+//            }
+////            //deaktivuj otrokov: - netreba vid. prvy riadok.
+////            for (String key : slavesIdsMap.keySet()) {
+////
+////                slvIds = slavesIdsMap.get(key);
+////                for (Integer aid : slvIds) {
+////                    genRepo.deactivateOne(key, aid);
+////                }
+////            }
+//            //      najdime dalsich pod-otrokov:
+//            for (String key : slavesIdsMap.keySet()) {
 //                slvIds = slavesIdsMap.get(key);
 //                for (Integer aid : slvIds) {
-//                    genRepo.deactivateOne(key, aid);
+//                    deactivateSlavesTree(key, aid);
 //                }
 //            }
-            //      najdime dalsich pod-otrokov:
-            for (String key : slavesIdsMap.keySet()) {
-                slvIds = slavesIdsMap.get(key);
-                for (Integer aid : slvIds) {
-                    deactivateSlavesTree(key, aid);
-                }
-            }
-        }
-    }
-
-    /**
-     * commituje zmeny do DB.
-     */
-    public static void doCommit() {
-        invasiveGenRepo.doCommit();
-        //aby vzdy bral nove genRepo a tak sa vyhol moznosti interferencie.
-        invasiveGenRepo = null;
-
-    }
-
-    /**
-     * rollbackuje zmeny.
-     */
-    public static void doRollback() {
-        invasiveGenRepo.doRollback();
-        //aby vzdy bral nove genRepo a tak sa vyhol moznosti interferencie.
-        invasiveGenRepo = null;
-    }
+//        }
+//    }
+//
+//    /**
+//     * commituje zmeny do DB.
+//     */
+//    public static void doCommit() {
+//        invasiveGenRepo.doCommit();
+//        //aby vzdy bral nove genRepo a tak sa vyhol moznosti interferencie.
+//        invasiveGenRepo = null;
+//
+//    }
+//
+//    /**
+//     * rollbackuje zmeny.
+//     */
+//    public static void doRollback() {
+//        invasiveGenRepo.doRollback();
+//        //aby vzdy bral nove genRepo a tak sa vyhol moznosti interferencie.
+//        invasiveGenRepo = null;
+//    }
 
 }

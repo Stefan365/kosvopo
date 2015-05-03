@@ -26,6 +26,7 @@ import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicPersonsLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.ui.KosvopoUI;
 
 /**
  *
@@ -46,9 +47,9 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
     //tlacitko na pridavanie novej verejne osoby:
     private Button addNewPublicPersonBt;
     
-        private final VerticalLayout temporaryLy;
+    private final VerticalLayout temporaryLy;
     
-    private final NavigationComponent navComp;
+//    private final NavigationComponent navComp;
 
 
     private final Navigator nav;
@@ -62,8 +63,8 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
 
         this.nav = UI.getCurrent().getNavigator();
 
-        navComp = NavigationComponent.createNavigationComponent();
-        this.addComponent(navComp);
+//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
+//        this.addComponent(navComp);
         
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);

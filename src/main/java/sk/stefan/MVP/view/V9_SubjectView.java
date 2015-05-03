@@ -25,6 +25,7 @@ import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.SubjectDetailedComponent;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.ui.KosvopoUI;
 import sk.stefan.wrappers.EditWrapper;
 
 /**
@@ -52,7 +53,7 @@ public final class V9_SubjectView extends VerticalLayout implements View {
     private UploaderLayout<Subject> uploaderLayout;
 
     private final VerticalLayout temporaryLy;
-    private final NavigationComponent navComp;
+//    private final NavigationComponent navComp;
     private final Navigator nav;
     
     
@@ -64,8 +65,8 @@ public final class V9_SubjectView extends VerticalLayout implements View {
 
         this.nav = UI.getCurrent().getNavigator();
 
-        navComp = NavigationComponent.createNavigationComponent();
-        this.addComponent(navComp);
+//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
+//        this.addComponent(navComp);
         
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);

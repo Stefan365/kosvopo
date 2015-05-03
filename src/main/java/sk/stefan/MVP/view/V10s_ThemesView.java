@@ -26,6 +26,7 @@ import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.ThemesLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.ui.KosvopoUI;
 
 /**
  *
@@ -46,7 +47,7 @@ public class V10s_ThemesView extends VerticalLayout implements View {
 
     private TextField searchFd; 
     private final VerticalLayout temporaryLy;
-    private final NavigationComponent navComp;
+//    private final NavigationComponent navComp;
 
     
     public V10s_ThemesView (){
@@ -56,8 +57,8 @@ public class V10s_ThemesView extends VerticalLayout implements View {
     
         this.nav = UI.getCurrent().getNavigator();
 
-        navComp = NavigationComponent.createNavigationComponent();
-        this.addComponent(navComp);
+//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
+//        this.addComponent(navComp);
         
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);

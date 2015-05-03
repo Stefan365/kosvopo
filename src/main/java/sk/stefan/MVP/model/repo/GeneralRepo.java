@@ -12,11 +12,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
+import sk.stefan.utils.ToolsFiltering;
 
 /**
  * zahrna metody, ktore su univerzalne, ale nie su zavisle od Triedy entity.
@@ -29,13 +32,13 @@ public class GeneralRepo {
 
     private final SecurityService securityService;
 
-    private Connection transConn;
+    private Connection transactionalConn;
 
     public GeneralRepo() {
 
         this.securityService = new SecurityServiceImpl();
-        if (transConn == null) {
-            transConn = DoDBconn.getConnection();
+        if (transactionalConn == null) {
+            transactionalConn = DoDBconn.getConnection();
         }
 
     }
@@ -50,7 +53,11 @@ public class GeneralRepo {
 //    public static synchronized boolean deactivate(String tn, Integer id) {
     public void deactivateOne(String tn, Integer id) throws SQLException {
 
-        Statement st = transConn.createStatement();
+        if (transactionalConn == null){
+            transactionalConn = DoDBconn.getConnection();
+        }
+
+        Statement st = transactionalConn.createStatement();
 
         String sql = String.format("UPDATE %s SET visible = false WHERE id = %d", tn, id);
         st.executeUpdate(sql);
@@ -225,11 +232,12 @@ public class GeneralRepo {
      */
     public void doCommit() {
         try {
-            transConn.commit();
+            transactionalConn.commit();
         } catch (SQLException ex) {
             try {
-                transConn.rollback();
-                DoDBconn.releaseConnection(transConn);
+                transactionalConn.rollback();
+                DoDBconn.releaseConnection(transactionalConn);
+                transactionalConn = null;
 
                 log.error(ex.getMessage(), ex);
                 Notification.show("Ukladanie sa nevydarilo, SPRAVIL SA ROLLBACK!");
@@ -245,8 +253,9 @@ public class GeneralRepo {
      */
     public void doRollback() {
         try {
-            transConn.rollback();
-            DoDBconn.releaseConnection(transConn);
+            transactionalConn.rollback();
+            DoDBconn.releaseConnection(transactionalConn);
+            transactionalConn = null;
 
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
@@ -336,13 +345,66 @@ public class GeneralRepo {
      */
     public void deactivateEntityDocuments(String tn, Integer rid) throws SQLException {
         
-        Statement st = transConn.createStatement();
+        if (transactionalConn == null){
+            transactionalConn = DoDBconn.getConnection();
+        }
+        Statement st = transactionalConn.createStatement();
 
         String sql = String.format("UPDATE t_document "
                 + " SET visible = false WHERE table_name = %s AND table_row_id = %d", tn, rid);
         st.executeUpdate(sql);
 
         st.close();
+    }
+    
+    
+    
+        //6.
+    /**
+     * Deaktivuje cely strom entit, pricom vrcholom stromu je entita na vstupe.
+     *
+     * @param tn
+     * @param id
+     * @throws java.sql.SQLException
+     */
+    public void deactivateSlavesTree(String tn, Integer id) throws SQLException {
+
+
+        this.deactivateOne(tn, id);
+        //deactivate documents;
+        this.deactivateEntityDocuments(tn, id);
+        
+
+        List<String> slaveTns = ToolsFiltering.getSlaves(tn);
+
+        if (!slaveTns.isEmpty()) {
+
+            Map<String, List<Integer>> slavesIdsMap = new HashMap<>();
+            List<Integer> slvIds;
+
+            String paramN = ToolsFiltering.getParamName(tn);
+
+            for (String slv : slaveTns) {
+                slvIds = this.findTnAllByParam(slv, paramN, "" + id);
+                slavesIdsMap.put(slv, slvIds);
+
+            }
+//            //deaktivuj otrokov: - netreba vid. prvy riadok.
+//            for (String key : slavesIdsMap.keySet()) {
+//
+//                slvIds = slavesIdsMap.get(key);
+//                for (Integer aid : slvIds) {
+//                    genRepo.deactivateOne(key, aid);
+//                }
+//            }
+            //      najdime dalsich pod-otrokov:
+            for (String key : slavesIdsMap.keySet()) {
+                slvIds = slavesIdsMap.get(key);
+                for (Integer aid : slvIds) {
+                    deactivateSlavesTree(key, aid);
+                }
+            }
+        }
     }
 
 }

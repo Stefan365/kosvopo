@@ -6,7 +6,9 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
+import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 
@@ -22,12 +24,17 @@ public class NavigationComponent extends HorizontalLayout {
     private final SecurityService securityService;
 
     private final Navigator navigator;
+    
+//    private final NavigationComponent navComp;
 
     //0.konstruktor.
     /**
      *
      * @param nav
      */
+    static {
+    
+    }
     private NavigationComponent(Navigator nav) {
 
         this.securityService = new SecurityServiceImpl();
@@ -50,7 +57,16 @@ public class NavigationComponent extends HorizontalLayout {
      */
     private void initButtons() {
         
-        b1 = new Button("login");
+        String loginCaption;
+        A_User usr = UI.getCurrent().getSession().getAttribute(A_User.class);
+        if (usr == null){
+            loginCaption = "login";
+        } else {
+            loginCaption="logout";
+        }
+        
+        
+        b1 = new Button(loginCaption);
         b1.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 7834517499543650204L;
 
@@ -130,7 +146,7 @@ public class NavigationComponent extends HorizontalLayout {
         this.addComponent(b4s);
 //        this.addComponent(b5);
         this.addComponent(b6s);
-        this.addComponent(b7);
+//        this.addComponent(b7);
         
 
     }
@@ -159,8 +175,6 @@ public class NavigationComponent extends HorizontalLayout {
      */
     public void obohatNavigator() {
         
-
-
         this.addComponent(b7);
     }
 
@@ -171,5 +185,9 @@ public class NavigationComponent extends HorizontalLayout {
     public Navigator getNavigator() {
         return navigator;
     }
+
+//    public NavigationComponent getNavComp() {
+//        return navComp;
+//    }
 
 }

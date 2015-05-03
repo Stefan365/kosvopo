@@ -4,7 +4,9 @@ import com.vaadin.server.VaadinSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
 
 /**
@@ -14,27 +16,39 @@ import sk.stefan.MVP.model.service.SecurityService;
  */
 public class SecurityServiceImpl implements SecurityService {
 
+    private static final Logger log = Logger.getLogger(SecurityServiceImpl.class);
+
+    
+    private UniRepo<A_User> userRepo;
+    
     private MessageDigest md;
 
+    //0.konstruktor:
+    /**
+     * 
+     */
     public SecurityServiceImpl() {
-	try {
-	    md = MessageDigest.getInstance("MD5");
-	} catch (NoSuchAlgorithmException ex) {
-	    throw new RuntimeException(ex);
-	}
+        
+        this.userRepo = new UniRepo<>(A_User.class);
+        
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     /**
      * Přidá přihlášeného uživatele do session.
      *
      * @param user uživatel
-     * 
+     *
      */
     @Override
     public void login(A_User user) {
-    	
+
         VaadinSession.getCurrent().setAttribute(A_User.class, user);
-        
+
     }
 
     /**
@@ -42,11 +56,10 @@ public class SecurityServiceImpl implements SecurityService {
      */
     @Override
     public void logout() {
-	
+
         VaadinSession.getCurrent().setAttribute(A_User.class, null);
-    
+
     }
-    
 
     /**
      * Vrátí aktuálně přihlášeného uživatele, uloženého v session.
@@ -55,7 +68,7 @@ public class SecurityServiceImpl implements SecurityService {
      */
     @Override
     public A_User getCurrentUser() {
-	return VaadinSession.getCurrent().getAttribute(A_User.class);
+        return VaadinSession.getCurrent().getAttribute(A_User.class);
     }
 
     /**
@@ -67,13 +80,15 @@ public class SecurityServiceImpl implements SecurityService {
      */
     @Override
     public Boolean checkPassword(String rawPassword, byte[] hashPassword) {
-	
+
         if (hashPassword == null || rawPassword == null) {
-	    return Boolean.FALSE;
-	}
-	//return true;
-        return MessageDigest.isEqual(hashPassword, encryptPassword(rawPassword));
-        
+            return Boolean.FALSE;
+        }
+        //return true;
+        byte[] passByte = encryptPassword(rawPassword);
+
+        return MessageDigest.isEqual(hashPassword, passByte);
+
     }
 
     /**
@@ -84,14 +99,66 @@ public class SecurityServiceImpl implements SecurityService {
      */
     @Override
     public byte[] encryptPassword(String password) {
-	try {
-	    //String saltedPassword = password.toUpperCase() + "KAROLKO";
+        try {
+            byte[] bytes = password.getBytes();
+            byte[] bytesa;
+            //String saltedPassword = password.toUpperCase() + "KAROLKO";
             String saltedPassword = password;//.toUpperCase() + "KAROLKO";
             md.update(saltedPassword.getBytes("UTF-8"));
-	    return md.digest();
-            
-	} catch (UnsupportedEncodingException ex) {
-	    throw new RuntimeException(ex);
-	}
+//            md.update(saltedPassword.getBytes());
+
+            StringBuilder sb = new StringBuilder();
+            StringBuilder sba = new StringBuilder();
+
+            for (byte b : bytes) {
+                sb.append(b);
+                sba.append(Integer.toHexString(b));
+
+            }
+            log.info("3. PASS FORM LINE:" + sb.toString());
+            log.info("4. PASS FORM LINE:" + sba.toString());
+
+            bytesa = md.digest();
+
+            StringBuilder sbc = new StringBuilder();
+            StringBuilder sbd = new StringBuilder();
+
+            for (byte b : bytesa) {
+                sbc.append(b);
+                sbd.append(Integer.toHexString(b));
+
+            }
+            log.info("5. PASS FORM LINE:" + sbc.toString());
+            log.info("6. PASS FORM LINE:" + sbd.toString());
+
+            return bytesa;
+
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public void initAdmin() {
+        
+        byte[] encPassword;
+        
+        A_User admin = new A_User();
+        
+        admin.setFirst_name("admin");
+        admin.setLast_name("adminovic");
+        admin.setLogin("admin");
+        admin.setE_mail("admin@admin.sk");
+        admin.setActive(Boolean.TRUE);
+        
+        encPassword = encryptPassword("admin");
+        admin.setPassword(encPassword);
+        
+        userRepo.save(admin);
+        
+        
+        
+        
+        
     }
 }

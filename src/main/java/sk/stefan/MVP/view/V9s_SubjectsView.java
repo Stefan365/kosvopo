@@ -26,6 +26,7 @@ import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicBodiesLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.ui.KosvopoUI;
 
 /**
  *
@@ -50,7 +51,7 @@ public class V9s_SubjectsView extends VerticalLayout implements View {
     
     private final VerticalLayout temporaryLy;
     
-    private final NavigationComponent navComp;
+//    private final NavigationComponent navComp;
 
     
     public V9s_SubjectsView (){
@@ -60,8 +61,8 @@ public class V9s_SubjectsView extends VerticalLayout implements View {
     
         this.nav = UI.getCurrent().getNavigator();
 
-        navComp = NavigationComponent.createNavigationComponent();
-        this.addComponent(navComp);
+//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
+//        this.addComponent(navComp);
         
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);

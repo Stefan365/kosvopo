@@ -18,14 +18,14 @@
     
 
         
-    <bean id="skuskaApp" class="sk.stefan.zaklad.Skuska" >
+    <bean id="skuskaApp" class="sk.stefan.zkuska.Skuska" >
 <!--        <property name="tickGrabberService" ref="tickGrabberService"/> 
         <property name="updateDataBAPIService" ref="updateDataBAPIService"/>
         <property name="getAnyDataService" ref="getAnyDataService"/> -->
        <constructor-arg index="0" type="int" value="12"/>
     </bean>
              
-    <bean id="skuska1App" class="sk.stefan.zaklad.Skuska1" >
+    <bean id="skuska1App" class="sk.stefan.zkuska.Skuska1" >
       <!--<constructor-arg ref="spellChecker"/>-->
        <!--<constructor-arg index="0" type="java.lang.String" value=""/>-->       
     </bean>    
@@ -33,93 +33,93 @@
 
 
     <!--A_Change repo:-->    
-    <bean id="achangeRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName" >
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.A_Change"></constructor-arg>
+    <bean id="achangeRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName" >
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.A_Change"></constructor-arg>
     </bean>
     
     <!--A_Hierarchy repo:-->    
-    <bean id="ahierarchyRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName" >
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.A_Hierarchy"></constructor-arg>
+    <bean id="ahierarchyRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName" >
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.A_Hierarchy"></constructor-arg>
     </bean>
     
     <!--A_Role repo:-->    
-    <bean id="aroleRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.A_Role"></constructor-arg>
+    <bean id="aroleRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.A_Role"></constructor-arg>
     </bean>
     
     <!--A_UserRole repo:-->    
-    <bean id="ausroleRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.A_UserRole"></constructor-arg>
+    <bean id="ausroleRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.A_UserRole"></constructor-arg>
     </bean>
     
     <!--Document repo:-->    
-    <bean id="docRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.Document"></constructor-arg>
+    <bean id="docRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.Document"></constructor-arg>
     </bean>
     
     <!--Kraj repo:-->    
-    <bean id="krajRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.Region"></constructor-arg>
+    <bean id="krajRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.Region"></constructor-arg>
     </bean>
     
     <!--Location repo:-->    
-    <bean id="locRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.Location"></constructor-arg>
+    <bean id="locRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.Location"></constructor-arg>
     </bean>
     
     <!--Okres repo:-->    
-    <bean id="okresRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.District"></constructor-arg>
+    <bean id="okresRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.District"></constructor-arg>
     </bean>
     
     <!--Person Classification repo:-->    
-    <bean id="pclassRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.PersonClassification"></constructor-arg>
+    <bean id="pclassRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.PersonClassification"></constructor-arg>
     </bean>
 
     <!--PublicBody repo:-->    
-    <bean id="pbRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.PublicBody"></constructor-arg>
+    <bean id="pbRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.PublicBody"></constructor-arg>
     </bean>
     
     <!--PublicPerson repo:-->    
-    <bean id="ppRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.PublicPerson"></constructor-arg>
+    <bean id="ppRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.PublicPerson"></constructor-arg>
     </bean>
     
     <!--PublicRole repo:-->    
-    <bean id="proleRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.PublicRole"></constructor-arg>
+    <bean id="proleRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.PublicRole"></constructor-arg>
     </bean>
     
     <!--Subject repo:-->    
-    <bean id="subRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.Subject"></constructor-arg>
+    <bean id="subRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.Subject"></constructor-arg>
     </bean>
     
     <!--Tenure repo:-->    
-    <bean id="tenRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.Tenure"></constructor-arg>
+    <bean id="tenRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.Tenure"></constructor-arg>
     </bean>
     
     <!--Theme repo:-->    
-    <bean id="themeRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.Theme"></constructor-arg>
+    <bean id="themeRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.Theme"></constructor-arg>
     </bean>
     
     <!--Vote repo:-->    
-    <bean id="voteRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.Vote"></constructor-arg>
+    <bean id="voteRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.Vote"></constructor-arg>
     </bean>
     
     <!--VoteClassification repo:-->    
-    <bean id="vclassRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.VoteClassification"></constructor-arg>
+    <bean id="vclassRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.VoteClassification"></constructor-arg>
     </bean>
     
     <!--VoteOfRole repo:-->    
-    <bean id="vorRepo" class="sk.stefan.MVP.model.repo.dao.UniRepo" autowire="byName">
-       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.dao.VoteOfRole"></constructor-arg>
+    <bean id="vorRepo" class="sk.stefan.MVP.model.repo.UniRepo" autowire="byName">
+       <constructor-arg index="0" type="java.lang.Class" value="sk.stefan.MVP.model.entity.VoteOfRole"></constructor-arg>
     </bean>
         
     

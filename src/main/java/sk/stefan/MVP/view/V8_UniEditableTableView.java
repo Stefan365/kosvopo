@@ -51,6 +51,7 @@ import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.listeners.RefreshViewListener;
 import sk.stefan.listeners.YesNoWindowListener;
+import sk.stefan.ui.KosvopoUI;
 import sk.stefan.utils.ToolsDao;
 import sk.stefan.utils.ToolsNazvy;
 
@@ -107,7 +108,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
 //    vseobecne komponenty
     private final VerticalLayout temporaryLy;
-    private final NavigationComponent navComp;
+//    private final NavigationComponent navComp;
     private final Navigator nav;
 
     
@@ -127,8 +128,8 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 //        zakladne komponenty
         this.nav = UI.getCurrent().getNavigator();
 
-        navComp = NavigationComponent.createNavigationComponent();
-        this.addComponent(navComp);
+//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
+//        this.addComponent(navComp);
 
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);
@@ -501,13 +502,17 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         if (usr != null) {
             
             UserType utype = userService.getUserType(usr);
-        
-            if (utype != UserType.ADMIN){
-//                UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
-//                UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
+            
+            if (this.isForAdminOnly){
+                if (utype != UserType.ADMIN){
+                    UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
+                }
+                //do nothing
+            } else {
+                //do nothing
             }
         } else {
-//            UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
+            UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
         }
 
     }

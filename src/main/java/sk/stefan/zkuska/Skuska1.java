@@ -74,6 +74,7 @@ public class Skuska1<T> {
 
     }
 
+    @SuppressWarnings("unchecked")
     public static void main(String[] args) throws NoSuchFieldException,
             SecurityException, InstantiationException, IllegalAccessException,
             NoSuchMethodException, IllegalArgumentException,
@@ -90,7 +91,8 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusVoteSave();
+        sk.skusAdmin();
+//        sk.skusVoteSave();
 //        sk.skusFormatter();
 //        sk.skusSaveU();
 //        sk.skusUniRepo();
@@ -1227,6 +1229,17 @@ public class Skuska1<T> {
         
         log.info("RESULT:" + v.getResult_vote());
             
+    }
+    
+    private void skusAdmin(){
+        
+        SecurityService ss = new SecurityServiceImpl();
+        ss.initAdmin();
+        log.info("Vytvoril som admina!");
+       
+        
+                
+    
     }
 
 }

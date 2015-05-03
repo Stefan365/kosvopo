@@ -15,15 +15,14 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.MVP.view.components.InputOptionGroup;
 import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.ui.KosvopoUI;
 import sk.stefan.utils.ToolsNazvy;
 
 /**
@@ -35,12 +34,13 @@ public class V1_LoginView extends VerticalLayout implements View {
     private static final Logger log = Logger.getLogger(V1_LoginView.class);
 
     //servisy:
-    private SecurityService securityService;
-    private UserService userService;
+    private final SecurityService securityService;
+    
+    private final UserService userService;
 
     private Button loginBt;
 
-    private TextField emailTf;
+    private TextField loginTf;
 
     private PasswordField passwordPf;
 
@@ -49,8 +49,8 @@ public class V1_LoginView extends VerticalLayout implements View {
 
     private VerticalLayout formVl;
 
-    private VerticalLayout temporaryLy;
-    private final NavigationComponent navComp;
+    private final VerticalLayout temporaryLy;
+//    private final NavigationComponent navComp;
     private final Navigator nav;
 
     public V1_LoginView() {
@@ -60,8 +60,8 @@ public class V1_LoginView extends VerticalLayout implements View {
 
         this.nav = UI.getCurrent().getNavigator();
 
-        navComp = NavigationComponent.createNavigationComponent();
-        this.addComponent(navComp);
+//        navComp =  ((KosvopoUI)UI.getCurrent()).getMainView().getNavComp();
+//        this.addComponent(navComp);
 
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);
@@ -76,7 +76,7 @@ public class V1_LoginView extends VerticalLayout implements View {
 
     private void initLayout() {
 
-        formVl = new VerticalLayout(emailTf, passwordPf, buttonsHl);
+        formVl = new VerticalLayout(loginTf, passwordPf, buttonsHl);
         formVl.setMargin(true);
         formVl.setSpacing(true);
 
@@ -88,7 +88,7 @@ public class V1_LoginView extends VerticalLayout implements View {
 
     private void initFields() {
         // Vytvareni komponent
-        emailTf = ToolsNazvy.createFormTextField("login", true);
+        loginTf = ToolsNazvy.createFormTextField("login", true);
         passwordPf = ToolsNazvy.createFormPasswordField("Heslo", true);
 
         loginBt = new Button("Prihlásiť", new Button.ClickListener() {
@@ -96,18 +96,37 @@ public class V1_LoginView extends VerticalLayout implements View {
             @Override
             public void buttonClick(ClickEvent event) {
 
+                log.info("1. SOM TU!");
+                
                 A_User user;
 
-                user = userService.getUserByLogin(emailTf.getValue());
+                user = userService.getUserByLogin(loginTf.getValue());
+                
+                log.info("2. SOM TU! *" + loginTf.getValue() + "*");
 
                 if (user != null) {
+                    
+                    log.info("3. SOM TU! *" + user.getLogin() + "*");
+                    
                     byte[] userPwHash = userService.getEncPasswordByLogin(user.getLogin());
-
+//                    
+//                    StringBuilder sb = new StringBuilder();
+//                    StringBuilder sba = new StringBuilder();
+//                    
+//                    for(byte b : userPwHash){
+//                        sb.append(b);
+//                        sba.append(Integer.toHexString(b));
+//                        
+//                    }
+//                    log.info("1. PASS FORM DB:" + sb.toString());
+//                    log.info("2. PASS FORM DB:" + sba.toString());
+                    
+                    
 //                    if (true) {
                     if (securityService.checkPassword(passwordPf.getValue(), userPwHash)) {
                         securityService.login(user);
-                        navComp.obohatNavigator();
-                        navComp.getLoginBut().setCaption("logout");
+                        ((KosvopoUI)UI.getCurrent()).getMainView().getNavComp().obohatNavigator();
+                        ((KosvopoUI)UI.getCurrent()).getMainView().getNavComp().getLoginBut().setCaption("logout");
                         Notification.show("prihlásenie prebehlo úspešne!");
                         nav.navigateTo("V2_EnterView");
                     } else {
@@ -118,6 +137,8 @@ public class V1_LoginView extends VerticalLayout implements View {
                 }
             }
         });
+        
+        
 
         loginBt.setStyleName(ValoTheme.BUTTON_FRIENDLY);
         loginBt.setClickShortcut(ShortcutAction.KeyCode.ENTER);
