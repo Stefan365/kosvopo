@@ -16,8 +16,8 @@ public class KosvopoUI extends UI {
     private static final Logger log = Logger.getLogger(KosvopoUI.class);
 
     @WebServlet(value = "/*", asyncSupported = true)
-//    @VaadinServletConfiguration(productionMode = false, ui = KosvopoUI.class, widgetset="sk.stefan.ui.AppWidgetSet")
-    @VaadinServletConfiguration(productionMode = false, ui = KosvopoUI.class)
+    @VaadinServletConfiguration(productionMode = false, ui = KosvopoUI.class, widgetset="sk.stefan.ui.AppWidgetSet")
+//    @VaadinServletConfiguration(productionMode = false, ui = KosvopoUI.class)
     public static class Servlet extends VaadinServlet {
     }
 
