@@ -519,5 +519,12 @@ public class VoteServiceImpl implements VoteService {
         return voteRepo.findAll();
     }
 
+    @Override
+    public Vote findOne(Integer voteId) {
+
+        return voteRepo.findOne(voteId);
+    
+    }
+
 
 }

@@ -26,25 +26,20 @@ public class MainView extends VerticalLayout {
     
     public MainView() {
         
-//        this.setSizeFull();
-//        this.addStyleName("mainview");
-
         content = new VerticalLayout();
 //        content.setSizeFull();
         nav = new MyNavigator(UI.getCurrent(), content);
 
         navComp = NavigationComponent.createNavigationComponent();
 
-        
         this.addComponents(navComp, content);
         
-//        setExpandRatio(content, 0.1f);
 
         
     }
 
     /**
-     * @return the navComp
+     * @return the navComp for login reasons.
      */
     public NavigationComponent getNavComp() {
         return navComp;

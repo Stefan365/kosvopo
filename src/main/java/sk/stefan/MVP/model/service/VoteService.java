@@ -91,6 +91,8 @@ public interface VoteService {
 
     public List<Vote> findAll();
 
+    public Vote findOne(Integer voteId);
+
     
 
 }

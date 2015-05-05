@@ -1,20 +1,25 @@
 package sk.stefan.MVP.view;
 
 import com.vaadin.addon.timeline.Timeline;
+import com.vaadin.data.Item;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
-import com.vaadin.data.util.sqlcontainer.query.TableQuery;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.AbstractClientConnector;
+import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.model.service.UserService;
-import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.MVP.view.components.MyTimeLine;
+import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.MVP.model.entity.Vote;
+import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 
 public class V2_EnterView extends VerticalLayout implements View {
 
@@ -22,56 +27,59 @@ public class V2_EnterView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = -2001141270398193257L;
 
-//    private final Label vstupniLab;
-    private final UserService userService;
+    private final VoteService voteService;
 
-//    private final VerticalLayout temporaryLy;
-//    private final NavigationComponent navComp;
-    private final Navigator nav;
+    private final Timeline timeline;
 
-    private final MyTimeLine myTimeline;
-
-    private Timeline timeline;
+    private SQLContainer timelineContainer;
 
     public V2_EnterView() {
 
         this.setMargin(true);
         this.setSpacing(true);
 
-        this.nav = UI.getCurrent().getNavigator();
+        voteService = new VoteServiceImpl();
+        timeline = new Timeline();
 
-        myTimeline = new MyTimeLine("AHOJ KAMO");
-        
         this.initTimeline();
+        initTimelineListener();
         this.addComponents(timeline);
 
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        log.info("IS NAVCOMP NULL?" + (navComp== null));
-//        this.addComponent(navComp);
-//        temporaryLy = new VerticalLayout();
-//        this.addComponent(temporaryLy);
-        this.userService = new UserServiceImpl();
-
-//        this.vstupniLab = new Label("KAMIL");
-//        this.vstupniLab.setCaption("Marcel Z Maleho Mesta JE Tu!!! Je, je, je jeee....");
-//        this.vstupniLab.setValue("HODNOTA");
-//        temporaryLy.addComponent(vstupniLab);
     }
 
+    /**
+     */
     private void initTimeline() {
+
         
         try {
-            timeline = new Timeline();
-            
+            timelineContainer = DoDBconn.createSqlContainera("t_vote");
             timeline.setBrowserVisible(Boolean.TRUE);
             timeline.setWidth("100%");
-            SQLContainer timelineContainer = DoDBconn.createSqlContainera("t_vote");
             timeline.addGraphDataSource(timelineContainer, "vote_date", "for_vote");
         } catch (SQLException ex) {
-            log.error(ex.getMessage(),ex);
+            log.error(ex.getMessage(), ex);
         }
 
+    }
 
+    private void initTimelineListener() {
+
+        timeline.addListener(new Timeline.EventClickListener() {
+
+            @Override
+            public void eventClick(Timeline.EventButtonClickEvent event) {
+                Notification.show("AHOJ");
+                Item item = timelineContainer.getItem(event.getItemIds().iterator().next());
+                Integer voteId = (Integer) item.getItemProperty("id").getValue();
+
+                Vote vot = voteService.findOne(voteId);
+                UI.getCurrent().getSession().setAttribute(Vote.class, vot);
+                UI.getCurrent().getNavigator().navigateTo("V6_VoteView");
+
+            }
+
+        });
     }
 
     @Override

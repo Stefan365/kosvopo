@@ -41,6 +41,8 @@ public class KosvopoUI extends UI {
 
     }
     
+    
+    
     public MainView getMainView() {
         return mainView;
     }
