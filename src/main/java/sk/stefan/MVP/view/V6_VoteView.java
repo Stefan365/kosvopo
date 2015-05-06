@@ -5,7 +5,6 @@
  */
 package sk.stefan.MVP.view;
 
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
@@ -25,7 +24,6 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.SubjectComponent;
 import sk.stefan.MVP.view.components.ThemeComponent;
 import sk.stefan.MVP.view.components.VoteClassComponent;
@@ -34,7 +32,6 @@ import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.InputNewEntityButtonFactory;
-import sk.stefan.ui.KosvopoUI;
 
 
 /**
@@ -48,68 +45,34 @@ public final class V6_VoteView extends VerticalLayout implements View {
 
     //hlavna entita tohoto VIew
     private Vote vote;
-
-//    private List<VoteOfRole> voteOfRoles;
-
     private Subject subject;
-    
     private Theme theme;
-    
     private VoteClassification voteClassification;
     
-
     //servisy:
     private final VoteService voteService;
     private final UserService userService;
     private final ClassificationService classificationService;
-
     
     //komponnety:
     private VoteDetailedComponent voteDetailedComponent;
-    
     private ThemeComponent themeComponent;
-  
-//    bude sucastou voteDetailedComponent:
-//    private PublicRoleComponent navrhovatelComponent;
-
     private SubjectComponent subjectComponent;
-
     private VoteClassComponent voteClassComponent;
-    
     private Button editVoteBt;
     private DownloaderLayout<Vote> downoaderLayout;
     private UploaderLayout<Vote> uploaderLayout;
 
-    //zakladne, vseobecne:
-    private final VerticalLayout temporaryLy;
-//    private final NavigationComponent navComp;
-    private final Navigator nav;
-
+    
     //konstruktor:
     public V6_VoteView() {
         
         this.setMargin(true);
         this.setSpacing(true);
 
-        this.nav = UI.getCurrent().getNavigator();
-
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-
-        
-        temporaryLy = new VerticalLayout();
-        this.addComponent(temporaryLy);
-
-        
-        
-//        this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
         this.classificationService = new ClassificationServiceImpl();
-
-//        if (vote != null) {
-//            initAllBasic(Boolean.FALSE);
-//        }
 
     }
 
@@ -117,14 +80,14 @@ public final class V6_VoteView extends VerticalLayout implements View {
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        temporaryLy.removeAllComponents();
+        this.removeAllComponents();
 
         initVoteDetailedComponent();
         this.initSubjectComponent();
         initThemeComponent();
         this.initVoteClassComponent();
         
-        temporaryLy.addComponents(voteDetailedComponent, subjectComponent, themeComponent, 
+        this.addComponents(voteDetailedComponent, subjectComponent, themeComponent, 
                 voteClassComponent);
 
         if (isVolunteer) {
@@ -143,7 +106,6 @@ public final class V6_VoteView extends VerticalLayout implements View {
         this.vote = vot;
         this.subject = voteService.findSubjectById(vote.getSubject_id());
         this.theme = voteService.findThemeBySubjectId(vote.getSubject_id());
-//        this.voteOfRoles = voteService.findVoteOfRolesByVoteId(vote.getId());
         this.voteClassification = classificationService.findVoteClassByVoteId(vote.getId());
         
     }
@@ -186,7 +148,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
 
         this.editVoteBt = InputNewEntityButtonFactory.createMyInputButton(PublicRole.class);
 
-        temporaryLy.addComponent(editVoteBt);
+        this.addComponent(editVoteBt);
 
     }
 
@@ -198,7 +160,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
 
         this.uploaderLayout = new UploaderLayout<>(Vote.class, this.vote);
 
-        temporaryLy.addComponent(uploaderLayout);
+        this.addComponent(uploaderLayout);
 
     }
 
@@ -209,7 +171,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
 
         this.downoaderLayout = new DownloaderLayout<>(Vote.class, this.vote);
 
-        temporaryLy.addComponent(downoaderLayout);
+        this.addComponent(downoaderLayout);
 
     }
 
@@ -232,8 +194,6 @@ public final class V6_VoteView extends VerticalLayout implements View {
         if (vot != null) {
             this.setVoteValue(vot);
             initAllBasic(isVolunteer);
-//            initAllBasic(true);
-
         } else {
             UI.getCurrent().getNavigator().navigateTo("V6s_VotesView");
         }

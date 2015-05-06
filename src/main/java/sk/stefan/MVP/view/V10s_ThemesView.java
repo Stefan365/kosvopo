@@ -23,10 +23,8 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.factories.InputNewEntityButtonFactory;
-import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.ThemesLayout;
 import sk.stefan.enums.UserType;
-import sk.stefan.ui.KosvopoUI;
 
 /**
  *
@@ -36,32 +34,21 @@ public class V10s_ThemesView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
     
+    //servisy
     private final VoteService voteService;
-    
     private final UserService userService;
 
-    private final Navigator nav;
+    //komponenty
     private ThemesLayout themesLayout;
     //tlacitko na pridavanie novej verejne osoby:
     private Button addNewThemeBt;
-
     private TextField searchFd; 
-    private final VerticalLayout temporaryLy;
-//    private final NavigationComponent navComp;
-
+    
     
     public V10s_ThemesView (){
 
         this.setMargin(true);
         this.setSpacing(true);
-    
-        this.nav = UI.getCurrent().getNavigator();
-
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-        
-        temporaryLy = new VerticalLayout();
-        this.addComponent(temporaryLy);
 
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
@@ -74,17 +61,16 @@ public class V10s_ThemesView extends VerticalLayout implements View {
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        temporaryLy.removeAllComponents();
+        this.removeAllComponents();
 
         this.initLayout();
         this.initSearchListener();
         
-        temporaryLy.addComponents(searchFd, themesLayout);
+        this.addComponents(searchFd, themesLayout);
         
         if(isVolunteer){
             this.initNewThemeButton();
         }
-        
     }
 
     
@@ -140,8 +126,7 @@ public class V10s_ThemesView extends VerticalLayout implements View {
     private void initNewThemeButton() {
         
         this.addNewThemeBt = InputNewEntityButtonFactory.createMyInputButton(PublicBody.class);
-        
-        temporaryLy.addComponent(addNewThemeBt);
+        this.addComponent(addNewThemeBt);
     }
 
     

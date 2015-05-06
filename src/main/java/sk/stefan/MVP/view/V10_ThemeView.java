@@ -5,12 +5,10 @@
  */
 package sk.stefan.MVP.view;
 
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
@@ -20,13 +18,11 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.factories.EditEntityButtonFactory;
-import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.ThemeDetailedComponent;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
-import sk.stefan.ui.KosvopoUI;
+import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.wrappers.EditWrapper;
 
 /**
@@ -45,32 +41,18 @@ public final class V10_ThemeView extends VerticalLayout implements View {
     //hlavna entita tohoto VIew
     private Theme theme;
     
-    
     //komponenty:
     private ThemeDetailedComponent themeDetailedComp;
     private Button editThemeBt;
-    
     private DownloaderLayout<Theme> downoaderLayout;
     private UploaderLayout<Theme> uploaderLayout;
 
-    private final VerticalLayout temporaryLy;
-//    private final NavigationComponent navComp;
-    private final Navigator nav;
-    
     //konstruktor:
     public V10_ThemeView() {
         
         this.setMargin(true);
         this.setSpacing(true);
                 
-        this.nav = UI.getCurrent().getNavigator();
-
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-        
-        temporaryLy = new VerticalLayout();
-        this.addComponent(temporaryLy);
-
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
         
@@ -80,21 +62,16 @@ public final class V10_ThemeView extends VerticalLayout implements View {
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        temporaryLy.removeAllComponents();
-        
+        this.removeAllComponents();
         this.initThemeDetailedComponent();
+        this.addComponents(themeDetailedComp);
         
-        temporaryLy.addComponents(themeDetailedComp);
-        
-        if(isVolunteer){
-            
+        if(isVolunteer){         
             this.initEditThemeButton();
-            this.initUploadLayout();
-            
+            this.initUploadLayout();            
         } else {
             this.initDownloadLayout();
         }
-
     }
     
     private void setThemeValue(Theme th) {
@@ -108,7 +85,6 @@ public final class V10_ThemeView extends VerticalLayout implements View {
 
         //voteservice nieje potrebny, preto null;
         this.themeDetailedComp = new ThemeDetailedComponent(theme, null);
-
     }
 
     /**
@@ -119,7 +95,7 @@ public final class V10_ThemeView extends VerticalLayout implements View {
         EditWrapper<Theme> ew = new EditWrapper<>(editThemeBt, Theme.class, theme);
         this.editThemeBt = EditEntityButtonFactory.createMyEditButton(ew);
         
-        temporaryLy.addComponent(editThemeBt);
+        this.addComponent(editThemeBt);
 
     }
 
@@ -129,9 +105,7 @@ public final class V10_ThemeView extends VerticalLayout implements View {
     private void initUploadLayout() {
         
         this.uploaderLayout = new UploaderLayout<>(Theme.class, this.theme);
-        
-        temporaryLy.addComponent(uploaderLayout);
-        
+        this.addComponent(uploaderLayout);
     }
     
 
@@ -141,14 +115,12 @@ public final class V10_ThemeView extends VerticalLayout implements View {
     private void initDownloadLayout() {
         
         this.downoaderLayout = new DownloaderLayout<>(Theme.class, this.theme);
-        
-        temporaryLy.addComponent(downoaderLayout);
+        this.addComponent(downoaderLayout);
         
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-//        Notification.show("ThemeView");
         
         Theme th = VaadinSession.getCurrent().getAttribute(Theme.class);
         

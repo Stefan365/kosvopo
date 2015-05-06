@@ -18,7 +18,7 @@ public class NavigationComponent extends HorizontalLayout {
      */
     private static final long serialVersionUID = 8811699550804144740L;
 
-    private Button b1, b3s, b4s, b6s, b7;
+    private Button b1, b2, b3s, b4s, b6s, b7;
 
     private final SecurityService securityService;
 
@@ -90,6 +90,10 @@ public class NavigationComponent extends HorizontalLayout {
         });
 
 
+        b2 = new Button("Hlavná stránka", (ClickEvent event) -> {
+            navigator.navigateTo("V2_EnterView");
+        });
+
         b3s = new Button("Verejné orgány", (ClickEvent event) -> {
             navigator.navigateTo("V3s_PublicBodiesView");
         });
@@ -117,6 +121,7 @@ public class NavigationComponent extends HorizontalLayout {
         this.setMargin(true);
 
         this.addComponent(b1);
+        this.addComponent(b2);
         this.addComponent(b3s);
         this.addComponent(b4s);
         this.addComponent(b6s);

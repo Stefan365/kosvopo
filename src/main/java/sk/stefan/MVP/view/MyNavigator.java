@@ -38,7 +38,6 @@ public class MyNavigator extends Navigator {
     public MyNavigator(UI ui, ComponentContainer container) {
         
         super(ui, container);
-        
         this.initNavigator(); 
     
     }

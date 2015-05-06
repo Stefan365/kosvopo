@@ -5,7 +5,6 @@
  */
 package sk.stefan.MVP.view;
 
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
@@ -15,17 +14,14 @@ import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.Subject;
-import sk.stefan.MVP.model.entity.Theme;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.factories.EditEntityButtonFactory;
-import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.SubjectDetailedComponent;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
-import sk.stefan.ui.KosvopoUI;
+import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.wrappers.EditWrapper;
 
 /**
@@ -41,35 +37,20 @@ public final class V9_SubjectView extends VerticalLayout implements View {
     private final VoteService voteService;
     private final UserService userService;
 
-    
     //hlavna entita tohoto VIew
     private Subject subject;
     
     //komponenty
     private SubjectDetailedComponent subjectDetailedComp;
     private Button editSubjectBt;
-    
     private DownloaderLayout<Subject> downoaderLayout;
     private UploaderLayout<Subject> uploaderLayout;
 
-    private final VerticalLayout temporaryLy;
-//    private final NavigationComponent navComp;
-    private final Navigator nav;
-    
-    
     //konstruktor:
     public V9_SubjectView() {
 
         this.setMargin(true);
         this.setSpacing(true);
-
-        this.nav = UI.getCurrent().getNavigator();
-
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-        
-        temporaryLy = new VerticalLayout();
-        this.addComponent(temporaryLy);
 
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
@@ -80,17 +61,13 @@ public final class V9_SubjectView extends VerticalLayout implements View {
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        temporaryLy.removeAllComponents();
-        
+        this.removeAllComponents();
         this.initSubjectDetailedComponent();
-        
-        temporaryLy.addComponents(subjectDetailedComp);
+        this.addComponents(subjectDetailedComp);
         
         if(isVolunteer){
-            
             this.initEditSubjectButton();
             this.initUploadLayout();
-            
         } else {
             this.initDownloadLayout();
         }
@@ -100,9 +77,7 @@ public final class V9_SubjectView extends VerticalLayout implements View {
     private void setSubjectValue(Subject sub) {
         subject = sub;
     }
-
     
-
     /**
      */
     private void initSubjectDetailedComponent() {
@@ -119,8 +94,7 @@ public final class V9_SubjectView extends VerticalLayout implements View {
         
         EditWrapper<Subject> ew = new EditWrapper<>(editSubjectBt, Subject.class, subject);
         this.editSubjectBt = EditEntityButtonFactory.createMyEditButton(ew);
-        
-        temporaryLy.addComponent(editSubjectBt);
+        this.addComponent(editSubjectBt);
 
     }
 
@@ -130,8 +104,7 @@ public final class V9_SubjectView extends VerticalLayout implements View {
     private void initUploadLayout() {
         
         this.uploaderLayout = new UploaderLayout<>(Subject.class, this.subject);
-        
-        temporaryLy.addComponent(uploaderLayout);
+        this.addComponent(uploaderLayout);
         
     }
 
@@ -141,8 +114,7 @@ public final class V9_SubjectView extends VerticalLayout implements View {
     private void initDownloadLayout() {
         
         this.downoaderLayout = new DownloaderLayout<>(Subject.class, this.subject);
-        
-        temporaryLy.addComponent(downoaderLayout);
+        this.addComponent(downoaderLayout);
         
     }
 

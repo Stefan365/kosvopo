@@ -22,11 +22,9 @@ import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.factories.InputNewEntityButtonFactory;
-import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicPersonsLayout;
 import sk.stefan.enums.UserType;
-import sk.stefan.ui.KosvopoUI;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 
 /**
  *
@@ -47,33 +45,13 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
     //tlacitko na pridavanie novej verejne osoby:
     private Button addNewPublicPersonBt;
     
-    private final VerticalLayout temporaryLy;
-    
-//    private final NavigationComponent navComp;
-
-
-    private final Navigator nav;
-    
-//    private TextField searchField;// = new TextField();
-        
     public V4s_PublicPersonsView (){
     
         this.setMargin(true);
         this.setSpacing(true);
 
-        this.nav = UI.getCurrent().getNavigator();
-
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-        
-        temporaryLy = new VerticalLayout();
-        this.addComponent(temporaryLy);
-
-        
         this.publicPersonService = new PublicPersonServiceImpl();
         this.userService = new UserServiceImpl();
-        
-//        this.initAllBasic(Boolean.FALSE);
         
     }
     
@@ -83,12 +61,12 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        temporaryLy.removeAllComponents();
+        this.removeAllComponents();
         
         this.initLayout();
         this.initListener();
         
-        temporaryLy.addComponents(searchFd, publicPersonsLayout);
+        this.addComponents(searchFd, publicPersonsLayout);
         
         if(isVolunteer){
             this.initNewPublicPersonButton();
@@ -139,7 +117,6 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
         searchFd.setWidth("40%");
         searchFd.setInputPrompt("možeš použiť vyhľadávanie podľa mena");
         searchFd.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
-        
     }
 
     
@@ -153,10 +130,8 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
      */
     private void initNewPublicPersonButton() {
         
-                
         this.addNewPublicPersonBt = InputNewEntityButtonFactory.createMyInputButton(PublicPerson.class);
-        
-        temporaryLy.addComponent(addNewPublicPersonBt);
+        this.addComponent(addNewPublicPersonBt);
     }
     
     @Override

@@ -52,9 +52,6 @@ public class V7_AdministrationView extends VerticalLayout implements View {
     private A_User user;
 
     private Button auserBt, okresBt, krajBt, locBt, pClassBt, pubBodyBt, pubRoleBt,
-            //            aroleBt, //this button is for superadmin, which is not implemented in this system.
-            //            vlastne to bude programator, spravca ktory ma cely system na starosti.
-
             subjectBt, tenureBt, themeBt, auserRoleBt, voteBt, vClassBt, vorBt, pubPersonBt;
 
     private final SecurityService securityService;
@@ -75,8 +72,6 @@ public class V7_AdministrationView extends VerticalLayout implements View {
     private final Label adminLb = new Label("Administrácia");
 
     private final Navigator nav;
-//    private final VerticalLayout temporaryLy;
-//    private final NavigationComponent navComp;
 
     //0. konstruktor
     /**
@@ -88,16 +83,9 @@ public class V7_AdministrationView extends VerticalLayout implements View {
 
         this.nav = UI.getCurrent().getNavigator();
 
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-
-//        temporaryLy = new VerticalLayout();
-//        this.addComponent(temporaryLy);
-
         this.securityService = new SecurityServiceImpl();
         this.userService = new UserServiceImpl();
 
-//        temporaryLy.addComponent(mainLayout);
         this.addComponent(mainLayout);
 
         initButtons();
@@ -109,20 +97,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         auserBt = new Button(A_User.PRES_NAME, (Button.ClickEvent event) -> {
             nav.navigateTo(ToolsNazvy.decapit(A_User.TN));
         });
-//        auserBt = new Button(A_User.PRES_NAME);
-//        auserBt.addClickListener(new Button.ClickListener() {
-//
-//            @Override
-//            public void buttonClick(Button.ClickEvent event) {
-//                nav.navigateTo(ToolsNazvy.decapit(A_User.TN)+"a");
-////                nav.navigateTo("public_person");
-//                
-//            }
-//        });
         
-//        aroleBt = new Button(A_Role.PRES_NAME, (Button.ClickEvent event) -> {
-//            UI.getCurrent().getNavigator().navigateTo(ToolsNazvy.decapit(A_Role.TN));
-//        });
         auserRoleBt = new Button(A_UserRole.PRES_NAME, (Button.ClickEvent event) -> {
             nav.navigateTo(ToolsNazvy.decapit(A_UserRole.TN));
         });
@@ -175,7 +150,6 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         });
 
         auserBt.setStyleName(BaseTheme.BUTTON_LINK);
-//        aroleBt.setStyleName(BaseTheme.BUTTON_LINK);
         auserRoleBt.setStyleName(BaseTheme.BUTTON_LINK);
 
         okresBt.setStyleName(BaseTheme.BUTTON_LINK);
@@ -252,7 +226,6 @@ public class V7_AdministrationView extends VerticalLayout implements View {
             adminLy.setSpacing(true);
             adminLy.addComponent(adminLb);
             adminLy.addComponent(auserBt);
-//            adminLy.addComponent(aroleBt); //this is for superadmin role, not implemented in this work.
             adminLy.addComponent(auserRoleBt);
         }
     }
@@ -283,10 +256,8 @@ public class V7_AdministrationView extends VerticalLayout implements View {
 
             setUserValue(usr);
             initAllBasic(isAdmin);
-//            initAllBasic(true);
 
         } else {
-//            initAllBasic(true);
             UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
         }
 

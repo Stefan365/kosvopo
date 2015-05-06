@@ -32,55 +32,42 @@ public class V6s_VotesView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
     
+    //servisy
     private final VoteService voteService;
-    
-    private VotesLayout votesLayout;
-    
-    //tlacitko na pridavanie novej verejne osoby:
-    private Button addVoteBt;
-    
     private final UserService userService;
     
-    private final VerticalLayout temporaryLy;   
-//    private final NavigationComponent navComp;
-    private final Navigator nav;
+    //komponenty
+    private VotesLayout votesLayout;
+    //tlacitko na pridavanie novej verejne osoby:
+    private Button addVoteBt;
+
+    
+    
     
     public V6s_VotesView (){
 
         this.setMargin(true);
         this.setSpacing(true);
     
-        this.nav = UI.getCurrent().getNavigator();
-
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-        
-        temporaryLy = new VerticalLayout();
-        this.addComponent(temporaryLy);
-
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
 
     }
     
-       /**
+    /**
      * 
      * @param isVolunteer
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        temporaryLy.removeAllComponents();
-
+        this.removeAllComponents();
         this.initLayout();
-        
-        temporaryLy.addComponents(votesLayout);
+        this.addComponents(votesLayout);
         
         if(isVolunteer){
             this.initNewPublicBodyButton();
-        }
-        
+        }      
     }
-
     
     /**
      * 
@@ -89,9 +76,7 @@ public class V6s_VotesView extends VerticalLayout implements View {
         
         this.setMargin(true);
         this.setSpacing(true);
-        
         this.votesLayout = new VotesLayout(voteService.findAll(), voteService);
-        
         
     }
     
@@ -105,7 +90,7 @@ public class V6s_VotesView extends VerticalLayout implements View {
         
         this.addVoteBt = InputNewEntityButtonFactory.createMyInputButton(Vote.class);
         
-        temporaryLy.addComponent(addVoteBt);
+        this.addComponent(addVoteBt);
     }
 
     @Override

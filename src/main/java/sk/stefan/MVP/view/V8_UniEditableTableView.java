@@ -84,7 +84,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     private Button addNewItemButton;// = new Button("Nová podložka");
     private Button removeItemButton;// = new Button("Odstráň túto podložku");
     private FormLayout editorLayout;// = new FormLayout();
-    private FieldGroup fg = new FieldGroup();
+    private final FieldGroup fg = new FieldGroup();
     private Button backBt;
 
     //split panel:
@@ -95,7 +95,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
     //Class specific:
     private SQLContainer sqlContainer;
-    private String tn;
+    private final String tn;
 //    private List<String> visibleFn;
     private List<String> nonEditFn;
     private String[] visibleColDepictNames;
@@ -105,11 +105,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     private VerticalLayout linksVl;
 
     private final Filter basicFilter;
-
-//    vseobecne komponenty
-    private final VerticalLayout temporaryLy;
-//    private final NavigationComponent navComp;
-    private final Navigator nav;
 
     
     //0.Konstruktor
@@ -123,19 +118,8 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         
         this.setMargin(true);
         this.setSpacing(true);
-
         
-//        zakladne komponenty
-        this.nav = UI.getCurrent().getNavigator();
-
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-
-        temporaryLy = new VerticalLayout();
-        this.addComponent(temporaryLy);
-
-
-//        servicy:
+//        servisy:
         this.securityService = new SecurityServiceImpl();
         this.uniTableService = new UniTableServiceImpl<>(clsq);
         this.userService = new UserServiceImpl();
@@ -146,7 +130,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         //dalsie komponenty:
         basicFilter = new Compare.Equal("visible", Boolean.TRUE);
         
-//        this.clsE = clsq;
         tn = ToolsDao.getTableName(clsq);
         
         this.initTableLists(uneditCol);
@@ -164,7 +147,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
      */
     private void initAllBasic() {
 
-        temporaryLy.removeAllComponents();
+        this.removeAllComponents();
 
         initLayout();
         initLinks();
@@ -173,7 +156,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         initSearch();
         initAddRemoveButtons();
 
-        temporaryLy.addComponents(splitPanel, linksVl);
+        this.addComponents(splitPanel, linksVl);
 
 
     }
@@ -507,7 +490,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                 if (utype != UserType.ADMIN){
                     UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
                 }
-                //do nothing
             } else {
                 //do nothing
             }

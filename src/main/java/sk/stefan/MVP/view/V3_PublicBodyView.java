@@ -26,6 +26,7 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
+import sk.stefan.MVP.view.components.MyTimeline;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.VotesLayout;
@@ -56,53 +57,43 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     private VotesLayout votesLayout;
     
     //componenty pre TimeLine:
-    private IndexedContainer container;
-    private Object timeStampProperty;
-    private Object valueProperty;
-    private Timeline timeLine;
+    private MyTimeline timeline;
     
     //tlacitko na pridavanie novej entity:
     private Button addNewPublicRoleBt;
     private DownloaderLayout<PublicBody> downoaderLayout;
     private UploaderLayout<PublicBody> uploaderLayout;
 
-    private final VerticalLayout temporaryLy;
-//    private final NavigationComponent navComp;
-    private final Navigator nav;
 
     
     
     //konstruktor:
+    /**
+     * Konstruktor.
+     */
     public V3_PublicBodyView(){
         
         this.setMargin(true);
         this.setSpacing(true);
 
-        this.nav = UI.getCurrent().getNavigator();
-
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-        
-        temporaryLy = new VerticalLayout();
-        this.addComponent(temporaryLy);
-        
-        
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
         
     }
     
+    /**
+     */
     private void initAllBasic(Boolean isVolunteer){
         
         
-        temporaryLy.removeAllComponents();
+        this.removeAllComponents();
         
         this.initPublicRolesLayout();
         this.initVoteLayout();
         this.initTimeline();
         
-        temporaryLy.addComponents(publicRolesLayout, votesLayout, timeLine);
+        this.addComponents(publicRolesLayout, votesLayout, timeline);
         
         if(isVolunteer){
             
@@ -141,23 +132,9 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
     }
 
     public void initTimeline() {
-        // Construct a container which implements Container.Indexed       
-        container = new IndexedContainer();
-
-        // Add the Timestamp property to the container
-        timeStampProperty = "vote_date";
-        container.addContainerProperty(timeStampProperty, java.util.Date.class, null);
-
-        // Add the value property
-        valueProperty = "for_vote";
-        container.addContainerProperty(valueProperty, java.lang.Integer.class, null);
-
-        // Our timeline
-        timeLine = new Timeline();
-        timeLine.addStyleName(null);
-
-        // Add the container as a graph container
-        timeLine.addGraphDataSource(container, timeStampProperty, valueProperty);
+        
+        List<Integer> ids = voteService.findVoteIdsByPubBodyId(this.publicBody.getId());
+        timeline = new MyTimeline(ids);
         
     }
 
@@ -187,7 +164,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyInputButton(PublicRole.class);
         
-        temporaryLy.addComponent(addNewPublicRoleBt);
+        this.addComponent(addNewPublicRoleBt);
     
     }
 
@@ -198,7 +175,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         this.uploaderLayout = new UploaderLayout<>(PublicBody.class, this.publicBody);
         
-        temporaryLy.addComponent(uploaderLayout);
+        this.addComponent(uploaderLayout);
         
     }
 
@@ -209,7 +186,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements View {
         
         this.downoaderLayout = new DownloaderLayout<>(PublicBody.class, this.publicBody);
         
-        temporaryLy.addComponent(downoaderLayout);
+        this.addComponent(downoaderLayout);
         
     }
 
