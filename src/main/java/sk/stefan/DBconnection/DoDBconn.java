@@ -21,7 +21,7 @@ public class DoDBconn {
 
     private static final Logger log = Logger.getLogger(DoDBconn.class);
         
-    private static int count =0;
+    public static int count =0;
     
     private static Connection nonInvasiveConn;
 
@@ -75,7 +75,7 @@ public class DoDBconn {
     }
     
     // 2.B. Connection for invasive DB operations.
-    public static Connection getConnection() {
+    public static Connection createInvasiveConnection() {
         try {
             Connection conn = connectionPool.reserveConnection();
             count++;

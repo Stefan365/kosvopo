@@ -14,6 +14,8 @@ public class V2_EnterView extends VerticalLayout implements View {
     private static final Logger log = Logger.getLogger(V2_EnterView.class);
 
     private static final long serialVersionUID = -2001141270398193257L;
+    
+    private final MyTimeline timeline;
 
 
     public V2_EnterView() {
@@ -23,6 +25,9 @@ public class V2_EnterView extends VerticalLayout implements View {
         
         this.initlayout();
 
+        this.timeline = new MyTimeline();
+        this.addComponent(timeline);
+        
     }
 
     private void initlayout() {

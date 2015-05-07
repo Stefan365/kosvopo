@@ -16,7 +16,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.view.components.InputFormLayout;
@@ -41,7 +40,7 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
     private Object itemId;
     private Item item;
     
-
+    
 //    public InputButClickListener(Class<?> cls, String title, InputAllView iaw) {
     public Input_EditButClickListener(Class<E> cls, String title, E entit) {
     
@@ -86,5 +85,27 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
             Notification.show("Nastala chyba!");
         }
     }
+    
+//        /**
+//     * inicializacia tlacitiek:
+//     */
+////    private static Button initButton(Button b, Class<?> cls, Object ent) {
+//    private Button initButton(EditWrapper<E> wrap) {
+//
+//        Button b = wrap.getB();
+//        
+//        String title = "edituj " + ToolsDao.getTitleName(wrap.getClass());
+//        
+//        b.setCaption(title);
+////        if ((Vote.class).equals(cls)) {
+////            b.addClickListener(new InputVoteButClickListener(title));
+////        } else {
+//        b.addClickListener(new Input_EditButClickListener<>(wrap.getClsE(), title, wrap.getEnt()));
+////        }
+//
+//        return b;
+//
+//    }
+
 
 }

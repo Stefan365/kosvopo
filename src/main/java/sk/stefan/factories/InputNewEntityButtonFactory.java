@@ -6,6 +6,7 @@
 package sk.stefan.factories;
 
 import com.vaadin.ui.Button;
+import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.listeners.InputVoteButClickListener;
 import sk.stefan.listeners.Input_EditButClickListener;
@@ -18,7 +19,7 @@ import sk.stefan.utils.ToolsDao;
  */
 public abstract class InputNewEntityButtonFactory {
 
-//    private static final Logger log = Logger.getLogger(InputNewEntityButtonFactoryImpl.class);
+    private static final Logger log = Logger.getLogger(InputNewEntityButtonFactory.class);
 
     private static final long serialVersionUID = 1645436L;
 
@@ -31,7 +32,6 @@ public abstract class InputNewEntityButtonFactory {
     public static Button createMyInputButton(Class<?> cls) {
         
         Button b = new Button();
-        
         return initButton(b, cls);
         
     }

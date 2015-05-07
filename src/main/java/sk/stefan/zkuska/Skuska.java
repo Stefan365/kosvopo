@@ -13,17 +13,23 @@ public class Skuska {
 
     @Autowired
     private UniRepo<Vote> voteRepo;
-    
+
     @Autowired
     private UniRepo<Location> locRepo;
-    
+
     @Autowired
     private UniRepo<Region> krRepo;
-    
-    
 
     private int aj;
     private static final Logger log = Logger.getLogger(Skuska1.class);
+
+    /**
+     * 
+     * @param args
+     */
+    public static void main(String[] args) {
+
+    }
 
     public Skuska(int i) {
         aj = i;
@@ -37,16 +43,15 @@ public class Skuska {
     }
 
     public void skusRepo() {
-        
+
         Vote v = voteRepo.findOne(4);
         log.info("VOTE SKUSKA: " + v.getPresentationName());
-        
+
         Location l = locRepo.findOne(4);
         log.info("LOC SKUSKA: " + l.getLocation_name());
-        
+
         Region k = krRepo.findOne(3);
         log.info("KRAJ SKUSKA: " + k.getRegion_name());
-        
 
     }
 

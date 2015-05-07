@@ -15,8 +15,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.PersonClassification;
+import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.entity.PublicPerson;
 import sk.stefan.MVP.model.entity.PublicRole;
+import sk.stefan.MVP.model.entity.Subject;
 import sk.stefan.MVP.model.service.ClassificationService;
 import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.UserService;
@@ -32,7 +34,9 @@ import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.factories.InputNewEntityButtonFactory;
+import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
  *
@@ -43,6 +47,12 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);
 
+    //servisy:
+    private final PublicRoleService publicRoleService;
+    private final VoteService voteService;
+    private final UserService userService;
+    private final ClassificationService classificationService;
+
     //hlavna entita tohoto VIew
     private PublicPerson publicPerson;
 
@@ -50,19 +60,14 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
     //bude vyznacena farebne.
     private PublicRole actualPublicRole;
 
+    
+    
     //komponenty pre zobrazeneie verejnych roli dane osoby (tj. jedna aktivna a 
     //zvysok stare): 
     private PublicRolesLayout publicRolesLayout;
-
     //layout pre zobrazenie zakladnych udajov danej osoby.
     private PublicPersonComponent publicPersonComponent;
-
-    //servisy:
-    private final PublicRoleService publicRoleService;
-    private final VoteService voteService;
-    private final UserService userService;
-    private final ClassificationService classificationService;
-
+    
 //    private final PublicPersonService publicPersonService;
     //componenty pre TimeLine:
     private MyTimeline timeline;
@@ -85,7 +90,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
         this.classificationService = new ClassificationServiceImpl();
-
+        
         if (publicPerson != null) {
             initAllBasic(Boolean.FALSE);
         }
@@ -109,6 +114,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
         if (isVolunteer) {
 
             this.initNewPublicRoleButton();
+            this.initEditPublicPersonButton();
             this.initUploadLayout();
 
         } else {
@@ -249,6 +255,14 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
             UI.getCurrent().getNavigator().navigateTo("V4s_PublicPersonsView");
         }
 
+    }
+
+    private void initEditPublicPersonButton() {
+        
+        Button editPubPersonBt;
+        FunctionalEditWrapper<PublicPerson> ew = new FunctionalEditWrapper<>(PublicPerson.class, publicPerson);
+        editPubPersonBt = EditEntityButtonFactory.createMyEditButton(ew);
+        this.addComponent(editPubPersonBt);
     }
 
 }

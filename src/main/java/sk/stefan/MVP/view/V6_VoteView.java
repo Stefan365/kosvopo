@@ -31,7 +31,9 @@ import sk.stefan.MVP.view.components.VoteDetailedComponent;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.factories.InputNewEntityButtonFactory;
+import sk.stefan.wrappers.FunctionalEditWrapper;
 
 
 /**
@@ -53,7 +55,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
     private final VoteService voteService;
     private final UserService userService;
     private final ClassificationService classificationService;
-    
+
     //komponnety:
     private VoteDetailedComponent voteDetailedComponent;
     private ThemeComponent themeComponent;
@@ -73,7 +75,8 @@ public final class V6_VoteView extends VerticalLayout implements View {
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
         this.classificationService = new ClassificationServiceImpl();
-
+        
+        
     }
 
     /**
@@ -93,6 +96,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
         if (isVolunteer) {
 
             this.initNewPublicRoleButton();
+            this.initEditVoteButton();
             this.initUploadLayout();
 
         } else {
@@ -147,7 +151,6 @@ public final class V6_VoteView extends VerticalLayout implements View {
     private void initNewPublicRoleButton() {
 
         this.editVoteBt = InputNewEntityButtonFactory.createMyInputButton(PublicRole.class);
-
         this.addComponent(editVoteBt);
 
     }
@@ -159,10 +162,20 @@ public final class V6_VoteView extends VerticalLayout implements View {
     private void initUploadLayout() {
 
         this.uploaderLayout = new UploaderLayout<>(Vote.class, this.vote);
-
         this.addComponent(uploaderLayout);
 
     }
+
+    /**
+     * 
+     */
+    private void initEditVoteButton() {
+        
+        FunctionalEditWrapper<Vote> ew = new FunctionalEditWrapper<>(Vote.class, vote);
+        editVoteBt = EditEntityButtonFactory.createMyEditButton(ew);
+        this.addComponent(editVoteBt);
+    }
+
 
     /**
      * Komponenta na zobrazovanie dokumentov prisluchajucich entite PublicBody.
@@ -170,7 +183,6 @@ public final class V6_VoteView extends VerticalLayout implements View {
     private void initDownloadLayout() {
 
         this.downoaderLayout = new DownloaderLayout<>(Vote.class, this.vote);
-
         this.addComponent(downoaderLayout);
 
     }
@@ -180,8 +192,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         Vote vot = VaadinSession.getCurrent().getAttribute(Vote.class);
-        
-        
+     
         A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
 
         Boolean isVolunteer = Boolean.FALSE;
@@ -197,10 +208,6 @@ public final class V6_VoteView extends VerticalLayout implements View {
         } else {
             UI.getCurrent().getNavigator().navigateTo("V6s_VotesView");
         }
-
     }
-
-//        
-
 
 }

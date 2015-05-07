@@ -37,9 +37,6 @@ public class GeneralRepo {
     public GeneralRepo() {
 
         this.securityService = new SecurityServiceImpl();
-        if (transactionalConn == null) {
-            transactionalConn = DoDBconn.getConnection();
-        }
 
     }
 
@@ -53,8 +50,10 @@ public class GeneralRepo {
 //    public static synchronized boolean deactivate(String tn, Integer id) {
     public void deactivateOne(String tn, Integer id) throws SQLException {
 
+
         if (transactionalConn == null){
-            transactionalConn = DoDBconn.getConnection();
+            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+            transactionalConn = DoDBconn.createInvasiveConnection();
         }
 
         Statement st = transactionalConn.createStatement();
@@ -113,7 +112,8 @@ public class GeneralRepo {
      */
     public void updatePassword(String rawPwd, String id) throws SQLException {
 
-        Connection conn = DoDBconn.getConnection();
+        log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+        Connection conn = DoDBconn.createInvasiveConnection();
 
         PreparedStatement st;
         try {
@@ -346,7 +346,8 @@ public class GeneralRepo {
     public void deactivateEntityDocuments(String tn, Integer rid) throws SQLException {
         
         if (transactionalConn == null){
-            transactionalConn = DoDBconn.getConnection();
+            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+            transactionalConn = DoDBconn.createInvasiveConnection();
         }
         Statement st = transactionalConn.createStatement();
 

@@ -282,8 +282,8 @@ public class UniRepo<E> implements MyRepo<E> {
     @Override
     public E save(E ent) {
         try {
-
-            Connection conn = DoDBconn.getConnection();
+            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+            Connection conn = DoDBconn.createInvasiveConnection();
             PreparedStatement st;
             Map<String, Class<?>> mapPar;
             String sql;
@@ -336,8 +336,8 @@ public class UniRepo<E> implements MyRepo<E> {
     @Override
     public boolean delete(E ent) {
         try {
-
-            Connection conn = DoDBconn.getConnection();
+            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+            Connection conn = DoDBconn.createInvasiveConnection();
 
             Statement st = conn.createStatement();
 
@@ -384,7 +384,8 @@ public class UniRepo<E> implements MyRepo<E> {
     @Override
     public boolean deactivate(E ent) {
 
-        Connection conn = DoDBconn.getConnection();
+        log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+        Connection conn = DoDBconn.createInvasiveConnection();
 
         try {
 
@@ -426,8 +427,9 @@ public class UniRepo<E> implements MyRepo<E> {
      * @throws java.sql.SQLException
      */
     public void updateParam(String paramName, String paramValue, String id) throws SQLException {
-
-        Connection conn = DoDBconn.getConnection();
+  
+        log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+        Connection conn = DoDBconn.createInvasiveConnection();
         Statement st = null;
         try {
 

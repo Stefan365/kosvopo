@@ -6,10 +6,10 @@
 package sk.stefan.factories;
 
 import com.vaadin.ui.Button;
-import sk.stefan.wrappers.EditWrapper;
+import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
- * Trieda, vytvara tlacitka na editaciu entit. 
+ * Trieda, vytvara tlacitka na editaciu entit.
  *
  *
  * @author stefan
@@ -18,11 +18,20 @@ public abstract class EditEntityButtonFactory {
 
     private static final long serialVersionUID = 1645436L;
 
-    
-    public static Button createMyEditButton(EditWrapper<?> wrap) {
+
+    /**
+     *  
+     * 
+     * @param wrap This wrapper has inside some funcionality inside  
+     * to make possible construct editButtonFactory as abstract class with static factory method.
+     * Otherwise factory must be generic and thus, factory method cannot be static.
+     * 
+     * @return 
+     */
+    public static Button createMyEditButton(FunctionalEditWrapper<?> wrap) {
 
         return wrap.getB();
-    
+
     }
-    
+
 }

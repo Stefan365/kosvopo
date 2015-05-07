@@ -26,7 +26,7 @@ public final class MyTimeline extends Timeline {
 
     private SQLContainer timelineContainer;
 
-    private final Filter basicFilter;
+    private final Filter basicFilter = new Compare.Equal("visible", Boolean.TRUE);
 
     private final Filter filter;
 
@@ -34,7 +34,6 @@ public final class MyTimeline extends Timeline {
 
         voteService = new VoteServiceImpl();
 
-        basicFilter = new Compare.Equal("visible", Boolean.TRUE);
         filter = ToolsFiltering.createFilter(ids);
         
         this.initTimeline();
@@ -45,7 +44,6 @@ public final class MyTimeline extends Timeline {
     public MyTimeline() {
         voteService = new VoteServiceImpl();
 
-        basicFilter = new Compare.Equal("visible", Boolean.TRUE);
         //tj. all possible.
         filter = null;
         
@@ -58,13 +56,14 @@ public final class MyTimeline extends Timeline {
         try {
             timelineContainer = DoDBconn.createSqlContainera("t_vote");
             timelineContainer.addContainerFilter(basicFilter);
+
             
             if (filter != null) {
                 timelineContainer.addContainerFilter(filter);
             }
             this.setBrowserVisible(Boolean.TRUE);
             this.setWidth("80%");
-//            timeline.addGraphDataSource(timelineContainer, "vote_date", "for_vote");
+            this.addGraphDataSource(timelineContainer, "vote_date", "for_vote");
             this.setEventDataSource(timelineContainer, "vote_date", "for_vote");
 
         } catch (SQLException ex) {

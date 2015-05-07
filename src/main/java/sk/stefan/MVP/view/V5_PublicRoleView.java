@@ -5,17 +5,16 @@
  */
 package sk.stefan.MVP.view;
 
-import com.vaadin.addon.timeline.Timeline;
-import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.MVP.model.entity.PublicPerson;
 import sk.stefan.MVP.model.entity.PublicRole;
 import sk.stefan.MVP.model.entity.VoteOfRole;
 import sk.stefan.MVP.model.service.PublicRoleService;
@@ -30,6 +29,8 @@ import sk.stefan.MVP.view.components.VoteOfRolesDetailedLayout;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.factories.EditEntityButtonFactory;
+import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
  * View zobrazujúci roľu danej verejnej osoby.
@@ -48,7 +49,10 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
     private final PublicRoleService publicRoleService;
     private final VoteService voteService;
     private final UserService userService;
-
+    
+//    private final EditEntityButtonFactory<PublicRole> editButtonFactory;
+    
+    
     //componenty pre TimeLine:
     private MyTimeline timeline;
     //layout pre zobrazenie zakladnych udajov danej osoby.
@@ -71,7 +75,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
-
+        
     }
 
     /**
@@ -87,7 +91,9 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
         this.addComponents(publicRoleComponent, votesOfRoleLayout, timeline);
 
         if (isVolunteer) {
+            this.initEditPublicRoleButton();
             this.initUploadLayout();
+            
         } else {
             this.initDownloadLayout();
         }
@@ -115,9 +121,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
     private void initVotesOfRoleLayout() {
 
         List<Integer> vorIds = voteService.findVoteOfRoleIdsByPubRoleId(publicRole.getId());
-
         List<VoteOfRole> votesOfRole = voteService.findNewVotesOfRole(vorIds);
-
         this.votesOfRoleLayout = new VoteOfRolesDetailedLayout(votesOfRole, voteService);
 
     }
@@ -139,10 +143,21 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
     private void initUploadLayout() {
 
         this.uploaderLayout = new UploaderLayout<>(PublicRole.class, this.publicRole);
-
         this.addComponent(uploaderLayout);
 
     }
+    
+    /**
+     * 
+     */
+    private void initEditPublicRoleButton() {
+        
+        Button editPubRoleBt;
+        FunctionalEditWrapper<PublicRole> ew = new FunctionalEditWrapper<>(PublicRole.class, publicRole);
+        editPubRoleBt = EditEntityButtonFactory.createMyEditButton(ew);
+        this.addComponent(editPubRoleBt);
+    }
+
 
     /**
      * Komponenta na zobrazovanie dokumentov prisluchajucich entite PublicBody.
@@ -150,7 +165,6 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
     private void initDownloadLayout() {
 
         this.downoaderLayout = new DownloaderLayout<>(PublicRole.class, this.publicRole);
-
         this.addComponent(downoaderLayout);
 
     }

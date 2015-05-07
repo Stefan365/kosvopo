@@ -22,7 +22,7 @@ import sk.stefan.MVP.view.components.SubjectDetailedComponent;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
 import sk.stefan.factories.EditEntityButtonFactory;
-import sk.stefan.wrappers.EditWrapper;
+import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
  *
@@ -54,6 +54,8 @@ public final class V9_SubjectView extends VerticalLayout implements View {
 
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
+        
+
         
     }
 
@@ -92,7 +94,8 @@ public final class V9_SubjectView extends VerticalLayout implements View {
      */
     private void initEditSubjectButton() {
         
-        EditWrapper<Subject> ew = new EditWrapper<>(editSubjectBt, Subject.class, subject);
+        
+        FunctionalEditWrapper<Subject> ew = new FunctionalEditWrapper<>(Subject.class, subject);
         this.editSubjectBt = EditEntityButtonFactory.createMyEditButton(ew);
         this.addComponent(editSubjectBt);
 
