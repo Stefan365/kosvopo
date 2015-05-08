@@ -2,6 +2,7 @@ package sk.stefan.MVP.model.repo;
 
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.UI;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -9,16 +10,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.entity.A_Change;
+import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.interfaces.MyRepo;
 import sk.stefan.utils.ToolsDao;
 
@@ -28,6 +30,9 @@ public class UniRepo<E> implements MyRepo<E> {
     // table name:
     private final String TN;
     private final Class<?> clsE;
+
+    //pre potreby ukladania do a_change;
+    private Connection invasiveConnection = null;
 
     //connection musi byt centralne, inak nenudu fungovat transactional operacie
     //bude tam odkaz na DoDBconn.conn
@@ -41,9 +46,17 @@ public class UniRepo<E> implements MyRepo<E> {
 
         this.clsE = cls;
         this.TN = ToolsDao.getTableName(cls);
-        if (DoDBconn.getNonInvasiveConn() == null) {
-            DoDBconn.createNoninvasiveConnection();
-        }
+//        if (DoDBconn.getNonInvasiveConn() == null) {
+//            DoDBconn.createNoninvasiveConnection();
+//        }
+
+    }
+
+    public UniRepo(Class<?> cls, Connection conn) {
+
+        this.clsE = cls;
+        this.TN = ToolsDao.getTableName(cls);
+        this.invasiveConnection = conn;
 
     }
 
@@ -64,11 +77,11 @@ public class UniRepo<E> implements MyRepo<E> {
             st = DoDBconn.getNonInvasiveConn().createStatement();
 
             String sql;
-            if (TN.contains("a_")&& !"a_hierarchy".equals(TN)) {
+            if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
                 sql = String.format("SELECT * FROM %s WHERE active = true", TN);
-            } else if ("a_hierarchy".equals(TN)){
+            } else if ("a_hierarchy".equals(TN)) {
                 sql = String.format("SELECT * FROM %s", TN);
-            } else {    
+            } else {
                 sql = String.format("SELECT * FROM %s  WHERE visible = true", TN);
             }
 
@@ -110,7 +123,7 @@ public class UniRepo<E> implements MyRepo<E> {
             String sql;
             if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
                 sql = String.format("SELECT * FROM %s WHERE id = %d AND active = true", TN, id);
-            } else if ("a_hierarchy".equals(TN)){
+            } else if ("a_hierarchy".equals(TN)) {
                 sql = String.format("SELECT * FROM %s WHERE id = %d", TN, id);
             } else {
                 sql = String.format("SELECT * FROM %s WHERE id = %d AND visible = true", TN, id);
@@ -149,7 +162,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
         try {
             //pre pripad, ze by spojenie spadlo.
-            
+
             if (DoDBconn.getNonInvasiveConn() == null) {
                 DoDBconn.createNoninvasiveConnection();
             }
@@ -163,7 +176,7 @@ public class UniRepo<E> implements MyRepo<E> {
             if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
                 sql.append(" AND active = true");
                 //do nothing
-            } else if ("a_hierarchy".equals(TN)){
+            } else if ("a_hierarchy".equals(TN)) {
                 //do nothing
             } else {
                 sql.append(" AND visible = true");
@@ -222,7 +235,7 @@ public class UniRepo<E> implements MyRepo<E> {
             if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
                 sql.append(" AND active = true");
                 //do nothing
-            } else if ("a_hierarchy".equals(TN)){
+            } else if ("a_hierarchy".equals(TN)) {
                 //do nothing
             } else {
                 sql.append(" AND visible = true");
@@ -281,9 +294,16 @@ public class UniRepo<E> implements MyRepo<E> {
      */
     @Override
     public E save(E ent) {
+
+        E entOrigin;
+        Connection conn;
         try {
-            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
-            Connection conn = DoDBconn.createInvasiveConnection();
+//            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+            if (this.invasiveConnection != null) {
+                conn = invasiveConnection;
+            } else {
+                conn = DoDBconn.createInvasiveConnection();
+            }
             PreparedStatement st;
             Map<String, Class<?>> mapPar;
             String sql;
@@ -295,8 +315,10 @@ public class UniRepo<E> implements MyRepo<E> {
 
             if (novy) {
                 sql = this.createInsertQueryPrepared(mapPar);
+                entOrigin = null;
             } else {
                 sql = this.createUpdateQueryPrepared(mapPar, eid);
+                entOrigin = this.findOne(eid);
             }
             st = this.createStatement(mapPar, conn, sql, ent);
 
@@ -310,12 +332,27 @@ public class UniRepo<E> implements MyRepo<E> {
                 entMethod.invoke(ent, newId);
             }
 
-            conn.commit();
+            //to druhe je ten len kvoli poisteniu
+            if (!"a_change".equals(TN) && this.invasiveConnection==null) {
+                //toto by sa malo prerobit na jedno invazivne connection a to by bolo spolocne 
+                //aj pre hlavne save aj pre save do A_change
+                List<A_Change> changes = this.createChangesToPersist(entOrigin, ent, mapPar);
+                UniRepo<A_Change> changeRepo = new UniRepo<>(A_Change.class, conn);
+                for (A_Change ch : changes) {
+                    changeRepo.save(ch);
+                }
+
+            }
+
             rs.close();
             st.close();
 
-            DoDBconn.releaseConnection(conn);
-
+            //ak sa vsetko podarilo(tj. ulozenie aj zapis do a_change), az teraz nastane commit:
+            if (this.invasiveConnection == null) {
+                conn.commit();
+                DoDBconn.releaseConnection(conn);
+            }
+            
             return ent;
 
         } catch (IllegalAccessException | NoSuchFieldException |
@@ -324,51 +361,6 @@ public class UniRepo<E> implements MyRepo<E> {
 //            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
             log.error(e.getMessage(), e);
             return null;
-        }
-
-    }
-
-// 5.
-    /**
-     * @param ent
-     * @return
-     */
-    @Override
-    public boolean delete(E ent) {
-        try {
-            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
-            Connection conn = DoDBconn.createInvasiveConnection();
-
-            Statement st = conn.createStatement();
-
-            Integer id = null;
-
-            if (ent != null) {
-                Method entMethod = clsE.getMethod("getId");
-                id = (Integer) entMethod.invoke(ent);
-            }
-
-            if (id != null) {
-                String sql = String.format("DELETE FROM %s WHERE id = %d", TN, id);
-                st.executeUpdate(sql);
-                log.info("DELETE:" + sql);
-            }
-            conn.commit();
-            st.close();
-
-            DoDBconn.releaseConnection(conn);
-            return true;
-
-        } catch (IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
-            Notification
-                    .show("Chyba, uniRepo::delete(non SQL exception)", Type.ERROR_MESSAGE);
-            log.error(e.getLocalizedMessage(), e);
-            return false;
-        } catch (SQLException e) {
-//            Notification.show("Chyba, uniRepo::delete(SQL exception)", Type.ERROR_MESSAGE);
-            Notification.show("Danu entitu nieje mozne zatial vymazat, vymaz dalsie podentity");
-            log.error(e.getLocalizedMessage(), e);
-            return false;
         }
 
     }
@@ -427,7 +419,7 @@ public class UniRepo<E> implements MyRepo<E> {
      * @throws java.sql.SQLException
      */
     public void updateParam(String paramName, String paramValue, String id) throws SQLException {
-  
+
         log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
         Connection conn = DoDBconn.createInvasiveConnection();
         Statement st = null;
@@ -459,7 +451,7 @@ public class UniRepo<E> implements MyRepo<E> {
         }
     }
 
-//    POMOCNE METODY:    
+//**************    POMOCNE METODY: *************************   
     /**
      *
      * @param mapPar
@@ -770,7 +762,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
             String entMetName = "getId";
             Method entMethod = clsE.getMethod(entMetName);
-            boolean novy = entMethod.invoke(ent) == null;
+//            boolean novy = entMethod.invoke(ent) == null;
             return (Integer) entMethod.invoke(ent);
 
         } catch (IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
@@ -779,4 +771,88 @@ public class UniRepo<E> implements MyRepo<E> {
             return null;
         }
     }
+
+    //******************** auxiliary  methods for saving change into database **************
+    private Map<String, Object> getEntityValues(E ent, Map<String, Class<?>> mapPar) {
+
+        Map<String, Object> valuesAsObjects = new HashMap<>();
+        String getterName;
+        Object val;
+
+        try {
+            for (String param : mapPar.keySet()) {
+                if (ent == null) {
+                    valuesAsObjects.put(param, null);
+                } else {
+                    getterName = ToolsDao.getG_SetterName(param, "get");
+                    Method entMethod = clsE.getMethod(getterName);
+                    val = entMethod.invoke(ent);
+                    valuesAsObjects.put(param, val);
+                }
+            }
+
+            return valuesAsObjects;
+
+        } catch (IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
+//            Notification.show("Chyba, createPreSaveSnapshot", Type.ERROR_MESSAGE);
+            log.error(e.getMessage(), e);
+            return null;
+        }
+
+    }
+
+    /**
+     *
+     * @param entOrigin entity before change from DB. if entChanged is new, this
+     * is null.
+     * @param entChanged must be after saving to database (i.e must have an
+     * id,also for new entity)
+     * @param mapPar
+     * @return
+     */
+    public List<A_Change> createChangesToPersist(E entOrigin, E entChanged, Map<String, Class<?>> mapPar) {
+
+        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+        Integer userId;
+        Integer rowId;
+        Object orig;
+        Object changed;
+
+        if (user == null) {
+            log.warn("This chouldnt be possible!!");
+            return null;
+        } else {
+            userId = user.getId();
+        }
+
+        rowId = this.isNew(entChanged);
+
+        Map<String, Object> pre = getEntityValues(entOrigin, mapPar);
+        Map<String, Object> post = getEntityValues(entChanged, mapPar);
+
+        List<A_Change> changesToPersist = new ArrayList<>();
+        A_Change zmena;
+
+        for (String param : pre.keySet()) {
+            orig = pre.get(param);
+            changed = post.get(param);
+            //odfiltrovanie policok, kde zmena nenastala. pokial je entita nova, uklada sa vsetko:
+            if ((entOrigin == null) || !orig.equals(changed)) {
+
+                zmena = new A_Change();
+                zmena.setUser_id(userId);
+                zmena.setTable_name(TN);
+                zmena.setColumn_name(param);
+                zmena.setRow_id(rowId);
+                //zistit, ci je to Strinfg postacujuce pre spatnu konverziu!
+                zmena.setOld_value(orig.toString());
+                zmena.setNew_value(changed.toString());
+
+                changesToPersist.add(zmena);
+            }
+        }
+
+        return changesToPersist;
+    }
+
 }

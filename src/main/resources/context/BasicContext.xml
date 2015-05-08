@@ -6,7 +6,7 @@
        default-lazy-init="true" default-autowire="byName"  
 >
     <!--default-autowire="byType"-->
-   <import resource="ViewsContext.xml"/> 
+   <!--<import resource="ViewsContext.xml"/>--> 
     
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">

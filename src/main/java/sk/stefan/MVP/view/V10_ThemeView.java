@@ -13,7 +13,6 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
-import sk.stefan.MVP.model.entity.Subject;
 import sk.stefan.MVP.model.entity.Theme;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
@@ -42,7 +41,7 @@ public final class V10_ThemeView extends VerticalLayout implements View {
     //hlavna entita tohoto VIew
     private Theme theme;
     
-    private final EditEntityButtonFactory<Theme> editButtonFactory;
+//    private final EditEntityButtonFactory<Theme> editButtonFactory;
         
     //komponenty:
     private ThemeDetailedComponent themeDetailedComp;
@@ -58,7 +57,6 @@ public final class V10_ThemeView extends VerticalLayout implements View {
                 
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
-        this.editButtonFactory = new  EditEntityButtonFactory<>();
     }
 
     /**
@@ -95,8 +93,8 @@ public final class V10_ThemeView extends VerticalLayout implements View {
      */
     private void initEditThemeButton() {
         
-        FunctionalEditWrapper<Theme> ew = new FunctionalEditWrapper<>(editThemeBt, Theme.class, theme);
-        this.editThemeBt = editButtonFactory.createMyEditButton(ew);
+        FunctionalEditWrapper<Theme> ew = new FunctionalEditWrapper<>(Theme.class, theme);
+        this.editThemeBt = EditEntityButtonFactory.createMyEditButton(ew);
         
         this.addComponent(editThemeBt);
 

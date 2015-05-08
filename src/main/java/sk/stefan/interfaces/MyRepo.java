@@ -54,13 +54,13 @@ public interface MyRepo<T> {
      */
     public T save(T ent);
 
-    // 5.
-    /**
-     * Zmaze entitu z databazy.
-     * @param ent
-     * @return 
-     */
-    public boolean delete(T ent);
+//    // 5.
+//    /**
+//     * Zmaze entitu z databazy.
+//     * @param ent
+//     * @return 
+//     */
+//    public boolean delete(T ent);
 
     //5.B
     /**

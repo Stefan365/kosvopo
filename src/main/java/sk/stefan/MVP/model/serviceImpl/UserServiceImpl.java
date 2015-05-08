@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(A_User user) {
-        userRepo.delete(user);
+        userRepo.deactivate(user);
     }
 
     @Override

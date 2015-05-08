@@ -91,7 +91,8 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusAdmin();
+        sk.skusField();
+//        sk.skusAdmin();
 //        sk.skusVoteSave();
 //        sk.skusFormatter();
 //        sk.skusSaveU();
@@ -462,8 +463,8 @@ public class Skuska1<T> {
 
         log.info("\nXXXXX: 6.DELETE");
         // 6.
-        uniRepo.delete(ent1);
-        uniRepo.delete(ent2);
+//        uniRepo.delete(ent1);
+//        uniRepo.delete(ent2);
         log.info("\nXXXXX: 6. PASSED!");
 
         log.info("\nXXXXX: 7.COPY");
@@ -1236,10 +1237,22 @@ public class Skuska1<T> {
         SecurityService ss = new SecurityServiceImpl();
         ss.initAdmin();
         log.info("Vytvoril som admina!");
-       
-        
-                
+    }
     
+    private void skusField(){
+        List<Object> objs = new ArrayList<>();
+        
+        for(int i = 0; i < 5; i++){
+            objs.add(null);
+        }
+        int j=0;
+        for (Object o: objs){
+            
+            log.info("J:" + o + " . " + j);
+            j++;
+        
+        }
+        
     }
 
 }

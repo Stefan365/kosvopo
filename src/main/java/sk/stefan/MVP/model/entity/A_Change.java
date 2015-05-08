@@ -28,6 +28,11 @@ public class A_Change implements PresentationName {
     private Boolean active;
     
     
+    public A_Change(){
+        
+        this.date_stamp = new Date();
+        
+    }
 
     //getters:
     public Integer getId() {
