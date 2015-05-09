@@ -29,7 +29,9 @@ public class FunctionalEditWrapper<E> {
         this.clsE = cls;
         this.ent = entit;
 
-        String title = ToolsDao.getTitleName(clsE);
+        String title = "edituj " + ToolsDao.getTitleName(clsE);
+
+        b.setCaption(title);
         b.addClickListener(new Input_EditButClickListener<>(clsE, title, ent));
 
     }

@@ -26,6 +26,4 @@ public interface DocumentService<E> {
     
     public Document save(Document doc);
     
-    
-
 }

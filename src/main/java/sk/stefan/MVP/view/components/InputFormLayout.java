@@ -49,9 +49,9 @@ import sk.stefan.utils.ToolsNazvy;
  * entit.
  *
  * @author Stefan
- * @param <T> Daná třída T, pro kterou se formulář vytvoří
+ * @param <E> Daná trieda E, pre ktoru sa formulár vytvori
  */
-public class InputFormLayout<T> extends FormLayout {
+public class InputFormLayout<E> extends FormLayout {
 
     private static final Logger log = Logger.getLogger(InputFormLayout.class);
 
@@ -135,7 +135,7 @@ public class InputFormLayout<T> extends FormLayout {
      * @param nEditFn zoznam mien parametrov, ktore budu pri tvorbe formularu
      * ignorovane.
      */
-    public InputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont,
+    public InputFormLayout(Class<E> clsT, Item item, SQLContainer sqlCont,
             Component cp, List<String> nEditFn) {
 
         //titul:

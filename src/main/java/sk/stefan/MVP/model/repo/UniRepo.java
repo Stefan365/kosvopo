@@ -77,9 +77,7 @@ public class UniRepo<E> implements MyRepo<E> {
             st = DoDBconn.getNonInvasiveConn().createStatement();
 
             String sql;
-            if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
-                sql = String.format("SELECT * FROM %s WHERE active = true", TN);
-            } else if ("a_hierarchy".equals(TN)) {
+            if ("a_hierarchy".equals(TN)) {
                 sql = String.format("SELECT * FROM %s", TN);
             } else {
                 sql = String.format("SELECT * FROM %s  WHERE visible = true", TN);
@@ -121,9 +119,7 @@ public class UniRepo<E> implements MyRepo<E> {
             st = DoDBconn.getNonInvasiveConn().createStatement();
 
             String sql;
-            if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
-                sql = String.format("SELECT * FROM %s WHERE id = %d AND active = true", TN, id);
-            } else if ("a_hierarchy".equals(TN)) {
+            if ("a_hierarchy".equals(TN)) {
                 sql = String.format("SELECT * FROM %s WHERE id = %d", TN, id);
             } else {
                 sql = String.format("SELECT * FROM %s WHERE id = %d AND visible = true", TN, id);
@@ -173,10 +169,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
             sql.append(String.format("SELECT * FROM %s WHERE ", TN));
             sql.append(this.getFindByParamQuery(paramName, paramValue));
-            if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
-                sql.append(" AND active = true");
-                //do nothing
-            } else if ("a_hierarchy".equals(TN)) {
+            if ("a_hierarchy".equals(TN)) {
                 //do nothing
             } else {
                 sql.append(" AND visible = true");
@@ -232,10 +225,7 @@ public class UniRepo<E> implements MyRepo<E> {
             sql.append(this.getFindByParamQuery(p1Name, p1Value));
             sql.append(" AND ");
             sql.append(this.getFindByParamQuery(p2Name, p2Value));
-            if (TN.contains("a_") && !"a_hierarchy".equals(TN)) {
-                sql.append(" AND active = true");
-                //do nothing
-            } else if ("a_hierarchy".equals(TN)) {
+            if ("a_hierarchy".equals(TN)) {
                 //do nothing
             } else {
                 sql.append(" AND visible = true");
@@ -323,7 +313,7 @@ public class UniRepo<E> implements MyRepo<E> {
             st = this.createStatement(mapPar, conn, sql, ent);
 
             st.executeUpdate();
-
+//            log.info("SOM TUS!");
             ResultSet rs = st.getGeneratedKeys();
             if (novy && rs.next()) {
                 Integer newId = rs.getInt(1);
@@ -333,7 +323,8 @@ public class UniRepo<E> implements MyRepo<E> {
             }
 
             //to druhe je ten len kvoli poisteniu
-            if (!"a_change".equals(TN) && this.invasiveConnection==null) {
+//            if (!TN.contains("a_") && this.invasiveConnection==null) {
+            if (!"a_change".equals(TN) && this.invasiveConnection == null) {
                 //toto by sa malo prerobit na jedno invazivne connection a to by bolo spolocne 
                 //aj pre hlavne save aj pre save do A_change
                 List<A_Change> changes = this.createChangesToPersist(entOrigin, ent, mapPar);
@@ -352,7 +343,7 @@ public class UniRepo<E> implements MyRepo<E> {
                 conn.commit();
                 DoDBconn.releaseConnection(conn);
             }
-            
+
             return ent;
 
         } catch (IllegalAccessException | NoSuchFieldException |
@@ -376,34 +367,42 @@ public class UniRepo<E> implements MyRepo<E> {
     @Override
     public boolean deactivate(E ent) {
 
-        log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
-        Connection conn = DoDBconn.createInvasiveConnection();
-
+        Connection conn;
         try {
+            if (this.invasiveConnection != null) {
+                conn = invasiveConnection;
+            } else {
+                conn = DoDBconn.createInvasiveConnection();
+            }
 
             Statement st = conn.createStatement();
 
-            Integer id = null;
-
-            if (ent != null) {
-                Method entMethod = clsE.getMethod("getId");
-                id = (Integer) entMethod.invoke(ent);
-            }
+            Integer id = isNew(ent);
 
             if (id != null) {
                 String sql = String.format("UPDATE %s SET visible = false WHERE id = %d", TN, id);
                 st.executeUpdate(sql);
+            } else {
+//                do nothing
+                return true;
+            }
+            if (!"a_change".equals(TN) && this.invasiveConnection == null) {
+                A_Change change = this.createDeactivateChangeToPersist(ent);
+                UniRepo<A_Change> changeRepo = new UniRepo<>(A_Change.class, conn);
+                changeRepo.save(change);
             }
 
-            conn.commit();
-
             st.close();
-            DoDBconn.releaseConnection(conn);
+
+            //ak sa vsetko podarilo(tj. ulozenie aj zapis do a_change), az teraz nastane commit:
+            if (this.invasiveConnection == null) {
+                conn.commit();
+                DoDBconn.releaseConnection(conn);
+            }
+
             return true;
 
-        } catch (SQLException | IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
-            Notification
-                    .show("Chyba, uniRepo::delete(non SQL exception)", Type.ERROR_MESSAGE);
+        } catch (SQLException | SecurityException | IllegalArgumentException e) {
             log.error(e.getLocalizedMessage(), e);
             return false;
         }
@@ -415,42 +414,61 @@ public class UniRepo<E> implements MyRepo<E> {
      *
      * @param paramName the name of parameter.
      * @param paramValue the new value of parameter
-     * @param id id of row where the value is updated.
+     * @param entId id of row where the value is updated.
      * @throws java.sql.SQLException
      */
-    public void updateParam(String paramName, String paramValue, String id) throws SQLException {
+    public void updateParam(String paramName, String paramValue, String entId) throws SQLException {
 
-        log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
-        Connection conn = DoDBconn.createInvasiveConnection();
-        Statement st = null;
+        Connection conn;
         try {
+            
+            if (this.invasiveConnection != null) {
+                conn = invasiveConnection;
+            } else {
+                conn = DoDBconn.createInvasiveConnection();
+            }
 
-            st = conn.createStatement();
+            Statement st = conn.createStatement();
 
             StringBuilder sql = new StringBuilder();
 
             sql.append(String.format("UPDATE %s SET ", TN));
             sql.append(this.getFindByParamQuery(paramName, paramValue));
-            sql.append(String.format(" WHERE id =%s", id));
+            sql.append(String.format(" WHERE id =%s", entId));
 
             log.info("SQL:*" + sql + "*");
             int i = st.executeUpdate(sql.toString());
 
-            conn.commit();
-            DoDBconn.releaseConnection(conn);
+            if (!"a_change".equals(TN) && this.invasiveConnection == null) {
+                A_Change change = this.createParamChangeToPersist(paramName, paramValue, entId);
+                UniRepo<A_Change> changeRepo = new UniRepo<>(A_Change.class, conn);
+                changeRepo.save(change);
+            }
+
+            st.close();
+
+            //ak sa vsetko podarilo(tj. ulozenie aj zapis do a_change), az teraz nastane commit:
+            if (this.invasiveConnection == null) {
+                conn.commit();
+                DoDBconn.releaseConnection(conn);
+            }
 
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
             Notification.show("Chyba, uniRepo::findByParam(...)",
                     Type.ERROR_MESSAGE);
             log.error(e.getLocalizedMessage(), e);
             throw e;
-        } finally {
-            if (st != null) {
-                st.close();
-            }
         }
+
     }
 
+    
+    
+    
+    
+    
+    
+    
 //**************    POMOCNE METODY: *************************   
     /**
      *
@@ -772,7 +790,10 @@ public class UniRepo<E> implements MyRepo<E> {
         }
     }
 
-    //******************** auxiliary  methods for saving change into database **************
+    
+
+//******************** auxiliary  methods for saving change into database **************
+    
     private Map<String, Object> getEntityValues(E ent, Map<String, Class<?>> mapPar) {
 
         Map<String, Object> valuesAsObjects = new HashMap<>();
@@ -810,18 +831,20 @@ public class UniRepo<E> implements MyRepo<E> {
      * @param mapPar
      * @return
      */
-    public List<A_Change> createChangesToPersist(E entOrigin, E entChanged, Map<String, Class<?>> mapPar) {
+    private List<A_Change> createChangesToPersist(E entOrigin, E entChanged, Map<String, Class<?>> mapPar) {
 
         A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+//        A_User user = new A_User();
         Integer userId;
         Integer rowId;
         Object orig;
         Object changed;
 
         if (user == null) {
-            log.warn("This chouldnt be possible!!");
+            log.warn("This shouldnt be possible!!");
             return null;
         } else {
+//            userId = 1;
             userId = user.getId();
         }
 
@@ -845,14 +868,99 @@ public class UniRepo<E> implements MyRepo<E> {
                 zmena.setColumn_name(param);
                 zmena.setRow_id(rowId);
                 //zistit, ci je to Strinfg postacujuce pre spatnu konverziu!
-                zmena.setOld_value(orig.toString());
-                zmena.setNew_value(changed.toString());
+                zmena.setOld_value(orig + "");
+                zmena.setNew_value(changed + "");
+                zmena.setVisible(Boolean.TRUE);
 
                 changesToPersist.add(zmena);
             }
         }
 
         return changesToPersist;
+    }
+
+    /**
+     *
+     * @param entChanged
+     * @return
+     */
+    public A_Change createDeactivateChangeToPersist(E entChanged) {
+
+        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+
+        Integer userId;
+        Integer rowId;
+        A_Change zmena;
+
+        if (user == null) {
+            log.warn("This shouldnt be possible!!");
+            return null;
+        } else {
+            userId = user.getId();
+        }
+
+        rowId = this.isNew(entChanged);
+
+        zmena = new A_Change();
+        zmena.setUser_id(userId);
+        zmena.setTable_name(TN);
+        zmena.setColumn_name("visible");
+        zmena.setRow_id(rowId);
+        zmena.setOld_value("true");
+        zmena.setNew_value("false");
+        zmena.setVisible(Boolean.TRUE);
+
+        return zmena;
+
+    }
+
+    /**
+     *
+     * @param paramName
+     * @param paramNewValue
+     * @param entId
+     */
+    private A_Change createParamChangeToPersist(String paramName, String paramNewValue, String entId) {
+
+        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+
+        E entOrig;
+        Integer userId;
+        Object valOrig;
+        A_Change zmena;
+        
+        Integer rowId = Integer.parseInt(entId);
+        if (user == null) {
+            log.warn("This shouldnt be possible!!");
+            return null;
+        } else {
+            userId = user.getId();
+        }
+
+        entOrig = this.findOne(rowId);
+
+        try {
+            String getterName = ToolsDao.getG_SetterName(paramName, "get");
+            Method entMethod = clsE.getMethod(getterName);
+            valOrig = entMethod.invoke(entOrig);
+
+            zmena = new A_Change();
+
+            zmena.setUser_id(userId);
+            zmena.setTable_name(TN);
+            zmena.setColumn_name(paramName);
+            zmena.setRow_id(rowId);
+            zmena.setOld_value(valOrig+"");
+            zmena.setNew_value(paramNewValue);
+            zmena.setVisible(Boolean.TRUE);
+
+            return zmena;
+
+        } catch (IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
+
     }
 
 }

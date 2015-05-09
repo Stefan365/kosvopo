@@ -23,7 +23,7 @@ public class A_UserRole implements PresentationName {
 
     private Date till;
     
-    private Boolean active;
+    private Boolean visible;
 
     // getters:
     public Integer getId() {
@@ -72,12 +72,12 @@ public class A_UserRole implements PresentationName {
     }
     
 
-    public Boolean getActive() {
-        return active;
+    public Boolean getVisible() {
+        return visible;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 
     public Boolean getActual() {

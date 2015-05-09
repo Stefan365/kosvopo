@@ -8,11 +8,13 @@ package sk.stefan.MVP.view.components;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.ui.OptionGroup;
+import com.vaadin.ui.OptionGroup;  
 import java.util.Map;
 import org.apache.log4j.Logger;
 
+
 /**
+ * Nevyuzita komponenta.
  *
  * @author stefan
  * @param <E>

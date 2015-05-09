@@ -82,13 +82,13 @@ public enum NonEditableFields {
                 return new String[]{"visible"};
                 
             case A_USER:
-                return new String[]{"password", "active"};
+                return new String[]{"password", "visible"};
 //                return new String[]{};
             case A_ROLE:
-                return new String[]{"active"};
+                return new String[]{"visible"};
             case A_USER_ROLE:
 //                return new String[]{};
-                return new String[]{"actual","since", "till","active"};
+                return new String[]{"actual","since", "till","visible"};
             default:
                 
                 return null;

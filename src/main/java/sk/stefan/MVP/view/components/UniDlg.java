@@ -34,7 +34,7 @@ public class UniDlg extends Window implements OkCancelListener {
      * @param inputFl
      */
 //    public UniDlg(String caption, InputFormLayout<? extends Object> inputFl, OkCancelListener cp) {
-    public UniDlg(String caption, InputFormLayout<? extends Object> inputFl) {
+    public UniDlg(String caption, InputFormLayout<?> inputFl) {
 
         this.setCaption(caption);
         setModal(true);

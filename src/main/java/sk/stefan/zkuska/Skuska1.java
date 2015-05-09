@@ -49,6 +49,7 @@ import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.Document;
 import sk.stefan.MVP.model.entity.District;
 import sk.stefan.MVP.model.entity.PublicRole;
+import sk.stefan.MVP.model.entity.Region;
 import sk.stefan.MVP.model.entity.Tenure;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteClassification;
@@ -91,7 +92,9 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusField();
+        sk.skusChangedRepo();
+//        sk.skusNewRepo();
+//        sk.skusField();
 //        sk.skusAdmin();
 //        sk.skusVoteSave();
 //        sk.skusFormatter();
@@ -1254,5 +1257,34 @@ public class Skuska1<T> {
         }
         
     }
+    
+    private void skusNewRepo(){
+        
+        UniRepo<Region> krajRepo = new UniRepo<>(Region.class);
+    
+        Region reg = new Region();
+        reg.setRegion_name("KOKOSOSLOVENKY");
+        
+        krajRepo.save(reg);
+        
+
+    }
+
+    private void skusChangedRepo() {
+        UniRepo<Region> krajRepo = new UniRepo<>(Region.class);
+    
+        Region reg = krajRepo.findOne(6);
+        if (reg != null){
+            reg.setRegion_name("KOKOSOSLOVENKY_VERES");
+            krajRepo.save(reg);
+            log.info("DONE");
+
+        } else {
+            log.info("NOT DONE");
+
+        }
+        
+    }
+    
 
 }

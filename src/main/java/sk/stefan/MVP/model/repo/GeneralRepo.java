@@ -6,6 +6,7 @@
 package sk.stefan.MVP.model.repo;
 
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,10 @@ import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
+import sk.stefan.MVP.model.entity.A_Change;
+import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.MVP.model.entity.Document;
+import sk.stefan.MVP.model.service.DocumentService;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.utils.ToolsFiltering;
@@ -34,37 +39,22 @@ public class GeneralRepo {
 
     private Connection transactionalConn;
 
+    private final UniRepo<Document> docRepo;
+
+    private UniRepo<A_Change> changeRepo;// = new UniRepo<>(A_Change.class, transactionalConn);
+
+    
+    //0. konstruktor.
+    /**
+     *
+     */
     public GeneralRepo() {
 
         this.securityService = new SecurityServiceImpl();
-
+        this.docRepo = new UniRepo<>(Document.class);
     }
 
-    //Je to sice metoda, ktora 
-    /**
-     * @param tn
-     * @param id
-     *
-     * @throws java.sql.SQLException
-     */
-//    public static synchronized boolean deactivate(String tn, Integer id) {
-    public void deactivateOne(String tn, Integer id) throws SQLException {
-
-
-        if (transactionalConn == null){
-            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
-            transactionalConn = DoDBconn.createInvasiveConnection();
-        }
-
-        Statement st = transactionalConn.createStatement();
-
-        String sql = String.format("UPDATE %s SET visible = false WHERE id = %d", tn, id);
-        st.executeUpdate(sql);
-
-        st.close();
-
-    }
-
+// ****************** NON INVASIVE **************************************    
     /**
      * Modifikuje iba password. Len pre tabulku a_user;
      *
@@ -98,38 +88,6 @@ public class GeneralRepo {
             if (st != null) {
                 st.close();
             }
-        }
-    }
-
-    /**
-     * Modifikuje iba password. Vynimka z univerzalnosti, plati len pre tabulku
-     * a_user;
-     *
-     * @param rawPwd
-     * @param id id of row where the value is updated.
-     *
-     * @throws java.sql.SQLException
-     */
-    public void updatePassword(String rawPwd, String id) throws SQLException {
-
-        log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
-        Connection conn = DoDBconn.createInvasiveConnection();
-
-        PreparedStatement st;
-        try {
-            st = conn.prepareStatement("UPDATE a_user SET password = ? WHERE id = " + id);
-            st.setBytes(1, securityService.encryptPassword(rawPwd));
-            st.executeUpdate();
-
-            conn.commit();
-            st.close();
-
-            DoDBconn.releaseConnection(conn);
-
-        } catch (SQLException ex) {
-            log.error(ex.getMessage(), ex);
-            Notification.show("nieco sa dojebalo pri update hesla!", Notification.Type.ERROR_MESSAGE);
-            throw new SQLException();
         }
     }
 
@@ -175,8 +133,8 @@ public class GeneralRepo {
         List<Integer> listIds;
 
 //        st = DoDBconn.getConn().prepareStatement("UPDATE a_user SET password = ? WHERE id = " + id);
-        String sql = "SELECT id FROM " + tn + " WHERE " + paramName + " = " + paramVal +
-                " AND visible = true";
+        String sql = "SELECT id FROM " + tn + " WHERE " + paramName + " = " + paramVal
+                + " AND visible = true";
         ResultSet rs;
         Statement st;
 
@@ -200,167 +158,55 @@ public class GeneralRepo {
 
     }
 
-    //************************************************
-//    POMOCNE FUNKCIE:
-    //************************************************
-    /**
-     * pomocna metoda pre filtrovanie
-     */
-    private List<Integer> fillListIds(ResultSet rs) {
+    public List<Integer> findMeAdminAndAllVolunteers(Integer adminId) {
 
-        List<Integer> listIds = new ArrayList<>();
-        int id;
-        int i = 0;
-        try {
-            while (rs.next()) {                
-//                log.info("KAMILKO: " + i);
-                i++;
-                id = rs.getInt("id");
-                listIds.add(id);
-            }
-            return listIds;
-            
-        } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("Chyba, FilterRepo, fillListIds(ResultSet rs)", Notification.Type.ERROR_MESSAGE);
-            log.error(e.getLocalizedMessage(), e);
-            return null;
-        }
-    }
-
-    /**
-     * commituje zmeny do DB.
-     */
-    public void doCommit() {
-        try {
-            transactionalConn.commit();
-        } catch (SQLException ex) {
-            try {
-                transactionalConn.rollback();
-                DoDBconn.releaseConnection(transactionalConn);
-                transactionalConn = null;
-
-                log.error(ex.getMessage(), ex);
-                Notification.show("Ukladanie sa nevydarilo, SPRAVIL SA ROLLBACK!");
-            } catch (SQLException ex1) {
-                log.error(ex.getMessage(), ex);
-                Notification.show("ANI TEN BLBY ROLLBACK SA NEPODARIL!");
-            }
-        }
-    }
-
-    /**
-     * commituje zmeny do DB.
-     */
-    public void doRollback() {
-        try {
-            transactionalConn.rollback();
-            DoDBconn.releaseConnection(transactionalConn);
-            transactionalConn = null;
-
-        } catch (SQLException ex) {
-            log.error(ex.getMessage(), ex);
-            Notification.show("Rollback sa nevydaril!");
-
-        }
-    }
-    
-    public List<Integer> findMeAdminAndAllVolunteers(Integer adminId){
-    
         List<Integer> uIds;
-        
+
 //        najdi vsetkych uzivatelov s aktualnou rolou dobrovolnik. + sameho seba (pohladu aministratora). 
         String sql = "select u.id from a_user u JOIN a_user_role ur ON(u.id = ur.user_id) "
                 + " where ur.role_id = 1 "
                 + " AND ur.actual = true "
-                + " AND u.active = true";
-        
+                + " AND u.visible = true";
+
         return null;
-        
-        
+
     }
 
-//    /**
-//     * Inputs file into the database.
-//     *
-//     * @param inputStream
-//     * @param tn
-//     * @param rid
-//     * @param fn
-//     * @return
-//     */
-//    public Document insertFileInDB(InputStream inputStream, String fn, String tn, Integer rid) {
-//
-//        Document doc = new Document();
-//
-//        Connection conn = DoDBconn.getConnection();
-//
-//        PreparedStatement st;
-//
-//        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String inputDate = formatter.format(new Date());
-//
-//        String sql = "INSERT INTO t_document (document, file_name, table_name, table_row_id, upload_date) "
-//                + " values (?, ?, ?, ?, ?) ";
-//        log.debug("SQL :*" + sql + "*");
-//
-//        try {
-//            st = conn.prepareStatement(sql);
-//
-//            st.setBlob(1, inputStream);
-////            st.setBytes(1, inputStream);
-////            
-//            st.setString(2, fn);
-//            st.setString(3, tn);
-//            st.setInt(4, rid);
-//            st.setString(5, inputDate);
-//
-//            st.executeUpdate();
-//
-//            ResultSet rs = st.getGeneratedKeys();
-//            if (rs.next()) {
-//                int iid = rs.getInt(1);
-//                log.debug("PRIDELENE ID: " + iid);
-//            }
-////            int iid = rs.getInt(1);
-//
-////             
-//            conn.commit();
-//            st.close();
-//            DoDBconn.releaseConnection(conn);
-//
-//            return doc;
-//        } catch (SecurityException | IllegalArgumentException | SQLException e) {
-//
-//            Notification.show("insertFile(...)", Notification.Type.ERROR_MESSAGE);
-//            log.error(e.getMessage(), e);
-//            return null;
-//        }
-//    }
-
+// ****************** INVASIVE **************************************    
     /**
-     * Deactivates all documents related to entity.
-     * @param tn
-     * @param rid
+     * Toto netreba ukladat do a_change!!!
+     *
+     * Modifikuje iba password. Vynimka z univerzalnosti, plati len pre tabulku
+     * a_user;
+     *
+     * @param rawPwd
+     * @param id id of row where the value is updated.
+     *
      * @throws java.sql.SQLException
      */
-    public void deactivateEntityDocuments(String tn, Integer rid) throws SQLException {
-        
-        if (transactionalConn == null){
-            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
-            transactionalConn = DoDBconn.createInvasiveConnection();
+    public void updatePassword(String rawPwd, String id) throws SQLException {
+
+        log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+        Connection conn = DoDBconn.createInvasiveConnection();
+
+        PreparedStatement st;
+        try {
+            st = conn.prepareStatement("UPDATE a_user SET password = ? WHERE id = " + id);
+            st.setBytes(1, securityService.encryptPassword(rawPwd));
+            st.executeUpdate();
+
+            st.close();
+            conn.commit();
+            DoDBconn.releaseConnection(conn);
+
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(), ex);
+            Notification.show("nieco sa dojebalo pri update hesla!", Notification.Type.ERROR_MESSAGE);
+            throw new SQLException();
         }
-        Statement st = transactionalConn.createStatement();
-
-        String sql = String.format("UPDATE t_document "
-                + " SET visible = false WHERE table_name = %s AND table_row_id = %d", tn, rid);
-        st.executeUpdate(sql);
-
-        st.close();
     }
-    
-    
-    
-        //6.
+
+    //6.
     /**
      * Deaktivuje cely strom entit, pricom vrcholom stromu je entita na vstupe.
      *
@@ -370,11 +216,16 @@ public class GeneralRepo {
      */
     public void deactivateSlavesTree(String tn, Integer id) throws SQLException {
 
+        if (transactionalConn == null) {
+            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+            transactionalConn = DoDBconn.createInvasiveConnection();
+        }
+
+        changeRepo = new UniRepo<>(A_Change.class, transactionalConn);
 
         this.deactivateOne(tn, id);
         //deactivate documents;
         this.deactivateEntityDocuments(tn, id);
-        
 
         List<String> slaveTns = ToolsFiltering.getSlaves(tn);
 
@@ -406,6 +257,150 @@ public class GeneralRepo {
                 }
             }
         }
+    }
+
+    /**
+     * POZOR!!! NEpouzivat na inom mieste, inak sa musi preimplementovat aj
+     * zapis do a_change!!!
+     *
+     * @param tn
+     * @param entId id entity, ktoru chceme deaktivovat.
+     *
+     * @throws java.sql.SQLException
+     */
+    private void deactivateOne(String tn, Integer entId) throws SQLException {
+
+        Statement st = transactionalConn.createStatement();
+
+        String sql = String.format("UPDATE %s SET visible = false WHERE id = %d", tn, entId);
+        st.executeUpdate(sql);
+
+        //for creating change:
+        A_Change change = createDeactivateChangeToPersist(tn, entId);
+        changeRepo.save(change);
+
+        st.close();
+
+    }
+
+    /**
+     * POZOR!!! NEpouzivat na inom mieste, inak sa musi preimplementovat aj
+     * zapis do a_change!!!
+     *
+     * Deactivates all documents related to entity.
+     *
+     * @param tn
+     * @param rid
+     * @throws java.sql.SQLException
+     */
+    private void deactivateEntityDocuments(String tn, Integer rid) throws SQLException {
+
+        Statement st = transactionalConn.createStatement();
+
+        String sql = String.format("UPDATE t_document "
+                + " SET visible = false WHERE table_name = %s AND table_row_id = %d", tn, rid);
+        st.executeUpdate(sql);
+
+        //for creating change:
+        A_Change change;
+        List<Document> touchedDocumetsIds = docRepo.findByTwoParams("table_name", tn, "table_row_id", rid + "");
+        for (Document doc : touchedDocumetsIds) {
+            change = createDeactivateChangeToPersist("t_document", doc.getId());
+            changeRepo.save(change);
+        }
+
+        st.close();
+    }
+
+    /**
+     * commituje zmeny do DB.
+     */
+    public void doCommit() {
+        try {
+            transactionalConn.commit();
+        } catch (SQLException ex) {
+            try {
+                transactionalConn.rollback();
+                DoDBconn.releaseConnection(transactionalConn);
+                transactionalConn = null;
+
+                log.error(ex.getMessage(), ex);
+//                Notification.show("Ukladanie sa nevydarilo, SPRAVIL SA ROLLBACK!");
+            } catch (SQLException ex1) {
+                log.error(ex.getMessage(), ex);
+//                Notification.show("ANI TEN BLBY ROLLBACK SA NEPODARIL!");
+            }
+        }
+    }
+
+    /**
+     * commituje zmeny do DB.
+     */
+    public void doRollback() {
+        try {
+            transactionalConn.rollback();
+            DoDBconn.releaseConnection(transactionalConn);
+            transactionalConn = null;
+
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(), ex);
+//            Notification.show("Rollback sa nevydaril!");
+
+        }
+    }
+
+    //************************************************
+//    POMOCNE FUNKCIE:
+    //************************************************
+    /**
+     * pomocna metoda pre filtrovanie
+     */
+    private List<Integer> fillListIds(ResultSet rs) {
+
+        List<Integer> listIds = new ArrayList<>();
+        int id;
+        int i = 0;
+        try {
+            while (rs.next()) {
+//                log.info("KAMILKO: " + i);
+                i++;
+                id = rs.getInt("id");
+                listIds.add(id);
+            }
+            return listIds;
+
+        } catch (SecurityException | IllegalArgumentException | SQLException e) {
+            Notification.show("Chyba, FilterRepo, fillListIds(ResultSet rs)", Notification.Type.ERROR_MESSAGE);
+            log.error(e.getLocalizedMessage(), e);
+            return null;
+        }
+    }
+
+    public A_Change createDeactivateChangeToPersist(String tn, Integer rowId) {
+
+        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+
+        Integer userId;
+        A_Change zmena;
+
+        if (user == null) {
+            log.warn("This shouldnt be possible!!");
+            return null;
+        } else {
+            userId = user.getId();
+        }
+
+        zmena = new A_Change();
+        zmena.setUser_id(userId);
+        zmena.setTable_name(tn);
+        zmena.setColumn_name("visible");
+        zmena.setRow_id(rowId);
+        zmena.setOld_value("true");
+        zmena.setNew_value("false");
+        zmena.setVisible(Boolean.TRUE);
+
+        return zmena;
+
     }
 
 }

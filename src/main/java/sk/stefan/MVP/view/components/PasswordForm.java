@@ -35,7 +35,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     private PasswordField newPwd2Tf;
 
     private final Item item;
-    private final GeneralRepo auserRepo;
+    private final GeneralRepo genRepo;
     private final OkCancelListener okCancelListener;
     private OkCancelListener forWindowListener;
     
@@ -52,7 +52,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
                 
         this.item = it;
         this.securityService = new SecurityServiceImpl();
-        this.auserRepo = new GeneralRepo();
+        this.genRepo = new GeneralRepo();
         this.initLayout();
     }
 
@@ -75,7 +75,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
         String rawPwd = oldPwdTf.getValue();
 
         try {
-            byte[] pwd = auserRepo.getPassword("" + id);
+            byte[] pwd = genRepo.getPassword("" + id);
             boolean isGood = securityService.checkPassword(rawPwd, pwd);
             isGood = true;
             log.info("ISGOOD: " + (isGood));
@@ -95,7 +95,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     }
 
     private void addToDB(String newPwd, String id) throws SQLException {
-        auserRepo.updatePassword(newPwd, id);
+        genRepo.updatePassword(newPwd, id);
     }
 
     /**

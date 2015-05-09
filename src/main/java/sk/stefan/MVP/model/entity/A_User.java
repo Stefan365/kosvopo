@@ -25,7 +25,7 @@ public class A_User implements Serializable, PresentationName {
 
     private byte[] password;
     
-    private Boolean active;
+    private Boolean visible;
     
     
     private final SecurityService securityService = new SecurityServiceImpl();
@@ -100,12 +100,12 @@ public class A_User implements Serializable, PresentationName {
         this.password = password;
     }
 
-    public Boolean getActive() {
-        return active;
+    public Boolean getVisible() {
+        return visible;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 
     @Override

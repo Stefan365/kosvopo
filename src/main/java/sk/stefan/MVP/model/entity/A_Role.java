@@ -17,7 +17,7 @@ public class A_Role implements PresentationName {
 
     private String rights_description;
     
-    private Boolean active;
+    private Boolean visible;
     
 
     //getters:
@@ -58,12 +58,12 @@ public class A_Role implements PresentationName {
         this.rights_description = rights_description;
     }
 
-    public Boolean getActive() {
-        return active;
+    public Boolean getVisible() {
+        return visible;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 
     

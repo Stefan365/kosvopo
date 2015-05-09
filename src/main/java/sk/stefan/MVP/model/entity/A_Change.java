@@ -25,7 +25,7 @@ public class A_Change implements PresentationName {
     
     private String new_value;
     
-    private Boolean active;
+    private Boolean visible;
     
     
     public A_Change(){
@@ -111,12 +111,12 @@ public class A_Change implements PresentationName {
     
     
 
-    public Boolean getActive() {
-        return active;
+    public Boolean getVisible() {
+        return visible;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 
     public String getNew_value() {

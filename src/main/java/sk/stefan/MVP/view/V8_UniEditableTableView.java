@@ -278,10 +278,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                 if (item.getItemProperty("visible") != null) {
                     item.getItemProperty("visible").setValue(Boolean.TRUE);
                 }
-                //docasne riesenie:
-                if (item.getItemProperty("active") != null) {
-                    item.getItemProperty("active").setValue(Boolean.TRUE);
-                }
 
                 obnovFilter();
 

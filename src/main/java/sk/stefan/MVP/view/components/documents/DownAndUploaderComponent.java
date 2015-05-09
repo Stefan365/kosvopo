@@ -134,7 +134,8 @@ public class DownAndUploaderComponent<E> extends HorizontalLayout {
         String basepath = VaadinService.getCurrent()
                 .getBaseDirectory().getAbsolutePath();
         FileResource resource = new FileResource(new File(basepath
-                + "/WEB-INF/images/close.gif"));
+//                + "/WEB-INF/images/close.gif"));
+                + "/VAADIN/themes/mytheme/images/close.gif"));
         this.removeBt.setIcon(resource);
 
         this.removeBt.addClickListener(new Button.ClickListener() {

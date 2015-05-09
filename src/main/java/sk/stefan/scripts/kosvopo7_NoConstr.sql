@@ -7,7 +7,7 @@ last_name VARCHAR(20),
 e_mail VARCHAR(50),
 login VARCHAR(50),
 password BLOB,
-active BIT DEFAULT 1,
+visible BIT DEFAULT 1,
  
 CONSTRAINT PRIMARY KEY (id)
 ); 
@@ -20,7 +20,7 @@ id INT(11) AUTO_INCREMENT,
 role SMALLINT,
 role_name VARCHAR(30),
 rights_description TEXT,
-active BIT DEFAULT 1,
+visible BIT DEFAULT 1,
 
 CONSTRAINT PRIMARY KEY (id) 
 ); 
@@ -34,7 +34,7 @@ user_id INT(11),
 actual BIT DEFAULT 1,
 since DATE,
 till DATE, 
-active BIT DEFAULT 1,
+visible BIT DEFAULT 1,
 
 CONSTRAINT PRIMARY KEY (id)
 ); 
@@ -54,7 +54,7 @@ row_id INT(11),
 old_value BLOB,
 new_value BLOB,
 
-active BIT DEFAULT 1,
+visible BIT DEFAULT 1,
 
 CONSTRAINT PRIMARY KEY (id)
 );

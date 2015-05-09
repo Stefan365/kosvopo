@@ -12,16 +12,16 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.entity.Vote;
-import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.InputClassComboBox;
+import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.utils.ToolsDao;
 
 /**
  *
  * @author stefan
- * @param <T>
+ * @param <E>
  */
-public class InputVoteFormLayout<T> extends InputFormLayout<T> {
+public class InputVoteFormLayout<E> extends InputFormLayout<E> {
 
     private static final Logger log = Logger.getLogger(InputVoteFormLayout.class);
         
@@ -29,8 +29,8 @@ public class InputVoteFormLayout<T> extends InputFormLayout<T> {
 
     private PublicBody pubBody;
 
-    public InputVoteFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont, Component cp, List<String> nEditFn) {
-        super(clsT, item, sqlCont, cp, nEditFn);
+    public InputVoteFormLayout(Class<E> clsE, Item item, SQLContainer sqlCont, Component cp, List<String> nEditFn) {
+        super(clsE, item, sqlCont, cp, nEditFn);
 
     }
 

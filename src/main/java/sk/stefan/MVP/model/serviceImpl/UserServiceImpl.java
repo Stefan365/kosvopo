@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService {
     public UserType getUserType(A_User user){
         
         A_UserRole aurole = this.getActualRole(user);
+//        log.debug("2. UROLE IS NULL?" + (aurole == null));
         return this.getType(aurole);
         
     }    
@@ -126,6 +127,7 @@ public class UserServiceImpl implements UserService {
      * @return 
      */
     private UserType getType(A_UserRole urole){
+//        log.debug("UROLE IS NULL" + (urole==null));
         
         Integer roleId = urole.getRole_id();
         A_Role role = roleRepo.findOne(roleId);
