@@ -34,9 +34,6 @@ public class UniRepo<E> implements MyRepo<E> {
     //pre potreby ukladania do a_change;
     private Connection invasiveConnection = null;
 
-    //connection musi byt centralne, inak nenudu fungovat transactional operacie
-    //bude tam odkaz na DoDBconn.conn
-//    private static Connection conn = DoDBconn.getConn();
     /**
      * Konstruktor:
      *
@@ -46,12 +43,15 @@ public class UniRepo<E> implements MyRepo<E> {
 
         this.clsE = cls;
         this.TN = ToolsDao.getTableName(cls);
-//        if (DoDBconn.getNonInvasiveConn() == null) {
-//            DoDBconn.createNoninvasiveConnection();
-//        }
 
     }
 
+    //0B. konstruktor za ucelom ulozenia zmeny do DB.
+    /**
+     * 
+     * @param cls
+     * @param conn
+     */
     public UniRepo(Class<?> cls, Connection conn) {
 
         this.clsE = cls;
@@ -60,6 +60,9 @@ public class UniRepo<E> implements MyRepo<E> {
 
     }
 
+
+    
+// ****************** NON INVASIVE **************************************        
     // 1.
     /**
      *
@@ -85,11 +88,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
             ResultSet rs;
             rs = st.executeQuery(sql);
-            //log.info("PETER 7: " + rs.getClass().getCanonicalName());
-            //log.info("PETER 8:  " + (rs != null));
-
-            //JDBC4ResultSet
-            //log.info(sql + " DONE!");
+            
             List<E> listEnt = this.fillListEntity(rs);
 
             rs.close();
@@ -275,6 +274,11 @@ public class UniRepo<E> implements MyRepo<E> {
 
     }
 
+    
+    
+    
+// ****************** INVASIVE **************************************    
+    
     // 4.
     /**
      * Vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
@@ -515,7 +519,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
                 Object o = entMethod.invoke(ent);
                 String namec = (mapPar.get(pn)).getCanonicalName();
-                log.info("DATUM1: " + namec + " : " + o);
+//                log.info("DATUM1: " + namec + " : " + o);
 
                 if (o == null) {
                     st.setNull(i, Types.NULL);
@@ -620,11 +624,9 @@ public class UniRepo<E> implements MyRepo<E> {
                 udpate.append(pn);
                 udpate.append(" = ?");
             }
-//            udpate.append(")");
 
             update2.append("id = ");
             update2.append(eid);
-//            update2.append("");
 
             String sql = String.format("UPDATE %s SET %s WHERE %s", TN,
                     udpate.toString(), update2.toString());
@@ -633,7 +635,6 @@ public class UniRepo<E> implements MyRepo<E> {
             return sql;
 
         } catch (SecurityException ex) {
-//            Notification.show("Chyba, create Insert", Type.ERROR_MESSAGE);
             log.error(ex.getMessage(), ex);
             return null;
         }

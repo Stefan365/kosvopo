@@ -6,6 +6,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
+import com.vaadin.data.util.sqlcontainer.RowId;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.OptionGroup;
 import java.io.ByteArrayInputStream;
@@ -48,6 +49,7 @@ import sk.stefan.MVP.model.entity.PublicPerson2;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.Document;
 import sk.stefan.MVP.model.entity.District;
+import sk.stefan.MVP.model.entity.PublicPerson;
 import sk.stefan.MVP.model.entity.PublicRole;
 import sk.stefan.MVP.model.entity.Region;
 import sk.stefan.MVP.model.entity.Tenure;
@@ -56,8 +58,11 @@ import sk.stefan.MVP.model.entity.VoteClassification;
 import sk.stefan.MVP.model.entity.VoteOfRole;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.service.UniTableService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
+import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
+import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.enums.Stability;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.enums.VoteResult;
@@ -92,7 +97,8 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusChangedRepo();
+        sk.skusItemToEntity();
+//        sk.skusChangedRepo();
 //        sk.skusNewRepo();
 //        sk.skusField();
 //        sk.skusAdmin();
@@ -1205,76 +1211,74 @@ public class Skuska1<T> {
     }
 
     private void skusFormatter() {
-        
+
         Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Object o = new Date();
         Object b = new java.sql.Date(new Date().getTime());
-        
+
         log.info("OBJEKT DATUMU: " + o);
         String createDate = formatter.format(o);
         log.info("UTIL DATE: *" + createDate + "*");
 
         String rate = formatter.format(b);
 
-        log.info("SQL DATE: *" +rate + "*");
-        
+        log.info("SQL DATE: *" + rate + "*");
 
     }
-    
+
     private void skusVoteSave() {
-        
+
         UniRepo<Vote> voteRepo = new UniRepo<>(Vote.class);
 
         Vote v = voteRepo.findOne(2);
-        
+
         v.setResult_vote(VoteResult.APPROVED);
-        
+
         v = voteRepo.save(v);
-        
+
         log.info("RESULT:" + v.getResult_vote());
-            
+
     }
-    
-    private void skusAdmin(){
-        
+
+    private void skusAdmin() {
+
         SecurityService ss = new SecurityServiceImpl();
         ss.initAdmin();
         log.info("Vytvoril som admina!");
     }
-    
-    private void skusField(){
+
+    private void skusField() {
         List<Object> objs = new ArrayList<>();
-        
-        for(int i = 0; i < 5; i++){
+
+        for (int i = 0; i < 5; i++) {
             objs.add(null);
         }
-        int j=0;
-        for (Object o: objs){
-            
+        int j = 0;
+        for (Object o : objs) {
+
             log.info("J:" + o + " . " + j);
             j++;
-        
+
         }
-        
+
     }
-    
-    private void skusNewRepo(){
-        
+
+    private void skusNewRepo() {
+
         UniRepo<Region> krajRepo = new UniRepo<>(Region.class);
-    
+
         Region reg = new Region();
         reg.setRegion_name("KOKOSOSLOVENKY");
-        
+
         krajRepo.save(reg);
-        
 
     }
 
     private void skusChangedRepo() {
         UniRepo<Region> krajRepo = new UniRepo<>(Region.class);
-    
+
         Region reg = krajRepo.findOne(6);
-        if (reg != null){
+        if (reg != null) {
             reg.setRegion_name("KOKOSOSLOVENKY_VERES");
             krajRepo.save(reg);
             log.info("DONE");
@@ -1283,8 +1287,37 @@ public class Skuska1<T> {
             log.info("NOT DONE");
 
         }
-        
+
     }
-    
+
+    private void skusItemToEntity() {
+
+        PublicPerson pp;
+        Item item;
+        Object itemId;
+        Integer ppId = 1;//johan prochazka
+        Class<PublicPerson> clsE = PublicPerson.class;
+        UniTableService<PublicPerson> uniTabSrv = new UniTableServiceImpl<>(clsE);
+        Map<String, Class<?>> mapPar;
+
+        
+        try {
+            mapPar = ToolsDao.getTypParametrov(clsE);
+            SQLContainer sqlCont = DoDBconn.createSqlContainera("t_public_person");
+//            UniRepo<PublicPerson> ppRepo = new UniRepo<>(clsE);
+            item = sqlCont.getItem(new RowId(new Object[]{ppId}));
+            pp = uniTabSrv.getObjectFromItem(item, mapPar);
+            
+            log.info("pp " + pp.getId());
+            log.info("pp " + pp.getFirst_name());
+            log.info("pp " + pp.getLast_name());
+            log.info("pp " + pp.getDate_of_birth());
+            
+            
+            
+        } catch (SQLException | NoSuchFieldException | SecurityException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+    }
 
 }

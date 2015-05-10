@@ -158,17 +158,49 @@ public class GeneralRepo {
 
     }
 
-    public List<Integer> findMeAdminAndAllVolunteers(Integer adminId) {
+    public List<Integer> findMeAdminAndAllVolunteers() {
 
-        List<Integer> uIds;
+        //list of user ids:
+        List<Integer> listIds;
+        
+        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+        Integer userId;
+        
+        if (user == null) {
+            log.warn("This shouldnt be possible!!");
+            return null;
+        } else {
+            userId = user.getId();
+        }
 
 //        najdi vsetkych uzivatelov s aktualnou rolou dobrovolnik. + sameho seba (pohladu aministratora). 
         String sql = "select u.id from a_user u JOIN a_user_role ur ON(u.id = ur.user_id) "
-                + " where ur.role_id = 1 "
-                + " AND ur.actual = true "
+                + " where ur.role_id = 1 OR u.id = " + userId
+                + " AND ur.actual = true"
+                + " AND ur.visible = true"
                 + " AND u.visible = true";
+        
+            ResultSet rs;
+        Statement st;
 
-        return null;
+        try {
+            if (DoDBconn.getNonInvasiveConn() == null) {
+                DoDBconn.createNoninvasiveConnection();
+            }
+            st = DoDBconn.getNonInvasiveConn().createStatement();
+            rs = st.executeQuery(sql);
+
+            listIds = fillListIds(rs);
+
+            rs.close();
+            st.close();
+            return listIds;
+        } catch (SecurityException | IllegalArgumentException | SQLException e) {
+            Notification.show("findTnAllByParam(...)", Notification.Type.ERROR_MESSAGE);
+            log.error(e.getMessage(), e);
+            return null;
+        }
+
 
     }
 

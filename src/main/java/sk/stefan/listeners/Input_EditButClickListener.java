@@ -86,26 +86,5 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
         }
     }
     
-//        /**
-//     * inicializacia tlacitiek:
-//     */
-////    private static Button initButton(Button b, Class<?> cls, Object ent) {
-//    private Button initButton(EditWrapper<E> wrap) {
-//
-//        Button b = wrap.getB();
-//        
-//        String title = "edituj " + ToolsDao.getTitleName(wrap.getClass());
-//        
-//        b.setCaption(title);
-////        if ((Vote.class).equals(cls)) {
-////            b.addClickListener(new InputVoteButClickListener(title));
-////        } else {
-//        b.addClickListener(new Input_EditButClickListener<>(wrap.getClsE(), title, wrap.getEnt()));
-////        }
-//
-//        return b;
-//
-//    }
-
 
 }

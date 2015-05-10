@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.service.UniTableService;
+import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.converters.DateConverter;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.listeners.ObnovFilterListener;
@@ -57,8 +59,10 @@ public class InputFormLayout<E> extends FormLayout {
 
     private static final long serialVersionUID = 4947104793788125920L;
 
-    private final Class<?> clsT;
+    private final Class<E> clsE;
 
+    private Map<String, Class<?>> mapPar;
+    private final UniTableService<E> uniTableService;// = new UniTableServiceImpl<>(clsE);
     /**
      * Spolu s uzavřením formulárě se musí vykonat další akce v základním view,
      * ze kterého se formulář otevře, na to slouží tento listener.
@@ -81,11 +85,11 @@ public class InputFormLayout<E> extends FormLayout {
      */
     private final Map<String, Component> fieldMap;
 
-    /**
-     * Proměnná, která ukládá informaci o tom, jestli se bude upravovat již
-     * existující položka(false), nebo vytvářet nová(true).
-     */
-    private boolean isNew;
+//    /**
+//     * Proměnná, která ukládá informaci o tom, jestli se bude upravovat již
+//     * existující položka(false), nebo vytvářet nová(true).
+//     */
+//    private boolean isNew;
 
     /**
      * Vybraná položka ze SQLContaineru (řádek z tabulky)
@@ -127,7 +131,7 @@ public class InputFormLayout<E> extends FormLayout {
     /**
      * Konstruktor.
      *
-     * @param clsT Class třídy T
+     * @param cls Class třídy E
      * @param item položka ze SQLContaineru
      * @param sqlCont SQL container na kterém je postavena tabulka s úkoly.
      * @param cp komponenta, ktora implementuje OkCancelListener i
@@ -135,17 +139,25 @@ public class InputFormLayout<E> extends FormLayout {
      * @param nEditFn zoznam mien parametrov, ktore budu pri tvorbe formularu
      * ignorovane.
      */
-    public InputFormLayout(Class<E> clsT, Item item, SQLContainer sqlCont,
+    public InputFormLayout(Class<E> cls, Item item, SQLContainer sqlCont,
             Component cp, List<String> nEditFn) {
 
+        uniTableService = new UniTableServiceImpl<>(cls);
+        this.clsE = cls;
+        try {
+            mapPar = ToolsNazvy.getTypParametrov(clsE);
+        } catch (NoSuchFieldException | SecurityException ex) {
+            mapPar = null;
+            log.error(ex.getMessage(), ex);
+        }
+
         //titul:
-        String title = ToolsDao.getTitleName(clsT);
-        this.titleLb = new Label(title);
+        this.titleLb = new Label(ToolsDao.getTitleName(cls));
         titleLb.setStyleName(ValoTheme.LABEL_BOLD);
 
 //        this.addComponent(titleLb);
         this.cp = cp;
-        tn = ToolsDao.getTableName(clsT);
+        tn = ToolsDao.getTableName(cls);
 
         if (nEditFn == null) {
             this.nonEditFn = new ArrayList<>();
@@ -154,20 +166,19 @@ public class InputFormLayout<E> extends FormLayout {
         }
 
         this.fieldMap = new HashMap<>();
-        
+
         //securityService = new SecurityServiceImpl();
         this.fg = new FieldGroup();
         this.fg.setBuffered(false);
         this.sqlContainer = sqlCont;
-        this.clsT = clsT;
         this.okCancelListener = (OkCancelListener) cp;
         this.obnovFilterListener = (ObnovFilterListener) cp;
         this.item = item;
-        if (item != null) {
-            isNew = (item.getItemProperty("id").getValue() == null);
-        } else {
-            isNew = false;
-        }
+//        if (item != null) {
+//            isNew = (item.getItemProperty("id").getValue() == null);
+//        } else {
+//            isNew = false;
+//        }
 
         fg.setItemDataSource(this.item);
 
@@ -194,19 +205,6 @@ public class InputFormLayout<E> extends FormLayout {
         fieldsFL.setSpacing(true);
 
         String propertyTypeName; // nazov typu danej property danej ent.
-
-        Map<String, Class<?>> mapPar = new HashMap<>();
-        try {
-            try {
-                mapPar = ToolsNazvy.getTypParametrov(clsT);
-            } catch (NoSuchFieldException ex) {
-                log.error(ex.getMessage(), ex);
-            }
-
-        } catch (SecurityException ex) {
-            log.warn(ex.getLocalizedMessage(), ex);
-            return;
-        }
 
         //vyber vhodnych komponent do form layoutu:
         for (String pn : mapPar.keySet()) {
@@ -507,33 +505,24 @@ public class InputFormLayout<E> extends FormLayout {
             @Override
             @SuppressWarnings("unchecked")
             public void buttonClick(ClickEvent event) {
-//                if (isNew) {
-//                    sqlContainer.removeAllContainerFilters();
-//                    dsfds
-//                    sqlContainer.getItem(itemId).getItemProperty("visible").setValue(Boolean.TRUE);
-//                    if (obnovFilterListener != null) {
-//                        obnovFilterListener.obnovFilter();
-//                    }
-//
-//                }
-
+                
                 // ulozenie zmien do DB:
                 try {
-                    Object ids = itemId;
-                    Item ite = item;
-                    sqlContainer.commit();
+//                    sqlContainer.commit(); nic sa commitovat nebude, 
+//                    vsetko pojde cez jdbc :
                     itemId = sqlContainer.lastItemId();
                     item = sqlContainer.getItem(itemId);
-//                    toto je slabe miesto celeho systemu
-//                    tento drbnuty sqlcontainer po ulozeni neumoznuje 
-//                    vystopovat ktory item bol zmeneny, 
-//                    pretoze zavola metodu clear(), ktora vsetky stopy po itemoch vymaze.
-//                    tj. prave to, co je potrebne na zistenie id, ktore priradila databaza.
-//                        ked vtacka lapaju pekne mu spievaju
-//                    Kedze nastastie tento sqlcontainer pracuje len s 1 polozkou,
+
+                    E ent = uniTableService.getObjectFromItem(item, mapPar);
+                    uniTableService.save(ent);
+//                    toto bolo slabe miesto celeho systemu
+//                    tento sqlcontainer po ulozeni neumoznuje 
+//                    vystopovat ktory item bol zmeneny, pretoze zavola metodu clear
+//                    (), ktora vsetky stopy po itemoch vymaze
+//                    tj.prave to, co je potrebne na zistenie id
+//                    , ktore priradila databaza.ked vtacka lapaju pekne mu spievaju
+//                    Kedze nastastie tento sqlcontainer pracuje len s 1 polozkou
 //                    lastItemId() fungovat bude.
-//                    log.info("KOKOSKO ITEMID: " +  (itemId == ids));
-//                    log.info("KOKOSKO ITEM: " +  (item == ite));
 
                     fieldsFL.setEnabled(false);
                     getFg().setEnabled(false);
@@ -545,7 +534,7 @@ public class InputFormLayout<E> extends FormLayout {
                     }
                     Notification.show("Úkol byl úspešně uložen!");
 
-                } catch (SQLException | UnsupportedOperationException e) {
+                } catch (UnsupportedOperationException e) {
                     log.warn(e.getLocalizedMessage(), e);
                 }
             }
@@ -608,11 +597,11 @@ public class InputFormLayout<E> extends FormLayout {
     }
 
     public void setItem(Object itId, Item it) {
-        if (it != null) {
-            isNew = (it.getItemProperty("id").getValue() == null);
-        } else {
-            isNew = false;
-        }
+//        if (it != null) {
+//            isNew = (it.getItemProperty("id").getValue() == null);
+//        } else {
+//            isNew = false;
+//        }
 
         this.itemId = itId;
         this.item = it;

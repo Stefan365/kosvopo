@@ -5,11 +5,14 @@
  */
 package sk.stefan.MVP.model.service;
 
+import com.vaadin.data.Item;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  *
  * @author stefan
+ * @param <E>
  */
 public interface UniTableService<E> {
 
@@ -18,6 +21,8 @@ public interface UniTableService<E> {
 
     public void deactivateById(Integer entId) throws SQLException;
     
+    public E getObjectFromItem(Item item, Map<String, Class<?>> mapPar);    
     
+    public E save(E ent);
     
 }
