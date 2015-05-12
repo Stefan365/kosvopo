@@ -271,9 +271,15 @@ public class VoteServiceImpl implements VoteService {
         String sql = "SELECT vot.id FROM t_vote vot WHERE vot.subject_id IN "
                 + "(SELECT sub.id FROM t_subject sub WHERE sub.public_role_id IN "
                 + "(SELECT pr.id FROM t_public_role pr WHERE pr.public_person_id = " + ppId +" "
-                + "AND pr.visible = true) "
-                + "AND sub.visible = true) "
-                + "AND vot.visible = true";
+                + " AND pr.visible = true) "
+                + " AND sub.visible = true) "
+                + " AND vot.visible = true"
+                + " UNION DISTINCT"
+        
+                + " SELECT vot.id FROM t_vote vot JOIN t_vote_of_role vor ON (vot.id = vor.vote_id) "
+                        + " JOIN t_public_role pur ON (vor.public_role_id = pur.id) "
+                        + " WHERE pur.public_person_id = " + ppId
+                        + " AND vot.visible = true"; 
         
         prIds = this.generalRepo.findIds(sql);
 

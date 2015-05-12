@@ -156,7 +156,9 @@ public abstract class ToolsNazvy {
             Class<?> cls = UserType.class;
             Method getNm = cls.getDeclaredMethod("getNames");
             Method getOm = cls.getDeclaredMethod("getOrdinals");
+            @SuppressWarnings("unchecked")
             List<String> names = (List<String>) getNm.invoke(null);
+            @SuppressWarnings("unchecked")
             List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
 
             Map<String, Integer> map = ToolsNazvy.makeEnumMap(names, ordinals);
@@ -185,10 +187,6 @@ public abstract class ToolsNazvy {
         return map;
     }
 
-//    private static String getHtmlLabelText(String caption, String text) {
-//        return String.format("<div class=v-label-%s><strong>%s</strong></div><i>%s</i>",
-//                ValoTheme.LABEL_BOLD, caption, text);
-//    }
     /**
      * Method for getting the Properies
      *
@@ -204,53 +202,9 @@ public abstract class ToolsNazvy {
         
         for (String key : properties.keySet()) {
             String value = properties.getString(key);
-//            System.out.println(key + " => " + value);
             prop.put(key, value);
         }
         return prop;
-//   
-//        String userDir = System.getProperty("user.dir");
-//        log.info("USER DIR: " + userDir);
-//
-//        InputStream input = ClassLoader.class.getResourceAsStream(path + ".properties");
-//        log.info("INPU IS NULL?: " + (input == null));
-//
-//        URL url = ToolsNazvy.class.getResource("");
-//        URL url1 = ToolsNazvy.class.getResource("");
-//
-////        Notification.show("URL: " + url.getPath());
-//        Notification.show("URL: is null? " + (url == null));
-//
-//        log.info("URL: is null? " + (url == null));
-//        if (url != null) {
-//            log.info("URL: " + (url.getPath()));
-//        }
-//        if (url1 != null) {
-//            log.info("URL1: " + (url1.getPath()));
-//        }
-//
-//        try {
-//            String fileN = properties.getString(path+ ".properties");
-//            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\"
-//            fileN = "${catalina.home}/webapps/kosvopo/WEB-INF/columnNames/"
-
-//                    + tabName.toLowerCase() + ".properties";
-//            Properties prop = new Properties();
-//            input = new FileInputStream(path + ".properties");
-//            prop.load(input);
-
-//        } catch (IOException ex) {
-//            log.error(ex.getMessage(), ex);
-//            return null;
-//        } finally {
-//            try {
-//                if (input != null) {
-//                    input.close();
-//                }
-//            } catch (IOException ex) {
-//                log.error(ex.getMessage(), ex);
-//            }
-//        }
     }
 
     /**
@@ -268,34 +222,10 @@ public abstract class ToolsNazvy {
         
         for (String key : properties.keySet()) {
             String value = properties.getString(key);
-//            System.out.println(key + " => " + value);
             prop.put(key, value);
         }
         return prop;
 
-//        InputStream input = null;
-//        try {
-//            String fileN;
-//            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\poradieParametrov\\"
-//                    + tabName.toLowerCase() + "_p.properties";
-//
-//            Properties prop = new Properties();
-//            input = new FileInputStream(fileN);
-//            prop.load(input);
-//            input.close();
-//            return prop;
-//        } catch (IOException ex) {
-//            log.error(ex.getMessage(), ex);
-//            return null;
-//        } finally {
-//            try {
-//                if (input != null) {
-//                    input.close();
-//                }
-//            } catch (IOException ex) {
-//                log.error(ex.getMessage(), ex);
-//            }
-//        }
     }
 
 //    neni treba, je to v tabulkach ako parameter PRES_NAME
@@ -308,35 +238,10 @@ public abstract class ToolsNazvy {
         
         for (String key : properties.keySet()) {
             String value = properties.getString(key);
-//            System.out.println(key + " => " + value);
             prop.put(key, value);
         }
         return prop.getProperty(tabName);
         
-
-//        InputStream input = null;
-//        try {
-//            String fileN;
-//            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\nazvyTabuliek.properties";
-//
-//            Properties prop = new Properties();
-//            input = new FileInputStream(fileN);
-//            prop.load(input);
-//            input.close();
-//
-//            return prop.getProperty(tabName);
-//        } catch (IOException ex) {
-//            log.error(ex.getMessage(), ex);
-//            return null;
-//        } finally {
-//            try {
-//                if (input != null) {
-//                    input.close();
-//                }
-//            } catch (IOException ex) {
-//                log.error(ex.getMessage(), ex);
-//            }
-//        }
     }
 
     /**

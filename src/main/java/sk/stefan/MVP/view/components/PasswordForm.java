@@ -12,9 +12,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.repo.GeneralRepo;
-import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.listeners.ObnovFilterListener;
@@ -144,7 +142,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     public void doOkAction() {
         this.verifyPassword();
         this.okCancelListener.doOkAction();
-        this.forWindowListener.doOkAction();
+//        this.forWindowListener.doOkAction();
         this.obnovFilterListener.obnovFilter();
         this.refreshViewListener.refreshView();
         
@@ -153,7 +151,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     @Override
     public void doCancelAction() {
         this.okCancelListener.doCancelAction();
-        this.forWindowListener.doOkAction();
+//        this.forWindowListener.doOkAction();
         //do nothing
     }
 

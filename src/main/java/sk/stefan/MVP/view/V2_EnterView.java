@@ -9,6 +9,9 @@ import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.view.components.MyTimeline;
 
+/**
+ * 
+ */
 public class V2_EnterView extends VerticalLayout implements View {
 
     private static final Logger log = Logger.getLogger(V2_EnterView.class);
@@ -18,6 +21,9 @@ public class V2_EnterView extends VerticalLayout implements View {
     private final MyTimeline timeline;
 
 
+    /**
+     * 
+     */
     public V2_EnterView() {
 
         this.setMargin(true);
@@ -26,7 +32,7 @@ public class V2_EnterView extends VerticalLayout implements View {
         this.initlayout();
 
         this.timeline = new MyTimeline();
-        this.addComponent(timeline);
+//        this.addComponent(timeline);
         
     }
 
