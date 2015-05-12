@@ -8,9 +8,7 @@ package sk.stefan.MVP.view;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
-import sk.stefan.MVP.model.entity.A_Role;
 import sk.stefan.MVP.model.entity.A_User;
-import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.MVP.model.entity.District;
 import sk.stefan.MVP.model.entity.Location;
 import sk.stefan.MVP.model.entity.PersonClassification;
@@ -63,21 +61,16 @@ public class MyNavigator extends Navigator {
         
         
         //views zodpovedajuce univerzalnym editacnym tabulkam:
-        //administracne view:
         this.addView(ToolsNazvy.decapit(A_User.TN),
                 new V8_UniEditableTableView<>(A_User.class, 
-                        NonEditableFields.A_USER.getNonEditableParams(), true));
+                        NonEditableFields.A_USER.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(A_Role.TN),
-                new V8_UniEditableTableView<>(A_Role.class, 
-                        NonEditableFields.A_ROLE.getNonEditableParams(),true));
-        
-        this.addView(ToolsNazvy.decapit(A_UserRole.TN),
-                new V8_UniEditableTableView<>(A_UserRole.class, 
-                        NonEditableFields.A_USER_ROLE.getNonEditableParams(),false));
+
+//        this.addView(ToolsNazvy.decapit(A_UserRole.TN),
+//                new V8_UniEditableTableView<>(A_UserRole.class, 
+//                        NonEditableFields.A_USER_ROLE.getNonEditableParams(),true));
         
         //dobrovolnicke VIew
-        
         this.addView(ToolsNazvy.decapit(District.TN),
                 new V8_UniEditableTableView<>(District.class, 
                         NonEditableFields.DISTRICT.getNonEditableParams(), false));

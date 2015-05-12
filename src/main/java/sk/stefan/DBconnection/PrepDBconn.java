@@ -22,7 +22,7 @@ public class PrepDBconn {
 
     static {
         
-      ResourceBundle props = ResourceBundle.getBundle("dBconn");
+      ResourceBundle props = ResourceBundle.getBundle("db/dBconn");
         
         switch (db) {
 

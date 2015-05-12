@@ -43,7 +43,6 @@ public class GeneralRepo {
 
     private UniRepo<A_Change> changeRepo;// = new UniRepo<>(A_Change.class, transactionalConn);
 
-    
     //0. konstruktor.
     /**
      *
@@ -158,29 +157,32 @@ public class GeneralRepo {
 
     }
 
-    public List<Integer> findMeAdminAndAllVolunteers() {
+    /**
+     * @param userId
+     * @return 
+     */
+    public List<Integer> findMeAndAllVolunteers(Integer userId) {
 
         //list of user ids:
         List<Integer> listIds;
-        
-        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
-        Integer userId;
-        
-        if (user == null) {
-            log.warn("This shouldnt be possible!!");
-            return null;
-        } else {
-            userId = user.getId();
-        }
 
-//        najdi vsetkych uzivatelov s aktualnou rolou dobrovolnik. + sameho seba (pohladu aministratora). 
+//        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+//        Integer userId;
+//        if (user == null) {
+//            log.warn("This shouldnt be possible!!");
+//            return null;
+//        } else {
+//            userId = user.getId();
+//        }
+
+//        najdi vsetkych uzivatelov s aktualnou rolou dobrovolnik. + sameho seba. 
         String sql = "select u.id from a_user u JOIN a_user_role ur ON(u.id = ur.user_id) "
                 + " where ur.role_id = 1 OR u.id = " + userId
                 + " AND ur.actual = true"
                 + " AND ur.visible = true"
                 + " AND u.visible = true";
-        
-            ResultSet rs;
+
+        ResultSet rs;
         Statement st;
 
         try {
@@ -194,13 +196,14 @@ public class GeneralRepo {
 
             rs.close();
             st.close();
+            
             return listIds;
+        
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("findTnAllByParam(...)", Notification.Type.ERROR_MESSAGE);
+            Notification.show("findMeAdminAndAllVolunteers(...)", Notification.Type.ERROR_MESSAGE);
             log.error(e.getMessage(), e);
             return null;
         }
-
 
     }
 

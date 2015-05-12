@@ -87,18 +87,6 @@ visible BIT NOT NULL DEFAULT 1,
 CONSTRAINT pup_PK PRIMARY KEY(id)
 );
 
--- 6.B
- CREATE TABLE t_public_person2
- (
- id INT(11) NOT NULL AUTO_INCREMENT,
- first_name VARCHAR(50) NOT NULL,
- last_name VARCHAR(50) NOT NULL,
- date_of_birth DATE,
- visible BIT NOT NULL DEFAULT 1,
-
- CONSTRAINT pup2_PK PRIMARY KEY(id)
- );
-
 
 -- 7.
 CREATE TABLE t_person_classification

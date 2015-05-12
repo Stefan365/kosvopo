@@ -83,17 +83,6 @@ visible BIT DEFAULT 1,
 CONSTRAINT PRIMARY KEY (id)
 );
 
--- 6.2
-CREATE TABLE t_public_person2
-(
-id INT(11) AUTO_INCREMENT,
-first_name VARCHAR(50) ,
-last_name VARCHAR(50) ,
-date_of_birth  DATE ,
-visible BIT DEFAULT 1,
- 
-CONSTRAINT PRIMARY KEY (id)
-);
 
 -- 7.
 CREATE TABLE t_person_classification

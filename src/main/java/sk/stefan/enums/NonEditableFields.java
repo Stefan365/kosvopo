@@ -82,7 +82,7 @@ public enum NonEditableFields {
                 return new String[]{"visible"};
                 
             case A_USER:
-                return new String[]{"password", "visible"};
+                return new String[]{"password", "login", "visible"};
 //                return new String[]{};
             case A_ROLE:
                 return new String[]{"visible"};

@@ -22,7 +22,6 @@ import com.vaadin.ui.themes.ValoTheme;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,7 +60,7 @@ public class InputFormLayout<E> extends FormLayout {
 
     private final Class<E> clsE;
 
-    private Map<String, Class<?>> mapPar;
+    private Map<String, Class<?>> mapPar;//mapa: nazov paramtru vs. jeho trieda.
     private final UniTableService<E> uniTableService;// = new UniTableServiceImpl<>(clsE);
     /**
      * Spolu s uzavřením formulárě se musí vykonat další akce v základním view,
@@ -69,63 +68,33 @@ public class InputFormLayout<E> extends FormLayout {
      */
     private OkCancelListener okCancelListener;
     private ObnovFilterListener obnovFilterListener;
-
     private final SQLContainer sqlContainer;
-
+    private Item item; // * Vybraná položka ze SQLContaineru (řádek z tabulky)
+    private Object itemId;
+    private String tn;
+    
+    /**
+     * Slovník, ve kterém je klíčem název parametru a hodnotou pro něj vhodná
+     * interaktivní komponenta. (např. completion_date/DateField)
+     */
+    private final Map<String, Component> fieldMap;
     /**
      * FieldGoup je nástroj na svázaní vaadinovské komponenty a nějakého jiného
      * objekty, který dané entitě poskytuje informace k zobrazení.
      */
     private final FieldGroup fg;
     private final Component cp;
-
-    /**
-     * Slovník, ve kterém je klíčem název parametru a hodnotou pro něj vhodná
-     * interaktivní komponenta. (např. completion_date/DateField)
-     */
-    private final Map<String, Component> fieldMap;
-
-//    /**
-//     * Proměnná, která ukládá informaci o tom, jestli se bude upravovat již
-//     * existující položka(false), nebo vytvářet nová(true).
-//     */
-//    private boolean isNew;
-
-    /**
-     * Vybraná položka ze SQLContaineru (řádek z tabulky)
-     */
-    private Item item;
     private PasswordForm passVl;
-
-    /**
-     * id této položky.
-     */
-    private Object itemId;
-
-    private String tn;
-
-    /**
-     * Layout, kde budou zobrazeny interaktivní komponenty všechny kromě
-     * tlačítek OK-CANCEL.
-     */
-    private FormLayout fieldsFL;
-
-    /**
-     * Layout pro uložení tlačítek OK-CANCEL.
-     */
-    private HorizontalLayout buttonsHL;
-
-    /**
-     * Tlačítka pro potvrzení, resp. zrušení změn ve formuláři.
-     */
+    private FormLayout fieldsFL; //     * Layout, kde budou zobrazeny interaktivní komponenty všechny kromě tlačítek OK-CANCEL.
+    private HorizontalLayout buttonsHL; //* Layout pro uložení tlačítek OK-CANCEL.
     private Button saveBt, editBt;
+    private final Label titleLb;
 
     /**
      * Tlacitka, ktore nemaju ist do formulara.
      */
     private final List<String> nonEditFn;
 
-    private final Label titleLb;
 
     //0.
     /**
@@ -278,7 +247,7 @@ public class InputFormLayout<E> extends FormLayout {
                 case "byte[]":
                 case "java.lang.Byte[]":
                     if ("password".equals(pn)) {
-                        Button but = new Button("kok");
+                        Button but = new Button("zmeň heslo");
                         but.addClickListener(new Button.ClickListener() {
                             private static final long serialVersionUID = 1L;
 

@@ -7,6 +7,7 @@ package sk.stefan.MVP.model.service;
 
 import com.vaadin.data.Item;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,5 +25,12 @@ public interface UniTableService<E> {
     public E getObjectFromItem(Item item, Map<String, Class<?>> mapPar);    
     
     public E save(E ent);
+
+    /**
+     *
+     * @param uid
+     * @return
+     */
+    public List<Integer> findMeAndAllVolunteers(Integer uid);
     
 }

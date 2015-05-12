@@ -97,7 +97,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         auserBt = new Button(A_User.PRES_NAME, (Button.ClickEvent event) -> {
             nav.navigateTo(ToolsNazvy.decapit(A_User.TN));
         });
-        
+
         auserRoleBt = new Button(A_UserRole.PRES_NAME, (Button.ClickEvent event) -> {
             nav.navigateTo(ToolsNazvy.decapit(A_UserRole.TN));
         });
@@ -150,7 +150,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         });
 
         auserBt.setStyleName(BaseTheme.BUTTON_LINK);
-        auserRoleBt.setStyleName(BaseTheme.BUTTON_LINK);
+//        auserRoleBt.setStyleName(BaseTheme.BUTTON_LINK);
 
         okresBt.setStyleName(BaseTheme.BUTTON_LINK);
         krajBt.setStyleName(BaseTheme.BUTTON_LINK);
@@ -220,14 +220,14 @@ public class V7_AdministrationView extends VerticalLayout implements View {
         hodnoteniaLy.addComponent(pClassBt);
         hodnoteniaLy.addComponent(vClassBt);
 
-        if (isAdmin) {
-            mainLayout.addComponent(adminLy, 1, 2);
-            adminLy.setMargin(true);
-            adminLy.setSpacing(true);
-            adminLy.addComponent(adminLb);
-            adminLy.addComponent(auserBt);
-            adminLy.addComponent(auserRoleBt);
-        }
+//        if (isAdmin) {
+        mainLayout.addComponent(adminLy, 1, 2);
+        adminLy.setMargin(true);
+        adminLy.setSpacing(true);
+        adminLy.addComponent(adminLb);
+        adminLy.addComponent(auserBt);
+//            adminLy.addComponent(auserRoleBt);
+//        }
     }
 
     private void setUserValue(A_User usr) {
@@ -240,7 +240,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         A_User usr = securityService.getCurrentUser();
-        
+
         Boolean isAdmin = Boolean.FALSE;
 
         if (usr != null) {

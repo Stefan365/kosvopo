@@ -14,7 +14,6 @@ import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.event.FieldEvents;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.AbstractTextField;
@@ -43,7 +42,6 @@ import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.MyTable;
-import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.YesNoWindow;
 import sk.stefan.MVP.view.components.filtering.FilteringComponent;
 import sk.stefan.enums.UserType;
@@ -51,7 +49,6 @@ import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.listeners.RefreshViewListener;
 import sk.stefan.listeners.YesNoWindowListener;
-import sk.stefan.ui.KosvopoUI;
 import sk.stefan.utils.ToolsDao;
 import sk.stefan.utils.ToolsNazvy;
 
@@ -74,15 +71,15 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     private final UserService userService;
 
     private final Boolean isForAdminOnly;
-    
+
     /* User interface components are stored in session. */
 //    private Class<E> clsE;
     private Object itemId;
     private Item item;
     private MyTable uniTable;// = new MyTable();
     private TextField searchField;// = new TextField();
-    private Button addNewItemButton;// = new Button("Nová podložka");
-    private Button removeItemButton;// = new Button("Odstráň túto podložku");
+    private Button addNewItemBt;// = new Button("Nová podložka");
+    private Button removeItemBt;// = new Button("Odstráň túto podložku");
     private FormLayout editorLayout;// = new FormLayout();
     private final FieldGroup fg = new FieldGroup();
     private Button backBt;
@@ -105,33 +102,35 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     private VerticalLayout linksVl;
 
     private final Filter basicFilter;
+    private boolean isAdmin;
+    private Filter userOnlyFilter;
 
-    
     //0.Konstruktor
     /**
-     * 
+     *
      * @param clsq
      * @param uneditCol
      * @param isAdm
      */
     public V8_UniEditableTableView(Class<E> clsq, String[] uneditCol, Boolean isAdm) {
-        
+
         this.setMargin(true);
         this.setSpacing(true);
         
+
 //        servisy:
         this.securityService = new SecurityServiceImpl();
         this.uniTableService = new UniTableServiceImpl<>(clsq);
         this.userService = new UserServiceImpl();
-    
+
         //je to komponenta len pre admina?
         this.isForAdminOnly = isAdm;
-        
+
         //dalsie komponenty:
         basicFilter = new Compare.Equal("visible", Boolean.TRUE);
-        
+
         tn = ToolsDao.getTableName(clsq);
-        
+
         this.initTableLists(uneditCol);
 
         this.inputForm = new InputFormLayout<>(clsq, item, sqlContainer, this, nonEditFn);
@@ -139,8 +138,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         initAllBasic();
 
     }
-
-
 
     /**
      *
@@ -158,9 +155,8 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
         this.addComponents(splitPanel, linksVl);
 
-
     }
-    
+
     private void initLinks() {
         linksVl = new VerticalLayout();
         linksVl.setMargin(true);
@@ -180,12 +176,12 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
         uniTable = new MyTable();
         searchField = new TextField();
-        addNewItemButton = new Button("Nová podložka");
-        removeItemButton = new Button("Odstráň túto podložku");
+        addNewItemBt = new Button("Nová podložka");
+        removeItemBt = new Button("Odstráň túto podložku");
         editorLayout = new FormLayout();
 
         splitPanel = new HorizontalSplitPanel();
-        
+
         leftLayout = new VerticalLayout();
         splitPanel.addComponent(leftLayout);
         splitPanel.addComponent(editorLayout);
@@ -197,8 +193,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         leftLayout.addComponents(bottomLeftLayout, filters);
 
         bottomLeftLayout.addComponent(searchField);
-        bottomLeftLayout.addComponent(addNewItemButton);
-        bottomLeftLayout.addComponent(removeItemButton);
+        
 
         // leftLayout.setSizeFull();
         leftLayout.setExpandRatio(uniTable, 1);
@@ -211,6 +206,18 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         /* Put a little margin around the fields in the right side editor */
         editorLayout.setMargin(true);
         editorLayout.setVisible(false);
+        
+        if ("a_user".equals(tn)){
+            initUsersFilter();
+            if (isAdmin){
+                bottomLeftLayout.addComponent(addNewItemBt);
+                bottomLeftLayout.addComponent(removeItemBt);               
+            }
+        } else {
+            bottomLeftLayout.addComponent(addNewItemBt);
+            bottomLeftLayout.addComponent(removeItemBt);
+
+        }
 
     }
 
@@ -218,7 +225,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     private void initEditor() {
 
         //editorLayout.addComponent(removeItemButton);
-        removeItemButton.setEnabled(true);
+        removeItemBt.setEnabled(true);
 //        log.info("INITEDIOTR1:" + (editorLayout == null));
 //        log.info("INITEDIOTR2:" + (inputForm == null));
         if (inputForm != null) {
@@ -264,7 +271,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
      */
     private void initAddRemoveButtons() {
 
-        addNewItemButton.addClickListener(new Button.ClickListener() {
+        addNewItemBt.addClickListener(new Button.ClickListener() {
 
             private static final long serialVersionUID = 1L;
 
@@ -289,7 +296,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
             }
         });
 
-        removeItemButton.addClickListener(new Button.ClickListener() {
+        removeItemBt.addClickListener(new Button.ClickListener() {
 
             private static final long serialVersionUID = 1L;
 
@@ -312,7 +319,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
      * Inicializuje tabulku na danu entitu.
      */
     private void initUniTable() {
-        
 
         try {
 
@@ -321,7 +327,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         } catch (SecurityException | SQLException e) {
             log.error(e.getMessage());
         }
-
 
         uniTable.setContainerDataSource(sqlContainer);
 
@@ -352,21 +357,19 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
             }
         });
     }
-    
 
     /**
      * Pomocne zoznamy pre tabulku.
      */
     private void initTableLists(String[] uneditCol) {
-        
+
         log.info("CLASS:" + uniTableService.getClassTableName());
 
         String[] pom = new String[]{};
-        
-        for (String s : uneditCol){
+
+        for (String s : uneditCol) {
             log.info("UNEDITABLE: " + s);
         }
-        
 
         this.nonEditFn = Arrays.asList(uneditCol);
         List<String> databaseNames = new ArrayList<>();
@@ -376,14 +379,14 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         String key;
         Properties proPoradie = ToolsNazvy.getPoradieParams(tn);
         Properties proDepict = ToolsNazvy.getDepictParams(tn);
-        
+
 //        log.info("PRO PORADIE: " +proPoradie.size());
 //        log.info("PRO DEPICT: " +proDepict.size());
 //        
         for (int i = 0; i < proPoradie.size(); i++) {
             key = proPoradie.getProperty("" + i);
             log.info("KEY: " + key);
-            
+
             if (nonEditFn.contains(key)) {
                 log.info("PKRACUJEM: " + key);
                 continue;
@@ -398,20 +401,19 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         this.visibleColDepictNames = depictNames.toArray(pom);
 
         for (String s : visibleColDbNames) {
-            log.debug("VISIBLE TABLE COLUMN: *"+ s +"*");
+            log.debug("VISIBLE TABLE COLUMN: *" + s + "*");
         }
         for (String s : visibleColDepictNames) {
-            log.debug("DEPICT T COL: *"+ s +"*");
+            log.debug("DEPICT T COL: *" + s + "*");
         }
 
     }
-    
+
     private void setUserValue(A_User usr) {
 //
 //        this.user = usr;
-    
-    }
 
+    }
 
     /**
      *
@@ -432,7 +434,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                 try {
                     Integer id = (Integer) item.getItemProperty("id").getValue();
                     uniTableService.deactivateById(id);
-                            
+
                     item = null;
                     Notification.show("Úkol úspešne vymazaný!");
                     doOkAction();
@@ -446,10 +448,9 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
     }
 
-
     @Override
     public void doOkAction() {
-        
+
         sqlContainer.refresh();
         uniTable.refreshRowCache();
     }
@@ -464,6 +465,9 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     @Override
     public void obnovFilter() {
         this.sqlContainer.addContainerFilter(basicFilter);
+         if ("a_user".equals(tn)){
+            initUsersFilter();
+        }
     }
 
     @Override
@@ -471,29 +475,60 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 //        Notification.show("MAKOSKO");
         sqlContainer.refresh();
         uniTable.refreshRowCache();
+
     }
-    
+
+    /**
+     *
+     */
+    private void initUsersFilter() {
+
+        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+
+        Integer uid;
+        if (user == null) {
+            log.warn("This shouldnt be possible!!");
+            return;
+        } else {
+            uid = user.getId();
+        }
+
+        List<Integer> listIds;
+        if (isAdmin) {
+            listIds = uniTableService.findMeAndAllVolunteers(uid);
+        } else {
+            listIds = new ArrayList<>();
+            listIds.add(uid);
+        }
+
+//        this.userOnlyFilter = new Compare.Equal("visible", Boolean.TRUE);
+        sqlContainer.removeContainerFilter(userOnlyFilter);
+
+        List<Filter> fls = new ArrayList<>();
+        for (Integer id : listIds) {
+            fls.add(new Compare.Equal("id", id));
+        }
+        this.userOnlyFilter = new Or(fls.toArray(new Filter[0]));
+        sqlContainer.addContainerFilter(userOnlyFilter);
+
+    }
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        
+
         A_User usr = securityService.getCurrentUser();
-        
+
         if (usr != null) {
-            
+
             UserType utype = userService.getUserType(usr);
-            
-            if (this.isForAdminOnly){
-                if (utype != UserType.ADMIN){
-                    UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
-                }
-            } else {
-                //do nothing
+
+            if (utype == UserType.ADMIN) {
+                this.isAdmin = true;
             }
         } else {
             UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
         }
 
     }
-
 
 }

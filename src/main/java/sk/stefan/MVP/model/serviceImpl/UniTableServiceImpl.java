@@ -9,8 +9,10 @@ import com.vaadin.data.Item;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.UniTableService;
 import sk.stefan.utils.ToolsDao;
@@ -27,13 +29,16 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
     
     private final UniRepo<E> uniRepo;
 
+    private final GeneralRepo genRepo;
+
     private final Class<E> clsE;
 
     public UniTableServiceImpl(Class<E> cls) {
 
         this.clsE = cls;
         this.uniRepo = new UniRepo<>(clsE);
-
+        this.genRepo = new GeneralRepo();
+        
     }
 
     @Override
@@ -86,6 +91,11 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
     @Override
     public E save(E ent) {
         return uniRepo.save(ent);
+    }
+
+    @Override
+    public List<Integer> findMeAndAllVolunteers(Integer uid) {
+        return genRepo.findMeAndAllVolunteers(uid);
     }
 
 }

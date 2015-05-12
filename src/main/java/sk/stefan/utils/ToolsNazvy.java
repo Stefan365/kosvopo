@@ -1,6 +1,7 @@
 package sk.stefan.utils;
 
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
@@ -10,11 +11,14 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
+import static javax.servlet.SessionTrackingMode.URL;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_Role;
 import sk.stefan.MVP.model.entity.A_User;
@@ -143,8 +147,8 @@ public abstract class ToolsNazvy {
 
     /**
      * Vrati mapu nazvov uzovatelov vhodnu pre ucely logout.
-     * 
-     * @return 
+     *
+     * @return
      */
     public static Map<String, Integer> getUserTypes() {
 
@@ -161,8 +165,8 @@ public abstract class ToolsNazvy {
                 NoSuchMethodException | SecurityException ex) {
             log.error(ex.getMessage(), ex);
             return null;
-        } 
-        
+        }
+
     }
 
     //5.
@@ -193,27 +197,60 @@ public abstract class ToolsNazvy {
      */
     public static Properties getDepictParams(String tabName) {
 
-        InputStream input = null;
-        try {
-            String fileN;
-            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\"
-                    + tabName.toLowerCase() + ".properties";
-            Properties prop = new Properties();
-            input = new FileInputStream(fileN);
-            prop.load(input);
-            return prop;
-        } catch (IOException ex) {
-            log.error(ex.getMessage(), ex);
-            return null;
-        } finally {
-            try {
-                if (input != null) {
-                    input.close();
-                }
-            } catch (IOException ex) {
-                log.error(ex.getMessage(), ex);
-            }
+        String path = "depictNames/" + tabName.toLowerCase();
+        ResourceBundle properties = ResourceBundle.getBundle(path);
+        
+        Properties prop = new Properties();
+        
+        for (String key : properties.keySet()) {
+            String value = properties.getString(key);
+//            System.out.println(key + " => " + value);
+            prop.put(key, value);
         }
+        return prop;
+//   
+//        String userDir = System.getProperty("user.dir");
+//        log.info("USER DIR: " + userDir);
+//
+//        InputStream input = ClassLoader.class.getResourceAsStream(path + ".properties");
+//        log.info("INPU IS NULL?: " + (input == null));
+//
+//        URL url = ToolsNazvy.class.getResource("");
+//        URL url1 = ToolsNazvy.class.getResource("");
+//
+////        Notification.show("URL: " + url.getPath());
+//        Notification.show("URL: is null? " + (url == null));
+//
+//        log.info("URL: is null? " + (url == null));
+//        if (url != null) {
+//            log.info("URL: " + (url.getPath()));
+//        }
+//        if (url1 != null) {
+//            log.info("URL1: " + (url1.getPath()));
+//        }
+//
+//        try {
+//            String fileN = properties.getString(path+ ".properties");
+//            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\depictNames\\"
+//            fileN = "${catalina.home}/webapps/kosvopo/WEB-INF/columnNames/"
+
+//                    + tabName.toLowerCase() + ".properties";
+//            Properties prop = new Properties();
+//            input = new FileInputStream(path + ".properties");
+//            prop.load(input);
+
+//        } catch (IOException ex) {
+//            log.error(ex.getMessage(), ex);
+//            return null;
+//        } finally {
+//            try {
+//                if (input != null) {
+//                    input.close();
+//                }
+//            } catch (IOException ex) {
+//                log.error(ex.getMessage(), ex);
+//            }
+//        }
     }
 
     /**
@@ -224,56 +261,82 @@ public abstract class ToolsNazvy {
      */
     public static Properties getPoradieParams(String tabName) {
 
-        InputStream input = null;
-        try {
-            String fileN;
-            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\poradieParametrov\\"
-                    + tabName.toLowerCase() + "_p.properties";
-            Properties prop = new Properties();
-            input = new FileInputStream(fileN);
-            prop.load(input);
-            input.close();
-            return prop;
-        } catch (IOException ex) {
-            log.error(ex.getMessage(), ex);
-            return null;
-        } finally {
-            try {
-                if (input != null) {
-                    input.close();
-                }
-            } catch (IOException ex) {
-                log.error(ex.getMessage(), ex);
-            }
+        String path = "poradieParametrov/" + tabName.toLowerCase() + "_p";
+        ResourceBundle properties = ResourceBundle.getBundle(path);
+        
+        Properties prop = new Properties();
+        
+        for (String key : properties.keySet()) {
+            String value = properties.getString(key);
+//            System.out.println(key + " => " + value);
+            prop.put(key, value);
         }
+        return prop;
+
+//        InputStream input = null;
+//        try {
+//            String fileN;
+//            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\poradieParametrov\\"
+//                    + tabName.toLowerCase() + "_p.properties";
+//
+//            Properties prop = new Properties();
+//            input = new FileInputStream(fileN);
+//            prop.load(input);
+//            input.close();
+//            return prop;
+//        } catch (IOException ex) {
+//            log.error(ex.getMessage(), ex);
+//            return null;
+//        } finally {
+//            try {
+//                if (input != null) {
+//                    input.close();
+//                }
+//            } catch (IOException ex) {
+//                log.error(ex.getMessage(), ex);
+//            }
+//        }
     }
 
 //    neni treba, je to v tabulkach ako parameter PRES_NAME
     public static String getTableDepictNames(String tabName) {
 
-        InputStream input = null;
-        try {
-            String fileN;
-            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\nazvyTabuliek.properties";
-
-            Properties prop = new Properties();
-            input = new FileInputStream(fileN);
-            prop.load(input);
-            input.close();
-
-            return prop.getProperty(tabName);
-        } catch (IOException ex) {
-            log.error(ex.getMessage(), ex);
-            return null;
-        } finally {
-            try {
-                if (input != null) {
-                    input.close();
-                }
-            } catch (IOException ex) {
-                log.error(ex.getMessage(), ex);
-            }
+        String path = "depictNames/nazvyTabuliek";
+        ResourceBundle properties = ResourceBundle.getBundle(path);
+        
+        Properties prop = new Properties();
+        
+        for (String key : properties.keySet()) {
+            String value = properties.getString(key);
+//            System.out.println(key + " => " + value);
+            prop.put(key, value);
         }
+        return prop.getProperty(tabName);
+        
+
+//        InputStream input = null;
+//        try {
+//            String fileN;
+//            fileN = "C:\\Users\\stefan\\Desktop\\kosvopo6\\src\\main\\resources\\nazvyTabuliek.properties";
+//
+//            Properties prop = new Properties();
+//            input = new FileInputStream(fileN);
+//            prop.load(input);
+//            input.close();
+//
+//            return prop.getProperty(tabName);
+//        } catch (IOException ex) {
+//            log.error(ex.getMessage(), ex);
+//            return null;
+//        } finally {
+//            try {
+//                if (input != null) {
+//                    input.close();
+//                }
+//            } catch (IOException ex) {
+//                log.error(ex.getMessage(), ex);
+//            }
+//        }
     }
 
     /**
@@ -284,7 +347,7 @@ public abstract class ToolsNazvy {
      * @return
      */
     public static Class<?> getClassFromName(String pn) {
-        log.info("MARTINKO:" + pn);
+//        log.info("MARTINKO:" + pn);
         switch (pn) {
 
             case "user_id":
