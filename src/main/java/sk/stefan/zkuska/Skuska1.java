@@ -3,44 +3,32 @@ package sk.stefan.zkuska;
 import com.vaadin.data.Container;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Item;
-import com.vaadin.data.Property;
 import com.vaadin.data.util.filter.Like;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.sqlcontainer.RowId;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.OptionGroup;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.entity.A_Hierarchy;
@@ -62,12 +50,10 @@ import sk.stefan.MVP.model.service.UniTableService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.MVP.view.components.InputFormLayout;
-import sk.stefan.enums.Stability;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.PresentationName;
-import sk.stefan.utils.ToolsNazvy;
+import sk.stefan.utils.ToolsNames;
 import sk.stefan.utils.ToolsDao;
 
 public class Skuska1<T> {
@@ -793,7 +779,7 @@ public class Skuska1<T> {
      */
     public void skusDepict() {
 
-        Properties pro = ToolsNazvy.getDepictParams("t_vote");//.getProperty(key);
+        Properties pro = ToolsNames.getDepictParams("t_vote");//.getProperty(key);
         for (String s : pro.stringPropertyNames()) {
             log.info(s + " : " + pro.getProperty(s));
 

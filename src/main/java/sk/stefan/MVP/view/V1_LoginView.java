@@ -23,7 +23,7 @@ import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.ui.KosvopoUI;
-import sk.stefan.utils.ToolsNazvy;
+import sk.stefan.utils.ToolsNames;
 
 /**
  * Třída komponenty pro přihlášení do systému
@@ -80,7 +80,7 @@ public class V1_LoginView extends VerticalLayout implements View {
         formVl.setMargin(true);
         formVl.setSpacing(true);
 
-        temporaryLy.addComponent(ToolsNazvy.createPanelCaption("Prihlásenie sa do KOSVOPO"));
+        temporaryLy.addComponent(ToolsNames.createPanelCaption("Prihlásenie sa do KOSVOPO"));
         temporaryLy.addComponent(new Panel(formVl));
         temporaryLy.setWidth(300, Sizeable.Unit.PIXELS);
 
@@ -88,8 +88,8 @@ public class V1_LoginView extends VerticalLayout implements View {
 
     private void initFields() {
         // Vytvareni komponent
-        loginTf = ToolsNazvy.createFormTextField("login", true);
-        passwordPf = ToolsNazvy.createFormPasswordField("Heslo", true);
+        loginTf = ToolsNames.createFormTextField("login", true);
+        passwordPf = ToolsNames.createFormPasswordField("Heslo", true);
 
         loginBt = new Button("Prihlásiť", new Button.ClickListener() {
 

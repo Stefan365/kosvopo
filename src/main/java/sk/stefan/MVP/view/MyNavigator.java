@@ -23,7 +23,7 @@ import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteClassification;
 import sk.stefan.MVP.model.entity.VoteOfRole;
 import sk.stefan.enums.NonEditableFields;
-import sk.stefan.utils.ToolsNazvy;
+import sk.stefan.utils.ToolsNames;
 
 /**
  *
@@ -61,7 +61,7 @@ public class MyNavigator extends Navigator {
         
         
         //views zodpovedajuce univerzalnym editacnym tabulkam:
-        this.addView(ToolsNazvy.decapit(A_User.TN),
+        this.addView(ToolsNames.decapit(A_User.TN),
                 new V8_UniEditableTableView<>(A_User.class, 
                         NonEditableFields.A_USER.getNonEditableParams(), false));
         
@@ -71,55 +71,55 @@ public class MyNavigator extends Navigator {
 //                        NonEditableFields.A_USER_ROLE.getNonEditableParams(),true));
         
         //dobrovolnicke VIew
-        this.addView(ToolsNazvy.decapit(District.TN),
+        this.addView(ToolsNames.decapit(District.TN),
                 new V8_UniEditableTableView<>(District.class, 
                         NonEditableFields.DISTRICT.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(Region.TN),
+        this.addView(ToolsNames.decapit(Region.TN),
                 new V8_UniEditableTableView<>(Region.class, 
                         NonEditableFields.REGION.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(Location.TN),
+        this.addView(ToolsNames.decapit(Location.TN),
                 new V8_UniEditableTableView<>(Location.class, 
                         NonEditableFields.LOCATION.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(PersonClassification.TN),
+        this.addView(ToolsNames.decapit(PersonClassification.TN),
                 new V8_UniEditableTableView<>(PersonClassification.class, 
                         NonEditableFields.PERSON_CLASS.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(PublicBody.TN),
+        this.addView(ToolsNames.decapit(PublicBody.TN),
                 new V8_UniEditableTableView<>(PublicBody.class, 
                         NonEditableFields.PUBLIC_BODY.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(PublicPerson.TN),
+        this.addView(ToolsNames.decapit(PublicPerson.TN),
                 new V8_UniEditableTableView<>(PublicPerson.class, 
                         NonEditableFields.PUBLIC_PERSON.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(PublicRole.TN),
+        this.addView(ToolsNames.decapit(PublicRole.TN),
                 new V8_UniEditableTableView<>(PublicRole.class, 
                         NonEditableFields.PUBLIC_ROLE.getNonEditableParams(), false));
 
-        this.addView(ToolsNazvy.decapit(Subject.TN),
+        this.addView(ToolsNames.decapit(Subject.TN),
                 new V8_UniEditableTableView<>(Subject.class, 
                         NonEditableFields.SUBJECT.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(Tenure.TN),
+        this.addView(ToolsNames.decapit(Tenure.TN),
                 new V8_UniEditableTableView<>(Tenure.class, 
                         NonEditableFields.TENURE.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(Theme.TN),
+        this.addView(ToolsNames.decapit(Theme.TN),
                 new V8_UniEditableTableView<>(Theme.class, 
                         NonEditableFields.THEME.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(Vote.getTN()),
+        this.addView(ToolsNames.decapit(Vote.getTN()),
                 new V8_UniEditableTableView<>(Vote.class, 
                         NonEditableFields.VOTE.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(VoteClassification.TN),
+        this.addView(ToolsNames.decapit(VoteClassification.TN),
                 new V8_UniEditableTableView<>(VoteClassification.class, 
                         NonEditableFields.VOTE_CLASS.getNonEditableParams(), false));
         
-        this.addView(ToolsNazvy.decapit(VoteOfRole.TN),
+        this.addView(ToolsNames.decapit(VoteOfRole.TN),
                 new V8_UniEditableTableView<>(VoteOfRole.class, 
                         NonEditableFields.VOTE_OF_ROLE.getNonEditableParams(), false));
     }

@@ -10,7 +10,7 @@ package sk.stefan.MVP.model.entity;
 import java.util.Date;
 import org.apache.log4j.Logger;
 import sk.stefan.interfaces.PresentationName;
-import sk.stefan.utils.ToolsNazvy;
+import sk.stefan.utils.ToolsNames;
 
 /**
  * reprezentuje dokumnet.
@@ -96,7 +96,7 @@ public class Document implements PresentationName {
     @Override
     public String getPresentationName() {
         
-        String tn = ToolsNazvy.getTableDepictNames(table_name);
+        String tn = ToolsNames.getTableDepictNames(table_name);
         return tn + "-" + this.id;
         
     }

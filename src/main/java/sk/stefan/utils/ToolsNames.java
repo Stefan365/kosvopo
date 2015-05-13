@@ -39,9 +39,9 @@ import sk.stefan.enums.UserType;
  * Trida obsahujici pomocne metody pro vytvareni GUI
  *
  */
-public abstract class ToolsNazvy {
+public abstract class ToolsNames {
 
-    private static final Logger log = Logger.getLogger(ToolsNazvy.class);
+    private static final Logger log = Logger.getLogger(ToolsNames.class);
 
     /**
      * Vytvori textove pole.
@@ -104,7 +104,7 @@ public abstract class ToolsNazvy {
 
         Map<String, Class<?>> typy = new HashMap<>();
 
-        List<String> zozPar = ToolsNazvy.getClassProperties(cls, false);
+        List<String> zozPar = ToolsNames.getClassProperties(cls, false);
 
         for (String p : zozPar) {
             Type typ = cls.getDeclaredField(p).getType();
@@ -161,7 +161,7 @@ public abstract class ToolsNazvy {
             @SuppressWarnings("unchecked")
             List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
 
-            Map<String, Integer> map = ToolsNazvy.makeEnumMap(names, ordinals);
+            Map<String, Integer> map = ToolsNames.makeEnumMap(names, ordinals);
             return map;
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
                 NoSuchMethodException | SecurityException ex) {
@@ -188,14 +188,14 @@ public abstract class ToolsNazvy {
     }
 
     /**
-     * Method for getting the Properies
+     * Method for getting the Properies with table column names.
      *
      * @param tabName
      * @return
      */
     public static Properties getDepictParams(String tabName) {
 
-        String path = "depictNames/" + tabName.toLowerCase();
+        String path = "columnNames/" + tabName.toLowerCase();
         ResourceBundle properties = ResourceBundle.getBundle(path);
         
         Properties prop = new Properties();
@@ -215,7 +215,7 @@ public abstract class ToolsNazvy {
      */
     public static Properties getPoradieParams(String tabName) {
 
-        String path = "poradieParametrov/" + tabName.toLowerCase() + "_p";
+        String path = "columnsSequence/" + tabName.toLowerCase() + "_p";
         ResourceBundle properties = ResourceBundle.getBundle(path);
         
         Properties prop = new Properties();
@@ -231,7 +231,7 @@ public abstract class ToolsNazvy {
 //    neni treba, je to v tabulkach ako parameter PRES_NAME
     public static String getTableDepictNames(String tabName) {
 
-        String path = "depictNames/nazvyTabuliek";
+        String path = "tableNames/tableNames";
         ResourceBundle properties = ResourceBundle.getBundle(path);
         
         Properties prop = new Properties();

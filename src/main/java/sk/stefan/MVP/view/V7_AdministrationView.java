@@ -36,7 +36,7 @@ import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.enums.UserType;
 import sk.stefan.ui.KosvopoUI;
-import sk.stefan.utils.ToolsNazvy;
+import sk.stefan.utils.ToolsNames;
 
 /**
  *
@@ -95,58 +95,58 @@ public class V7_AdministrationView extends VerticalLayout implements View {
     private void initButtons() {
 
         auserBt = new Button(A_User.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(A_User.TN));
+            nav.navigateTo(ToolsNames.decapit(A_User.TN));
         });
 
         auserRoleBt = new Button(A_UserRole.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(A_UserRole.TN));
+            nav.navigateTo(ToolsNames.decapit(A_UserRole.TN));
         });
 
         okresBt = new Button(District.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(District.TN));
+            nav.navigateTo(ToolsNames.decapit(District.TN));
         });
         krajBt = new Button(Region.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(Region.TN));
+            nav.navigateTo(ToolsNames.decapit(Region.TN));
         });
         locBt = new Button(Location.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(Location.TN));
+            nav.navigateTo(ToolsNames.decapit(Location.TN));
         });
 
         pClassBt = new Button(PersonClassification.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(PersonClassification.TN));
+            nav.navigateTo(ToolsNames.decapit(PersonClassification.TN));
         });
 
         pubBodyBt = new Button(PublicBody.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(PublicBody.TN));
+            nav.navigateTo(ToolsNames.decapit(PublicBody.TN));
         });
 
         pubRoleBt = new Button(PublicRole.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(PublicRole.TN));
+            nav.navigateTo(ToolsNames.decapit(PublicRole.TN));
         });
         subjectBt = new Button(Subject.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(Subject.TN));
+            nav.navigateTo(ToolsNames.decapit(Subject.TN));
         });
         tenureBt = new Button(Tenure.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(Tenure.TN));
+            nav.navigateTo(ToolsNames.decapit(Tenure.TN));
         });
 
         themeBt = new Button(Theme.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(Theme.TN));
+            nav.navigateTo(ToolsNames.decapit(Theme.TN));
         });
 
         voteBt = new Button(Vote.getPRES_NAME(), (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(Vote.getTN()));
+            nav.navigateTo(ToolsNames.decapit(Vote.getTN()));
         });
 
         vClassBt = new Button(VoteClassification.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(VoteClassification.TN));
+            nav.navigateTo(ToolsNames.decapit(VoteClassification.TN));
         });
 
         vorBt = new Button(VoteOfRole.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(VoteOfRole.TN));
+            nav.navigateTo(ToolsNames.decapit(VoteOfRole.TN));
         });
         pubPersonBt = new Button(PublicPerson.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNazvy.decapit(PublicPerson.TN));
+            nav.navigateTo(ToolsNames.decapit(PublicPerson.TN));
         });
 
         auserBt.setStyleName(BaseTheme.BUTTON_LINK);

@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import sk.stefan.interfaces.Filterable;
-import sk.stefan.utils.ToolsNazvy;
+import sk.stefan.utils.ToolsNames;
 import sk.stefan.utils.ToolsDao;
 
 /**

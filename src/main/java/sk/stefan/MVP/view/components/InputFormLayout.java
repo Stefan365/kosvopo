@@ -40,7 +40,7 @@ import sk.stefan.enums.VoteResult;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.utils.ToolsDao;
-import sk.stefan.utils.ToolsNazvy;
+import sk.stefan.utils.ToolsNames;
 
 /**
  *
@@ -114,7 +114,7 @@ public class InputFormLayout<E> extends FormLayout {
         uniTableService = new UniTableServiceImpl<>(cls);
         this.clsE = cls;
         try {
-            mapPar = ToolsNazvy.getTypParametrov(clsE);
+            mapPar = ToolsNames.getTypParametrov(clsE);
         } catch (NoSuchFieldException | SecurityException ex) {
             mapPar = null;
             log.error(ex.getMessage(), ex);
@@ -189,7 +189,7 @@ public class InputFormLayout<E> extends FormLayout {
                         //POZN: parametry POJO by se meli jmenovat stejne ako
                         // stloupce tabulky a identifikator by se mel jmenovat jen 'id'..
                         InputClassComboBox<?> cb;
-                        Class<?> cls = ToolsNazvy.getClassFromName(pn);
+                        Class<?> cls = ToolsNames.getClassFromName(pn);
 
                         cb = new InputClassComboBox<>(fg, pn, cls);
 
@@ -276,7 +276,7 @@ public class InputFormLayout<E> extends FormLayout {
 
                         List<String> names = (List<String>) getNm.invoke(null);
                         List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
-                        Map<String, Integer> map = ToolsNazvy.makeEnumMap(names, ordinals);
+                        Map<String, Integer> map = ToolsNames.makeEnumMap(names, ordinals);
 
                         InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
 
@@ -320,8 +320,8 @@ public class InputFormLayout<E> extends FormLayout {
     private void completeForm() throws IOException {
 
         String key;
-        Properties proPoradie = ToolsNazvy.getPoradieParams(tn);
-        Properties proDepict = ToolsNazvy.getDepictParams(tn);
+        Properties proPoradie = ToolsNames.getPoradieParams(tn);
+        Properties proDepict = ToolsNames.getDepictParams(tn);
 
 //        if ("t_tenure".equals(Tn)) {
 //        for (String s : proDepict.stringPropertyNames()) {

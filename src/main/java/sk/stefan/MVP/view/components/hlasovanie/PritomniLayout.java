@@ -23,7 +23,7 @@ import sk.stefan.MVP.model.entity.VoteOfRole;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.utils.ToolsDao;
-import sk.stefan.utils.ToolsNazvy;
+import sk.stefan.utils.ToolsNames;
 
 /**
  *

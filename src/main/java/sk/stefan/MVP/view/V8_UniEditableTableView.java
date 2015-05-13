@@ -50,7 +50,7 @@ import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.listeners.RefreshViewListener;
 import sk.stefan.listeners.YesNoWindowListener;
 import sk.stefan.utils.ToolsDao;
-import sk.stefan.utils.ToolsNazvy;
+import sk.stefan.utils.ToolsNames;
 
 /**
  *
@@ -377,8 +377,8 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
 //        log.debug("DEBUG tn: " + tn);
         String key;
-        Properties proPoradie = ToolsNazvy.getPoradieParams(tn);
-        Properties proDepict = ToolsNazvy.getDepictParams(tn);
+        Properties proPoradie = ToolsNames.getPoradieParams(tn);
+        Properties proDepict = ToolsNames.getDepictParams(tn);
 
 //        log.info("PRO PORADIE: " +proPoradie.size());
 //        log.info("PRO DEPICT: " +proDepict.size());
