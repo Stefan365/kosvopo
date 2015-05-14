@@ -173,5 +173,7 @@ public class SecurityServiceImpl implements SecurityService {
         
         userRoleRepo.save(urole);
         
+        String sql = "SELECT * FROM"; 
+        
     }
 }

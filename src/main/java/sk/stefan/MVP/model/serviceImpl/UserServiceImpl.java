@@ -35,10 +35,13 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public A_User getUserByLogin(String login) {
-        if(userRepo.findByParam("login", login) == null || userRepo.findByParam("login", login).isEmpty()){
+        
+        List<A_User> usrs = userRepo.findByParam("login", login);
+        
+        if(usrs == null || usrs.isEmpty()){
             return null;
         } else {
-            return userRepo.findByParam("login", login).get(0);
+            return usrs.get(0);
         }
     }
 
@@ -70,10 +73,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public byte[] getEncPasswordByLogin(String login) {
         
-        if (userRepo.findByParam("login", login) == null || userRepo.findByParam("login", login).isEmpty()){
+        List<A_User> usrs = userRepo.findByParam("login", login);
+        if (usrs == null || usrs.isEmpty()){
             return null;
         } else {
-            A_User user = userRepo.findByParam("login", login).get(0);
+            A_User user = usrs.get(0);
             return user.getPassword();
         }
         
