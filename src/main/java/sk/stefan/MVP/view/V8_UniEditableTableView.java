@@ -145,10 +145,10 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     private void initAllBasic() {
 
         this.removeAllComponents();
-
+        
         initLayout();
-        initLinks();
         initUniTable();
+        initLinks();
         initEditor();
         initSearch();
         initAddRemoveButtons();
@@ -207,17 +207,17 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         editorLayout.setMargin(true);
         editorLayout.setVisible(false);
         
-        if ("a_user".equals(tn)){
-            initUsersFilter();
-            if (isAdmin){
-                bottomLeftLayout.addComponent(addNewItemBt);
-                bottomLeftLayout.addComponent(removeItemBt);               
-            }
-        } else {
-            bottomLeftLayout.addComponent(addNewItemBt);
-            bottomLeftLayout.addComponent(removeItemBt);
-
-        }
+//        if ("a_user".equals(tn)){
+//            initUsersFilter();
+//            if (isAdmin){
+//                bottomLeftLayout.addComponent(addNewItemBt);
+//                bottomLeftLayout.addComponent(removeItemBt);               
+//            }
+//        } else {
+//            bottomLeftLayout.addComponent(addNewItemBt);
+//            bottomLeftLayout.addComponent(removeItemBt);
+//
+//        }
 
     }
 
@@ -284,7 +284,13 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                 item = sqlContainer.getItem(itemId);
                 if (item.getItemProperty("visible") != null) {
                     item.getItemProperty("visible").setValue(Boolean.TRUE);
+                    if ("a_user".equals(tn)){
+                        initNewUser(item);
+                    }
+                    Notification.show("Pridal som novu podložkuou!");
                 }
+                inputForm.setItem(itemId, item);
+                editorLayout.setVisible(itemId != null);
 
                 obnovFilter();
 
@@ -293,11 +299,14 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
                 sqlContainer.refresh();
                 uniTable.refreshRowCache();
+                
+            
             }
         });
 
         removeItemBt.addClickListener(new Button.ClickListener() {
 
+            
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -305,13 +314,45 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
                 if (item != null) {
                     final YesNoWindow window = new YesNoWindow("Upozornenie",
-                            "Chcete úkol smazat?", new DeleteTaskListener());
+                            "Chcete to zmazať?", new DeleteTaskListener());
                     UI.getCurrent().addWindow(window);
                 } else {
-                    Notification.show("Vyber nejdříve řádek v tabulce!");
+                    Notification.show("Vyber nejprv riadok v tabuľke!");
                 }
             }
         });
+        
+    }
+    
+    @SuppressWarnings("unchecked")
+    private void initNewUser(Item item){
+        
+        item.getItemProperty("first_name").setValue("proto_user");
+        item.getItemProperty("last_name").setValue("proto_user");
+        item.getItemProperty("login").setValue("proto_user");
+        item.getItemProperty("e_mail").setValue("proto_user");
+        item.getItemProperty("password").setValue(securityService.encryptPassword("proto_user"));
+        
+    }
+    
+    private void initButtons(){
+        
+        bottomLeftLayout.removeComponent(addNewItemBt);
+        bottomLeftLayout.removeComponent(removeItemBt);
+        
+        
+        if ("a_user".equals(tn)){
+            initUsersFilter();
+            if (isAdmin){
+                bottomLeftLayout.addComponent(addNewItemBt);
+                bottomLeftLayout.addComponent(removeItemBt);               
+            }
+        } else {
+            bottomLeftLayout.addComponent(addNewItemBt);
+            bottomLeftLayout.addComponent(removeItemBt);
+
+        }
+    
     }
 
     //5.
@@ -409,11 +450,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
     }
 
-    private void setUserValue(A_User usr) {
-//
-//        this.user = usr;
-
-    }
 
     /**
      *
@@ -435,14 +471,18 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                     Integer id = (Integer) item.getItemProperty("id").getValue();
                     uniTableService.deactivateById(id);
 
+                    itemId= null;
                     item = null;
-                    Notification.show("Úkol úspešne vymazaný!");
+                    inputForm.setItem(itemId, item);
+                    editorLayout.setVisible(false);
+                    
+                    Notification.show("úspešne vymazaný!");
                     doOkAction();
                 } catch (SQLException ex) {
                     Notification.show("Vymazanie sa nepodarilo!");
                 }
             } else {
-                Notification.show("Není co mazat!");
+                Notification.show("Nieje čo zmazať!");
             }
         }
 
@@ -457,13 +497,14 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
     @Override
     public void doCancelAction() {
-//        Notification.show("PETERKO");
+        
         sqlContainer.refresh();
         uniTable.refreshRowCache();
     }
 
     @Override
     public void obnovFilter() {
+        
         this.sqlContainer.addContainerFilter(basicFilter);
          if ("a_user".equals(tn)){
             initUsersFilter();
@@ -523,8 +564,15 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
             UserType utype = userService.getUserType(usr);
 
             if (utype == UserType.ADMIN) {
+//                log.info("V8 ADMINQ!!!");
+//                log.info("V8 utype: " + utype);
+                
                 this.isAdmin = true;
             }
+            
+            this.initUsersFilter();
+            this.initButtons();
+            
         } else {
             UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
         }
