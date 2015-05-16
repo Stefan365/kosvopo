@@ -94,8 +94,12 @@ public class V7_AdministrationView extends VerticalLayout implements View {
 
     private void initButtons() {
 
-        auserBt = new Button(A_User.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNames.decapit(A_User.TN));
+        auserBt = new Button(A_User.PRES_NAME);
+        auserBt.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                nav.navigateTo(ToolsNames.decapit(A_User.TN));
+            }
         });
 
         auserRoleBt = new Button(A_UserRole.PRES_NAME, (Button.ClickEvent event) -> {

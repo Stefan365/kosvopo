@@ -284,10 +284,11 @@ public class UniRepo<E> implements MyRepo<E> {
      * Vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
      *
      * @param ent
+     * @param noteChange ak je true, bude sa zapisovat do A_change, inak nie.
      * @return
      */
     @Override
-    public E save(E ent) {
+    public E save(E ent, boolean noteChange) {
 
         E entOrigin;
         Connection conn;
@@ -314,6 +315,7 @@ public class UniRepo<E> implements MyRepo<E> {
                 sql = this.createUpdateQueryPrepared(mapPar, eid);
                 entOrigin = this.findOne(eid);
             }
+            log.info("*"+sql+"*");
             st = this.createStatement(mapPar, conn, sql, ent);
 
             st.executeUpdate();
@@ -326,15 +328,15 @@ public class UniRepo<E> implements MyRepo<E> {
                 entMethod.invoke(ent, newId);
             }
 
-            //to druhe je ten len kvoli poisteniu
-//            if (!TN.contains("a_") && this.invasiveConnection==null) {
-            if (!"a_change".equals(TN) && this.invasiveConnection == null) {
+            
+            //to druhe a tretie je ten len kvoli poisteniu. staci len noteChange! 
+            if (noteChange && !"a_change".equals(TN) && this.invasiveConnection == null) {
                 //toto by sa malo prerobit na jedno invazivne connection a to by bolo spolocne 
                 //aj pre hlavne save aj pre save do A_change
                 List<A_Change> changes = this.createChangesToPersist(entOrigin, ent, mapPar);
                 UniRepo<A_Change> changeRepo = new UniRepo<>(A_Change.class, conn);
                 for (A_Change ch : changes) {
-                    changeRepo.save(ch);
+                    changeRepo.save(ch, false);
                 }
 
             }
@@ -366,10 +368,11 @@ public class UniRepo<E> implements MyRepo<E> {
      * zavislych entit, pouzite generalRepo...deactivateAll
      *
      * @param ent
+     * @param noteChange
      * @return
      */
     @Override
-    public boolean deactivate(E ent) {
+    public boolean deactivateOneOnly(E ent, boolean noteChange) {
 
         Connection conn;
         try {
@@ -390,10 +393,11 @@ public class UniRepo<E> implements MyRepo<E> {
 //                do nothing
                 return true;
             }
-            if (!"a_change".equals(TN) && this.invasiveConnection == null) {
+            //to druhe a tretie je ten len kvoli poisteniu. staci len noteChange! 
+            if (noteChange && !"a_change".equals(TN) && this.invasiveConnection == null) {
                 A_Change change = this.createDeactivateChangeToPersist(ent);
                 UniRepo<A_Change> changeRepo = new UniRepo<>(A_Change.class, conn);
-                changeRepo.save(change);
+                changeRepo.save(change, false);
             }
 
             st.close();
@@ -419,9 +423,10 @@ public class UniRepo<E> implements MyRepo<E> {
      * @param paramName the name of parameter.
      * @param paramValue the new value of parameter
      * @param entId id of row where the value is updated.
+     * @param noteChange
      * @throws java.sql.SQLException
      */
-    public void updateParam(String paramName, String paramValue, String entId) throws SQLException {
+    public void updateParam(String paramName, String paramValue, String entId, boolean noteChange) throws SQLException {
 
         Connection conn;
         try {
@@ -443,10 +448,11 @@ public class UniRepo<E> implements MyRepo<E> {
             log.info("SQL:*" + sql + "*");
             int i = st.executeUpdate(sql.toString());
 
-            if (!"a_change".equals(TN) && this.invasiveConnection == null) {
+            //to druhe a tretie je ten len kvoli poisteniu. staci len noteChange! 
+            if (noteChange && !"a_change".equals(TN) && this.invasiveConnection == null) {
                 A_Change change = this.createParamChangeToPersist(paramName, paramValue, entId);
                 UniRepo<A_Change> changeRepo = new UniRepo<>(A_Change.class, conn);
-                changeRepo.save(change);
+                changeRepo.save(change, false);
             }
 
             st.close();

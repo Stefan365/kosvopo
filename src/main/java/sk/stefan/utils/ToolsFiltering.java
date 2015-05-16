@@ -386,9 +386,11 @@ public abstract class ToolsFiltering {
      */
     public static String getParamName(String tn) {
 
-        String replace = tn.replace("t_", "");
-        replace += "_id";
-        return replace;
+        String result = tn.replace("t_", "");
+        result = result.replace("a_", "");
+        
+        result += "_id";
+        return result;
     }
 
     //5. pom

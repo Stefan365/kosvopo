@@ -50,9 +50,11 @@ public interface MyRepo<T> {
      * Zahrna update i vytvorenie novej entity.
      *
      * @param ent
+     * @param noteChange
      * @return
      */
-    public T save(T ent);
+    public T save(T ent, boolean noteChange);
+    
 
 //    // 5.
 //    /**
@@ -67,9 +69,10 @@ public interface MyRepo<T> {
      * Deaktivuje entity, cely strom potomkov, pri deaktivacii danej entity.
      *
      * @param ent
+     * @param noteChange
      * @return
      */
-    public boolean deactivate(T ent);
+    public boolean deactivateOneOnly(T ent, boolean noteChange);
 
     // 6.
     /**

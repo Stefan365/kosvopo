@@ -22,6 +22,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.MVP.model.service.UniTableService;
 import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.converters.DateConverter;
@@ -114,7 +117,7 @@ public class InputFormLayout<E> extends FormLayout {
         uniTableService = new UniTableServiceImpl<>(cls);
         this.clsE = cls;
         try {
-            mapPar = ToolsNames.getTypParametrov(clsE);
+            mapPar = ToolsNames.getTypParametrov(clsE, true);
         } catch (NoSuchFieldException | SecurityException ex) {
             mapPar = null;
             log.error(ex.getMessage(), ex);
@@ -479,11 +482,22 @@ public class InputFormLayout<E> extends FormLayout {
                 try {
 //                    sqlContainer.commit(); nic sa commitovat nebude, 
 //                    vsetko pojde cez jdbc :
-                    itemId = sqlContainer.lastItemId();
-                    item = sqlContainer.getItem(itemId);
-
                     E ent = uniTableService.getObjectFromItem(item, mapPar);
-                    uniTableService.save(ent);
+                    ent = uniTableService.save(ent);
+                    
+                    if ("a_user".equals(tn)){
+                        
+                        A_User usr = (A_User)ent;
+                        A_UserRole urole = new A_UserRole();
+                        urole.setRole_id(1);
+                        urole.setSince(new java.util.Date());
+                        urole.setUser_id(usr.getId());
+                        urole.setActual(Boolean.TRUE);
+                        urole.setVisible(Boolean.TRUE);
+                        uniTableService.saveRole(urole);
+                        
+                    }
+                    
 //                    toto bolo slabe miesto celeho systemu
 //                    tento sqlcontainer po ulozeni neumoznuje 
 //                    vystopovat ktory item bol zmeneny, pretoze zavola metodu clear

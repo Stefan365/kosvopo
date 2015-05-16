@@ -1,7 +1,7 @@
 
 package sk.stefan.MVP.model.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.interfaces.PresentationName;
 

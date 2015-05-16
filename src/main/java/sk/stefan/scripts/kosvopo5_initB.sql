@@ -4,9 +4,9 @@
 INSERT INTO a_user (first_name, last_name, e_mail, login, password)
 VALUES ('Peter', 'Sarkoci', 'peter.sarkoci@gmail.com', 'petak', md5('petak'));
 INSERT INTO a_user (first_name, last_name, e_mail, login, password)
-VALUES ('Štefan', 'Vereš', 'stefan.veres@gmail.com', 'stefan63', md5('stefan63'));
+VALUES ('Štefan', 'Vereš', 'stefan.veres@gmail.com', 'stefan', md5('stefan'));
 INSERT INTO a_user (first_name, last_name, e_mail, login, password)
-VALUES ('Miro', 'Sčibrányi', 'miro.scibranyi@gmail.com', 'mito108', md5('miro108'));
+VALUES ('Miro', 'Sčibrányi', 'miro.scibranyi@gmail.com', 'miro', md5('miro'));
 COMMIT; 
 
 
@@ -226,10 +226,9 @@ INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_tenur
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_theme', null, null);
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_region', null, null);
 
+
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_district', 't_region', 'region_id');
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_location', 't_district', 'district_id');
-
-
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_public_body', 't_location', 'location_id');
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) 
 		VALUES ('t_person_classification', 't_public_person', 'public_person_id');
@@ -243,4 +242,11 @@ INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_vote'
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_vote_classification', 't_vote', 'vote_id');
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_vote_of_role', 't_vote','vote_id');
 INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('t_vote_of_role', 't_public_role','public_role_id');
+
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('a_user', null, null);
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('a_role', null, null);
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('a_user_role', 'a_user','user_id');
+INSERT INTO a_hierarchy(table_name, boss_table, boss_reference) VALUES ('a_user_role', 'a_role','role_id');
+
 COMMIT;
+

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.UniTableService;
@@ -32,27 +33,33 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
     private final GeneralRepo genRepo;
 
     private final Class<E> clsE;
+    
+    private final String tn;
+    
+    
 
     public UniTableServiceImpl(Class<E> cls) {
 
         this.clsE = cls;
         this.uniRepo = new UniRepo<>(clsE);
         this.genRepo = new GeneralRepo();
+        this.tn = ToolsDao.getTableName(clsE);
         
     }
 
     @Override
     public String getClassTableName() {
 
-        return ToolsDao.getTableName(clsE);
+        return tn;
 
     }
 
     @Override
     public void deactivateById(Integer entId) throws SQLException {
 
-        uniRepo.updateParam("visible", "false", "" + entId);
-
+        genRepo.deactivateWithSlavesTree(tn, entId);
+        genRepo.doCommit();
+        
     }
 
     @Override
@@ -66,10 +73,10 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
             E ent = clsE.newInstance();
             
             for (String param : mapPar.keySet()){
-                log.info("PARAM: *" + param + "*");
+
                 //item:
                 val = item.getItemProperty(param).getValue();                
-                
+                log.info("PARAM: *" + param + "*, value: " + val);                
                 //entita:
                 entSetterName = ToolsDao.getG_SetterName(param, "set");
                 entMethod = clsE.getMethod(entSetterName, mapPar.get(param));
@@ -90,12 +97,20 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
 
     @Override
     public E save(E ent) {
-        return uniRepo.save(ent);
+        return uniRepo.save(ent, true);
     }
 
     @Override
     public List<Integer> findMeAndAllVolunteers(Integer uid) {
         return genRepo.findMeAndAllVolunteers(uid);
+    }
+
+    @Override
+    public void saveRole(A_UserRole urole) {
+        
+        UniRepo<A_UserRole> roleRepo = new UniRepo<>(A_UserRole.class);
+        roleRepo.save(urole, true);
+        
     }
 
 }

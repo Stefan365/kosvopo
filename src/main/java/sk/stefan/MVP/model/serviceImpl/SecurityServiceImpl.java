@@ -4,10 +4,13 @@ import com.vaadin.server.VaadinSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.A_UserRole;
+import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
 
@@ -24,6 +27,7 @@ public class SecurityServiceImpl implements SecurityService {
     private UniRepo<A_User> userRepo;
     
     private UniRepo<A_UserRole> userRoleRepo;
+    
     
     private MessageDigest md;
 
@@ -143,37 +147,4 @@ public class SecurityServiceImpl implements SecurityService {
         }
     }
 
-    @Override
-    public void initAdmin() {
-        
-        byte[] encPassword;
-        
-        A_User admin = new A_User();
-        
-        admin.setFirst_name("admin");
-        admin.setLast_name("adminovic");
-        admin.setLogin("admin");
-        admin.setE_mail("admin@admin.sk");
-        admin.setVisible(Boolean.TRUE);
-        
-        encPassword = encryptPassword("admin");
-        admin.setPassword(encPassword);
-        
-        admin = userRepo.save(admin);
-        
-        //user Role:
-        A_UserRole urole = new A_UserRole();
-        
-        urole.setUser_id(admin.getId());
-        urole.setRole_id(2);
-        urole.setSince((java.sql.Date) new Date());
-        urole.setTill(null);
-        urole.setVisible(Boolean.TRUE);
-        urole.setActual(Boolean.TRUE);
-        
-        userRoleRepo.save(urole);
-        
-        String sql = "SELECT * FROM"; 
-        
-    }
 }

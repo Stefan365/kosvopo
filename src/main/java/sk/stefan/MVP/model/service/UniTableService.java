@@ -9,6 +9,7 @@ import com.vaadin.data.Item;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import sk.stefan.MVP.model.entity.A_UserRole;
 
 /**
  *
@@ -32,5 +33,7 @@ public interface UniTableService<E> {
      * @return
      */
     public List<Integer> findMeAndAllVolunteers(Integer uid);
+
+    public void saveRole(A_UserRole urole);
     
 }

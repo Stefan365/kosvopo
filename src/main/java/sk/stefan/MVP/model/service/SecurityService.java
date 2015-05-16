@@ -23,7 +23,6 @@ public interface SecurityService {
 
     public byte[] encryptPassword(String password);
     
-    public void initAdmin();
     
     
 }

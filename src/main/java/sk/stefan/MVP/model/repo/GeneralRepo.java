@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.entity.A_Change;
 import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.MVP.model.entity.Document;
 import sk.stefan.MVP.model.service.DocumentService;
 import sk.stefan.MVP.model.service.SecurityService;
@@ -39,6 +41,10 @@ public class GeneralRepo {
 
     private Connection transactionalConn;
 
+    private final UniRepo<A_User> userRepo;
+
+    private final UniRepo<A_UserRole> userRoleRepo;
+
     private final UniRepo<Document> docRepo;
 
     private UniRepo<A_Change> changeRepo;// = new UniRepo<>(A_Change.class, transactionalConn);
@@ -51,6 +57,9 @@ public class GeneralRepo {
 
         this.securityService = new SecurityServiceImpl();
         this.docRepo = new UniRepo<>(Document.class);
+        this.userRepo = new UniRepo<>(A_User.class);
+        this.userRoleRepo = new UniRepo<>(A_UserRole.class);
+        
     }
 
 // ****************** NON INVASIVE **************************************    
@@ -132,8 +141,10 @@ public class GeneralRepo {
         List<Integer> listIds;
 
 //        st = DoDBconn.getConn().prepareStatement("UPDATE a_user SET password = ? WHERE id = " + id);
-        String sql = "SELECT id FROM " + tn + " WHERE " + paramName + " = " + paramVal
-                + " AND visible = true";
+        String sql = "SELECT id FROM " + tn + " WHERE " + paramName + " = '" + paramVal
+                + "' AND visible = true";
+        log.info("**" + sql + "*");
+
         ResultSet rs;
         Statement st;
 
@@ -150,7 +161,7 @@ public class GeneralRepo {
             st.close();
             return listIds;
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("findTnAllByParam(...)", Notification.Type.ERROR_MESSAGE);
+//            Notification.show("findTnAllByParam(...)", Notification.Type.ERROR_MESSAGE);
             log.error(e.getMessage(), e);
             return null;
         }
@@ -159,7 +170,7 @@ public class GeneralRepo {
 
     /**
      * @param userId
-     * @return 
+     * @return
      */
     public List<Integer> findMeAndAllVolunteers(Integer userId) {
 
@@ -174,7 +185,6 @@ public class GeneralRepo {
 //        } else {
 //            userId = user.getId();
 //        }
-
 //        najdi vsetkych uzivatelov s aktualnou rolou dobrovolnik. + sameho seba. 
         String sql = "select u.id from a_user u JOIN a_user_role ur ON(u.id = ur.user_id) "
                 + " where ur.role_id = 1 OR u.id = " + userId
@@ -196,9 +206,9 @@ public class GeneralRepo {
 
             rs.close();
             st.close();
-            
+
             return listIds;
-        
+
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
             Notification.show("findMeAdminAndAllVolunteers(...)", Notification.Type.ERROR_MESSAGE);
             log.error(e.getMessage(), e);
@@ -215,18 +225,18 @@ public class GeneralRepo {
      * a_user;
      *
      * @param rawPwd
-     * @param id id of row where the value is updated.
+     * @param userId id of user where the password is updated.
      *
      * @throws java.sql.SQLException
      */
-    public void updatePassword(String rawPwd, String id) throws SQLException {
+    public void updatePassword(String rawPwd, String userId) throws SQLException {
 
         log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
         Connection conn = DoDBconn.createInvasiveConnection();
 
         PreparedStatement st;
         try {
-            st = conn.prepareStatement("UPDATE a_user SET password = ? WHERE id = " + id);
+            st = conn.prepareStatement("UPDATE a_user SET password = ? WHERE id = " + userId);
             st.setBytes(1, securityService.encryptPassword(rawPwd));
             st.executeUpdate();
 
@@ -236,7 +246,7 @@ public class GeneralRepo {
 
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            Notification.show("nieco sa dojebalo pri update hesla!", Notification.Type.ERROR_MESSAGE);
+//            Notification.show("nieco sa pokazilo pri update hesla!", Notification.Type.ERROR_MESSAGE);
             throw new SQLException();
         }
     }
@@ -249,7 +259,7 @@ public class GeneralRepo {
      * @param id
      * @throws java.sql.SQLException
      */
-    public void deactivateSlavesTree(String tn, Integer id) throws SQLException {
+    public void deactivateWithSlavesTree(String tn, Integer id) throws SQLException {
 
         if (transactionalConn == null) {
             log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
@@ -288,7 +298,7 @@ public class GeneralRepo {
             for (String key : slavesIdsMap.keySet()) {
                 slvIds = slavesIdsMap.get(key);
                 for (Integer aid : slvIds) {
-                    deactivateSlavesTree(key, aid);
+                    deactivateWithSlavesTree(key, aid);
                 }
             }
         }
@@ -312,7 +322,7 @@ public class GeneralRepo {
 
         //for creating change:
         A_Change change = createDeactivateChangeToPersist(tn, entId);
-        changeRepo.save(change);
+        changeRepo.save(change, false);
 
         st.close();
 
@@ -333,7 +343,8 @@ public class GeneralRepo {
         Statement st = transactionalConn.createStatement();
 
         String sql = String.format("UPDATE t_document "
-                + " SET visible = false WHERE table_name = %s AND table_row_id = %d", tn, rid);
+                + " SET visible = false WHERE table_name = '%s' AND table_row_id = %d", tn, rid);
+        log.info("*" + sql + "**");
         st.executeUpdate(sql);
 
         //for creating change:
@@ -341,7 +352,7 @@ public class GeneralRepo {
         List<Document> touchedDocumetsIds = docRepo.findByTwoParams("table_name", tn, "table_row_id", rid + "");
         for (Document doc : touchedDocumetsIds) {
             change = createDeactivateChangeToPersist("t_document", doc.getId());
-            changeRepo.save(change);
+            changeRepo.save(change, false);
         }
 
         st.close();
@@ -415,7 +426,7 @@ public class GeneralRepo {
 
         A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
 
-        Integer userId;
+        Integer userId;// = 2;
         A_Change zmena;
 
         if (user == null) {
@@ -438,4 +449,43 @@ public class GeneralRepo {
 
     }
 
+    public void initAdmin() {
+
+        byte[] encPassword;
+
+        A_User admin = new A_User();
+
+        admin.setFirst_name("admin");
+        admin.setLast_name("adminovic");
+        admin.setLogin("admin");
+        admin.setE_mail("admin@admin.sk");
+        admin.setVisible(Boolean.TRUE);
+
+        encPassword = securityService.encryptPassword("admin");
+        admin.setPassword(encPassword);
+
+        admin = userRepo.save(admin, false);
+
+        //user Role:
+        A_UserRole urole = new A_UserRole();
+        
+
+        urole.setUser_id(admin.getId());
+        urole.setRole_id(2);
+        urole.setSince(new Date());
+        urole.setTill(null);
+        urole.setVisible(Boolean.TRUE);
+        urole.setActual(Boolean.TRUE);
+
+        userRoleRepo.save(urole, false);
+
+        try {
+            this.updatePassword("petak", "1");
+            this.updatePassword("stefan", "2");
+            this.updatePassword("miro", "3");
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+        
+    }
 }

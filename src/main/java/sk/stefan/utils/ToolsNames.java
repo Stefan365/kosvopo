@@ -96,15 +96,16 @@ public abstract class ToolsNames {
      * Ziska mapu nazvov 'parameter : jeho typ' danej triedy ako string.
      *
      * @param cls Class dana tridy.
+     * @param withId
      * @return
      * @throws java.lang.NoSuchFieldException
      */
-    public static Map<String, Class<?>> getTypParametrov(Class<?> cls)
+    public static Map<String, Class<?>> getTypParametrov(Class<?> cls, boolean withId)
             throws NoSuchFieldException, SecurityException {
 
         Map<String, Class<?>> typy = new HashMap<>();
 
-        List<String> zozPar = ToolsNames.getClassProperties(cls, false);
+        List<String> zozPar = ToolsNames.getClassProperties(cls, withId);
 
         for (String p : zozPar) {
             Type typ = cls.getDeclaredField(p).getType();

@@ -82,7 +82,7 @@ public class MyFileDownloader {
         //deaktivacia starej entity:
         if (document.getId() != null){
             this.document.setVisible(Boolean.FALSE);
-            docRepo.save(document);
+            docRepo.save(document, true);
         }
         
         this.document = doc;

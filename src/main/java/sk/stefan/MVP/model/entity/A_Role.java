@@ -73,5 +73,4 @@ public class A_Role implements PresentationName {
         return this.role_name;
     }
 
-
 }

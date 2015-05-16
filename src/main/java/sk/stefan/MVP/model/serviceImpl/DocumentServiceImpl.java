@@ -98,13 +98,15 @@ public class DocumentServiceImpl<E> implements DocumentService<E> {
 
     @Override
     public Boolean deactivate(Document doc) {
-        Boolean b = this.docRepo.deactivate(doc);
+//        dokumenty su koncova entita, tj. deaktivujeme je jednoduchsou cestou (nie zbytocne cez 
+//                deaktivaciu stromu entit)
+        Boolean b = this.docRepo.deactivateOneOnly(doc, true);
         return b;
     }
 
     @Override
     public Document save(Document doc) {
-        return docRepo.save(doc);
+        return docRepo.save(doc, true);
                 
     }
 

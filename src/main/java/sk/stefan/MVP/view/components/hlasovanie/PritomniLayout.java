@@ -196,7 +196,7 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
             voteId = listener.getVoteInputFormLy().getVoteId();
             for (VoteOfRole vor : votesOfRoles) {
                 vor.setVote_id(voteId);
-                vorRepo.save(vor);
+                vorRepo.save(vor, true);
             }
         } else {
             this.saveAllVoteOfRoles();
@@ -238,7 +238,7 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
 
     private void saveAllVoteOfRoles() {
         for (VoteOfRole vor : votesOfRoles) {
-            vor = vorRepo.save(vor);
+            vor = vorRepo.save(vor, true);
         }
     }
 

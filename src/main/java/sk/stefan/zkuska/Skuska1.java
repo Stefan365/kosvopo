@@ -44,6 +44,7 @@ import sk.stefan.MVP.model.entity.Tenure;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteClassification;
 import sk.stefan.MVP.model.entity.VoteOfRole;
+import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.UniTableService;
@@ -83,7 +84,8 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusItemToEntity();
+        sk.skusStromTree();
+//        sk.skusItemToEntity();
 //        sk.skusChangedRepo();
 //        sk.skusNewRepo();
 //        sk.skusField();
@@ -446,13 +448,13 @@ public class Skuska1<T> {
         // 4.
         @SuppressWarnings("unchecked")
         T ent1 = (T) cls.newInstance();
-        T ent2 = uniRepo.save(ent1);
+        T ent2 = uniRepo.save(ent1, false);
         log.info("4. PASSED! *" + ((PresentationName) ent2).getPresentationName() + "*");
 
         log.info("\nXXXXX: 5.SAVE ALREDY IN DB");
         // 5.
         @SuppressWarnings("unchecked")
-        T ent3 = uniRepo.save(ent2);
+        T ent3 = uniRepo.save(ent2, false);
         log.info("5. PASSED *"
                 + ((PresentationName) ent3).getPresentationName());
 
@@ -740,12 +742,12 @@ public class Skuska1<T> {
         try {
             UniRepo<Location> uniRepo = new UniRepo<>(Location.class);
 
-            uniRepo.updateParam("mestka_cast", "KOKOSOVO", "6");
-            uniRepo.updateParam("visible", "false", "6");
-            uniRepo.updateParam("mestka_cast", null, "8");
+            uniRepo.updateParam("mestka_cast", "KOKOSOVO", "6", false);
+            uniRepo.updateParam("visible", "false", "6", false);
+            uniRepo.updateParam("mestka_cast", null, "8", false);
 
             UniRepo<A_User> uniRepo1 = new UniRepo<>(A_User.class);
-            uniRepo.updateParam("password", "KOKOSOVO", "1");
+            uniRepo.updateParam("password", "KOKOSOVO", "1", false);
 
             List<A_User> allUs = uniRepo1.findAll();
             for (A_User u : allUs) {
@@ -974,7 +976,7 @@ public class Skuska1<T> {
         vor.setDecision(VoteAction.REFAIN);
         vor.setVisible(Boolean.TRUE);
 
-        vorRepo.save(vor);
+        vorRepo.save(vor, true);
     }
 
     private void skusShortFromEnum() {
@@ -1002,7 +1004,7 @@ public class Skuska1<T> {
 
             Method entMethod = (VoteOfRole.class).getMethod("setDecision", VoteAction.class);
             entMethod.invoke(vor, en);
-            vorRepo.save(vor);
+            vorRepo.save(vor, false);
 
         } catch (NoSuchMethodException | SecurityException |
                 IllegalArgumentException | InvocationTargetException |
@@ -1150,7 +1152,7 @@ public class Skuska1<T> {
                 log.info("OKRES:" + o.getDistrict_name());
             }
 
-            uniRepo.updateParam("district_name", "ZVOLENA", "7");
+            uniRepo.updateParam("district_name", "ZVOLENA", "7", false);
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
 
@@ -1164,7 +1166,7 @@ public class Skuska1<T> {
 
         A_User u = new A_User("jojo", "kajo", "jojo@kajo.com", "kajo", "kokos");
 //        userv.save(u);
-        usrRepo.save(u);
+        usrRepo.save(u, true);
 
     }
 
@@ -1193,7 +1195,7 @@ public class Skuska1<T> {
         o.setRegion_id(3);
         o.setVisible(Boolean.TRUE);
 
-        okresRepo.save(o);
+        okresRepo.save(o, false);
     }
 
     private void skusFormatter() {
@@ -1220,7 +1222,7 @@ public class Skuska1<T> {
 
         v.setResult_vote(VoteResult.APPROVED);
 
-        v = voteRepo.save(v);
+        v = voteRepo.save(v, true);
 
         log.info("RESULT:" + v.getResult_vote());
 
@@ -1228,8 +1230,9 @@ public class Skuska1<T> {
 
     private void skusAdmin() {
 
-        SecurityService ss = new SecurityServiceImpl();
-        ss.initAdmin();
+        GeneralRepo genRepo = new GeneralRepo();
+        
+        genRepo.initAdmin();
         log.info("Vytvoril som admina!");
     }
 
@@ -1256,7 +1259,7 @@ public class Skuska1<T> {
         Region reg = new Region();
         reg.setRegion_name("KOKOSOSLOVENKY");
 
-        krajRepo.save(reg);
+        krajRepo.save(reg, false);
 
     }
 
@@ -1266,7 +1269,7 @@ public class Skuska1<T> {
         Region reg = krajRepo.findOne(6);
         if (reg != null) {
             reg.setRegion_name("KOKOSOSLOVENKY_VERES");
-            krajRepo.save(reg);
+            krajRepo.save(reg, true);
             log.info("DONE");
 
         } else {
@@ -1286,24 +1289,37 @@ public class Skuska1<T> {
         UniTableService<PublicPerson> uniTabSrv = new UniTableServiceImpl<>(clsE);
         Map<String, Class<?>> mapPar;
 
-        
         try {
             mapPar = ToolsDao.getTypParametrov(clsE);
             SQLContainer sqlCont = DoDBconn.createSqlContainera("t_public_person");
 //            UniRepo<PublicPerson> ppRepo = new UniRepo<>(clsE);
             item = sqlCont.getItem(new RowId(new Object[]{ppId}));
             pp = uniTabSrv.getObjectFromItem(item, mapPar);
-            
+
             log.info("pp " + pp.getId());
             log.info("pp " + pp.getFirst_name());
             log.info("pp " + pp.getLast_name());
             log.info("pp " + pp.getDate_of_birth());
-            
-            
-            
+
         } catch (SQLException | NoSuchFieldException | SecurityException ex) {
             log.error(ex.getMessage(), ex);
         }
+    }
+
+    private void skusStromTree() {
+        
+        GeneralRepo genRepo = new GeneralRepo();
+
+        try {
+            genRepo.deactivateWithSlavesTree("a_user", 2);
+            genRepo.doCommit();
+            log.info("DONE");
+//        userRepo.deactivateOneOnly(user);
+//        toto sa musi deaktivovat stromovo.
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+
     }
 
 }

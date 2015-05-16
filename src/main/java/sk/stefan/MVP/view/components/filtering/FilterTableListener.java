@@ -80,6 +80,9 @@ public class FilterTableListener<E> implements Property.ValueChangeListener {
                 }
             } else {
                 combo.setEnabled(false);
+                log.debug("CONT IS NULL: " + (sqlCont == null));
+                log.debug("listenr is NULL: " + (listenerFt == null));
+                
                 this.sqlCont.removeContainerFilter(listenerFt);
                 removeFiltersFromTouched();
             }

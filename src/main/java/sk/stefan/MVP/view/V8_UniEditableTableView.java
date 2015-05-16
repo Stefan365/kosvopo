@@ -117,6 +117,16 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         this.setMargin(true);
         this.setSpacing(true);
         
+        tn = ToolsDao.getTableName(clsq);
+        //dalsie komponenty:
+        basicFilter = new Compare.Equal("visible", Boolean.TRUE);
+        
+        try {
+            sqlContainer = DoDBconn.createSqlContainera(tn);
+            obnovFilter();
+        } catch (SecurityException | SQLException e) {
+            log.error(e.getMessage());
+        }
 
 //        servisy:
         this.securityService = new SecurityServiceImpl();
@@ -126,10 +136,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         //je to komponenta len pre admina?
         this.isForAdminOnly = isAdm;
 
-        //dalsie komponenty:
-        basicFilter = new Compare.Equal("visible", Boolean.TRUE);
-
-        tn = ToolsDao.getTableName(clsq);
 
         this.initTableLists(uneditCol);
 
@@ -331,7 +337,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         item.getItemProperty("last_name").setValue("proto_user");
         item.getItemProperty("login").setValue("proto_user");
         item.getItemProperty("e_mail").setValue("proto_user");
-        item.getItemProperty("password").setValue(securityService.encryptPassword("proto_user"));
+        item.getItemProperty("password").setValue(securityService.encryptPassword("proto"));
         
     }
     
@@ -360,14 +366,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
      * Inicializuje tabulku na danu entitu.
      */
     private void initUniTable() {
-
-        try {
-
-            sqlContainer = DoDBconn.createSqlContainera(tn);
-            obnovFilter();
-        } catch (SecurityException | SQLException e) {
-            log.error(e.getMessage());
-        }
 
         uniTable.setContainerDataSource(sqlContainer);
 
@@ -470,6 +468,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                 try {
                     Integer id = (Integer) item.getItemProperty("id").getValue();
                     uniTableService.deactivateById(id);
+                    
 
                     itemId= null;
                     item = null;

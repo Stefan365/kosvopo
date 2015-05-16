@@ -13,7 +13,9 @@ import com.vaadin.ui.VerticalLayout;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.repo.GeneralRepo;
+import sk.stefan.MVP.model.service.PasswordService;
 import sk.stefan.MVP.model.service.SecurityService;
+import sk.stefan.MVP.model.serviceImpl.PasswordServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
@@ -33,24 +35,28 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     private PasswordField newPwd2Tf;
 
     private final Item item;
-    private final GeneralRepo genRepo;
+
+    private final PasswordService passwordService;
+//    private final GeneralRepo genRepo;
+
     private final OkCancelListener okCancelListener;
     private OkCancelListener forWindowListener;
-    
+
     private final ObnovFilterListener obnovFilterListener;
     private final RefreshViewListener refreshViewListener;
-    
+
     private final SecurityService securityService;
 
     public PasswordForm(Item it, Component cp) {
-        
-        this.okCancelListener = (OkCancelListener)cp;
-        this.obnovFilterListener = (ObnovFilterListener)cp;
-        this.refreshViewListener = (RefreshViewListener)cp;
-                
+
+        this.okCancelListener = (OkCancelListener) cp;
+        this.obnovFilterListener = (ObnovFilterListener) cp;
+        this.refreshViewListener = (RefreshViewListener) cp;
+
         this.item = it;
         this.securityService = new SecurityServiceImpl();
-        this.genRepo = new GeneralRepo();
+        this.passwordService = new PasswordServiceImpl();
+//        this.genRepo = new GeneralRepo();
         this.initLayout();
     }
 
@@ -66,34 +72,36 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
 
     }
 
-    private void verifyPassword() {
+    private boolean verifyPassword() {
         //1. podmienka: stare heslo je spravne.
 //        item.getItemProperty("id").getValue()
         Integer id = (Integer) item.getItemProperty("id").getValue();
-        String rawPwd = oldPwdTf.getValue();
-
+        String rawOldPwd = oldPwdTf.getValue();
+        boolean isOldGood;
+        //pokial je novy,  je to ok.
         try {
-            byte[] pwd = genRepo.getPassword("" + id);
-            boolean isGood = securityService.checkPassword(rawPwd, pwd);
-            isGood = true;
-            log.info("ISGOOD: " + (isGood));
-            if (isGood && newPwd1Tf.getValue().equals(newPwd2Tf.getValue())) {
-                addToDB(newPwd1Tf.getValue(), "" + id);
-                Notification.show("heslo úspešne zmenené!");
+            if (id == null) {
+                isOldGood = true;
             } else {
-                Notification.show("chod do p...!");
+                byte[] pwd = passwordService.getPassword(id);
+                isOldGood = securityService.checkPassword(rawOldPwd, pwd);
+                log.info("IS OLD GOOD: " + (isOldGood));
             }
-            
+            return isOldGood && newPwd1Tf.getValue().equals(newPwd2Tf.getValue());//                addToDB(newPwd1Tf.getValue(), "" + id);
+//                Notification.show("heslo úspešne zmenené!");
+//                return true;
+//                Notification.show("Zmena hesla sa nepodatila !");
             //return Boolean.TRUE;
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
-            Notification.show("Zmena hesla sa nepodarila");
-            //return Boolean.FALSE;
+            Notification.show("Overovanie hesla sa nepodarilo");
+            return false;
         }
     }
 
     private void addToDB(String newPwd, String id) throws SQLException {
-        genRepo.updatePassword(newPwd, id);
+
+        this.passwordService.updatePassword(newPwd, id);
     }
 
     /**
@@ -140,12 +148,16 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
 
     @Override
     public void doOkAction() {
-        this.verifyPassword();
+        boolean isPassValid = this.verifyPassword();
+        
+        if (isPassValid){
+            kokos
+        }
         this.okCancelListener.doOkAction();
 //        this.forWindowListener.doOkAction();
         this.obnovFilterListener.obnovFilter();
         this.refreshViewListener.refreshView();
-        
+
     }
 
     @Override
