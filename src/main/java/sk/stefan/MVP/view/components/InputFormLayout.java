@@ -14,6 +14,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -36,9 +37,12 @@ import java.util.TimeZone;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.A_UserRole;
+import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.UniTableService;
+import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.converters.DateConverter;
+import sk.stefan.converters.PasswordConverter;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
@@ -63,6 +67,8 @@ public class InputFormLayout<E> extends FormLayout {
 
     private final Class<E> clsE;
 
+    private final SecurityService securityService;
+
     private Map<String, Class<?>> mapPar;//mapa: nazov paramtru vs. jeho trieda.
     private final UniTableService<E> uniTableService;// = new UniTableServiceImpl<>(clsE);
     /**
@@ -74,8 +80,8 @@ public class InputFormLayout<E> extends FormLayout {
     private final SQLContainer sqlContainer;
     private Item item; // * Vybraná položka ze SQLContaineru (řádek z tabulky)
     private Object itemId;
-    private String tn;
-    
+    private final String tn;
+
     /**
      * Slovník, ve kterém je klíčem název parametru a hodnotou pro něj vhodná
      * interaktivní komponenta. (např. completion_date/DateField)
@@ -87,7 +93,7 @@ public class InputFormLayout<E> extends FormLayout {
      */
     private final FieldGroup fg;
     private final Component cp;
-    private PasswordForm passVl;
+    private PasswordForm passVl = null;
     private FormLayout fieldsFL; //     * Layout, kde budou zobrazeny interaktivní komponenty všechny kromě tlačítek OK-CANCEL.
     private HorizontalLayout buttonsHL; //* Layout pro uložení tlačítek OK-CANCEL.
     private Button saveBt, editBt;
@@ -97,7 +103,6 @@ public class InputFormLayout<E> extends FormLayout {
      * Tlacitka, ktore nemaju ist do formulara.
      */
     private final List<String> nonEditFn;
-
 
     //0.
     /**
@@ -115,6 +120,8 @@ public class InputFormLayout<E> extends FormLayout {
             Component cp, List<String> nEditFn) {
 
         uniTableService = new UniTableServiceImpl<>(cls);
+        this.securityService = new SecurityServiceImpl();
+
         this.clsE = cls;
         try {
             mapPar = ToolsNames.getTypParametrov(clsE, true);
@@ -146,11 +153,6 @@ public class InputFormLayout<E> extends FormLayout {
         this.okCancelListener = (OkCancelListener) cp;
         this.obnovFilterListener = (ObnovFilterListener) cp;
         this.item = item;
-//        if (item != null) {
-//            isNew = (item.getItemProperty("id").getValue() == null);
-//        } else {
-//            isNew = false;
-//        }
 
         fg.setItemDataSource(this.item);
 
@@ -195,6 +197,7 @@ public class InputFormLayout<E> extends FormLayout {
                         Class<?> cls = ToolsNames.getClassFromName(pn);
 
                         cb = new InputClassComboBox<>(fg, pn, cls);
+                        cb.setWidth("30%");
 
                         fieldMap.put(pn, cb);
                     } else {
@@ -210,6 +213,7 @@ public class InputFormLayout<E> extends FormLayout {
                             break;
                         case "title":
                             TextField field = bindTextField(pn);
+                            field.setWidth("30%");
                             field.setRequired(true);
                             fieldMap.put(pn, field);
                             break;
@@ -249,7 +253,10 @@ public class InputFormLayout<E> extends FormLayout {
 
                 case "byte[]":
                 case "java.lang.Byte[]":
+
                     if ("password".equals(pn)) {
+
+//                        if (uid != null) {
                         Button but = new Button("zmeň heslo");
                         but.addClickListener(new Button.ClickListener() {
                             private static final long serialVersionUID = 1L;
@@ -257,9 +264,15 @@ public class InputFormLayout<E> extends FormLayout {
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
                                 openPasswordWindow();
+//                                    ss
                             }
                         });
                         fieldMap.put(pn, but);
+//                        } 
+//                        else {
+//                            fieldMap.put(pn, this.bindPasswordField(pn));
+//                        }
+
                     }
                     break;
 
@@ -282,6 +295,7 @@ public class InputFormLayout<E> extends FormLayout {
                         Map<String, Integer> map = ToolsNames.makeEnumMap(names, ordinals);
 
                         InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
+                        cb.setWidth("30%");
 
                         if (item != null) {
                             Property<?> prop = item.getItemProperty(pn);
@@ -362,6 +376,7 @@ public class InputFormLayout<E> extends FormLayout {
      */
     public TextField bindTextField(String fn) {
         TextField field = new TextField(fn);
+        field.setWidth("30%");
         fg.bind(field, fn);
         return field;
     }
@@ -375,6 +390,7 @@ public class InputFormLayout<E> extends FormLayout {
      */
     public TextArea bindTextArea(String fn) {
         TextArea field = new TextArea(fn);
+        field.setWidth("30%");
         fg.bind(field, fn);
         return field;
     }
@@ -383,7 +399,7 @@ public class InputFormLayout<E> extends FormLayout {
     /**
      * Vytvori checkBox a zviaze ho s FG.
      *
-     * @param fn
+     * @param fn fieldname
      * @return
      */
     public CheckBox bindCheckBox(String fn) {
@@ -413,8 +429,22 @@ public class InputFormLayout<E> extends FormLayout {
         fg.bind(field, fn);
         return field;
     }
+//    // 7.
+//    /**
+//     * Vytvori pole pre password a zviaze ho s FG.
+//     *
+//     * @param fn
+//     * @return
+//     */
+//    public PasswordDoubleFieldComponent bindPasswordField(String fn) {
+//
+//        PasswordDoubleFieldComponent pwdDoubleField = new PasswordDoubleFieldComponent();
+//        
+//        fg.bind(pwdDoubleField.getPw1(), fn);
+//        return pwdDoubleField;
+//    }
 
-    // 4.
+    // 8.
     /**
      * Vytvori pole pre sql.Date a zviaze ho s FG.
      *
@@ -455,9 +485,9 @@ public class InputFormLayout<E> extends FormLayout {
         return field;
     }
 
-    // 7.
+    // 9.
     /**
-     * Vytvoří, inicializuje a přidá tlačítka OK-CANCEL.
+     * Vytvorí, inicializuje a pridá tlačítka OK-CANCEL.
      *
      */
     private void addButtons() {
@@ -477,17 +507,23 @@ public class InputFormLayout<E> extends FormLayout {
             @Override
             @SuppressWarnings("unchecked")
             public void buttonClick(ClickEvent event) {
-                
+
                 // ulozenie zmien do DB:
                 try {
+                    
 //                    sqlContainer.commit(); nic sa commitovat nebude, 
 //                    vsetko pojde cez jdbc :
                     E ent = uniTableService.getObjectFromItem(item, mapPar);
-                    ent = uniTableService.save(ent);
-                    
-                    if ("a_user".equals(tn)){
-                        
-                        A_User usr = (A_User)ent;
+                    Integer entId = (Integer) item.getItemProperty("id").getValue();
+                    if (passVl != null && passVl.getNewPassword() != null) {
+                        ((A_User) ent).setPassword(securityService.encryptPassword(passVl.getNewPassword()));
+                    }
+                    ent = uniTableService.save(ent, true);
+//                    ddd
+
+                    if ("a_user".equals(tn) && entId == null) {
+
+                        A_User usr = (A_User) ent;
                         A_UserRole urole = new A_UserRole();
                         urole.setRole_id(1);
                         urole.setSince(new java.util.Date());
@@ -495,9 +531,9 @@ public class InputFormLayout<E> extends FormLayout {
                         urole.setActual(Boolean.TRUE);
                         urole.setVisible(Boolean.TRUE);
                         uniTableService.saveRole(urole);
-                        
+
                     }
-                    
+
 //                    toto bolo slabe miesto celeho systemu
 //                    tento sqlcontainer po ulozeni neumoznuje 
 //                    vystopovat ktory item bol zmeneny, pretoze zavola metodu clear
@@ -506,7 +542,6 @@ public class InputFormLayout<E> extends FormLayout {
 //                    , ktore priradila databaza.ked vtacka lapaju pekne mu spievaju
 //                    Kedze nastastie tento sqlcontainer pracuje len s 1 polozkou
 //                    lastItemId() fungovat bude.
-
                     fieldsFL.setEnabled(false);
                     getFg().setEnabled(false);
                     editBt.setEnabled(true);
@@ -560,7 +595,9 @@ public class InputFormLayout<E> extends FormLayout {
     private void openPasswordWindow() {
 
         if (item != null) {
-            this.passVl = new PasswordForm(item, cp);
+            Integer uid = (Integer) item.getItemProperty("id").getValue();
+
+            this.passVl = new PasswordForm(item, cp, uid);
             final OkCancelWindow window = new OkCancelWindow("Zmena hesla",
                     "Zadajte prosím nové heslo", this.passVl);
             UI.getCurrent().addWindow(window);
@@ -580,14 +617,27 @@ public class InputFormLayout<E> extends FormLayout {
     }
 
     public void setItem(Object itId, Item it) {
-//        if (it != null) {
-//            isNew = (it.getItemProperty("id").getValue() == null);
-//        } else {
-//            isNew = false;
-//        }
-
+        
         this.itemId = itId;
         this.item = it;
+        
+        if (tn.equals("a_user") && item!=null ) {
+            Integer uid = (Integer) item.getItemProperty("id").getValue();
+
+            for (String pn : fieldMap.keySet()) {
+                if (fieldMap.get(pn) instanceof Button) {
+                    String caption;
+                    if (uid == null) {
+                        caption = "vytvor heslo";
+                    } else {
+                        caption = "zmeň heslo";
+                    }
+                    ((Button) fieldMap.get(pn)).setCaption(caption);
+                    break;
+                }
+            }
+        }
+        
         if (item != null) {
             fg.setItemDataSource(this.item);
         }
@@ -602,31 +652,7 @@ public class InputFormLayout<E> extends FormLayout {
         //this.refreshComboboxes();
     }
 
-//    /**
-//     * Neuniverzalna metoda len pre potreby hlasovania. 
-//     * zuniverzalnit v buducnosti.
-//     * 
-//     * @param vot
-//     */
-//    public void updateVote(Vote vot){
-//        
-//        ToolsDao.updateVoteItem(item, vot);
-//        
-//    }
-//    
-//    /**
-//     * Neuniverzalna metoda na filtrovanie subject_id po zadani publicBody objektu.
-//     * Potom to zuniverzalnit.
-//     * Ta neuniverzalita vyplyva z poziadavku vyplnat Vote a Role of Vote naraz.
-//     * keby sa to nemuselo davat dohromady, takto by som to neprznil.
-//     */
-//    public void filterSubject(PublicBody pubBody){
-//        
-//        
-//    }
-    /**
-     * @return the fieldMap
-     */
+//    ************* GETTERS AND SETTERS *****************
     public Map<String, Component> getFieldMap() {
         return Collections.unmodifiableMap(fieldMap);
     }
@@ -639,9 +665,6 @@ public class InputFormLayout<E> extends FormLayout {
         return itemId;
     }
 
-    /**
-     * @return the fg
-     */
     public FieldGroup getFg() {
         return fg;
     }

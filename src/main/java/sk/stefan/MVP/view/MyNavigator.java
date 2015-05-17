@@ -73,55 +73,55 @@ public class MyNavigator extends Navigator {
         //dobrovolnicke VIew
         this.addView(ToolsNames.decapit(District.TN),
                 new V8_UniEditableTableView<>(District.class, 
-                        NonEditableFields.DISTRICT.getNonEditableParams(), false));
+                        NonEditableFields.T_DISTRICT.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(Region.TN),
                 new V8_UniEditableTableView<>(Region.class, 
-                        NonEditableFields.REGION.getNonEditableParams(), false));
+                        NonEditableFields.T_REGION.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(Location.TN),
                 new V8_UniEditableTableView<>(Location.class, 
-                        NonEditableFields.LOCATION.getNonEditableParams(), false));
+                        NonEditableFields.T_LOCATION.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(PersonClassification.TN),
                 new V8_UniEditableTableView<>(PersonClassification.class, 
-                        NonEditableFields.PERSON_CLASS.getNonEditableParams(), false));
+                        NonEditableFields.T_PERSON_CLASSIFICATION.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(PublicBody.TN),
                 new V8_UniEditableTableView<>(PublicBody.class, 
-                        NonEditableFields.PUBLIC_BODY.getNonEditableParams(), false));
+                        NonEditableFields.T_PUBLIC_BODY.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(PublicPerson.TN),
                 new V8_UniEditableTableView<>(PublicPerson.class, 
-                        NonEditableFields.PUBLIC_PERSON.getNonEditableParams(), false));
+                        NonEditableFields.T_PUBLIC_PERSON.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(PublicRole.TN),
                 new V8_UniEditableTableView<>(PublicRole.class, 
-                        NonEditableFields.PUBLIC_ROLE.getNonEditableParams(), false));
+                        NonEditableFields.T_PUBLIC_ROLE.getNonEditableParams(), false));
 
         this.addView(ToolsNames.decapit(Subject.TN),
                 new V8_UniEditableTableView<>(Subject.class, 
-                        NonEditableFields.SUBJECT.getNonEditableParams(), false));
+                        NonEditableFields.T_SUBJECT.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(Tenure.TN),
                 new V8_UniEditableTableView<>(Tenure.class, 
-                        NonEditableFields.TENURE.getNonEditableParams(), false));
+                        NonEditableFields.T_TENURE.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(Theme.TN),
                 new V8_UniEditableTableView<>(Theme.class, 
-                        NonEditableFields.THEME.getNonEditableParams(), false));
+                        NonEditableFields.T_THEME.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(Vote.getTN()),
                 new V8_UniEditableTableView<>(Vote.class, 
-                        NonEditableFields.VOTE.getNonEditableParams(), false));
+                        NonEditableFields.T_VOTE.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(VoteClassification.TN),
                 new V8_UniEditableTableView<>(VoteClassification.class, 
-                        NonEditableFields.VOTE_CLASS.getNonEditableParams(), false));
+                        NonEditableFields.T_VOTE_CLASSIFICATION.getNonEditableParams(), false));
         
         this.addView(ToolsNames.decapit(VoteOfRole.TN),
                 new V8_UniEditableTableView<>(VoteOfRole.class, 
-                        NonEditableFields.VOTE_OF_ROLE.getNonEditableParams(), false));
+                        NonEditableFields.T_VOTE_OF_ROLE.getNonEditableParams(), false));
     }
     
 }

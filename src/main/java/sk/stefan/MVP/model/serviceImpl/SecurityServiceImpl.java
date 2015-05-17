@@ -114,31 +114,17 @@ public class SecurityServiceImpl implements SecurityService {
             //String saltedPassword = password.toUpperCase() + "KAROLKO";
             String saltedPassword = password;//.toUpperCase() + "KAROLKO";
             md.update(saltedPassword.getBytes("UTF-8"));
-//            md.update(saltedPassword.getBytes());
 
-            StringBuilder sb = new StringBuilder();
-            StringBuilder sba = new StringBuilder();
-
-            for (byte b : bytes) {
-                sb.append(b);
-                sba.append(Integer.toHexString(b));
-
-            }
-            log.info("3. PASS FORM LINE:" + sb.toString());
-            log.info("4. PASS FORM LINE:" + sba.toString());
 
             bytesa = md.digest();
 
             StringBuilder sbc = new StringBuilder();
-            StringBuilder sbd = new StringBuilder();
 
             for (byte b : bytesa) {
                 sbc.append(b);
-                sbd.append(Integer.toHexString(b));
-
             }
             log.info("5. PASS FORM LINE:" + sbc.toString());
-            log.info("6. PASS FORM LINE:" + sbd.toString());
+//            log.info("6. PASS FORM LINE:" + sbd.toString());
 
             return bytesa;
 

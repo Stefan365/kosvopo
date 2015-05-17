@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sk.stefan.DBconnection.DoDBconn;
@@ -51,6 +52,7 @@ import sk.stefan.MVP.model.service.UniTableService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
+import sk.stefan.enums.NonEditableFields;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.PresentationName;
@@ -84,7 +86,10 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        sk.skusStromTree();
+        
+        sk.skusEnum();
+//        sk.skusSaveVsPassupdate();
+//        sk.skusStromTree();
 //        sk.skusItemToEntity();
 //        sk.skusChangedRepo();
 //        sk.skusNewRepo();
@@ -1231,7 +1236,7 @@ public class Skuska1<T> {
     private void skusAdmin() {
 
         GeneralRepo genRepo = new GeneralRepo();
-        
+
         genRepo.initAdmin();
         log.info("Vytvoril som admina!");
     }
@@ -1307,7 +1312,7 @@ public class Skuska1<T> {
     }
 
     private void skusStromTree() {
-        
+
         GeneralRepo genRepo = new GeneralRepo();
 
         try {
@@ -1320,6 +1325,74 @@ public class Skuska1<T> {
             log.error(ex.getMessage(), ex);
         }
 
+    }
+
+    private void skusSaveVsPassupdate() {
+
+        UniRepo<A_User> userRepo = new UniRepo<>(A_User.class);
+        SecurityService secServ = new SecurityServiceImpl();
+        GeneralRepo genRepo = new GeneralRepo();
+
+        A_User usr1 = userRepo.findOne(1);
+
+        String pwd = "KOKO";
+        byte[] pwdb = secServ.encryptPassword(pwd);
+
+//        usr1.setPassword(pwdb);
+//        userRepo.save(usr1, false);
+//
+//        try {
+//            genRepo.updatePassword(pwd, "2");
+//        } catch (SQLException ex) {
+//            log.error(ex.getMessage(), ex);
+//        }
+        this.skusZobraz(pwdb);
+
+    }
+
+    private void skusZobraz(byte[] pwdb) {
+
+        UniRepo<A_User> userRepo = new UniRepo<>(A_User.class);
+        SecurityService secServ = new SecurityServiceImpl();
+        GeneralRepo genRepo = new GeneralRepo();
+
+        A_User usr2 = userRepo.findOne(2);
+        A_User usr3 = userRepo.findOne(1);
+
+        StringBuilder sb0 = new StringBuilder();
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+
+        for (byte db : pwdb) {
+            sb0.append(db);
+        }
+        for (byte ab : usr3.getPassword()) {
+            sb1.append(ab);
+        }
+        for (byte cb : usr2.getPassword()) {
+            sb2.append(cb);
+        }
+
+        log.info("       ENCRYPT:*" + sb0.toString() + "*");
+        log.info("      VIA SAVE:*" + sb1.toString() + "*");
+        log.info("VIA UPDATE PWD:*" + sb2.toString() + "*");
+
+    }
+
+    private void skusEnum() {
+        String tn = "T_PUBLIC_PERSON";
+        NonEditableFields nf = NonEditableFields.valueOf(tn.toLowerCase());
+        log.info("N F: " + nf.name());
+        
+        
+        String[] nonEdCols = (NonEditableFields.valueOf(tn.toLowerCase())).getNonEditableParams();
+        
+        log.info("NON EDITABL COLS IS NULL:" + (nonEdCols == null));
+        if ((nonEdCols != null)) {
+            log.info("NON ED SIZE:" + nonEdCols.length);
+            log.info("COL NAME: " + nonEdCols[0]);
+            
+        }
     }
 
 }

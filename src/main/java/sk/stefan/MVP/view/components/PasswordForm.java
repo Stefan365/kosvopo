@@ -12,7 +12,6 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.service.PasswordService;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.PasswordServiceImpl;
@@ -36,18 +35,27 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
 
     private final Item item;
 
+    private final Integer userId;
+
     private final PasswordService passwordService;
-//    private final GeneralRepo genRepo;
+    private final SecurityService securityService;
 
     private final OkCancelListener okCancelListener;
     private OkCancelListener forWindowListener;
-
     private final ObnovFilterListener obnovFilterListener;
     private final RefreshViewListener refreshViewListener;
 
-    private final SecurityService securityService;
+    //toto je len pre ucely docasneho ulozenia hesla, pri zadani noveho usera.
+    private String newPassword = null;
 
-    public PasswordForm(Item it, Component cp) {
+    //0. konstruktor
+    /**
+     *
+     * @param it
+     * @param cp
+     * @param uid
+     */
+    public PasswordForm(Item it, Component cp, Integer uid) {
 
         this.okCancelListener = (OkCancelListener) cp;
         this.obnovFilterListener = (ObnovFilterListener) cp;
@@ -57,33 +65,36 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
         this.securityService = new SecurityServiceImpl();
         this.passwordService = new PasswordServiceImpl();
 //        this.genRepo = new GeneralRepo();
+        this.userId = uid;
         this.initLayout();
     }
 
     private void initLayout() {
 
-        oldPwdTf = new PasswordField("staré heslo");
+        if (userId != null) {
+            oldPwdTf = new PasswordField("staré heslo");
+            this.addComponent(oldPwdTf);
+        }
         newPwd1Tf = new PasswordField("nové heslo");
         newPwd2Tf = new PasswordField("potvrdenie nového hesla");
-
-        this.addComponent(oldPwdTf);
         this.addComponent(newPwd1Tf);
         this.addComponent(newPwd2Tf);
 
     }
 
-    private boolean verifyPassword() {
+    /**
+     *
+     */
+    private boolean verifyPassword(String rawOldPwd, Integer uid) {
         //1. podmienka: stare heslo je spravne.
 //        item.getItemProperty("id").getValue()
-        Integer id = (Integer) item.getItemProperty("id").getValue();
-        String rawOldPwd = oldPwdTf.getValue();
         boolean isOldGood;
         //pokial je novy,  je to ok.
         try {
-            if (id == null) {
+            if (uid == null) {
                 isOldGood = true;
             } else {
-                byte[] pwd = passwordService.getPassword(id);
+                byte[] pwd = passwordService.getPassword(uid);
                 isOldGood = securityService.checkPassword(rawOldPwd, pwd);
                 log.info("IS OLD GOOD: " + (isOldGood));
             }
@@ -99,60 +110,32 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
         }
     }
 
-    private void addToDB(String newPwd, String id) throws SQLException {
-
-        this.passwordService.updatePassword(newPwd, id);
-    }
-
-    /**
-     * @return the oldPwdTf
-     */
-    public PasswordField getOldPwdTf() {
-        return oldPwdTf;
-    }
-
-    /**
-     * @param oldPwdTf the oldPwdTf to set
-     */
-    public void setOldPwdTf(PasswordField oldPwdTf) {
-        this.oldPwdTf = oldPwdTf;
-    }
-
-    /**
-     * @return the newPwd1Tf
-     */
-    public PasswordField getNewPwd1Tf() {
-        return newPwd1Tf;
-    }
-
-    /**
-     * @param newPwd1Tf the newPwd1Tf to set
-     */
-    public void setNewPwd1Tf(PasswordField newPwd1Tf) {
-        this.newPwd1Tf = newPwd1Tf;
-    }
-
-    /**
-     * @return the newPwd2Tf
-     */
-    public PasswordField getNewPwd2Tf() {
-        return newPwd2Tf;
-    }
-
-    /**
-     * @param newPwd2Tf the newPwd2Tf to set
-     */
-    public void setNewPwd2Tf(PasswordField newPwd2Tf) {
-        this.newPwd2Tf = newPwd2Tf;
-    }
-
     @Override
     public void doOkAction() {
-        boolean isPassValid = this.verifyPassword();
-        
-        if (isPassValid){
-            kokos
+
+        String rawNewPwd;
+        String rawOldPwd = "";
+        boolean isOldPassValid;
+        rawNewPwd = newPwd1Tf.getValue();
+
+        if (userId != null) {
+            rawOldPwd = oldPwdTf.getValue();
+            isOldPassValid = this.verifyPassword(rawOldPwd, userId);
+//           this.passwordService.updatePassword(rawNewPwd, userId + "");
+
+        } else {
+            isOldPassValid = this.verifyPassword(rawOldPwd, userId);
         }
+        if (isOldPassValid) {
+            this.newPassword = rawNewPwd;
+            Notification.show("Heslo pripravené!");
+
+        } else {
+            
+            Notification.show("Heslo sa nepodarilo pripraviť!");
+
+        }
+
         this.okCancelListener.doOkAction();
 //        this.forWindowListener.doOkAction();
         this.obnovFilterListener.obnovFilter();
@@ -167,8 +150,52 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
         //do nothing
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    //***************    GETTERS AND SETTERS *********************
+    
+    
     void setWindowOkCancelListener(OkCancelListener aThis) {
         this.forWindowListener = aThis;
+    }
+
+    
+    public PasswordField getOldPwdTf() {
+        return oldPwdTf;
+    }
+
+    public void setOldPwdTf(PasswordField oldPwdTf) {
+        this.oldPwdTf = oldPwdTf;
+    }
+
+    public PasswordField getNewPwd1Tf() {
+        return newPwd1Tf;
+    }
+
+    public void setNewPwd1Tf(PasswordField newPwd1Tf) {
+        this.newPwd1Tf = newPwd1Tf;
+    }
+
+    public PasswordField getNewPwd2Tf() {
+        return newPwd2Tf;
+    }
+
+    public void setNewPwd2Tf(PasswordField newPwd2Tf) {
+        this.newPwd2Tf = newPwd2Tf;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
 }

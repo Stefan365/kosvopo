@@ -25,7 +25,7 @@ public interface UniTableService<E> {
     
     public E getObjectFromItem(Item item, Map<String, Class<?>> mapPar);    
     
-    public E save(E ent);
+    public E save(E ent, boolean noteChange);
 
     /**
      *

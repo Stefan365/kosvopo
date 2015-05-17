@@ -71,6 +71,10 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
             }
             
             String[] nonEdCols = NonEditableFields.valueOf(tn).getNonEditableParams();
+            log.info("NON EDITABL COLS IS NULL:" + (nonEdCols==null));
+            if((nonEdCols!=null)){
+                log.info("NON ED SIZE:" + nonEdCols.length);
+            }
            
             inputFl = new InputFormLayout<>(clsE, item, sqlCont, null, Arrays.asList(nonEdCols));
             tdlg = new UniDlg("Nový " + title, inputFl);
@@ -81,7 +85,7 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
             //sqlCont = null;
         } catch (IllegalAccessException | SQLException | NoSuchFieldException | SecurityException |
                 NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
-            log.error(ex.getMessage());
+            log.error(ex.getMessage(),ex);
             Notification.show("Nastala chyba!");
         }
     }

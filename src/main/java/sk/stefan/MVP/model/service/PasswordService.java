@@ -14,5 +14,7 @@ import java.sql.SQLException;
 public interface PasswordService {
 
     public byte[] getPassword(Integer id) throws SQLException;
+
+    public void updatePassword(String newPwd, String uid) throws SQLException;
     
 }

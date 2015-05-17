@@ -68,17 +68,27 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
         Object val;
         Method entMethod;
         String entSetterName;
-        
+         Class<?> clsPom;
         try {
             E ent = clsE.newInstance();
             
             for (String param : mapPar.keySet()){
 
                 //item:
-                val = item.getItemProperty(param).getValue();                
-                log.info("PARAM: *" + param + "*, value: " + val);                
+
+                val = item.getItemProperty(param).getValue();     
+                log.info("1. PARAM: *" + param + "*, value: " + val);                
+ 
+                if(val!=null){
+                    clsPom = val.getClass();
+                    log.info("2. Classpom: *" + clsPom.getCanonicalName() + "*");                                   
+                }
+                
                 //entita:
                 entSetterName = ToolsDao.getG_SetterName(param, "set");
+                log.info("3. SETTER NAME: *" + entSetterName +"*");              
+                log.info("4. PARAM CLASS NAME: *" + mapPar.get(param).getCanonicalName() +"*");
+                
                 entMethod = clsE.getMethod(entSetterName, mapPar.get(param));
                 entMethod.invoke(ent, val);
                 
@@ -96,8 +106,8 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
     }
 
     @Override
-    public E save(E ent) {
-        return uniRepo.save(ent, true);
+    public E save(E ent, boolean noteChange) {
+        return uniRepo.save(ent, noteChange);
     }
 
     @Override

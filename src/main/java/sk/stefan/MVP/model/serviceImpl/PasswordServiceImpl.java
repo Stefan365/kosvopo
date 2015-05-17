@@ -31,4 +31,11 @@ public class PasswordServiceImpl implements PasswordService {
 
     }
 
+    @Override
+    public void updatePassword(String newPwd, String uid) throws SQLException  {
+        
+        genRepo.updatePassword(newPwd, uid);
+        
+    }
+
 }

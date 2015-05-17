@@ -11,19 +11,19 @@ package sk.stefan.enums;
  */
 public enum NonEditableFields {
 
-    REGION("t_region"),
-    LOCATION("t_location"),
-    DISTRICT("t_district"),
-    PERSON_CLASS("t_person_classification"),
-    PUBLIC_BODY("t_public_body"),
-    PUBLIC_PERSON("t_public_person"),
-    PUBLIC_ROLE("t_public_role"),
-    SUBJECT("t_subject"),
-    TENURE("t_tenure"),
-    THEME("t_theme"),
-    VOTE("t_vote"),
-    VOTE_CLASS("t_vote_classification"),
-    VOTE_OF_ROLE("t_vote_of_role"),
+    T_REGION("t_region"),
+    T_LOCATION("t_location"),
+    T_DISTRICT("t_district"),
+    T_PERSON_CLASSIFICATION("t_person_classification"),
+    T_PUBLIC_BODY("t_public_body"),
+    T_PUBLIC_PERSON("t_public_person"),
+    T_PUBLIC_ROLE("t_public_role"),
+    T_SUBJECT("t_subject"),
+    T_TENURE("t_tenure"),
+    T_THEME("t_theme"),
+    T_VOTE("t_vote"),
+    T_VOTE_CLASSIFICATION("t_vote_classification"),
+    T_VOTE_OF_ROLE("t_vote_of_role"),
     A_ROLE("a_role"),
     A_USER("a_user"),
     A_USER_ROLE("a_user_role");
@@ -36,48 +36,48 @@ public enum NonEditableFields {
 
     public String[] getNonEditableParams() {
         switch (this) {
-            case REGION:
+            case T_REGION:
                 
                 return new String[]{"visible"};
 ////              
 //                return new String[]{};
             
-            case LOCATION:
+            case T_LOCATION:
                 return new String[]{"visible"};
                 
-            case DISTRICT:
+            case T_DISTRICT:
                 return new String[]{"visible"};
 //                
 //                return new String[]{};
                 
-            case PERSON_CLASS:
+            case T_PERSON_CLASSIFICATION:
 //                return new String[]{};
                 return new String[]{"visible"};
-            case PUBLIC_BODY:
+            case T_PUBLIC_BODY:
 //                return new String[]{};
                 return new String[]{"visible"};
-            case PUBLIC_PERSON:
+            case T_PUBLIC_PERSON:
 //                return new String[]{};
                 return new String[]{"visible"};
-            case PUBLIC_ROLE:
+            case T_PUBLIC_ROLE:
 //                return new String[]{};
                 return new String[]{"visible"};
-            case SUBJECT:
+            case T_SUBJECT:
 //                return new String[]{};
                 return new String[]{"visible"};
-            case TENURE:
+            case T_TENURE:
 //                return new String[]{};
                 return new String[]{"visible"};
-            case THEME:
+            case T_THEME:
 //                return new String[]{};
                 return new String[]{"visible"};
-            case VOTE:
+            case T_VOTE:
 //                return new String[]{};
                 return new String[]{"visible"};
-            case VOTE_CLASS:
+            case T_VOTE_CLASSIFICATION:
 //                return new String[]{};
                 return new String[]{"visible"};
-            case VOTE_OF_ROLE:
+            case T_VOTE_OF_ROLE:
 //                return new String[]{};
                 return new String[]{"visible"};
                 

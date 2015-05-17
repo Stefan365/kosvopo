@@ -43,6 +43,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
         this.clsE = cls;
         this.TN = ToolsDao.getTableName(cls);
+        this.invasiveConnection = null;
 
     }
 
