@@ -693,16 +693,11 @@ public class UniRepo<E> implements MyRepo<E> {
                     entMetName = ToolsDao.getG_SetterName(pn, "set");
                     rsMetName = ToolsDao.getGettersForResultSet(mapPar.get(pn));
 
-//                    log.info("KYRYLENKO 1: " + rsMetName);
-//                    log.info("KYRYLENKO 2: " + clsT.getCanonicalName());
-//                    log.info("KYRYLENKO 3: " + pn);
-//                    log.info("KYRYLENKO 4: " + entMetName);
-//                    Method entMethod = clsT.getDeclaredMethod(entMetName, new Class<?>[]{mapPar.get(pn)});
                     Method entMethod = clsE.getMethod(entMetName, mapPar.get(pn));
 
-//                  Method rsMethod = rsCls.getDeclaredMethod(rsMetName, new Class<?>[]{String.class});
                     Method rsMethod = rsCls.getMethod(rsMetName, String.class);
 
+//                    pre potreby transformacie do enum:
                     if ("getShort".equals(rsMetName)) {
 
                         Short sh = (Short) rsMethod.invoke(rs, pn);

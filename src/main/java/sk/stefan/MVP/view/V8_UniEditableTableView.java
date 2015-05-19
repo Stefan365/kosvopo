@@ -214,18 +214,6 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
         editorLayout.setMargin(true);
         editorLayout.setVisible(false);
         
-//        if ("a_user".equals(tn)){
-//            initUsersFilter();
-//            if (isAdmin){
-//                bottomLeftLayout.addComponent(addNewItemBt);
-//                bottomLeftLayout.addComponent(removeItemBt);               
-//            }
-//        } else {
-//            bottomLeftLayout.addComponent(addNewItemBt);
-//            bottomLeftLayout.addComponent(removeItemBt);
-//
-//        }
-
     }
 
     //2.
@@ -294,7 +282,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                     if ("a_user".equals(tn)){
                         initNewUser(item);
                     }
-                    Notification.show("Pridal som novu podložkuou!");
+                    Notification.show("Pridal som novu podložku!");
                 }
                 inputForm.setItem(itemId, item);
                 editorLayout.setVisible(itemId != null);
@@ -570,7 +558,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                 this.isAdmin = true;
             }
             
-            this.initUsersFilter();
+            this.obnovFilter();
             this.initButtons();
             
         } else {

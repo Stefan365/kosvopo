@@ -86,8 +86,9 @@ public class Skuska1<T> {
         Skuska1<VoteClassification> sk;
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
-        
-        sk.skusEnum();
+
+        sk.skusRolu();
+//        sk.skusEnum();
 //        sk.skusSaveVsPassupdate();
 //        sk.skusStromTree();
 //        sk.skusItemToEntity();
@@ -1380,6 +1381,7 @@ public class Skuska1<T> {
     }
 
     private void skusEnum() {
+        
         String tn = "T_PUBLIC_PERSON";
         NonEditableFields nf = NonEditableFields.valueOf(tn.toLowerCase());
         log.info("N F: " + nf.name());
@@ -1393,6 +1395,17 @@ public class Skuska1<T> {
             log.info("COL NAME: " + nonEdCols[0]);
             
         }
+    }
+    
+    private void skusRolu(){
+        
+        UniRepo<PublicRole> roleRepo = new UniRepo<>(PublicRole.class);
+        
+        PublicRole pr = roleRepo.findOne(3);
+        
+        log.info(pr.getId());
+        log.info(pr.getName());
+        
     }
 
 }

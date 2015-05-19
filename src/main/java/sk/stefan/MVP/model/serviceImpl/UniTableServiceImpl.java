@@ -25,18 +25,15 @@ import sk.stefan.utils.ToolsDao;
  */
 public class UniTableServiceImpl<E> implements UniTableService<E> {
 
-    
     private static final Logger log = Logger.getLogger(UniTableServiceImpl.class);
-    
+
     private final UniRepo<E> uniRepo;
 
     private final GeneralRepo genRepo;
 
     private final Class<E> clsE;
-    
+
     private final String tn;
-    
-    
 
     public UniTableServiceImpl(Class<E> cls) {
 
@@ -44,7 +41,7 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
         this.uniRepo = new UniRepo<>(clsE);
         this.genRepo = new GeneralRepo();
         this.tn = ToolsDao.getTableName(clsE);
-        
+
     }
 
     @Override
@@ -59,7 +56,7 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
 
         genRepo.deactivateWithSlavesTree(tn, entId);
         genRepo.doCommit();
-        
+
     }
 
     @Override
@@ -67,42 +64,57 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
 
         Object val;
         Method entMethod;
-        String entSetterName;
-         Class<?> clsPom;
+        String entMetName;
+        Class<?> clsPom;
         try {
             E ent = clsE.newInstance();
-            
-            for (String param : mapPar.keySet()){
+
+            for (String param : mapPar.keySet()) {
 
                 //item:
+                val = item.getItemProperty(param).getValue();
+                log.info("1. PARAM: *" + param + "*, value: " + val);
 
-                val = item.getItemProperty(param).getValue();     
-                log.info("1. PARAM: *" + param + "*, value: " + val);                
- 
-                if(val!=null){
+                if (val != null) {
                     clsPom = val.getClass();
-                    log.info("2. Classpom: *" + clsPom.getCanonicalName() + "*");                                   
+                    log.info("2. Classpom: *" + clsPom.getCanonicalName() + "*");
                 }
-                
+
                 //entita:
-                entSetterName = ToolsDao.getG_SetterName(param, "set");
-                log.info("3. SETTER NAME: *" + entSetterName +"*");              
-                log.info("4. PARAM CLASS NAME: *" + mapPar.get(param).getCanonicalName() +"*");
-                
-                entMethod = clsE.getMethod(entSetterName, mapPar.get(param));
-                entMethod.invoke(ent, val);
-                
+                entMetName = ToolsDao.getG_SetterName(param, "set");
+                log.info("3. SETTER NAME: *" + entMetName + "*");
+                log.info("4. PARAM CLASS NAME: *" + mapPar.get(param).getCanonicalName() + "*");
+
+                entMethod = clsE.getMethod(entMetName, mapPar.get(param));
+
+//                    pre potreby transformacie do enum:
+                if (mapPar.get(param).getCanonicalName().contains(".enums.")) {
+
+                    Integer valInt = (Integer) val;
+                    
+                    Class<?> clsEnum = mapPar.get(param);
+                    Method enumMethod = clsEnum.getDeclaredMethod("values");
+                    Object[] enumVals = (Object[]) (enumMethod.invoke(null));
+                    Object enumVal = enumVals[valInt];
+
+                    entMethod.invoke(ent, enumVal);
+                    
+                    
+                } else {
+                    entMethod.invoke(ent, val);
+                }
+
             }
-            
+
             return ent;
-            
+
         } catch (InstantiationException | IllegalAccessException |
                 SecurityException | NoSuchMethodException | IllegalArgumentException |
                 InvocationTargetException e) {
             log.error(e.getLocalizedMessage(), e);
             return null;
         }
-        
+
     }
 
     @Override
@@ -117,10 +129,10 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
 
     @Override
     public void saveRole(A_UserRole urole) {
-        
+
         UniRepo<A_UserRole> roleRepo = new UniRepo<>(A_UserRole.class);
         roleRepo.save(urole, true);
-        
+
     }
 
 }

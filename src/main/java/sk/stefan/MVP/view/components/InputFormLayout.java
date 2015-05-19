@@ -510,7 +510,7 @@ public class InputFormLayout<E> extends FormLayout {
 
                 // ulozenie zmien do DB:
                 try {
-                    
+
 //                    sqlContainer.commit(); nic sa commitovat nebude, 
 //                    vsetko pojde cez jdbc :
                     E ent = uniTableService.getObjectFromItem(item, mapPar);
@@ -532,6 +532,9 @@ public class InputFormLayout<E> extends FormLayout {
                         urole.setVisible(Boolean.TRUE);
                         uniTableService.saveRole(urole);
 
+                    }
+                    if (item.getItemProperty("id").getValue() == null) {
+                        sqlContainer.removeItem(itemId);
                     }
 
 //                    toto bolo slabe miesto celeho systemu
@@ -617,11 +620,11 @@ public class InputFormLayout<E> extends FormLayout {
     }
 
     public void setItem(Object itId, Item it) {
-        
+
         this.itemId = itId;
         this.item = it;
-        
-        if (tn.equals("a_user") && item!=null ) {
+
+        if (tn.equals("a_user") && item != null) {
             Integer uid = (Integer) item.getItemProperty("id").getValue();
 
             for (String pn : fieldMap.keySet()) {
@@ -637,7 +640,7 @@ public class InputFormLayout<E> extends FormLayout {
                 }
             }
         }
-        
+
         if (item != null) {
             fg.setItemDataSource(this.item);
         }
