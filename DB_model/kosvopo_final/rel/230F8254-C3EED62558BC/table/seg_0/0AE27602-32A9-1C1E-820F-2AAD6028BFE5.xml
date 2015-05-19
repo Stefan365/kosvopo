@@ -1,0 +1,74 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0AE27602-32A9-1C1E-820F-2AAD6028BFE5" name="T_PUBLIC_BODY">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 04:20:07 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<abbreviation>PUB</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="A74C180C-64A5-C38E-3CCE-CE941F09C31C">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 04:21:37 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="name" id="55CD93C8-46D0-1D2C-154D-487071D7780B">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 04:21:37 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="location_id" id="0F805C8A-8F60-4087-30DE-AD07B83DF464">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 19:04:14 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>3D5AEF2F-0CFA-BD6B-B237-8CB515AAC454</delegate>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C732788B-FCC2-418A-9EC7-452BBB4AD150" referredColumn="3D5AEF2F-0CFA-BD6B-B237-8CB515AAC454"/>
+</associations>
+</Column>
+<Column name="visible" id="85C0D04F-2F2E-E19A-85FF-D2683E3113E4">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 04:21:37 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="31A75D50-72DB-F081-76F0-D4A3C154C2B5" name="pub_PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 04:21:37 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="A74C180C-64A5-C38E-3CCE-CE941F09C31C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A47FE557-F686-53C0-E4F9-9FF67C25F0BF" name="loc_FK1">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 19:04:14 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="0F805C8A-8F60-4087-30DE-AD07B83DF464"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

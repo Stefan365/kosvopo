@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="52C646EB-B45F-3D9D-DA21-1BDE836CAC03" name="vot_FK2">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:20:58 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<containerWithKeyObject>23545763-AAEE-EC63-1940-5C544E98880B</containerWithKeyObject>
+<deleteRule>RESTRICT</deleteRule>
+<localFKIndex>6314099E-E266-319D-7350-0E7D1E4C9392</localFKIndex>
+<keyObject>0ED863B2-46E4-FB7E-7AF9-7696668D6C12</keyObject>
+<mandatory>true</mandatory>
+<transferable>true</transferable>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

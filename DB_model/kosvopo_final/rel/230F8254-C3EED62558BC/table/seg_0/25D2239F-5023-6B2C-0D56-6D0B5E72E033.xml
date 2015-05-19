@@ -1,0 +1,70 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="25D2239F-5023-6B2C-0D56-6D0B5E72E033" name="T_PUBLIC_PERSON">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:40:44 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<abbreviation>PUP</abbreviation>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="E8E30169-08EB-16FA-8ADE-D05A94C0D095">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:42:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="first_name" id="FD142712-AE61-42FB-30F0-57CCBA02ACFF">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:42:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="last_name" id="D8121A0C-0703-3CE3-5BCE-73BF1D9BB5CD">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:42:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="date_of_birth" id="0350233E-E1D0-6BD0-C465-C94972E9DB43">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:42:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="visible" id="11565EE5-6AEE-24F5-5C45-DC0131CCA581">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:44:15 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="620B1872-561A-7823-5CC6-D375BE5F1A24" name="pup_PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:42:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="E8E30169-08EB-16FA-8ADE-D05A94C0D095"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

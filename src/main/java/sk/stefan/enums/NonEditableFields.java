@@ -46,7 +46,7 @@ public enum NonEditableFields {
                 return new String[]{"visible"};
                 
             case T_DISTRICT:
-                return new String[]{"visible"};
+//                return new String[]{"visible"};
 //                
 //                return new String[]{};
                 

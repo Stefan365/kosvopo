@@ -1,0 +1,106 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="702CA546-9995-F0A3-9DF3-DE7F9608A76B" name="A_USER_ROLE">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:05:18 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<abbreviation>URO</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="2A69DAC7-D1DD-ACF8-F2DA-5FC710709101">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:07:33 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="user_id" id="85325CD6-67E2-B3C3-DDA3-29EF418942A0">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:12:33 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>037FA105-5131-0D12-13E9-0EEB6ED18F2C</delegate>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="621DB39E-E845-46CA-5531-F61AE91F78F6" referredColumn="037FA105-5131-0D12-13E9-0EEB6ED18F2C"/>
+</associations>
+</Column>
+<Column name="role_id" id="C63B4C84-7E2A-B84E-5178-B157F18DC946">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:36:27 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>884C0580-71E9-DB66-FCDD-46682C632178</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="BBA1FF5E-C358-299F-A500-2C320182D8ED" referredColumn="884C0580-71E9-DB66-FCDD-46682C632178"/>
+</associations>
+</Column>
+<Column name="since" id="E709B44A-BED6-2856-48FC-9998C7187843">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:07:33 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="till" id="8D0C6B20-2907-1AA4-AC50-8753145BB9D0">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:07:34 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="active" id="C72FF640-257F-AD53-913F-23220579C5BF">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-07 21:48:23 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1A860C61-2139-7DE1-6A73-3F9D7129F02A" name="uro_PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:07:34 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="2A69DAC7-D1DD-ACF8-F2DA-5FC710709101"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C1090A97-46A6-DEC6-051E-4BFBA3E3D6F8" name="uro_FK1">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:12:33 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="85325CD6-67E2-B3C3-DDA3-29EF418942A0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FAD9A14A-B1D7-D469-9CA9-67CACCBF7D7B" name="uro_FK2">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:36:27 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C63B4C84-7E2A-B84E-5178-B157F18DC946"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

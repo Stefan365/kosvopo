@@ -1,0 +1,129 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B570475F-D145-5BD8-A19E-D39F7BF7D4A0" name="T_PUBLIC_ROLE">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:37:55 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<abbreviation>PRO</abbreviation>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="950FB13F-25EF-D19D-788B-853D2FAEA3AA">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:39:22 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="public_body_id" id="E5E78F26-A136-2A16-4747-2399E559D248">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 14:15:54 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>A74C180C-64A5-C38E-3CCE-CE941F09C31C</delegate>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="9CE42D28-C772-89C1-2414-D60883D8AB64" referredColumn="A74C180C-64A5-C38E-3CCE-CE941F09C31C"/>
+</associations>
+</Column>
+<Column name="tenure_id" id="149A6EDE-2672-063E-9974-3D8AD4C2BABF">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 14:41:32 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>95A241E6-F668-4887-2162-404F7AB8E963</delegate>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0FE90226-355E-ED1E-9046-D9575B61FE06" referredColumn="95A241E6-F668-4887-2162-404F7AB8E963"/>
+</associations>
+</Column>
+<Column name="public_person_id" id="C58FEBAB-E278-7F69-7A42-161656C4C81B">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 19:12:25 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>E8E30169-08EB-16FA-8ADE-D05A94C0D095</delegate>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="09E9429B-D84A-28C5-B3A4-CB206A8F2C85" referredColumn="E8E30169-08EB-16FA-8ADE-D05A94C0D095"/>
+</associations>
+</Column>
+<Column name="name" id="B2B59E97-FFDC-6C85-E7D7-BEDBE5DC1757">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:39:22 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT018</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="visible" id="FB56D591-C177-2F37-0DED-73D4DE21AAE1">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:39:58 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="8540A230-1BA6-BF83-8BE0-A329A9C4CA61" name="pur_PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:39:22 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="950FB13F-25EF-D19D-788B-853D2FAEA3AA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="609C1B6A-789D-9483-07F6-35A548A10E70" name="pur_UN1">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:32:14 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="149A6EDE-2672-063E-9974-3D8AD4C2BABF"/>
+<colUsage columnID="C58FEBAB-E278-7F69-7A42-161656C4C81B"/>
+<colUsage columnID="E5E78F26-A136-2A16-4747-2399E559D248"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F1ED9F31-4E29-457D-C0FF-5BEFEBB223D8" name="pur_FK2">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 14:41:32 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="149A6EDE-2672-063E-9974-3D8AD4C2BABF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B1D21A65-0139-DB69-F306-BE0C1E85383C" name="pur_FK3">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 19:12:25 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="C58FEBAB-E278-7F69-7A42-161656C4C81B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F82D8628-2181-E2B5-C149-68ED550D3340" name="pur_FK1">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 22:32:55 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="E5E78F26-A136-2A16-4747-2399E559D248"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

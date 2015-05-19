@@ -1,0 +1,59 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="248925C2-5ACD-C170-3BB2-75CC737E2339" name="T_TENURE">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 01:59:59 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<abbreviation>TEN</abbreviation>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="95A241E6-F668-4887-2162-404F7AB8E963">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:01:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="since" id="B7BBC997-0375-8360-2AA4-346528229284">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:01:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="till" id="E1E4BA53-1913-BADB-97F6-880223A70C15">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:01:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="visible" id="DE35E82D-5C7F-E3A6-4557-A7D778012192">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 19:10:59 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0B3BF86C-3A85-CF57-6227-2B75F91A849B" name="ten_PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 02:01:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="95A241E6-F668-4887-2162-404F7AB8E963"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

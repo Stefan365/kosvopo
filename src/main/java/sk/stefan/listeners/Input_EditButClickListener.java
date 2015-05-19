@@ -70,7 +70,8 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
                 item = sqlCont.getItem(new RowId(new Object[]{entId}));
             }
             
-            String[] nonEdCols = NonEditableFields.valueOf(tn).getNonEditableParams();
+            String[] nonEdCols = NonEditableFields.valueOf(tn.toUpperCase()).getNonEditableParams();
+
             log.info("NON EDITABL COLS IS NULL:" + (nonEdCols==null));
             if((nonEdCols!=null)){
                 log.info("NON ED SIZE:" + nonEdCols.length);

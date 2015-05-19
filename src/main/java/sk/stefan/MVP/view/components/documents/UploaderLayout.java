@@ -126,7 +126,7 @@ public class UploaderLayout<E> extends VerticalLayout {
      */
     private void initAddButton() {
 
-        this.addDocBt = new Button("pridaj");
+        this.addDocBt = new Button("pridaj dokumnet");
 
         this.addDocBt.addClickListener(new Button.ClickListener() {
 

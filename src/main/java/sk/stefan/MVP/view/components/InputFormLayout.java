@@ -197,7 +197,7 @@ public class InputFormLayout<E> extends FormLayout {
                         Class<?> cls = ToolsNames.getClassFromName(pn);
 
                         cb = new InputClassComboBox<>(fg, pn, cls);
-                        cb.setWidth("30%");
+                        cb.setWidth("60%");
 
                         fieldMap.put(pn, cb);
                     } else {
@@ -213,7 +213,7 @@ public class InputFormLayout<E> extends FormLayout {
                             break;
                         case "title":
                             TextField field = bindTextField(pn);
-                            field.setWidth("30%");
+                            field.setWidth("60%");
                             field.setRequired(true);
                             fieldMap.put(pn, field);
                             break;
@@ -295,7 +295,7 @@ public class InputFormLayout<E> extends FormLayout {
                         Map<String, Integer> map = ToolsNames.makeEnumMap(names, ordinals);
 
                         InputComboBox<Integer> cb = new InputComboBox<>(fg, pn, map);
-                        cb.setWidth("30%");
+                        cb.setWidth("60%");
 
                         if (item != null) {
                             Property<?> prop = item.getItemProperty(pn);
@@ -340,18 +340,8 @@ public class InputFormLayout<E> extends FormLayout {
         Properties proPoradie = ToolsNames.getPoradieParams(tn);
         Properties proDepict = ToolsNames.getDepictParams(tn);
 
-//        if ("t_tenure".equals(Tn)) {
-//        for (String s : proDepict.stringPropertyNames()) {
-//            log.info("ZOBRAZ:*" + s + "* : *" + proDepict.getProperty(s) + "*");
-//        }
-//        for (String s : proPoradie.stringPropertyNames()) {
-//            log.info("PORADIE:*" + s + "* : *" + proPoradie.getProperty(s) + "*");
-//        }
-//
-        log.info("TN:" + tn);
-//        log.info("SIZE PORADIE:" + proPoradie.size());
-//        log.info("SIZE DEPICT:" + proDepict.size());
-//        }
+//        log.info("TN:" + tn);
+        
         for (int i = 1; i < proPoradie.size(); i++) {
 
             key = proPoradie.getProperty("" + i);
@@ -359,9 +349,9 @@ public class InputFormLayout<E> extends FormLayout {
                 continue;
             }
 
-            log.info("KEY: *" + key + "*");
+//            log.info("KEY: *" + key + "*");
             String cap = proDepict.getProperty(key);
-            log.info("CAP: *" + cap + "*");
+//            log.info("CAP: *" + cap + "*");
             (fieldMap.get(key)).setCaption(cap);
             fieldsFL.addComponent(fieldMap.get(key));
         }
@@ -376,7 +366,7 @@ public class InputFormLayout<E> extends FormLayout {
      */
     public TextField bindTextField(String fn) {
         TextField field = new TextField(fn);
-        field.setWidth("30%");
+        field.setWidth("60%");
         fg.bind(field, fn);
         return field;
     }
@@ -390,7 +380,7 @@ public class InputFormLayout<E> extends FormLayout {
      */
     public TextArea bindTextArea(String fn) {
         TextArea field = new TextArea(fn);
-        field.setWidth("30%");
+        field.setWidth("60%");
         fg.bind(field, fn);
         return field;
     }
@@ -511,7 +501,7 @@ public class InputFormLayout<E> extends FormLayout {
                 // ulozenie zmien do DB:
                 try {
 
-//                    sqlContainer.commit(); nic sa commitovat nebude, 
+//                    sqlContainer.commit(); NIE!!! nic sa commitovat nebude, 
 //                    vsetko pojde cez jdbc :
                     E ent = uniTableService.getObjectFromItem(item, mapPar);
                     Integer entId = (Integer) item.getItemProperty("id").getValue();
@@ -568,10 +558,6 @@ public class InputFormLayout<E> extends FormLayout {
             @Override
             public void buttonClick(ClickEvent event) {
 
-//                saveBt.setEnabled(true);
-//                if (isNew) {
-//                    sqlContainer.removeItem(itemId);
-//                }
                 getFg().setEnabled(true);
                 fieldsFL.setEnabled(true);
 
@@ -672,9 +658,6 @@ public class InputFormLayout<E> extends FormLayout {
         return fg;
     }
 
-    /**
-     * @return the sqlContainer
-     */
     public SQLContainer getSqlContainer() {
         return sqlContainer;
     }

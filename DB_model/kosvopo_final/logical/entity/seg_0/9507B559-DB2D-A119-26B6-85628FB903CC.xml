@@ -1,0 +1,85 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="9507B559-DB2D-A119-26B6-85628FB903CC" name="PUBLIC_ROLE">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-18 20:51:50 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>PUR</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="name" id="59BB4DDD-8EC3-70F3-4BC0-3625D7B7D434">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-18 21:48:07 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT018</logicalDatatype>
+</Attribute>
+<Attribute name="visible" id="1380A108-9D26-ACBE-FC64-49BE513DD479">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 01:51:31 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+</Attribute>
+<Attribute name="location_name" id="0192E18B-25F5-8BE3-C6E8-B0DE6E35F01E">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 04:24:26 UTC</createdTime>
+<generatorID>15E917EE-755F-53FB-7A51-1B88A8F407B5</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<referedAttribute>351277B9-27E1-B5B7-DAFD-B64DDA107F91</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Attribute>
+<Attribute name="name1" id="9A59E62F-4D48-2120-4578-6E0B5F0D3EC1">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-27 20:10:35 UTC</createdTime>
+<generatorID>15E917EE-755F-53FB-7A51-1B88A8F407B5</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<referedAttribute>8152A978-866C-B5E6-5149-A6D7B10668AF</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80</dataTypeSize>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="A1048A99-0281-9DDF-EB70-7706EE74A748" name="T_ROLE PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-18 21:48:06 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>0192E18B-25F5-8BE3-C6E8-B0DE6E35F01E</attributeRef>
+<attributeRef>9A59E62F-4D48-2120-4578-6E0B5F0D3EC1</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

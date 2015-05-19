@@ -1,0 +1,82 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="6E160ADD-BAD1-0586-9F59-AA847CC5B660" name="SUBJECT">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-20 19:45:34 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>SUB</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="brief_description" id="CA64961F-6991-6A2E-4ABF-3A80595AFCCC">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-20 19:46:21 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+</Attribute>
+<Attribute name="description" id="13E122A6-A0DE-86FD-1E47-F577E00512E4">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-20 19:47:11 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+</Attribute>
+<Attribute name="visible" id="BC9EAA6F-18C3-2771-5004-5918D668258E">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 01:47:27 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+</Attribute>
+<Attribute name="location_name" id="9659D6D7-FCBC-BBB6-04A7-18000D8BAA7F">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:42:33 UTC</createdTime>
+<generatorID>332B1687-B3A8-95C3-F5D8-9114637C29F7</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<referedAttribute>0192E18B-25F5-8BE3-C6E8-B0DE6E35F01E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Attribute>
+<Attribute name="name1" id="B1327603-9106-41EB-56C3-DE0DC74BB5C4">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-27 20:10:35 UTC</createdTime>
+<generatorID>332B1687-B3A8-95C3-F5D8-9114637C29F7</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<referedAttribute>9A59E62F-4D48-2120-4578-6E0B5F0D3EC1</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80</dataTypeSize>
+</Attribute>
+</attributes>
+</Entity>

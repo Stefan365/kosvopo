@@ -1,7 +1,5 @@
 package sk.stefan.MVP.model.repo;
 
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -66,19 +64,20 @@ public class UniRepo<E> implements MyRepo<E> {
 // ****************** NON INVASIVE **************************************        
     // 1.
     /**
+     * Najde vsetky entity daneho typu E.
      *
      * @return
      */
     @Override
     public List<E> findAll() {
+        
+        Connection conn;
+        Statement st;
+        ResultSet rs;
+        
         try {
-//            Connection conn = DoDBconn.getConnection();
-            Statement st;
-            //pre pripad, ze by spojenie spadlo.
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
-            st = DoDBconn.getNonInvasiveConn().createStatement();
+            conn = DoDBconn.createNoninvasiveConnection();
+            st = conn.createStatement();
 
             String sql;
             if ("a_hierarchy".equals(TN)) {
@@ -87,36 +86,47 @@ public class UniRepo<E> implements MyRepo<E> {
                 sql = String.format("SELECT * FROM %s  WHERE visible = true", TN);
             }
 
-            ResultSet rs;
             rs = st.executeQuery(sql);
             
             List<E> listEnt = this.fillListEntity(rs);
-
+            
             rs.close();
             st.close();
-//            DoDBconn.releaseConnection(conn);
+            DoDBconn.releaseConnection(conn);
 
+            
             return listEnt;
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("Chyba, uniRepo::findAll(...)",
-                    Type.ERROR_MESSAGE);
             log.error(e.getLocalizedMessage(), e);
             return null;
-        }
+        } 
+//        uzatvaranie connection vo finally bloku je z praktickeho hladiska 
+//        zbytocne, lebo ked sa doserie nieco v DB, tak aj tak sa nepokracuje dalej.
 
     }
 
     // 2.
+    /**
+     * Najde prave jednu entitu E podla id.
+     */
     @Override
     public E findOne(Integer id) {
-        try {
-            //pre pripad, ze by spojenie spadlo.
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
+        
+        Connection conn;
+        Statement st;
+        ResultSet rs;
 
-            Statement st;
-            st = DoDBconn.getNonInvasiveConn().createStatement();
+        try {
+            
+            conn = DoDBconn.createInvasiveConnection();
+
+//            TOTO STATICKE SPOJENIE NEFUNGUJE (RESP. DAVA ZASTARALE VYSLEDKY),
+//            NA AKTUALNE UDAJE SA MUSI VYTVORIT VZDY NOVE DB SPOJENIE!!!
+//            if (DoDBconn.getNonInvasiveConn() == null) {
+//                DoDBconn.createNoninvasiveConnection();
+//            }
+
+            st = conn.createStatement();
 
             String sql;
             if ("a_hierarchy".equals(TN)) {
@@ -125,20 +135,16 @@ public class UniRepo<E> implements MyRepo<E> {
                 sql = String.format("SELECT * FROM %s WHERE id = %d AND visible = true", TN, id);
             }
 
-            ResultSet rs;
             rs = st.executeQuery(sql);
-            // Notification.show(sql);
-//            log.info(sql);
+            log.info(sql);
             E ent = this.fillEntity(rs);
 
             rs.close();
             st.close();
-//            DoDBconn.getPool().releaseConnection(conn);
+            DoDBconn.releaseConnection(conn);
 
             return ent;
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("Chyba, uniRepo::findOne(...)",
-                    Type.ERROR_MESSAGE);
             log.error(e.getLocalizedMessage(), e);
             return null;
         }
@@ -155,15 +161,16 @@ public class UniRepo<E> implements MyRepo<E> {
      */
     @Override
     public List<E> findByParam(String paramName, String paramValue) {
+ 
+        Connection conn;
+        Statement st;
+        ResultSet rs;
 
         try {
-            //pre pripad, ze by spojenie spadlo.
-
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
-            Statement st;
-            st = DoDBconn.getNonInvasiveConn().createStatement();
+            
+            conn = DoDBconn.createNoninvasiveConnection();
+            
+            st = conn.createStatement();
 
             StringBuilder sql = new StringBuilder();
 
@@ -176,20 +183,18 @@ public class UniRepo<E> implements MyRepo<E> {
             }
 
             log.info("SQL: *" + sql.toString() + "*");
-            ResultSet rs;
-
+            
             rs = st.executeQuery(sql.toString());
 
             List<E> listEnt = this.fillListEntity(rs);
 
             rs.close();
             st.close();
-
+            DoDBconn.releaseConnection(conn);
+            
             return listEnt;
 
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("Chyba, uniRepo::findByParam(...)",
-                    Type.ERROR_MESSAGE);
             log.error(e.getMessage());
             return null;
         }
@@ -198,7 +203,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
     // 3.
     /**
-     * Najde entitu podla zadaneho parametra.
+     * Najde entitu podla zadanych parametrov.
      *
      * @param p1Name
      * @param p1Value
@@ -210,13 +215,14 @@ public class UniRepo<E> implements MyRepo<E> {
     public List<E> findByTwoParams(String p1Name, String p1Value,
             String p2Name, String p2Value) {
 
+        Connection conn;
+        Statement st;
+        ResultSet rs;
+
         try {
-            //pre pripad, ze by spojenie spadlo.
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
-            Statement st;
-            st = DoDBconn.getNonInvasiveConn().createStatement();
+            
+            conn = DoDBconn.createNoninvasiveConnection();
+            st = conn.createStatement();
 
             // Notification.show("SOM TU!");
             StringBuilder sql = new StringBuilder();
@@ -231,7 +237,6 @@ public class UniRepo<E> implements MyRepo<E> {
                 sql.append(" AND visible = true");
             }
 
-            ResultSet rs;
             rs = st.executeQuery(sql.toString());
 
             log.info("SQL: *" + sql.toString() + "*");
@@ -239,41 +244,17 @@ public class UniRepo<E> implements MyRepo<E> {
 
             rs.close();
             st.close();
-//            DoDBconn.releaseConnection(conn);
+            DoDBconn.releaseConnection(conn);
 
             return listEnt;
 
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("Chyba, uniRepo::findByParam(...)",
-                    Type.ERROR_MESSAGE);
             log.error(e.getMessage());
             return null;
         }
 
     }
 
-    /**
-     * Vrati SQL dotaz, pre zadany parameter a jeho hodnotu.
-     *
-     * @param pn parameter name
-     * @param pv parameter value
-     * @return
-     */
-    private String getFindByParamQuery(String pn, String pv) {
-
-        String sql;
-
-        if (pv == null) {
-            sql = String.format(" %s is NULL ", pn);
-        } else if ("null".equalsIgnoreCase(pv) || "true".equalsIgnoreCase(pv) || "false".equalsIgnoreCase(pv)) {
-            sql = String.format(" %s = %s ", pn, pv);
-        } else {
-            sql = String.format(" %s = '%s'", pn, pv);
-        }
-
-        return sql;
-
-    }
 
     
     
@@ -282,7 +263,7 @@ public class UniRepo<E> implements MyRepo<E> {
     
     // 4.
     /**
-     * Vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
+     * Uklada entitu do DB a vracia presne tu istu entitu, len ulozenu. tj. ten isty pointer.
      *
      * @param ent
      * @param noteChange ak je true, bude sa zapisovat do A_change, inak nie.
@@ -293,6 +274,9 @@ public class UniRepo<E> implements MyRepo<E> {
 
         E entOrigin;
         Connection conn;
+        PreparedStatement st;
+        ResultSet rs;
+        
         try {
 //            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
             if (this.invasiveConnection != null) {
@@ -300,7 +284,6 @@ public class UniRepo<E> implements MyRepo<E> {
             } else {
                 conn = DoDBconn.createInvasiveConnection();
             }
-            PreparedStatement st;
             Map<String, Class<?>> mapPar;
             String sql;
 
@@ -321,7 +304,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
             st.executeUpdate();
 //            log.info("SOM TUS!");
-            ResultSet rs = st.getGeneratedKeys();
+            rs = st.getGeneratedKeys();
             if (novy && rs.next()) {
                 Integer newId = rs.getInt(1);
                 Method entMethod = clsE.getMethod("setId", Integer.class);
@@ -367,6 +350,8 @@ public class UniRepo<E> implements MyRepo<E> {
     /**
      * deaktivuje len 1 entitu. pokial potrebujete deaktivovat cely strom
      * zavislych entit, pouzite generalRepo...deactivateAll
+     * Asi je to zbytocna metoda, staci pouzivat generalRepo...deactive...
+     * potom vyhodit.
      *
      * @param ent
      * @param noteChange
@@ -376,6 +361,8 @@ public class UniRepo<E> implements MyRepo<E> {
     public boolean deactivateOneOnly(E ent, boolean noteChange) {
 
         Connection conn;
+        Statement st;
+        
         try {
             if (this.invasiveConnection != null) {
                 conn = invasiveConnection;
@@ -383,7 +370,7 @@ public class UniRepo<E> implements MyRepo<E> {
                 conn = DoDBconn.createInvasiveConnection();
             }
 
-            Statement st = conn.createStatement();
+            st = conn.createStatement();
 
             Integer id = isNew(ent);
 
@@ -430,6 +417,8 @@ public class UniRepo<E> implements MyRepo<E> {
     public void updateParam(String paramName, String paramValue, String entId, boolean noteChange) throws SQLException {
 
         Connection conn;
+        Statement st;
+                
         try {
             
             if (this.invasiveConnection != null) {
@@ -438,7 +427,7 @@ public class UniRepo<E> implements MyRepo<E> {
                 conn = DoDBconn.createInvasiveConnection();
             }
 
-            Statement st = conn.createStatement();
+            st = conn.createStatement();
 
             StringBuilder sql = new StringBuilder();
 
@@ -465,8 +454,6 @@ public class UniRepo<E> implements MyRepo<E> {
             }
 
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("Chyba, uniRepo::findByParam(...)",
-                    Type.ERROR_MESSAGE);
             log.error(e.getLocalizedMessage(), e);
             throw e;
         }
@@ -617,7 +604,6 @@ public class UniRepo<E> implements MyRepo<E> {
             StringBuilder udpate = new StringBuilder();
             StringBuilder update2 = new StringBuilder();
 
-//            udpate.append("(");
             boolean zac = true;
 
             for (String pn : mapPar.keySet()) {
@@ -673,7 +659,6 @@ public class UniRepo<E> implements MyRepo<E> {
      */
     private List<E> fillListEntity(ResultSet rs) {
 
-//        Class<?> rsCls = rs.getClass();
         Class<?> rsCls = ResultSet.class;
 
         List<E> listEnts = new ArrayList<>();
@@ -708,12 +693,6 @@ public class UniRepo<E> implements MyRepo<E> {
                         Object enumVal = enumVals[sh];
 
                         entMethod.invoke(ent, enumVal);
-//                  }  else if ("getBytes".equals(rsMetName) && "document".equals(pn)){
-//                        byte[] bytes;
-//                        bytes = (byte[]) rsMethod.invoke(rs, pn);
-//                        InputStream myInputStream = new ByteArrayInputStream(bytes);
-//                        
-//                        entMethod.invoke(ent, myInputStream);
 
                     } else {
                         entMethod.invoke(ent, rsMethod.invoke(rs, pn));
@@ -766,7 +745,7 @@ public class UniRepo<E> implements MyRepo<E> {
             return true;
 
         } catch (IllegalAccessException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
-            Notification.show("Chyba, uniRepo, copy(...)", Type.ERROR_MESSAGE);
+//            Notification.show("Chyba, uniRepo, copy(...)", Type.ERROR_MESSAGE);
             log.error(e.getLocalizedMessage(), e);
             return false;
         }
@@ -786,12 +765,37 @@ public class UniRepo<E> implements MyRepo<E> {
 //            boolean novy = entMethod.invoke(ent) == null;
             return (Integer) entMethod.invoke(ent);
 
-        } catch (IllegalAccessException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
-            Notification.show("Chyba, uniRepo, copy(...)", Type.ERROR_MESSAGE);
+        } catch (IllegalAccessException | SecurityException | NoSuchMethodException |
+                IllegalArgumentException | InvocationTargetException e) {
+//            Notification.show("Chyba, uniRepo, copy(...)", Type.ERROR_MESSAGE);
             log.error(e.getMessage(), e);
             return null;
         }
     }
+    
+    /**
+     * Vrati SQL dotaz, pre zadany parameter a jeho hodnotu.
+     *
+     * @param pn parameter name
+     * @param pv parameter value
+     * @return
+     */
+    private String getFindByParamQuery(String pn, String pv) {
+
+        String sql;
+
+        if (pv == null) {
+            sql = String.format(" %s is NULL ", pn);
+        } else if ("null".equalsIgnoreCase(pv) || "true".equalsIgnoreCase(pv) || "false".equalsIgnoreCase(pv)) {
+            sql = String.format(" %s = %s ", pn, pv);
+        } else {
+            sql = String.format(" %s = '%s'", pn, pv);
+        }
+
+        return sql;
+
+    }
+
 
     
 
@@ -965,5 +969,7 @@ public class UniRepo<E> implements MyRepo<E> {
         }
 
     }
+    
+
 
 }

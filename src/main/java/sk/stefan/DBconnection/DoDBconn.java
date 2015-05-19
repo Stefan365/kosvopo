@@ -22,28 +22,15 @@ public class DoDBconn {
     private static final Logger log = Logger.getLogger(DoDBconn.class);
         
     public static int count =0;
-    
-    private static Connection nonInvasiveConn;
+
+    //TOTO NEFUNGUJE DOBRE: DAVA TO ZASTARALE VYSLEDKY.
+//    private static Connection nonInvasiveConn;
 
     private static JDBCConnectionPool connectionPool = null;
 
 
     static {
         connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 55);
-    }
-
-    /**
-     * @return the conn
-     */
-    public static Connection getNonInvasiveConn() {
-        return nonInvasiveConn;
-    }
-
-    /**
-     * @param aConn the conn to set
-     */
-    public static void setNonInvasiveConn(Connection aConn) {
-        nonInvasiveConn = aConn;
     }
 
     // 0.A konstruktor:
@@ -64,17 +51,28 @@ public class DoDBconn {
     }
 
     // 2.A connection for non invasive DB operations.
-    public static void createNoninvasiveConnection() {
+    /**
+     * Rozdiel je v nazve len z dvovodu lepsej orientacie pre uzivatela.
+     * @return 
+     */
+    public static Connection createNoninvasiveConnection() {
         try {
-            nonInvasiveConn = connectionPool.reserveConnection();
+//            nonInvasiveConn = connectionPool.reserveConnection();
+            Connection conn = connectionPool.reserveConnection();
             count++;
             log.info("VYTVORIL SOM NEINVAZIVNE CONN: " + count);
+            return conn;
         } catch (SQLException ex) {
             log.error(ex.getMessage(),ex);
+            return null;
         }
     }
     
     // 2.B. Connection for invasive DB operations.
+    /**
+     * 
+     * @return 
+     */
     public static Connection createInvasiveConnection() {
         try {
             Connection conn = connectionPool.reserveConnection();

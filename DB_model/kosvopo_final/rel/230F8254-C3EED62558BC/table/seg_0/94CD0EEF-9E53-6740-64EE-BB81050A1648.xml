@@ -1,0 +1,108 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="94CD0EEF-9E53-6740-64EE-BB81050A1648" name="T_SUBJECT">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:15:16 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<abbreviation>SUB</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="97401B75-3704-A5EB-660C-FFD292887611">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:17:13 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="brief_description" id="801359F9-E9EA-17B1-CC16-2BD08FE96B36">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:17:13 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="description" id="78C7965A-52B8-E3AC-F840-EF04BCB33282">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:17:13 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="public_role_id" id="F91F56FE-6940-F49C-84CA-0230B3D38D4D">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:19:37 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>950FB13F-25EF-D19D-788B-853D2FAEA3AA</delegate>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CFC9A6B7-7A06-FF2A-69DB-8B84A5672F91" referredColumn="950FB13F-25EF-D19D-788B-853D2FAEA3AA"/>
+</associations>
+</Column>
+<Column name="theme_id" id="95B415FF-83D8-EFF1-4293-219A1398CE91">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:24:14 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>E508FDC1-AB45-39F8-43B1-B5E32778AA53</delegate>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4FCC8C22-1CD8-D5A7-7A5A-6D564E9FB325" referredColumn="E508FDC1-AB45-39F8-43B1-B5E32778AA53"/>
+</associations>
+</Column>
+<Column name="visible" id="36787DEA-A00A-A083-FEFE-7E281AAD5159">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:17:13 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0ED863B2-46E4-FB7E-7AF9-7696668D6C12" name="sub_PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:17:13 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="97401B75-3704-A5EB-660C-FFD292887611"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="11E2E51A-723E-C526-015D-2BEC0CC30394" name="sub_FK1">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:19:37 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="F91F56FE-6940-F49C-84CA-0230B3D38D4D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="BB48D906-D07C-F377-9081-7C74D225279E" name="sub_FK2">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:24:14 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="95B415FF-83D8-EFF1-4293-219A1398CE91"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

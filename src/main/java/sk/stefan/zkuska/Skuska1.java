@@ -87,8 +87,8 @@ public class Skuska1<T> {
         sk = (Skuska1<VoteClassification>) ctx.getBean("skuska1App", Skuska1.class);
 
 
-        sk.skusRolu();
-//        sk.skusEnum();
+//        sk.skusRolu();
+        sk.skusEnum();
 //        sk.skusSaveVsPassupdate();
 //        sk.skusStromTree();
 //        sk.skusItemToEntity();
@@ -1336,17 +1336,19 @@ public class Skuska1<T> {
 
         A_User usr1 = userRepo.findOne(1);
 
+//        String pwd = "KOKOSASELAKOS";
         String pwd = "KOKO";
+        
         byte[] pwdb = secServ.encryptPassword(pwd);
 
-//        usr1.setPassword(pwdb);
-//        userRepo.save(usr1, false);
-//
-//        try {
-//            genRepo.updatePassword(pwd, "2");
-//        } catch (SQLException ex) {
-//            log.error(ex.getMessage(), ex);
-//        }
+        usr1.setPassword(pwdb);
+        userRepo.save(usr1, false);
+
+        try {
+            genRepo.updatePassword(pwd, "2");
+        } catch (SQLException ex) {
+            log.error(ex.getMessage(), ex);
+        }
         this.skusZobraz(pwdb);
 
     }
@@ -1354,8 +1356,6 @@ public class Skuska1<T> {
     private void skusZobraz(byte[] pwdb) {
 
         UniRepo<A_User> userRepo = new UniRepo<>(A_User.class);
-        SecurityService secServ = new SecurityServiceImpl();
-        GeneralRepo genRepo = new GeneralRepo();
 
         A_User usr2 = userRepo.findOne(2);
         A_User usr3 = userRepo.findOne(1);
@@ -1383,11 +1383,11 @@ public class Skuska1<T> {
     private void skusEnum() {
         
         String tn = "T_PUBLIC_PERSON";
-        NonEditableFields nf = NonEditableFields.valueOf(tn.toLowerCase());
+        NonEditableFields nf = NonEditableFields.valueOf(tn.toUpperCase());
         log.info("N F: " + nf.name());
         
         
-        String[] nonEdCols = (NonEditableFields.valueOf(tn.toLowerCase())).getNonEditableParams();
+        String[] nonEdCols = (NonEditableFields.valueOf(tn.toUpperCase())).getNonEditableParams();
         
         log.info("NON EDITABL COLS IS NULL:" + (nonEdCols == null));
         if ((nonEdCols != null)) {

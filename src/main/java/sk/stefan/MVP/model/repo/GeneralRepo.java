@@ -23,7 +23,6 @@ import sk.stefan.MVP.model.entity.A_Change;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.MVP.model.entity.Document;
-import sk.stefan.MVP.model.service.DocumentService;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.utils.ToolsFiltering;
@@ -47,8 +46,8 @@ public class GeneralRepo {
 
     private final UniRepo<Document> docRepo;
 
-    private UniRepo<A_Change> changeRepo;// = new UniRepo<>(A_Change.class, transactionalConn);
-
+    private UniRepo<A_Change> changeRepo;
+    
     //0. konstruktor.
     /**
      *
@@ -59,7 +58,7 @@ public class GeneralRepo {
         this.docRepo = new UniRepo<>(Document.class);
         this.userRepo = new UniRepo<>(A_User.class);
         this.userRoleRepo = new UniRepo<>(A_UserRole.class);
-        
+
     }
 
 // ****************** NON INVASIVE **************************************    
@@ -73,59 +72,69 @@ public class GeneralRepo {
      */
     public byte[] getPassword(String id) throws SQLException {
 
-        PreparedStatement st = null;
+        Connection conn;
+        PreparedStatement st;
+        ResultSet rs;
         byte[] hash = null;
         String sql;
+        
         sql = "SELECT password FROM a_user WHERE id = ?";
+        
         try {
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
-            st = DoDBconn.getNonInvasiveConn().prepareStatement(sql);
+            conn = DoDBconn.createNoninvasiveConnection();
+            st = conn.prepareStatement(sql);
+
             st.setString(1, id);
-            ResultSet result = st.executeQuery();
-            if (result.next()) {
-                hash = result.getBytes("password");
+            rs = st.executeQuery();
+            if (rs.next()) {
+                hash = rs.getBytes("password");
             }
+
+            rs.close();
+            st.close();
+            DoDBconn.releaseConnection(conn);
+
             return hash;
+
         } catch (SQLException ex) {
             log.error(ex.getLocalizedMessage(), ex);
-            Notification.show("nieco sa dojebalo pri ziskavani hesla z DB!", Notification.Type.ERROR_MESSAGE);
             throw new SQLException(ex);
-        } finally {
-            if (st != null) {
-                st.close();
-            }
-        }
+        } 
+        
     }
 
     /**
      * For specific filtering purposes.
      *
      * @param sql
-     * @return
+     * @return 
      */
     public List<Integer> findIds(String sql) {
+
+        Connection conn;
+        Statement st;
+        ResultSet rs;
+
         try {
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
-            Statement st;
-            st = DoDBconn.getNonInvasiveConn().createStatement();
+            conn = DoDBconn.createNoninvasiveConnection();
+            st = conn.createStatement();
+
             List<Integer> listIds;
             log.info("MEGASQL:*" + sql + "*");
-            ResultSet rs;
             rs = st.executeQuery(sql);
-//            log.info("KAROLKO RESULT SET is null?: " + (rs==null));
+            
             listIds = fillListIds(rs);
+            
             rs.close();
             st.close();
+            DoDBconn.releaseConnection(conn);
+
             return listIds;
+
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("Chyba, filterRepo::findAllIds(...)", Notification.Type.ERROR_MESSAGE);
             log.error(e.getMessage(), e);
             return null;
-        }
+        } 
     }
 
     /**
@@ -138,30 +147,33 @@ public class GeneralRepo {
      */
     public List<Integer> findTnAllByParam(String tn, String paramName, String paramVal) {
 
+        Connection conn;
+        Statement st;
+        ResultSet rs;
+
         List<Integer> listIds;
 
-//        st = DoDBconn.getConn().prepareStatement("UPDATE a_user SET password = ? WHERE id = " + id);
         String sql = "SELECT id FROM " + tn + " WHERE " + paramName + " = '" + paramVal
                 + "' AND visible = true";
+        
         log.info("**" + sql + "*");
 
-        ResultSet rs;
-        Statement st;
-
         try {
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
-            st = DoDBconn.getNonInvasiveConn().createStatement();
+            conn = DoDBconn.createNoninvasiveConnection();
+            st = conn.createStatement();
+
             rs = st.executeQuery(sql);
 
             listIds = fillListIds(rs);
 
             rs.close();
             st.close();
+            DoDBconn.releaseConnection(conn);
+
+            
             return listIds;
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-//            Notification.show("findTnAllByParam(...)", Notification.Type.ERROR_MESSAGE);
+            
             log.error(e.getMessage(), e);
             return null;
         }
@@ -169,6 +181,8 @@ public class GeneralRepo {
     }
 
     /**
+     * Metoda na najdenie dobrovolnikov s seba. Metoda sa vyuzije pri administracii uzivatelov.
+     * 
      * @param userId
      * @return
      */
@@ -177,14 +191,6 @@ public class GeneralRepo {
         //list of user ids:
         List<Integer> listIds;
 
-//        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
-//        Integer userId;
-//        if (user == null) {
-//            log.warn("This shouldnt be possible!!");
-//            return null;
-//        } else {
-//            userId = user.getId();
-//        }
 //        najdi vsetkych uzivatelov s aktualnou rolou dobrovolnik. + sameho seba. 
         String sql = "select u.id from a_user u JOIN a_user_role ur ON(u.id = ur.user_id) "
                 + " where ur.role_id = 1 OR u.id = " + userId
@@ -192,25 +198,25 @@ public class GeneralRepo {
                 + " AND ur.visible = true"
                 + " AND u.visible = true";
 
-        ResultSet rs;
+        Connection conn;
         Statement st;
+        ResultSet rs;
 
         try {
-            if (DoDBconn.getNonInvasiveConn() == null) {
-                DoDBconn.createNoninvasiveConnection();
-            }
-            st = DoDBconn.getNonInvasiveConn().createStatement();
+            conn = DoDBconn.createNoninvasiveConnection();
+            st = conn.createStatement();
+            
             rs = st.executeQuery(sql);
 
             listIds = fillListIds(rs);
 
             rs.close();
             st.close();
-
+            DoDBconn.releaseConnection(conn);
+            
             return listIds;
 
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            Notification.show("findMeAdminAndAllVolunteers(...)", Notification.Type.ERROR_MESSAGE);
             log.error(e.getMessage(), e);
             return null;
         }
@@ -232,9 +238,10 @@ public class GeneralRepo {
     public void updatePassword(String rawPwd, String userId) throws SQLException {
 
         log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
+        
         Connection conn = DoDBconn.createInvasiveConnection();
-
         PreparedStatement st;
+        
         try {
             st = conn.prepareStatement("UPDATE a_user SET password = ? WHERE id = " + userId);
             st.setBytes(1, securityService.encryptPassword(rawPwd));
@@ -245,8 +252,8 @@ public class GeneralRepo {
             DoDBconn.releaseConnection(conn);
 
         } catch (SQLException ex) {
+            
             log.error(ex.getMessage(), ex);
-//            Notification.show("nieco sa pokazilo pri update hesla!", Notification.Type.ERROR_MESSAGE);
             throw new SQLException();
         }
     }
@@ -286,14 +293,7 @@ public class GeneralRepo {
                 slavesIdsMap.put(slv, slvIds);
 
             }
-//            //deaktivuj otrokov: - netreba vid. prvy riadok.
-//            for (String key : slavesIdsMap.keySet()) {
-//
-//                slvIds = slavesIdsMap.get(key);
-//                for (Integer aid : slvIds) {
-//                    genRepo.deactivateOne(key, aid);
-//                }
-//            }
+            
             //      najdime dalsich pod-otrokov:
             for (String key : slavesIdsMap.keySet()) {
                 slvIds = slavesIdsMap.get(key);
@@ -399,7 +399,10 @@ public class GeneralRepo {
 //    POMOCNE FUNKCIE:
     //************************************************
     /**
-     * pomocna metoda pre filtrovanie
+     * pomocna metoda pre filtrovanie. Najde zoznam id pre dany resultset.
+     * 
+     * @param rs
+     * @return 
      */
     private List<Integer> fillListIds(ResultSet rs) {
 
@@ -422,6 +425,13 @@ public class GeneralRepo {
         }
     }
 
+    /**
+     * Vytvori instanciu zmeny, pre deaktivaciu daneho riadku v tabulke tn.
+     * 
+     * @param tn
+     * @param rowId
+     * @return 
+     */
     public A_Change createDeactivateChangeToPersist(String tn, Integer rowId) {
 
         A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
@@ -449,6 +459,14 @@ public class GeneralRepo {
 
     }
 
+    
+    /**
+     * Tato metoda inicializuje tj. vytvori uzivatel admin. a zmeni hesla uzivatelov
+     * pridanych cez skript (.._initB.sql).
+     * Je to z toho dvovodu, ze mysql md5() vytvori(koduje) nieco uplne ine ako 
+     * Java md5(). Nemam cas riesit preco, takze riesim to takto.
+     * 
+     */
     public void initAdmin() {
 
         byte[] encPassword;
@@ -468,7 +486,6 @@ public class GeneralRepo {
 
         //user Role:
         A_UserRole urole = new A_UserRole();
-        
 
         urole.setUser_id(admin.getId());
         urole.setRole_id(2);
@@ -486,6 +503,6 @@ public class GeneralRepo {
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
         }
-        
+
     }
 }

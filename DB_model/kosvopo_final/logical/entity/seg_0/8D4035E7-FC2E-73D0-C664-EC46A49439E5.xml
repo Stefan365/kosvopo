@@ -1,0 +1,170 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="8D4035E7-FC2E-73D0-C664-EC46A49439E5" name="CHANGE">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 00:58:23 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>CHG</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="date_stamp" id="B99EAE11-6D31-E88D-1F4F-10EA30EF68A7">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 00:58:53 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+</Attribute>
+<Attribute name="table_name" id="F2AEFF1E-96A1-0D15-9D6A-ED84786384FC">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 00:59:06 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Attribute>
+<Attribute name="column_name" id="579BFB9F-365A-D3FF-580D-6FAF1D5A82EC">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-07 22:09:35 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Attribute>
+<Attribute name="row_id" id="EDD736A3-EE8B-8769-32B9-9C8DE91839C2">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 00:59:53 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Attribute>
+<Attribute name="old_value" id="5526E7E5-929F-EB9E-E555-FE30364D8DD9">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 01:57:48 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT029</logicalDatatype>
+</Attribute>
+<Attribute name="new_value" id="096AC0B9-1C9F-C74B-0CE9-2C93F539C764">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-07 22:10:10 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT029</logicalDatatype>
+</Attribute>
+<Attribute name="active" id="720D6222-A1F4-9EC6-30F6-48AB2E5A930B">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-07 22:03:37 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+</Attribute>
+<Attribute name="since" id="BB364BC8-DF83-7A6E-0F1E-357A4D9F68A0">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-07 22:06:14 UTC</createdTime>
+<generatorID>39AA9B8C-3963-E36A-2654-B6A4A4859A52</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<referedAttribute>62C5067F-E354-474B-D318-B7C01995224A</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+</Attribute>
+<Attribute name="location_name" id="5F3F1F6D-466F-5581-7F85-13C2C398657F">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-27 20:01:33 UTC</createdTime>
+<generatorID>19E85E4C-16EA-D5BF-3E71-BE6A1AF5A185</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>351277B9-27E1-B5B7-DAFD-B64DDA107F91</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Attribute>
+<Attribute name="name" id="CD6D1E8D-D0FF-34C3-A2E5-A3F29418AE06">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-27 20:10:35 UTC</createdTime>
+<generatorID>19E85E4C-16EA-D5BF-3E71-BE6A1AF5A185</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>8152A978-866C-B5E6-5149-A6D7B10668AF</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80</dataTypeSize>
+</Attribute>
+<Attribute name="role" id="D212D3E3-8EC2-E545-F8AE-55A34E9A79F6">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-27 20:12:31 UTC</createdTime>
+<generatorID>39AA9B8C-3963-E36A-2654-B6A4A4859A52</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<referedAttribute>9E77E415-5220-486D-DE90-93F4FDCCF579</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT018</logicalDatatype>
+</Attribute>
+<Attribute name="login" id="911CF0D0-DFC6-50C2-0FCD-DE2853528086">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-27 20:13:38 UTC</createdTime>
+<generatorID>39AA9B8C-3963-E36A-2654-B6A4A4859A52</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<referedAttribute>54AA3526-AD3C-D227-162C-791A06CB6A84</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+</Attribute>
+</attributes>
+</Entity>

@@ -1,0 +1,64 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="AE225834-24C4-154B-AF45-F167DC842F6B" name="A_HIERARCHY">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:18:05 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="10AC40DF-3209-9562-2B64-6B5996DA6316">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:18:29 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="table_name" id="3E213FC6-9927-5604-CB95-4924D3EBEABB">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:18:29 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="boss_table" id="3753B5E0-43F7-CBBC-650B-B44BC8B25DE0">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:18:29 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="boss_reference" id="E759037C-AD33-F3C7-AD66-ECBB33417BBC">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:18:29 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="74D7AB32-FA36-63C6-E14A-43ADA163724B" name="hie_PK">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:18:29 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="10AC40DF-3209-9562-2B64-6B5996DA6316"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

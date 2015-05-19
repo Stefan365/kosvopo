@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="AC514D59-21EF-9BFF-B6F2-92E32AFC050C" name="A_USER">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:00:34 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<abbreviation>USR</abbreviation>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="037FA105-5131-0D12-13E9-0EEB6ED18F2C">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:05:12 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="first_name" id="8D9E526A-661C-95A2-7589-94088B8A49C4">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:05:12 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="last_name" id="AA8E9D8C-1DDA-4E86-ABD3-5907D109F917">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:05:12 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="e_mail" id="92FEE67B-9D2D-FAC0-E7B0-93A2CED99DC3">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:05:12 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="login" id="0224951E-E6E6-CE86-7E12-93F0FBF23F1B">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:05:12 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="password" id="F70F5A69-82E2-3EF7-570A-05B13A0BA342">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:05:12 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT029</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="active" id="DA8154A0-4F49-8149-5F60-0B6B4549D975">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-07 21:47:43 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="E0EC0AB3-3E4B-2D9E-B51B-A66A5B84C10C" name="usr_PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 21:05:12 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="037FA105-5131-0D12-13E9-0EEB6ED18F2C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E32CD588-C2E5-2D60-CCE7-42D5D4E89F90" name="T_NOTE">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:13:29 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="F0D4FD11-E063-9D9A-0DD0-E979E5876A54">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:13:55 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="table_name" id="2668022F-C373-116B-7D14-8839AED8084D">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:13:55 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="table_row_id" id="44512BB9-24F8-BF14-8F3E-E0FF7375029D">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:13:55 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="title" id="441B862F-E083-B310-E5E9-FECBA46A6214">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:17:03 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="note_date" id="9DBC8B84-EE39-8CDC-A2BE-FDACE109B3B6">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:13:55 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="note" id="214F1735-48F1-9509-FB79-9F5AA826E0E0">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:13:55 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="visible" id="CC6737E4-5987-342A-1CB2-4968714DB11F">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:13:55 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="7BC0AF95-DFA3-2FD9-FACE-02823931572A" name="not_PK">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 22:13:55 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F0D4FD11-E063-9D9A-0DD0-E979E5876A54"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5C997B9E-D989-FDFF-AC91-4A30ED7E0A57" name="A_ROLE">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:29:03 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<abbreviation>rol</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="884C0580-71E9-DB66-FCDD-46682C632178">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:31:49 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="role" id="C7CA1D1F-54F0-5273-2D06-B5FD7AFD20D0">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:31:49 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT018</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="role_name" id="336480E2-18A7-89DB-C430-0AC07E4FF598">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:31:49 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="rights_description" id="2B2F23B9-A5B1-B9DE-953E-A21D4225BAFF">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:31:49 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="active" id="BC37CC90-FE3D-ED98-AFA0-559DC1F33FE6">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:31:49 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="C20A5BB0-5BA5-0879-918A-0276FFFDC9E3" name="rol_PK">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:31:49 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="884C0580-71E9-DB66-FCDD-46682C632178"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

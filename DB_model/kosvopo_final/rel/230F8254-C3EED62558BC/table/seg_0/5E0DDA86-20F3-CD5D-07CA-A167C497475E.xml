@@ -1,0 +1,60 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5E0DDA86-20F3-CD5D-07CA-A167C497475E" name="T_THEME">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:22:10 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="E508FDC1-AB45-39F8-43B1-B5E32778AA53">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:24:00 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="brief_description" id="F690B9F7-EC7A-2580-467B-CE3844C115BF">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:24:00 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="description" id="9F5605B1-51A0-41F8-2A39-0AA264558C4E">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:49:22 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="visible" id="D4D726DC-E0BD-2E39-8FFA-942130B13B73">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:24:00 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="EB22B669-E45A-7C9F-2CA9-3AAD6C6F0CB1" name="the_PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:24:00 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="E508FDC1-AB45-39F8-43B1-B5E32778AA53"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

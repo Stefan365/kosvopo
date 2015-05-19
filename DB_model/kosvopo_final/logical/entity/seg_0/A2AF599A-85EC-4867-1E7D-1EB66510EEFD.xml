@@ -1,0 +1,101 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A2AF599A-85EC-4867-1E7D-1EB66510EEFD" name="VOTE_OF_ROLE">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-19 20:27:54 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>VOR</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="decision" id="CE7DE792-E185-63B1-92D5-63E86425E089">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-19 20:29:32 UTC</createdTime>
+<comment>Za&lt;br/&gt;Proti&lt;br/&gt;Zdrzal_sa</comment>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+</Attribute>
+<Attribute name="date" id="07FC80BE-C18D-FDF4-770E-3C962E29B276">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-20 19:25:31 UTC</createdTime>
+<generatorID>89384552-CD13-A408-FAC2-107BE558F268</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<referedAttribute>82E9354A-557F-A0D1-398F-5A9318900388</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+</Attribute>
+<Attribute name="visible" id="983F8B2C-27D0-943B-E7A1-0415A0409909">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 01:49:35 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+</Attribute>
+<Attribute name="location_name" id="971A40D7-B4D7-8E61-A550-F19E91032893">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 04:24:26 UTC</createdTime>
+<generatorID>2F1D32E1-BD81-A453-CF0B-B057B8058C0E</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<referedAttribute>0192E18B-25F5-8BE3-C6E8-B0DE6E35F01E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Attribute>
+<Attribute name="name1" id="D42CC9B0-87F0-4819-2B70-49D0483BE9C0">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-27 20:10:35 UTC</createdTime>
+<generatorID>2F1D32E1-BD81-A453-CF0B-B057B8058C0E</generatorID>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<referedAttribute>9A59E62F-4D48-2120-4578-6E0B5F0D3EC1</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80</dataTypeSize>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="1B6F7B92-F0E9-B73D-5CA6-F75DE8300A64" name="T_VOTING_OF_ROLE PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-19 20:29:31 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<engineerTo>
+<item key="230F8254-2436-720B-48E5-C3EED62558BC" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>971A40D7-B4D7-8E61-A550-F19E91032893</attributeRef>
+<attributeRef>07FC80BE-C18D-FDF4-770E-3C962E29B276</attributeRef>
+<attributeRef>D42CC9B0-87F0-4819-2B70-49D0483BE9C0</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

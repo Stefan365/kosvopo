@@ -1,0 +1,137 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="23545763-AAEE-EC63-1940-5C544E98880B" name="T_VOTE">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:22:28 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<abbreviation>VOT</abbreviation>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="C81CAD91-075E-6435-0074-E3E92FB0D47E">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:23:32 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="vote_date" id="594A96CA-C11E-F0E8-2EDB-1F8D615E23A2">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:23:32 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="subject_id" id="4F7A6482-673C-AC52-DBA2-6D9E4E70365E">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:20:58 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>97401B75-3704-A5EB-660C-FFD292887611</delegate>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="52C646EB-B45F-3D9D-DA21-1BDE836CAC03" referredColumn="97401B75-3704-A5EB-660C-FFD292887611"/>
+</associations>
+</Column>
+<Column name="internal_nr" id="EE7155EE-BA14-8074-5A89-1F55F7103C7C">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:24:41 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="vote_result" id="474C6CF3-DFF8-AD4E-094C-A81B5253B810">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:24:41 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT018</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="for" id="9132178D-AF3A-75AA-9CE5-CD6025DB0FBF">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:25:49 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="againgst" id="90537C24-D00A-FC1C-7D0D-A8C8C42175D1">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:25:49 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="refrain" id="755FAEF0-FB31-A666-1008-ED8CF14DC402">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:25:49 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="absent" id="C65B7AAA-054D-A6ED-DBA9-C5CB471F13DB">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:26:31 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="visible" id="45FEEA17-FEF1-8DC6-D280-F05900AF5FE0">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:26:31 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B5A0D95F-6DE9-C658-A616-49574B74D14E" name="vot_PK">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-21 03:23:32 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="C81CAD91-075E-6435-0074-E3E92FB0D47E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="614DA4C3-B59C-DFF6-1A91-E7098EE220FB" name="vot_UN1">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:36:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="594A96CA-C11E-F0E8-2EDB-1F8D615E23A2"/>
+<colUsage columnID="4F7A6482-673C-AC52-DBA2-6D9E4E70365E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6314099E-E266-319D-7350-0E7D1E4C9392" name="vot_FK2">
+<createdBy>Stefan</createdBy>
+<createdTime>2013-06-22 20:20:58 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="4F7A6482-673C-AC52-DBA2-6D9E4E70365E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

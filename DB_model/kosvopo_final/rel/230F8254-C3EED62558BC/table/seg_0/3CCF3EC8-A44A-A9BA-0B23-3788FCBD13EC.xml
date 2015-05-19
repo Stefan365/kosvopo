@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3CCF3EC8-A44A-A9BA-0B23-3788FCBD13EC" name="T_DISTRICT">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:53:30 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="48071B48-BB2B-D7DD-02DA-9E016E42E100">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:54:25 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="district_name" id="772E7812-39F9-877E-9AC7-C8A42574F1FB">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:54:46 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="region_id" id="6EA4B5E4-5FC0-171D-1808-D5A03605A92C">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:59:13 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>7CBC4994-C21F-62F3-1E85-92F0A6F7A712</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AFE34E8F-19DE-3F41-ECB2-68917DC890C9" referredColumn="7CBC4994-C21F-62F3-1E85-92F0A6F7A712"/>
+</associations>
+</Column>
+<Column name="visible" id="DE4F502C-87F7-C0CB-E882-B480B728E545">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:55:00 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="2E199DB9-2B9A-558A-4B2B-7C5B5646802C" name="dis_PK">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:54:25 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="48071B48-BB2B-D7DD-02DA-9E016E42E100"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0FD5AA41-6E25-C417-5D55-EDA883FE5137" name="dis_FK">
+<createdBy>stefan</createdBy>
+<createdTime>2015-04-06 21:59:30 UTC</createdTime>
+<ownerDesignName>kosvopo_final</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6EA4B5E4-5FC0-171D-1808-D5A03605A92C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
