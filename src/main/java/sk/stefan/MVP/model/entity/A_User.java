@@ -5,6 +5,9 @@ import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Reprezentuje uzivatela nasho systemu.
+ */
 public class A_User implements Serializable, PresentationName {
 
     public static final long serialVersionUID = 1L;

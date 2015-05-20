@@ -5,10 +5,13 @@
  */
 package sk.stefan.MVP.model.service;
 
+import java.sql.SQLException;
 import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.enums.UserType;
 
 /**
- *
+ * Obsluhuje veci okolo prihlasovania a hesiel. 
+ * 
  * @author stefan
  */
 public interface SecurityService {
@@ -23,6 +26,10 @@ public interface SecurityService {
 
     public byte[] encryptPassword(String password);
     
-    
+    public byte[] getPassword(Integer id) throws SQLException;
+
+    public void updatePassword(String newPwd, String uid) throws SQLException;
+ 
+
     
 }

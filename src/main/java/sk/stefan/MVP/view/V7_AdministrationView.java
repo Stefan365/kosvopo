@@ -11,6 +11,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
@@ -33,9 +34,7 @@ import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.enums.UserType;
-import sk.stefan.ui.KosvopoUI;
 import sk.stefan.utils.ToolsNames;
 
 /**
@@ -113,6 +112,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
             nav.navigateTo(ToolsNames.decapit(Region.TN));
         });
         locBt = new Button(Location.PRES_NAME, (Button.ClickEvent event) -> {
+            Notification.show("VŠECHEN SPĚCH JEST OD ĎÁBLA!");
             nav.navigateTo(ToolsNames.decapit(Location.TN));
         });
 

@@ -5,9 +5,7 @@
  */
 package sk.stefan.MVP.model.service;
 
-import java.util.List;
 import sk.stefan.MVP.model.entity.A_User;
-import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.enums.UserType;
 
 /**
@@ -23,35 +21,6 @@ public interface UserService {
      */
     A_User getUserByLogin(String login);
     
-    /**
-     * Uloží nového nebo aktualizuje stávajícího uživatele. Vrací jeho aktuální
-     * verzi v databázi.
-     * @param user uživatel k uložení do databáze
-     * @return aktuální verzi uživatele
-     */
-    A_User save(A_User user);
-    
-    
-    /**
-     * Změní heslo uživatele.
-     * @param paramName
-     * @param paramValue
-     * @param user uživatel, ktermy ma jiz zmeneny vnitrni parametr hesla.
-     */
-    public void modifyPassword(String paramName, String paramValue, A_User user);
-    
-    /**
-     * Vrátí seznam všech uživatelů.
-     * @return seznam vrácených uživatelů.
-     */
-    List<A_User> getAllUsers();
-    
-    /**
-     * Smaže uživatele a jeho úkoly.
-     * @param user mazaný uživatel.     * 
-     */
-    public void delete(A_User user);    
-
     /**
      * Vrací hash hesla uživatele podle e-mailu.
      * @param login email uživatele

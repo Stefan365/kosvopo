@@ -5,6 +5,9 @@ import java.util.Date;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Resprezentuje vazbu medzi uzivatelom a rolou.
+ */
 public class A_UserRole implements PresentationName {
 
     public static final String TN = "a_user_role";

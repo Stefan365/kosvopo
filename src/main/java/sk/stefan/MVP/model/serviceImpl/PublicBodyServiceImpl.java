@@ -35,6 +35,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
 
     }
 
+    
     @Override
     public String getPublicBodyChief(PublicBody pb) {
 
@@ -66,17 +67,18 @@ public class PublicBodyServiceImpl implements PublicBodyService {
     }
 
     /**
+     * Vrati ids verejnych organov v danom okrese.
      *
-     * @param distrId
+     * @param districtId id okresu.
      * @return
      */
     @Override
-    public List<Integer> findNewPublicBodyIds(Integer distrId) {
+    public List<Integer> findPublicBodyIdsByDistrictId(Integer districtId) {
 
         List<Integer> pbIds;
 
         String sql = "SELECT pb.id FROM t_public_body pb WHERE pb.location_id IN "
-                + "(SELECT loc.id FROM t_location loc WHERE loc.district_id = " + distrId + " AND loc.visible = true) "
+                + "(SELECT loc.id FROM t_location loc WHERE loc.district_id = " + districtId + " AND loc.visible = true) "
                 + "AND pb.visible = true";
         pbIds = this.generalRepo.findIds(sql);
 
@@ -90,7 +92,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
      * @return
      */
     @Override
-    public List<Integer> findNewPublicBodyIdsByFilter(String tx) {
+    public List<Integer> findPublicBodyIdsByFilter(String tx) {
 
         List<Integer> pbIds;
 
@@ -109,7 +111,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
 
 
     @Override
-    public List<PublicBody> findNewPublicBodies(List<Integer> pbIds) {
+    public List<PublicBody> findPublicBodies(List<Integer> pbIds) {
         
         List<PublicBody> publicBodies = new ArrayList<>();
 

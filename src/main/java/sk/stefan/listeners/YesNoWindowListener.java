@@ -9,7 +9,7 @@ package sk.stefan.listeners;
 import com.vaadin.ui.Component.Event;
 
 /**
- * Listener por vsechna dialogova okna s vyberem yes/no
+ * Listener pre vsetky dialogove okna s vyberem yes/no
  *
  * @author stefan
  */

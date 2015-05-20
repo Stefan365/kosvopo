@@ -2,6 +2,10 @@ package sk.stefan.MVP.model.entity;
 
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Sirsi tematicky okruh ku ktoremu sa mozu(nemusia) hlasovania vztahovat
+ * (napr. skolstvo, uzemny rozvoj, etc).
+ */
 public class Theme implements PresentationName {
 
     public static final String TN = "t_theme";

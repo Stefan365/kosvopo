@@ -68,7 +68,7 @@ public class PublicPersonsLayout extends VerticalLayout implements Filterable {
     @Override
     public void applyFilter(List<Integer> ids) {
         
-        this.setPublicBodies(publicPersonService.findNewPublicPersons(ids));
+        this.setPublicBodies(publicPersonService.findPublicPersons(ids));
         
     }
 

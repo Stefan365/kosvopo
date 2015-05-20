@@ -20,18 +20,30 @@ public interface PublicRoleService {
     
     public List<PublicRole> getActualPublicRolesOfPublicPerson(PublicPerson pp);
     
-    public String getPublicBody(PublicRole pubRole);
+    public String getPublicBodyName(PublicRole pubRole);
     
-    public String getTenure(PublicRole pubRole);
+    public String getTenureName(PublicRole pubRole);
     
+    /**
+     * Vrati zoznam verejnych roli na zaklade ich ids.
+     * @param ids
+     * @return 
+     */
     public List<PublicRole> getPublicRoles(List<Integer> ids);
-    
+
     public List<Integer> findPublicRoleIdsByPubBodyId(Integer pbId);
     
     public List<Integer> findPublicRoleIdsByPubPersonId(Integer ppId);
 
     public List<Integer> findPublicRoleIdsByFilter(String tx);
 
+    /**
+     * Vrati aktualnu role verejne osoby v danom verejnom organe (pocita sa s tym
+     * ze teoreticky moze mat aj ine funkcie v inych organoch).
+     * @param pp
+     * @param pb
+     * @return 
+     */
     public PublicRole getActualRole(PublicPerson pp, PublicBody pb);
     
 }

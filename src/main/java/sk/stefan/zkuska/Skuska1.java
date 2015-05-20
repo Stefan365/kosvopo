@@ -28,13 +28,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.entity.A_Hierarchy;
 import sk.stefan.MVP.model.entity.Location;
-import sk.stefan.MVP.model.entity.PublicPerson2;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.Document;
 import sk.stefan.MVP.model.entity.District;
@@ -567,7 +565,7 @@ public class Skuska1<T> {
             Calendar s = new GregorianCalendar();
             //System.out.format("SYSTEM CALENDAR: %s %n", s);
 
-            UniRepo<PublicPerson2> pp2Repo = new UniRepo<PublicPerson2>(PublicPerson2.class);
+            UniRepo<PublicPerson> ppRepo = new UniRepo<PublicPerson>(PublicPerson.class);
 //			PublicPerson2 pp2 = new PublicPerson2();
 //			pp2.setFirst_name("Kamilko");
 //			pp2.setLast_name("Maly");
@@ -575,7 +573,7 @@ public class Skuska1<T> {
 //			pp2.setDate_of_birth(new Date());
 //			pp2 = pp2Repo.save(pp2);
 
-            List<PublicPerson2> lpp2 = pp2Repo.findByParam("visible", "TRUE");
+            List<PublicPerson> lpp2 = ppRepo.findByParam("visible", "TRUE");
             if (lpp2 != null) {
                 log.info("VELKOST: " + lpp2.size());
             }
@@ -1300,7 +1298,7 @@ public class Skuska1<T> {
             SQLContainer sqlCont = DoDBconn.createSqlContainera("t_public_person");
 //            UniRepo<PublicPerson> ppRepo = new UniRepo<>(clsE);
             item = sqlCont.getItem(new RowId(new Object[]{ppId}));
-            pp = uniTabSrv.getObjectFromItem(item, mapPar);
+            pp = uniTabSrv.getEntFromItem(item, mapPar);
 
             log.info("pp " + pp.getId());
             log.info("pp " + pp.getFirst_name());

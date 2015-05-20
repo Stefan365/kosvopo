@@ -4,11 +4,11 @@ import javax.servlet.ServletContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-public class SpringContextHelper {
+public class ZBD_SpringContextHelper {
 
     private final ApplicationContext context;
     
-    public SpringContextHelper(ServletContext servletContext) {
+    public ZBD_SpringContextHelper(ServletContext servletContext) {
         /*ServletContext servletContext = 
                 ((WebApplicationContext) application.getContext())
                 .getHttpSession().getServletContext();*/

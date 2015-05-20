@@ -6,13 +6,21 @@
 package sk.stefan.MVP.model.service;
 
 /**
- *
+ * Obsluhuje vstupny view.
+ *  
  * @author stefan
  */
 public interface EnterViewService {
     
+    /**
+     * Zistuje, ci je v DB user admin.
+     * @return 
+     */
     public Boolean isThereAdmin();
 
+    /**
+     * Pokial nieje tak ho touto metodou vytvori.
+     */
     public void initAdmin();
     
 }

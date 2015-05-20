@@ -15,6 +15,11 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.utils.ToolsFiltering;
 
+/**
+ * Timeline na zobrazenie hlasovani.
+ * este treba dokoncit ten debilny graf, co tam vobec nieje treba
+ * a popisky pri prejdeni mysou.
+ */
 @SuppressWarnings("serial")
 public final class MyTimeline extends Timeline {
 

@@ -1,24 +1,17 @@
 package sk.stefan.utils;
 
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import static javax.servlet.SessionTrackingMode.URL;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_Role;
 import sk.stefan.MVP.model.entity.A_User;
@@ -33,10 +26,10 @@ import sk.stefan.MVP.model.entity.Subject;
 import sk.stefan.MVP.model.entity.Tenure;
 import sk.stefan.MVP.model.entity.Theme;
 import sk.stefan.MVP.model.entity.Vote;
-import sk.stefan.enums.UserType;
 
 /**
- * Trida obsahujici pomocne metody pro vytvareni GUI
+ * 
+ * Abstr. trieda s pomocnymi statickymi metodami tykajucimi nazvoslovia.
  *
  */
 public abstract class ToolsNames {
@@ -146,31 +139,31 @@ public abstract class ToolsNames {
         return properties;
     }
 
-    /**
-     * Vrati mapu nazvov uzovatelov vhodnu pre ucely logout.
-     *
-     * @return
-     */
-    public static Map<String, Integer> getUserTypes() {
-
-        try {
-            Class<?> cls = UserType.class;
-            Method getNm = cls.getDeclaredMethod("getNames");
-            Method getOm = cls.getDeclaredMethod("getOrdinals");
-            @SuppressWarnings("unchecked")
-            List<String> names = (List<String>) getNm.invoke(null);
-            @SuppressWarnings("unchecked")
-            List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
-
-            Map<String, Integer> map = ToolsNames.makeEnumMap(names, ordinals);
-            return map;
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
-                NoSuchMethodException | SecurityException ex) {
-            log.error(ex.getMessage(), ex);
-            return null;
-        }
-
-    }
+//    /**
+//     * Vrati mapu nazvov uzivatelov vh.
+//     *
+//     * @return
+//     */
+//    public static Map<String, Integer> getUserTypes() {
+//
+//        try {
+//            Class<?> cls = UserType.class;
+//            Method getNm = cls.getDeclaredMethod("getNames");
+//            Method getOm = cls.getDeclaredMethod("getOrdinals");
+//            @SuppressWarnings("unchecked")
+//            List<String> names = (List<String>) getNm.invoke(null);
+//            @SuppressWarnings("unchecked")
+//            List<Integer> ordinals = (List<Integer>) getOm.invoke(null);
+//
+//            Map<String, Integer> map = ToolsNames.makeEnumMap(names, ordinals);
+//            return map;
+//        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
+//                NoSuchMethodException | SecurityException ex) {
+//            log.error(ex.getMessage(), ex);
+//            return null;
+//        }
+//
+//    }
 
     //5.
     /**

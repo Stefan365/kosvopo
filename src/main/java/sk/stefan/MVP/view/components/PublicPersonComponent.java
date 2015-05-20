@@ -12,7 +12,6 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import sk.stefan.MVP.model.entity.PublicPerson;
 import sk.stefan.MVP.model.service.PublicPersonService;
 
@@ -33,6 +32,7 @@ public class PublicPersonComponent extends HorizontalLayout{
     //graficke komponenty:
     private Label menoLb;
     private Label datumNarodeniaLb;
+    
     //implementovat neskvor
     private Embedded photoEm;    
     

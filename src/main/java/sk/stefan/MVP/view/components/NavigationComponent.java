@@ -11,6 +11,11 @@ import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 
+
+/**
+ * Komponenta pripojena na MainView, obsahujuca navigacne tlacitka (login, Hlasovania, etc...)
+ * 
+ */
 public class NavigationComponent extends HorizontalLayout {
 
     /**
@@ -30,9 +35,6 @@ public class NavigationComponent extends HorizontalLayout {
      *
      * @param nav
      */
-    static {
-    
-    }
     private NavigationComponent(Navigator nav) {
 
         this.securityService = new SecurityServiceImpl();
@@ -112,10 +114,6 @@ public class NavigationComponent extends HorizontalLayout {
 
 
         b1.setStyleName(BaseTheme.BUTTON_LINK);
-//        b4s.setStyleName(BaseTheme.BUTTON_LINK);
-//        b3s.setStyleName(BaseTheme.BUTTON_LINK);
-//        b6s.setStyleName(BaseTheme.BUTTON_LINK);
-//        b7.setStyleName(BaseTheme.BUTTON_LINK);
 
         this.setSpacing(true);
         this.setMargin(true);

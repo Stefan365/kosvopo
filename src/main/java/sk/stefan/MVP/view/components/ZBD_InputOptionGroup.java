@@ -14,14 +14,16 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Nevyuzita komponenta.
+ * Nevyuzita komponenta. povodne myslen na prihlasovanie, kedy mal jeden user 
+ * naraz viacero platnych roli,
+ * ale nas system to nepodporuje.
  *
  * @author stefan
  * @param <E>
  */
-public final class InputOptionGroup<E> extends OptionGroup {
+public final class ZBD_InputOptionGroup<E> extends OptionGroup {
 
-    private static final Logger log = Logger.getLogger(InputOptionGroup.class);
+    private static final Logger log = Logger.getLogger(ZBD_InputOptionGroup.class);
     private static final long serialVersionUID = 1L;
 
     /**
@@ -55,7 +57,7 @@ public final class InputOptionGroup<E> extends OptionGroup {
      * @param fn Field name
      * @param map Slovník reprezentativní jméno/entita
      */
-    public InputOptionGroup(FieldGroup fg, String fn, Map<String, E> map) {
+    public ZBD_InputOptionGroup(FieldGroup fg, String fn, Map<String, E> map) {
 
         super(fn);
         this.fn = fn;
@@ -77,7 +79,7 @@ public final class InputOptionGroup<E> extends OptionGroup {
      *
      * @param map Slovník reprezentativní jméno/entita
      */
-    public InputOptionGroup(Map<String, E> map) {
+    public ZBD_InputOptionGroup(Map<String, E> map) {
 
 
         this.map = map;

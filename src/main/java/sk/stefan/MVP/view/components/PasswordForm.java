@@ -12,15 +12,14 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.service.PasswordService;
 import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.serviceImpl.PasswordServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.listeners.RefreshViewListener;
 
 /**
+ * Formular na vkladanie noveho hesla / zmenu hesla.
  *
  * @author stefan
  */
@@ -33,11 +32,8 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     private PasswordField newPwd1Tf;
     private PasswordField newPwd2Tf;
 
-    private final Item item;
-
     private final Integer userId;
 
-    private final PasswordService passwordService;
     private final SecurityService securityService;
 
     private final OkCancelListener okCancelListener;
@@ -61,10 +57,8 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
         this.obnovFilterListener = (ObnovFilterListener) cp;
         this.refreshViewListener = (RefreshViewListener) cp;
 
-        this.item = it;
         this.securityService = new SecurityServiceImpl();
-        this.passwordService = new PasswordServiceImpl();
-//        this.genRepo = new GeneralRepo();
+        
         this.userId = uid;
         this.initLayout();
     }
@@ -83,26 +77,21 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     }
 
     /**
-     *
+     * Overi stare heslo, ci bolo zadane spravne.
      */
     private boolean verifyPassword(String rawOldPwd, Integer uid) {
         //1. podmienka: stare heslo je spravne.
-//        item.getItemProperty("id").getValue()
         boolean isOldGood;
         //pokial je novy,  je to ok.
         try {
             if (uid == null) {
                 isOldGood = true;
             } else {
-                byte[] pwd = passwordService.getPassword(uid);
+                byte[] pwd = securityService.getPassword(uid);
                 isOldGood = securityService.checkPassword(rawOldPwd, pwd);
                 log.info("IS OLD GOOD: " + (isOldGood));
             }
-            return isOldGood && newPwd1Tf.getValue().equals(newPwd2Tf.getValue());//                addToDB(newPwd1Tf.getValue(), "" + id);
-//                Notification.show("heslo úspešne zmenené!");
-//                return true;
-//                Notification.show("Zmena hesla sa nepodatila !");
-            //return Boolean.TRUE;
+            return isOldGood && newPwd1Tf.getValue().equals(newPwd2Tf.getValue());
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);
             Notification.show("Overovanie hesla sa nepodarilo");
@@ -121,7 +110,6 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
         if (userId != null) {
             rawOldPwd = oldPwdTf.getValue();
             isOldPassValid = this.verifyPassword(rawOldPwd, userId);
-//           this.passwordService.updatePassword(rawNewPwd, userId + "");
 
         } else {
             isOldPassValid = this.verifyPassword(rawOldPwd, userId);
@@ -147,7 +135,6 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     public void doCancelAction() {
         this.okCancelListener.doCancelAction();
 //        this.forWindowListener.doOkAction();
-        //do nothing
     }
 
     

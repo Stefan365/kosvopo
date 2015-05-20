@@ -41,7 +41,7 @@ public class PublicPersonServiceImpl implements PublicPersonService {
      * @return
      */
     @Override
-    public List<Integer> findNewPublicPersonsIds(String name) {
+    public List<Integer> findPublicPersonsIdsByFilter(String name) {
 
         List<Integer> ppIds;
 
@@ -54,7 +54,7 @@ public class PublicPersonServiceImpl implements PublicPersonService {
     }
 
     @Override
-    public List<PublicPerson> findNewPublicPersons(List<Integer> ppIds) {
+    public List<PublicPerson> findPublicPersons(List<Integer> ppIds) {
         
         List<PublicPerson> publicPersons = new ArrayList<>();
 

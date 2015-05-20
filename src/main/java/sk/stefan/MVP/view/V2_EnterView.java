@@ -8,16 +8,11 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.A_User;
-import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.EnterViewService;
-import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.EnterViewServiceImpl;
-import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
-//import sk.stefan.MVP.view.components.MyTimeline;
 
 /**
- * 
+ * Vstupny View. 
  */
 public class V2_EnterView extends VerticalLayout implements View {
 
@@ -32,9 +27,6 @@ public class V2_EnterView extends VerticalLayout implements View {
     private final V2_EnterView thiss;
     
     
-//    private final MyTimeline timeline;
-
-
     /**
      * 
      */
@@ -48,9 +40,6 @@ public class V2_EnterView extends VerticalLayout implements View {
         this.initlayout();
         this.initAdminButton();
         
-        
-//        this.timeline = new MyTimeline();
-//        this.addComponent(timeline);
         
     }
 
@@ -88,10 +77,11 @@ public class V2_EnterView extends VerticalLayout implements View {
         log.info("IS THERE ADMIN:" + isThereAdm);
         
         if (!isThereAdm){
+            
             this.addComponent(initAdminBt);
         } else if(initAdminBt != null){
+            
             this.removeComponent(initAdminBt);
-//            this.initAdminBt = null;
         }
         
     }

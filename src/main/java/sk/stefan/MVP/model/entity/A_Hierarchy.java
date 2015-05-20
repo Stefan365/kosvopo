@@ -7,7 +7,10 @@ package sk.stefan.MVP.model.entity;
 
 
 /**
- *
+ * Trieda zachytavajuca hierarchicke vztahy mezdi statnymi entitami. 
+ * Jej Vyhodou je, ze pokial chceme niektory hierarchicky vztah ignorovat,
+ * prote ho pomocou tejto triedy nezapiseme.
+ * 
  * @author stefan
  */
 public class A_Hierarchy {

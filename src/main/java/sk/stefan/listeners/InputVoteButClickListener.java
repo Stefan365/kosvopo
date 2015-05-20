@@ -13,6 +13,9 @@ import sk.stefan.MVP.view.components.UniDlg;
 import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
 
 /**
+ * Specialny listener pre tlacitko vlozenia Hlasovania, pretoze v tomto secialnom 
+ * pripade je komponenta zlozena ako z formulara pre samotne hlasovanie, tak i podformulara 
+ * s hlasovanim jednotlivych osob, vid obrazok z okazky v texte prace.
  *
  * @author stefan
  */

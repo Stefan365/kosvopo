@@ -22,9 +22,18 @@ import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.interfaces.MyRepo;
 import sk.stefan.utils.ToolsDao;
 
+/**
+ * Vrstva komunikujuca s na jednej strane s databazovymi nastrojmi (jdbc)
+ * a na druhej strane so systemom (servisom).
+ * 
+ * Je specificka pre tu ktory entitu - preto genericky typ a reflexia.
+ * 
+ * @param <E>
+ */
 public class UniRepo<E> implements MyRepo<E> {
 
     private static final Logger log = Logger.getLogger(UniRepo.class);
+    
     // table name:
     private final String TN;
     private final Class<?> clsE;
@@ -349,9 +358,9 @@ public class UniRepo<E> implements MyRepo<E> {
     // 5.B
     /**
      * deaktivuje len 1 entitu. pokial potrebujete deaktivovat cely strom
-     * zavislych entit, pouzite generalRepo...deactivateAll
-     * Asi je to zbytocna metoda, staci pouzivat generalRepo...deactive...
-     * potom vyhodit.
+     * zavislych entit, pouzite generalRepo...deactivateAll.
+     * 
+     * Preco existuju obe, vid vysvetlenie v generalRepo..deactivate...
      *
      * @param ent
      * @param noteChange
@@ -469,7 +478,10 @@ public class UniRepo<E> implements MyRepo<E> {
     
 //**************    POMOCNE METODY: *************************   
     /**
-     *
+     * Vytvara databazovy preparedStatement pre save(). 
+     * 
+     * Tymto sposobom preto, lebo metody statementu su zavisle od triedy.
+     * 
      * @param mapPar
      * @param conn
      * @param sql
@@ -501,12 +513,15 @@ public class UniRepo<E> implements MyRepo<E> {
                 if ("id".equals(pn)) {
                     continue;
                 }
-//                st.setd
+//                setter pre prepared statemet:
                 stMetName = ToolsDao.getSetterForPreparedStatement(mapPar.get(pn));
+//                medzi typom v statemente a typom v java entite je rozdiel, 
+//                tj. spravny typ sa musi namapovat:  
                 pomCls = ToolsDao.transformToPrimitive(mapPar.get(pn));
+                
 //                log.info("STAT MET NAME: " + stMetName);
                 stMethod = stCls.getMethod(stMetName, int.class, pomCls);
-//                stMethod = stCls.getMethod(stMetName, int.class, mapPar.get(pn)); //nefunguje
+//                stMethod = stCls.getMethod(stMetName, int.class, mapPar.get(pn)); //nefunguje, vid vyssie
 
                 entMetName = ToolsDao.getG_SetterName(pn, "get");
                 entMethod = clsE.getMethod(entMetName);
@@ -514,11 +529,11 @@ public class UniRepo<E> implements MyRepo<E> {
                 Object o = entMethod.invoke(ent);
                 String namec = (mapPar.get(pn)).getCanonicalName();
 //                log.info("DATUM1: " + namec + " : " + o);
-
+                
+//                dalsie nestandardne typy metod preparedStatementu:
                 if (o == null) {
                     st.setNull(i, Types.NULL);
                 } else if ("java.util.Date".equals(namec) || "java.sql.Date".equals(namec)) {
-
                     date = formatter.format(o);
                     log.info("DATUM: " + date);
                     st.setString(i, date);
@@ -526,14 +541,14 @@ public class UniRepo<E> implements MyRepo<E> {
                     Integer sh = ToolsDao.getShortFromEnum(mapPar.get(pn), o);
                     st.setInt(i, sh);
                 } else {
-//                    o = ToolsDao.transformToAppropValue(o, mapPar.get(pn));
                     stMethod.invoke(st, i, o);
                 }
                 i++;
 
             }
-//            st.setString(5, inputDate);
+            
             return st;
+            
         } catch (IllegalAccessException |
                 SecurityException | NoSuchMethodException |
                 IllegalArgumentException | InvocationTargetException | SQLException e) {
@@ -545,7 +560,7 @@ public class UniRepo<E> implements MyRepo<E> {
     }
 
     /**
-     * Creates Insert Query for
+     * Vytvara SQL dotaz.
      *
      * @param mapPar
      * @return
@@ -579,12 +594,11 @@ public class UniRepo<E> implements MyRepo<E> {
             String sql = String.format("INSERT INTO %s %s VALUES %s", TN,
                     insert1.toString(), insert2.toString());
 
-//            Statement st = conn.prepareStatement(sql);
             log.debug("SQL:*" + sql + "*");
             return sql;
 
         } catch (SecurityException ex) {
-//            Notification.show("Chyba, create Insert", Type.ERROR_MESSAGE);
+            
             log.error(ex.getMessage(), ex);
             return null;
         }
@@ -635,7 +649,7 @@ public class UniRepo<E> implements MyRepo<E> {
     }
 
     /**
-     * funkce na naplneni entity.
+     * metoda na naplnenie entity z navratoveho objektu Db(resultset).
      *
      * @param rs
      * @return
@@ -652,7 +666,7 @@ public class UniRepo<E> implements MyRepo<E> {
     }
 
     /**
-     * naplna zoznam entit
+     * naplna zoznam entit. vid vyssie.
      *
      * @param rs
      * @return
@@ -762,7 +776,6 @@ public class UniRepo<E> implements MyRepo<E> {
 
             String entMetName = "getId";
             Method entMethod = clsE.getMethod(entMetName);
-//            boolean novy = entMethod.invoke(ent) == null;
             return (Integer) entMethod.invoke(ent);
 
         } catch (IllegalAccessException | SecurityException | NoSuchMethodException |
@@ -801,6 +814,19 @@ public class UniRepo<E> implements MyRepo<E> {
 
 //******************** auxiliary  methods for saving change into database **************
     
+    /**
+     * Metoda vytiahne z entity hodnoty a ulozi ich do mapy. kde:
+     * key = nazov parametru entity a
+     * value = objekt jeho hodnoty.
+     * 
+     * Vyuziva sa pri hladani zmien pri pouziti metody save() (pretoze nie vsetky 
+     * parametre entity museli byt pred jej ulozeniim zmenene.)
+     * aby sa vedelo, aka zmena sa ma do DB ulozit.
+     * 
+     * @param ent
+     * @param mapPar
+     * @return 
+     */
     private Map<String, Object> getEntityValues(E ent, Map<String, Class<?>> mapPar) {
 
         Map<String, Object> valuesAsObjects = new HashMap<>();
@@ -830,13 +856,16 @@ public class UniRepo<E> implements MyRepo<E> {
     }
 
     /**
+     * Vrati zoznam zmien danej entity (v porovnani pred a po ulozeni do DB). 
      *
      * @param entOrigin entity before change from DB. if entChanged is new, this
      * is null.
      * @param entChanged must be after saving to database (i.e must have an
      * id,also for new entity)
-     * @param mapPar
-     * @return
+     * @param mapPar key = parameter name, value = class of that parameter
+     * 
+     * @return list of changes.
+     * 
      */
     private List<A_Change> createChangesToPersist(E entOrigin, E entChanged, Map<String, Class<?>> mapPar) {
 
@@ -887,6 +916,7 @@ public class UniRepo<E> implements MyRepo<E> {
     }
 
     /**
+     * Vrati zmenu z deaktivacie entity.
      *
      * @param entChanged
      * @return
@@ -922,6 +952,7 @@ public class UniRepo<E> implements MyRepo<E> {
     }
 
     /**
+     * Vracia zmenu(objekt) zo zmeny hodnoty parametra entity.
      *
      * @param paramName
      * @param paramNewValue

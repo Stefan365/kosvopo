@@ -28,7 +28,10 @@ import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.utils.ToolsFiltering;
 
 /**
- * zahrna metody, ktore su univerzalne, ale nie su zavisle od Triedy entity.
+ * Vrstva komunikujuca s na jednej strane s databazovymi nastrojmi (jdbc)
+ * a na druhej strane so systemom (servisom).
+ * 
+ * Zahrna metody, ktore nie su zavisle od Triedy entity.
  *
  * @author stefan
  */
@@ -104,7 +107,8 @@ public class GeneralRepo {
     }
 
     /**
-     * For specific filtering purposes.
+     * Specificka metoda pre filtrovacie ucely. 
+     * Vrati id pre dany sql dotaz.
      *
      * @param sql
      * @return 
@@ -138,7 +142,13 @@ public class GeneralRepo {
     }
 
     /**
-     * Najde hladane parametre vo vsetkych tabulkach.
+     * Najde hladane parametre vo vsetkych tabulkach. 
+     *
+     * Kryje sa sice s metodou findbyparam triedy UniRepo, 
+     * ale viac vyhovuje poziadavkam na automaticku deaktivaciu 
+     * entit pri deaktivacii korenovej entity. 
+     * Pretoze tato deaktivacia bude dennym chlebom, ponechavam 
+     * aj tuto specifickejsiu metodu.
      *
      * @param tn
      * @param paramName
@@ -258,7 +268,6 @@ public class GeneralRepo {
         }
     }
 
-    //6.
     /**
      * Deaktivuje cely strom entit, pricom vrcholom stromu je entita na vstupe.
      *
@@ -307,6 +316,11 @@ public class GeneralRepo {
     /**
      * POZOR!!! NEpouzivat na inom mieste, inak sa musi preimplementovat aj
      * zapis do a_change!!!
+     * 
+     * Deaktivuje len parameter visible. Kryje sa sice s DeactivateOblyOne UniRepa,
+     * ale lepsie vyhovuje potrebam deaktivacie stromu entit (pretoze tam sa
+     * dopredu nevie akeho typu etita bude - to by robilo zbytocne probemy pri 
+     * tvorbe generickeho UniRepa.)
      *
      * @param tn
      * @param entId id entity, ktoru chceme deaktivovat.

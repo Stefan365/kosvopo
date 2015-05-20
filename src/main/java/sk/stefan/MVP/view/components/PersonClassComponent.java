@@ -11,7 +11,8 @@ import sk.stefan.MVP.model.entity.PersonClassification;
 import sk.stefan.MVP.model.service.ClassificationService;
 
 /**
- *
+ * Komponenta na zobrazonie klasifikacie verejnej osoby.
+ * 
  * @author stefan
  */
 public class PersonClassComponent extends GridLayout {
@@ -35,8 +36,6 @@ public class PersonClassComponent extends GridLayout {
 
         this.classificationService = pcls;
         this.personClass = pcl;
-//        this.publicPerson = pp;
-        
         
         this.initLayout();
         this.initListener();

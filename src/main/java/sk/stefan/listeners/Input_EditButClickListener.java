@@ -23,6 +23,7 @@ import sk.stefan.MVP.view.components.UniDlg;
 import sk.stefan.enums.NonEditableFields;
 
 /**
+ * Univerzalny listener pre input new / edit buttons.
  *
  * @author stefan
  */

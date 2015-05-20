@@ -3,6 +3,9 @@ package sk.stefan.MVP.model.entity;
 import java.sql.Date;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Volebne obdobie, vztahuje sa k verejnej roli.
+ */
 public class Tenure implements PresentationName {
 
     public static final String TN = "t_tenure";

@@ -2,6 +2,9 @@ package sk.stefan.MVP.model.entity;
 
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Trieda reprezentuje miesto v zmysle budto obec, alebo mestka cast obce.
+ */
 public class Location implements PresentationName {
 
     public static final String TN = "t_location";

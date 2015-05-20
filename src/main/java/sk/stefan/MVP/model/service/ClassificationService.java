@@ -11,17 +11,44 @@ import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteClassification;
 
 /**
+ * Ma na starosti klasifikaciu osob aj hlasovania.
  *
  * @author stefan
  */
 public interface ClassificationService {
 
+    /**
+     * Vrati zoznam vsetkych hodnoteni danej osoby. Vzdy len jedno bude aktualne,
+     * tj. hodnotenie osoby sa vyvija v case.
+     * 
+     * @param pclId
+     * @return 
+     */
     public List<PersonClassification> findNewPersonClass(List<Integer> pclId);
 
+    /**
+     * Najde aktualne hodnotenia verejnej osoby (malo by byt len jedno).
+     * 
+     * @param ppId
+     * @return 
+     */
     public List<Integer> findActualPersonClassIds(Integer ppId);
-
+    
+    /**
+     * Najde klasifikaciu hlasovania (bude len jedna, tj .nebude sa vyvijat v case).
+     * 
+     * @param votId
+     * @return 
+     */
     public VoteClassification findVoteClassByVoteId(Integer votId);
 
-    public Vote findVoteByVoteId(Integer id);
+    /**
+     * Najde hlasovanie podla jeho id. 
+     * toto by malo patrit do Vote repa, potom premiestnit.
+     * 
+     * @param votId
+     * @return 
+     */
+    public Vote findVoteByVoteId(Integer votId);
     
 }

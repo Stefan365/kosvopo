@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!--<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -31,7 +31,7 @@
 	<bean id="myProp" class="java.util.Properties"></bean>
  	
     <bean id="myRepo" class="com.app.dao.OrderDAO">
-		<!--<property name="jdbcTemplate" ref="myTempl"/> -->
+		<property name="jdbcTemplate" ref="myTempl"/> 
   		
         <constructor-arg ref="myTempl" />
 	</bean>
@@ -43,7 +43,7 @@
    
   <bean id="mojaBeana" class="spring2hello.Beana">
 		<property name="first_name" value="karolko"/>
-		<!--<constructor-arg ref="beerSource" /> -->
+		<constructor-arg ref="beerSource" /> 
  </bean>
 	
 	  <bean id="userBeana" class="spring2hello.User">
@@ -51,4 +51,4 @@
 			
 	 </bean>
 	
-</beans>
+</beans>-->

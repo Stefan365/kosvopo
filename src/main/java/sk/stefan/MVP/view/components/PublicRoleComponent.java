@@ -60,8 +60,8 @@ public class PublicRoleComponent extends HorizontalLayout {
         
         
         this.nameLb = new Label(pubRole.getPresentationName());
-        this.pubBodyLb = new Label(publicRoleService.getPublicBody(pubRole));
-        this.tenureLb = new Label(publicRoleService.getTenure(pubRole));
+        this.pubBodyLb = new Label(publicRoleService.getPublicBodyName(pubRole));
+        this.tenureLb = new Label(publicRoleService.getTenureName(pubRole));
         
         this.addComponents(nameLb, pubBodyLb, tenureLb);
         

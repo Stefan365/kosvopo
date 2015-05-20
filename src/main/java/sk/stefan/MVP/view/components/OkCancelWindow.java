@@ -15,7 +15,7 @@ import com.vaadin.ui.Window;
 import sk.stefan.listeners.OkCancelListener;
 
 /**
- * Komponenta pro potvrzovací dialog.
+ * Komponenta pre potvrzovací dialog.
  *
  * @author stefan
  *
@@ -89,7 +89,7 @@ public class OkCancelWindow extends Window {
     }
 
     /**
-     * Spuštění akce po stlačení YES.
+     * Spustenie akcie po stlačení YES.
      */
     public void onOk() {
         listener.doOkAction();

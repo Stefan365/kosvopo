@@ -3,6 +3,10 @@ package sk.stefan.MVP.model.entity;
 import sk.stefan.enums.UserType;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Reprezentuje rolu uzivatela systemu.
+ * 
+ */
 public class A_Role implements PresentationName {
 
     public static final String TN = "a_role";

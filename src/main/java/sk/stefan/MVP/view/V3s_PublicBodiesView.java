@@ -122,7 +122,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
             public void textChange(final FieldEvents.TextChangeEvent event) {
         
                 String tx = event.getText();
-                List<Integer> pbIds = publicBodyService.findNewPublicBodyIdsByFilter(tx);
+                List<Integer> pbIds = publicBodyService.findPublicBodyIdsByFilter(tx);
                 publicBodiesLayout.applyFilter(pbIds);
                 
             }

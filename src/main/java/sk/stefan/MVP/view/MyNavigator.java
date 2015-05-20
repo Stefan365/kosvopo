@@ -26,6 +26,7 @@ import sk.stefan.enums.NonEditableFields;
 import sk.stefan.utils.ToolsNames;
 
 /**
+ * Navigator upraveny pre nase ucely.
  *
  * @author stefan
  */
@@ -66,9 +67,6 @@ public class MyNavigator extends Navigator {
                         NonEditableFields.A_USER.getNonEditableParams(), false));
         
 
-//        this.addView(ToolsNazvy.decapit(A_UserRole.TN),
-//                new V8_UniEditableTableView<>(A_UserRole.class, 
-//                        NonEditableFields.A_USER_ROLE.getNonEditableParams(),true));
         
         //dobrovolnicke VIew
         this.addView(ToolsNames.decapit(District.TN),

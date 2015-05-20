@@ -3,6 +3,9 @@ package sk.stefan.MVP.model.entity;
 import java.util.Date;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Entita zachytavajuca akukolvek zmenu v databaze.
+ */
 public class A_Change implements PresentationName {
 
     public static final String TN = "a_change";

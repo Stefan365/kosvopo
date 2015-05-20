@@ -8,8 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.view.MainView;
 
+/**
+ * HLAVNA TRIEDA CELEHO SYSTEMU, OD KTOREJ SA VSETKO ODVIJA.
+ * 
+ */
 @com.vaadin.annotations.Theme("mytheme")
-//@com.vaadin.annotations.Theme("mytheme1")
 @SuppressWarnings("serial")
 public class KosvopoUI extends UI {
 
@@ -17,7 +20,6 @@ public class KosvopoUI extends UI {
 
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = KosvopoUI.class, widgetset="sk.stefan.ui.AppWidgetSet")
-//    @VaadinServletConfiguration(productionMode = false, ui = KosvopoUI.class)
     public static class Servlet extends VaadinServlet {
     }
 
@@ -26,7 +28,7 @@ public class KosvopoUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
-        
+        //V BUDUCNOSTI SA TU BUDE MOCT ZAVIEST SPRING.
 //        navComp = NavigationComponent.createNavigationComponent();
 //        SpringContextHelper helper = 
 //                new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());

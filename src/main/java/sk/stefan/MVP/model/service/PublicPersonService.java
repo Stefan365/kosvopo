@@ -9,15 +9,29 @@ import java.util.List;
 import sk.stefan.MVP.model.entity.PublicPerson;
 
 /**
+ * Obsluhuje verejnu osobu.
  *
  * @author stefan
  */
 public interface PublicPersonService {
     
+    /**
+     * @return 
+     */
     public List<PublicPerson> findAll();
 
-    public List<Integer> findNewPublicPersonsIds(String name);
+    /**
+     * Vrati zoznam ids verejnych osob na zaklade slova zo search line.
+     * @param name
+     * @return 
+     */
+    public List<Integer> findPublicPersonsIdsByFilter(String name);
     
-    public List<PublicPerson> findNewPublicPersons(List<Integer> ppIds);
+    /**
+     * Vrati zoznam verejnych osob na zaklade ich id.
+     * @param ppIds
+     * @return 
+     */
+    public List<PublicPerson> findPublicPersons(List<Integer> ppIds);
     
 }

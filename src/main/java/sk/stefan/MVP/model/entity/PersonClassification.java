@@ -6,6 +6,9 @@ import sk.stefan.enums.PublicUsefulness;
 import sk.stefan.enums.Stability;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Trida reprezentuje hodnotenie verejnej osoby.
+ */
 public class PersonClassification implements PresentationName {
 
     public static final String TN = "t_person_classification";

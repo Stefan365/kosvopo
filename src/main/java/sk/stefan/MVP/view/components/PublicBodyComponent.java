@@ -13,7 +13,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.service.PublicBodyService;
-import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
 
 /**
  *
@@ -31,6 +30,7 @@ public class PublicBodyComponent extends HorizontalLayout {
 
     //service, ktory bude zdedeny z nadradenej komponenty.
     private final PublicBodyService publicBodyService; 
+
     //graficke komponenty:
     private Label titleLb;
     private Label predsedaLb;

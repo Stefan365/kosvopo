@@ -4,6 +4,9 @@ import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.enums.PublicRoleType;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Trieda reprezentuje rolu, resp. funkciu verejne osoby (napr. poslanec, predseda zastupitelstva, etc).
+ */
 public class PublicRole implements PresentationName {
 
     public static final String TN = "t_public_role";

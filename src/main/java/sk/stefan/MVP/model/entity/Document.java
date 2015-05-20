@@ -13,8 +13,8 @@ import sk.stefan.interfaces.PresentationName;
 import sk.stefan.utils.ToolsNames;
 
 /**
- * reprezentuje dokumnet.
- * Elinecka je najlepsia vo vesmire.
+ * Reprezentuje dokumnet, ktory sa moze vztahovat k akejkolvek entite.
+ * Vsechen spech jest od dabla!
  * 
  * @author stefan
  */

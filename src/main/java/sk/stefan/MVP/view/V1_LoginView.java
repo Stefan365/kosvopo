@@ -21,12 +21,11 @@ import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.ui.KosvopoUI;
 import sk.stefan.utils.ToolsNames;
 
 /**
- * Třída komponenty pro přihlášení do systému
+ * View pre login.
  */
 @SuppressWarnings("serial")
 public class V1_LoginView extends VerticalLayout implements View {
@@ -50,7 +49,6 @@ public class V1_LoginView extends VerticalLayout implements View {
     private VerticalLayout formVl;
 
     private final VerticalLayout temporaryLy;
-//    private final NavigationComponent navComp;
     private final Navigator nav;
 
     public V1_LoginView() {
@@ -59,9 +57,6 @@ public class V1_LoginView extends VerticalLayout implements View {
         this.setSpacing(true);
 
         this.nav = UI.getCurrent().getNavigator();
-
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getMainView().getNavComp();
-//        this.addComponent(navComp);
 
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);
@@ -110,19 +105,6 @@ public class V1_LoginView extends VerticalLayout implements View {
                     
                     byte[] userPwHash = userService.getEncPasswordByLogin(user.getLogin());
 //                    
-//                    StringBuilder sb = new StringBuilder();
-//                    StringBuilder sba = new StringBuilder();
-//                    
-//                    for(byte b : userPwHash){
-//                        sb.append(b);
-//                        sba.append(Integer.toHexString(b));
-//                        
-//                    }
-//                    log.info("1. PASS FORM DB:" + sb.toString());
-//                    log.info("2. PASS FORM DB:" + sba.toString());
-                    
-                    
-//                    if (true) {
                     if (securityService.checkPassword(passwordPf.getValue(), userPwHash)) {
                         securityService.login(user);
                         ((KosvopoUI)UI.getCurrent()).getMainView().getNavComp().obohatNavigator();
@@ -152,22 +134,10 @@ public class V1_LoginView extends VerticalLayout implements View {
 
     }
 
-//    /**
-//     * toto je vlastne zbytočné, pretože náš systém podporuje len 1 roľu naraz.
-//     */
-//    private void initOptionGroup() throws NoSuchMethodException {
-//
-//        Map<String, Integer> map = ToolsNazvy.getUserTypes();
-//
-//        this.userRoleOg = new InputOptionGroup<Integer>(map);
-////            this.userRoleOg.select(UserType.values()[0]);
-////            this.userRoleOg.select(0);
-//        this.userRoleOg.setValue(0);
-//
-//    }
+    
     @Override
     public void enter(ViewChangeEvent event) {
-        Notification.show("VŠECHEN SPĚCH JEST OD ĎÁBLA!");
+        
         passwordPf.setValue("");
     }
 

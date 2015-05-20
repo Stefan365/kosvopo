@@ -42,7 +42,7 @@ import sk.stefan.MVP.model.service.UniTableService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.converters.DateConverter;
-import sk.stefan.converters.PasswordConverter;
+import sk.stefan.converters.ZBD_PasswordConverter;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
@@ -503,7 +503,7 @@ public class InputFormLayout<E> extends FormLayout {
 
 //                    sqlContainer.commit(); NIE!!! nic sa commitovat nebude, 
 //                    vsetko pojde cez jdbc :
-                    E ent = uniTableService.getObjectFromItem(item, mapPar);
+                    E ent = uniTableService.getEntFromItem(item, mapPar);
                     Integer entId = (Integer) item.getItemProperty("id").getValue();
                     if (passVl != null && passVl.getNewPassword() != null) {
                         ((A_User) ent).setPassword(securityService.encryptPassword(passVl.getNewPassword()));

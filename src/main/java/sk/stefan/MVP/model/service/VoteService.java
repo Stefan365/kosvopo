@@ -15,22 +15,30 @@ import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteOfRole;
 
 /**
+ * Obsluhuje Hlasovanie.
  *
  * @author stefan
  */
 public interface VoteService {
 
-    //vote itself:
+    /**
+     * Vsetky hlasovanie danej verejnej osoby.
+     * @param pp
+     * @return 
+     */
     public List<Vote> getAllVotesForPublicPerson(PublicPerson pp);
 
     public List<Vote> getAllVotesForPublicRole(PublicRole pr);
 
-    //vote of role:
+    /**
+     * Vrati vsetky hlasovacie ukony danej verejnej osoby.
+     * @param pp
+     * @return 
+     */
     public List<VoteOfRole> getAllVotesOfPublicPerson(PublicPerson pp);
 
     public List<PublicRole> getAllPublicRolesOfPublicPerson(PublicPerson pp);
 
-    
     public List<Integer> findVoteIdsByPubBodyId(Integer publicBodyId);
     
     public List<Integer> findNewVoteIdsByFilter(String tx);

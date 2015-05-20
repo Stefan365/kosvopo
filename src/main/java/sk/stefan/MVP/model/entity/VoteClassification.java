@@ -5,6 +5,13 @@ import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.enums.PublicUsefulness;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Klasifikacia navrhu hlasovania. Niektore navrhy mozu byt verejne prospesne, 
+ * ine verejne skodlive. Tato trieda to ma podchytit.
+ * 
+ * Toto by vlastne mohlo byt vztiahnute aj na subject, ale takto sa to bude lepsie 
+ * prenasat na akterov hlasovania - tych co hlasovali. tj. do ich osobneho hodnotenia.
+ */
 public class VoteClassification implements PresentationName {
 
     private static final Logger log = Logger.getLogger(VoteClassification.class);

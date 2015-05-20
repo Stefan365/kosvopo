@@ -5,13 +5,9 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
-import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.MVP.model.repo.GeneralRepo;
-import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.SecurityService;
 
 /**
@@ -23,11 +19,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     private static final Logger log = Logger.getLogger(SecurityServiceImpl.class);
 
-    
-    private UniRepo<A_User> userRepo;
-    
-    private UniRepo<A_UserRole> userRoleRepo;
-    
+    private final GeneralRepo genRepo;
     
     private MessageDigest md;
 
@@ -37,8 +29,7 @@ public class SecurityServiceImpl implements SecurityService {
      */
     public SecurityServiceImpl() {
         
-        this.userRepo = new UniRepo<>(A_User.class);
-        this.userRoleRepo = new UniRepo<>(A_UserRole.class);
+        this.genRepo = new GeneralRepo();
         
         try {
             md = MessageDigest.getInstance("MD5");
@@ -85,7 +76,7 @@ public class SecurityServiceImpl implements SecurityService {
      *
      * @param rawPassword heslo v podobe plain text
      * @param hashPassword hash hesla z databazy
-     * @return TRUE, pokud jsou hesla stejná
+     * @return TRUE, pokial su hesla rovnake.
      */
     @Override
     public Boolean checkPassword(String rawPassword, byte[] hashPassword) {
@@ -101,30 +92,26 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     /**
-     * Vrátí hash hesla.
+     * Vrati hash hesla.
      *
-     * @param password heslo, ze kterého bude vytvořen hash.
+     * @param password heslo, z ktorého bude vytvoreny hash.
      * @return hash hesla
      */
     @Override
     public byte[] encryptPassword(String password) {
         try {
-            byte[] bytes = password.getBytes();
             byte[] bytesa;
-            //String saltedPassword = password.toUpperCase() + "KAROLKO";
+            
             String saltedPassword = password;//.toUpperCase() + "KAROLKO";
             md.update(saltedPassword.getBytes("UTF-8"));
 
-
             bytesa = md.digest();
 
-            StringBuilder sbc = new StringBuilder();
-
-            for (byte b : bytesa) {
-                sbc.append(b);
-            }
-            log.info("5. PASS FORM LINE:" + sbc.toString());
-//            log.info("6. PASS FORM LINE:" + sbd.toString());
+//            StringBuilder sbc = new StringBuilder();
+//            for (byte b : bytesa) {
+//                sbc.append(b);
+//            }
+//            log.info("5. PASS FORM LINE:" + sbc.toString());
 
             return bytesa;
 
@@ -132,5 +119,20 @@ public class SecurityServiceImpl implements SecurityService {
             throw new RuntimeException(ex);
         }
     }
+    
+    @Override
+    public byte[] getPassword(Integer id) throws SQLException {
+
+        return genRepo.getPassword(id + "");
+
+    }
+
+    @Override
+    public void updatePassword(String newPwd, String uid) throws SQLException  {
+        
+        genRepo.updatePassword(newPwd, uid);
+        
+    }
+
 
 }

@@ -2,6 +2,9 @@ package sk.stefan.MVP.model.entity;
 
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Trieda reprezentuje este vyssi uzemny celok ako district, v nasom pripade Kraj.
+ */
 public class Region implements PresentationName {
 
     public static final String TN = "t_region";

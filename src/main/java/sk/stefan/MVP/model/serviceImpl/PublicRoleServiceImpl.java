@@ -104,7 +104,7 @@ public class PublicRoleServiceImpl implements PublicRoleService {
     }
 
     @Override
-    public String getPublicBody(PublicRole pubRole) {
+    public String getPublicBodyName(PublicRole pubRole) {
         
         Integer pbId = pubRole.getPublic_body_id();
         
@@ -118,7 +118,7 @@ public class PublicRoleServiceImpl implements PublicRoleService {
     }
     
     @Override
-    public String getTenure(PublicRole pubRole){
+    public String getTenureName(PublicRole pubRole){
         
         Integer tenId = pubRole.getTenure_id();
 

@@ -456,7 +456,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                 }
                 try {
                     Integer id = (Integer) item.getItemProperty("id").getValue();
-                    uniTableService.deactivateById(id);
+                    uniTableService.deactivateWholeTreeById(id);
                     
 
                     itemId= null;

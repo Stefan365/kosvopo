@@ -12,18 +12,16 @@ import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_Hierarchy;
 import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
 
 /**
- *
+ * Abstr. trieda s pomocnymi statickymi metodami tykajucimi sa filtrovania.
+ * 
  * @author stefan
  */
 public abstract class ToolsFiltering {
@@ -37,7 +35,6 @@ public abstract class ToolsFiltering {
 
     private static GeneralRepo invasiveGenRepo;
 
-//    private static final String[] relFilTns = new String[]{"t_location", "t_public_body", "t_public_person"};
     //1.
     /**
      * vrati hierarchicku sekvenciu tried. tj. napr <t_vote, t_subect, t_theme>
@@ -65,33 +62,19 @@ public abstract class ToolsFiltering {
         List<List<String>> pom2;
         strs.add(start);
 
-//        log.info("KAROLKO: " + strs.size());
         int counter = -1;
         do {
             //priprava:
             if (!strs2.isEmpty()) {
-//                log.info("KAROLKO1: " + strs2.size());
                 strs = strs2;
-//                for (List<String> lis : strs) {
-//                    for (String s : lis) {
-////                        log.info("LIS2:" + s);
-//                    }
-//                }
                 strs2 = new ArrayList<>();
             }
             if (counter >= 10) {
-//                log.info("VYCHADZAM0: " + strs.size());
-//                log.info("VYCHADZAM1: " + touchingTn);
-//                for (List<String> lis : strs) {
-//                    for (String s : lis) {
-//                        log.info("VYCHADZAM:" + s);
-//                    }
-//                }
+                
                 return vytried(strs, touchingTn);
             }
 
 //            samotny cyklus:
-//            log.info("KAROLKO3: " + strs.size());
             int c = 0;
             for (List<String> list : strs) {
                 posledny = list.get(list.size() - 1);
@@ -110,38 +93,13 @@ public abstract class ToolsFiltering {
                 }
 //                log.info("PRED NEXT HIER LAYER: " + posledny);
                 pom = getBosses(posledny);
-//                int f = 0;
-
-//                if ("t_public_body".equals(posledny)) {
-//                    log.info("ANO SOM TU: " + pom.size());
-//                    for (String s : pom) {
-//                        log.info("NEXT HIER LAYER:" + f + " : " + s);
-//                        f++;
-//                    }
-//                }
-//                log.info("POM SIZE: " + pom.size());
 //                log.info("POM: " + pom.get(0));
                 pom2 = pripoj(list, pom);
                 int g = 0;
                 int h = 0;
-//                if ("t_public_body".equals(posledny)) {
-//                    log.info("ANO SOM TU 2: " + pom2.size());
-//                    for (List<String> lis : pom2) {
-//                        log.info("vonkajsi cyklus:" + g + " : " + lis.size());
-//                        g++;
-//                        for (String s : lis) {
-//                            log.info("VNUTORNY CYKLUS:" + h + " : " + s);
-//                            h++;
-//                        }
-//                    }
-//                }
+                
                 strs2.addAll(pom2);
-//                log.info("KAROLKO4: " + strs2.size());
-//                for (List<String> lis : strs2) {
-//                    for (String s : lis) {
-////                        log.info("LIS:" + s);
-//                    }
-//                }
+                
             }
         } while (true);
     }
@@ -414,74 +372,5 @@ public abstract class ToolsFiltering {
         return slaves;
     }
 
-//    //6.
-//    /**
-//     * Deaktivuje cely strom entit, pricom vrcholom stromu je entita na vstupe.
-//     *
-//     * @param tn
-//     * @param id
-//     * @throws java.sql.SQLException
-//     */
-//    public static void deactivateSlavesTree(String tn, Integer id) throws SQLException {
-//
-//        if (invasiveGenRepo == null) {
-//            invasiveGenRepo = new GeneralRepo();
-//        }
-//
-//        invasiveGenRepo.deactivateOne(tn, id);
-//        //deactivate documents;
-//        invasiveGenRepo.deactivateEntityDocuments(tn, id);
-//        
-//
-//        List<String> slaveTns = ToolsFiltering.getSlaves(tn);
-//
-//        if (!slaveTns.isEmpty()) {
-//
-//            Map<String, List<Integer>> slavesIdsMap = new HashMap<>();
-//            List<Integer> slvIds;
-//
-//            String paramN = ToolsFiltering.getParamName(tn);
-//
-//            for (String slv : slaveTns) {
-//                slvIds = genRepo.findTnAllByParam(slv, paramN, "" + id);
-//                slavesIdsMap.put(slv, slvIds);
-//
-//            }
-////            //deaktivuj otrokov: - netreba vid. prvy riadok.
-////            for (String key : slavesIdsMap.keySet()) {
-////
-////                slvIds = slavesIdsMap.get(key);
-////                for (Integer aid : slvIds) {
-////                    genRepo.deactivateOne(key, aid);
-////                }
-////            }
-//            //      najdime dalsich pod-otrokov:
-//            for (String key : slavesIdsMap.keySet()) {
-//                slvIds = slavesIdsMap.get(key);
-//                for (Integer aid : slvIds) {
-//                    deactivateSlavesTree(key, aid);
-//                }
-//            }
-//        }
-//    }
-//
-//    /**
-//     * commituje zmeny do DB.
-//     */
-//    public static void doCommit() {
-//        invasiveGenRepo.doCommit();
-//        //aby vzdy bral nove genRepo a tak sa vyhol moznosti interferencie.
-//        invasiveGenRepo = null;
-//
-//    }
-//
-//    /**
-//     * rollbackuje zmeny.
-//     */
-//    public static void doRollback() {
-//        invasiveGenRepo.doRollback();
-//        //aby vzdy bral nove genRepo a tak sa vyhol moznosti interferencie.
-//        invasiveGenRepo = null;
-//    }
 
 }

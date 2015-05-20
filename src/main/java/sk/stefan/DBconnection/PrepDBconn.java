@@ -2,7 +2,9 @@ package sk.stefan.DBconnection;
 
 import java.util.ResourceBundle;
 
-/* Set the DB used for testing here! */
+/**
+ * Trieda pripravuje spojenie s DB.
+ */
 public class PrepDBconn {
 
 

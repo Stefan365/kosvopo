@@ -3,6 +3,9 @@ package sk.stefan.MVP.model.entity;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Trieda reprezentuje verjny organ (mestke zastupitelstvo, parlament, ...).
+ */
 public class PublicBody implements PresentationName {
 
     public static final String TN = "t_public_body";

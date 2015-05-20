@@ -8,10 +8,11 @@ package sk.stefan.MVP.view.components;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Locale;
-import sk.stefan.converters.PasswordConverter;
+import sk.stefan.converters.ZBD_PasswordConverter;
 
 /**
- *
+ * Komponenta pre password, tj. dve policka pre heslo a jeho potvrdenie.
+ * 
  * @author stefan
  */
 public class PasswordDoubleFieldComponent extends VerticalLayout {
@@ -44,7 +45,7 @@ public class PasswordDoubleFieldComponent extends VerticalLayout {
     
     private void initTextFields(){
         
-        pw1.setConverter(new PasswordConverter());
+        pw1.setConverter(new ZBD_PasswordConverter());
         pw1.setImmediate(true);
         pw1.setLocale(new Locale("cz", "CZ"));
         

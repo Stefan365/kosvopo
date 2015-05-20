@@ -4,6 +4,8 @@
 
 <module>
     <!--
+        Toto cele je tu potrebne kvoli grafike a napr. umoznuje existenciu Timeline.
+        
         This file is automatically updated based on new dependencies by the
         goal "vaadin:update-widgetset".
     -->

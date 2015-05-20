@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Typy publiRole.
  * @author stefan
  */
 public enum PublicRoleType {

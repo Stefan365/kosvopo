@@ -6,6 +6,9 @@ import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Predstavuje jedno konkretne hlasovanie verejneho organu.
+ */
 public class Vote implements PresentationName {
 
     public static final String TN = "t_vote";

@@ -103,7 +103,7 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
             public void textChange(final FieldEvents.TextChangeEvent event) {
         
                 String tx = event.getText();
-                List<Integer> ppIds = publicPersonService.findNewPublicPersonsIds(tx);
+                List<Integer> ppIds = publicPersonService.findPublicPersonsIdsByFilter(tx);
                 publicPersonsLayout.applyFilter(ppIds);
                 
             }

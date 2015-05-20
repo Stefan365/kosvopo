@@ -24,6 +24,9 @@ import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.interfaces.Filterable;
 
+/**
+ * Abstr. trieda s pomocnymi statickymi metodami tykajucimi sa operacii s DB.
+ */
 public abstract class ToolsDao {
 
     private static final Logger log = Logger.getLogger(ToolsDao.class);

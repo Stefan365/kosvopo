@@ -2,6 +2,9 @@ package sk.stefan.MVP.model.entity;
 
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Trieda reprezentuje vyssi uzemny celok, v nasom pripade okres. 
+ */
 public final class District implements PresentationName {
 
     public static final String TN = "t_district";

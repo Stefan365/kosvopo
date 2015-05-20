@@ -4,6 +4,10 @@ import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Predstavuje hlasovaci ukon jednej verejnej funkcie. 
+ * (Tj. ci hlasovala za, proti, etc. )
+ */
 public class VoteOfRole implements PresentationName {
 
     public static final String TN = "t_vote_of_role";

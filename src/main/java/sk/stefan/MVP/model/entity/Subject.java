@@ -1,9 +1,12 @@
 package sk.stefan.MVP.model.entity;
 
-import java.util.List;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.interfaces.PresentationName;
 
+/**
+ * Trieda reprezentuje predmet hlasovania, tj. konkretne to, k comu sa 
+ * dane hlasovanie vztahuje.
+ */
 public class Subject implements PresentationName {
 
     public static final String TN = "t_subject";

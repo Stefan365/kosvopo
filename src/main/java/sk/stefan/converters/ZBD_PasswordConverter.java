@@ -5,16 +5,17 @@ import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 /**
  * Konvertor mezi raw password - as it is type in form to byte[] / as it is stored in entitites.
+ * potom som to vyriesil inak.
  * 
  * @author Stefan
  */
-public class PasswordConverter implements Converter<String, byte[]> {
+public class ZBD_PasswordConverter implements Converter<String, byte[]> {
 
     private static final long serialVersionUID = 14324L;
     
     private SecurityService securityService;
     
-    public PasswordConverter(){
+    public ZBD_PasswordConverter(){
         
         this.securityService = new SecurityServiceImpl();
     

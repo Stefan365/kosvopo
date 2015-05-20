@@ -66,7 +66,7 @@ public class PublicBodiesLayout extends VerticalLayout implements Filterable {
     @Override
     public void applyFilter(List<Integer> ids) {
         
-        this.setPublicBodies(publicBodyService.findNewPublicBodies(ids));
+        this.setPublicBodies(publicBodyService.findPublicBodies(ids));
         
     }
 

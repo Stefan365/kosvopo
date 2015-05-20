@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sk.stefan.factories;
 
 import com.vaadin.ui.Button;
@@ -20,11 +15,9 @@ public abstract class EditEntityButtonFactory {
 
 
     /**
-     *  
-     * 
-     * @param wrap This wrapper has inside some funcionality inside  
-     * to make possible construct editButtonFactory as abstract class with static factory method.
-     * Otherwise factory must be generic and thus, factory method cannot be static.
+     * @param wrap tento wrapper mas v sebe urcitu funkcionalitu  
+     * aby bolo mozne vytvorit editButtonFactory ako abstraktnu triedu so statickou factory methodou/ami.
+     * Inak factory musi byt genericka a tak factory methoda nemoze byt staticka.
      * 
      * @return 
      */

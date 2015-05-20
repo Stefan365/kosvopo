@@ -69,10 +69,12 @@ public class PersonClassLayout extends VerticalLayout implements Filterable {
         
     }
 
+    /**
+     * V tejto komponente nevyuzita metoda.
+     */
     @Override
     public String getTableName() {
  
-//        return "t_district";
         return null;
     
     }

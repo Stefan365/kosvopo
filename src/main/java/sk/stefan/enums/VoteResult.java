@@ -10,7 +10,7 @@ import java.util.List;
  */
 public enum VoteResult {
 
-    APPROVED("Schválené"), DISSALLOWED("zamietnuté");
+    APPROVED("schválené"), DISSALLOWED("zamietnuté");
 
     public final String name;
 

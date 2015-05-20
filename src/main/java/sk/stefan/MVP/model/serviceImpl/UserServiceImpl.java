@@ -5,31 +5,28 @@
  */
 package sk.stefan.MVP.model.serviceImpl;
 
-import com.vaadin.ui.Notification;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_Role;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.A_UserRole;
-import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.enums.UserType;
 
 /**
+ * Obsluhuje A_User.
  *
  * @author stefan
  */
 public class UserServiceImpl implements UserService {
 
     private static final Logger log = Logger.getLogger(UserServiceImpl.class);
+    
     private final UniRepo<A_User> userRepo = new UniRepo<>(A_User.class);
     private final UniRepo<A_UserRole> userRoleRepo = new UniRepo<>(A_UserRole.class);
     private final UniRepo<A_Role> roleRepo = new UniRepo<>(A_Role.class);
-    private final GeneralRepo genRepo = new GeneralRepo();
-    private final String tn = "a_user";
     
     
     @Override
@@ -44,38 +41,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public A_User save(A_User user) {
-        return userRepo.save(user, true);
-    }
-
-    @Override
-    public void modifyPassword(String paramName, String paramValue, A_User user) {
-        try {
-            userRepo.updateParam(paramName, paramValue, "" + user.getId(), true);
-        } catch (SQLException ex) {
-            log.error(ex);
-            Notification.show("Userservice" + ex);
-        }
-    }
-
-    @Override
-    public List<A_User> getAllUsers() {
-        return userRepo.findAll();
-    }
-
-    @Override
-    public void delete(A_User user) {
-        
-        try {
-            genRepo.deactivateWithSlavesTree(tn, user.getId());
-            genRepo.doCommit();
-//        userRepo.deactivateOneOnly(user);
-//        toto sa musi deaktivovat stromovo.
-        } catch (SQLException ex) {
-            log.error(ex.getMessage(),ex);
-        }
-    }
 
     @Override
     public byte[] getEncPasswordByLogin(String login) {
@@ -134,6 +99,8 @@ public class UserServiceImpl implements UserService {
     }
     
     /**
+     * Vrati typ uzivateskej role (admin, volunteer)
+     * 
      * @param urole
      * @return 
      */

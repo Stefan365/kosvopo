@@ -6,6 +6,7 @@
 package sk.stefan.listeners;
 
 /**
+ * Obnovuje View po zmene z formulara.
  *
  * @author stefan
  */

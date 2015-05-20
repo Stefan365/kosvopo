@@ -6,14 +6,12 @@
 package sk.stefan.MVP.view;
 
 import com.vaadin.event.FieldEvents;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import sk.stefan.MVP.model.entity.A_User;
@@ -22,11 +20,12 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.ThemesLayout;
 import sk.stefan.enums.UserType;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 
 /**
+ * View zahrnujuce vsetky tematicke okruhy.
  *
  * @author stefan
  */

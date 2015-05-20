@@ -37,60 +37,54 @@ public enum NonEditableFields {
     public String[] getNonEditableParams() {
         switch (this) {
             case T_REGION:
-                
                 return new String[]{"visible"};
-////              
-//                return new String[]{};
             
             case T_LOCATION:
                 return new String[]{"visible"};
                 
             case T_DISTRICT:
-//                return new String[]{"visible"};
-//                
-//                return new String[]{};
+                return new String[]{"visible"};
                 
             case T_PERSON_CLASSIFICATION:
-//                return new String[]{};
                 return new String[]{"visible"};
+                
             case T_PUBLIC_BODY:
-//                return new String[]{};
                 return new String[]{"visible"};
+            
             case T_PUBLIC_PERSON:
-//                return new String[]{};
                 return new String[]{"visible"};
+                
             case T_PUBLIC_ROLE:
-//                return new String[]{};
                 return new String[]{"visible"};
+            
             case T_SUBJECT:
-//                return new String[]{};
                 return new String[]{"visible"};
+            
             case T_TENURE:
-//                return new String[]{};
                 return new String[]{"visible"};
+
             case T_THEME:
-//                return new String[]{};
                 return new String[]{"visible"};
+            
             case T_VOTE:
-//                return new String[]{};
                 return new String[]{"visible"};
+            
             case T_VOTE_CLASSIFICATION:
-//                return new String[]{};
                 return new String[]{"visible"};
+                
             case T_VOTE_OF_ROLE:
-//                return new String[]{};
                 return new String[]{"visible"};
                 
             case A_USER:
                 return new String[]{"visible"};
-//                return new String[]{};
+                
             case A_ROLE:
                 return new String[]{"visible"};
+            
             case A_USER_ROLE:
-//                return new String[]{};
                 return new String[]{"actual","since", "till","visible"};
+
             default:
-                
                 return null;
         }
     }

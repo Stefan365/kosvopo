@@ -6,6 +6,7 @@
 package sk.stefan.listeners;
 
 /**
+ * Obnovi filter.
  *
  * @author stefan
  */

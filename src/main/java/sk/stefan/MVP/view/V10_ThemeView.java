@@ -26,6 +26,7 @@ import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
+ * View tykajuce sa zvoleneho tematickeho okruhu.
  *
  * @author stefan
  */

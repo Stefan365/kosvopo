@@ -48,7 +48,7 @@ public abstract class InputNewEntityButtonFactory {
         if ((Vote.class).equals(cls)) {
             b.addClickListener(new InputVoteButClickListener(title));
         } else {
-//            b.addClickListener(new Input_EditButClickListener<>(cls, title, null));
+            
             b.addClickListener(new Input_EditButClickListener<>(cls, title, null));
         }
         

@@ -52,7 +52,7 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
     }
 
     @Override
-    public void deactivateById(Integer entId) throws SQLException {
+    public void deactivateWholeTreeById(Integer entId) throws SQLException {
 
         genRepo.deactivateWithSlavesTree(tn, entId);
         genRepo.doCommit();
@@ -60,7 +60,7 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
     }
 
     @Override
-    public E getObjectFromItem(Item item, Map<String, Class<?>> mapPar) {
+    public E getEntFromItem(Item item, Map<String, Class<?>> mapPar) {
 
         Object val;
         Method entMethod;

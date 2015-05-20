@@ -34,6 +34,9 @@ public class DoDBconn {
     }
 
     // 0.A konstruktor:
+    /**
+     * Konstruktor. nepouziva sa.
+     */
     public DoDBconn() {
 
         connectToDb(PrepDBconn.dbDriver, PrepDBconn.dbURL, PrepDBconn.dbUser, PrepDBconn.dbPwd, 2, 255);
@@ -41,6 +44,9 @@ public class DoDBconn {
     }
 
     // 1.
+    /**
+     * Stara sa o pripojenie k DB.
+     */
     private static void connectToDb(String dbDriver, String dbURL, String dbUser,
             String dbPwd, int iniCon, int maxCon) {
         try {
@@ -57,7 +63,6 @@ public class DoDBconn {
      */
     public static Connection createNoninvasiveConnection() {
         try {
-//            nonInvasiveConn = connectionPool.reserveConnection();
             Connection conn = connectionPool.reserveConnection();
             count++;
             log.info("VYTVORIL SOM NEINVAZIVNE CONN: " + count);
@@ -70,6 +75,8 @@ public class DoDBconn {
     
     // 2.B. Connection for invasive DB operations.
     /**
+     * Vracia invazivne spojenie s DB. nazov Invazivne len pre lepsiu orientaciu
+     * uzivatela.
      * 
      * @return 
      */
