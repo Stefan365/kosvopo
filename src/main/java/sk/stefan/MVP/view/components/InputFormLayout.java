@@ -503,13 +503,18 @@ public class InputFormLayout<E> extends FormLayout {
 
 //                    sqlContainer.commit(); NIE!!! nic sa commitovat nebude, 
 //                    vsetko pojde cez jdbc :
-                    E ent = uniTableService.getEntFromItem(item, mapPar);
                     Integer entId = (Integer) item.getItemProperty("id").getValue();
+
+                    if (entId == null){
+                        item.getItemProperty("visible").setValue(Boolean.TRUE);
+                    }
+
+                    E ent = uniTableService.getEntFromItem(item, mapPar);
                     if (passVl != null && passVl.getNewPassword() != null) {
                         ((A_User) ent).setPassword(securityService.encryptPassword(passVl.getNewPassword()));
                     }
+                    
                     ent = uniTableService.save(ent, true);
-//                    ddd
 
                     if ("a_user".equals(tn) && entId == null) {
 
