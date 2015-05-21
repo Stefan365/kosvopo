@@ -92,7 +92,7 @@ public class OkCancelWindow extends Window {
      * Spustenie akcie po stlačení YES.
      */
     public void onOk() {
-        listener.doOkAction();
+        listener.doOkAction(null);
         close();
     }
 }

@@ -11,9 +11,9 @@ import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.repo.UniRepo;
-import sk.stefan.MVP.view.components.hlasovanie.PritomniLayout;
-import sk.stefan.MVP.view.components.hlasovanie.InputVoteFormLayout;
-import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
+import sk.stefan.MVP.view.components.vote.PritomniLayout;
+import sk.stefan.MVP.view.components.vote.InputVoteFormLayout;
+import sk.stefan.MVP.view.components.vote.VotingLayout;
 
 /**
  *

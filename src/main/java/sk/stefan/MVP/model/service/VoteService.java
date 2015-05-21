@@ -76,6 +76,8 @@ public interface VoteService {
     public List<Vote> findNewVotes(List<Integer> voteIds);
     
     public List<VoteOfRole> findNewVotesOfRole(List<Integer> votesOfRoleIds);
+    
+    public VoteOfRole saveVoteOfRole(VoteOfRole vor, boolean noteChange);
 
     public List<Theme> findNewThemes(List<Integer> themeIds);
     

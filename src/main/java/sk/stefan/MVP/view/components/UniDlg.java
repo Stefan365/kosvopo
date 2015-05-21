@@ -8,7 +8,7 @@ package sk.stefan.MVP.view.components;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
+import sk.stefan.MVP.view.components.vote.VotingLayout;
 import sk.stefan.listeners.OkCancelListener;
 
 /**
@@ -98,9 +98,9 @@ public class UniDlg extends Window implements OkCancelListener {
     
     // pozri na popis OkCancelListener
     @Override
-    public void doOkAction() {
+    public void doOkAction(Integer id) {
         if (parentListenerOc != null) {
-            parentListenerOc.doOkAction();
+            parentListenerOc.doOkAction(id);
         }
         close();
     }

@@ -195,5 +195,11 @@ public class PublicRoleServiceImpl implements PublicRoleService {
 
     }
 
+    @Override
+    public PublicRole findPublicRoleById(Integer prId) {
+        
+        return publicRoleRepo.findOne(prId);
+    }
+
 
 }

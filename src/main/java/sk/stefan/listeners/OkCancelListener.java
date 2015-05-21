@@ -12,8 +12,15 @@ package sk.stefan.listeners;
  */
 public interface OkCancelListener {
 
-    public void doOkAction();
+    /**
+     * to entId je tam len a vyhradne kvoli tomu, ze z InputVoteLayout treba preniest 
+     * vote id, ktore vzniklo zapisom do DB do pritomniLayout aby sa mohlo predat novovzniknutym 
+     * voteOfRoles.
+     * @param entId
+     */
+    public void doOkAction(Integer entId);
 
     public void doCancelAction();
+
 
 }

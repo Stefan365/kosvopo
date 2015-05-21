@@ -78,7 +78,7 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
                 log.info("NON ED SIZE:" + nonEdCols.length);
             }
            
-            inputFl = new InputFormLayout<>(clsE, item, sqlCont, null, Arrays.asList(nonEdCols));
+            inputFl = new InputFormLayout<>(clsE, item, sqlCont, null, nonEdCols);
             tdlg = new UniDlg("Nový " + title, inputFl);
             
             UI.getCurrent().addWindow(tdlg);

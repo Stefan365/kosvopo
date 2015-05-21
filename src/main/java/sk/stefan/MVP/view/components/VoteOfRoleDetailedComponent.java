@@ -29,13 +29,13 @@ public class VoteOfRoleDetailedComponent extends HorizontalLayout {
 
 //    servisy:
     private final VoteService voteService;
-    
+
     //graficke komponenty:
-    private Label voteDescriptionLb; 
-    private Label roleDecisionLb; 
+    private Label voteDescriptionLb;
+    private Label roleDecisionLb;
 
     private Navigator nav;
-    
+
     //0.konstruktor:
     /**
      * @param vor
@@ -46,12 +46,11 @@ public class VoteOfRoleDetailedComponent extends HorizontalLayout {
         this.voteOfRole = vor;
         this.voteService = vs;
 
-        
         nav = UI.getCurrent().getNavigator();
-        
+
         this.initLayout();
         this.initListener();
-        
+
     }
 
     /**
@@ -59,21 +58,28 @@ public class VoteOfRoleDetailedComponent extends HorizontalLayout {
     private void initLayout() {
 
         this.removeAllComponents();
-        
+
         this.setMargin(true);
         this.setSpacing(true);
 
         vote = voteService.getVote(voteOfRole);//voteService.getVoteResultAsString(, voteService);
         
-        this.voteDescriptionLb = new Label(vote.getPresentationName());
+        this.voteDescriptionLb = new Label();
+        if (vote != null) {
+            this.voteDescriptionLb.setValue(vote.getPresentationName());
+        } else {
+            this.voteDescriptionLb.setValue("tato rola nemá hlasovanie");
+        }
+        
+        
+        
         this.roleDecisionLb = new Label(voteOfRole.getDecision().getName());
-        
-        
+
         this.addComponents(voteDescriptionLb, roleDecisionLb);
-        
+
     }
-    
-        /**
+
+    /**
      *
      */
     private void initListener() {
@@ -91,7 +97,5 @@ public class VoteOfRoleDetailedComponent extends HorizontalLayout {
         });
 
     }
-
-    
 
 }

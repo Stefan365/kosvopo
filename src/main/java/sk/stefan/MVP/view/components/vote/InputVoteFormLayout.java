@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.MVP.view.components.hlasovanie;
+package sk.stefan.MVP.view.components.vote;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
@@ -29,7 +29,9 @@ public class InputVoteFormLayout<E> extends InputFormLayout<E> {
 
     private PublicBody pubBody;
 
-    public InputVoteFormLayout(Class<E> clsE, Item item, SQLContainer sqlCont, Component cp, List<String> nEditFn) {
+    public InputVoteFormLayout(Class<E> clsE, Item item, SQLContainer sqlCont, 
+            Component cp, String[] nEditFn) {
+        
         super(clsE, item, sqlCont, cp, nEditFn);
 
     }
@@ -84,10 +86,7 @@ public class InputVoteFormLayout<E> extends InputFormLayout<E> {
      */
     @SuppressWarnings("unchecked")
     public void setResults(List<Integer> res) {
-//        log.info("NESTAVUJEM ITEM Za:" + res.get(0));
-//        log.info("NESTAVUJEM ITEM Proti:" + res.get(1));
-//        log.info("NESTAVUJEM ITEM Zadrzal sa:" + res.get(2));
-//        log.info("NESTAVUJEM ITEM Abesnt:" + res.get(3));
+        
         getItem().getItemProperty("for_vote").setValue(res.get(0));
         getItem().getItemProperty("against_vote").setValue(res.get(1));
         getItem().getItemProperty("refrain_vote").setValue(res.get(2));

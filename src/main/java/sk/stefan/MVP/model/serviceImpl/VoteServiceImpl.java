@@ -152,7 +152,12 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public String getVoteDate(Vote vote) {
-        return vote.getVote_date().toString();
+        if (vote.getVote_date()!=null){
+            return vote.getVote_date().toString();
+        
+        } else {
+            return "nema datum";
+        }
     }
 
     @Override
@@ -266,7 +271,6 @@ public class VoteServiceImpl implements VoteService {
         List<Integer> prIds;
 
         //SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
-//        zdola naho a zhora nadol.
         //viacnasobne viible je tam kvoli bezpecnosti.
         String sql = "SELECT vot.id FROM t_vote vot WHERE vot.subject_id IN "
                 + "(SELECT sub.id FROM t_subject sub WHERE sub.public_role_id IN "
@@ -297,10 +301,6 @@ public class VoteServiceImpl implements VoteService {
 
         List<Integer> prIds;
 
-//        String sql = "SELECT pr.id FROM t_public_role pr JOIN t_public_person pp "
-//                + " ON (pr.public_person_id = pp.id) "
-//                + " WHERE pp.first_name like '%" + tx + "%'"
-//                + " OR pp.last_name like '%" + tx + "%' AND pr.visible = true";
         String sql = "SELECT vot.id FROM t_vote vot JOIN t_subject sub "
                 + " ON (vot.subject_id = sub.id) JOIN t_public_role pr "
                 + " ON (sub.public_role_id = pr.id) JOIN t_public_body pb "
@@ -530,6 +530,12 @@ public class VoteServiceImpl implements VoteService {
 
         return voteRepo.findOne(voteId);
     
+    }
+
+    @Override
+    public VoteOfRole saveVoteOfRole(VoteOfRole vor, boolean noteChange) {
+
+        return voteOfRoleRepo.save(vor, noteChange);
     }
 
 

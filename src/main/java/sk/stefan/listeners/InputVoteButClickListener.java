@@ -10,7 +10,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.view.components.UniDlg;
-import sk.stefan.MVP.view.components.hlasovanie.VotingLayout;
+import sk.stefan.MVP.view.components.vote.VotingLayout;
 
 /**
  * Specialny listener pre tlacitko vlozenia Hlasovania, pretoze v tomto secialnom 

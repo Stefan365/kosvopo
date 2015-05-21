@@ -100,7 +100,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
     }
 
     @Override
-    public void doOkAction() {
+    public void doOkAction(Integer entId) {
 
         String rawNewPwd;
         String rawOldPwd = "";
@@ -124,7 +124,7 @@ public class PasswordForm extends VerticalLayout implements OkCancelListener {
 
         }
 
-        this.okCancelListener.doOkAction();
+        this.okCancelListener.doOkAction(entId);
 //        this.forWindowListener.doOkAction();
         this.obnovFilterListener.obnovFilter();
         this.refreshViewListener.refreshView();

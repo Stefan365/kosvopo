@@ -140,7 +140,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
         this.initTableLists(uneditCol);
 
-        this.inputForm = new InputFormLayout<>(clsq, item, sqlContainer, this, nonEditFn);
+        this.inputForm = new InputFormLayout<>(clsq, item, sqlContainer, this, uneditCol);
 
         initAllBasic();
 
@@ -465,7 +465,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                     editorLayout.setVisible(false);
                     
                     Notification.show("úspešne vymazaný!");
-                    doOkAction();
+                    doOkAction(null);
                 } catch (SQLException ex) {
                     Notification.show("Vymazanie sa nepodarilo!");
                 }
@@ -477,7 +477,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
     }
 
     @Override
-    public void doOkAction() {
+    public void doOkAction(Integer entId) {
 
         sqlContainer.refresh();
         uniTable.refreshRowCache();

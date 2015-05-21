@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.MVP.view.components.hlasovanie;
+package sk.stefan.MVP.view.components.vote;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.sqlcontainer.SQLContainer;
@@ -12,20 +12,16 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.model.entity.PublicBody;
-import sk.stefan.MVP.model.entity.PublicRole;
-import sk.stefan.MVP.model.entity.Tenure;
 import sk.stefan.MVP.model.entity.Vote;
-import sk.stefan.MVP.model.repo.UniRepo;
-import sk.stefan.MVP.view.components.hlasovanie.PritomniLayout;
 import sk.stefan.MVP.view.components.filtering.FilterComboBox;
 import sk.stefan.MVP.view.components.filtering.FilterVoteListener;
+import sk.stefan.enums.NonEditableFields;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
 
@@ -38,7 +34,7 @@ import sk.stefan.listeners.OkCancelListener;
 public class VotingLayout extends HorizontalLayout implements OkCancelListener, ObnovFilterListener {
 
     private final GridLayout mainLayout = new GridLayout(3, 2);
-    
+
     private final Label comboLb = new Label("Verejný orgán");
     private final Label voteInputLb = new Label("Hlasovanie");
     private final Label pritomniLb = new Label("Hlasovanie poslancov");
@@ -53,12 +49,6 @@ public class VotingLayout extends HorizontalLayout implements OkCancelListener, 
     private final PritomniLayout pritomniLy;
 
 //    private final VerticalLayout comboLy;
-    
-    
-    
-    
-    
-
 //    hlavne entity:
     private PublicBody pubBody;
     private Vote vote;
@@ -67,15 +57,6 @@ public class VotingLayout extends HorizontalLayout implements OkCancelListener, 
     private final Object itemId;
     private final Item item;
 
-//    REPA:
-//    @Autowired
-    private UniRepo<PublicRole> prRepo;
-//    @Autowired
-    private UniRepo<Tenure> tenureRepo;
-//    @Autowired
-    private UniRepo<PublicBody> pbRepo;
-//    @Autowired
-    private UniRepo<Vote> voteRepo;
 
     private OkCancelListener forWindowListener;
 
@@ -84,29 +65,24 @@ public class VotingLayout extends HorizontalLayout implements OkCancelListener, 
      * @param vot
      */
     public VotingLayout(Vote vot) {
-        
+
         vote = vot;
 
         this.addComponent(mainLayout);
-        
-        this.initRepos();
-        
-        
+
         comboLb.setStyleName(ValoTheme.LABEL_BOLD);
         voteInputLb.setStyleName(ValoTheme.LABEL_BOLD);
         pritomniLb.setStyleName(ValoTheme.LABEL_BOLD);
-        
 
         this.pubBodycCb = new FilterComboBox<>(PublicBody.class);
 
-        
         this.setSpacing(true);
         this.setMargin(true);
 
         pritomniLy = new PritomniLayout(pubBody, vote, Boolean.FALSE, this);
 
-//        public VoteInputFormLayout(Class<?> clsT, Item item, SQLContainer sqlCont, Component cp, List<String> nEditFn) {
         Class<Vote> cls = Vote.class;
+        
         try {
 
             Field tnFld = cls.getDeclaredField("TN");
@@ -120,28 +96,26 @@ public class VotingLayout extends HorizontalLayout implements OkCancelListener, 
         itemId = sqlCont.addItem();
         item = sqlCont.getItem(itemId);
 
-        this.voteInputFormLy = new InputVoteFormLayout<>(cls, item, sqlCont, this, null);
-        
+        this.voteInputFormLy = new InputVoteFormLayout<>(cls, item, sqlCont, 
+                this, NonEditableFields.T_VOTE.getNonEditableParams());
+
         FilterVoteListener lisnr = new FilterVoteListener(voteInputFormLy, pritomniLy, this);
         this.pubBodycCb.addValueChangeListener(lisnr);
-        
-//        this.addComponents(comboLy, voteInputFormLy, pritomniLy);
 
+//        this.addComponents(comboLy, voteInputFormLy, pritomniLy);
         pritomniLy.setEnabled(false);
         this.voteInputFormLy.setEnabled(false);
-        
-        this.putAllInLayout();
 
+        this.putAllInLayout();
 
     }
 
     @Override
-    public void doOkAction() {
+    public void doOkAction(Integer entId) {
         //musi to byt takto, pretoze ok button je v tej druhej komponente, tj.
         //v input form layoute.
-        Notification.show("VotingLayout: OkAction");
-        this.pritomniLy.doOkAction();
-        this.forWindowListener.doOkAction();
+        this.pritomniLy.doOkAction(entId);
+        this.forWindowListener.doOkAction(entId);
         Notification.show("Hlasovanie uložené");
     }
 
@@ -152,14 +126,6 @@ public class VotingLayout extends HorizontalLayout implements OkCancelListener, 
         Notification.show("Hlasovanie zrušené");
     }
 
-    private void initRepos() {
-
-        pbRepo = new UniRepo<>(PublicBody.class);
-        tenureRepo = new UniRepo<>(Tenure.class);
-        voteRepo = new UniRepo<>(Vote.class);
-        prRepo = new UniRepo<>(PublicRole.class);
-
-    }
 
     public Vote getVote() {
         return vote;
@@ -178,41 +144,40 @@ public class VotingLayout extends HorizontalLayout implements OkCancelListener, 
         this.forWindowListener = aThis;
     }
 
-
     public PublicBody getPubBody() {
         return pubBody;
     }
+
     public void setPubBody(PublicBody pubBody) {
         this.pubBody = pubBody;
     }
+
     public InputVoteFormLayout<Vote> getVoteInputFormLy() {
         return voteInputFormLy;
     }
 
     private void putAllInLayout() {
-        
+
         mainLayout.setMargin(true);
         mainLayout.setSpacing(true);
 
-        
         mainLayout.addComponent(comboLb, 0, 0);
         mainLayout.addComponent(voteInputLb, 1, 0);
         mainLayout.addComponent(pritomniLb, 2, 0);
-        
+
         mainLayout.addComponent(pubBodycCb, 0, 1);
         mainLayout.addComponent(voteInputFormLy, 1, 1);
         mainLayout.addComponent(pritomniLy, 2, 1);
-        
+
         mainLayout.setComponentAlignment(comboLb, Alignment.MIDDLE_LEFT);
         mainLayout.setComponentAlignment(pubBodycCb, Alignment.TOP_LEFT);
-        
+
         mainLayout.setComponentAlignment(voteInputLb, Alignment.MIDDLE_CENTER);
         mainLayout.setComponentAlignment(voteInputFormLy, Alignment.TOP_CENTER);
-        
+
         mainLayout.setComponentAlignment(pritomniLb, Alignment.MIDDLE_LEFT);
         mainLayout.setComponentAlignment(pritomniLy, Alignment.TOP_LEFT);
-        
-        
+
     }
 
 }

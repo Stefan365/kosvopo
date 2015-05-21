@@ -45,5 +45,7 @@ public interface PublicRoleService {
      * @return 
      */
     public PublicRole getActualRole(PublicPerson pp, PublicBody pb);
+
+    public PublicRole findPublicRoleById(Integer prId);
     
 }

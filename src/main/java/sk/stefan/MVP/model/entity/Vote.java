@@ -143,7 +143,13 @@ public class Vote implements PresentationName {
             Subject sub = subRepo.findOne(getSubject_id());
             
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            String dateStr = sdf.format(this.getVote_date());
+            Date d = this.getVote_date();
+            String dateStr;
+            if (d != null){
+                dateStr = sdf.format(this.getVote_date());
+            } else {
+                dateStr ="no date";
+            }
 
             return sub.getPresentationName() + ", " + dateStr;
         } else {

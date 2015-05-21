@@ -67,8 +67,8 @@ public enum NonEditableFields {
                 return new String[]{"visible"};
             
             case T_VOTE:
-                return new String[]{"visible"};
-            
+                return new String[]{"for_vote","against_vote", "refrain_vote", "absent", "visible"};
+
             case T_VOTE_CLASSIFICATION:
                 return new String[]{"visible"};
                 

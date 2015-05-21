@@ -12,7 +12,7 @@ import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.EnterViewService;
-import sk.stefan.MVP.view.components.hlasovanie.PritomniLayout;
+import sk.stefan.MVP.view.components.vote.PritomniLayout;
 
 /**
  *

@@ -895,10 +895,9 @@ public class UniRepo<E> implements MyRepo<E> {
         for (String param : pre.keySet()) {
             orig = pre.get(param);
             changed = post.get(param);
+
             //odfiltrovanie policok, kde zmena nenastala. pokial je entita nova, uklada sa vsetko:
             if (entOrigin == null || !(orig + "").equals(changed+"")) {
-
-                
                 
                 zmena = new A_Change();
                 zmena.setUser_id(userId);

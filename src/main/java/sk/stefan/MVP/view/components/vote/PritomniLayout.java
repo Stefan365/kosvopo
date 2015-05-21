@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.MVP.view.components.hlasovanie;
+package sk.stefan.MVP.view.components.vote;
 
-import com.vaadin.data.util.sqlcontainer.SQLContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -20,12 +18,13 @@ import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.entity.PublicRole;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteOfRole;
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.utils.ToolsDao;
-import sk.stefan.utils.ToolsNames;
 
 /**
+ * Hlasujuci ludkovia.
  *
  * @author stefan
  */
@@ -35,7 +34,9 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
 
     private static final long serialVersionUID = 1L;
 
-    private List<PritomnyComponent> pritomniComponents;
+    
+    //servisy:
+    private final VoteService voteService;
 
     //hlavne entity
     private PublicBody pubBody;
@@ -45,6 +46,7 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
 
     //Komponnety:
     private final VerticalLayout refreshingLy;
+    private List<PritomnyComponent> pritomniComponents;
 
     private final Label titleLb;
 
@@ -56,9 +58,6 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
 
     private HorizontalLayout buttonsLayout;
 
-    private final UniRepo<VoteOfRole> vorRepo;
-
-    private final UniRepo<Vote> voteRepo;
 
 //    private Boolean isNew;
     private final VotingLayout listener;
@@ -90,8 +89,9 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
 
         this.addComponents(titleLb, refreshingLy);
 
-        this.vorRepo = new UniRepo<>(VoteOfRole.class);
-        this.voteRepo = new UniRepo<>(Vote.class);
+//        this.vorRepo = new UniRepo<>(VoteOfRole.class);
+//        this.voteRepo = new UniRepo<>(Vote.class);
+        this.voteService = new VoteServiceImpl();
 
 //        if (voteId != null && pubBody != null) {
         if (pubBody != null) {
@@ -130,7 +130,7 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
         for (PublicRole pr : prActual) {
 //            vors = vorRepo.findByParam("public_role_id", "" + pr.getId());
             if (voteId != null) {
-                vors = vorRepo.findByParam("vote_id", "" + voteId);
+                vors = voteService.findVoteOfRolesByVoteId(voteId);
                 if (vors != null && !vors.isEmpty()) {
                     vor = vors.get(0);
                 } else {
@@ -171,46 +171,34 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
 
         cancelBt = new Button("zrušiť");
         saveBt = new Button("uložiť", (Button.ClickEvent event) -> {
-            doOkAction();
+//            doOkAction(null);
         });
 
         cancelBt = new Button("zrušiť", (Button.ClickEvent event) -> {
-            doCancelAction();
+//            doCancelAction();
         });
 
         buttonsLayout.addComponents(saveBt, cancelBt);
     }
 
     @Override
-    public void doOkAction() {
+    public void doOkAction(Integer entId) {
 
-//        this.updateResult(); //nema zmyslel, updatuje sa priebezne, a tu je to neskoro, 
-//        inak by sa opat musel zavola sqlcontainer.commit().
-//        try {
-//            netreba commitnut, uz je commitnute
-//           SQLContainer sc = this.listener.getVoteInputFormLy().getSqlContainer();
-//            sc.commit();
-//            isNew = false;
-//            saveAllVoteOfRoles();
         if (voteId == null) {
-            voteId = listener.getVoteInputFormLy().getVoteId();
+//            hlasovanie je uz ulozene v DB, takze sa to moze vytiahnut cez DB. 
+//            Vote v = 
+            voteId = entId;
+            
+//            voteId = listener.getVoteInputFormLy().getVoteId();
             for (VoteOfRole vor : votesOfRoles) {
                 vor.setVote_id(voteId);
-                vorRepo.save(vor, true);
+                voteService.saveVoteOfRole(vor, true);
             }
         } else {
             this.saveAllVoteOfRoles();
         }
 
-//        for (VoteOfRole vor : votesOfRoles) {
-//            vor.setVote_id(voteId);
-//            vorRepo.save(vor);
-//        }
-        
         Notification.show("Uloženie prebehlo v poriadku!");
-//        } catch (UnsupportedOperationException | SQLException ex) {
-//            log.error(ex.getMessage(), ex);
-//        }
 
     }
 
@@ -237,8 +225,10 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
     }
 
     private void saveAllVoteOfRoles() {
+        
         for (VoteOfRole vor : votesOfRoles) {
-            vor = vorRepo.save(vor, true);
+            
+            vor = voteService.saveVoteOfRole(vor, true);
         }
     }
 

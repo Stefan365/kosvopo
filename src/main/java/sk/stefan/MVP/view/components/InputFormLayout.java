@@ -24,9 +24,11 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -117,7 +119,7 @@ public class InputFormLayout<E> extends FormLayout {
      * ignorovane.
      */
     public InputFormLayout(Class<E> cls, Item item, SQLContainer sqlCont,
-            Component cp, List<String> nEditFn) {
+            Component cp, String[] nEditFn) {
 
         uniTableService = new UniTableServiceImpl<>(cls);
         this.securityService = new SecurityServiceImpl();
@@ -141,7 +143,8 @@ public class InputFormLayout<E> extends FormLayout {
         if (nEditFn == null) {
             this.nonEditFn = new ArrayList<>();
         } else {
-            this.nonEditFn = nEditFn;
+
+            this.nonEditFn = Arrays.asList(nEditFn);
         }
 
         this.fieldMap = new HashMap<>();
@@ -341,7 +344,6 @@ public class InputFormLayout<E> extends FormLayout {
         Properties proDepict = ToolsNames.getDepictParams(tn);
 
 //        log.info("TN:" + tn);
-        
         for (int i = 1; i < proPoradie.size(); i++) {
 
             key = proPoradie.getProperty("" + i);
@@ -505,7 +507,7 @@ public class InputFormLayout<E> extends FormLayout {
 //                    vsetko pojde cez jdbc :
                     Integer entId = (Integer) item.getItemProperty("id").getValue();
 
-                    if (entId == null){
+                    if (entId == null) {
                         item.getItemProperty("visible").setValue(Boolean.TRUE);
                     }
 
@@ -513,7 +515,7 @@ public class InputFormLayout<E> extends FormLayout {
                     if (passVl != null && passVl.getNewPassword() != null) {
                         ((A_User) ent).setPassword(securityService.encryptPassword(passVl.getNewPassword()));
                     }
-                    
+
                     ent = uniTableService.save(ent, true);
 
                     if ("a_user".equals(tn) && entId == null) {
@@ -546,12 +548,22 @@ public class InputFormLayout<E> extends FormLayout {
                     saveBt.setEnabled(false);
 
                     if (okCancelListener != null) {
-                        okCancelListener.doOkAction();
+                        String getter = "getId";
+                        Method getterMethod = clsE.getMethod(getter);
+
+                        Integer entIda = (Integer) getterMethod.invoke(ent);
+
+                        okCancelListener.doOkAction(entIda);
                     }
                     Notification.show("Úkol byl úspešně uložen!");
 
                 } catch (UnsupportedOperationException e) {
                     log.warn(e.getLocalizedMessage(), e);
+                } catch (IllegalAccessException |
+                        SecurityException | NoSuchMethodException |
+                        IllegalArgumentException | InvocationTargetException e) {
+//            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
+                    log.error("KAROLKO" + e.getMessage(), e);
                 }
             }
         });

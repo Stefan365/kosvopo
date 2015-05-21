@@ -1,4 +1,4 @@
-package sk.stefan.MVP.view.components.hlasovanie;
+package sk.stefan.MVP.view.components.vote;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -6,9 +6,9 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
 import sk.stefan.MVP.model.entity.PublicRole;
-import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteOfRole;
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.PublicRoleService;
+import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.enums.VoteAction;
 
 /**
@@ -21,31 +21,25 @@ public class PritomnyComponent extends HorizontalLayout {
     private Label presentLb;
     private OptionGroup decisionOg;
 
-//    private final PublicRole pubRole;
-//    private final Vote vote;
     private final VoteOfRole voteOfRole;
     private VoteAction decision;
 
-    private final UniRepo<PublicRole> prRepo;
+//    private final UniRepo<PublicRole> prRepo;
+    private final PublicRoleService publicRoleService;
     
     private final PritomniLayout listener; 
     //0. konstruktor
     /**
      * @param vor
-     * @param hlas
      * @param lisnr
      */
     public PritomnyComponent(VoteOfRole vor, PritomniLayout lisnr) {
-//    public PritomnyComponent(VoteOfRole vor) {
 
-        prRepo = new UniRepo<>(PublicRole.class);
+//        prRepo = new UniRepo<>(PublicRole.class);
+        this.publicRoleService = new PublicRoleServiceImpl();
+
         this.listener = lisnr;
-//        this.pubRole = pr;
-//        this.vote = hlas;
         this.voteOfRole = vor;
-//        this.hlasovanieVerOs.setPublic_role_id(pr.getId());
-//        this.hlasovanieVerOs.setVote_id(hlas.getId());
-//        this.hlasovanieVerOs.setVisible(Boolean.TRUE);
         
         
         
@@ -115,7 +109,8 @@ public class PritomnyComponent extends HorizontalLayout {
     private void initLabel() {
         
         Integer prId = this.voteOfRole.getPublic_role_id();
-        PublicRole prole = prRepo.findOne(prId);
+        
+        PublicRole prole = publicRoleService.findPublicRoleById(prId);
         
         presentLb = new Label(prole.getPresentationName2());
 
@@ -147,13 +142,5 @@ public class PritomnyComponent extends HorizontalLayout {
     public void setDecision(VoteAction decision) {
         this.decision = decision;
     }
-
-//    public PublicRole getPubRole() {
-//        return pubRole;
-//    }
-
-//    public Vote getHlasovanie() {
-//        return vote;
-//    }
 
 }
