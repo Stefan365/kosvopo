@@ -7,6 +7,9 @@ package sk.stefan.MVP.model.repo;
 
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,14 +26,12 @@ import sk.stefan.MVP.model.entity.A_Change;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.MVP.model.entity.Document;
-import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.utils.ToolsFiltering;
 
 /**
- * Vrstva komunikujuca s na jednej strane s databazovymi nastrojmi (jdbc)
- * a na druhej strane so systemom (servisom).
- * 
+ * Vrstva komunikujuca s na jednej strane s databazovymi nastrojmi (jdbc) a na
+ * druhej strane so systemom (servisom).
+ *
  * Zahrna metody, ktore nie su zavisle od Triedy entity.
  *
  * @author stefan
@@ -38,8 +39,6 @@ import sk.stefan.utils.ToolsFiltering;
 public class GeneralRepo {
 
     private static final Logger log = Logger.getLogger(GeneralRepo.class);
-
-    private final SecurityService securityService;
 
     private Connection transactionalConn;
 
@@ -50,17 +49,24 @@ public class GeneralRepo {
     private final UniRepo<Document> docRepo;
 
     private UniRepo<A_Change> changeRepo;
-    
+
+    private final MessageDigest md;
+
     //0. konstruktor.
     /**
      *
      */
     public GeneralRepo() {
 
-        this.securityService = new SecurityServiceImpl();
         this.docRepo = new UniRepo<>(Document.class);
         this.userRepo = new UniRepo<>(A_User.class);
         this.userRoleRepo = new UniRepo<>(A_UserRole.class);
+        
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException ex) {
+            throw new RuntimeException(ex);
+        }
 
     }
 
@@ -80,9 +86,9 @@ public class GeneralRepo {
         ResultSet rs;
         byte[] hash = null;
         String sql;
-        
+
         sql = "SELECT password FROM a_user WHERE id = ?";
-        
+
         try {
             conn = DoDBconn.createNoninvasiveConnection();
             st = conn.prepareStatement(sql);
@@ -102,16 +108,15 @@ public class GeneralRepo {
         } catch (SQLException ex) {
             log.error(ex.getLocalizedMessage(), ex);
             throw new SQLException(ex);
-        } 
-        
+        }
+
     }
 
     /**
-     * Specificka metoda pre filtrovacie ucely. 
-     * Vrati id pre dany sql dotaz.
+     * Specificka metoda pre filtrovacie ucely. Vrati id pre dany sql dotaz.
      *
      * @param sql
-     * @return 
+     * @return
      */
     public List<Integer> findIds(String sql) {
 
@@ -126,9 +131,9 @@ public class GeneralRepo {
             List<Integer> listIds;
             log.info("MEGASQL:*" + sql + "*");
             rs = st.executeQuery(sql);
-            
+
             listIds = fillListIds(rs);
-            
+
             rs.close();
             st.close();
             DoDBconn.releaseConnection(conn);
@@ -138,17 +143,16 @@ public class GeneralRepo {
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
             log.error(e.getMessage(), e);
             return null;
-        } 
+        }
     }
 
     /**
-     * Najde hladane parametre vo vsetkych tabulkach. 
+     * Najde hladane parametre vo vsetkych tabulkach.
      *
-     * Kryje sa sice s metodou findbyparam triedy UniRepo, 
-     * ale viac vyhovuje poziadavkam na automaticku deaktivaciu 
-     * entit pri deaktivacii korenovej entity. 
-     * Pretoze tato deaktivacia bude dennym chlebom, ponechavam 
-     * aj tuto specifickejsiu metodu.
+     * Kryje sa sice s metodou findbyparam triedy UniRepo, ale viac vyhovuje
+     * poziadavkam na automaticku deaktivaciu entit pri deaktivacii korenovej
+     * entity. Pretoze tato deaktivacia bude dennym chlebom, ponechavam aj tuto
+     * specifickejsiu metodu.
      *
      * @param tn
      * @param paramName
@@ -165,7 +169,7 @@ public class GeneralRepo {
 
         String sql = "SELECT id FROM " + tn + " WHERE " + paramName + " = '" + paramVal
                 + "' AND visible = true";
-        
+
         log.info("**" + sql + "*");
 
         try {
@@ -180,10 +184,9 @@ public class GeneralRepo {
             st.close();
             DoDBconn.releaseConnection(conn);
 
-            
             return listIds;
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
-            
+
             log.error(e.getMessage(), e);
             return null;
         }
@@ -191,8 +194,9 @@ public class GeneralRepo {
     }
 
     /**
-     * Metoda na najdenie dobrovolnikov s seba. Metoda sa vyuzije pri administracii uzivatelov.
-     * 
+     * Metoda na najdenie dobrovolnikov s seba. Metoda sa vyuzije pri
+     * administracii uzivatelov.
+     *
      * @param userId
      * @return
      */
@@ -215,7 +219,7 @@ public class GeneralRepo {
         try {
             conn = DoDBconn.createNoninvasiveConnection();
             st = conn.createStatement();
-            
+
             rs = st.executeQuery(sql);
 
             listIds = fillListIds(rs);
@@ -223,7 +227,7 @@ public class GeneralRepo {
             rs.close();
             st.close();
             DoDBconn.releaseConnection(conn);
-            
+
             return listIds;
 
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
@@ -235,7 +239,7 @@ public class GeneralRepo {
 
 // ****************** INVASIVE **************************************    
     /**
-     * Toto netreba ukladat do a_change!!!
+     * Toto sa nebude z bezpecnostnych dvovodov ukladat do a_change!!!
      *
      * Modifikuje iba password. Vynimka z univerzalnosti, plati len pre tabulku
      * a_user;
@@ -248,13 +252,13 @@ public class GeneralRepo {
     public void updatePassword(String rawPwd, String userId) throws SQLException {
 
         log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
-        
+
         Connection conn = DoDBconn.createInvasiveConnection();
         PreparedStatement st;
-        
+
         try {
             st = conn.prepareStatement("UPDATE a_user SET password = ? WHERE id = " + userId);
-            st.setBytes(1, securityService.encryptPassword(rawPwd));
+            st.setBytes(1, this.encryptPassword(rawPwd));
             st.executeUpdate();
 
             st.close();
@@ -262,7 +266,7 @@ public class GeneralRepo {
             DoDBconn.releaseConnection(conn);
 
         } catch (SQLException ex) {
-            
+
             log.error(ex.getMessage(), ex);
             throw new SQLException();
         }
@@ -302,7 +306,7 @@ public class GeneralRepo {
                 slavesIdsMap.put(slv, slvIds);
 
             }
-            
+
             //      najdime dalsich pod-otrokov:
             for (String key : slavesIdsMap.keySet()) {
                 slvIds = slavesIdsMap.get(key);
@@ -316,11 +320,11 @@ public class GeneralRepo {
     /**
      * POZOR!!! NEpouzivat na inom mieste, inak sa musi preimplementovat aj
      * zapis do a_change!!!
-     * 
-     * Deaktivuje len parameter visible. Kryje sa sice s DeactivateOblyOne UniRepa,
-     * ale lepsie vyhovuje potrebam deaktivacie stromu entit (pretoze tam sa
-     * dopredu nevie akeho typu etita bude - to by robilo zbytocne probemy pri 
-     * tvorbe generickeho UniRepa.)
+     *
+     * Deaktivuje len parameter visible. Kryje sa sice s DeactivateOblyOne
+     * UniRepa, ale lepsie vyhovuje potrebam deaktivacie stromu entit (pretoze
+     * tam sa dopredu nevie akeho typu etita bude - to by robilo zbytocne
+     * probemy pri tvorbe generickeho UniRepa.)
      *
      * @param tn
      * @param entId id entity, ktoru chceme deaktivovat.
@@ -414,9 +418,9 @@ public class GeneralRepo {
     //************************************************
     /**
      * pomocna metoda pre filtrovanie. Najde zoznam id pre dany resultset.
-     * 
+     *
      * @param rs
-     * @return 
+     * @return
      */
     private List<Integer> fillListIds(ResultSet rs) {
 
@@ -441,10 +445,10 @@ public class GeneralRepo {
 
     /**
      * Vytvori instanciu zmeny, pre deaktivaciu daneho riadku v tabulke tn.
-     * 
+     *
      * @param tn
      * @param rowId
-     * @return 
+     * @return
      */
     public A_Change createDeactivateChangeToPersist(String tn, Integer rowId) {
 
@@ -473,13 +477,12 @@ public class GeneralRepo {
 
     }
 
-    
     /**
-     * Tato metoda inicializuje tj. vytvori uzivatel admin. a zmeni hesla uzivatelov
-     * pridanych cez skript (.._initB.sql).
-     * Je to z toho dvovodu, ze mysql md5() vytvori(koduje) nieco uplne ine ako 
-     * Java md5(). Nemam cas riesit preco, takze riesim to takto.
-     * 
+     * Tato metoda inicializuje tj. vytvori uzivatel admin. a zmeni hesla
+     * uzivatelov pridanych cez skript (.._initB.sql). Je to z toho dvovodu, ze
+     * mysql md5() vytvori(koduje) nieco uplne ine ako Java md5(). Nemam cas
+     * riesit preco, takze riesim to takto.
+     *
      */
     public void initAdmin() {
 
@@ -493,7 +496,7 @@ public class GeneralRepo {
         admin.setE_mail("admin@admin.sk");
         admin.setVisible(Boolean.TRUE);
 
-        encPassword = securityService.encryptPassword("admin");
+        encPassword = this.encryptPassword("admin");
         admin.setPassword(encPassword);
 
         admin = userRepo.save(admin, false);
@@ -519,4 +522,33 @@ public class GeneralRepo {
         }
 
     }
+
+    /**
+     * Tato metoda sa tu nachadza z dvovodu, zabranenia cyklickeho 
+     * odkazu SecurityServiceImpl a GeneralRepo.
+     * nicmene sa viaze, sluzi zdejsej funkcii updatePassword ktora logicky patri aj sem,
+     * lebo komunikuje s DB.
+     * 
+     * Vrati hash hesla.
+     *
+     * @param password heslo, z ktorého bude vytvoreny hash.
+     * @return hash hesla
+     */
+    public byte[] encryptPassword(String password) {
+
+        try {
+            byte[] bytesa;
+
+            String saltedPassword = password;//.toUpperCase() + "KAROLKO";
+            md.update(saltedPassword.getBytes("UTF-8"));
+
+            bytesa = md.digest();
+
+            return bytesa;
+
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
 }

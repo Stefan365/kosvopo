@@ -56,18 +56,6 @@ INSERT INTO t_public_person(first_name, last_name, date_of_birth)
 VALUES ('Emil', 'Čútora', '1967-04-01');
 COMMIT; 
 
--- 6.B
-INSERT INTO t_public_person2(first_name, last_name, date_of_birth)
-VALUES ('Johan', 'Procházka', '1956-09-11');
-INSERT INTO t_public_person2(first_name, last_name, date_of_birth)
-VALUES ('Karol', 'Čútora', '1966-05-13');
-INSERT INTO t_public_person2(first_name, last_name, date_of_birth)
-VALUES ('Luboš', 'Jozefíny', '1954-12-21');
-INSERT INTO t_public_person2(first_name, last_name, date_of_birth)
-VALUES ('Alex', 'Spevák', '1979-09-01');
-INSERT INTO t_public_person2(first_name, last_name, date_of_birth)
-VALUES ('Emil', 'Čútora', '1967-04-01');
-COMMIT; 
 
 
 -- 7.

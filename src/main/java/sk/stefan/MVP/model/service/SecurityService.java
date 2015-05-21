@@ -24,12 +24,11 @@ public interface SecurityService {
 
     public Boolean checkPassword(String rawPassword, byte[] hashPassword);
 
-    public byte[] encryptPassword(String password);
-    
     public byte[] getPassword(Integer id) throws SQLException;
 
     public void updatePassword(String newPwd, String uid) throws SQLException;
  
+    public byte[] encryptPassword(String password);
 
     
 }

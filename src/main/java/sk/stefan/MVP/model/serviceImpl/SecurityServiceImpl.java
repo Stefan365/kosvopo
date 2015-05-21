@@ -1,9 +1,7 @@
 package sk.stefan.MVP.model.serviceImpl;
 
 import com.vaadin.server.VaadinSession;
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
@@ -21,7 +19,6 @@ public class SecurityServiceImpl implements SecurityService {
 
     private final GeneralRepo genRepo;
     
-    private MessageDigest md;
 
     //0.konstruktor:
     /**
@@ -31,11 +28,6 @@ public class SecurityServiceImpl implements SecurityService {
         
         this.genRepo = new GeneralRepo();
         
-        try {
-            md = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     /**
@@ -85,40 +77,12 @@ public class SecurityServiceImpl implements SecurityService {
             return Boolean.FALSE;
         }
         //return true;
-        byte[] passByte = encryptPassword(rawPassword);
+        byte[] passByte = genRepo.encryptPassword(rawPassword);
 
         return MessageDigest.isEqual(hashPassword, passByte);
 
     }
 
-    /**
-     * Vrati hash hesla.
-     *
-     * @param password heslo, z ktorého bude vytvoreny hash.
-     * @return hash hesla
-     */
-    @Override
-    public byte[] encryptPassword(String password) {
-        try {
-            byte[] bytesa;
-            
-            String saltedPassword = password;//.toUpperCase() + "KAROLKO";
-            md.update(saltedPassword.getBytes("UTF-8"));
-
-            bytesa = md.digest();
-
-//            StringBuilder sbc = new StringBuilder();
-//            for (byte b : bytesa) {
-//                sbc.append(b);
-//            }
-//            log.info("5. PASS FORM LINE:" + sbc.toString());
-
-            return bytesa;
-
-        } catch (UnsupportedEncodingException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
     
     @Override
     public byte[] getPassword(Integer id) throws SQLException {
@@ -132,6 +96,11 @@ public class SecurityServiceImpl implements SecurityService {
         
         genRepo.updatePassword(newPwd, uid);
         
+    }
+
+    @Override
+    public byte[] encryptPassword(String rawPassword) {
+        return genRepo.encryptPassword(rawPassword);
     }
 
 
