@@ -527,7 +527,7 @@ public class InputFormLayout<E> extends FormLayout {
                         urole.setUser_id(usr.getId());
                         urole.setActual(Boolean.TRUE);
                         urole.setVisible(Boolean.TRUE);
-                        uniTableService.saveRole(urole);
+                        uniTableService.saveUserRole(urole, true);
 
                     }
                     if (item.getItemProperty("id").getValue() == null) {
