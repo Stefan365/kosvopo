@@ -224,10 +224,10 @@ public class VoteServiceImpl implements VoteService {
 
         StringBuilder numbers = new StringBuilder();
         
-        numbers.append("za: ").append(vote.getFor_vote()).append(" \n");
-        numbers.append("proti: ").append(vote.getAgainst_vote()).append(" \n");
-        numbers.append("zadržali sa: ").append(vote.getRefrain_vote()).append(" \n");
-        numbers.append("chýbali: ").append(vote.getFor_vote()).append(" \n");
+        numbers.append("za: ").append(vote.getFor_vote()).append("  ");
+        numbers.append("proti: ").append(vote.getAgainst_vote()).append("  ");
+        numbers.append("zadržali sa: ").append(vote.getRefrain_vote()).append("  ");
+        numbers.append("chýbali: ").append(vote.getAbsent()).append("  ");
 
         return numbers.toString();
     }

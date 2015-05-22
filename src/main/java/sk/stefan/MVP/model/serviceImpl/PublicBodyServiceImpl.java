@@ -25,21 +25,23 @@ import sk.stefan.MVP.model.service.PublicRoleService;
  */
 public class PublicBodyServiceImpl implements PublicBodyService {
 
-    private final GeneralRepo generalRepo;
-    private final UniRepo<PublicBody> publicBodyRepo;
-
+    private final GeneralRepo genRepo;
+    private final UniRepo<PublicBody> pubBodyRepo;
+    private final UniRepo<PublicRole> pubRoleRepo;
+    
     private final PublicPersonService pubPersonService;
-    private final PublicRoleService pubRoleService;
     private final LocationService locationService;
     
     public PublicBodyServiceImpl() {
 
-        generalRepo = new GeneralRepo();
-        publicBodyRepo = new UniRepo<>(PublicBody.class);
+        genRepo = new GeneralRepo();
+        pubBodyRepo = new UniRepo<>(PublicBody.class);
+        //nemoze tu byt pubRole service kvoi cyklickej referencii:
+        pubRoleRepo = new UniRepo<>(PublicRole.class);
         
         pubPersonService = new PublicPersonServiceImpl();
-        pubRoleService = new PublicRoleServiceImpl();
         locationService = new LocationServiceImpl();
+        
 
     }
 
@@ -51,7 +53,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         String chiefRole = "" + 3;
 
         List<PublicRole> pRoles
-                = pubRoleService.findByTwoParams("public_body_id", pbId, "name", chiefRole);
+                = pubRoleRepo.findByTwoParams("public_body_id", pbId, "name", chiefRole);
         if (pRoles == null || pRoles.isEmpty()) {
 
             return "žiadny predseda";
@@ -71,7 +73,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
 
     @Override
     public List<PublicBody> findAll() {
-        return publicBodyRepo.findAll();
+        return pubBodyRepo.findAll();
     }
 
     /**
@@ -88,7 +90,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         String sql = "SELECT pb.id FROM t_public_body pb WHERE pb.location_id IN "
                 + "(SELECT loc.id FROM t_location loc WHERE loc.district_id = " + districtId + " AND loc.visible = true) "
                 + "AND pb.visible = true";
-        pbIds = this.generalRepo.findIds(sql);
+        pbIds = this.genRepo.findIds(sql);
 
         return pbIds;
 
@@ -111,7 +113,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
                 + " AND pb.visible = true"
                 + " AND loc.visible = true";
         
-        pbIds = this.generalRepo.findIds(sql);
+        pbIds = this.genRepo.findIds(sql);
 
         return pbIds;
 
@@ -124,7 +126,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         List<PublicBody> publicBodies = new ArrayList<>();
 
         for (Integer i : pbIds) {
-            publicBodies.add(publicBodyRepo.findOne(i));
+            publicBodies.add(pubBodyRepo.findOne(i));
         }
 
         return publicBodies;
@@ -134,7 +136,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
     @Override
     public PublicBody findOne(Integer pbId) {
         
-        return publicBodyRepo.findOne(pbId);
+        return pubBodyRepo.findOne(pbId);
     }
 
     @Override

@@ -50,10 +50,14 @@ public class VoteClassComponent extends GridLayout {
         
         
         this.briefDescriptionLb.setCaption("Stručný popis");
-        this.briefDescriptionLb.setValue(voteClass.getBrief_description());
         
         this.usefulnessLb.setCaption("Verejná užitočnosť");
-        this.usefulnessLb.setValue(voteClass.getPublic_usefulness().getName());
+        
+        if (voteClass != null){
+            this.usefulnessLb.setValue(voteClass.getPublic_usefulness().getName());
+            this.briefDescriptionLb.setValue(voteClass.getBrief_description());
+        
+        }
         
         this.addComponent(briefDescriptionLb, 0,0);
         this.addComponent(usefulnessLb, 1,0);

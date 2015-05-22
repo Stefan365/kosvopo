@@ -266,7 +266,7 @@ public class GeneralRepo {
             DoDBconn.releaseConnection(conn);
 
         } catch (SQLException ex) {
-
+            Notification.show("Zápis do databáze sa nepodaril!");
             log.error(ex.getMessage(), ex);
             throw new SQLException();
         }
@@ -383,6 +383,8 @@ public class GeneralRepo {
         try {
             transactionalConn.commit();
         } catch (SQLException ex) {
+            Notification.show("Zápis do databáze sa nepodaril!");
+
             try {
                 transactionalConn.rollback();
                 DoDBconn.releaseConnection(transactionalConn);
@@ -392,7 +394,6 @@ public class GeneralRepo {
 //                Notification.show("Ukladanie sa nevydarilo, SPRAVIL SA ROLLBACK!");
             } catch (SQLException ex1) {
                 log.error(ex.getMessage(), ex);
-//                Notification.show("ANI TEN BLBY ROLLBACK SA NEPODARIL!");
             }
         }
     }

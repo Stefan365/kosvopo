@@ -1,5 +1,6 @@
 package sk.stefan.MVP.model.repo;
 
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -348,7 +349,7 @@ public class UniRepo<E> implements MyRepo<E> {
         } catch (IllegalAccessException | NoSuchFieldException |
                 SecurityException | NoSuchMethodException |
                 IllegalArgumentException | InvocationTargetException | SQLException e) {
-//            Notification.show("Chyba, uniRepo::save(...)", Type.ERROR_MESSAGE);
+            Notification.show("Zápis do databáze sa nepodaril!");
             log.error(e.getMessage(), e);
             return null;
         }
@@ -408,6 +409,7 @@ public class UniRepo<E> implements MyRepo<E> {
             return true;
 
         } catch (SQLException | SecurityException | IllegalArgumentException e) {
+            Notification.show("Zápis do databáze sa nepodaril!");
             log.error(e.getLocalizedMessage(), e);
             return false;
         }
@@ -463,6 +465,8 @@ public class UniRepo<E> implements MyRepo<E> {
             }
 
         } catch (SecurityException | IllegalArgumentException | SQLException e) {
+
+            Notification.show("Zápis do databáze sa nepodaril!");
             log.error(e.getLocalizedMessage(), e);
             throw e;
         }
