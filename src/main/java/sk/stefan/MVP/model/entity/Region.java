@@ -39,17 +39,17 @@ public class Region implements PresentationName {
         this.region_name = kn;
     }
 
-    @Override
-    public String getPresentationName() {
-        return this.region_name;
-    }
-
     public Boolean getVisible() {
         return visible;
     }
 
     public void setVisible(Boolean visible) {
         this.visible = visible;
+    }
+
+    @Override
+    public String getPresentationName() {
+        return this.region_name;
     }
 
 }

@@ -1,6 +1,7 @@
 package sk.stefan.MVP.model.entity;
 
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.PublicBodyService;
+import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.interfaces.PresentationName;
 
 /**
@@ -12,6 +13,10 @@ public class PublicBody implements PresentationName {
     
     public static final String PRES_NAME = "Verejný orgán";
 
+    private static final PublicBodyService pubBodyService = new PublicBodyServiceImpl();
+    
+    
+    
     private Integer id;
 
     private String name;
@@ -60,16 +65,8 @@ public class PublicBody implements PresentationName {
 
     @Override
     public String getPresentationName() {
-
-        UniRepo<Location> locRepo = new UniRepo<>(Location.class);
-
-        if (location_id != null) {
-            Location loc = locRepo.findOne(location_id);
-            return name + ", " + loc.getPresentationName();
-        } else {
-            return name;
-        }
-
+        
+        return pubBodyService.getPresentationName(this);
     }
 
 }

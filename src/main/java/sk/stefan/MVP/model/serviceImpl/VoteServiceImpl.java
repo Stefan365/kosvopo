@@ -1,5 +1,6 @@
 package sk.stefan.MVP.model.serviceImpl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -15,6 +16,8 @@ import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteOfRole;
 import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.PublicBodyService;
+import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.enums.VoteResult;
@@ -24,18 +27,17 @@ public class VoteServiceImpl implements VoteService {
 
     // repa:
     private final GeneralRepo generalRepo;
-    
     private final UniRepo<Vote> voteRepo;
     private final UniRepo<Tenure> tenureRepo;
     private final UniRepo<Theme> themeRepo;
     private final UniRepo<Subject> subjectRepo;
-    private final UniRepo<PublicBody> publicBodyRepo;
-
-    private final UniRepo<PublicRole> publicRoleRepo;
     private final UniRepo<VoteOfRole> voteOfRoleRepo;
 
     // servisy:
     private final PublicRoleService publicRoleService;
+    private final PublicBodyService publicBodyService;
+    private final PublicPersonService publicPersonService;
+    
 
     public VoteServiceImpl() {
         
@@ -45,12 +47,11 @@ public class VoteServiceImpl implements VoteService {
         tenureRepo = new UniRepo<>(Tenure.class);
         themeRepo = new UniRepo<>(Theme.class);
         subjectRepo = new UniRepo<>(Subject.class);
-        publicBodyRepo = new UniRepo<>(PublicBody.class);
-        
-        publicRoleRepo = new UniRepo<>(PublicRole.class);
         voteOfRoleRepo = new UniRepo<>(VoteOfRole.class);
 
         publicRoleService = new PublicRoleServiceImpl();
+        publicBodyService = new PublicBodyServiceImpl();
+        publicPersonService = new PublicPersonServiceImpl();
 
     }
 
@@ -143,7 +144,7 @@ public class VoteServiceImpl implements VoteService {
         List<PublicRole> role;
 
         String id = pp.getId().toString();
-        role = this.publicRoleRepo.findByParam("public_person_id", id);
+        role = this.publicRoleService.findByParam("public_person_id", id);
 
         return role;
 
@@ -183,7 +184,7 @@ public class VoteServiceImpl implements VoteService {
 //        Integer pbId = pr.getPublic_body_id();
         PublicBody pb;
         if (pbIds != null && !pbIds.isEmpty()){
-            pb = publicBodyRepo.findOne(pbIds.get(0));
+            pb = publicBodyService.findOne(pbIds.get(0));
             return pb.getPresentationName();
         } else {
             return null;
@@ -406,7 +407,7 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public PublicRole getPublicRoleById(Integer prId) {
         
-        PublicRole pr = publicRoleRepo.findOne(prId);
+        PublicRole pr = publicRoleService.findOne(prId);
         return pr;
         
     }
@@ -536,6 +537,60 @@ public class VoteServiceImpl implements VoteService {
     public VoteOfRole saveVoteOfRole(VoteOfRole vor, boolean noteChange) {
 
         return voteOfRoleRepo.save(vor, noteChange);
+    }
+
+    @Override
+    public synchronized String getVorPresentationName(VoteOfRole vor) {
+
+        Integer prId = vor.getPublic_role_id();
+        if (prId != null) {
+            PublicRole pr = publicRoleService.findOne(prId);
+            PublicPerson pp = publicPersonService.findOne(pr.getPublic_person_id());
+            Vote vot = voteRepo.findOne(vor.getVote_id());
+
+            return pp.getPresentationName() + ", " + vot.getPresentationName();
+        } else {
+            return vor.getId() + ", nedefinované";
+        }
+        
+    }
+
+    @Override
+    public synchronized String getVotePresentationName(Vote vot) {
+        
+        Integer subId = vot.getSubject_id();
+        
+        if (subId != null) {
+            Subject sub = subjectRepo.findOne(subId);
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            Date d = vot.getVote_date();
+            String dateStr;
+            if (d != null){
+                dateStr = sdf.format(d);
+            } else {
+                dateStr ="no date";
+            }
+
+            return sub.getPresentationName() + ", " + dateStr;
+        } else {
+            return vot.getId() + ", nedefinované";
+        }
+    }
+
+    @Override
+    public synchronized String getSubjectPresentationName(Subject sub) {
+        
+        PublicRole pr = publicRoleService.findOne(sub.getPublic_role_id());
+        PublicBody pb = null;
+        if(pr != null){
+            pb = publicBodyService.findOne(pr.getPublic_body_id());
+        }
+        String s = sub.getBrief_description();
+        if (pb != null){
+            s += " " + pb.getPresentationName();
+        }
+        return s;
     }
 
 

@@ -2,7 +2,8 @@
 package sk.stefan.MVP.model.entity;
 
 import java.util.Date;
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.UserService;
+import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.interfaces.PresentationName;
 
 /**
@@ -13,6 +14,10 @@ public class A_UserRole implements PresentationName {
     public static final String TN = "a_user_role";
 
     public static final String PRES_NAME = "Rola užívateľa";
+    
+    private static final UserService userService = new UserServiceImpl();
+    
+    
     
     private Integer id;
 
@@ -28,6 +33,16 @@ public class A_UserRole implements PresentationName {
     
     private Boolean visible;
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // getters:
     public Integer getId() {
         return this.id;
@@ -93,17 +108,8 @@ public class A_UserRole implements PresentationName {
 
     @Override
     public String getPresentationName() {
-
-        UniRepo<A_User> usrRepo = new UniRepo<>(A_User.class);
-        UniRepo<A_Role> rolRepo = new UniRepo<>(A_Role.class);
-
-        if (user_id != null && role_id != null) {
-            A_User u = usrRepo.findOne(user_id);
-            A_Role r = rolRepo.findOne(role_id);
-            return u.getPresentationName() + ", " + r.getPresentationName() + ", " + id;
-//                    + ", " + since + ((till == null) ? "" : (", " + till));
-        } else {
-            return id + ", nedefinované";
-        }
+        
+        return userService.getUserRolePresentationName(this);
+        
     }
 }

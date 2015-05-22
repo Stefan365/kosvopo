@@ -10,7 +10,8 @@ import com.vaadin.data.Property.ValueChangeListener;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.entity.Vote;
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.PublicBodyService;
+import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.MVP.view.components.vote.PritomniLayout;
 import sk.stefan.MVP.view.components.vote.InputVoteFormLayout;
 import sk.stefan.MVP.view.components.vote.VotingLayout;
@@ -30,21 +31,23 @@ public class FilterVoteListener implements ValueChangeListener {
     private final PritomniLayout pritomniLy;
     private final VotingLayout votingLy;
 
-    private final UniRepo<PublicBody> pbRepo;
+    private final PublicBodyService publicBodyService;
     
     //0. konstruktor
     /**
      *
      * @param vinLy
      * @param pLy
+     * @param vLy
      */
-    public FilterVoteListener(InputVoteFormLayout<Vote> vinLy, PritomniLayout pLy, VotingLayout vLy) {
+    public FilterVoteListener(InputVoteFormLayout<Vote> vinLy, 
+            PritomniLayout pLy, VotingLayout vLy) {
         
         this.voteInputLy = vinLy;
         this.pritomniLy = pLy;
         this.votingLy = vLy;
-        
-        this.pbRepo = new UniRepo<>(PublicBody.class);
+
+        this.publicBodyService = new PublicBodyServiceImpl();
     
         
     }
@@ -58,11 +61,10 @@ public class FilterVoteListener implements ValueChangeListener {
         
         if (pbId != null) {
             
-            PublicBody pb = pbRepo.findOne(pbId);
+            PublicBody pb = publicBodyService.findOne(pbId);
         
             voteInputLy.setPublicBodyId(pb);
             
-//            log.info("KAMO SOM TU:" + (pb == null) + ":");
             
             pritomniLy.setEntities(pb, null);
             

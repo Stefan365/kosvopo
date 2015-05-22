@@ -1,6 +1,7 @@
 package sk.stefan.MVP.model.entity;
 
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.interfaces.PresentationName;
 
@@ -13,6 +14,9 @@ public class VoteOfRole implements PresentationName {
     public static final String TN = "t_vote_of_role";
 
     public static final String PRES_NAME = "Hlasovaneie verejného činiteľa";
+    
+    private static final VoteService voteService = new VoteServiceImpl();
+
 
     private Integer id;
 
@@ -24,6 +28,13 @@ public class VoteOfRole implements PresentationName {
 
     private Boolean visible;
 
+    
+    //0. konstruktor.
+    /**
+     */
+    public VoteOfRole(){
+    }
+    
     // getters:
     public Integer getId() {
         return this.id;
@@ -77,20 +88,7 @@ public class VoteOfRole implements PresentationName {
     @Override
     public String getPresentationName() {
 
-        UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
-        UniRepo<PublicPerson> ppRepo = new UniRepo<>(
-                PublicPerson.class);
-        UniRepo<Vote> votRepo = new UniRepo<>(Vote.class);
-
-        if (public_role_id != null) {
-            PublicRole pr = prRepo.findOne(public_role_id);
-            PublicPerson pp = ppRepo.findOne(pr.getPublic_person_id());
-            Vote vot = votRepo.findOne(vote_id);
-
-            return pp.getPresentationName() + ", " + vot.getPresentationName();
-        } else {
-            return id + ", nedefinované";
-        }
+        return voteService.getVorPresentationName(this);
 
     }
 

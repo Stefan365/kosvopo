@@ -50,5 +50,9 @@ public interface ClassificationService {
      * @return 
      */
     public Vote findVoteByVoteId(Integer votId);
+
+    public String getVotClassPresentationName(VoteClassification aThis);
+
+    public String getPersonClassPresentationName(PersonClassification aThis);
     
 }

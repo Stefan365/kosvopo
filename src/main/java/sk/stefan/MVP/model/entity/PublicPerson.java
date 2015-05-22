@@ -26,6 +26,13 @@ public class PublicPerson implements PresentationName {
 
     private Boolean visible;
 
+    
+    
+    
+    
+    
+    
+    
     //getters:
     public Integer getId() {
         return this.id;

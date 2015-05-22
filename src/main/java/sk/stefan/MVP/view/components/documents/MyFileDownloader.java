@@ -15,6 +15,8 @@ import java.io.InputStream;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.Document;
 import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.DocumentService;
+import sk.stefan.MVP.model.serviceImpl.DocumentServiceImpl;
 
 /**
  *
@@ -30,8 +32,10 @@ public class MyFileDownloader {
 
     private Document document;
 
+    //nie service. toto je umyselna vynimka z MVP, mnohy, ked sa pozrie do kodu pochopi preco:
     private final UniRepo<Document> docRepo = new UniRepo<>(Document.class);
     
+
     //0.konstruktor.
     /**
      * 

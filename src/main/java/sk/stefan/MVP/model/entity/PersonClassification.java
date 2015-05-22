@@ -1,7 +1,8 @@
 package sk.stefan.MVP.model.entity;
 
 import java.sql.Date;
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.ClassificationService;
+import sk.stefan.MVP.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.enums.PublicUsefulness;
 import sk.stefan.enums.Stability;
 import sk.stefan.interfaces.PresentationName;
@@ -14,6 +15,9 @@ public class PersonClassification implements PresentationName {
     public static final String TN = "t_person_classification";
     
     public static final String PRES_NAME = "Hodnotenie verejnej osoby";
+    
+    private static final ClassificationService classService = new ClassificationServiceImpl();
+    
 
     private Integer id;
 
@@ -29,7 +33,15 @@ public class PersonClassification implements PresentationName {
 
     private Boolean visible;
 
-    // getters:
+    
+    
+    
+    
+    
+    
+    
+    
+    // getters AND SETTERS:
     public Integer getId() {
         return this.id;
     }
@@ -93,15 +105,17 @@ public class PersonClassification implements PresentationName {
 
     @Override
     public String getPresentationName() {
+        
+        return classService.getPersonClassPresentationName(this);
 
-        UniRepo<PublicPerson> ppRepo = new UniRepo<>(PublicPerson.class);
-
-        if (public_person_id != null) {
-            PublicPerson pp = ppRepo.findOne(public_person_id);
-            return id + ", " + pp.getPresentationName();
-        } else {
-            return id + ", ";
-        }
+//        UniRepo<PublicPerson> ppRepo = new UniRepo<>(PublicPerson.class);
+//
+//        if (public_person_id != null) {
+//            PublicPerson pp = ppRepo.findOne(public_person_id);
+//            return id + ", " + pp.getPresentationName();
+//        } else {
+//            return id + ", ";
+//        }
 
     }
 

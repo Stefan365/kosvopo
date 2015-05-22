@@ -34,8 +34,6 @@ public class Document implements PresentationName {
     
     private String file_name;
     
-//    private Timestamp upload_date;
-    
     private Date upload_date;
     
 //    private InputStream document;
@@ -51,7 +49,9 @@ public class Document implements PresentationName {
 
     
     
-
+//************** GETTER AND SETTERS *********************
+    
+    
     public Integer getId() {
         return id;
     }
@@ -101,30 +101,18 @@ public class Document implements PresentationName {
         
     }
 
-    /**
-     * @return the file_name
-     */
     public String getFile_name() {
         return file_name;
     }
 
-    /**
-     * @param file_name the file_name to set
-     */
     public void setFile_name(String file_name) {
         this.file_name = file_name;
     }
 
-    /**
-     * @return the document
-     */
     public byte[] getDocument() {
         return document;
     }
 
-    /**
-     * @param document the document to set
-     */
     public void setDocument(byte[] document) {
         this.document = document;
     }

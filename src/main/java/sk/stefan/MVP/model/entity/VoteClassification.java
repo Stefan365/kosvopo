@@ -1,7 +1,8 @@
 package sk.stefan.MVP.model.entity;
 
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.ClassificationService;
+import sk.stefan.MVP.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.enums.PublicUsefulness;
 import sk.stefan.interfaces.PresentationName;
 
@@ -19,6 +20,10 @@ public class VoteClassification implements PresentationName {
     public static final String TN = "t_vote_classification";
     
     public static final String PRES_NAME = "Hodnotenie hlasovania";
+    
+    private static final ClassificationService classService = new ClassificationServiceImpl();
+
+
 
     private Integer id;
 
@@ -30,7 +35,17 @@ public class VoteClassification implements PresentationName {
 
     private Boolean visible;
 
-    // getters:
+    
+    
+    //0. konstruktor
+    /**
+     */
+    public VoteClassification(){
+        
+    }
+    
+    
+    // getters and setters:
     public Integer getId() {
         return this.id;
     }
@@ -82,13 +97,8 @@ public class VoteClassification implements PresentationName {
 
     @Override
     public String getPresentationName() {
-
-        UniRepo<Vote> voteRepo = new UniRepo<>(Vote.class);
-        if (vote_id != null) {
-            Vote vot = voteRepo.findOne(vote_id);
-            return id + ", " + vot.getPresentationName();
-         } else {
-            return id + ", nedefinované";
-        }
+        
+        return classService.getVotClassPresentationName(this);
+        
     }
 }

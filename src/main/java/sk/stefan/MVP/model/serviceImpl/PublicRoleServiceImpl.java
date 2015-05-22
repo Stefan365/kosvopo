@@ -3,47 +3,52 @@ package sk.stefan.MVP.model.serviceImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.entity.PublicPerson;
 import sk.stefan.MVP.model.entity.PublicRole;
 import sk.stefan.MVP.model.entity.Tenure;
 import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.PublicBodyService;
+import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.MVP.model.service.PublicRoleService;
-
 
 public class PublicRoleServiceImpl implements PublicRoleService {
 
     private final GeneralRepo generalRepo;
-    private final UniRepo<PublicRole> publicRoleRepo;
     private final UniRepo<Tenure> tenureRepo;
-    private final UniRepo<PublicBody> publicBodyRepo;
+    private final UniRepo<PublicRole> pubRoleRepo;
     
     
-
+    private final PublicBodyService pubBodyService;
+    private final PublicPersonService pubPersonService;
     
+    //0. konstruktor
+    /**
+     */
     public PublicRoleServiceImpl() {
 
         generalRepo = new GeneralRepo();
-        publicRoleRepo = new UniRepo<>(PublicRole.class);
         tenureRepo = new UniRepo<>(Tenure.class);
-        publicBodyRepo = new UniRepo<>(PublicBody.class);
-        
+        pubRoleRepo = new UniRepo<>(PublicRole.class);
 
+        this.pubBodyService = new PublicBodyServiceImpl();
+        this.pubPersonService = new PublicPersonServiceImpl();
+    
     }
 
     /**
      * Get All public roles for public person (historical included)
+     *
      * @param pp
-     * @return 
+     * @return
      */
     @Override
     public List<PublicRole> getAllPublicRolesOfPublicPerson(PublicPerson pp) {
         if (pp == null) {
             return new ArrayList<>();
         }
-        return publicRoleRepo.findByParam("public_person_id", "" + pp.getId());
+        return pubRoleRepo.findByParam("public_person_id", "" + pp.getId());
 
     }
 
@@ -51,7 +56,7 @@ public class PublicRoleServiceImpl implements PublicRoleService {
      * Get actual public roles for public person
      *
      * @param pp
-     * @return 
+     * @return
      */
     @Override
     public List<PublicRole> getActualPublicRolesOfPublicPerson(PublicPerson pp) {
@@ -81,22 +86,21 @@ public class PublicRoleServiceImpl implements PublicRoleService {
 
         return lprAct;
     }
-    
+
     /**
-     * 
+     *
      * @param pp
      * @param pb
-     * @return 
+     * @return
      */
-    
     @Override
-    public PublicRole getActualRole(PublicPerson pp, PublicBody pb){
-        
+    public PublicRole getActualRole(PublicPerson pp, PublicBody pb) {
+
         List<PublicRole> pubRoles = this.getActualPublicRolesOfPublicPerson(pp);
-        
+
         Integer pbId = pb.getId();
-        for (PublicRole pr : pubRoles){
-            if(pr.getPublic_body_id().compareTo(pbId)==0){
+        for (PublicRole pr : pubRoles) {
+            if (pr.getPublic_body_id().compareTo(pbId) == 0) {
                 return pr;
             }
         }
@@ -105,30 +109,31 @@ public class PublicRoleServiceImpl implements PublicRoleService {
 
     @Override
     public String getPublicBodyName(PublicRole pubRole) {
-        
+
         Integer pbId = pubRole.getPublic_body_id();
-        
-        PublicBody pb = publicBodyRepo.findOne(pbId);
-        if (pb != null){
+
+        PublicBody pb = pubBodyService.findOne(pbId);
+
+        if (pb != null) {
             return pb.getPresentationName();
         } else {
             return "žiadny verejný orgán";
         }
-    
+
     }
-    
+
     @Override
-    public String getTenureName(PublicRole pubRole){
-        
+    public String getTenureName(PublicRole pubRole) {
+
         Integer tenId = pubRole.getTenure_id();
 
         Tenure ten = tenureRepo.findOne(tenId);
-        if (ten != null){
+        if (ten != null) {
             return ten.getPresentationName();
         } else {
             return "žiadne volebné obdobie";
         }
-    
+
     }
 
     @Override
@@ -136,29 +141,28 @@ public class PublicRoleServiceImpl implements PublicRoleService {
 
         List<Integer> prIds;
 
-        String sql = "SELECT id FROM t_public_role WHERE public_body_id = " + publicBodyId +
-                " AND visible = true";
-          
+        String sql = "SELECT id FROM t_public_role WHERE public_body_id = " + publicBodyId
+                + " AND visible = true";
+
         prIds = this.generalRepo.findIds(sql);
 
         return prIds;
 
     }
-    
+
     @Override
     public List<Integer> findPublicRoleIdsByPubPersonId(Integer ppId) {
 
         List<Integer> prIds;
 
-        String sql = "SELECT id FROM t_public_role WHERE public_person_id = " + ppId +
-                    " AND visible = true";
+        String sql = "SELECT id FROM t_public_role WHERE public_person_id = " + ppId
+                + " AND visible = true";
         prIds = this.generalRepo.findIds(sql);
 
         return prIds;
-        
+
     }
 
-    
     /**
      *
      * @param tx
@@ -173,33 +177,75 @@ public class PublicRoleServiceImpl implements PublicRoleService {
                 + " ON (pr.public_person_id = pp.id) "
                 + " WHERE pp.first_name like '%" + tx + "%'"
                 + " OR pp.last_name like '%" + tx + "%' AND visible = true";
-        
+
         prIds = this.generalRepo.findIds(sql);
 
         return prIds;
 
     }
 
-    
     @Override
     public List<PublicRole> getPublicRoles(List<Integer> prIds) {
-        
+
         List<PublicRole> publicRoles = new ArrayList<>();
 
         for (Integer i : prIds) {
-            publicRoles.add(publicRoleRepo.findOne(i));
+            publicRoles.add(pubRoleRepo.findOne(i));
         }
 
         return publicRoles;
-
 
     }
 
     @Override
     public PublicRole findPublicRoleById(Integer prId) {
-        
-        return publicRoleRepo.findOne(prId);
+
+        return pubRoleRepo.findOne(prId);
     }
 
+    @Override
+    public List<PublicRole> findByParam(String ppIdName, String ppId) {
+
+        return pubRoleRepo.findByParam(ppIdName, ppId);
+    }
+
+    @Override
+    public PublicRole findOne(Integer prId) {
+
+        return pubRoleRepo.findOne(prId);
+    }
+
+    @Override
+    public synchronized String getPresentationName(PublicRole pubRole) {
+
+        Integer pbId = pubRole.getPublic_body_id();
+        Integer ppId = pubRole.getPublic_person_id();
+        Integer tenId = pubRole.getTenure_id();
+
+        if (pbId != null && ppId != null && tenId != null) {
+            PublicPerson pp = pubPersonService.findOne(ppId);
+            Tenure ten = tenureRepo.findOne(tenId);
+
+            return pp.getPresentationName()
+                    + ", " + ten.getPresentationName();
+        } else {
+            return pubRole.getId() + ", nedefinované";
+        }
+
+    }
+
+    @Override
+    public synchronized String getPresentationName2(PublicRole pubRole) {
+
+        PublicPerson pp = pubPersonService.findOne(pubRole.getPublic_person_id());
+        return pp.getPresentationName();
+
+    }
+
+    @Override
+    public List<PublicRole> findByTwoParams(String public_body_id, String pbId, String name, String chiefRole) {
+        
+        return pubRoleRepo.findByTwoParams(public_body_id, pbId, name, chiefRole);
+    }
 
 }

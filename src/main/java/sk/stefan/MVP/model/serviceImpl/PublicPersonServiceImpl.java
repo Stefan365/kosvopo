@@ -65,5 +65,11 @@ public class PublicPersonServiceImpl implements PublicPersonService {
         return publicPersons;
 
     }
+
+    @Override
+    public PublicPerson findOne(Integer ppId) {
+        
+        return publicPersonRepo.findOne(ppId);
+    }
     
 }

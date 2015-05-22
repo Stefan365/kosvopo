@@ -50,6 +50,10 @@ public interface PublicBodyService {
      * @return 
      */
     public List<Integer> findPublicBodyIdsByFilter(String name);
+
+    public PublicBody findOne(Integer pbId);
+
+    public String getPresentationName(PublicBody pb);
     
     
 }

@@ -1,6 +1,7 @@
 package sk.stefan.MVP.model.entity;
 
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.PublicRoleService;
+import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.enums.PublicRoleType;
 import sk.stefan.interfaces.PresentationName;
 
@@ -13,6 +14,9 @@ public class PublicRole implements PresentationName {
     
     public static final String PRES_NAME = "Verejná funkcia";
 
+    public static final PublicRoleService publicRoleService = new PublicRoleServiceImpl();
+    
+    
     private Integer id;
 
     private Integer public_body_id;
@@ -25,6 +29,16 @@ public class PublicRole implements PresentationName {
 
     private Boolean visible;
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // getters:
     public Integer getId() {
         return this.id;
@@ -81,23 +95,13 @@ public class PublicRole implements PresentationName {
 
     /**
      * Reprezentativne meno pre comboboxy.
+     * @return 
      */
     @Override
     public String getPresentationName() {
+        
+        return publicRoleService.getPresentationName(this);
 
-        UniRepo<PublicPerson> ppRepo = new UniRepo<>(
-                PublicPerson.class);
-        UniRepo<Tenure> tenRepo = new UniRepo<>(Tenure.class);
-
-        if (public_body_id != null && public_person_id != null
-                && tenure_id != null) {
-            PublicPerson pp = ppRepo.findOne(public_person_id);
-            Tenure ten = tenRepo.findOne(tenure_id);
-            return pp.getPresentationName()
-                    + ", " + ten.getPresentationName();
-        } else {
-            return id + ", nedefinované";
-        }
 
     }
     
@@ -106,10 +110,9 @@ public class PublicRole implements PresentationName {
      * @return 
      */
     public String getPresentationName2() {
-        UniRepo<PublicPerson> ppRepo = new UniRepo<>(
-                PublicPerson.class);
-        PublicPerson pp = ppRepo.findOne(public_person_id);
-        return pp.getPresentationName();
+
+        return publicRoleService.getPresentationName2(this);
+        
     }
 
 }

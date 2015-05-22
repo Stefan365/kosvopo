@@ -58,10 +58,6 @@ public final class District implements PresentationName {
         this.region_id = kr;
     }
 
-    @Override
-    public String getPresentationName() {
-        return this.district_name;
-    }
 
     public Boolean getVisible() {
         return visible;
@@ -70,4 +66,11 @@ public final class District implements PresentationName {
     public void setVisible(Boolean visible) {
         this.visible = visible;
     }
+    
+    
+    @Override
+    public String getPresentationName() {
+        return this.district_name;
+    }
+
 }

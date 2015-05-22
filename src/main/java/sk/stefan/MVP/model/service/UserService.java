@@ -6,6 +6,7 @@
 package sk.stefan.MVP.model.service;
 
 import sk.stefan.MVP.model.entity.A_User;
+import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.enums.UserType;
 
 /**
@@ -30,5 +31,20 @@ public interface UserService {
 
     public UserType getUserType(A_User user);
      
+    public String getUserRolePresentationName(A_UserRole usrRole);
+    
+    /**
+     * Zistuje, ci je v DB user admin.
+     * @return 
+     */
+    public Boolean isThereAdmin();
+
+    /**
+     * Pokial nieje tak ho touto metodou vytvori.
+     */
+    public void initAdmin();
+
+    public void saveUserRole(A_UserRole urole, boolean b);
+
     
 }

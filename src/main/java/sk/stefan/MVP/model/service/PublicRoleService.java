@@ -47,5 +47,15 @@ public interface PublicRoleService {
     public PublicRole getActualRole(PublicPerson pp, PublicBody pb);
 
     public PublicRole findPublicRoleById(Integer prId);
+
+    public List<PublicRole> findByParam(String public_person_id, String id);
+
+    public PublicRole findOne(Integer prId);
+
+    public String getPresentationName(PublicRole pr);
+
+    public String getPresentationName2(PublicRole pr);
+
+    public List<PublicRole> findByTwoParams(String public_body_id, String pbId, String name, String chiefRole);
     
 }

@@ -33,5 +33,7 @@ public interface PublicPersonService {
      * @return 
      */
     public List<PublicPerson> findPublicPersons(List<Integer> ppIds);
+
+    public PublicPerson findOne(Integer public_person_id);
     
 }

@@ -8,8 +8,8 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.service.EnterViewService;
-import sk.stefan.MVP.model.serviceImpl.EnterViewServiceImpl;
+import sk.stefan.MVP.model.service.UserService;
+import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 
 /**
  * Vstupny View. 
@@ -20,7 +20,9 @@ public class V2_EnterView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = -2001141270398193257L;
    
-    private final EnterViewService enterService;
+    private final UserService userService;
+    
+    
     
     private Button initAdminBt;
     
@@ -36,7 +38,7 @@ public class V2_EnterView extends VerticalLayout implements View {
         this.setSpacing(true);
         
         thiss = this;
-        this.enterService = new EnterViewServiceImpl();
+        this.userService = new UserServiceImpl();
         this.initlayout();
         this.initAdminButton();
         
@@ -63,7 +65,7 @@ public class V2_EnterView extends VerticalLayout implements View {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                enterService.initAdmin();
+                userService.initAdmin();
                 thiss.removeComponent(initAdminBt);
             }
         });
@@ -73,7 +75,7 @@ public class V2_EnterView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event) {
         
-        Boolean isThereAdm = enterService.isThereAdmin();
+        Boolean isThereAdm = userService.isThereAdmin();
         log.info("IS THERE ADMIN:" + isThereAdm);
         
         if (!isThereAdm){

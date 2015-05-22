@@ -103,6 +103,12 @@ public interface VoteService {
 
     public Vote findOne(Integer voteId);
 
+    public String getVorPresentationName(VoteOfRole aThis);
+
+    public String getVotePresentationName(Vote aThis);
+
+    public String getSubjectPresentationName(Subject sub);
+
     
 
 }

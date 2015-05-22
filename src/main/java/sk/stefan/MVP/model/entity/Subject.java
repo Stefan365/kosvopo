@@ -1,6 +1,7 @@
 package sk.stefan.MVP.model.entity;
 
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.interfaces.PresentationName;
 
 /**
@@ -13,6 +14,9 @@ public class Subject implements PresentationName {
     
     public static final String PRES_NAME = "Predmet hlasovania";
 
+    private static final VoteService voteService = new VoteServiceImpl(); 
+    
+    
     private Integer id;
 
     private String brief_description;
@@ -81,19 +85,21 @@ public class Subject implements PresentationName {
 
     @Override
     public String getPresentationName() {
-        UniRepo<PublicBody> pbRepo = new UniRepo<>(PublicBody.class);
-        UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
         
-        PublicRole pr = prRepo.findOne(this.public_role_id);
-        PublicBody pb = null;
-        if(pr != null){
-            pb = pbRepo.findOne(pr.getPublic_body_id());
-        }
-        String s = this.brief_description;
-        if (pb != null){
-            s += " " + pb.getPresentationName();
-        }
-        return s;
+        return voteService.getSubjectPresentationName(this);
+//        UniRepo<PublicBody> pbRepo = new UniRepo<>(PublicBody.class);
+//        UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
+//        
+//        PublicRole pr = prRepo.findOne(this.public_role_id);
+//        PublicBody pb = null;
+//        if(pr != null){
+//            pb = pbRepo.findOne(pr.getPublic_body_id());
+//        }
+//        String s = this.brief_description;
+//        if (pb != null){
+//            s += " " + pb.getPresentationName();
+//        }
+//        return s;
     }
 
 }

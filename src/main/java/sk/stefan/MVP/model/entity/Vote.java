@@ -1,8 +1,8 @@
 package sk.stefan.MVP.model.entity;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.VoteService;
+import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.PresentationName;
 
@@ -14,6 +14,9 @@ public class Vote implements PresentationName {
     public static final String TN = "t_vote";
 
     public static final String PRES_NAME = "Hlasovanie";
+    
+    private static final VoteService voteService = new VoteServiceImpl(); 
+
 
     /**
      * @return the PRES_NAME
@@ -41,8 +44,15 @@ public class Vote implements PresentationName {
     private Integer absent;
     
     private Boolean visible;
+    
+    
+    
+    
+    
+    
+    
 
-    // getters:
+//     getters adn setters:
     public Integer getId() {
         return this.id;
     }
@@ -136,25 +146,8 @@ public class Vote implements PresentationName {
 
     @Override
     public String getPresentationName() {
-
-        UniRepo<Subject> subRepo = new UniRepo<>(Subject.class);
         
-        if (getSubject_id() != null) {
-            Subject sub = subRepo.findOne(getSubject_id());
-            
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date d = this.getVote_date();
-            String dateStr;
-            if (d != null){
-                dateStr = sdf.format(this.getVote_date());
-            } else {
-                dateStr ="no date";
-            }
-
-            return sub.getPresentationName() + ", " + dateStr;
-        } else {
-            return getId() + ", nedefinované";
-        }
+        return voteService.getVotePresentationName(this);
 
     }
 

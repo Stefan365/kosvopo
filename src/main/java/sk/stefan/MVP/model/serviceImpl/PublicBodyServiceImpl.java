@@ -8,12 +8,16 @@ package sk.stefan.MVP.model.serviceImpl;
 import com.vaadin.ui.Notification;
 import java.util.ArrayList;
 import java.util.List;
+import sk.stefan.MVP.model.entity.Location;
 import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.entity.PublicPerson;
 import sk.stefan.MVP.model.entity.PublicRole;
 import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.MVP.model.service.LocationService;
 import sk.stefan.MVP.model.service.PublicBodyService;
+import sk.stefan.MVP.model.service.PublicPersonService;
+import sk.stefan.MVP.model.service.PublicRoleService;
 
 /**
  *
@@ -23,15 +27,19 @@ public class PublicBodyServiceImpl implements PublicBodyService {
 
     private final GeneralRepo generalRepo;
     private final UniRepo<PublicBody> publicBodyRepo;
-    private final UniRepo<PublicPerson> ppRepo;
-    private final UniRepo<PublicRole> pubRoleRepo;
 
+    private final PublicPersonService pubPersonService;
+    private final PublicRoleService pubRoleService;
+    private final LocationService locationService;
+    
     public PublicBodyServiceImpl() {
 
         generalRepo = new GeneralRepo();
         publicBodyRepo = new UniRepo<>(PublicBody.class);
-        ppRepo = new UniRepo<>(PublicPerson.class);
-        pubRoleRepo = new UniRepo<>(PublicRole.class);
+        
+        pubPersonService = new PublicPersonServiceImpl();
+        pubRoleService = new PublicRoleServiceImpl();
+        locationService = new LocationServiceImpl();
 
     }
 
@@ -43,7 +51,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         String chiefRole = "" + 3;
 
         List<PublicRole> pRoles
-                = pubRoleRepo.findByTwoParams("public_body_id", pbId, "name", chiefRole);
+                = pubRoleService.findByTwoParams("public_body_id", pbId, "name", chiefRole);
         if (pRoles == null || pRoles.isEmpty()) {
 
             return "žiadny predseda";
@@ -57,7 +65,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
 
         Integer ppId = pRoles.get(0).getId();
         //ziskavanie mena predsedu:
-        PublicPerson predseda = ppRepo.findOne(ppId);
+        PublicPerson predseda = pubPersonService.findOne(ppId);
         return predseda.getPresentationName();
     }
 
@@ -120,6 +128,26 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         }
 
         return publicBodies;
+
+    }
+
+    @Override
+    public PublicBody findOne(Integer pbId) {
+        
+        return publicBodyRepo.findOne(pbId);
+    }
+
+    @Override
+    public synchronized String getPresentationName(PublicBody pb) {
+        
+        Integer locId = pb.getLocation_id();
+        
+        if (locId != null) {
+            Location loc = locationService.findOneLocation(locId);
+            return pb.getName() + ", " + loc.getPresentationName();
+        } else {
+            return pb.getName();
+        }
 
     }
 }

@@ -69,6 +69,7 @@ public class Location implements PresentationName {
 
     @Override
     public String getPresentationName() {
+        
         String rn;
         if (town_section== null || "".equals(town_section)){
             rn = location_name;

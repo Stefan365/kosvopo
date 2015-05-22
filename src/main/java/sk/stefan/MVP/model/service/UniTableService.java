@@ -57,7 +57,8 @@ public interface UniTableService<E> {
      * Ulozi user_rolu (napr. noveho) uzivatela
      * 
      * @param urole
+     * @param noteChange
      */
-    public void saveRole(A_UserRole urole);
-    
+    public void saveUserRole(A_UserRole urole, Boolean noteChange);
+
 }
