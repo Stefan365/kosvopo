@@ -1,0 +1,19 @@
+WildFly 8 administrator added.  Please make note of these credentials:
+
+   Username: adminmbAxKqI
+   Password: e-UI4h7Uz8GG
+   
+   run 'rhc port-forward kosvopo' to access the web admin area on port 9990.
+   
+   
+   
+   MySQL 5.5 database added.  Please make note of these credentials:
+
+       Root User: admingN94EaH
+   Root Password: AnkH2lTeTfyv
+   Database Name: kosvopo
+
+Connection URL: mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/
+
+You can manage your new MySQL database by also embedding phpmyadmin.
+The phpmyadmin username and password will be the same as the MySQL credentials above.
