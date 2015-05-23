@@ -15,7 +15,7 @@ import sk.stefan.MVP.model.service.LocationService;
  *
  * @author stefan
  */
-public class LocationServiceImpl implements LocationService {
+public class ZBD_LocationServiceImpl implements LocationService {
     
     private final UniRepo<Location> locRepo;
     private final UniRepo<District> distrRepo;
@@ -23,7 +23,7 @@ public class LocationServiceImpl implements LocationService {
     
 
     
-    public LocationServiceImpl(){
+    public ZBD_LocationServiceImpl(){
         
         locRepo = new UniRepo<>(Location.class);
         distrRepo = new UniRepo<>(District.class);

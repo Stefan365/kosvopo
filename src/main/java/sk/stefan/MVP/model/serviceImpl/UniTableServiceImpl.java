@@ -16,7 +16,6 @@ import sk.stefan.MVP.model.entity.A_UserRole;
 import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.UniTableService;
-import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.utils.ToolsDao;
 
 /**
@@ -29,11 +28,10 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
     private static final Logger log = Logger.getLogger(UniTableServiceImpl.class);
 
     private final UniRepo<E> uniRepo;
-
+    private final UniRepo<A_UserRole> userRoleRepo;
+    
     private final GeneralRepo genRepo;
 
-    private UserService userService;
-    
     
     private final Class<E> clsE;
 
@@ -45,9 +43,12 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
 
         this.clsE = cls;
         this.uniRepo = new UniRepo<>(clsE);
+        this.userRoleRepo = new UniRepo<>(A_UserRole.class);
         this.genRepo = new GeneralRepo();
+        
+        
         this.tn = ToolsDao.getTableName(clsE);
-        this.userService = new UserServiceImpl();
+//        this.userService = new UserServiceImpl();
 
     }
 
@@ -137,7 +138,7 @@ public class UniTableServiceImpl<E> implements UniTableService<E> {
     @Override
     public void saveUserRole(A_UserRole urole, Boolean noteChange) {
 
-        this.userService.saveUserRole(urole, true);
+        this.userRoleRepo.save(urole, true);
         
     }
 

@@ -28,19 +28,23 @@ public class PublicBodyServiceImpl implements PublicBodyService {
     private final GeneralRepo genRepo;
     private final UniRepo<PublicBody> pubBodyRepo;
     private final UniRepo<PublicRole> pubRoleRepo;
-    
-    private final PublicPersonService pubPersonService;
-    private final LocationService locationService;
+    private final UniRepo<PublicPerson> pubPersonRepo;
+    private final UniRepo<Location> locRepo;
+
+//    na odlahcenie RAM, nebudem tu pouzivat objemne Service.:    
+//    private final PublicPersonService pubPersonService;
+//    private final LocationService locationService;
     
     public PublicBodyServiceImpl() {
 
         genRepo = new GeneralRepo();
         pubBodyRepo = new UniRepo<>(PublicBody.class);
-        //nemoze tu byt pubRole service kvoi cyklickej referencii:
         pubRoleRepo = new UniRepo<>(PublicRole.class);
+        pubPersonRepo = new UniRepo<>(PublicPerson.class);
+        locRepo = new UniRepo<>(Location.class);
         
-        pubPersonService = new PublicPersonServiceImpl();
-        locationService = new LocationServiceImpl();
+//        pubPersonService = new PublicPersonServiceImpl();
+//        locationService = new LocationServiceImpl();
         
 
     }
@@ -67,7 +71,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
 
         Integer ppId = pRoles.get(0).getId();
         //ziskavanie mena predsedu:
-        PublicPerson predseda = pubPersonService.findOne(ppId);
+        PublicPerson predseda = pubPersonRepo.findOne(ppId);
         return predseda.getPresentationName();
     }
 
@@ -145,7 +149,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         Integer locId = pb.getLocation_id();
         
         if (locId != null) {
-            Location loc = locationService.findOneLocation(locId);
+            Location loc = locRepo.findOne(locId);
             return pb.getName() + ", " + loc.getPresentationName();
         } else {
             return pb.getName();

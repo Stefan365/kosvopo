@@ -9,8 +9,6 @@ import sk.stefan.MVP.model.entity.PublicRole;
 import sk.stefan.MVP.model.entity.Tenure;
 import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
-import sk.stefan.MVP.model.service.PublicBodyService;
-import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.MVP.model.service.PublicRoleService;
 
 public class PublicRoleServiceImpl implements PublicRoleService {
@@ -18,10 +16,12 @@ public class PublicRoleServiceImpl implements PublicRoleService {
     private final GeneralRepo generalRepo;
     private final UniRepo<Tenure> tenureRepo;
     private final UniRepo<PublicRole> pubRoleRepo;
-    
-    
-    private final PublicBodyService pubBodyService;
-    private final PublicPersonService pubPersonService;
+    private final UniRepo<PublicBody> pubBodyRepo;
+    private final UniRepo<PublicPerson> pubPersonRepo;
+
+//    na odlahcenie RAM, nebudem tu pouzivat objemne Service.:    
+//    private final PublicBodyService pubBodyService;
+//    private final PublicPersonService pubPersonService;
     
     //0. konstruktor
     /**
@@ -31,9 +31,11 @@ public class PublicRoleServiceImpl implements PublicRoleService {
         generalRepo = new GeneralRepo();
         tenureRepo = new UniRepo<>(Tenure.class);
         pubRoleRepo = new UniRepo<>(PublicRole.class);
+        pubBodyRepo = new UniRepo<>(PublicBody.class);
+        pubPersonRepo = new UniRepo<>(PublicPerson.class);
 
-        this.pubBodyService = new PublicBodyServiceImpl();
-        this.pubPersonService = new PublicPersonServiceImpl();
+//        this.pubBodyService = new PublicBodyServiceImpl();
+//        this.pubPersonService = new PublicPersonServiceImpl();
     
     }
 
@@ -112,7 +114,7 @@ public class PublicRoleServiceImpl implements PublicRoleService {
 
         Integer pbId = pubRole.getPublic_body_id();
 
-        PublicBody pb = pubBodyService.findOne(pbId);
+        PublicBody pb = pubBodyRepo.findOne(pbId);
 
         if (pb != null) {
             return pb.getPresentationName();
@@ -223,7 +225,7 @@ public class PublicRoleServiceImpl implements PublicRoleService {
         Integer tenId = pubRole.getTenure_id();
 
         if (pbId != null && ppId != null && tenId != null) {
-            PublicPerson pp = pubPersonService.findOne(ppId);
+            PublicPerson pp = pubPersonRepo.findOne(ppId);
             Tenure ten = tenureRepo.findOne(tenId);
 
             return pp.getPresentationName()
@@ -237,7 +239,7 @@ public class PublicRoleServiceImpl implements PublicRoleService {
     @Override
     public synchronized String getPresentationName2(PublicRole pubRole) {
 
-        PublicPerson pp = pubPersonService.findOne(pubRole.getPublic_person_id());
+        PublicPerson pp = pubPersonRepo.findOne(pubRole.getPublic_person_id());
         return pp.getPresentationName();
 
     }

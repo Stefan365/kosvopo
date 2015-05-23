@@ -14,8 +14,6 @@ import sk.stefan.MVP.model.entity.VoteClassification;
 import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
 import sk.stefan.MVP.model.service.ClassificationService;
-import sk.stefan.MVP.model.service.PublicPersonService;
-import sk.stefan.MVP.model.service.VoteService;
 
 /**
  *
@@ -25,11 +23,15 @@ public class ClassificationServiceImpl implements ClassificationService {
 
     private final UniRepo<PersonClassification> personClassRepo;
     private final UniRepo<VoteClassification> voteClassRepo;
+    private final UniRepo<Vote> voteRepo;
+    private final UniRepo<PublicPerson> pubPersonRepo;
+    
     private final GeneralRepo generalRepo;
     
     //servisy:
-    private final VoteService voteService;
-    private final PublicPersonService pubPersonService;
+//    na odlahcenie RAM, nebudem tu pouzivat objemne Service.:
+//    private final VoteService voteService;
+//    private final PublicPersonService pubPersonService;
 
     
     //0.konstruktor
@@ -39,10 +41,13 @@ public class ClassificationServiceImpl implements ClassificationService {
 
         personClassRepo = new UniRepo<>(PersonClassification.class);
         voteClassRepo = new UniRepo<>(VoteClassification.class);
+        voteRepo = new UniRepo<>(Vote.class);
+        pubPersonRepo = new UniRepo<>(PublicPerson.class);
+        
         generalRepo = new GeneralRepo();
 
-        voteService = new VoteServiceImpl();
-        pubPersonService = new PublicPersonServiceImpl();
+//        voteService = new VoteServiceImpl();
+//        pubPersonService = new PublicPersonServiceImpl();
         
     }
 
@@ -88,7 +93,7 @@ public class ClassificationServiceImpl implements ClassificationService {
     @Override
     public Vote findVoteByVoteId(Integer voteId) {
 
-        return voteService.findOne(voteId);
+        return voteRepo.findOne(voteId);
 
     }
 
@@ -98,7 +103,7 @@ public class ClassificationServiceImpl implements ClassificationService {
         Integer vote_id = vcl.getVote_id();
         
         if (vote_id != null) {
-            Vote vot = voteService.findOne(vote_id);
+            Vote vot = voteRepo.findOne(vote_id);
             return vcl.getId() + ", " + vot.getPresentationName();
         } else {
             return vcl.getId() + ", nedefinované";
@@ -111,7 +116,7 @@ public class ClassificationServiceImpl implements ClassificationService {
         Integer ppId = pcl.getPublic_person_id();
 
         if (ppId != null) {
-            PublicPerson pp = pubPersonService.findOne(ppId);
+            PublicPerson pp = pubPersonRepo.findOne(ppId);
             return pcl.getId() + ", " + pp.getPresentationName();
         } else {
             return pcl.getId() + ", ";

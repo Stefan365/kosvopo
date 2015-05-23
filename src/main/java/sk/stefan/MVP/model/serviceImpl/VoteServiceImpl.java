@@ -33,10 +33,13 @@ public class VoteServiceImpl implements VoteService {
     private final UniRepo<Subject> subjectRepo;
     private final UniRepo<VoteOfRole> voteOfRoleRepo;
 
+    private final UniRepo<PublicBody> pubBodyRepo;
+    private final UniRepo<PublicPerson> pubPersonRepo;
+
+    
     // servisy:
+    //    na odlahcenie RAM, nebudem tu pouzivat objemne Service.:
     private final PublicRoleService publicRoleService;
-    private final PublicBodyService publicBodyService;
-    private final PublicPersonService publicPersonService;
     
 
     public VoteServiceImpl() {
@@ -49,9 +52,11 @@ public class VoteServiceImpl implements VoteService {
         subjectRepo = new UniRepo<>(Subject.class);
         voteOfRoleRepo = new UniRepo<>(VoteOfRole.class);
 
+        pubBodyRepo = new UniRepo<>(PublicBody.class);
+        pubPersonRepo = new UniRepo<>(PublicPerson.class);
+
+        
         publicRoleService = new PublicRoleServiceImpl();
-        publicBodyService = new PublicBodyServiceImpl();
-        publicPersonService = new PublicPersonServiceImpl();
 
     }
 
@@ -184,7 +189,7 @@ public class VoteServiceImpl implements VoteService {
 //        Integer pbId = pr.getPublic_body_id();
         PublicBody pb;
         if (pbIds != null && !pbIds.isEmpty()){
-            pb = publicBodyService.findOne(pbIds.get(0));
+            pb = pubBodyRepo.findOne(pbIds.get(0));
             return pb.getPresentationName();
         } else {
             return null;
@@ -545,7 +550,7 @@ public class VoteServiceImpl implements VoteService {
         Integer prId = vor.getPublic_role_id();
         if (prId != null) {
             PublicRole pr = publicRoleService.findOne(prId);
-            PublicPerson pp = publicPersonService.findOne(pr.getPublic_person_id());
+            PublicPerson pp = pubPersonRepo.findOne(pr.getPublic_person_id());
             Vote vot = voteRepo.findOne(vor.getVote_id());
 
             return pp.getPresentationName() + ", " + vot.getPresentationName();
@@ -584,7 +589,7 @@ public class VoteServiceImpl implements VoteService {
         PublicRole pr = publicRoleService.findOne(sub.getPublic_role_id());
         PublicBody pb = null;
         if(pr != null){
-            pb = publicBodyService.findOne(pr.getPublic_body_id());
+            pb = pubBodyRepo.findOne(pr.getPublic_body_id());
         }
         String s = sub.getBrief_description();
         if (pb != null){
