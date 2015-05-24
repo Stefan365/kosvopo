@@ -19,6 +19,9 @@ import sk.stefan.MVP.model.entity.PublicPerson;
 import sk.stefan.MVP.view.components.SilentCheckBox;
 
 /**
+ * Komponenta obsahujuca 3 comboboxy so zakladnymi moznostami filtrovania,
+ * tj. podla verejnej osoby, podla verejneho organu a podla miesta.
+ * 
  *
  * @author stefan
  */

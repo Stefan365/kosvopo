@@ -71,7 +71,7 @@ public class FilterTableListener<E> implements Property.ValueChangeListener {
 
         if (o instanceof Boolean) {
             bolVal = (Boolean) o;
-//            log.info("BOOLEAN: " + bolVal);
+            
             if (bolVal) {
                 intVal = (Integer) combo.getValue();
                 combo.setEnabled(true);
@@ -96,8 +96,9 @@ public class FilterTableListener<E> implements Property.ValueChangeListener {
 
         if (doRefilter && chb.getValue()) {
 
-            //filtrovanie hlavnej tabulky:
             doRefilter = Boolean.FALSE;
+            
+            //filtrovanie hlavnej tabulky:
             List<String> hierarchicalSeq = ToolsFiltering.getHierarchicalSequence(touchedTn, touchingTn);
             if (hierarchicalSeq == null) {
                 Notification.show("Táto položka nemá vplyv na tabuľku");
@@ -125,6 +126,7 @@ public class FilterTableListener<E> implements Property.ValueChangeListener {
     private void addFiltersToTouched() {
 
         for (FilterComboBox<?> c : touchedChBs) {
+            
             ToolsDao.addFiltersToTouched((Filterable)c, touchingTn, intVal);
 //            String comboTouchedTn = c.getTableName();
 //            List<String> hSeq = ToolsFiltering.getHierarchicalSequence(comboTouchedTn, touchingTn);

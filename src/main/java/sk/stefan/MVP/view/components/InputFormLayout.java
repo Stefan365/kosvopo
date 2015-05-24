@@ -44,7 +44,6 @@ import sk.stefan.MVP.model.service.UniTableService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.converters.DateConverter;
-import sk.stefan.converters.ZBD_PasswordConverter;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
@@ -63,6 +62,7 @@ import sk.stefan.utils.ToolsNames;
  */
 public class InputFormLayout<E> extends FormLayout {
 
+    
     private static final Logger log = Logger.getLogger(InputFormLayout.class);
 
     private static final long serialVersionUID = 4947104793788125920L;
@@ -78,7 +78,7 @@ public class InputFormLayout<E> extends FormLayout {
      * ze kterého se formulář otevře, na to slouží tento listener.
      */
     private OkCancelListener okCancelListener;
-    private ObnovFilterListener obnovFilterListener;
+    private ObnovFilterListener obnovTableFilterListener;
     private final SQLContainer sqlContainer;
     private Item item; // * Vybraná položka ze SQLContaineru (řádek z tabulky)
     private Object itemId;
@@ -154,7 +154,7 @@ public class InputFormLayout<E> extends FormLayout {
         this.fg.setBuffered(false);
         this.sqlContainer = sqlCont;
         this.okCancelListener = (OkCancelListener) cp;
-        this.obnovFilterListener = (ObnovFilterListener) cp;
+        this.obnovTableFilterListener = (ObnovFilterListener) cp;
         this.item = item;
 
         fg.setItemDataSource(this.item);

@@ -16,9 +16,6 @@ import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteOfRole;
 import sk.stefan.MVP.model.repo.GeneralRepo;
 import sk.stefan.MVP.model.repo.UniRepo;
-import sk.stefan.MVP.model.service.PublicBodyService;
-import sk.stefan.MVP.model.service.PublicPersonService;
-import sk.stefan.MVP.model.service.PublicRoleService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.utils.ToolsDao;
@@ -33,13 +30,12 @@ public class VoteServiceImpl implements VoteService {
     private final UniRepo<Subject> subjectRepo;
     private final UniRepo<VoteOfRole> voteOfRoleRepo;
 
+    //    na odlahcenie RAM, nebudem tu pouzivat objemne Service, 
+//    i ked by to viac vyhovovalo MVP:
     private final UniRepo<PublicBody> pubBodyRepo;
     private final UniRepo<PublicPerson> pubPersonRepo;
+    private final UniRepo<PublicRole> pubRoleRepo;
 
-    
-    // servisy:
-    //    na odlahcenie RAM, nebudem tu pouzivat objemne Service.:
-    private final PublicRoleService publicRoleService;
     
 
     public VoteServiceImpl() {
@@ -51,12 +47,13 @@ public class VoteServiceImpl implements VoteService {
         themeRepo = new UniRepo<>(Theme.class);
         subjectRepo = new UniRepo<>(Subject.class);
         voteOfRoleRepo = new UniRepo<>(VoteOfRole.class);
-
+        
+        
         pubBodyRepo = new UniRepo<>(PublicBody.class);
         pubPersonRepo = new UniRepo<>(PublicPerson.class);
+        pubRoleRepo = new UniRepo<>(PublicRole.class);
 
         
-        publicRoleService = new PublicRoleServiceImpl();
 
     }
 
@@ -75,9 +72,9 @@ public class VoteServiceImpl implements VoteService {
         }
 
         // 1. step: ziskej vsechny public Roles for that public person
-        List<PublicRole> lrole = publicRoleService
-                .getAllPublicRolesOfPublicPerson(pp);
+        List<PublicRole> lrole = pubRoleRepo.findByParam("public_person_id", "" + pp.getId());
 
+        
         // 2. step: get list of all votes for these public bodies.
 //        List<Vote> lvot;
         Set<Vote> lvotAll = new HashSet<>();
@@ -149,7 +146,7 @@ public class VoteServiceImpl implements VoteService {
         List<PublicRole> role;
 
         String id = pp.getId().toString();
-        role = this.publicRoleService.findByParam("public_person_id", id);
+        role = this.pubRoleRepo.findByParam("public_person_id", id);
 
         return role;
 
@@ -412,7 +409,7 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public PublicRole getPublicRoleById(Integer prId) {
         
-        PublicRole pr = publicRoleService.findOne(prId);
+        PublicRole pr = pubRoleRepo.findOne(prId);
         return pr;
         
     }
@@ -549,7 +546,7 @@ public class VoteServiceImpl implements VoteService {
 
         Integer prId = vor.getPublic_role_id();
         if (prId != null) {
-            PublicRole pr = publicRoleService.findOne(prId);
+            PublicRole pr = pubRoleRepo.findOne(prId);
             PublicPerson pp = pubPersonRepo.findOne(pr.getPublic_person_id());
             Vote vot = voteRepo.findOne(vor.getVote_id());
 
@@ -586,7 +583,7 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public synchronized String getSubjectPresentationName(Subject sub) {
         
-        PublicRole pr = publicRoleService.findOne(sub.getPublic_role_id());
+        PublicRole pr = pubRoleRepo.findOne(sub.getPublic_role_id());
         PublicBody pb = null;
         if(pr != null){
             pb = pubBodyRepo.findOne(pr.getPublic_body_id());

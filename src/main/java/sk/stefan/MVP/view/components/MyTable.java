@@ -10,11 +10,11 @@ import com.vaadin.ui.Table;
 import java.text.SimpleDateFormat;
 
 /**
- * Tabulka, ktora sa zobrzuje vo V8. 
+ * Tabulka, ktora sa zobrazuje vo V8. 
  * potom treba este rozsirit metody: formatProperyValue,
  * aby sa uzivatelovi nezobrazovali len napr. cisla (id),
  * ale reprezentacne mena danych entit. 
- * To je este vele prace.
+ * To je este vela prace.
  *
  * @author stefan
  */

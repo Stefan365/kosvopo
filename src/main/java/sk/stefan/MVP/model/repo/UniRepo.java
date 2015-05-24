@@ -171,7 +171,7 @@ public class UniRepo<E> implements MyRepo<E> {
      */
     @Override
     public List<E> findByParam(String paramName, String paramValue) {
- 
+        
         Connection conn;
         Statement st;
         ResultSet rs;
