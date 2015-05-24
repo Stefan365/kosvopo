@@ -174,9 +174,8 @@ public abstract class ToolsFiltering {
         }
 
         for (Integer id : ids) {
-            String tx = "" + id;
-            if (!"".equals(tx)) {
-                fls.add(new Like("id", tx));
+            if (!"".equals(id+"")) {
+                fls.add(new Like("id", id+""));
             }
         }
         o = new Or(fls.toArray(new Filter[0]));

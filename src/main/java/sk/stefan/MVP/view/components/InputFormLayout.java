@@ -643,6 +643,8 @@ public class InputFormLayout<E> extends FormLayout {
                 }
             }
         }
+        
+        refresh values in comboboxes
 
         if (item != null) {
             fg.setItemDataSource(this.item);
@@ -658,7 +660,11 @@ public class InputFormLayout<E> extends FormLayout {
         //this.refreshComboboxes();
     }
 
+    
+    
+    
 //    ************* GETTERS AND SETTERS *****************
+    
     public Map<String, Component> getFieldMap() {
         return Collections.unmodifiableMap(fieldMap);
     }

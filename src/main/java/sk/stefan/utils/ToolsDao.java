@@ -116,21 +116,20 @@ public abstract class ToolsDao {
 
         switch (typ) {
             case "java.lang.Integer":
-//                return int.class;
                 return Integer.TYPE;
                 
             case "java.lang.Byte[]":
                 return byte[].class;
-//                return Byte[].TYPE;
+            
             case "java.util.Date":
-                
                  return String.class;
+            
             case "java.sql.Timestamp":
                  return String.class;
+            
             case "java.sql.Date":
                  return String.class;
             
-                
             case "java.lang.Short":
             case "sk.stefan.enums.VoteResult":
             case "sk.stefan.enums.VoteAction":
@@ -140,7 +139,6 @@ public abstract class ToolsDao {
             case "sk.stefan.enums.FilterType":
             case "sk.stefan.enums.NonEditableFields":
             case "sk.stefan.enums.PublicRoleType":
-//                return short.class;
                 return Integer.TYPE;
                 
             case "java.lang.Long":
@@ -150,6 +148,7 @@ public abstract class ToolsDao {
             case "java.lang.Boolean":
 //                return boolean.class;
                 return Boolean.TYPE;
+            
             default:
                 return cls;
         }
@@ -461,9 +460,13 @@ public abstract class ToolsDao {
     }
 
     /**
+     * Najde vsetky zive entity danej triedy.
+     * 
+     * 
      * @param cls
-     * @return
+     * @return Mapa. key = representation Name danej entity, value = id danej entity.
      */
+    @SuppressWarnings("unchecked")
     public static synchronized Map<String, Integer> findAllByClass(Class<?> cls) {
     
         Map<String, Integer> map = new HashMap<>();
@@ -472,9 +475,11 @@ public abstract class ToolsDao {
         try {
             Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.UniRepo");
             Constructor<UniRepo<? extends Object>> repoCtor;
-            repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
-            List<? extends Object> listObj;
-            log.info("KAROLKO, CLS:" + (cls.getCanonicalName()));
+            repoCtor = (Constructor<UniRepo<?>>) repoCls.getConstructor(Class.class);
+            List<?> listObj;
+            
+//            log.info("KAROLKO, CLS:" + (cls.getCanonicalName()));
+            
             listObj = repoCtor.newInstance(cls).findAll();
             for (Object o : listObj) {
                 Method getRepNameMethod = cls.getMethod("getPresentationName");
@@ -485,10 +490,15 @@ public abstract class ToolsDao {
                 map.put(repN, id);
             }
             return map;
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalArgumentException | IllegalAccessException | InstantiationException | SecurityException | ClassNotFoundException ex) {
+            
+        } catch (NoSuchMethodException | InvocationTargetException | 
+                IllegalArgumentException | IllegalAccessException | 
+                InstantiationException | SecurityException | 
+                ClassNotFoundException ex) {
             log.error(ex.getMessage(), ex);
+            return null;
+
         }
-        return null;
     }
 
     /**
@@ -498,8 +508,11 @@ public abstract class ToolsDao {
      * @return
      */
     public static synchronized Boolean isActual(Integer tenure_id) {
+        
         UniRepo<Tenure> tenRepo = new UniRepo<>(Tenure.class);
+        
         Tenure ten = tenRepo.findOne(tenure_id);
+        
         if (ten != null) {
             Long today = (new Date()).getTime();
             Long since = ten.getSince().getTime();
@@ -522,7 +535,9 @@ public abstract class ToolsDao {
 
         List<PublicRole> prActual = new ArrayList<>();
         UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
+        
         List<PublicRole> pubRoles = prRepo.findByParam("public_body_id", "" + pubB.getId());
+        
         Integer tid;
         for (PublicRole pr : pubRoles) {
             tid = pr.getTenure_id();

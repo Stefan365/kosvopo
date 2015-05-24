@@ -22,10 +22,10 @@ import sk.stefan.utils.ToolsDao;
  * 
  * Combobox, ktory ma schopnost transformovat presentation type (tj. String - to
  * co v comboboxu vidime na type, ktery reprezentuje, napr. Boolean, ale muze
- * byt i komplikovanejsi entita) Duvod, proc neni converter navazany primo na
- * obycejny COmboBox, je ten, ze na ten nejde konverter navazat primo (resp. ne
- * jednoduse). V totmo pripade se tedy vyuziva pomocnej TextField, na ktery
- * converter navazat jde.
+ * byt i komplikovanejsi entita) Duvod, preco nieni converter naviazany priamo na
+ * obycejny ComboBox, je ten, ze na ten konverter navazat priamo jednoducho nejde 
+ * (resp. nie jednoduse). V totmo pripade se tedy vyuziva pomocnej TextField, na ktory
+ * converter naviazat jde.
  *
  * @author stefan
  * @param <E> třída, představitelé které, se mají v comboBoxu zobrazit.
