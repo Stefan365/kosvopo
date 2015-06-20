@@ -55,41 +55,41 @@ public enum CrutialNonEditable {
                 return new String[]{"classification_date", "public_person_id", "actual"};
 
             case T_PUBLIC_BODY:
-                return new String[]{""};
+                return new String[]{"location_id"};
 
             case T_PUBLIC_PERSON:
-                return new String[]{""};
+                return new String[]{};
 
             case T_PUBLIC_ROLE:
-                return new String[]{""};
+                return new String[]{"public_body_id", "tenure_id", "public_person_id", "name"};
 
             case T_SUBJECT:
-                return new String[]{"visible"};
+                return new String[]{"public_role_id", "theme_id"};
 
             case T_TENURE:
-                return new String[]{"visible"};
+                return new String[]{"since", "till"};
 
             case T_THEME:
-                return new String[]{"visible"};
+                return new String[]{};
 
             case T_VOTE:
 //                return new String[]{"for_vote","against_vote", "refrain_vote", "absent", "visible"};
-                return new String[]{"visible"};
+                return new String[]{"subject_id", "result_vote", "vote_date"};
 
             case T_VOTE_CLASSIFICATION:
-                return new String[]{"visible"};
+                return new String[]{"vote_id", "public_usefulness"};
 
             case T_VOTE_OF_ROLE:
-                return new String[]{"visible"};
+                return new String[]{"public_role_id", "vote_id", "decision"};
 
             case A_USER:
-                return new String[]{"visible"};
+                return new String[]{"login"};
 
             case A_ROLE:
-                return new String[]{"visible"};
+                return new String[]{"role","role_name"};
 
             case A_USER_ROLE:
-                return new String[]{"actual", "since", "till", "visible"};
+                return new String[]{"role_id","user_id","actual", "since", "till"};
 
             default:
                 return null;
