@@ -6,12 +6,16 @@
 package sk.stefan.enums;
 
 /**
- * Tieto policka nebudu editovatelne vobec. tj. uzivatel ich pri tvorbe
- * entity, ako aj pri jej editacii nikdy neuvidi.
+ * Toto budú policka, ktore nebude mozne menit po vytvoreni entity.
+ *
+ * Pri editacii entity by mali byt menitelne len niektore polozky, a nie vsetky
+ * ako pri jej vytvarani. (napr. hodnotenie hlasovania. pri vytvarani musi byt
+ * na vyber aj samotne hlasovanie, pri editacii by uz volitene byt nemalo. Mali
+ * by byt viditelne - ale needitovatelne.)
  *
  * @author stefan
  */
-public enum NonEditableFields {
+public enum CrutialNonEditable {
 
     T_REGION("t_region"),
     T_LOCATION("t_location"),
@@ -32,60 +36,60 @@ public enum NonEditableFields {
 
     private final String name;
 
-    NonEditableFields(String name) {
+    CrutialNonEditable(String name) {
         this.name = name;
     }
 
     public String[] getNonEditableParams() {
         switch (this) {
             case T_REGION:
-                return new String[]{"visible"};
-            
-            case T_LOCATION:
-                return new String[]{"visible"};
-                
+                return new String[]{};
+
             case T_DISTRICT:
-                return new String[]{"visible"};
+                return new String[]{"region_id"};
                 
+            case T_LOCATION:
+                return new String[]{"district_id"};
+
             case T_PERSON_CLASSIFICATION:
-                return new String[]{"visible"};
-                
+                return new String[]{"classification_date", "public_person_id", "actual"};
+
             case T_PUBLIC_BODY:
-                return new String[]{"visible"};
-            
+                return new String[]{""};
+
             case T_PUBLIC_PERSON:
-                return new String[]{"visible"};
-                
+                return new String[]{""};
+
             case T_PUBLIC_ROLE:
-                return new String[]{"visible"};
-            
+                return new String[]{""};
+
             case T_SUBJECT:
                 return new String[]{"visible"};
-            
+
             case T_TENURE:
                 return new String[]{"visible"};
 
             case T_THEME:
                 return new String[]{"visible"};
-            
+
             case T_VOTE:
 //                return new String[]{"for_vote","against_vote", "refrain_vote", "absent", "visible"};
                 return new String[]{"visible"};
 
             case T_VOTE_CLASSIFICATION:
                 return new String[]{"visible"};
-                
+
             case T_VOTE_OF_ROLE:
                 return new String[]{"visible"};
-                
+
             case A_USER:
                 return new String[]{"visible"};
-                
+
             case A_ROLE:
                 return new String[]{"visible"};
-            
+
             case A_USER_ROLE:
-                return new String[]{"actual","since", "till","visible"};
+                return new String[]{"actual", "since", "till", "visible"};
 
             default:
                 return null;

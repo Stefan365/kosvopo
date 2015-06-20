@@ -80,20 +80,20 @@ public class InputVoteFormLayout<E> extends InputFormLayout<E> {
         this.pubBody = pubBody;
     }
 
-    /**
-     * nastavi vysledky hlasovania z hlasovani jednotlivych poslancov
-     * @param res
-     */
-    @SuppressWarnings("unchecked")
-    public void setResults(List<Integer> res) {
-        
-        getItem().getItemProperty("for_vote").setValue(res.get(0));
-        getItem().getItemProperty("against_vote").setValue(res.get(1));
-        getItem().getItemProperty("refrain_vote").setValue(res.get(2));
-        getItem().getItemProperty("absent").setValue(res.get(3));
-        
-//        getSqlContainer().refresh();
-    }
+//    /**
+//     * nastavi vysledky hlasovania z hlasovani jednotlivych poslancov
+//     * @param res
+//     */
+//    @SuppressWarnings("unchecked")
+//    public void setResults(List<Integer> res) {
+//        
+////        getItem().getItemProperty("for_vote").setValue(res.get(0));
+////        getItem().getItemProperty("against_vote").setValue(res.get(1));
+////        getItem().getItemProperty("refrain_vote").setValue(res.get(2));
+////        getItem().getItemProperty("absent").setValue(res.get(3));
+//        
+////        getSqlContainer().refresh();
+//    }
     
     /**
      * ziska aktualne id hlasovania, na kotorm je postaveny inputFormLayout

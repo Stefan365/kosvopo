@@ -35,14 +35,6 @@ public class Vote implements PresentationName {
 
     private VoteResult result_vote;
 
-    private Integer for_vote;
-
-    private Integer against_vote;
-
-    private Integer refrain_vote;
-
-    private Integer absent;
-    
     private Boolean visible;
     
     
@@ -74,22 +66,6 @@ public class Vote implements PresentationName {
     }
 
     
-    public Integer getFor_vote() {
-        return this.for_vote;
-    }
-
-    public Integer getAgainst_vote() {
-        return this.against_vote;
-    }
-
-    public Integer getRefrain_vote() {
-        return this.refrain_vote;
-    }
-
-    public Integer getAbsent() {
-        return this.absent;
-    }
-
     public Boolean getVisible() {
         return this.visible;
     }
@@ -122,22 +98,6 @@ public class Vote implements PresentationName {
 //    public void setResult_vote(Short rv) {
 //        this.result_vote = VoteResult.values()[rv];
 //    }
-
-    public void setFor_vote(Integer fv) {
-        this.for_vote = fv;
-    }
-
-    public void setAgainst_vote(Integer av) {
-        this.against_vote = av;
-    }
-
-    public void setRefrain_vote(Integer rf) {
-        this.refrain_vote = rf;
-    }
-
-    public void setAbsent(Integer a) {
-        this.absent = a;
-    }
 
     public void setVisible(Boolean vis) {
         this.visible = vis;

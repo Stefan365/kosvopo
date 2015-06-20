@@ -260,7 +260,7 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
     public void updateResult() {
 
         List<Integer> res = this.calculateResult();
-        this.listener.getVoteInputFormLy().setResults(res);
+//        this.listener.getVoteInputFormLy().setResults(res);
     }
 
 }

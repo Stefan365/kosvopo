@@ -226,13 +226,22 @@ public class VoteServiceImpl implements VoteService {
 
         StringBuilder numbers = new StringBuilder();
         
-        numbers.append("za: ").append(vote.getFor_vote()).append("  ");
-        numbers.append("proti: ").append(vote.getAgainst_vote()).append("  ");
-        numbers.append("zadržali sa: ").append(vote.getRefrain_vote()).append("  ");
-        numbers.append("chýbali: ").append(vote.getAbsent()).append("  ");
+        Integer votId = vote.getId();
+        
+        int za = this.getForVote(votId);
+        int proti = this.getAgainstVote(votId);
+        int zadrzalSa = this.getRefrainVote(votId);
+        int absent = this.getAbsentVote(votId);
+        
+        numbers.append("za: ").append(za).append("  ");
+        numbers.append("proti: ").append(proti).append("  ");
+        numbers.append("zadržali sa: ").append(zadrzalSa).append("  ");
+        numbers.append("chýbali: ").append(absent).append("  ");
 
         return numbers.toString();
     }
+    
+    
     
     @Override
     public List<Vote> findNewVotes(List<Integer> voteIds) {
@@ -593,6 +602,46 @@ public class VoteServiceImpl implements VoteService {
             s += " " + pb.getPresentationName();
         }
         return s;
+    }
+
+    private int getForVote(Integer votId) {
+        
+        List<VoteOfRole> vs = voteOfRoleRepo.findByTwoParams("vote_id", votId+"", "decision", "0");
+        if (vs!=null){
+            return vs.size();
+        } else {
+            return 0;
+        } 
+        
+    }
+
+    private int getAgainstVote(Integer votId) {
+        
+        List<VoteOfRole> vs = voteOfRoleRepo.findByTwoParams("vote_id", votId+"", "decision", "1");
+        if (vs!=null){
+            return vs.size();
+        } else {
+            return 0;
+        } 
+    }
+
+    private int getRefrainVote(Integer votId) {
+        
+        List<VoteOfRole> vs = voteOfRoleRepo.findByTwoParams("vote_id", votId+"", "decision", "2");
+        if (vs!=null){
+            return vs.size();
+        } else {
+            return 0;
+        } 
+    }
+
+    private int getAbsentVote(Integer votId) {
+        List<VoteOfRole> vs = voteOfRoleRepo.findByTwoParams("vote_id", votId+"", "decision", "3");
+        if (vs!=null){
+            return vs.size();
+        } else {
+            return 0;
+        } 
     }
 
 

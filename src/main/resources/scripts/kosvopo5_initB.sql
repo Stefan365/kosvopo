@@ -29,17 +29,17 @@ COMMIT;
 
 -- 5.
 INSERT INTO t_tenure(since, till)
-VALUES ('2011-07-04', '2012-09-26');
+VALUES ('2011-07-04', null);
 INSERT INTO t_tenure(since, till)
-VALUES ('2010-07-04', '2011-09-26');
+VALUES ('2010-07-04', null);
 INSERT INTO t_tenure(since, till)
-VALUES ('2009-07-04', '2010-09-26');
+VALUES ('2009-07-04', null);
 INSERT INTO t_tenure(since, till)
-VALUES ('2008-07-04', '2009-09-25');
+VALUES ('2008-07-04', null);
 INSERT INTO t_tenure(since, till)
-VALUES ('2007-07-04', '2008-09-24');
+VALUES ('2007-07-04', null);
 INSERT INTO t_tenure(since, till)
-VALUES ('2006-07-04', '2007-09-23');
+VALUES ('2006-07-04', null);
 COMMIT; 
 
 
@@ -150,18 +150,14 @@ COMMIT;
 
 
 -- 13. VOTE
-INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote, 
-            for_vote, against_vote, refrain_vote, absent)			
-VALUES (NOW(), 1, '957-AC',1, 4, 0, 1, 0);
-INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote, 
-            for_vote, against_vote, refrain_vote, absent)			
-VALUES (NOW(), 2, '958-AC',1, 3, 0, 2, 0);
-INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote, 
-			for_vote, against_vote, refrain_vote, absent)			
-VALUES (NOW(), 2, '959-AC',1, 1, 4, 0, 0);
-INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote, 
-            for_vote, against_vote, refrain_vote, absent)			
-VALUES (NOW(), 4, '963-AC',0, 3, 2, 0, 0);
+INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote)			
+VALUES ('2006-07-04', 1, '957-AC',1);
+INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote)			
+VALUES ('2007-07-04', 2, '958-AC',1);
+INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote)			
+VALUES ('2008-07-04', 2, '959-AC',1);
+INSERT INTO t_vote(vote_date, subject_id, internal_nr, result_vote)			
+VALUES ('2009-07-04', 4, '963-AC',0);
 COMMIT;
 
 

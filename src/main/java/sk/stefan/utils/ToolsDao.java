@@ -375,10 +375,10 @@ public abstract class ToolsDao {
         item.getItemProperty("subject_id").setValue(vot.getSubject_id());
         item.getItemProperty("internal_nr").setValue(vot.getInternal_nr());
         item.getItemProperty("result_vote").setValue(vot.getResult_vote().ordinal());
-        item.getItemProperty("for_vote").setValue(vot.getFor_vote());
-        item.getItemProperty("against_vote").setValue(vot.getAgainst_vote());
-        item.getItemProperty("refrain_vote").setValue(vot.getRefrain_vote());
-        item.getItemProperty("absent").setValue(vot.getAbsent());
+//        item.getItemProperty("for_vote").setValue(vot.getFor_vote());
+//        item.getItemProperty("against_vote").setValue(vot.getAgainst_vote());
+//        item.getItemProperty("refrain_vote").setValue(vot.getRefrain_vote());
+//        item.getItemProperty("absent").setValue(vot.getAbsent());
         item.getItemProperty("visible").setValue(vot.getVisible());
 
     }

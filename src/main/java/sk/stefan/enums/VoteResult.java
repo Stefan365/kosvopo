@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Enum představující periody opakování úkolu
+ * Enum vysledky hlasovania
  *
  * @author stefan
  */

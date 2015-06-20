@@ -555,7 +555,7 @@ public class InputFormLayout<E> extends FormLayout {
 
                         okCancelListener.doOkAction(entIda);
                     }
-                    Notification.show("Úkol byl úspešně uložen!");
+                    Notification.show("Podložka bola úspešne uložená!");
 
                 } catch (UnsupportedOperationException e) {
                     log.warn(e.getLocalizedMessage(), e);
@@ -644,7 +644,7 @@ public class InputFormLayout<E> extends FormLayout {
             }
         }
         
-        refresh values in comboboxes
+//        refresh values in comboboxes
 
         if (item != null) {
             fg.setItemDataSource(this.item);
