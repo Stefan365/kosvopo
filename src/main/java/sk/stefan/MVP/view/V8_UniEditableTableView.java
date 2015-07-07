@@ -111,9 +111,10 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
      *
      * @param clsq
      * @param uneditCol
+     * @param crutialCol
      * @param isAdm
      */
-    public V8_UniEditableTableView(Class<E> clsq, String[] uneditCol, Boolean isAdm) {
+    public V8_UniEditableTableView(Class<E> clsq, String[] uneditCol, String[] crutialCol, Boolean isAdm) {
 
         this.setMargin(true);
         this.setSpacing(true);
@@ -140,7 +141,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
         this.initTableLists(uneditCol);
 
-        this.inputForm = new InputFormLayout<>(clsq, item, sqlContainer, this, uneditCol);
+        this.inputForm = new InputFormLayout<>(clsq, item, sqlContainer, this, uneditCol, crutialCol);
 
         initAllBasic();
 

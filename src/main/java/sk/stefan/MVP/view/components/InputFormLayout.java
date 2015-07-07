@@ -62,7 +62,6 @@ import sk.stefan.utils.ToolsNames;
  */
 public class InputFormLayout<E> extends FormLayout {
 
-    
     private static final Logger log = Logger.getLogger(InputFormLayout.class);
 
     private static final long serialVersionUID = 4947104793788125920L;
@@ -106,6 +105,12 @@ public class InputFormLayout<E> extends FormLayout {
      */
     private final List<String> nonEditFn;
 
+    /**
+     * Tlacitka, ktore nemaju byt vo formulari editovatelne, ale maju byt
+     * viditelne.
+     */
+    private final List<String> crutialFn;
+
     //0.
     /**
      * Konstruktor.
@@ -117,9 +122,10 @@ public class InputFormLayout<E> extends FormLayout {
      * ObnovFilterListener.
      * @param nEditFn zoznam mien parametrov, ktore budu pri tvorbe formularu
      * ignorovane.
+     * @param crutFn
      */
     public InputFormLayout(Class<E> cls, Item item, SQLContainer sqlCont,
-            Component cp, String[] nEditFn) {
+            Component cp, String[] nEditFn, String[] crutFn) {
 
         uniTableService = new UniTableServiceImpl<>(cls);
         this.securityService = new SecurityServiceImpl();
@@ -140,11 +146,17 @@ public class InputFormLayout<E> extends FormLayout {
         this.cp = cp;
         tn = ToolsDao.getTableName(cls);
 
+//        neviditelne stlpce:
         if (nEditFn == null) {
             this.nonEditFn = new ArrayList<>();
         } else {
-
             this.nonEditFn = Arrays.asList(nEditFn);
+        }
+//        Kriticke stlpce:
+        if (crutFn == null) {
+            this.crutialFn = new ArrayList<>();
+        } else {
+            this.crutialFn = Arrays.asList(crutFn);
         }
 
         this.fieldMap = new HashMap<>();
@@ -189,6 +201,7 @@ public class InputFormLayout<E> extends FormLayout {
             if (nonEditFn.contains(pn)) {
                 continue;
             }
+
             propertyTypeName = mapPar.get(pn).getCanonicalName();
 
             switch (propertyTypeName) {
@@ -339,23 +352,27 @@ public class InputFormLayout<E> extends FormLayout {
      */
     private void completeForm() throws IOException {
 
-        String key;
+        String pn;
         Properties proPoradie = ToolsNames.getPoradieParams(tn);
         Properties proDepict = ToolsNames.getDepictParams(tn);
 
 //        log.info("TN:" + tn);
         for (int i = 1; i < proPoradie.size(); i++) {
 
-            key = proPoradie.getProperty("" + i);
-            if (nonEditFn.contains(key)) {
+            
+            pn = proPoradie.getProperty("" + i);
+            if (nonEditFn.contains(pn)) {
                 continue;
             }
 
+            
 //            log.info("KEY: *" + key + "*");
-            String cap = proDepict.getProperty(key);
+            String cap = proDepict.getProperty(pn);
 //            log.info("CAP: *" + cap + "*");
-            (fieldMap.get(key)).setCaption(cap);
-            fieldsFL.addComponent(fieldMap.get(key));
+            (fieldMap.get(pn)).setCaption(cap);
+            
+            fieldsFL.addComponent(fieldMap.get(pn));
+        
         }
     }
 
@@ -577,7 +594,11 @@ public class InputFormLayout<E> extends FormLayout {
 
                 getFg().setEnabled(true);
                 fieldsFL.setEnabled(true);
-
+                for (String pn : fieldMap.keySet()){
+                    if (crutialFn.contains(pn)) {
+                        (fieldMap.get(pn)).setEnabled(false);
+                    }
+                }
                 editBt.setEnabled(false);
                 saveBt.setEnabled(true);
                 if (okCancelListener != null) {
@@ -643,9 +664,8 @@ public class InputFormLayout<E> extends FormLayout {
                 }
             }
         }
-        
-//        refresh values in comboboxes
 
+//        refresh values in comboboxes
         if (item != null) {
             fg.setItemDataSource(this.item);
         }
@@ -660,11 +680,7 @@ public class InputFormLayout<E> extends FormLayout {
         //this.refreshComboboxes();
     }
 
-    
-    
-    
 //    ************* GETTERS AND SETTERS *****************
-    
     public Map<String, Component> getFieldMap() {
         return Collections.unmodifiableMap(fieldMap);
     }

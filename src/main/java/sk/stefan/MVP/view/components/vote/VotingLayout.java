@@ -21,6 +21,7 @@ import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.view.components.filtering.FilterComboBox;
 import sk.stefan.MVP.view.components.filtering.FilterVoteListener;
+import sk.stefan.enums.CrutialNonEditable;
 import sk.stefan.enums.NonEditableFields;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
@@ -97,7 +98,8 @@ public class VotingLayout extends HorizontalLayout implements OkCancelListener, 
         item = sqlCont.getItem(itemId);
 
         this.voteInputFormLy = new InputVoteFormLayout<>(cls, item, sqlCont, 
-                this, NonEditableFields.T_VOTE.getNonEditableParams());
+                this, NonEditableFields.T_VOTE.getNonEditableParams(),
+                CrutialNonEditable.T_VOTE.getCrutialParams());
 
         FilterVoteListener lisnr = new FilterVoteListener(voteInputFormLy, pritomniLy, this);
         this.pubBodycCb.addValueChangeListener(lisnr);

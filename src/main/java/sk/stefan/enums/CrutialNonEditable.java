@@ -40,7 +40,7 @@ public enum CrutialNonEditable {
         this.name = name;
     }
 
-    public String[] getNonEditableParams() {
+    public String[] getCrutialParams() {
         switch (this) {
             case T_REGION:
                 return new String[]{};

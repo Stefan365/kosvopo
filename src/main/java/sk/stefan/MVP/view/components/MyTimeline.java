@@ -68,8 +68,10 @@ public final class MyTimeline extends Timeline {
             }
             this.setBrowserVisible(Boolean.TRUE);
             this.setWidth("80%");
-            this.addGraphDataSource(timelineContainer, "vote_date", "for_vote");
-            this.setEventDataSource(timelineContainer, "vote_date", "for_vote");
+//            this.addGraphDataSource(timelineContainer, "vote_date", 3);
+//            this.setEventDataSource(timelineContainer, "vote_date", 3);
+            this.addGraphDataSource(timelineContainer, "vote_date", "result_vote");
+            this.setEventDataSource(timelineContainer, "vote_date", "result_vote");
 
         } catch (SQLException ex) {
             log.error(ex.getMessage(), ex);

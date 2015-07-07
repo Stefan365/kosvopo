@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
 import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.UniDlg;
+import sk.stefan.enums.CrutialNonEditable;
 import sk.stefan.enums.NonEditableFields;
 
 /**
@@ -72,13 +73,14 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
             }
             
             String[] nonEdCols = NonEditableFields.valueOf(tn.toUpperCase()).getNonEditableParams();
+            String[] crutialCols = CrutialNonEditable.valueOf(tn.toUpperCase()).getCrutialParams();
 
             log.info("NON EDITABL COLS IS NULL:" + (nonEdCols==null));
             if((nonEdCols!=null)){
                 log.info("NON ED SIZE:" + nonEdCols.length);
             }
            
-            inputFl = new InputFormLayout<>(clsE, item, sqlCont, null, nonEdCols);
+            inputFl = new InputFormLayout<>(clsE, item, sqlCont, null, nonEdCols, crutialCols);
             tdlg = new UniDlg("Nový " + title, inputFl);
             
             UI.getCurrent().addWindow(tdlg);

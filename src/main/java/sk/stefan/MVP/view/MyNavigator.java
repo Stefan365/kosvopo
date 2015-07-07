@@ -22,6 +22,7 @@ import sk.stefan.MVP.model.entity.Theme;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteClassification;
 import sk.stefan.MVP.model.entity.VoteOfRole;
+import sk.stefan.enums.CrutialNonEditable;
 import sk.stefan.enums.NonEditableFields;
 import sk.stefan.utils.ToolsNames;
 
@@ -64,62 +65,90 @@ public class MyNavigator extends Navigator {
         //views zodpovedajuce univerzalnym editacnym tabulkam:
         this.addView(ToolsNames.decapit(A_User.TN),
                 new V8_UniEditableTableView<>(A_User.class, 
-                        NonEditableFields.A_USER.getNonEditableParams(), false));
+                        NonEditableFields.A_USER.getNonEditableParams(), 
+                        CrutialNonEditable.A_USER.getCrutialParams(),
+                        false));
         
 
         
         //dobrovolnicke VIew
         this.addView(ToolsNames.decapit(District.TN),
                 new V8_UniEditableTableView<>(District.class, 
-                        NonEditableFields.T_DISTRICT.getNonEditableParams(), false));
+                        NonEditableFields.T_DISTRICT.getNonEditableParams(), 
+                        CrutialNonEditable.T_DISTRICT.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(Region.TN),
                 new V8_UniEditableTableView<>(Region.class, 
-                        NonEditableFields.T_REGION.getNonEditableParams(), false));
+                        NonEditableFields.T_REGION.getNonEditableParams(), 
+                        CrutialNonEditable.T_REGION.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(Location.TN),
                 new V8_UniEditableTableView<>(Location.class, 
-                        NonEditableFields.T_LOCATION.getNonEditableParams(), false));
+                        NonEditableFields.T_LOCATION.getNonEditableParams(), 
+                        CrutialNonEditable.T_LOCATION.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(PersonClassification.TN),
                 new V8_UniEditableTableView<>(PersonClassification.class, 
-                        NonEditableFields.T_PERSON_CLASSIFICATION.getNonEditableParams(), false));
+                        NonEditableFields.T_PERSON_CLASSIFICATION.getNonEditableParams(),
+                        CrutialNonEditable.T_PERSON_CLASSIFICATION.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(PublicBody.TN),
                 new V8_UniEditableTableView<>(PublicBody.class, 
-                        NonEditableFields.T_PUBLIC_BODY.getNonEditableParams(), false));
+                        NonEditableFields.T_PUBLIC_BODY.getNonEditableParams(), 
+                        CrutialNonEditable.T_PUBLIC_BODY.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(PublicPerson.TN),
                 new V8_UniEditableTableView<>(PublicPerson.class, 
-                        NonEditableFields.T_PUBLIC_PERSON.getNonEditableParams(), false));
+                        NonEditableFields.T_PUBLIC_PERSON.getNonEditableParams(), 
+                        CrutialNonEditable.T_PUBLIC_PERSON.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(PublicRole.TN),
                 new V8_UniEditableTableView<>(PublicRole.class, 
-                        NonEditableFields.T_PUBLIC_ROLE.getNonEditableParams(), false));
+                        NonEditableFields.T_PUBLIC_ROLE.getNonEditableParams(), 
+                        CrutialNonEditable.T_PUBLIC_ROLE.getCrutialParams(),
+                        false));
 
         this.addView(ToolsNames.decapit(Subject.TN),
                 new V8_UniEditableTableView<>(Subject.class, 
-                        NonEditableFields.T_SUBJECT.getNonEditableParams(), false));
+                        NonEditableFields.T_SUBJECT.getNonEditableParams(),
+                        CrutialNonEditable.T_SUBJECT.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(Tenure.TN),
                 new V8_UniEditableTableView<>(Tenure.class, 
-                        NonEditableFields.T_TENURE.getNonEditableParams(), false));
+                        NonEditableFields.T_TENURE.getNonEditableParams(),
+                        CrutialNonEditable.T_TENURE.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(Theme.TN),
                 new V8_UniEditableTableView<>(Theme.class, 
-                        NonEditableFields.T_THEME.getNonEditableParams(), false));
+                        NonEditableFields.T_THEME.getNonEditableParams(),
+                        CrutialNonEditable.T_THEME.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(Vote.getTN()),
                 new V8_UniEditableTableView<>(Vote.class, 
-                        NonEditableFields.T_VOTE.getNonEditableParams(), false));
+                        NonEditableFields.T_VOTE.getNonEditableParams(), 
+                        CrutialNonEditable.T_VOTE.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(VoteClassification.TN),
                 new V8_UniEditableTableView<>(VoteClassification.class, 
-                        NonEditableFields.T_VOTE_CLASSIFICATION.getNonEditableParams(), false));
+                        NonEditableFields.T_VOTE_CLASSIFICATION.getNonEditableParams(), 
+                        CrutialNonEditable.T_VOTE_CLASSIFICATION.getCrutialParams(),
+                        false));
         
         this.addView(ToolsNames.decapit(VoteOfRole.TN),
                 new V8_UniEditableTableView<>(VoteOfRole.class, 
-                        NonEditableFields.T_VOTE_OF_ROLE.getNonEditableParams(), false));
+                        NonEditableFields.T_VOTE_OF_ROLE.getNonEditableParams(), 
+                        CrutialNonEditable.T_VOTE_OF_ROLE.getCrutialParams(),
+                        false));
     }
     
 }

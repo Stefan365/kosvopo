@@ -30,9 +30,9 @@ public class InputVoteFormLayout<E> extends InputFormLayout<E> {
     private PublicBody pubBody;
 
     public InputVoteFormLayout(Class<E> clsE, Item item, SQLContainer sqlCont, 
-            Component cp, String[] nEditFn) {
+            Component cp, String[] nEditFn, String[] crutialFn) {
         
-        super(clsE, item, sqlCont, cp, nEditFn);
+        super(clsE, item, sqlCont, cp, nEditFn, crutialFn);
 
     }
 
