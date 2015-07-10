@@ -565,6 +565,8 @@ public class InputFormLayout<E> extends FormLayout {
 //                            rtretret
 //                            retertretretretre
 //                                    rtre
+//fgfdlkjdj kjg ojgh kgkjghjogk                   
+                    
                     fieldsFL.setEnabled(false);
                     getFg().setEnabled(false);
                     editBt.setEnabled(true);
