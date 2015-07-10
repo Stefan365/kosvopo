@@ -14,7 +14,6 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -99,6 +98,8 @@ public class InputFormLayout<E> extends FormLayout {
     private HorizontalLayout buttonsHL; //* Layout pro uložení tlačítek OK-CANCEL.
     private Button saveBt, editBt;
     private final Label titleLb;
+    
+    private Boolean isNew;
 
     /**
      * Tlacitka, ktore nemaju ist do formulara.
@@ -129,7 +130,9 @@ public class InputFormLayout<E> extends FormLayout {
 
         uniTableService = new UniTableServiceImpl<>(cls);
         this.securityService = new SecurityServiceImpl();
-
+        
+        this.isNew = false;
+        
         this.clsE = cls;
         try {
             mapPar = ToolsNames.getTypParametrov(clsE, true);
@@ -595,7 +598,7 @@ public class InputFormLayout<E> extends FormLayout {
                 getFg().setEnabled(true);
                 fieldsFL.setEnabled(true);
                 for (String pn : fieldMap.keySet()){
-                    if (crutialFn.contains(pn)) {
+                    if (crutialFn.contains(pn) & !isNew) {
                         (fieldMap.get(pn)).setEnabled(false);
                     }
                 }
@@ -643,11 +646,12 @@ public class InputFormLayout<E> extends FormLayout {
         this.okCancelListener = list;
     }
 
-    public void setItem(Object itId, Item it) {
+    public void setItem(Object itId, Item it, Boolean isnew) {
 
         this.itemId = itId;
         this.item = it;
-
+        this.isNew = isnew;
+        
         if (tn.equals("a_user") && item != null) {
             Integer uid = (Integer) item.getItemProperty("id").getValue();
 

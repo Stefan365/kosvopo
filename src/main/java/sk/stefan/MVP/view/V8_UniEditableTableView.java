@@ -165,6 +165,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
     }
 
+    
     private void initLinks() {
         linksVl = new VerticalLayout();
         linksVl.setMargin(true);
@@ -285,7 +286,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                     }
                     Notification.show("Pridal som novu podložku!");
                 }
-                inputForm.setItem(itemId, item);
+                inputForm.setItem(itemId, item, Boolean.TRUE);
                 editorLayout.setVisible(itemId != null);
 
                 obnovFilter();
@@ -313,7 +314,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                             "Chcete to zmazať?", new DeleteTaskListener());
                     UI.getCurrent().addWindow(window);
                 } else {
-                    Notification.show("Vyber nejprv riadok v tabuľke!");
+                    Notification.show("Vyber najprv riadok v tabuľke!");
                 }
             }
         });
@@ -378,8 +379,15 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
                 item = uniTable.getItem(itemId);
 
                 if (itemId != null) {
-                    inputForm.setItem(itemId, uniTable.getItem(itemId));
-                }
+                    String s = itemId.toString();
+                    
+                    if("Temporary row id".equals(s)){
+                        inputForm.setItem(itemId, uniTable.getItem(itemId), Boolean.TRUE);
+                    } else {
+                        inputForm.setItem(itemId, uniTable.getItem(itemId), Boolean.FALSE);
+                    }
+                } 
+                
                 editorLayout.setVisible(itemId != null);
                 fg.setEnabled(false);//to sa ozivi az tlacitkom Edit,
                 inputForm.doEnableButtons();
@@ -462,7 +470,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
                     itemId= null;
                     item = null;
-                    inputForm.setItem(itemId, item);
+                    inputForm.setItem(itemId, item, Boolean.FALSE);
                     editorLayout.setVisible(false);
                     
                     Notification.show("úspešne vymazaný!");
@@ -479,7 +487,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
 
     @Override
     public void doOkAction(Integer entId) {
-
+        inputForm.setItem(null, null, Boolean.FALSE);
         sqlContainer.refresh();
         uniTable.refreshRowCache();
     }
