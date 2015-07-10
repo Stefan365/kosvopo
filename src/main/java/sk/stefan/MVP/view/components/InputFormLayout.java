@@ -563,6 +563,7 @@ public class InputFormLayout<E> extends FormLayout {
 //                    Kedze nastastie tento sqlcontainer pracuje len s 1 polozkou
 //                    lastItemId() fungovat bude.
 //                    bracncha 4
+//                    ////branch 3
                     fieldsFL.setEnabled(false);
                     getFg().setEnabled(false);
                     editBt.setEnabled(true);
