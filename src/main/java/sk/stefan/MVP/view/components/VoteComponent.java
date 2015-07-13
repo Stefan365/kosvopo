@@ -8,6 +8,7 @@ package sk.stefan.MVP.view.components;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -42,6 +43,8 @@ public class VoteComponent extends VerticalLayout {
 
         this.setSpacing(true);
         this.setMargin(true);
+        
+        this.setStyleName("voteComponent");
         
         this.navigator = UI.getCurrent().getNavigator();
         this.vote = vot;

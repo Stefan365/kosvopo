@@ -560,13 +560,6 @@ public class InputFormLayout<E> extends FormLayout {
 //                    , ktore priradila databaza.ked vtacka lapaju pekne mu spievaju
 //                    Kedze nastastie tento sqlcontainer pracuje len s 1 polozkou
 //                    lastItemId() fungovat bude.
-                    
-//                    gfjlkfgj
-//                            rtretret
-//                            retertretretretre
-//                                    rtre
-//fgfdlkjdj kjg ojgh kgkjghjogk                   
-                    
                     fieldsFL.setEnabled(false);
                     getFg().setEnabled(false);
                     editBt.setEnabled(true);

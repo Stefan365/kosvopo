@@ -79,6 +79,28 @@ $v-error-indicator-color: #ed473b;
         background-color: lighten($v-error-indicator-color, 40%);
         cursor: pointer;
     }	
+    
+    .v-verticallayout{
+        
+        
+    }
+    
+    .v-horizontallayout{
+        /*border: solid red;*/
+    }
+    
+    .voteComponent{
+        border: solid #ffff33;
+        border-width: 1px;
+        border-style: groove;
+        
+    }
+    
+    .voteLayout{
+        
+        padding: 20px 20px 20px 20px;
+        
+    }
 
     .todoInfoLayout{
         padding: 0px 0px 0px 8px; 

@@ -8,6 +8,8 @@ package sk.stefan.MVP.model.serviceImpl;
 import com.vaadin.ui.Notification;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
+import sk.stefan.MVP.model.entity.Document;
 import sk.stefan.MVP.model.entity.Location;
 import sk.stefan.MVP.model.entity.PublicBody;
 import sk.stefan.MVP.model.entity.PublicPerson;
@@ -24,7 +26,10 @@ import sk.stefan.MVP.model.service.PublicRoleService;
  * @author stefan
  */
 public class PublicBodyServiceImpl implements PublicBodyService {
-
+    
+    
+    private static final Logger log = Logger.getLogger(PublicPersonServiceImpl.class);
+    
     private final GeneralRepo genRepo;
     private final UniRepo<PublicBody> pubBodyRepo;
     private final UniRepo<PublicRole> pubRoleRepo;
@@ -147,7 +152,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
     public synchronized String getPresentationName(PublicBody pb) {
         
         Integer locId = pb.getLocation_id();
-        
+        log.info("LOC ID:" + locId);
         if (locId != null) {
             Location loc = locRepo.findOne(locId);
             return pb.getName() + ", " + loc.getPresentationName();

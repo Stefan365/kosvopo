@@ -12112,6 +12112,12 @@ div.v-layout.v-horizontal.v-widget {
 	cursor: pointer;
 }
 
+.mytheme .voteComponent {
+	border: solid #ffff33;
+	border-width: 1px;
+	border-style: groove;
+}
+
 .mytheme .todoInfoLayout {
 	padding: 0px 0px 0px 8px;
 }
