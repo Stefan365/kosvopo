@@ -21,6 +21,7 @@ import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.ui.KosvopoUI;
 import sk.stefan.utils.ToolsNames;
 
@@ -28,7 +29,7 @@ import sk.stefan.utils.ToolsNames;
  * View pre login.
  */
 @SuppressWarnings("serial")
-public class V1_LoginView extends VerticalLayout implements View {
+public class V1_LoginView extends ViewLayout implements View {
 
     private static final Logger log = Logger.getLogger(V1_LoginView.class);
 
@@ -52,10 +53,7 @@ public class V1_LoginView extends VerticalLayout implements View {
     private final Navigator nav;
 
     public V1_LoginView() {
-
-        this.setMargin(true);
-        this.setSpacing(true);
-
+        super("Prihlásenie sa do systému");
         this.nav = UI.getCurrent().getNavigator();
 
         temporaryLy = new VerticalLayout();
@@ -66,10 +64,10 @@ public class V1_LoginView extends VerticalLayout implements View {
         userService = new UserServiceImpl();
 
         this.initFields();
-        this.initLayout();
+        this.initLayoutContent();
     }
 
-    private void initLayout() {
+    private void initLayoutContent() {
 
         formVl = new VerticalLayout(loginTf, passwordPf, buttonsHl);
         formVl.setMargin(true);

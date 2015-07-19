@@ -9,7 +9,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.VerticalLayout;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.service.UserService;
@@ -17,6 +16,7 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.VotesLayout;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.InputNewEntityButtonFactory;
 
@@ -24,7 +24,7 @@ import sk.stefan.factories.InputNewEntityButtonFactory;
  *
  * @author stefan
  */
-public class V6s_VotesView extends VerticalLayout implements View {
+public class V6s_VotesView extends ViewLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
     
@@ -42,9 +42,7 @@ public class V6s_VotesView extends VerticalLayout implements View {
     
     public V6s_VotesView (){
 
-        this.setMargin(true);
-        this.setSpacing(true);
-    
+        super("hlasovania");
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
 

@@ -21,6 +21,7 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.ThemesLayout;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.InputNewEntityButtonFactory;
 
@@ -29,7 +30,7 @@ import sk.stefan.factories.InputNewEntityButtonFactory;
  *
  * @author stefan
  */
-public class V10s_ThemesView extends VerticalLayout implements View {
+public class V10s_ThemesView extends ViewLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
     
@@ -45,10 +46,7 @@ public class V10s_ThemesView extends VerticalLayout implements View {
     
     
     public V10s_ThemesView (){
-
-        this.setMargin(true);
-        this.setSpacing(true);
-
+        super("tématické okruhy hlasovaní");
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
 

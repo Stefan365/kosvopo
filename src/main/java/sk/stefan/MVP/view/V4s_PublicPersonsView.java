@@ -23,6 +23,7 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.view.components.PublicPersonsLayout;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.InputNewEntityButtonFactory;
 
@@ -30,7 +31,7 @@ import sk.stefan.factories.InputNewEntityButtonFactory;
  *
  * @author stefan
  */
-public class V4s_PublicPersonsView extends VerticalLayout implements View {
+public class V4s_PublicPersonsView extends ViewLayout implements View {
 
     
     private static final long serialVersionUID = 10903884L;
@@ -46,10 +47,8 @@ public class V4s_PublicPersonsView extends VerticalLayout implements View {
     private Button addNewPublicPersonBt;
     
     public V4s_PublicPersonsView (){
-    
-        this.setMargin(true);
-        this.setSpacing(true);
-
+        
+        super("verejné osoby");
         this.publicPersonService = new PublicPersonServiceImpl();
         this.userService = new UserServiceImpl();
         

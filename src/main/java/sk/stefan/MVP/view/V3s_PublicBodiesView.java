@@ -25,6 +25,7 @@ import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicBodiesLayout;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.ui.KosvopoUI;
 
@@ -32,7 +33,7 @@ import sk.stefan.ui.KosvopoUI;
  *
  * @author stefan
  */
-public class V3s_PublicBodiesView extends VerticalLayout implements View {
+public class V3s_PublicBodiesView extends ViewLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
     
@@ -56,14 +57,10 @@ public class V3s_PublicBodiesView extends VerticalLayout implements View {
     
     public V3s_PublicBodiesView (){
     
-        this.setMargin(true);
-        this.setSpacing(true);
-
+        super("verejné orgány");
+        
         this.nav = UI.getCurrent().getNavigator();
 
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-        
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);
 

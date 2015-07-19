@@ -22,17 +22,16 @@ import sk.stefan.MVP.model.service.PublicBodyService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.factories.InputNewEntityButtonFactory;
-import sk.stefan.MVP.view.components.NavigationComponent;
 import sk.stefan.MVP.view.components.PublicBodiesLayout;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
-import sk.stefan.ui.KosvopoUI;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 
 /**
  *
  * @author stefan
  */
-public class V9s_SubjectsView extends VerticalLayout implements View {
+public class V9s_SubjectsView extends ViewLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
     
@@ -56,8 +55,7 @@ public class V9s_SubjectsView extends VerticalLayout implements View {
     
     public V9s_SubjectsView (){
 
-        this.setMargin(true);
-        this.setSpacing(true);
+        super("predmety hlasovania");
     
         this.nav = UI.getCurrent().getNavigator();
 

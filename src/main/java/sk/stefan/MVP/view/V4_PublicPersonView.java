@@ -31,6 +31,7 @@ import sk.stefan.MVP.view.components.PublicPersonComponent;
 import sk.stefan.MVP.view.components.PublicRolesLayout;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.factories.InputNewEntityButtonFactory;
@@ -40,7 +41,7 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
  *
  * @author stefan
  */
-public final class V4_PublicPersonView extends VerticalLayout implements View {
+public final class V4_PublicPersonView extends ViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);
@@ -80,10 +81,8 @@ public final class V4_PublicPersonView extends VerticalLayout implements View {
 
     //konstruktor:
     public V4_PublicPersonView() {
-
-        this.setMargin(true);
-        this.setSpacing(true);
-
+        
+        super("Verejná Osoba");
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();

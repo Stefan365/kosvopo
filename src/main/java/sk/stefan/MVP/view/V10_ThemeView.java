@@ -21,6 +21,7 @@ import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.ThemeDetailedComponent;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.wrappers.FunctionalEditWrapper;
@@ -30,7 +31,7 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
  *
  * @author stefan
  */
-public final class V10_ThemeView extends VerticalLayout implements View {
+public final class V10_ThemeView extends ViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V10_ThemeView.class);
@@ -52,10 +53,7 @@ public final class V10_ThemeView extends VerticalLayout implements View {
 
     //konstruktor:
     public V10_ThemeView() {
-        
-        this.setMargin(true);
-        this.setSpacing(true);
-                
+        super("Tématický Okruh Hlasovania");
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
     }

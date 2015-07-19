@@ -28,6 +28,7 @@ import sk.stefan.MVP.view.components.PublicRoleComponent;
 import sk.stefan.MVP.view.components.VoteOfRolesDetailedLayout;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.wrappers.FunctionalEditWrapper;
@@ -37,7 +38,7 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
  *
  * @author stefan
  */
-public final class V5_PublicRoleView extends VerticalLayout implements View {
+public final class V5_PublicRoleView extends ViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V5_PublicRoleView.class);
@@ -68,10 +69,8 @@ public final class V5_PublicRoleView extends VerticalLayout implements View {
      *
      */
     public V5_PublicRoleView() {
-
-        this.setMargin(true);
-        this.setSpacing(true);
-
+        
+        super("Verejná Funkcia");
         this.publicRoleService = new PublicRoleServiceImpl();
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();

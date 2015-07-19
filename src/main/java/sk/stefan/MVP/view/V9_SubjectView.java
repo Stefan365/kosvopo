@@ -21,6 +21,7 @@ import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.SubjectDetailedComponent;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
@@ -28,7 +29,7 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
  *
  * @author stefan
  */
-public final class V9_SubjectView extends VerticalLayout implements View {
+public final class V9_SubjectView extends ViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V9_SubjectView.class);
@@ -49,9 +50,7 @@ public final class V9_SubjectView extends VerticalLayout implements View {
     //konstruktor:
     public V9_SubjectView() {
 
-        this.setMargin(true);
-        this.setSpacing(true);
-
+        super("Predmet Hlasovania");
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
         

@@ -10,7 +10,6 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.A_User;
 import sk.stefan.MVP.model.entity.PublicRole;
@@ -30,6 +29,7 @@ import sk.stefan.MVP.view.components.VoteClassComponent;
 import sk.stefan.MVP.view.components.VoteDetailedComponent;
 import sk.stefan.MVP.view.components.documents.DownloaderLayout;
 import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.factories.InputNewEntityButtonFactory;
@@ -40,7 +40,7 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
  *
  * @author stefan
  */
-public final class V6_VoteView extends VerticalLayout implements View {
+public final class V6_VoteView extends ViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);
@@ -69,9 +69,7 @@ public final class V6_VoteView extends VerticalLayout implements View {
     //konstruktor:
     public V6_VoteView() {
         
-        this.setMargin(true);
-        this.setSpacing(true);
-
+        super("Hlasovanie");
         this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
         this.classificationService = new ClassificationServiceImpl();

@@ -30,7 +30,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
@@ -45,6 +44,7 @@ import sk.stefan.MVP.view.components.InputFormLayout;
 import sk.stefan.MVP.view.components.MyTable;
 import sk.stefan.MVP.view.components.YesNoWindow;
 import sk.stefan.MVP.view.components.filtering.FilteringComponent;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
@@ -61,7 +61,7 @@ import sk.stefan.utils.ToolsNames;
  * @param <E> type of UniEditableTableView
  *
  */
-public final class V8_UniEditableTableView<E> extends VerticalLayout implements OkCancelListener,
+public final class V8_UniEditableTableView<E> extends ViewLayout implements OkCancelListener,
         RefreshViewListener, ObnovFilterListener, View {
 
     private static final Logger log = Logger.getLogger(V8_UniEditableTableView.class);
@@ -116,9 +116,7 @@ public final class V8_UniEditableTableView<E> extends VerticalLayout implements 
      */
     public V8_UniEditableTableView(Class<E> clsq, String[] uneditCol, String[] crutialCol, Boolean isAdm) {
 
-        this.setMargin(true);
-        this.setSpacing(true);
-        
+//        super("Univerzálny Editačný Formulár");
         tn = ToolsDao.getTableName(clsq);
         //dalsie komponenty:
         basicFilter = new Compare.Equal("visible", Boolean.TRUE);

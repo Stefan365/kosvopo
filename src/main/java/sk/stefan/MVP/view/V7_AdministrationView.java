@@ -34,6 +34,7 @@ import sk.stefan.MVP.model.service.SecurityService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.utils.ToolsNames;
 
@@ -41,7 +42,7 @@ import sk.stefan.utils.ToolsNames;
  *
  * @author stefan
  */
-public class V7_AdministrationView extends VerticalLayout implements View {
+public class V7_AdministrationView extends ViewLayout implements View {
 
     /**
      *
@@ -77,9 +78,7 @@ public class V7_AdministrationView extends VerticalLayout implements View {
      */
     public V7_AdministrationView() {
 
-        this.setMargin(true);
-        this.setSpacing(true);
-
+        super("Administračná Stránka");
         this.nav = UI.getCurrent().getNavigator();
 
         this.securityService = new SecurityServiceImpl();

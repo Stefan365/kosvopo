@@ -10,11 +10,12 @@ import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
+import sk.stefan.MVP.view.components.layouts.ViewLayout;
 
 /**
  * Vstupny View. 
  */
-public class V2_EnterView extends VerticalLayout implements View {
+public class V2_EnterView extends ViewLayout implements View {
 
     private static final Logger log = Logger.getLogger(V2_EnterView.class);
 
@@ -33,7 +34,7 @@ public class V2_EnterView extends VerticalLayout implements View {
      * 
      */
     public V2_EnterView() {
-
+//        super("Vstupná ");
         this.setMargin(true);
         this.setSpacing(true);
         
