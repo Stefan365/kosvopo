@@ -8,6 +8,8 @@ package sk.stefan.MVP.view.components.layouts;
 import com.vaadin.ui.VerticalLayout;
 
 /**
+ * This Layout is the base of each View. It need to be different from plain Vertical Layout,
+ * due to 
  *
  * @author stefan
  */
