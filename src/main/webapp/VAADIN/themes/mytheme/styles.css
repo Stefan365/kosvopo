@@ -12118,6 +12118,10 @@ div.v-layout.v-horizontal.v-widget {
 	border-style: groove;
 }
 
+.mytheme .voteLayout {
+	padding: 20px 20px 20px 20px;
+}
+
 .mytheme .todoInfoLayout {
 	padding: 0px 0px 0px 8px;
 }

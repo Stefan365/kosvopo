@@ -36,6 +36,9 @@ public class VotesLayout extends VerticalLayout implements Filterable {
     //0.konstruktor
     public VotesLayout(List<Vote> votes, VoteService vots){
         
+        
+        this.setStyleName("voteLayout");
+        
         this.voteService = vots;
         this.temporaryLy = new VerticalLayout();
         this.searchFd = new TextField("Vyhľadávanie");
