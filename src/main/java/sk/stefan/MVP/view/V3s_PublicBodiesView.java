@@ -23,8 +23,8 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.factories.InputNewEntityButtonFactory;
-import sk.stefan.MVP.view.components.NavigationComponent;
-import sk.stefan.MVP.view.components.PublicBodiesLayout;
+import sk.stefan.MVP.view.components.NavigationPanel;
+import sk.stefan.MVP.view.components.layouts.PubBodiesBriefLayout;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.ui.KosvopoUI;
@@ -39,7 +39,7 @@ public class V3s_PublicBodiesView extends ViewLayout implements View {
     
     private final PublicBodyService publicBodyService;
     
-    private PublicBodiesLayout publicBodiesLayout;
+    private PubBodiesBriefLayout publicBodiesLayout;
     
     //tlacitko na pridavanie novej verejne osoby:
     private Button addNewPublicBodyBt;
@@ -97,7 +97,7 @@ public class V3s_PublicBodiesView extends ViewLayout implements View {
         this.setMargin(true);
         this.setSpacing(true);
         
-        this.publicBodiesLayout = new PublicBodiesLayout(publicBodyService.findAll(), publicBodyService);
+        this.publicBodiesLayout = new PubBodiesBriefLayout(publicBodyService.findAll(), publicBodyService);
 //        this.districtCb = new FilterComboBox<>(District.class);
         this.searchFd = new TextField("Vyhľadávanie");
         this.initSearch();
@@ -140,7 +140,7 @@ public class V3s_PublicBodiesView extends ViewLayout implements View {
         
     }
 
-    public PublicBodiesLayout getPbComp() {
+    public PubBodiesBriefLayout getPbComp() {
         return publicBodiesLayout;
     }
     

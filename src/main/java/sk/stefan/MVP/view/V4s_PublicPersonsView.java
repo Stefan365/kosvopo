@@ -22,7 +22,7 @@ import sk.stefan.MVP.model.service.PublicPersonService;
 import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.PublicPersonServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.MVP.view.components.PublicPersonsLayout;
+import sk.stefan.MVP.view.components.layouts.PubPersonsBriefLayout;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.InputNewEntityButtonFactory;
@@ -39,7 +39,7 @@ public class V4s_PublicPersonsView extends ViewLayout implements View {
     private final PublicPersonService publicPersonService;
     private final UserService userService;
 
-    private PublicPersonsLayout publicPersonsLayout;
+    private PubPersonsBriefLayout publicPersonsLayout;
     
     private TextField searchFd; 
     
@@ -82,7 +82,7 @@ public class V4s_PublicPersonsView extends ViewLayout implements View {
         this.setMargin(true);
         this.setSpacing(true);
         
-        this.publicPersonsLayout = new PublicPersonsLayout(publicPersonService.findAll(), publicPersonService);
+        this.publicPersonsLayout = new PubPersonsBriefLayout(publicPersonService.findAll(), publicPersonService);
         this.searchFd = new TextField("Vyhľadávač");
         this.initSearch();
         
@@ -120,7 +120,7 @@ public class V4s_PublicPersonsView extends ViewLayout implements View {
 
     
     
-    public PublicPersonsLayout getPublicPersonsComponent() {
+    public PubPersonsBriefLayout getPublicPersonsComponent() {
         return publicPersonsLayout;
     }
 

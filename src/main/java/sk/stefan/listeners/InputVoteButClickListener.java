@@ -10,7 +10,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.view.components.UniDlg;
-import sk.stefan.MVP.view.components.vote.VotingLayout;
+import sk.stefan.MVP.view.components.layouts.InputVoteComplexLayout;
 
 /**
  * Specialny listener pre tlacitko vlozenia Hlasovania, pretoze v tomto secialnom 
@@ -25,7 +25,7 @@ public class InputVoteButClickListener implements ClickListener {
     private static final Logger log = Logger.getLogger(InputVoteButClickListener.class);
 
     private final String title;
-    private VotingLayout votingLy;
+    private InputVoteComplexLayout votingLy;
     private UniDlg tdlg;
 
     public InputVoteButClickListener(String title) {
@@ -37,7 +37,7 @@ public class InputVoteButClickListener implements ClickListener {
     @Override
     public void buttonClick(Button.ClickEvent event) {
         
-        this.votingLy = new VotingLayout(null);
+        this.votingLy = new InputVoteComplexLayout(null);
 
         tdlg = new UniDlg("Nový " + title, votingLy);
         tdlg.setSizeFull();

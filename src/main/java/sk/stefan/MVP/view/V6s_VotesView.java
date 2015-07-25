@@ -15,7 +15,7 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.VotesLayout;
+import sk.stefan.MVP.view.components.layouts.VotesBriefLayout;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.InputNewEntityButtonFactory;
@@ -33,7 +33,7 @@ public class V6s_VotesView extends ViewLayout implements View {
     private final UserService userService;
     
     //komponenty
-    private VotesLayout votesLayout;
+    private VotesBriefLayout votesBriefLayout;
     //tlacitko na pridavanie novej verejne osoby:
     private Button addVoteBt;
 
@@ -56,7 +56,7 @@ public class V6s_VotesView extends ViewLayout implements View {
 
         this.removeAllComponents();
         this.initLayout();
-        this.addComponents(votesLayout);
+        this.addComponents(votesBriefLayout);
         
         if(isVolunteer){
             this.initNewPublicBodyButton();
@@ -70,7 +70,7 @@ public class V6s_VotesView extends ViewLayout implements View {
         
         this.setMargin(true);
         this.setSpacing(true);
-        this.votesLayout = new VotesLayout(voteService.findAll(), voteService);
+        this.votesBriefLayout = new VotesBriefLayout(voteService.findAll(), voteService);
         
     }
     

@@ -3,7 +3,7 @@ package sk.stefan.MVP.view;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import sk.stefan.MVP.view.components.NavigationComponent;
+import sk.stefan.MVP.view.components.NavigationPanel;
 
 /*
  * Hlavne view, ktore nesie listu s tlacitkami.
@@ -15,7 +15,7 @@ public class MainView extends VerticalLayout {
     
     private final MyNavigator nav;
     
-    private final NavigationComponent navComp;
+    private final NavigationPanel navComp;
     
     
     
@@ -25,14 +25,14 @@ public class MainView extends VerticalLayout {
         
         nav = new MyNavigator(UI.getCurrent(), content);
 
-        navComp = NavigationComponent.createNavigationComponent();
+        navComp = NavigationPanel.createNavigationComponent();
 
         this.addComponents(navComp, content);
         
     }
 
     
-    public NavigationComponent getNavComp() {
+    public NavigationPanel getNavComp() {
         return navComp;
     }
 }

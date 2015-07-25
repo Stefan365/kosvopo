@@ -26,11 +26,11 @@ import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.MyTimeline;
-import sk.stefan.MVP.view.components.PersonClassLayout;
-import sk.stefan.MVP.view.components.PublicPersonComponent;
-import sk.stefan.MVP.view.components.PublicRolesLayout;
-import sk.stefan.MVP.view.components.documents.DownloaderLayout;
-import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.layouts.PersonClassBriefLayout;
+import sk.stefan.MVP.view.components.panContents.PUP_briefPanContent;
+import sk.stefan.MVP.view.components.layouts.PubRolesBriefLayout;
+import sk.stefan.MVP.view.components.layouts.DownloaderBriefLayout;
+import sk.stefan.MVP.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
@@ -63,21 +63,21 @@ public final class V4_PublicPersonView extends ViewLayout implements View {
     
     //komponenty pre zobrazeneie verejnych roli dane osoby (tj. jedna aktivna a 
     //zvysok stare): 
-    private PublicRolesLayout publicRolesLayout;
+    private PubRolesBriefLayout pubRolesBriefLayout;
     //layout pre zobrazenie zakladnych udajov danej osoby.
-    private PublicPersonComponent publicPersonComponent;
+    private PUP_briefPanContent pubPersonBriefPanel;
     
 //    private final PublicPersonService publicPersonService;
     //componenty pre TimeLine:
     private MyTimeline timeline;
 
-    private PersonClassLayout classPersonLayout;
+    private PersonClassBriefLayout classPersonLayout;
     //tlacitko na pridavanie novej entity:
     private Button addNewPublicRoleBt;
     //pre uzivatela obcan   
-    private DownloaderLayout<PublicPerson> downoaderLayout;
+    private DownloaderBriefLayout<PublicPerson> downoaderLayout;
     //pre uzivatela admin a dobrovolnik
-    private UploaderLayout<PublicPerson> uploaderLayout;
+    private DownAndUploaderBriefLayout<PublicPerson> uploaderLayout;
 
     //konstruktor:
     public V4_PublicPersonView() {
@@ -106,7 +106,7 @@ public final class V4_PublicPersonView extends ViewLayout implements View {
         this.initTimeline();
         this.classPersonLayout();
 
-        this.addComponents(publicPersonComponent, publicRolesLayout, classPersonLayout, timeline);
+        this.addComponents(pubPersonBriefPanel, pubRolesBriefLayout, classPersonLayout, timeline);
 
         if (isVolunteer) {
 
@@ -137,7 +137,7 @@ public final class V4_PublicPersonView extends ViewLayout implements View {
      */
     private void initPublicPersonComponent() {
 
-        this.publicPersonComponent = new PublicPersonComponent(publicPerson, null);
+        this.pubPersonBriefPanel = new PUP_briefPanContent(publicPerson, null);
 
     }
 
@@ -150,10 +150,10 @@ public final class V4_PublicPersonView extends ViewLayout implements View {
 
         List<PublicRole> publicRoles = publicRoleService.getPublicRoles(prIds);
 
-        this.publicRolesLayout = new PublicRolesLayout(publicRoles, publicRoleService);
+        this.pubRolesBriefLayout = new PubRolesBriefLayout(publicRoles, publicRoleService);
 
         if (actualPublicRole != null) {
-            this.publicRolesLayout.setActual(actualPublicRole);
+            this.pubRolesBriefLayout.setActual(actualPublicRole);
         }
 
     }
@@ -174,12 +174,12 @@ public final class V4_PublicPersonView extends ViewLayout implements View {
         this.publicPerson = publicPerson;
     }
 
-    public PublicRolesLayout getPublicRolesLayout() {
-        return publicRolesLayout;
+    public PubRolesBriefLayout getPublicRolesLayout() {
+        return pubRolesBriefLayout;
     }
 
-    public void setPublicRolesLayout(PublicRolesLayout publicRolesLy) {
-        this.publicRolesLayout = publicRolesLy;
+    public void setPublicRolesLayout(PubRolesBriefLayout publicRolesLy) {
+        this.pubRolesBriefLayout = publicRolesLy;
     }
 
     /**
@@ -199,7 +199,7 @@ public final class V4_PublicPersonView extends ViewLayout implements View {
      */
     private void initUploadLayout() {
 
-        this.uploaderLayout = new UploaderLayout<>(PublicPerson.class, this.publicPerson);
+        this.uploaderLayout = new DownAndUploaderBriefLayout<>(PublicPerson.class, this.publicPerson);
 
         this.addComponent(uploaderLayout);
 
@@ -210,7 +210,7 @@ public final class V4_PublicPersonView extends ViewLayout implements View {
      */
     private void initDownloadLayout() {
 
-        this.downoaderLayout = new DownloaderLayout<>(PublicPerson.class, this.publicPerson);
+        this.downoaderLayout = new DownloaderBriefLayout<>(PublicPerson.class, this.publicPerson);
 
         this.addComponent(downoaderLayout);
 
@@ -224,7 +224,7 @@ public final class V4_PublicPersonView extends ViewLayout implements View {
 
         List<PersonClassification> pcls = classificationService.findNewPersonClass(pclIds);
 
-        this.classPersonLayout = new PersonClassLayout(pcls, classificationService);
+        this.classPersonLayout = new PersonClassBriefLayout(pcls, classificationService);
 
     }
 

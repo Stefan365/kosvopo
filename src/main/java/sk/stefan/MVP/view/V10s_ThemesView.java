@@ -20,7 +20,7 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.ThemesLayout;
+import sk.stefan.MVP.view.components.layouts.ThemesBriefLayout;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.InputNewEntityButtonFactory;
@@ -39,7 +39,7 @@ public class V10s_ThemesView extends ViewLayout implements View {
     private final UserService userService;
 
     //komponenty
-    private ThemesLayout themesLayout;
+    private ThemesBriefLayout themesLayout;
     //tlacitko na pridavanie novej verejne osoby:
     private Button addNewThemeBt;
     private TextField searchFd; 
@@ -79,7 +79,7 @@ public class V10s_ThemesView extends ViewLayout implements View {
         this.setMargin(true);
         this.setSpacing(true);
         
-        this.themesLayout = new ThemesLayout(voteService.findAllThemes(), voteService);
+        this.themesLayout = new ThemesBriefLayout(voteService.findAllThemes(), voteService);
         this.searchFd = new TextField("Vyhľadávanie");
         this.initSearch();
         

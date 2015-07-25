@@ -12112,7 +12112,19 @@ div.v-layout.v-horizontal.v-widget {
 	cursor: pointer;
 }
 
-.mytheme .voteComponent {
+.mytheme .viewLayout {
+	border: solid #ffff33;
+	border-width: 1px;
+	border-style: groove;
+	padding: 20px 20px 20px 20px;
+	position: absolute;
+}
+
+.mytheme .viewTitleLabel {
+	text-height: 20px;
+}
+
+.mytheme .voteBriefPanel {
 	border: solid #ffff33;
 	border-width: 1px;
 	border-style: groove;

@@ -5,6 +5,7 @@
  */
 package sk.stefan.MVP.view.components.layouts;
 
+import sk.stefan.MVP.view.components.ViewTitleLabel;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -17,7 +18,7 @@ public class ViewLayout extends VerticalLayout {
 
     private static final long serialVersionUID = 1L;
 
-    private final TitleLabel title;
+    private final ViewTitleLabel titleLb;
 
     /**
      *
@@ -25,8 +26,8 @@ public class ViewLayout extends VerticalLayout {
      */
     public ViewLayout(String titleStr) {
         this.setStyleName("ViewLayout");
-        this.title = new TitleLabel(titleStr);
-        this.addComponent(title);
+        this.titleLb = new ViewTitleLabel(titleStr);
+        this.addComponent(titleLb);
 
     }
 
@@ -35,8 +36,8 @@ public class ViewLayout extends VerticalLayout {
      */
     public ViewLayout() {
         this.setStyleName("ViewLayout");
-        this.title = new TitleLabel();
-        this.addComponent(title);
+        this.titleLb = new ViewTitleLabel();
+        this.addComponent(titleLb);
         
         this.initLayout();
 

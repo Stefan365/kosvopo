@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import org.apache.log4j.Logger;
 import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.view.components.InputFormLayout;
+import sk.stefan.MVP.view.components.layouts.InputFormLayout;
 import sk.stefan.MVP.view.components.UniDlg;
 import sk.stefan.enums.CrutialNonEditable;
 import sk.stefan.enums.NonEditableFields;

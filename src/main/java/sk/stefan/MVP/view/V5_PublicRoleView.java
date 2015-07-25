@@ -24,10 +24,10 @@ import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.MyTimeline;
-import sk.stefan.MVP.view.components.PublicRoleComponent;
-import sk.stefan.MVP.view.components.VoteOfRolesDetailedLayout;
-import sk.stefan.MVP.view.components.documents.DownloaderLayout;
-import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.panContents.PUR_briefPanContent;
+import sk.stefan.MVP.view.components.layouts.VoteOfRolesBriefLayout;
+import sk.stefan.MVP.view.components.layouts.DownloaderBriefLayout;
+import sk.stefan.MVP.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
@@ -57,12 +57,12 @@ public final class V5_PublicRoleView extends ViewLayout implements View {
     //componenty pre TimeLine:
     private MyTimeline timeline;
     //layout pre zobrazenie zakladnych udajov danej osoby.
-    private PublicRoleComponent publicRoleComponent;
-    private VoteOfRolesDetailedLayout votesOfRoleLayout;
+    private PUR_briefPanContent publicRoleComponent;
+    private VoteOfRolesBriefLayout votesOfRoleLayout;
     //pre uzivatela obcan   
-    private DownloaderLayout<PublicRole> downoaderLayout;
+    private DownloaderBriefLayout<PublicRole> downoaderLayout;
     //pre uzivatela admin a dobrovolnik
-    private UploaderLayout<PublicRole> uploaderLayout;
+    private DownAndUploaderBriefLayout<PublicRole> uploaderLayout;
 
     //konstruktor:
     /**
@@ -110,7 +110,7 @@ public final class V5_PublicRoleView extends ViewLayout implements View {
      */
     private void initPublicPersonComponent() {
 
-        this.publicRoleComponent = new PublicRoleComponent(publicRole, publicRoleService);
+        this.publicRoleComponent = new PUR_briefPanContent(publicRole, publicRoleService);
 
     }
 
@@ -121,7 +121,7 @@ public final class V5_PublicRoleView extends ViewLayout implements View {
 
         List<Integer> vorIds = voteService.findVoteOfRoleIdsByPubRoleId(publicRole.getId());
         List<VoteOfRole> votesOfRole = voteService.findNewVotesOfRole(vorIds);
-        this.votesOfRoleLayout = new VoteOfRolesDetailedLayout(votesOfRole, voteService);
+        this.votesOfRoleLayout = new VoteOfRolesBriefLayout(votesOfRole, voteService);
 
     }
 
@@ -141,7 +141,7 @@ public final class V5_PublicRoleView extends ViewLayout implements View {
      */
     private void initUploadLayout() {
 
-        this.uploaderLayout = new UploaderLayout<>(PublicRole.class, this.publicRole);
+        this.uploaderLayout = new DownAndUploaderBriefLayout<>(PublicRole.class, this.publicRole);
         this.addComponent(uploaderLayout);
 
     }
@@ -163,7 +163,7 @@ public final class V5_PublicRoleView extends ViewLayout implements View {
      */
     private void initDownloadLayout() {
 
-        this.downoaderLayout = new DownloaderLayout<>(PublicRole.class, this.publicRole);
+        this.downoaderLayout = new DownloaderBriefLayout<>(PublicRole.class, this.publicRole);
         this.addComponent(downoaderLayout);
 
     }

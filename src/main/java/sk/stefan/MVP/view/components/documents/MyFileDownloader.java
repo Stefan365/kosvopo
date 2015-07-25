@@ -15,8 +15,6 @@ import java.io.InputStream;
 import org.apache.log4j.Logger;
 import sk.stefan.MVP.model.entity.Document;
 import sk.stefan.MVP.model.repo.UniRepo;
-import sk.stefan.MVP.model.service.DocumentService;
-import sk.stefan.MVP.model.serviceImpl.DocumentServiceImpl;
 
 /**
  *

@@ -1,0 +1,50 @@
+SELECT count(*) FROM universe WHERE modified > '2015-07-25 01:00:00' and modified < '2015-07-25 04:00:00'
+AND (
+untradeable IS NOT NULL
+OR blocked IS NOT NULL
+OR name IS NULL
+OR currency IS NULL
+OR marketCap IS NULL
+OR currency IS NULL
+OR primaryIndex IS NULL
+OR isin IS NULL
+OR sedol IS NULL
+OR sector IS NULL
+OR indexClose IS NULL
+OR sectorClose IS NULL
+OR exchangeRate IS NULL
+OR lotsize IS NULL
+OR closePrice IS NULL
+OR adv IS NULL
+OR touch IS NULL
+OR averageTrade IS NULL
+OR ticksPerDay IS NULL
+OR medianTradeSize IS NULL
+OR ticksPerEpoch IS NULL
+OR cdf0 IS NULL
+OR cdf1 IS NULL
+OR cdf2 IS NULL
+OR cdf3 IS NULL
+OR cdf4 IS NULL
+OR cdf5 IS NULL
+OR cdf6 IS NULL
+OR cdf7 IS NULL
+OR cdf8 IS NULL
+OR cdf9 IS NULL
+
+OR med0 IS NULL
+OR med1 IS NULL
+OR med2 IS NULL
+OR med3 IS NULL
+OR med4 IS NULL
+OR med5 IS NULL
+OR med6 IS NULL
+OR med7 IS NULL
+OR med8 IS NULL
+OR med9 IS NULL
+OR med10 IS NULL
+OR med11 IS NULL
+OR med12 IS NULL
+OR med13 IS NULL
+OR med14 IS NULL
+);

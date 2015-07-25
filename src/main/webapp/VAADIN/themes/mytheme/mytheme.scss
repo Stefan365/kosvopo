@@ -89,27 +89,80 @@ $v-error-indicator-color: #ed473b;
         /*border: solid red;*/
     }
     
-    .voteComponent{
-        border: solid #ffff33;
-        border-width: 1px;
-        border-style: groove;
-        
-    }
-    
+   
     .viewLayout{
+        
         border: solid #ffff33;
         border-width: 1px;
         border-style: groove;
         padding: 20px 20px 20px 20px;
         position: absolute; 
         
-        
-        
     }
     
-    .titleLabel{
+    .viewTitleLabel{
         
+        text-height: 20px;
+    
     }
+
+    /*PANELS:*/
+    
+    .detailedPanel{
+    }
+    
+    .briefPanel{
+    }
+    
+    
+    
+    .PUB_detPanel{
+    }
+    .PUB_briefPanel{
+    }
+
+    .PUP_detPanel{
+    }
+    .PUP_briefPanel{
+    }
+
+    .PUR_detPanel{
+    }
+    .PUR_briefPanel{
+    }
+
+    
+
+    .VOT_detPanel{
+    
+    }
+    
+    
+    
+    .VOT_briefPanel{
+        border: solid #ffff33;
+        border-width: 1px;
+        border-style: groove;
+    }
+
+    .SUB_detPanel{
+    }
+    .SUB_briefPanel{
+    }
+ 
+    .THE_detPanel{
+    }
+    .THE_briefPanel{
+    }
+
+
+    .viewSearchTextArea{
+    }
+ 
+    
+    
+    /*END OF PANELS*/
+    
     .voteLayout{
         
         padding: 20px 20px 20px 20px;

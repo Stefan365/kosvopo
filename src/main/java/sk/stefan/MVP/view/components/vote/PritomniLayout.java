@@ -20,6 +20,7 @@ import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.entity.VoteOfRole;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
+import sk.stefan.MVP.view.components.layouts.InputVoteComplexLayout;
 import sk.stefan.listeners.OkCancelListener;
 import sk.stefan.utils.ToolsDao;
 
@@ -60,7 +61,7 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
 
 
 //    private Boolean isNew;
-    private final VotingLayout listener;
+    private final InputVoteComplexLayout listener;
 
     //0. konstruktor.
     /**
@@ -70,7 +71,7 @@ public class PritomniLayout extends VerticalLayout implements OkCancelListener {
      * @param wb
      * @param lisnr
      */
-    public PritomniLayout(PublicBody pb, Vote vot, Boolean wb, VotingLayout lisnr) {
+    public PritomniLayout(PublicBody pb, Vote vot, Boolean wb, InputVoteComplexLayout lisnr) {
 
         this.pubBody = pb;
         if (vot != null) {

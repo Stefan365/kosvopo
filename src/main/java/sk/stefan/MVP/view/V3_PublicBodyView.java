@@ -24,10 +24,10 @@ import sk.stefan.MVP.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.MVP.view.components.MyTimeline;
-import sk.stefan.MVP.view.components.PublicRolesLayout;
-import sk.stefan.MVP.view.components.VotesLayout;
-import sk.stefan.MVP.view.components.documents.DownloaderLayout;
-import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.layouts.PubRolesBriefLayout;
+import sk.stefan.MVP.view.components.layouts.VotesBriefLayout;
+import sk.stefan.MVP.view.components.layouts.DownloaderBriefLayout;
+import sk.stefan.MVP.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
@@ -50,16 +50,16 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
     //hlavna entita tohoto VIew
     private PublicBody publicBody;
 
-    private PublicRolesLayout publicRolesLayout;
-    private VotesLayout votesLayout;
+    private PubRolesBriefLayout publicRolesLayout;
+    private VotesBriefLayout votesLayout;
 
     //componenty pre TimeLine:
     private MyTimeline timeline;
 
     //tlacitko na pridavanie novej entity:
     private Button addNewPublicRoleBt;
-    private DownloaderLayout<PublicBody> downoaderLayout;
-    private UploaderLayout<PublicBody> uploaderLayout;
+    private DownloaderBriefLayout<PublicBody> downoaderLayout;
+    private DownAndUploaderBriefLayout<PublicBody> uploaderLayout;
 
     //konstruktor:
     /**
@@ -108,7 +108,7 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
 
         List<PublicRole> publicRoles = publicRoleService.getPublicRoles(prIds);
         log.info("KAROLKO2: " + publicRoles.size());
-        this.publicRolesLayout = new PublicRolesLayout(publicRoles, publicRoleService);
+        this.publicRolesLayout = new PubRolesBriefLayout(publicRoles, publicRoleService);
 
     }
 
@@ -118,7 +118,7 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
 
         List<Vote> votes = voteService.findNewVotes(votIds);
 
-        this.votesLayout = new VotesLayout(votes, voteService);
+        this.votesLayout = new VotesBriefLayout(votes, voteService);
 
     }
 
@@ -137,11 +137,11 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
         this.publicBody = publicBody;
     }
 
-    public PublicRolesLayout getPublicRolesLayout() {
+    public PubRolesBriefLayout getPublicRolesLayout() {
         return publicRolesLayout;
     }
 
-    public void setPublicRolesLayout(PublicRolesLayout publicRolesLy) {
+    public void setPublicRolesLayout(PubRolesBriefLayout publicRolesLy) {
         this.publicRolesLayout = publicRolesLy;
     }
 
@@ -162,7 +162,7 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
      */
     private void initUploadLayout() {
 
-        this.uploaderLayout = new UploaderLayout<>(PublicBody.class, this.publicBody);
+        this.uploaderLayout = new DownAndUploaderBriefLayout<>(PublicBody.class, this.publicBody);
 
         this.addComponent(uploaderLayout);
 
@@ -173,7 +173,7 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
      */
     private void initDownloadLayout() {
 
-        this.downoaderLayout = new DownloaderLayout<>(PublicBody.class, this.publicBody);
+        this.downoaderLayout = new DownloaderBriefLayout<>(PublicBody.class, this.publicBody);
 
         this.addComponent(downoaderLayout);
 

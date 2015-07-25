@@ -23,12 +23,12 @@ import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.SubjectComponent;
-import sk.stefan.MVP.view.components.ThemeComponent;
-import sk.stefan.MVP.view.components.VoteClassComponent;
-import sk.stefan.MVP.view.components.VoteDetailedComponent;
-import sk.stefan.MVP.view.components.documents.DownloaderLayout;
-import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.panContents.SUB_briefPanContent;
+import sk.stefan.MVP.view.components.panContents.THE_briefPanContent;
+import sk.stefan.MVP.view.components.panContents.VCL_detPanContent;
+import sk.stefan.MVP.view.components.panContents.VOT_detPanContent;
+import sk.stefan.MVP.view.components.layouts.DownloaderBriefLayout;
+import sk.stefan.MVP.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
@@ -57,13 +57,13 @@ public final class V6_VoteView extends ViewLayout implements View {
     private final ClassificationService classificationService;
 
     //komponnety:
-    private VoteDetailedComponent voteDetailedComponent;
-    private ThemeComponent themeComponent;
-    private SubjectComponent subjectComponent;
-    private VoteClassComponent voteClassComponent;
+    private VOT_detPanContent voteDetailedPanel;
+    private THE_briefPanContent themeComponent;
+    private SUB_briefPanContent subjectComponent;
+    private VCL_detPanContent voteClassComponent;
     private Button editVoteBt;
-    private DownloaderLayout<Vote> downoaderLayout;
-    private UploaderLayout<Vote> uploaderLayout;
+    private DownloaderBriefLayout<Vote> downoaderLayout;
+    private DownAndUploaderBriefLayout<Vote> uploaderLayout;
 
     
     //konstruktor:
@@ -83,12 +83,12 @@ public final class V6_VoteView extends ViewLayout implements View {
 
         this.removeAllComponents();
 
-        initVoteDetailedComponent();
+        initVoteDetailedPanel();
         this.initSubjectComponent();
         initThemeComponent();
         this.initVoteClassComponent();
         
-        this.addComponents(voteDetailedComponent, subjectComponent, themeComponent, 
+        this.addComponents(voteDetailedPanel, subjectComponent, themeComponent, 
                 voteClassComponent);
 
         if (isVolunteer) {
@@ -112,9 +112,9 @@ public final class V6_VoteView extends ViewLayout implements View {
         
     }
 
-    private void initVoteDetailedComponent() {
+    private void initVoteDetailedPanel() {
         
-        this.voteDetailedComponent = new VoteDetailedComponent(vote, voteService);
+        this.voteDetailedPanel = new VOT_detPanContent(vote, voteService);
         
     }
 
@@ -122,7 +122,7 @@ public final class V6_VoteView extends ViewLayout implements View {
      */
     private void initSubjectComponent() {
 
-        this.subjectComponent = new SubjectComponent(subject, voteService);
+        this.subjectComponent = new SUB_briefPanContent(subject, voteService);
 
     }
     
@@ -130,7 +130,7 @@ public final class V6_VoteView extends ViewLayout implements View {
      */
     private void initThemeComponent() {
 
-        this.themeComponent = new ThemeComponent(theme, voteService);
+        this.themeComponent = new THE_briefPanContent(theme, voteService);
 
     }
 
@@ -138,7 +138,7 @@ public final class V6_VoteView extends ViewLayout implements View {
      */
     private void initVoteClassComponent() {
         
-        this.voteClassComponent = new VoteClassComponent(voteClassification, classificationService);
+        this.voteClassComponent = new VCL_detPanContent(voteClassification, classificationService);
 
     }
 
@@ -159,7 +159,7 @@ public final class V6_VoteView extends ViewLayout implements View {
      */
     private void initUploadLayout() {
 
-        this.uploaderLayout = new UploaderLayout<>(Vote.class, this.vote);
+        this.uploaderLayout = new DownAndUploaderBriefLayout<>(Vote.class, this.vote);
         this.addComponent(uploaderLayout);
 
     }
@@ -180,7 +180,7 @@ public final class V6_VoteView extends ViewLayout implements View {
      */
     private void initDownloadLayout() {
 
-        this.downoaderLayout = new DownloaderLayout<>(Vote.class, this.vote);
+        this.downoaderLayout = new DownloaderBriefLayout<>(Vote.class, this.vote);
         this.addComponent(downoaderLayout);
 
     }

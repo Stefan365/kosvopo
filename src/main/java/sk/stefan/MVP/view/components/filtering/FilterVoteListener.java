@@ -13,8 +13,8 @@ import sk.stefan.MVP.model.entity.Vote;
 import sk.stefan.MVP.model.service.PublicBodyService;
 import sk.stefan.MVP.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.MVP.view.components.vote.PritomniLayout;
-import sk.stefan.MVP.view.components.vote.InputVoteFormLayout;
-import sk.stefan.MVP.view.components.vote.VotingLayout;
+import sk.stefan.MVP.view.components.layouts.InputVoteFormLayout;
+import sk.stefan.MVP.view.components.layouts.InputVoteComplexLayout;
 
 /**
  *
@@ -29,7 +29,7 @@ public class FilterVoteListener implements ValueChangeListener {
     
     private final InputVoteFormLayout<Vote> voteInputLy;
     private final PritomniLayout pritomniLy;
-    private final VotingLayout votingLy;
+    private final InputVoteComplexLayout votingLy;
 
     private final PublicBodyService publicBodyService;
     
@@ -41,7 +41,7 @@ public class FilterVoteListener implements ValueChangeListener {
      * @param vLy
      */
     public FilterVoteListener(InputVoteFormLayout<Vote> vinLy, 
-            PritomniLayout pLy, VotingLayout vLy) {
+            PritomniLayout pLy, InputVoteComplexLayout vLy) {
         
         this.voteInputLy = vinLy;
         this.pritomniLy = pLy;

@@ -18,9 +18,9 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.SubjectDetailedComponent;
-import sk.stefan.MVP.view.components.documents.DownloaderLayout;
-import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.panContents.SUB_detPanContent;
+import sk.stefan.MVP.view.components.layouts.DownloaderBriefLayout;
+import sk.stefan.MVP.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.wrappers.FunctionalEditWrapper;
@@ -42,10 +42,10 @@ public final class V9_SubjectView extends ViewLayout implements View {
     private Subject subject;
     
     //komponenty
-    private SubjectDetailedComponent subjectDetailedComp;
+    private SUB_detPanContent subjectDetailedComp;
     private Button editSubjectBt;
-    private DownloaderLayout<Subject> downoaderLayout;
-    private UploaderLayout<Subject> uploaderLayout;
+    private DownloaderBriefLayout<Subject> downoaderLayout;
+    private DownAndUploaderBriefLayout<Subject> uploaderLayout;
 
     //konstruktor:
     public V9_SubjectView() {
@@ -84,7 +84,7 @@ public final class V9_SubjectView extends ViewLayout implements View {
     private void initSubjectDetailedComponent() {
 
         //voteservice nieje potrebny, preto null;
-        this.subjectDetailedComp = new SubjectDetailedComponent(subject, voteService);
+        this.subjectDetailedComp = new SUB_detPanContent(subject, voteService);
 
     }
 
@@ -105,7 +105,7 @@ public final class V9_SubjectView extends ViewLayout implements View {
      */
     private void initUploadLayout() {
         
-        this.uploaderLayout = new UploaderLayout<>(Subject.class, this.subject);
+        this.uploaderLayout = new DownAndUploaderBriefLayout<>(Subject.class, this.subject);
         this.addComponent(uploaderLayout);
         
     }
@@ -115,7 +115,7 @@ public final class V9_SubjectView extends ViewLayout implements View {
      */
     private void initDownloadLayout() {
         
-        this.downoaderLayout = new DownloaderLayout<>(Subject.class, this.subject);
+        this.downoaderLayout = new DownloaderBriefLayout<>(Subject.class, this.subject);
         this.addComponent(downoaderLayout);
         
     }

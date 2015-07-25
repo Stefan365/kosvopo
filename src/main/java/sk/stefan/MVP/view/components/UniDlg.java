@@ -5,10 +5,11 @@
  */
 package sk.stefan.MVP.view.components;
 
+import sk.stefan.MVP.view.components.layouts.InputFormLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import sk.stefan.MVP.view.components.vote.VotingLayout;
+import sk.stefan.MVP.view.components.layouts.InputVoteComplexLayout;
 import sk.stefan.listeners.OkCancelListener;
 
 /**
@@ -70,7 +71,7 @@ public class UniDlg extends Window implements OkCancelListener {
      * @param votingLy
      * @param caption
      */
-    public UniDlg(String caption, VotingLayout votingLy) {
+    public UniDlg(String caption, InputVoteComplexLayout votingLy) {
         
         this.setCaption(caption);
         votingLy.setWindowOkCancelListener(this);

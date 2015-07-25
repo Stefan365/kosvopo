@@ -40,10 +40,10 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
-import sk.stefan.MVP.view.components.InputFormLayout;
+import sk.stefan.MVP.view.components.layouts.InputFormLayout;
 import sk.stefan.MVP.view.components.MyTable;
 import sk.stefan.MVP.view.components.YesNoWindow;
-import sk.stefan.MVP.view.components.filtering.FilteringComponent;
+import sk.stefan.MVP.view.components.filtering.Filtering3Panel;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.listeners.ObnovFilterListener;
@@ -89,7 +89,7 @@ public final class V8_UniEditableTableView<E> extends ViewLayout implements OkCa
     private HorizontalSplitPanel splitPanel;
     private VerticalLayout leftLayout;
     private HorizontalLayout bottomLeftLayout;
-    private FilteringComponent filters;
+    private Filtering3Panel filters;
 
     //Class specific:
     private SQLContainer sqlContainer;
@@ -195,7 +195,7 @@ public final class V8_UniEditableTableView<E> extends ViewLayout implements OkCa
 
         leftLayout.addComponent(uniTable);
         bottomLeftLayout = new HorizontalLayout();
-        filters = new FilteringComponent(tn, sqlContainer);
+        filters = new Filtering3Panel(tn, sqlContainer);
 
         leftLayout.addComponents(bottomLeftLayout, filters);
 

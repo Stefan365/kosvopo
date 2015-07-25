@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import sk.stefan.MVP.view.components.PublicBodiesLayout;
+import sk.stefan.MVP.view.components.layouts.PubBodiesBriefLayout;
 
 /**
  *
@@ -46,8 +46,8 @@ public class V9s_SubjectsViewTest {
     public void testGetPbComp() {
         System.out.println("getPbComp");
         V9s_SubjectsView instance = new V9s_SubjectsView();
-        PublicBodiesLayout expResult = null;
-        PublicBodiesLayout result = instance.getPbComp();
+        PubBodiesBriefLayout expResult = null;
+        PubBodiesBriefLayout result = instance.getPbComp();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

@@ -18,9 +18,9 @@ import sk.stefan.MVP.model.service.UserService;
 import sk.stefan.MVP.model.service.VoteService;
 import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
 import sk.stefan.MVP.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.MVP.view.components.ThemeDetailedComponent;
-import sk.stefan.MVP.view.components.documents.DownloaderLayout;
-import sk.stefan.MVP.view.components.documents.UploaderLayout;
+import sk.stefan.MVP.view.components.panContents.THE_detPanContent;
+import sk.stefan.MVP.view.components.layouts.DownloaderBriefLayout;
+import sk.stefan.MVP.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.MVP.view.components.layouts.ViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
@@ -46,10 +46,10 @@ public final class V10_ThemeView extends ViewLayout implements View {
 //    private final EditEntityButtonFactory<Theme> editButtonFactory;
         
     //komponenty:
-    private ThemeDetailedComponent themeDetailedComp;
+    private THE_detPanContent themeDetailedComp;
     private Button editThemeBt;
-    private DownloaderLayout<Theme> downoaderLayout;
-    private UploaderLayout<Theme> uploaderLayout;
+    private DownloaderBriefLayout<Theme> downloaderLayout;
+    private DownAndUploaderBriefLayout<Theme> downAnUploaderLayout;
 
     //konstruktor:
     public V10_ThemeView() {
@@ -84,7 +84,7 @@ public final class V10_ThemeView extends ViewLayout implements View {
     private void initThemeDetailedComponent() {
 
         //voteservice nieje potrebny, preto null;
-        this.themeDetailedComp = new ThemeDetailedComponent(theme, null);
+        this.themeDetailedComp = new THE_detPanContent(theme, null);
     }
 
     /**
@@ -104,8 +104,8 @@ public final class V10_ThemeView extends ViewLayout implements View {
      */
     private void initUploadLayout() {
         
-        this.uploaderLayout = new UploaderLayout<>(Theme.class, this.theme);
-        this.addComponent(uploaderLayout);
+        this.downAnUploaderLayout = new DownAndUploaderBriefLayout<>(Theme.class, this.theme);
+        this.addComponent(downAnUploaderLayout);
     }
     
 
@@ -114,8 +114,8 @@ public final class V10_ThemeView extends ViewLayout implements View {
      */
     private void initDownloadLayout() {
         
-        this.downoaderLayout = new DownloaderLayout<>(Theme.class, this.theme);
-        this.addComponent(downoaderLayout);
+        this.downloaderLayout = new DownloaderBriefLayout<>(Theme.class, this.theme);
+        this.addComponent(downloaderLayout);
         
     }
 
