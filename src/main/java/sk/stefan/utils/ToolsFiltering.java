@@ -15,9 +15,9 @@ import com.vaadin.ui.Label;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.A_Hierarchy;
-import sk.stefan.MVP.model.repo.GeneralRepo;
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.mvps.model.entity.A_Hierarchy;
+import sk.stefan.mvps.model.repo.GeneralRepo;
+import sk.stefan.mvps.model.repo.UniRepo;
 
 /**
  * Abstr. trieda s pomocnymi statickymi metodami tykajucimi sa filtrovania.

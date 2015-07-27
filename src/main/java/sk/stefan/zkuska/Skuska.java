@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import sk.stefan.MVP.model.entity.Region;
-import sk.stefan.MVP.model.entity.Location;
-import sk.stefan.MVP.model.entity.Vote;
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.mvps.model.entity.Region;
+import sk.stefan.mvps.model.entity.Location;
+import sk.stefan.mvps.model.entity.Vote;
+import sk.stefan.mvps.model.repo.UniRepo;
 
 public class Skuska {
 

@@ -6,7 +6,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import javax.servlet.annotation.WebServlet;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.view.MainView;
+import sk.stefan.mvps.view.MainView;
 
 /**
  * HLAVNA TRIEDA CELEHO SYSTEMU, OD KTOREJ SA VSETKO ODVIJA.

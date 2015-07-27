@@ -1,8 +1,8 @@
 package sk.stefan.converters;
 import com.vaadin.data.util.converter.Converter;
 import java.util.Locale;
-import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
+import sk.stefan.mvps.model.service.SecurityService;
+import sk.stefan.mvps.model.serviceImpl.SecurityServiceImpl;
 /**
  * Konvertor mezi raw password - as it is type in form to byte[] / as it is stored in entitites.
  * potom som to vyriesil inak.

@@ -13,19 +13,19 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.A_Role;
-import sk.stefan.MVP.model.entity.A_User;
-import sk.stefan.MVP.model.entity.A_UserRole;
-import sk.stefan.MVP.model.entity.District;
-import sk.stefan.MVP.model.entity.Location;
-import sk.stefan.MVP.model.entity.PublicBody;
-import sk.stefan.MVP.model.entity.PublicPerson;
-import sk.stefan.MVP.model.entity.PublicRole;
-import sk.stefan.MVP.model.entity.Region;
-import sk.stefan.MVP.model.entity.Subject;
-import sk.stefan.MVP.model.entity.Tenure;
-import sk.stefan.MVP.model.entity.Theme;
-import sk.stefan.MVP.model.entity.Vote;
+import sk.stefan.mvps.model.entity.A_Role;
+import sk.stefan.mvps.model.entity.A_User;
+import sk.stefan.mvps.model.entity.A_UserRole;
+import sk.stefan.mvps.model.entity.District;
+import sk.stefan.mvps.model.entity.Location;
+import sk.stefan.mvps.model.entity.PublicBody;
+import sk.stefan.mvps.model.entity.PublicPerson;
+import sk.stefan.mvps.model.entity.PublicRole;
+import sk.stefan.mvps.model.entity.Region;
+import sk.stefan.mvps.model.entity.Subject;
+import sk.stefan.mvps.model.entity.Tenure;
+import sk.stefan.mvps.model.entity.Theme;
+import sk.stefan.mvps.model.entity.Vote;
 
 /**
  * 

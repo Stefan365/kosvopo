@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import sk.stefan.MVP.model.entity.A_Hierarchy;
-import sk.stefan.MVP.model.entity.PublicBody;
-import sk.stefan.MVP.model.entity.PublicRole;
-import sk.stefan.MVP.model.entity.Tenure;
-import sk.stefan.MVP.model.entity.Vote;
-import sk.stefan.MVP.model.repo.UniRepo;
+import sk.stefan.mvps.model.entity.A_Hierarchy;
+import sk.stefan.mvps.model.entity.PublicBody;
+import sk.stefan.mvps.model.entity.PublicRole;
+import sk.stefan.mvps.model.entity.Tenure;
+import sk.stefan.mvps.model.entity.Vote;
+import sk.stefan.mvps.model.repo.UniRepo;
 import sk.stefan.interfaces.Filterable;
 
 /**
@@ -473,7 +473,7 @@ public abstract class ToolsDao {
         String repN;
         Integer id;
         try {
-            Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.UniRepo");
+            Class<?> repoCls = Class.forName("sk.stefan.mvps.model.repo.UniRepo");
             Constructor<UniRepo<? extends Object>> repoCtor;
             repoCtor = (Constructor<UniRepo<?>>) repoCls.getConstructor(Class.class);
             List<?> listObj;

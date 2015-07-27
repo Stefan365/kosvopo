@@ -30,26 +30,26 @@ import java.util.Map;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import sk.stefan.DBconnection.DoDBconn;
-import sk.stefan.MVP.model.entity.A_Hierarchy;
-import sk.stefan.MVP.model.entity.Location;
-import sk.stefan.MVP.model.entity.A_User;
-import sk.stefan.MVP.model.entity.Document;
-import sk.stefan.MVP.model.entity.District;
-import sk.stefan.MVP.model.entity.PublicPerson;
-import sk.stefan.MVP.model.entity.PublicRole;
-import sk.stefan.MVP.model.entity.Region;
-import sk.stefan.MVP.model.entity.Tenure;
-import sk.stefan.MVP.model.entity.Vote;
-import sk.stefan.MVP.model.entity.VoteClassification;
-import sk.stefan.MVP.model.entity.VoteOfRole;
-import sk.stefan.MVP.model.repo.GeneralRepo;
-import sk.stefan.MVP.model.repo.UniRepo;
-import sk.stefan.MVP.model.service.SecurityService;
-import sk.stefan.MVP.model.service.UniTableService;
-import sk.stefan.MVP.model.serviceImpl.SecurityServiceImpl;
-import sk.stefan.MVP.model.serviceImpl.UniTableServiceImpl;
-import sk.stefan.MVP.model.serviceImpl.UserServiceImpl;
+import sk.stefan.dbConnection.DoDBconn;
+import sk.stefan.mvps.model.entity.A_Hierarchy;
+import sk.stefan.mvps.model.entity.Location;
+import sk.stefan.mvps.model.entity.A_User;
+import sk.stefan.mvps.model.entity.Document;
+import sk.stefan.mvps.model.entity.District;
+import sk.stefan.mvps.model.entity.PublicPerson;
+import sk.stefan.mvps.model.entity.PublicRole;
+import sk.stefan.mvps.model.entity.Region;
+import sk.stefan.mvps.model.entity.Tenure;
+import sk.stefan.mvps.model.entity.Vote;
+import sk.stefan.mvps.model.entity.VoteClassification;
+import sk.stefan.mvps.model.entity.VoteOfRole;
+import sk.stefan.mvps.model.repo.GeneralRepo;
+import sk.stefan.mvps.model.repo.UniRepo;
+import sk.stefan.mvps.model.service.SecurityService;
+import sk.stefan.mvps.model.service.UniTableService;
+import sk.stefan.mvps.model.serviceImpl.SecurityServiceImpl;
+import sk.stefan.mvps.model.serviceImpl.UniTableServiceImpl;
+import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.enums.NonEditableFields;
 import sk.stefan.enums.VoteAction;
 import sk.stefan.enums.VoteResult;
@@ -693,7 +693,7 @@ public class Skuska1<T> {
     @SuppressWarnings("unchecked")
     private List<? extends Object> skusReflex(Class<?> cls) {
         try {
-            Class<?> clazz = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
+            Class<?> clazz = Class.forName("sk.stefan.mvps.model.repo.dao.UniRepo");
             //Class<?> cls2 = Class.forName("sk.stefan.zaklad.Skuska");
 
             //log.info("CLAZZ: " + clazz.getCanonicalName());
@@ -720,7 +720,7 @@ public class Skuska1<T> {
         Integer id;
 
         try {
-            Class<?> repoCls = Class.forName("sk.stefan.MVP.model.repo.dao.UniRepo");
+            Class<?> repoCls = Class.forName("sk.stefan.mvps.model.repo.dao.UniRepo");
             Constructor<UniRepo<? extends Object>> repoCtor;
             repoCtor = (Constructor<UniRepo<? extends Object>>) repoCls.getConstructor(Class.class);
             List<? extends Object> listObj;
