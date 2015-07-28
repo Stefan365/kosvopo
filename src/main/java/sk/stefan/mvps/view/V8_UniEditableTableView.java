@@ -44,7 +44,7 @@ import sk.stefan.mvps.view.components.layouts.InputFormLayout;
 import sk.stefan.mvps.view.components.MyTable;
 import sk.stefan.mvps.view.components.YesNoWindow;
 import sk.stefan.mvps.view.components.filtering.Filtering3Panel;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.listeners.ObnovFilterListener;
 import sk.stefan.listeners.OkCancelListener;
@@ -61,7 +61,7 @@ import sk.stefan.utils.ToolsNames;
  * @param <E> type of UniEditableTableView
  *
  */
-public final class V8_UniEditableTableView<E> extends ViewLayout implements OkCancelListener,
+public final class V8_UniEditableTableView<E> extends MyViewLayout implements OkCancelListener,
         RefreshViewListener, ObnovFilterListener, View {
 
     private static final Logger log = Logger.getLogger(V8_UniEditableTableView.class);

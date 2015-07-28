@@ -28,7 +28,7 @@ import sk.stefan.mvps.view.components.panContents.PUR_briefPanContent;
 import sk.stefan.mvps.view.components.layouts.VORs_briefLayout;
 import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.wrappers.FunctionalEditWrapper;
@@ -38,7 +38,7 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
  *
  * @author stefan
  */
-public final class V5_PublicRoleView extends ViewLayout implements View {
+public final class V5_PublicRoleView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V5_PublicRoleView.class);

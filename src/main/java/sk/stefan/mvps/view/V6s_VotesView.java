@@ -16,7 +16,7 @@ import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.mvps.view.components.layouts.VOTs_briefLayout;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.InputNewEntityButtonFactory;
 
@@ -24,7 +24,7 @@ import sk.stefan.factories.InputNewEntityButtonFactory;
  *
  * @author stefan
  */
-public class V6s_VotesView extends ViewLayout implements View {
+public class V6s_VotesView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
     

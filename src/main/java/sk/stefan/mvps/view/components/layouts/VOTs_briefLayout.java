@@ -15,6 +15,7 @@ import java.util.Map;
 import sk.stefan.interfaces.Filterable;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.service.VoteService;
+import sk.stefan.mvps.view.components.MyBriefPanel;
 import sk.stefan.mvps.view.components.panContents.VOT_briefPanContent;
 
 /**
@@ -25,7 +26,8 @@ public class VOTs_briefLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 43565321L;
     
-    private Map<Vote, VOT_briefPanContent> votesMap;
+//    private Map<Vote, VOT_briefPanContent> votesMap;
+    private Map<Vote, MyBriefPanel> votesMap;
     
     private final TextField searchFd; 
     
@@ -61,14 +63,15 @@ public class VOTs_briefLayout extends VerticalLayout implements Filterable {
     private void initLayout(List<Vote> votes){
         
         temporaryLy.removeAllComponents();
-        
+        MyBriefPanel pan;
         VOT_briefPanContent votComp;
         this.votesMap = new HashMap<>();
         
         for (Vote vot : votes){
             votComp = new VOT_briefPanContent(vot, voteService);
-            this.votesMap.put(vot, votComp);
-            temporaryLy.addComponent(votComp);
+            pan = new MyBriefPanel(votComp);
+            this.votesMap.put(vot, pan);
+            temporaryLy.addComponent(pan);
         }
         
     }

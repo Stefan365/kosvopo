@@ -9,10 +9,11 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import sk.stefan.interfaces.Filterable;
+import sk.stefan.mvps.view.components.MyBriefPanel;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.view.components.panContents.PUR_briefPanContent;
-import sk.stefan.interfaces.Filterable;
 
 /**
  *
@@ -25,7 +26,7 @@ public class PURs_briefLayout extends VerticalLayout implements Filterable {
 //    servisy:
     private final PublicRoleService publicRoleService; 
 
-    private Map<PublicRole, PUR_briefPanContent> pubRolesBriefMap;
+    private Map<PublicRole, MyBriefPanel> pubRolesBriefMap;
 
     
     //0.konstruktor
@@ -44,14 +45,18 @@ public class PURs_briefLayout extends VerticalLayout implements Filterable {
      */
     private void initLayout(List<PublicRole> pubRoles){
         
-        PUR_briefPanContent prComp;
+        PUR_briefPanContent prPanCont;
         this.pubRolesBriefMap = new HashMap<>();
         this.removeAllComponents();
         
         for (PublicRole pr : pubRoles){
-            prComp = new PUR_briefPanContent(pr, publicRoleService);
-            this.pubRolesBriefMap.put(pr, prComp);
-            this.addComponent(prComp);
+            
+            
+            prPanCont = new PUR_briefPanContent(pr, publicRoleService);
+            MyBriefPanel pan = new MyBriefPanel(prPanCont);
+            
+            this.pubRolesBriefMap.put(pr, pan);
+            this.addComponent(pan);
         }
         
     }
@@ -72,7 +77,7 @@ public class PURs_briefLayout extends VerticalLayout implements Filterable {
         
         for (PublicRole pr : pubRolesBriefMap.keySet()){
             if( pr.getId().compareTo(aprId) == 0){
-                pubRolesBriefMap.get(pr).setIsActual(Boolean.TRUE);
+                ((PUR_briefPanContent)pubRolesBriefMap.get(pr).getPanContent()).setIsActual(Boolean.TRUE);
                 break;
             }
         }

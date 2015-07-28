@@ -6,64 +6,49 @@
 package sk.stefan.mvps.view;
 
 import com.vaadin.event.FieldEvents;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import java.util.List;
+import sk.stefan.enums.UserType;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
-import sk.stefan.factories.InputNewEntityButtonFactory;
-import sk.stefan.mvps.view.components.NavigationPanel;
 import sk.stefan.mvps.view.components.layouts.PUBs_briefLayout;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
-import sk.stefan.enums.UserType;
-import sk.stefan.ui.KosvopoUI;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 
 /**
  *
  * @author stefan
  */
-public class V3s_PublicBodiesView extends ViewLayout implements View {
+public class V3s_PublicBodiesView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
+
+//    private final Navigator nav;
     
+//    servisy:
     private final PublicBodyService publicBodyService;
+    private final UserService userService;
     
+//    KOMPONENTY:
+//    private final VerticalLayout temporaryLy;
+    private TextField searchFd; 
     private PUBs_briefLayout publicBodiesLayout;
-    
     //tlacitko na pridavanie novej verejne osoby:
     private Button addNewPublicBodyBt;
     
-    private final UserService userService;
-
-    private final Navigator nav;
-    
-    private TextField searchFd; 
-    
-    private final VerticalLayout temporaryLy;
-    
-//    private final NavigationComponent navComp;
-
     
     public V3s_PublicBodiesView (){
     
         super("verejné orgány");
-        
-        this.nav = UI.getCurrent().getNavigator();
-
-        temporaryLy = new VerticalLayout();
-        this.addComponent(temporaryLy);
-
         this.publicBodyService = new PublicBodyServiceImpl();
         this.userService = new UserServiceImpl();
 
@@ -75,12 +60,12 @@ public class V3s_PublicBodiesView extends ViewLayout implements View {
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        temporaryLy.removeAllComponents();
+        this.removeAllComponents();
 
         this.initLayout();
         this.initSearchListener();
         
-        temporaryLy.addComponents(searchFd, publicBodiesLayout);
+        this.addComponents(searchFd, publicBodiesLayout);
         
         if(isVolunteer){
             this.initNewPublicBodyButton();
@@ -94,16 +79,9 @@ public class V3s_PublicBodiesView extends ViewLayout implements View {
      */
     private void initLayout(){
         
-        this.setMargin(true);
-        this.setSpacing(true);
-        
         this.publicBodiesLayout = new PUBs_briefLayout(publicBodyService.findAll(), publicBodyService);
-//        this.districtCb = new FilterComboBox<>(District.class);
         this.searchFd = new TextField("Vyhľadávanie");
         this.initSearch();
-        
-    
-        
     }
     
     
@@ -150,8 +128,7 @@ public class V3s_PublicBodiesView extends ViewLayout implements View {
     private void initNewPublicBodyButton() {
         
         this.addNewPublicBodyBt = InputNewEntityButtonFactory.createMyInputButton(PublicBody.class);
-        
-        temporaryLy.addComponent(addNewPublicBodyBt);
+        this.addComponent(addNewPublicBodyBt);
     }
 
     @Override

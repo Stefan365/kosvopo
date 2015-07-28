@@ -30,14 +30,14 @@ import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.PURs_briefLayout;
 import sk.stefan.mvps.view.components.layouts.VOTs_briefLayout;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
  *
  * @author stefan
  */
-public final class V3_PublicBodyView extends ViewLayout implements View {
+public final class V3_PublicBodyView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);
@@ -48,14 +48,12 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
 
     //hlavna entita tohoto VIew
     private PublicBody publicBody;
-
-    private PURs_briefLayout publicRolesLayout;
-    private VOTs_briefLayout votesLayout;
-
-    //componenty pre TimeLine:
+    
+//  KOMPONENTY:
+    private PURs_briefLayout publicRolesBriefLy;
+    private VOTs_briefLayout votesBriefLy;
     private MyTimeline timeline;
-
-    //tlacitko na pridavanie novej entity:
+//    tlacitko na pridavanie novej entity:
     private Button addNewPublicRoleBt;
     private DownloaderBriefLayout<PublicBody> downoaderLayout;
     private DownAndUploaderBriefLayout<PublicBody> uploaderLayout;
@@ -83,7 +81,7 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
         this.initVoteLayout();
         this.initTimeline();
 
-        this.addComponents(publicRolesLayout, votesLayout, timeline);
+        this.addComponents(publicRolesBriefLy, votesBriefLy, timeline);
 
         if (isVolunteer) {
 
@@ -107,7 +105,7 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
 
         List<PublicRole> publicRoles = publicRoleService.getPublicRoles(prIds);
         log.info("KAROLKO2: " + publicRoles.size());
-        this.publicRolesLayout = new PURs_briefLayout(publicRoles, publicRoleService);
+        this.publicRolesBriefLy = new PURs_briefLayout(publicRoles, publicRoleService);
 
     }
 
@@ -117,7 +115,7 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
 
         List<Vote> votes = voteService.findNewVotes(votIds);
 
-        this.votesLayout = new VOTs_briefLayout(votes, voteService);
+        this.votesBriefLy = new VOTs_briefLayout(votes, voteService);
 
     }
 
@@ -137,11 +135,11 @@ public final class V3_PublicBodyView extends ViewLayout implements View {
     }
 
     public PURs_briefLayout getPublicRolesLayout() {
-        return publicRolesLayout;
+        return publicRolesBriefLy;
     }
 
     public void setPublicRolesLayout(PURs_briefLayout publicRolesLy) {
-        this.publicRolesLayout = publicRolesLy;
+        this.publicRolesBriefLy = publicRolesLy;
     }
 
     /**

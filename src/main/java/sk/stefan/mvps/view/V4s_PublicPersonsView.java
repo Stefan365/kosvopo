@@ -23,7 +23,7 @@ import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.serviceImpl.PublicPersonServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.view.components.layouts.PUPs_briefLayout;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.InputNewEntityButtonFactory;
 
@@ -31,7 +31,7 @@ import sk.stefan.factories.InputNewEntityButtonFactory;
  *
  * @author stefan
  */
-public class V4s_PublicPersonsView extends ViewLayout implements View {
+public class V4s_PublicPersonsView extends MyViewLayout implements View {
 
     
     private static final long serialVersionUID = 10903884L;

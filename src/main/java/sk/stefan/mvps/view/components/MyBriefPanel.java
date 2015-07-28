@@ -12,9 +12,11 @@ import com.vaadin.ui.Panel;
  *
  * @author stefan
  */
-public class MyBriefPanel extends Panel {
+public final class MyBriefPanel extends Panel {
     
     private static final long serialVersionUID = 1L;
+    
+    private AbstractLayout panContent;
     
     public MyBriefPanel(){
         this.setStyleName("briefPanel");
@@ -23,7 +25,16 @@ public class MyBriefPanel extends Panel {
     
     public MyBriefPanel(AbstractLayout lay){
         this.setStyleName("briefPanel");
+        this.setPanContent(lay);
         this.setContent(lay);
+    }
+
+    public AbstractLayout getPanContent() {
+        return panContent;
+    }
+
+    public void setPanContent(AbstractLayout content) {
+        this.panContent = content;
     }
     
 }

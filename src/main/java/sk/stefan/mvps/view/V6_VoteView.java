@@ -30,7 +30,7 @@ import sk.stefan.mvps.view.components.panContents.VCL_detPanContent;
 import sk.stefan.mvps.view.components.panContents.VOT_detPanContent;
 import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.factories.InputNewEntityButtonFactory;
@@ -41,7 +41,7 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
  *
  * @author stefan
  */
-public final class V6_VoteView extends ViewLayout implements View {
+public final class V6_VoteView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);

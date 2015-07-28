@@ -34,7 +34,7 @@ import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.enums.UserType;
 import sk.stefan.utils.ToolsNames;
 
@@ -42,7 +42,7 @@ import sk.stefan.utils.ToolsNames;
  *
  * @author stefan
  */
-public class V7_AdministrationView extends ViewLayout implements View {
+public class V7_AdministrationView extends MyViewLayout implements View {
 
     /**
      *

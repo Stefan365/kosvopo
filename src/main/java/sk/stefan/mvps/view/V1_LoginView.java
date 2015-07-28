@@ -21,7 +21,7 @@ import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.ui.KosvopoUI;
 import sk.stefan.utils.ToolsNames;
 
@@ -29,7 +29,7 @@ import sk.stefan.utils.ToolsNames;
  * View pre login.
  */
 @SuppressWarnings("serial")
-public class V1_LoginView extends ViewLayout implements View {
+public class V1_LoginView extends MyViewLayout implements View {
 
     private static final Logger log = Logger.getLogger(V1_LoginView.class);
 

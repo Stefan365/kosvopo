@@ -10,12 +10,12 @@ import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 
 /**
  * Vstupny View. 
  */
-public class V2_EnterView extends ViewLayout implements View {
+public class V2_EnterView extends MyViewLayout implements View {
 
     private static final Logger log = Logger.getLogger(V2_EnterView.class);
 

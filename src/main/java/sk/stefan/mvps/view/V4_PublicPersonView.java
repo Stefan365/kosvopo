@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.factories.InputNewEntityButtonFactory;
-import sk.stefan.mvp.view.components.MyBriefPanel;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.PersonClassification;
 import sk.stefan.mvps.model.entity.PublicPerson;
@@ -28,12 +27,13 @@ import sk.stefan.mvps.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
+import sk.stefan.mvps.view.components.MyBriefPanel;
 import sk.stefan.mvps.view.components.MyTimeline;
 import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.PCLs_briefLayout;
 import sk.stefan.mvps.view.components.layouts.PURs_briefLayout;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.mvps.view.components.panContents.PUP_briefPanContent;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
@@ -41,10 +41,10 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
  *
  * @author stefan
  */
-public final class V4_PublicPersonView extends ViewLayout implements View {
+public final class V4_PublicPersonView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
-    private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);
+    private static final Logger log = Logger.getLogger(V4_PublicPersonView.class);
 
     //servisy:
     private final PublicRoleService publicRoleService;
@@ -61,20 +61,16 @@ public final class V4_PublicPersonView extends ViewLayout implements View {
 
     
     
-    //komponenty pre zobrazeneie verejnych roli dane osoby (tj. jedna aktivna a 
+    //KOMPONENTY pre zobrazeneie verejnych roli dane osoby (tj. jedna aktivna a 
     //zvysok stare): 
     private PURs_briefLayout pubRolesBriefLayout;
     //layout pre zobrazenie zakladnych udajov danej osoby.
     private PUP_briefPanContent pubPersonBriefPanel;
-    
-//    private final PublicPersonService publicPersonService;
-    //componenty pre TimeLine:
     private MyTimeline timeline;
-
     private PCLs_briefLayout classPersonLayout;
     //tlacitko na pridavanie novej entity:
     private Button addNewPublicRoleBt;
-    //pre uzivatela obcan   
+    //pre uzivatela obcan:  
     private DownloaderBriefLayout<PublicPerson> downoaderLayout;
     //pre uzivatela admin a dobrovolnik
     private DownAndUploaderBriefLayout<PublicPerson> uploaderLayout;
@@ -141,6 +137,7 @@ public final class V4_PublicPersonView extends ViewLayout implements View {
 //        this.pubPersonBriefPanel = new PUP_briefPanContent(publicPerson, null);
         PUP_briefPanContent cont = new PUP_briefPanContent(publicPerson, null);
         MyBriefPanel pan = new MyBriefPanel(cont);
+//        MyBriefPanel pan = new MyBriefPanel();
         this.pubPersonBriefPanel = new PUP_briefPanContent(publicPerson, null);
 
     }

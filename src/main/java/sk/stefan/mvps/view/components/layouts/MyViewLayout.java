@@ -14,7 +14,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author stefan
  */
-public class ViewLayout extends VerticalLayout {
+public class MyViewLayout extends VerticalLayout {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class ViewLayout extends VerticalLayout {
      *
      * @param titleStr
      */
-    public ViewLayout(String titleStr) {
+    public MyViewLayout(String titleStr) {
         this.setStyleName("ViewLayout");
         this.titleLb = new ViewTitleLabel(titleStr);
         this.addComponent(titleLb);
@@ -34,7 +34,7 @@ public class ViewLayout extends VerticalLayout {
     /**
      *
      */
-    public ViewLayout() {
+    public MyViewLayout() {
         this.setStyleName("ViewLayout");
         this.titleLb = new ViewTitleLabel();
         this.addComponent(titleLb);

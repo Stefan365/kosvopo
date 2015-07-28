@@ -21,7 +21,7 @@ import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.mvps.view.components.panContents.SUB_detPanContent;
 import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
-import sk.stefan.mvps.view.components.layouts.ViewLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
@@ -29,7 +29,7 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
  *
  * @author stefan
  */
-public final class V9_SubjectView extends ViewLayout implements View {
+public final class V9_SubjectView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V9_SubjectView.class);
