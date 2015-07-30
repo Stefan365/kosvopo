@@ -10,11 +10,12 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 import org.apache.log4j.Logger;
+import sk.stefan.enums.UserType;
+import sk.stefan.factories.EditEntityButtonFactory;
+import sk.stefan.mvp.view.components.panels.PUR_detPanel;
 import sk.stefan.mvps.model.entity.A_User;
-import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.entity.VoteOfRole;
 import sk.stefan.mvps.model.service.PublicRoleService;
@@ -24,13 +25,11 @@ import sk.stefan.mvps.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.mvps.view.components.MyTimeline;
-import sk.stefan.mvps.view.components.panContents.PUR_briefPanContent;
-import sk.stefan.mvps.view.components.layouts.VORs_briefLayout;
-import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
+import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
-import sk.stefan.enums.UserType;
-import sk.stefan.factories.EditEntityButtonFactory;
+import sk.stefan.mvps.view.components.layouts.VORs_briefLayout;
+import sk.stefan.mvps.view.components.panContents.PUR_detPanContent;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
@@ -51,14 +50,12 @@ public final class V5_PublicRoleView extends MyViewLayout implements View {
     private final VoteService voteService;
     private final UserService userService;
     
-//    private final EditEntityButtonFactory<PublicRole> editButtonFactory;
-    
-    
-    //componenty pre TimeLine:
-    private MyTimeline timeline;
+    //KOMPONENTY:
     //layout pre zobrazenie zakladnych udajov danej osoby.
-    private PUR_briefPanContent publicRoleComponent;
-    private VORs_briefLayout votesOfRoleLayout;
+    private PUR_detPanel publicRoleDetPanel;
+    private VORs_briefLayout votesOfRoleBriefLy;
+    private MyTimeline timeline;
+
     //pre uzivatela obcan   
     private DownloaderBriefLayout<PublicRole> downoaderLayout;
     //pre uzivatela admin a dobrovolnik
@@ -87,7 +84,7 @@ public final class V5_PublicRoleView extends MyViewLayout implements View {
         this.initVotesOfRoleLayout();
         this.initTimeline();
 
-        this.addComponents(publicRoleComponent, votesOfRoleLayout, timeline);
+        this.addComponents(publicRoleDetPanel, votesOfRoleBriefLy, timeline);
 
         if (isVolunteer) {
             this.initEditPublicRoleButton();
@@ -110,7 +107,8 @@ public final class V5_PublicRoleView extends MyViewLayout implements View {
      */
     private void initPublicPersonComponent() {
 
-        this.publicRoleComponent = new PUR_briefPanContent(publicRole, publicRoleService);
+        PUR_detPanContent purComp = new PUR_detPanContent(publicRole, publicRoleService);
+        this.publicRoleDetPanel = new PUR_detPanel(purComp);
 
     }
 
@@ -121,7 +119,7 @@ public final class V5_PublicRoleView extends MyViewLayout implements View {
 
         List<Integer> vorIds = voteService.findVoteOfRoleIdsByPubRoleId(publicRole.getId());
         List<VoteOfRole> votesOfRole = voteService.findNewVotesOfRole(vorIds);
-        this.votesOfRoleLayout = new VORs_briefLayout(votesOfRole, voteService);
+        this.votesOfRoleBriefLy = new VORs_briefLayout(votesOfRole, voteService);
 
     }
 

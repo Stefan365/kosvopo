@@ -15,7 +15,7 @@ import java.util.Map;
 import sk.stefan.interfaces.Filterable;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.service.VoteService;
-import sk.stefan.mvps.view.components.MyBriefPanel;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 import sk.stefan.mvps.view.components.panContents.VOT_briefPanContent;
 
 /**

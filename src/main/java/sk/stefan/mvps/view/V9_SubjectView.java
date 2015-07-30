@@ -10,19 +10,17 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
+import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.Subject;
-import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.service.VoteService;
-import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.mvps.view.components.panContents.SUB_detPanContent;
-import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
+import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
-import sk.stefan.factories.EditEntityButtonFactory;
+import sk.stefan.mvps.view.components.panContents.SUB_detPanContent;
+import sk.stefan.mvps.view.components.panels.MyDetailedPanel;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
@@ -34,27 +32,24 @@ public final class V9_SubjectView extends MyViewLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V9_SubjectView.class);
 
-        //servisy:
+//    servisy:
     private final VoteService voteService;
-    private final UserService userService;
-
-    //hlavna entita tohoto VIew
-    private Subject subject;
     
-    //komponenty
-    private SUB_detPanContent subjectDetailedComp;
+//    komponenty:
+    private MyDetailedPanel<SUB_detPanContent> subjectDetPanel;
     private Button editSubjectBt;
     private DownloaderBriefLayout<Subject> downoaderLayout;
     private DownAndUploaderBriefLayout<Subject> uploaderLayout;
 
+//    hlavna entita tohoto VIew:
+    private Subject subject;
+    
+    
     //konstruktor:
     public V9_SubjectView() {
 
         super("Predmet Hlasovania");
         this.voteService = new VoteServiceImpl();
-        this.userService = new UserServiceImpl();
-        
-
         
     }
 
@@ -64,7 +59,7 @@ public final class V9_SubjectView extends MyViewLayout implements View {
 
         this.removeAllComponents();
         this.initSubjectDetailedComponent();
-        this.addComponents(subjectDetailedComp);
+        this.addComponents(subjectDetPanel);
         
         if(isVolunteer){
             this.initEditSubjectButton();
@@ -83,8 +78,8 @@ public final class V9_SubjectView extends MyViewLayout implements View {
      */
     private void initSubjectDetailedComponent() {
 
-        //voteservice nieje potrebny, preto null;
-        this.subjectDetailedComp = new SUB_detPanContent(subject, voteService);
+        SUB_detPanContent subCont = new SUB_detPanContent(subject, voteService);
+        this.subjectDetPanel = new MyDetailedPanel<>(subCont);
 
     }
 
@@ -120,6 +115,8 @@ public final class V9_SubjectView extends MyViewLayout implements View {
         
     }
 
+    
+    
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
@@ -139,6 +136,5 @@ public final class V9_SubjectView extends MyViewLayout implements View {
         }
 
     }
-
-
+    
 }

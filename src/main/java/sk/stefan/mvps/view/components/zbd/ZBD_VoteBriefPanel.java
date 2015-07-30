@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.mvps.view.components.panels;
+package sk.stefan.mvps.view.components.zbd;
 
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.navigator.Navigator;

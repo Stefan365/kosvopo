@@ -5,13 +5,15 @@
  */
 package sk.stefan.mvps.view;
 
-import sk.stefan.mvps.view.V3_PublicBodyView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import org.apache.log4j.Logger;
+import sk.stefan.enums.UserType;
+import sk.stefan.factories.EditEntityButtonFactory;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.entity.Subject;
@@ -24,16 +26,15 @@ import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
+import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
+import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.mvps.view.components.panContents.SUB_briefPanContent;
 import sk.stefan.mvps.view.components.panContents.THE_briefPanContent;
 import sk.stefan.mvps.view.components.panContents.VCL_detPanContent;
 import sk.stefan.mvps.view.components.panContents.VOT_detPanContent;
-import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
-import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
-import sk.stefan.mvps.view.components.layouts.MyViewLayout;
-import sk.stefan.enums.UserType;
-import sk.stefan.factories.EditEntityButtonFactory;
-import sk.stefan.factories.InputNewEntityButtonFactory;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
+import sk.stefan.mvps.view.components.panels.MyDetailedPanel;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
 
@@ -44,24 +45,25 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
 public final class V6_VoteView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
-    private static final Logger log = Logger.getLogger(V3_PublicBodyView.class);
+    private static final Logger log = Logger.getLogger(V6_VoteView.class);
 
-    //hlavna entita tohoto VIew
+//    hlavna entita tohoto VIew
     private Vote vote;
+//    pomocne entity tohoto view:
     private Subject subject;
     private Theme theme;
     private VoteClassification voteClassification;
     
-    //servisy:
+//    servisy:
     private final VoteService voteService;
     private final UserService userService;
     private final ClassificationService classificationService;
 
-    //komponnety:
-    private VOT_detPanContent voteDetailedPanel;
-    private THE_briefPanContent themeComponent;
-    private SUB_briefPanContent subjectComponent;
-    private VCL_detPanContent voteClassComponent;
+//    komponnety:
+    private MyDetailedPanel<VOT_detPanContent> voteDetailedPanel;
+    private MyBriefPanel<THE_briefPanContent> themeBriefPanel;
+    private MyBriefPanel<SUB_briefPanContent> subjectBriefPanel;
+    private MyDetailedPanel<VCL_detPanContent> voteClassDetPanel;
     private Button editVoteBt;
     private DownloaderBriefLayout<Vote> downoaderLayout;
     private DownAndUploaderBriefLayout<Vote> uploaderLayout;
@@ -89,8 +91,8 @@ public final class V6_VoteView extends MyViewLayout implements View {
         initThemeComponent();
         this.initVoteClassComponent();
         
-        this.addComponents(voteDetailedPanel, subjectComponent, themeComponent, 
-                voteClassComponent);
+        this.addComponents(voteDetailedPanel, subjectBriefPanel, themeBriefPanel, 
+                voteClassDetPanel);
 
         if (isVolunteer) {
 
@@ -115,7 +117,8 @@ public final class V6_VoteView extends MyViewLayout implements View {
 
     private void initVoteDetailedPanel() {
         
-        this.voteDetailedPanel = new VOT_detPanContent(vote, voteService);
+        VOT_detPanContent votCont = new VOT_detPanContent(vote, voteService);
+        this.voteDetailedPanel = new MyDetailedPanel<>(votCont);
         
     }
 
@@ -123,15 +126,17 @@ public final class V6_VoteView extends MyViewLayout implements View {
      */
     private void initSubjectComponent() {
 
-        this.subjectComponent = new SUB_briefPanContent(subject, voteService);
+        SUB_briefPanContent subCont = new SUB_briefPanContent(subject, voteService);
+        this.subjectBriefPanel = new MyBriefPanel<>(subCont);
 
     }
     
     /**
      */
     private void initThemeComponent() {
-
-        this.themeComponent = new THE_briefPanContent(theme, voteService);
+        
+        THE_briefPanContent theCont = new THE_briefPanContent(theme, voteService);
+        this.themeBriefPanel = new MyBriefPanel<>(theCont);
 
     }
 
@@ -139,7 +144,8 @@ public final class V6_VoteView extends MyViewLayout implements View {
      */
     private void initVoteClassComponent() {
         
-        this.voteClassComponent = new VCL_detPanContent(voteClassification, classificationService);
+        VCL_detPanContent vclCont = new VCL_detPanContent(voteClassification, classificationService);
+        this.voteClassDetPanel = new MyDetailedPanel<>(vclCont);
 
     }
 

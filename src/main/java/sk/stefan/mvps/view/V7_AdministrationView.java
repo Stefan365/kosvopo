@@ -15,6 +15,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
+import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.mvps.model.entity.District;
@@ -35,7 +36,6 @@ import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
-import sk.stefan.enums.UserType;
 import sk.stefan.utils.ToolsNames;
 
 /**
@@ -44,27 +44,24 @@ import sk.stefan.utils.ToolsNames;
  */
 public class V7_AdministrationView extends MyViewLayout implements View {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 8811699550804144740L;
 
-    private A_User user;
-
-    private Button auserBt, okresBt, krajBt, locBt, pClassBt, pubBodyBt, pubRoleBt,
-            subjectBt, tenureBt, themeBt, auserRoleBt, voteBt, vClassBt, vorBt, pubPersonBt;
-
+//    servisy:
     private final SecurityService securityService;
     private final UserService userService;
 
+//    komponenty:
     private final GridLayout mainLayout = new GridLayout(2, 3);
-
+//    tlacitka na editaciu jednotlivych entit:
+    private Button auserBt, okresBt, krajBt, locBt, pClassBt, pubBodyBt, pubRoleBt,
+            subjectBt, tenureBt, themeBt, voteBt, vClassBt, vorBt, pubPersonBt;
+//    layouty na rozlozenie tychto tlacitiek do skupin:
     private final VerticalLayout hodnoteniaLy = new VerticalLayout();
     private final VerticalLayout hlasovanieLy = new VerticalLayout();
     private final VerticalLayout miestoLy = new VerticalLayout();
     private final VerticalLayout politikaLy = new VerticalLayout();
     private final VerticalLayout adminLy = new VerticalLayout();
-
+//    nazvy jednotlivych skupin:
     private final Label hodLb = new Label("Hodnotenia");
     private final Label hlasLb = new Label("Hlasovanie");
     private final Label miestLb = new Label("Miesto");
@@ -100,9 +97,9 @@ public class V7_AdministrationView extends MyViewLayout implements View {
             }
         });
 
-        auserRoleBt = new Button(A_UserRole.PRES_NAME, (Button.ClickEvent event) -> {
-            nav.navigateTo(ToolsNames.decapit(A_UserRole.TN));
-        });
+//        auserRoleBt = new Button(A_UserRole.PRES_NAME, (Button.ClickEvent event) -> {
+//            nav.navigateTo(ToolsNames.decapit(A_UserRole.TN));
+//        });
 
         okresBt = new Button(District.PRES_NAME, (Button.ClickEvent event) -> {
             nav.navigateTo(ToolsNames.decapit(District.TN));
@@ -229,16 +226,12 @@ public class V7_AdministrationView extends MyViewLayout implements View {
         adminLy.setSpacing(true);
         adminLy.addComponent(adminLb);
         adminLy.addComponent(auserBt);
-//            adminLy.addComponent(auserRoleBt);
-//        }
-    }
-
-    private void setUserValue(A_User usr) {
-
-        this.user = usr;
+//        adminLy.addComponent(auserRoleBt);
 
     }
 
+
+    
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
@@ -257,7 +250,6 @@ public class V7_AdministrationView extends MyViewLayout implements View {
                 default:
             }
 
-            setUserValue(usr);
             initAllBasic(isAdmin);
 
         } else {

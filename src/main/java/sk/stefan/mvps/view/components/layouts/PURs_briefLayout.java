@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import sk.stefan.interfaces.Filterable;
-import sk.stefan.mvps.view.components.MyBriefPanel;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.view.components.panContents.PUR_briefPanContent;

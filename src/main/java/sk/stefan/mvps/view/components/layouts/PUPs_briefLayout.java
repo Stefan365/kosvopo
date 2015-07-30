@@ -9,10 +9,11 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import sk.stefan.interfaces.Filterable;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.service.PublicPersonService;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 import sk.stefan.mvps.view.components.panContents.PUP_briefPanContent;
-import sk.stefan.interfaces.Filterable;
 
 /**
  *
@@ -22,9 +23,11 @@ public class PUPs_briefLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 43565321L;
     
-    private Map<PublicPerson, PUP_briefPanContent> publicPersonsMap;
-
+//    servisy:
     private final PublicPersonService publicPersonService; 
+    
+    private Map<PublicPerson, MyBriefPanel> publicPersonsMap;
+
     
     
     //0.konstruktor
@@ -45,13 +48,16 @@ public class PUPs_briefLayout extends VerticalLayout implements Filterable {
     private void initLayout(List<PublicPerson> pubPersons){
         
         PUP_briefPanContent ppComp;
+        MyBriefPanel pan;
         this.publicPersonsMap = new HashMap<>();
         this.removeAllComponents();
         
         for (PublicPerson pp : pubPersons){
             ppComp = new PUP_briefPanContent(pp, publicPersonService);
-            this.publicPersonsMap.put(pp, ppComp);
-            this.addComponent(ppComp);
+            pan = new MyBriefPanel(ppComp);
+            
+            this.publicPersonsMap.put(pp, pan);
+            this.addComponent(pan);
         }
         
     }

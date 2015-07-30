@@ -27,7 +27,7 @@ import sk.stefan.mvps.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.mvps.view.components.MyBriefPanel;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 import sk.stefan.mvps.view.components.MyTimeline;
 import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;

@@ -6,20 +6,32 @@
 package sk.stefan.mvps.view.components.panels;
 
 import com.vaadin.ui.AbstractLayout;
-import sk.stefan.mvps.view.components.MyDetailedPanel;
+import com.vaadin.ui.Panel;
 
 /**
  *
  * @author stefan
+ * @param <E>
  */
-public class PUP_detPanel  extends MyDetailedPanel {
-    
+public final class MyBriefPanel<E extends AbstractLayout> extends Panel {
+
     private static final long serialVersionUID = 1L;
- 
-    public PUP_detPanel(AbstractLayout lay){
+    
+    private final E panContent;
+    
+    public MyBriefPanel(E lay){
         
-        this.setStyleName("PUP_detPanel");
+        this.setStyleName("briefPanel");
+        this.panContent = lay;
         this.setContent(lay);
     }
+
+    
+    
+    
+    public AbstractLayout getPanContent() {
+        return panContent;
+    }
+
     
 }

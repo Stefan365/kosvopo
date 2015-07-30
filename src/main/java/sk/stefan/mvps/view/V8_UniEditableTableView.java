@@ -67,45 +67,43 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
     private static final Logger log = Logger.getLogger(V8_UniEditableTableView.class);
     private static final long serialVersionUID = 1L;
 
+    
+//    servisy:
     private final SecurityService securityService;
     private final UniTableService<E> uniTableService;
     private final UserService userService;
 
-    private final Boolean isForAdminOnly;
-
-    /* User interface components are stored in session. */
-//    private Class<E> clsE;
-    private Object itemId;
-    private Item item;
+//    komponenty:
+    private final InputFormLayout<E> inputForm;
+    private VerticalLayout linksVl;
     private MyTable uniTable;// = new MyTable();
     private TextField searchField;// = new TextField();
     private Button addNewItemBt;// = new Button("Nová podložka");
     private Button removeItemBt;// = new Button("Odstráň túto podložku");
     private FormLayout editorLayout;// = new FormLayout();
-    private final FieldGroup fg = new FieldGroup();
     private Button backBt;
-
-    //split panel:
+//    split panel:
     private HorizontalSplitPanel splitPanel;
     private VerticalLayout leftLayout;
     private HorizontalLayout bottomLeftLayout;
     private Filtering3Panel filters;
-
-    //Class specific:
-    private SQLContainer sqlContainer;
-    private final String tn;
-//    private List<String> visibleFn;
+    
+    
+//    pomocne premenny pre zobrazenie celeho vzhladu view:  
     private List<String> nonEditFn;
     private String[] visibleColDepictNames;
     private String[] visibleColDbNames;
-
-    private final InputFormLayout<E> inputForm;
-    private VerticalLayout linksVl;
-
     private final Filter basicFilter;
     private boolean isAdmin;
     private Filter userOnlyFilter;
+    private Object itemId;
+    private Item item;
+    private final Boolean isForAdminOnly;
+    private final FieldGroup fg = new FieldGroup();
+    private SQLContainer sqlContainer;
+    private final String tn;
 
+    
     //0.Konstruktor
     /**
      *

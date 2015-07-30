@@ -23,6 +23,7 @@ import sk.stefan.mvps.view.components.panels.DownloaderBriefPanel;
  */
 public class DownloaderBriefLayout<E> extends VerticalLayout {
 
+//    server RPC interface is not used - check
     private static final Logger log = Logger.getLogger(DownloaderBriefLayout.class);
 
     private static final long serialVersionUID = 1L;

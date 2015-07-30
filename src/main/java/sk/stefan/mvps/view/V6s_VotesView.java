@@ -83,10 +83,11 @@ public class V6s_VotesView extends MyViewLayout implements View {
     private void initNewPublicBodyButton() {
         
         this.addVoteBt = InputNewEntityButtonFactory.createMyInputButton(Vote.class);
-        
         this.addComponent(addVoteBt);
     }
 
+    
+    
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         
