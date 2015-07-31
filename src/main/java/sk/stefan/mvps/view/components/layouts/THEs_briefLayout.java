@@ -9,10 +9,11 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import sk.stefan.interfaces.Filterable;
 import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.view.components.panContents.THE_briefPanContent;
-import sk.stefan.interfaces.Filterable;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 
 /**
  *
@@ -22,9 +23,15 @@ public class THEs_briefLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 43565321L;
     
-    private Map<Theme, THE_briefPanContent> themesMap;
-
+//    servisy:
     private final VoteService voteService; 
+    
+    
+//    komponenty:
+    private Map<Theme, MyBriefPanel<THE_briefPanContent>> themesMap;
+
+    
+    
     
     //0.konstruktor
     public THEs_briefLayout(List<Theme> themes, VoteService vots){
@@ -42,14 +49,17 @@ public class THEs_briefLayout extends VerticalLayout implements Filterable {
      */
     private void initLayout(List<Theme> themes){
         
-        THE_briefPanContent themeComp;
+        THE_briefPanContent theCont;
+        MyBriefPanel<THE_briefPanContent> pan;
+        
         this.themesMap = new HashMap<>();
         this.removeAllComponents();
         
         for (Theme th : themes){
-            themeComp = new THE_briefPanContent(th, voteService);
-            this.themesMap.put(th, themeComp);
-            this.addComponent(themeComp);
+            theCont = new THE_briefPanContent(th, voteService);
+            pan = new MyBriefPanel<>(theCont);
+            this.themesMap.put(th, pan);
+            this.addComponent(pan);
         }
         
     }

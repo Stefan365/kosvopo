@@ -13,6 +13,7 @@ import sk.stefan.interfaces.Filterable;
 import sk.stefan.mvps.model.entity.PersonClassification;
 import sk.stefan.mvps.model.service.ClassificationService;
 import sk.stefan.mvps.view.components.panContents.PCL_briefPanContent;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 
 /**
  *
@@ -22,9 +23,14 @@ public class PCLs_briefLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 243432565321L;
     
-    private Map<PersonClassification, PCL_briefPanContent> personClassMap;
-
+//    servisy:
     private final ClassificationService classificationService; 
+    
+//    hlavny zoznam:
+    private Map<PersonClassification, MyBriefPanel<PCL_briefPanContent>> personClassMap;
+
+
+    
     
     //0.konstruktor
     public PCLs_briefLayout(List<PersonClassification> personClass, ClassificationService pcls){
@@ -42,13 +48,15 @@ public class PCLs_briefLayout extends VerticalLayout implements Filterable {
 
         this.removeAllComponents();
         
-        PCL_briefPanContent pclComp;
+        PCL_briefPanContent pclCont;
+        MyBriefPanel<PCL_briefPanContent> pan;
         this.personClassMap = new HashMap<>();
         
         for (PersonClassification pcl : personClassS){
-            pclComp = new PCL_briefPanContent(pcl, classificationService);
-            this.personClassMap.put(pcl, pclComp);
-            this.addComponent(pclComp);
+            pclCont = new PCL_briefPanContent(pcl, classificationService);
+            pan = new MyBriefPanel<>(pclCont);
+            this.personClassMap.put(pcl, pan);
+            this.addComponent(pan);
         }
         
     }

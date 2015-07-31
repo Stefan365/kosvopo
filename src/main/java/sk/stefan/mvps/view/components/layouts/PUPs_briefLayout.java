@@ -12,8 +12,8 @@ import java.util.Map;
 import sk.stefan.interfaces.Filterable;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.service.PublicPersonService;
-import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 import sk.stefan.mvps.view.components.panContents.PUP_briefPanContent;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 
 /**
  *
@@ -26,7 +26,7 @@ public class PUPs_briefLayout extends VerticalLayout implements Filterable {
 //    servisy:
     private final PublicPersonService publicPersonService; 
     
-    private Map<PublicPerson, MyBriefPanel> publicPersonsMap;
+    private Map<PublicPerson, MyBriefPanel<PUP_briefPanContent>> publicPersonsMap;
 
     
     
@@ -47,14 +47,14 @@ public class PUPs_briefLayout extends VerticalLayout implements Filterable {
      */
     private void initLayout(List<PublicPerson> pubPersons){
         
-        PUP_briefPanContent ppComp;
-        MyBriefPanel pan;
+        PUP_briefPanContent ppCont;
+        MyBriefPanel<PUP_briefPanContent> pan;
         this.publicPersonsMap = new HashMap<>();
         this.removeAllComponents();
         
         for (PublicPerson pp : pubPersons){
-            ppComp = new PUP_briefPanContent(pp, publicPersonService);
-            pan = new MyBriefPanel(ppComp);
+            ppCont = new PUP_briefPanContent(pp, publicPersonService);
+            pan = new MyBriefPanel<>(ppCont);
             
             this.publicPersonsMap.put(pp, pan);
             this.addComponent(pan);

@@ -20,6 +20,8 @@ public class MyDetailedPanel<E extends AbstractLayout> extends Panel {
 
     private E panContent;
 
+//    this is here just due to entities detailed panels - but this idea probably won't be 
+//    developed:
     public MyDetailedPanel() {
         this.setStyleName("detailedPanel");
     }

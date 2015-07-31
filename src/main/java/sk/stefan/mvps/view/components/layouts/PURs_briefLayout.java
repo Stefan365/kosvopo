@@ -10,10 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import sk.stefan.interfaces.Filterable;
-import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.view.components.panContents.PUR_briefPanContent;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 
 /**
  *
@@ -26,10 +26,13 @@ public class PURs_briefLayout extends VerticalLayout implements Filterable {
 //    servisy:
     private final PublicRoleService publicRoleService; 
 
-    private Map<PublicRole, MyBriefPanel> pubRolesBriefMap;
+//    komponenty:
+    private Map<PublicRole, MyBriefPanel<PUR_briefPanContent>> pubRolesBriefMap;
 
     
-    //0.konstruktor
+    
+    
+//    0.konstruktor
     public PURs_briefLayout(List<PublicRole> pubRoles, PublicRoleService prs){
         
         this.publicRoleService = prs;
@@ -45,15 +48,15 @@ public class PURs_briefLayout extends VerticalLayout implements Filterable {
      */
     private void initLayout(List<PublicRole> pubRoles){
         
-        PUR_briefPanContent prPanCont;
+        PUR_briefPanContent purCont;
+        MyBriefPanel<PUR_briefPanContent> pan;
         this.pubRolesBriefMap = new HashMap<>();
         this.removeAllComponents();
         
         for (PublicRole pr : pubRoles){
             
-            
-            prPanCont = new PUR_briefPanContent(pr, publicRoleService);
-            MyBriefPanel pan = new MyBriefPanel(prPanCont);
+            purCont = new PUR_briefPanContent(pr, publicRoleService);
+            pan = new MyBriefPanel<>(purCont);
             
             this.pubRolesBriefMap.put(pr, pan);
             this.addComponent(pan);

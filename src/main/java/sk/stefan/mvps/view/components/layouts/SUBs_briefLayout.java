@@ -9,10 +9,11 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import sk.stefan.interfaces.Filterable;
 import sk.stefan.mvps.model.entity.Subject;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.view.components.panContents.SUB_briefPanContent;
-import sk.stefan.interfaces.Filterable;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 
 /**
  *
@@ -21,10 +22,14 @@ import sk.stefan.interfaces.Filterable;
 public class SUBs_briefLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 4233421L;
-    
-    private Map<Subject, SUB_briefPanContent> subjectsMap;
-
+   
+//    servisy:
     private final VoteService voteService; 
+    
+//    komponenty:
+    private Map<Subject, MyBriefPanel<SUB_briefPanContent>> subjectsMap;
+
+    
     
     //0.konstruktor
     public SUBs_briefLayout(List<Subject> subjects, VoteService vots){
@@ -35,21 +40,22 @@ public class SUBs_briefLayout extends VerticalLayout implements Filterable {
         this.setSpacing(true);
         this.setMargin(true);
 
-        
     } 
     
     /**
      */
     private void initLayout(List<Subject> subjects){
         
-        SUB_briefPanContent subComp;
+        SUB_briefPanContent subCont;
+        MyBriefPanel<SUB_briefPanContent> pan;
         this.subjectsMap = new HashMap<>();
         this.removeAllComponents();
         
         for (Subject sub : subjects){
-            subComp = new SUB_briefPanContent(sub, voteService);
-            this.subjectsMap.put(sub, subComp);
-            this.addComponent(subComp);
+            subCont = new SUB_briefPanContent(sub, voteService);
+            pan = new MyBriefPanel<>(subCont);
+            this.subjectsMap.put(sub, pan);
+            this.addComponent(pan);
         }
         
     }

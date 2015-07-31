@@ -21,8 +21,8 @@ import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.mvps.view.components.layouts.THEs_briefLayout;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
+import sk.stefan.mvps.view.components.layouts.THEs_briefLayout;
 
 /**
  * View zahrnujuce vsetky tematicke okruhy.
@@ -33,15 +33,17 @@ public class V10s_ThemesView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
     
-    //servisy
+//    servisy:
     private final VoteService voteService;
     private final UserService userService;
 
-    //komponenty
+//    komponenty:
+    private TextField searchFd; 
     private THEs_briefLayout themesLayout;
     //tlacitko na pridavanie novej verejne osoby:
     private Button addNewThemeBt;
-    private TextField searchFd; 
+    
+    
     
     
     public V10s_ThemesView (){

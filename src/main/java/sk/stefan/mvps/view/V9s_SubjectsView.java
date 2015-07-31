@@ -6,26 +6,24 @@
 package sk.stefan.mvps.view;
 
 import com.vaadin.event.FieldEvents;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
+import sk.stefan.enums.UserType;
+import sk.stefan.factories.InputNewEntityButtonFactory;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
-import sk.stefan.mvps.view.components.layouts.PUBs_briefLayout;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
-import sk.stefan.enums.UserType;
-import sk.stefan.factories.InputNewEntityButtonFactory;
+import sk.stefan.mvps.view.components.layouts.PUBs_briefLayout;
 
 /**
  *
@@ -35,53 +33,42 @@ public class V9s_SubjectsView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
     
+    
+//    servisy:
     private final PublicBodyService publicBodyService;
-    
-    private PUBs_briefLayout publicBodiesLayout;
-    
-    //tlacitko na pridavanie novej verejne osoby:
-    private Button addNewPublicBodyBt;
-    
     private final UserService userService;
 
-    private final Navigator nav;
-    
+//    komponenty:
     private TextField searchFd; 
+    private PUBs_briefLayout publicBodiesLayout;
+//    tlacitko na pridavanie novej verejne osoby:
+    private Button addNewPublicBodyBt;
     
-    private VerticalLayout temporaryLy;
-    
-//    private final NavigationComponent navComp;
 
+    
+    
     
     public V9s_SubjectsView (){
 
         super("predmety hlasovania");
         
-        this.nav = UI.getCurrent().getNavigator();
-
-//        navComp =  ((KosvopoUI)UI.getCurrent()).getNavComp();
-//        this.addComponent(navComp);
-        temporaryLy = new VerticalLayout();
-        
-        this.addComponent(temporaryLy);
-
         this.publicBodyService = new PublicBodyServiceImpl();
         this.userService = new UserServiceImpl();
 
     }
     
-       /**
+    /**
      * 
      * @param isVolunteer
      */
     private void initAllBasic(Boolean isVolunteer) {
 
-        temporaryLy.removeAllComponents();
+        this.removeAllComponents();
 
         this.initLayout();
         this.initSearchListener();
         
-        temporaryLy.addComponents(searchFd, publicBodiesLayout);
+        this.addComponents(searchFd, publicBodiesLayout);
         
         if(isVolunteer){
             this.initNewPublicBodyButton();
@@ -99,7 +86,6 @@ public class V9s_SubjectsView extends MyViewLayout implements View {
         this.setSpacing(true);
         
         this.publicBodiesLayout = new PUBs_briefLayout(publicBodyService.findAll(), publicBodyService);
-//        this.districtCb = new FilterComboBox<>(District.class);
         this.searchFd = new TextField("Vyhľadávanie");
         this.initSearch();
         
@@ -150,7 +136,7 @@ public class V9s_SubjectsView extends MyViewLayout implements View {
         
         this.addNewPublicBodyBt = InputNewEntityButtonFactory.createMyInputButton(PublicBody.class);
         
-        temporaryLy.addComponent(addNewPublicBodyBt);
+        this.addComponent(addNewPublicBodyBt);
     }
 
     @Override

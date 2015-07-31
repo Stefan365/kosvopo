@@ -33,6 +33,11 @@ import java.util.List;
 import java.util.Properties;
 import org.apache.log4j.Logger;
 import sk.stefan.dbConnection.DoDBconn;
+import sk.stefan.enums.UserType;
+import sk.stefan.listeners.ObnovFilterListener;
+import sk.stefan.listeners.OkCancelListener;
+import sk.stefan.listeners.RefreshViewListener;
+import sk.stefan.listeners.YesNoWindowListener;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UniTableService;
@@ -40,16 +45,12 @@ import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
-import sk.stefan.mvps.view.components.layouts.InputFormLayout;
 import sk.stefan.mvps.view.components.MyTable;
 import sk.stefan.mvps.view.components.YesNoWindow;
 import sk.stefan.mvps.view.components.filtering.Filtering3Panel;
+import sk.stefan.mvps.view.components.layouts.InputFormLayout;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
-import sk.stefan.enums.UserType;
-import sk.stefan.listeners.ObnovFilterListener;
-import sk.stefan.listeners.OkCancelListener;
-import sk.stefan.listeners.RefreshViewListener;
-import sk.stefan.listeners.YesNoWindowListener;
+import sk.stefan.mvps.view.components.panels.MyInputFormPanel;
 import sk.stefan.utils.ToolsDao;
 import sk.stefan.utils.ToolsNames;
 
@@ -65,7 +66,7 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
         RefreshViewListener, ObnovFilterListener, View {
 
     private static final Logger log = Logger.getLogger(V8_UniEditableTableView.class);
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 107933L;
 
     
 //    servisy:
@@ -75,6 +76,7 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
 
 //    komponenty:
     private final InputFormLayout<E> inputForm;
+    private MyInputFormPanel<E> inputFormPanel;
     private VerticalLayout linksVl;
     private MyTable uniTable;// = new MyTable();
     private TextField searchField;// = new TextField();
@@ -82,7 +84,6 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
     private Button removeItemBt;// = new Button("Odstráň túto podložku");
     private FormLayout editorLayout;// = new FormLayout();
     private Button backBt;
-//    split panel:
     private HorizontalSplitPanel splitPanel;
     private VerticalLayout leftLayout;
     private HorizontalLayout bottomLeftLayout;
@@ -214,15 +215,15 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
         
     }
 
+    
     //2.
     private void initEditor() {
 
-        //editorLayout.addComponent(removeItemButton);
         removeItemBt.setEnabled(true);
-//        log.info("INITEDIOTR1:" + (editorLayout == null));
-//        log.info("INITEDIOTR2:" + (inputForm == null));
+        
         if (inputForm != null) {
-            editorLayout.addComponent(inputForm);
+            inputFormPanel = new MyInputFormPanel<>(inputForm);
+            editorLayout.addComponent(inputFormPanel);
         }
 
         fg.setBuffered(false);

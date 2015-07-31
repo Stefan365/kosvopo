@@ -5,8 +5,8 @@
  */
 package sk.stefan.mvps.view.components.layouts;
 
-import sk.stefan.mvps.view.components.ViewTitleLabel;
 import com.vaadin.ui.VerticalLayout;
+import sk.stefan.mvps.view.components.ViewTitleLabel;
 
 /**
  * This Layout is the base of each View. It need to be different from plain
@@ -25,16 +25,20 @@ public class MyViewLayout extends VerticalLayout {
      * @param titleStr
      */
     public MyViewLayout(String titleStr) {
+        
         this.setStyleName("ViewLayout");
         this.titleLb = new ViewTitleLabel(titleStr);
         this.addComponent(titleLb);
 
+        this.initLayout();
+        
     }
 
     /**
      *
      */
     public MyViewLayout() {
+        
         this.setStyleName("ViewLayout");
         this.titleLb = new ViewTitleLabel();
         this.addComponent(titleLb);
@@ -47,6 +51,7 @@ public class MyViewLayout extends VerticalLayout {
      * Initialization of the layout.
      */
     private void initLayout() {
+        
         this.setMargin(true);
         this.setSpacing(true);
 

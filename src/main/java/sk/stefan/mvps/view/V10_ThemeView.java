@@ -10,20 +10,20 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import org.apache.log4j.Logger;
+import sk.stefan.enums.UserType;
+import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.mvps.view.components.panContents.THE_detPanContent;
-import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
+import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
-import sk.stefan.enums.UserType;
-import sk.stefan.factories.EditEntityButtonFactory;
+import sk.stefan.mvps.view.components.panContents.THE_detPanContent;
+import sk.stefan.mvps.view.components.panels.MyDetailedPanel;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
@@ -36,25 +36,23 @@ public final class V10_ThemeView extends MyViewLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V10_ThemeView.class);
 
-    //servisy:
-    private final VoteService voteService;
+//    entity:
+//    hlavna entita tohoto VIew
+    private Theme theme;
+
+//    servisy:
     private final UserService userService;
 
-    //hlavna entita tohoto VIew
-    private Theme theme;
-    
-//    private final EditEntityButtonFactory<Theme> editButtonFactory;
-        
-    //komponenty:
-    private THE_detPanContent themeDetailedComp;
+//    komponenty:
+    private MyDetailedPanel<THE_detPanContent> themeDetailedPanel;
     private Button editThemeBt;
     private DownloaderBriefLayout<Theme> downloaderLayout;
     private DownAndUploaderBriefLayout<Theme> downAnUploaderLayout;
 
     //konstruktor:
     public V10_ThemeView() {
+        
         super("Tématický Okruh Hlasovania");
-        this.voteService = new VoteServiceImpl();
         this.userService = new UserServiceImpl();
     }
 
@@ -64,7 +62,7 @@ public final class V10_ThemeView extends MyViewLayout implements View {
 
         this.removeAllComponents();
         this.initThemeDetailedComponent();
-        this.addComponents(themeDetailedComp);
+        this.addComponents(themeDetailedPanel);
         
         if(isVolunteer){         
             this.initEditThemeButton();
@@ -82,9 +80,11 @@ public final class V10_ThemeView extends MyViewLayout implements View {
     /**
      */
     private void initThemeDetailedComponent() {
-
+        
+        THE_detPanContent theCont = new THE_detPanContent(theme, null);
         //voteservice nieje potrebny, preto null;
-        this.themeDetailedComp = new THE_detPanContent(theme, null);
+        this.themeDetailedPanel = new MyDetailedPanel<>(theCont);
+    
     }
 
     /**

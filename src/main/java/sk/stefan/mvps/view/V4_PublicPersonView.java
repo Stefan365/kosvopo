@@ -27,14 +27,15 @@ import sk.stefan.mvps.model.serviceImpl.ClassificationServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
-import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 import sk.stefan.mvps.view.components.MyTimeline;
 import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.mvps.view.components.layouts.PCLs_briefLayout;
 import sk.stefan.mvps.view.components.layouts.PURs_briefLayout;
-import sk.stefan.mvps.view.components.layouts.MyViewLayout;
-import sk.stefan.mvps.view.components.panContents.PUP_briefPanContent;
+import sk.stefan.mvps.view.components.panContents.PUP_detPanContent;
+import sk.stefan.mvps.view.components.panels.MyDetailedPanel;
+import sk.stefan.mvps.view.components.panels.MyTimelinePanel;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
@@ -46,28 +47,26 @@ public final class V4_PublicPersonView extends MyViewLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V4_PublicPersonView.class);
 
-    //servisy:
+//    hlavna entita tohoto VIew
+    private PublicPerson publicPerson;
+    //dvolezita entita, ktora predstavuje aktualnu verejnu funkciu danej osoby. 
+    //bude vyznacena farebne.
+    private PublicRole actualPublicRole;
+
+//    servisy:
     private final PublicRoleService publicRoleService;
     private final VoteService voteService;
     private final UserService userService;
     private final ClassificationService classificationService;
 
-    //hlavna entita tohoto VIew
-    private PublicPerson publicPerson;
 
-    //dvolezita entita, ktora predstavuje aktualnu verejnu funkciu danej osoby. 
-    //bude vyznacena farebne.
-    private PublicRole actualPublicRole;
-
-    
-    
-    //KOMPONENTY pre zobrazeneie verejnych roli dane osoby (tj. jedna aktivna a 
+//    KOMPONENTY pre zobrazeneie verejnych roli dane osoby (tj. jedna aktivna a 
     //zvysok stare): 
+//    layout pre zobrazenie zakladnych udajov danej osoby.
+    private MyDetailedPanel<PUP_detPanContent> pubPersonDetailedPanel;
     private PURs_briefLayout pubRolesBriefLayout;
-    //layout pre zobrazenie zakladnych udajov danej osoby.
-    private PUP_briefPanContent pubPersonBriefPanel;
-    private MyTimeline timeline;
     private PCLs_briefLayout classPersonLayout;
+    private MyTimelinePanel timelinePanel;
     //tlacitko na pridavanie novej entity:
     private Button addNewPublicRoleBt;
     //pre uzivatela obcan:  
@@ -75,8 +74,12 @@ public final class V4_PublicPersonView extends MyViewLayout implements View {
     //pre uzivatela admin a dobrovolnik
     private DownAndUploaderBriefLayout<PublicPerson> uploaderLayout;
 
+    
+    
+    
     //konstruktor:
     public V4_PublicPersonView() {
+
         
         super("Verejná Osoba");
         this.publicRoleService = new PublicRoleServiceImpl();
@@ -103,7 +106,7 @@ public final class V4_PublicPersonView extends MyViewLayout implements View {
         this.initTimeline();
         this.classPersonLayout();
 
-        this.addComponents(pubPersonBriefPanel, pubRolesBriefLayout, classPersonLayout, timeline);
+        this.addComponents(pubPersonDetailedPanel, pubRolesBriefLayout, classPersonLayout, timelinePanel);
 
         if (isVolunteer) {
 
@@ -134,11 +137,8 @@ public final class V4_PublicPersonView extends MyViewLayout implements View {
      */
     private void initPublicPersonComponent() {
 
-//        this.pubPersonBriefPanel = new PUP_briefPanContent(publicPerson, null);
-        PUP_briefPanContent cont = new PUP_briefPanContent(publicPerson, null);
-        MyBriefPanel pan = new MyBriefPanel(cont);
-//        MyBriefPanel pan = new MyBriefPanel();
-        this.pubPersonBriefPanel = new PUP_briefPanContent(publicPerson, null);
+        PUP_detPanContent pupCont = new PUP_detPanContent(publicPerson, null);
+        this.pubPersonDetailedPanel = new MyDetailedPanel<>(pupCont);
 
     }
 
@@ -162,7 +162,10 @@ public final class V4_PublicPersonView extends MyViewLayout implements View {
     private void initTimeline() {
 
         List<Integer> ids = voteService.findVoteIdsByPubPersonId(this.publicPerson.getId());
-        timeline = new MyTimeline(ids);
+        
+        MyTimeline tl = new MyTimeline(ids);
+        timelinePanel = new MyTimelinePanel(tl);
+        
 
     }
     
@@ -189,7 +192,6 @@ public final class V4_PublicPersonView extends MyViewLayout implements View {
     private void initNewPublicRoleButton() {
 
         this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyInputButton(PublicRole.class);
-
         this.addComponent(addNewPublicRoleBt);
 
     }
@@ -248,8 +250,6 @@ public final class V4_PublicPersonView extends MyViewLayout implements View {
         PublicPerson pp = UI.getCurrent().getSession().getAttribute(PublicPerson.class);
 
         A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
-
-//        Notification.show("V4: " + (pp == null));
 
         Boolean isVolunteer = Boolean.FALSE;
         if (user != null) {

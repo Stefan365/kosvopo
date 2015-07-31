@@ -20,22 +20,20 @@ import sk.stefan.mvps.model.service.PublicBodyService;
  */
 public class PUB_briefPanContent extends HorizontalLayout {
 
-    
-    
     private static final long serialVersionUID = 1L;
 
-    private final PublicBody pubBody;
-
-    private final Navigator navigator;
-
-    //service, ktory bude zdedeny z nadradenej komponenty.
+//    servisy: tento bude zdedeny z nadradenej komponenty.
     private final PublicBodyService publicBodyService; 
-
-    //graficke komponenty:
+    
+//    komponenty:
     private Label titleLb;
     private Label predsedaLb;
     private Label adresaLb;
     
+//    hlavna entita komponenty:
+    private final PublicBody pubBody;
+
+    private final Navigator navigator;
     
 
     //0.konstruktor:

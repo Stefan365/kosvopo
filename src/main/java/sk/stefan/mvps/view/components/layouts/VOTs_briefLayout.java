@@ -15,8 +15,8 @@ import java.util.Map;
 import sk.stefan.interfaces.Filterable;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.service.VoteService;
-import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 import sk.stefan.mvps.view.components.panContents.VOT_briefPanContent;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 
 /**
  *
@@ -26,15 +26,13 @@ public class VOTs_briefLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 43565321L;
     
-//    private Map<Vote, VOT_briefPanContent> votesMap;
-    private Map<Vote, MyBriefPanel> votesMap;
-    
-    private final TextField searchFd; 
-    
-    private final VerticalLayout temporaryLy;
-
-
+//    servisy:
     private final VoteService voteService; 
+    
+//    komponenty:
+    private final TextField searchFd; 
+    private Map<Vote, MyBriefPanel<VOT_briefPanContent>> votesBriefMap;
+
     
     //0.konstruktor
     public VOTs_briefLayout(List<Vote> votes, VoteService vots){
@@ -43,12 +41,10 @@ public class VOTs_briefLayout extends VerticalLayout implements Filterable {
         this.setStyleName("voteLayout");
         
         this.voteService = vots;
-        this.temporaryLy = new VerticalLayout();
         this.searchFd = new TextField("Vyhľadávanie");
         this.initSearch();
         this.initSearchListener();
-        
-        this.addComponents(searchFd, temporaryLy);
+        this.addComponents(searchFd);
         
         initLayout(votes);
 
@@ -62,16 +58,17 @@ public class VOTs_briefLayout extends VerticalLayout implements Filterable {
      */
     private void initLayout(List<Vote> votes){
         
-        temporaryLy.removeAllComponents();
-        MyBriefPanel pan;
-        VOT_briefPanContent votComp;
-        this.votesMap = new HashMap<>();
+        VOT_briefPanContent votCont;
+        MyBriefPanel<VOT_briefPanContent> pan;
+        
+        this.removeAllComponents();
+        this.votesBriefMap = new HashMap<>();
         
         for (Vote vot : votes){
-            votComp = new VOT_briefPanContent(vot, voteService);
-            pan = new MyBriefPanel(votComp);
-            this.votesMap.put(vot, pan);
-            temporaryLy.addComponent(pan);
+            votCont = new VOT_briefPanContent(vot, voteService);
+            pan = new MyBriefPanel<>(votCont);
+            this.votesBriefMap.put(vot, pan);
+            this.addComponent(pan);
         }
         
     }

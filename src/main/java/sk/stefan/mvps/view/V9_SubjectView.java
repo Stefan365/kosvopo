@@ -32,6 +32,9 @@ public final class V9_SubjectView extends MyViewLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V9_SubjectView.class);
 
+//    entity:
+    private Subject subject;
+
 //    servisy:
     private final VoteService voteService;
     
@@ -41,11 +44,11 @@ public final class V9_SubjectView extends MyViewLayout implements View {
     private DownloaderBriefLayout<Subject> downoaderLayout;
     private DownAndUploaderBriefLayout<Subject> uploaderLayout;
 
-//    hlavna entita tohoto VIew:
-    private Subject subject;
     
     
-    //konstruktor:
+    
+    
+//    konstruktor:
     public V9_SubjectView() {
 
         super("Predmet Hlasovania");

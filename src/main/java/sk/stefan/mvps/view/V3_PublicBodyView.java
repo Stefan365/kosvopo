@@ -31,6 +31,7 @@ import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.PURs_briefLayout;
 import sk.stefan.mvps.view.components.layouts.VOTs_briefLayout;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
+import sk.stefan.mvps.view.components.panels.MyTimelinePanel;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
@@ -52,7 +53,7 @@ public final class V3_PublicBodyView extends MyViewLayout implements View {
 //  KOMPONENTY:
     private PURs_briefLayout publicRolesBriefLy;
     private VOTs_briefLayout votesBriefLy;
-    private MyTimeline timeline;
+    private MyTimelinePanel timelinePanel;
 //    tlacitko na pridavanie novej entity:
     private Button addNewPublicRoleBt;
     private DownloaderBriefLayout<PublicBody> downoaderLayout;
@@ -81,7 +82,7 @@ public final class V3_PublicBodyView extends MyViewLayout implements View {
         this.initVoteLayout();
         this.initTimeline();
 
-        this.addComponents(publicRolesBriefLy, votesBriefLy, timeline);
+        this.addComponents(publicRolesBriefLy, votesBriefLy, timelinePanel);
 
         if (isVolunteer) {
 
@@ -119,10 +120,14 @@ public final class V3_PublicBodyView extends MyViewLayout implements View {
 
     }
 
+    /**
+     * 
+     */
     public void initTimeline() {
 
         List<Integer> ids = voteService.findVoteIdsByPubBodyId(this.publicBody.getId());
-        timeline = new MyTimeline(ids);
+        MyTimeline tl = new MyTimeline(ids);
+        timelinePanel = new MyTimelinePanel(tl);
 
     }
 

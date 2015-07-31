@@ -9,10 +9,11 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import sk.stefan.interfaces.Filterable;
 import sk.stefan.mvps.model.entity.VoteOfRole;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.view.components.panContents.VOR_brief2PanContent;
-import sk.stefan.interfaces.Filterable;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 
 /**
  *
@@ -21,10 +22,15 @@ import sk.stefan.interfaces.Filterable;
 public class VORs_brief2Layout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 43565321L;
-    
-    private Map<VoteOfRole, VOR_brief2PanContent> votesOfRoleMap;
 
+//    servisy:
     private final VoteService voteService; 
+    
+//    komponenty:
+    private Map<VoteOfRole, MyBriefPanel<VOR_brief2PanContent>> votesOfRoleMap;
+
+
+    
     
     //0.konstruktor
     /**
@@ -46,16 +52,20 @@ public class VORs_brief2Layout extends VerticalLayout implements Filterable {
      */
     private void initLayout(List<VoteOfRole> votesOfRole){
         
+        VOR_brief2PanContent votCont;
+        MyBriefPanel<VOR_brief2PanContent> pan;
+        
         this.removeAllComponents();
         this.votesOfRoleMap = new HashMap<>();
         
         
-        VOR_brief2PanContent votComp;
-        
         for (VoteOfRole vor : votesOfRole){
-            votComp = new VOR_brief2PanContent(vor, voteService);
-            this.votesOfRoleMap.put(vor, votComp);
-            this.addComponent(votComp);
+        
+            votCont = new VOR_brief2PanContent(vor, voteService);
+            pan = new MyBriefPanel<>(votCont);
+            this.votesOfRoleMap.put(vor, pan);
+            this.addComponent(pan);
+        
         }
         
     }

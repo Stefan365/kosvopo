@@ -13,6 +13,7 @@ import sk.stefan.interfaces.Filterable;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.view.components.panContents.PUB_briefPanContent;
+import sk.stefan.mvps.view.components.panels.MyBriefPanel;
 
 /**
  *
@@ -22,9 +23,14 @@ public class PUBs_briefLayout extends VerticalLayout implements Filterable {
     
     private static final long serialVersionUID = 43565321L;
     
-    private Map<PublicBody, PUB_briefPanContent> publicBodiesMap;
-
+//    servisy:
     private final PublicBodyService publicBodyService; 
+    
+//    hlavna komponenta:
+    private Map<PublicBody, MyBriefPanel<PUB_briefPanContent>> publicBodiesMap;
+
+    
+    
     
     //0.konstruktor
     public PUBs_briefLayout(List<PublicBody> pubBodies, PublicBodyService pbs){
@@ -43,13 +49,15 @@ public class PUBs_briefLayout extends VerticalLayout implements Filterable {
     private void initLayout(List<PublicBody> pubBodies){
         
         PUB_briefPanContent pbComp;
+        MyBriefPanel<PUB_briefPanContent> pan;
         this.publicBodiesMap = new HashMap<>();
         this.removeAllComponents();
         
         for (PublicBody pb : pubBodies){
             pbComp = new PUB_briefPanContent(pb, publicBodyService);
-            this.publicBodiesMap.put(pb, pbComp);
-            this.addComponent(pbComp);
+            pan = new MyBriefPanel<>(pbComp);
+            this.publicBodiesMap.put(pb, pan);
+            this.addComponent(pan);
         }
         
     }
