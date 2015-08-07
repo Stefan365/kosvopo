@@ -28,9 +28,9 @@ public class VOT_briefPanContent extends GridLayout {
 
     //service, ktory bude zdedeny z nadradenej komponenty.
     private final VoteService voteService;
-    
+
     //graficke komponenty:
-    private Label dateLb; 
+    private Label dateLb;
     private Label internalNrLb;
     private Label publicBodyLb;
     private Label subjectLb;
@@ -40,11 +40,12 @@ public class VOT_briefPanContent extends GridLayout {
     //0.konstruktor:
     public VOT_briefPanContent(Vote vot, VoteService vs) {
 
+        super(3, 3);
         this.setSpacing(true);
         this.setMargin(true);
-        
+
         this.setStyleName("voteBriefPanel");
-        
+
         this.navigator = UI.getCurrent().getNavigator();
         this.vote = vot;
         this.voteService = vs;
@@ -58,7 +59,7 @@ public class VOT_briefPanContent extends GridLayout {
     private void initLayout() {
 
         this.removeAllComponents();
-        
+
         this.setSpacing(true);
 
         this.dateLb = new Label(voteService.getVoteDate(vote));
@@ -67,20 +68,20 @@ public class VOT_briefPanContent extends GridLayout {
         this.internalNrLb.setCaption("interné číslo hlasovania");
         this.publicBodyLb = new Label(voteService.getVotePublicBodyName(vote));
         this.publicBodyLb.setCaption("verejný orgán");
-        this.subjectLb = new Label(voteService.getVoteSubjectName(vote)); 
+        this.subjectLb = new Label(voteService.getVoteSubjectName(vote));
         this.subjectLb.setCaption("predmet hlasovania");
         this.resultLb = new Label(voteService.getVoteResultAsString(vote));
         this.resultLb.setCaption("výsledok hlasovania");
         this.numbersLb = new Label(voteService.getVoteNumbers(vote));
         this.numbersLb.setCaption("čísla");
-//        this.addComponents(dateLb, 0, 0);
-//        this.addComponent(internalNrLb, 1, 0);
-//        this.addComponent(publicBodyLb, 0, 1);
-//        this.addComponent(subjectLb, 0, 2);
-//        this.addComponent(resultLb, 0, 3);
-//        this.addComponent(numbersLb, 1, 3);
-        this.addComponents(dateLb, internalNrLb, publicBodyLb, subjectLb, resultLb, numbersLb);
-        
+        this.addComponent(dateLb, 0, 0);
+        this.addComponent(subjectLb, 2, 0);
+        this.addComponent(publicBodyLb, 0, 1);
+        this.addComponent(internalNrLb, 2, 1);
+        this.addComponent(resultLb, 0, 2);
+        this.addComponent(numbersLb, 2, 2);
+//        this.addComponents(dateLb, internalNrLb, publicBodyLb, subjectLb, resultLb, numbersLb);
+
     }
 
     /**

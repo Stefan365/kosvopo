@@ -21,7 +21,7 @@ public final class MyBriefPanel<E extends AbstractLayout> extends Panel {
     
     public MyBriefPanel(E lay){
         
-        this.setStyleName("briefPanel");
+//        this.setStyleName("briefPanel");
         this.panContent = lay;
         this.setContent(lay);
     }

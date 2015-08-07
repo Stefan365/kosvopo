@@ -5,9 +5,9 @@
  */
 package sk.stefan.mvps.view.components.panels;
 
+import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
-import sk.stefan.mvps.view.components.layouts.InputFormLayout;
 
 /**
  *
@@ -15,26 +15,28 @@ import sk.stefan.mvps.view.components.layouts.InputFormLayout;
  * @param <E>
  * 
  */
-public class MyInputFormPanel<E> extends Panel {
+public class MyUniPanel<E extends AbstractComponent> extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    private final InputFormLayout<E> inputFormLy;
+    private final E myContent;
 
     
-
-    public MyInputFormPanel(InputFormLayout<E> lay) {
-        this.setStyleName("inputFormLayoutPanel");
-        this.inputFormLy = lay;
+    
+    public MyUniPanel(E cont) {
+        
+        this.setStyleName("uniPanel");
+        this.setCaption("uni Panel");
+        this.myContent = cont;
         VerticalLayout vl = new VerticalLayout();
-        vl.addComponent(inputFormLy);
+        vl.addComponent(myContent);
         this.setContent(vl);   
     }
 
 
     
-    public InputFormLayout<E> getInputFormLayout() {
-        return inputFormLy;
+    public E getMyContent() {
+        return myContent;
     }
 
 

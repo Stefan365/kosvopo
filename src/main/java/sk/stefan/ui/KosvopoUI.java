@@ -28,7 +28,7 @@ public class KosvopoUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
-        //V BUDUCNOSTI SA TU BUDE MOCT ZAVIEST SPRING.
+//        V BUDUCNOSTI SA TU BUDE MOCT ZAVIEST SPRING.
 //        navComp = NavigationComponent.createNavigationComponent();
 //        SpringContextHelper helper = 
 //                new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
@@ -38,7 +38,7 @@ public class KosvopoUI extends UI {
          this.setContent(mainView);
          
 
-        //pociatocna navigacia:
+//        pociatocna navigacia:
         UI.getCurrent().getNavigator().navigateTo("V2_EnterView");
 
     }

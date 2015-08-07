@@ -47,10 +47,12 @@ import sk.stefan.mvps.model.serviceImpl.UniTableServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.view.components.MyTable;
 import sk.stefan.mvps.view.components.YesNoWindow;
-import sk.stefan.mvps.view.components.filtering.Filtering3Panel;
+import sk.stefan.mvps.view.components.filtering.Filtering3Component;
 import sk.stefan.mvps.view.components.layouts.InputFormLayout;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.mvps.view.components.panels.MyInputFormPanel;
+import sk.stefan.mvps.view.components.panels.MyTablePanel;
+import sk.stefan.mvps.view.components.panels.MyUniPanel;
 import sk.stefan.utils.ToolsDao;
 import sk.stefan.utils.ToolsNames;
 
@@ -78,16 +80,19 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
     private final InputFormLayout<E> inputForm;
     private MyInputFormPanel<E> inputFormPanel;
     private VerticalLayout linksVl;
+    
     private MyTable uniTable;// = new MyTable();
+    private MyTablePanel uniTablePanel;
+    
     private TextField searchField;// = new TextField();
     private Button addNewItemBt;// = new Button("Nová podložka");
     private Button removeItemBt;// = new Button("Odstráň túto podložku");
     private FormLayout editorLayout;// = new FormLayout();
     private Button backBt;
     private HorizontalSplitPanel splitPanel;
-    private VerticalLayout leftLayout;
-    private HorizontalLayout bottomLeftLayout;
-    private Filtering3Panel filters;
+    private VerticalLayout leftLy;
+    private HorizontalLayout bottomLeftLy;
+    private Filtering3Component filtersComp;
     
     
 //    pomocne premenny pre zobrazenie celeho vzhladu view:  
@@ -182,32 +187,46 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
 
         uniTable = new MyTable();
         searchField = new TextField();
-        addNewItemBt = new Button("Nová podložka");
-        removeItemBt = new Button("Odstráň túto podložku");
+        addNewItemBt = new Button("New");
+//        removeItemBt = new Button("Odstráň túto podložku");
+        removeItemBt = new Button("Remove");
         editorLayout = new FormLayout();
 
         splitPanel = new HorizontalSplitPanel();
 
-        leftLayout = new VerticalLayout();
-        splitPanel.addComponent(leftLayout);
+        leftLy = new VerticalLayout();
+        leftLy.setSpacing(true);
+        leftLy.setMargin(true);
+        
+        splitPanel.addComponent(leftLy);
         splitPanel.addComponent(editorLayout);
 
-        leftLayout.addComponent(uniTable);
-        bottomLeftLayout = new HorizontalLayout();
-        filters = new Filtering3Panel(tn, sqlContainer);
+        MyTablePanel pan1 = new MyTablePanel(uniTable);
+        leftLy.addComponent(pan1);
+        
+        
+        bottomLeftLy = new HorizontalLayout();
+        MyUniPanel<HorizontalLayout> pan2;
+        pan2 = new MyUniPanel<>(bottomLeftLy);
+        
+        
+        filtersComp = new Filtering3Component(tn, sqlContainer);
+        MyUniPanel<Filtering3Component> pan3;
+        pan3 = new MyUniPanel<>(filtersComp);
 
-        leftLayout.addComponents(bottomLeftLayout, filters);
+        leftLy.addComponents(pan2, pan3);
 
-        bottomLeftLayout.addComponent(searchField);
+        bottomLeftLy.addComponent(searchField);
+        
         
 
         // leftLayout.setSizeFull();
-        leftLayout.setExpandRatio(uniTable, 1);
+        leftLy.setExpandRatio(pan1, 1);
         uniTable.setSizeFull();
 
-        bottomLeftLayout.setWidth("100%");
+        bottomLeftLy.setWidth("100%");
         searchField.setWidth("100%");
-        bottomLeftLayout.setExpandRatio(searchField, 1);
+        bottomLeftLy.setExpandRatio(searchField, 1);
 
         /* Put a little margin around the fields in the right side editor */
         editorLayout.setMargin(true);
@@ -331,19 +350,19 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
     
     private void initButtons(){
         
-        bottomLeftLayout.removeComponent(addNewItemBt);
-        bottomLeftLayout.removeComponent(removeItemBt);
+        bottomLeftLy.removeComponent(addNewItemBt);
+        bottomLeftLy.removeComponent(removeItemBt);
         
         
         if ("a_user".equals(tn)){
             initUsersFilter();
             if (isAdmin){
-                bottomLeftLayout.addComponent(addNewItemBt);
-                bottomLeftLayout.addComponent(removeItemBt);               
+                bottomLeftLy.addComponent(addNewItemBt);
+                bottomLeftLy.addComponent(removeItemBt);               
             }
         } else {
-            bottomLeftLayout.addComponent(addNewItemBt);
-            bottomLeftLayout.addComponent(removeItemBt);
+            bottomLeftLy.addComponent(addNewItemBt);
+            bottomLeftLy.addComponent(removeItemBt);
 
         }
     

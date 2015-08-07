@@ -101,7 +101,7 @@ public class FilterTableListener<E> implements Property.ValueChangeListener {
             //filtrovanie hlavnej tabulky:
             List<String> hierarchicalSeq = ToolsFiltering.getHierarchicalSequence(touchedTn, touchingTn);
             if (hierarchicalSeq == null) {
-                Notification.show("Táto položka nemá vplyv na tabuľku");
+                Notification.show("Táto podložka nemá vplyv na tabuľku!");
             } else {
                 List<A_Hierarchy> hierSeq = ToolsFiltering.getFinalHierSequence(hierarchicalSeq);
                 List<Integer> ids = ToolsFiltering.getFinalIds(hierSeq, intVal);

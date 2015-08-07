@@ -47,7 +47,7 @@ public final class V4_PublicPersonView extends MyViewLayout implements View {
     private static final long serialVersionUID = 121322L;
     private static final Logger log = Logger.getLogger(V4_PublicPersonView.class);
 
-//    hlavna entita tohoto VIew
+//    entity:
     private PublicPerson publicPerson;
     //dvolezita entita, ktora predstavuje aktualnu verejnu funkciu danej osoby. 
     //bude vyznacena farebne.

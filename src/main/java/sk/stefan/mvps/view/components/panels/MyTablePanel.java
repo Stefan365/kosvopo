@@ -7,34 +7,35 @@ package sk.stefan.mvps.view.components.panels;
 
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+import sk.stefan.mvps.view.components.MyTable;
 import sk.stefan.mvps.view.components.layouts.InputFormLayout;
 
 /**
  *
  * @author stefan
- * @param <E>
  * 
  */
-public class MyInputFormPanel<E> extends Panel {
+public class MyTablePanel extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    private final InputFormLayout<E> inputFormLy;
+    private final MyTable table;
 
     
+    
 
-    public MyInputFormPanel(InputFormLayout<E> lay) {
-        this.setStyleName("inputFormLayoutPanel");
-        this.inputFormLy = lay;
+    public MyTablePanel(MyTable tab) {
+        this.setStyleName("tablePanel");
+        this.table = tab;
         VerticalLayout vl = new VerticalLayout();
-        vl.addComponent(inputFormLy);
+        vl.addComponent(table);
         this.setContent(vl);   
     }
 
 
     
-    public InputFormLayout<E> getInputFormLayout() {
-        return inputFormLy;
+    public MyTable getTable() {
+        return table;
     }
 
 

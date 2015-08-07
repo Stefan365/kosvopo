@@ -21,7 +21,13 @@ public class MainView extends VerticalLayout {
     
     public MainView() {
         
+//        this.setSizeFull();
+//        this.setExpandRatio(content, SIZE_UNDEFINED);
+//        this.
+                
         content = new VerticalLayout();
+        
+//        content.setWidth("800px");
         
         nav = new MyNavigator(UI.getCurrent(), content);
 

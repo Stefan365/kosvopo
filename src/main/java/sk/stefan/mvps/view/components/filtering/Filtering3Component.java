@@ -26,9 +26,9 @@ import sk.stefan.mvps.view.components.SilentCheckBox;
  * @author stefan
  */
 @SuppressWarnings("serial")
-public class Filtering3Panel extends HorizontalLayout {
+public class Filtering3Component extends HorizontalLayout {
     
-    private static final Logger log = Logger.getLogger(Filtering3Panel.class);
+    private static final Logger log = Logger.getLogger(Filtering3Component.class);
     
     private final String parentTn;
     private final SQLContainer sqlContainer;
@@ -63,7 +63,7 @@ public class Filtering3Panel extends HorizontalLayout {
      * @param parTn
      * @param sqlCont
      */
-    public Filtering3Panel(String parTn, SQLContainer sqlCont) {
+    public Filtering3Component(String parTn, SQLContainer sqlCont) {
 
         this.parentTn = parTn;
         this.sqlContainer = sqlCont;

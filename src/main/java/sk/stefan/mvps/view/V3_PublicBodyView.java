@@ -28,9 +28,9 @@ import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.mvps.view.components.MyTimeline;
 import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
 import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
+import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.mvps.view.components.layouts.PURs_briefLayout;
 import sk.stefan.mvps.view.components.layouts.VOTs_briefLayout;
-import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.mvps.view.components.panels.MyTimelinePanel;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 

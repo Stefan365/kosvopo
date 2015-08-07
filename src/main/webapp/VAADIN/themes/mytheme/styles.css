@@ -12130,6 +12130,10 @@ div.v-layout.v-horizontal.v-widget {
 	border-style: groove;
 }
 
+.mytheme .voteBriefPanel {
+	background-color: white;
+}
+
 .mytheme .voteLayout {
 	padding: 20px 20px 20px 20px;
 }
