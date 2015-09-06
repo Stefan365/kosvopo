@@ -15,11 +15,25 @@
             
         </layout>
     </appender>
+
+    <appender name="rolling2" class="org.apache.log4j.FileAppender">
+        <param name="file" value="${catalina.home}/logs/kosvopo2.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+        </layout>
+    </appender>
+
     
+            
     <root>
         <level value="DEBUG" />
         <appender-ref ref="console" />
         <appender-ref ref="rolling" />
     </root>
+
+      <logger name="log2">
+            <level value="DEBUG"/>
+            <appender-ref ref="rolling2"/>
+        </logger>
  
 </log4j:configuration>

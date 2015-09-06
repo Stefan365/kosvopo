@@ -64,6 +64,7 @@ import sk.stefan.utils.ToolsNames;
 public class InputFormLayout<E> extends FormLayout {
 
     private static final Logger log = Logger.getLogger(InputFormLayout.class);
+    private static final Logger log2 = Logger.getLogger("log2");
 
     private static final long serialVersionUID = 4947104793788125920L;
 
@@ -100,7 +101,7 @@ public class InputFormLayout<E> extends FormLayout {
     private HorizontalLayout buttonsHL; //* Layout pro uložení tlačítek OK-CANCEL.
     private Button saveBt, editBt;
     private final Label titleLb;
-    
+
     private Boolean isNew;
 
     /**
@@ -132,9 +133,9 @@ public class InputFormLayout<E> extends FormLayout {
 
         uniTableService = new UniTableServiceImpl<>(cls);
         this.securityService = new SecurityServiceImpl();
-        
+
         this.isNew = false;
-        
+
         this.clsE = cls;
         try {
             mapPar = ToolsNames.getTypParametrov(clsE, true);
@@ -364,20 +365,18 @@ public class InputFormLayout<E> extends FormLayout {
 //        log.info("TN:" + tn);
         for (int i = 1; i < proPoradie.size(); i++) {
 
-            
             pn = proPoradie.getProperty("" + i);
             if (nonEditFn.contains(pn)) {
                 continue;
             }
 
-            
 //            log.info("KEY: *" + key + "*");
             String cap = proDepict.getProperty(pn);
 //            log.info("CAP: *" + cap + "*");
             (fieldMap.get(pn)).setCaption(cap);
-            
+
             fieldsFL.addComponent(fieldMap.get(pn));
-        
+
         }
     }
 
@@ -516,28 +515,30 @@ public class InputFormLayout<E> extends FormLayout {
         saveBt.setEnabled(true);
 
         saveBt.addClickListener(new ClickListener() {
+
             private static final long serialVersionUID = 1L;
 
             @Override
             @SuppressWarnings("unchecked")
             public void buttonClick(ClickEvent event) {
 
-                // ulozenie zmien do DB:
                 try {
 
 //                    sqlContainer.commit(); NIE!!! nic sa commitovat nebude, 
 //                    vsetko pojde cez jdbc :
                     Integer entId;
-                    if (item != null){
+                    if (item != null) {
                         entId = (Integer) item.getItemProperty("id").getValue();
+                        log2.info("item nieje null, nastavujem entId!!");
                     } else {
+                        log2.info("Unikam1, pretoze item is null!!!");
                         return;
                     }
-                    
+
                     if (entId != null) {
                         item.getItemProperty("visible").setValue(Boolean.TRUE);
                     } else {
-                        return;
+                        log2.info("entId is null!!!");
                     }
 
                     E ent = uniTableService.getEntFromItem(item, mapPar);
@@ -606,7 +607,7 @@ public class InputFormLayout<E> extends FormLayout {
 
                 getFg().setEnabled(true);
                 fieldsFL.setEnabled(true);
-                for (String pn : fieldMap.keySet()){
+                for (String pn : fieldMap.keySet()) {
                     if (crutialFn.contains(pn) & !isNew) {
                         (fieldMap.get(pn)).setEnabled(false);
                     }
@@ -660,7 +661,7 @@ public class InputFormLayout<E> extends FormLayout {
         this.itemId = itId;
         this.item = it;
         this.isNew = isnew;
-        
+
         if (tn.equals("a_user") && item != null) {
             Integer uid = (Integer) item.getItemProperty("id").getValue();
 
