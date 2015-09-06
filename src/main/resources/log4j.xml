@@ -9,7 +9,7 @@
     </appender>
         
     <appender name="rolling" class="org.apache.log4j.FileAppender">
-        <param name="file" value="kosvopo.log" />
+        <param name="file" value="${catalina.home}/logs/kosvopo.log" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
             

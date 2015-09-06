@@ -21,8 +21,8 @@ import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.serviceImpl.PublicBodyServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
-import sk.stefan.mvps.view.components.layouts.PUBs_briefLayout;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
+import sk.stefan.mvps.view.components.layouts.PUBs_briefLayout;
 
 /**
  *
@@ -32,8 +32,7 @@ public class V3s_PublicBodiesView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 10903884L;
 
-//    private final Navigator nav;
-    
+
 //    servisy:
     private final PublicBodyService publicBodyService;
     private final UserService userService;
@@ -45,7 +44,8 @@ public class V3s_PublicBodiesView extends MyViewLayout implements View {
     //tlacitko na pridavanie novej verejne osoby:
     private Button addNewPublicBodyBt;
     
-    
+
+
     public V3s_PublicBodiesView (){
     
         super("verejné orgány");
@@ -54,7 +54,7 @@ public class V3s_PublicBodiesView extends MyViewLayout implements View {
 
     }
     
-       /**
+    /**
      * 
      * @param isVolunteer
      */
@@ -70,7 +70,7 @@ public class V3s_PublicBodiesView extends MyViewLayout implements View {
         if(isVolunteer){
             this.initNewPublicBodyButton();
         }
-        
+
     }
 
     
@@ -111,8 +111,8 @@ public class V3s_PublicBodiesView extends MyViewLayout implements View {
     private void initSearch() {
         
         searchFd.setWidth("40%");
-        searchFd.setInputPrompt("možeš použiť vyhľadávanie podľa názvu obce");
-//          searchFd.setInputPrompt("všechen spěch jest od ďábla!");
+//        searchFd.setInputPrompt("možeš použiť vyhľadávanie podľa názvu obce");
+        searchFd.setInputPrompt("všechen spěch jest od ďábla!");
         
         searchFd.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
         

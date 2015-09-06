@@ -41,11 +41,10 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
     private String tn;
     private Object itemId;
     private Item item;
-    
-    
+
 //    public InputButClickListener(Class<?> cls, String title, InputAllView iaw) {
     public Input_EditButClickListener(Class<E> cls, String title, E entit) {
-    
+
         this.ent = entit;
         this.clsE = cls;
         this.title = title;
@@ -56,43 +55,50 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
 
     @Override
     public void buttonClick(Button.ClickEvent event) {
-        
+
         try {
             Field tnFld = clsE.getDeclaredField("TN");
 
             tn = (String) tnFld.get(null);
             sqlCont = DoDBconn.createSqlContainera(tn);
             InputFormLayout<E> inputFl;
-            if (ent == null){
+            if (ent == null) {
                 itemId = sqlCont.addItem();
                 item = sqlCont.getItem(itemId);
             } else {
                 Method getIdMethod = clsE.getDeclaredMethod("getId");
-                Integer entId =  (Integer) getIdMethod.invoke(ent);
+                Integer entId = (Integer) getIdMethod.invoke(ent);
                 item = sqlCont.getItem(new RowId(new Object[]{entId}));
             }
-            
+
             String[] nonEdCols = NonEditableFields.valueOf(tn.toUpperCase()).getNonEditableParams();
             String[] crutialCols = CrutialNonEditable.valueOf(tn.toUpperCase()).getCrutialParams();
 
-            log.info("NON EDITABL COLS IS NULL:" + (nonEdCols==null));
-            if((nonEdCols!=null)){
+            if (null == crutialCols) {
+                Notification.show("crutialCols is null");
+
+            } else {
+                Notification.show("crutialCols : " + crutialCols.length);
+            }
+
+            
+            log.info("NON EDITABL COLS IS NULL:" + (nonEdCols == null));
+            if ((nonEdCols != null)) {
                 log.info("NON ED SIZE:" + nonEdCols.length);
             }
-           
+
             inputFl = new InputFormLayout<>(clsE, item, sqlCont, null, nonEdCols, crutialCols);
             tdlg = new UniDlg("Nový " + title, inputFl);
-            
+
             UI.getCurrent().addWindow(tdlg);
             //POZOR na toto, malo by to dobehnut az potom, co sa ukonci vlakno 
             //UI okna:
             //sqlCont = null;
         } catch (IllegalAccessException | SQLException | NoSuchFieldException | SecurityException |
                 NoSuchMethodException | IllegalArgumentException | InvocationTargetException ex) {
-            log.error(ex.getMessage(),ex);
+            log.error(ex.getMessage(), ex);
             Notification.show("Nastala chyba!");
         }
     }
-    
 
 }

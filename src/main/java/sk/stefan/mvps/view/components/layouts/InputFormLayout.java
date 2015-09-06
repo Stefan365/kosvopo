@@ -527,10 +527,17 @@ public class InputFormLayout<E> extends FormLayout {
 
 //                    sqlContainer.commit(); NIE!!! nic sa commitovat nebude, 
 //                    vsetko pojde cez jdbc :
-                    Integer entId = (Integer) item.getItemProperty("id").getValue();
-
-                    if (entId == null) {
+                    Integer entId;
+                    if (item != null){
+                        entId = (Integer) item.getItemProperty("id").getValue();
+                    } else {
+                        return;
+                    }
+                    
+                    if (entId != null) {
                         item.getItemProperty("visible").setValue(Boolean.TRUE);
+                    } else {
+                        return;
                     }
 
                     E ent = uniTableService.getEntFromItem(item, mapPar);

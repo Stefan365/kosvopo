@@ -81,13 +81,12 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
     private MyInputFormPanel<E> inputFormPanel;
     private VerticalLayout linksVl;
     
-    private MyTable uniTable;// = new MyTable();
-    private MyTablePanel uniTablePanel;
+    private MyTable uniTable;
     
-    private TextField searchField;// = new TextField();
-    private Button addNewItemBt;// = new Button("Nová podložka");
-    private Button removeItemBt;// = new Button("Odstráň túto podložku");
-    private FormLayout editorLayout;// = new FormLayout();
+    private TextField searchField;
+    private Button addNewItemBt;
+    private Button removeItemBt;
+    private FormLayout editorLayout;
     private Button backBt;
     private HorizontalSplitPanel splitPanel;
     private VerticalLayout leftLy;
@@ -104,13 +103,12 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
     private Filter userOnlyFilter;
     private Object itemId;
     private Item item;
-    private final Boolean isForAdminOnly;
     private final FieldGroup fg = new FieldGroup();
     private SQLContainer sqlContainer;
     private final String tn;
 
     
-    //0.Konstruktor
+//    0.Konstruktor
     /**
      *
      * @param clsq
@@ -122,7 +120,7 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
 
 //        super("Univerzálny Editačný Formulár");
         tn = ToolsDao.getTableName(clsq);
-        //dalsie komponenty:
+//        dalsie komponenty:
         basicFilter = new Compare.Equal("visible", Boolean.TRUE);
         
         try {
@@ -137,14 +135,12 @@ public final class V8_UniEditableTableView<E> extends MyViewLayout implements Ok
         this.uniTableService = new UniTableServiceImpl<>(clsq);
         this.userService = new UserServiceImpl();
 
-        //je to komponenta len pre admina?
-        this.isForAdminOnly = isAdm;
-
+//        je to komponenta len pre admina?
+//        this.isForAdminOnly = isAdm;
 
         this.initTableLists(uneditCol);
-
         this.inputForm = new InputFormLayout<>(clsq, item, sqlContainer, this, uneditCol, crutialCol);
-
+        
         initAllBasic();
 
     }

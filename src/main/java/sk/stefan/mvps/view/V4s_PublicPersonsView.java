@@ -59,7 +59,7 @@ public class V4s_PublicPersonsView extends MyViewLayout implements View {
         this.removeAllComponents();
 
         this.initLayout();
-        this.initListener();
+        this.initSearchListener();
 
         this.addComponents(searchFd, publicPersonsBriefLy);
 
@@ -86,9 +86,10 @@ public class V4s_PublicPersonsView extends MyViewLayout implements View {
     /**
      * Initializes listener
      */
-    private void initListener() {
+    private void initSearchListener() {
 
         searchFd.addTextChangeListener(new FieldEvents.TextChangeListener() {
+            
             private static final long serialVersionUID = 1L;
 
             @Override

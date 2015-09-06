@@ -45,10 +45,11 @@ public class PublicPersonServiceImpl implements PublicPersonService {
 
         List<Integer> ppIds;
 
-        String sql = "SELECT id FROM t_public_person WHERE first_name like '%" + name + "%'"
-                + " OR last_name like '%" + name + "%' AND visible = true";
+        String sql = "SELECT id FROM t_public_person WHERE (first_name like '%" + name + "%'"
+                + " OR last_name like '%" + name + "%') AND visible = true";
+        
         ppIds = this.generalRepo.findIds(sql);
-
+        
         return ppIds;
 
     }
