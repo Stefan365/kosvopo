@@ -57,6 +57,7 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
     public void buttonClick(Button.ClickEvent event) {
 
         try {
+            
             Field tnFld = clsE.getDeclaredField("TN");
 
             tn = (String) tnFld.get(null);
@@ -65,6 +66,10 @@ public class Input_EditButClickListener<E> implements Button.ClickListener {
             if (ent == null) {
                 itemId = sqlCont.addItem();
                 item = sqlCont.getItem(itemId);
+                if (item.getItemProperty("visible") != null){
+                    item.getItemProperty("visible").setValue(Boolean.TRUE);
+                }
+                
             } else {
                 Method getIdMethod = clsE.getDeclaredMethod("getId");
                 Integer entId = (Integer) getIdMethod.invoke(ent);

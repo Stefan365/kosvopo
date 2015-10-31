@@ -10,6 +10,7 @@
     <name>kosvopo6</name>
 
     <properties>
+    
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--<vaadin.version>7.4.2</vaadin.version>-->
@@ -113,7 +114,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring</artifactId>
-            <version>2.5.6.SEC03</version>
+            <version>4.0.7.RELEASE</version>
             <type>jar</type>
         </dependency>
         

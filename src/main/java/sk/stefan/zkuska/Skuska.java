@@ -96,4 +96,5 @@ public class Skuska {
     public void setKrajRepo(UniRepo<Region> krRepo) {
         this.krRepo = krRepo;
     }
+    
 }
