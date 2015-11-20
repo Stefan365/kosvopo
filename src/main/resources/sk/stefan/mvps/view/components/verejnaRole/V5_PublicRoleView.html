@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="package-mapping" content="c:sk.stefan.mvps.view.components"/>
+    <meta name="package-mapping" content="vr:sk.stefan.mvps.view.components.verejnaRole"/>
+</head>
+<body>
+<v-vertical-layout spacing margin width-full>
+    <v-horizontal-layout spacing width-full>
+        <v-vertical-layout spacing>
+            <vr-detail-verejne-funkce-panel _id="detailPanel"/>
+            <c-dokumenty-panel _id="dokumentyPanel"/>
+        </v-vertical-layout>
+        <v-vertical-layout spacing>
+            <vr-hlasovani-funkce-panel _id="hlasovaniFunkcePanel"/>
+        </v-vertical-layout>
+    </v-horizontal-layout>
+    <c-timeline-panel _id="timelinePanel" width-full/>
+</v-vertical-layout>
+</body>
+</html>

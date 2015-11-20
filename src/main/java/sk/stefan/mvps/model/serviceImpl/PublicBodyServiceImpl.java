@@ -9,6 +9,7 @@ import com.vaadin.ui.Notification;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
@@ -21,6 +22,7 @@ import sk.stefan.mvps.model.service.PublicBodyService;
  *
  * @author stefan
  */
+@Service
 public class PublicBodyServiceImpl implements PublicBodyService {
     
     
@@ -157,5 +159,10 @@ public class PublicBodyServiceImpl implements PublicBodyService {
             return pb.getName();
         }
 
+    }
+
+    @Override
+    public PublicBody savePublicBody(PublicBody publicBody) {
+        return pubBodyRepo.save(publicBody, false);
     }
 }

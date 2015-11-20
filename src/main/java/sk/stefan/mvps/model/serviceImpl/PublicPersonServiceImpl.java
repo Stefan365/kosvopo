@@ -7,6 +7,8 @@ package sk.stefan.mvps.model.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.repo.GeneralRepo;
 import sk.stefan.mvps.model.repo.UniRepo;
@@ -16,6 +18,7 @@ import sk.stefan.mvps.model.service.PublicPersonService;
  *
  * @author stefan
  */
+@Service
 public class PublicPersonServiceImpl implements PublicPersonService {
 
     private final GeneralRepo generalRepo;

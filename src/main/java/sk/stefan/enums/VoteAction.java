@@ -5,6 +5,8 @@
  */
 package sk.stefan.enums;
 
+import sk.stefan.interfaces.PresentableEnum;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
  *
  * @author stefan
  */
-public enum VoteAction {
+public enum VoteAction implements PresentableEnum{
     
     FOR("Za"), AGAINST("Proti"), REFAIN("Zadržal sa"), ABSENT("Neprítomný");
 

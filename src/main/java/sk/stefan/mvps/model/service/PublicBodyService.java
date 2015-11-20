@@ -54,6 +54,6 @@ public interface PublicBodyService {
     public PublicBody findOne(Integer pbId);
 
     public String getPresentationName(PublicBody pb);
-    
-    
+
+    PublicBody savePublicBody(PublicBody publicBody);
 }

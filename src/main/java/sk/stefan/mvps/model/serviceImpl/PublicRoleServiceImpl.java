@@ -3,6 +3,8 @@ package sk.stefan.mvps.model.serviceImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
@@ -11,6 +13,7 @@ import sk.stefan.mvps.model.repo.GeneralRepo;
 import sk.stefan.mvps.model.repo.UniRepo;
 import sk.stefan.mvps.model.service.PublicRoleService;
 
+@Service
 public class PublicRoleServiceImpl implements PublicRoleService {
 
     private final GeneralRepo generalRepo;
@@ -250,4 +253,8 @@ public class PublicRoleServiceImpl implements PublicRoleService {
         return pubRoleRepo.findByTwoParams(public_body_id, pbId, name, chiefRole);
     }
 
+    @Override
+    public List<PublicRole> findAllPublicRoleByPublicBodyId(Integer publicBodyId) {
+        return pubRoleRepo.findByParam("public_body_id", String.valueOf(publicBodyId));
+    }
 }

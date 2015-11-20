@@ -1,0 +1,13 @@
+<v-panel style-name="new-form" caption="Seznam verejných funkcí" icon="font://LIST">
+    <v-vertical-layout spacing margin width-full>
+        <v-text-field _id="tfSearch" width-full caption="Vyhladavanie" input-prompt="Zadejte kluč vyhladavanie"/>
+        <v-grid _id="grid" width-full clickable="true">
+            <table>
+                <col property-id="name"/>
+                <col property-id="tenure_id"/>
+                <col property-id="public_person_id"/>
+            </table>
+        </v-grid>
+        <v-button _id="addNewPublicRoleBt" icon="font://PLUS">Pridaj verejnou roli</v-button>
+    </v-vertical-layout>
+</v-panel>

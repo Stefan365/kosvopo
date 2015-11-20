@@ -873,8 +873,9 @@ public class UniRepo<E> implements MyRepo<E> {
      */
     private List<A_Change> createChangesToPersist(E entOrigin, E entChanged, Map<String, Class<?>> mapPar) {
 
-        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
-//        A_User user = new A_User();
+        //Tohle chce pryč. Z repa čučet do session nejde. Je to špageťárna.
+//        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+        A_User user = new A_User();
         Integer userId;
         Integer rowId;
         Object orig;

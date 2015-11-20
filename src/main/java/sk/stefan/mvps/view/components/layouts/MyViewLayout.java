@@ -25,8 +25,9 @@ public class MyViewLayout extends VerticalLayout {
      * @param titleStr
      */
     public MyViewLayout(String titleStr) {
+        setSizeUndefined();
         
-        this.setStyleName("ViewLayout");
+        //this.setStyleName("ViewLayout");
         this.titleLb = new ViewTitleLabel(titleStr);
         this.addComponent(titleLb);
 

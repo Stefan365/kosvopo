@@ -6,6 +6,8 @@
 package sk.stefan.mvps.model.service;
 
 import java.sql.SQLException;
+
+import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.enums.UserType;
 
@@ -30,5 +32,4 @@ public interface SecurityService {
  
     public byte[] encryptPassword(String password);
 
-    
 }

@@ -6,7 +6,7 @@ import sk.stefan.interfaces.PresentationName;
 /**
  * Trieda reprezentuje verejne cinnu fyzicku osobu (napr. Vaclav Havel, etc...).
  */
-public class PublicPerson implements PresentationName {
+public class PublicPerson implements PresentationName, TabEntity {
 
     public static final String TN = "t_public_person";
     
@@ -26,13 +26,17 @@ public class PublicPerson implements PresentationName {
 
     private Boolean visible;
 
-    
-    
-    
-    
-    
-    
-    
+
+    @Override
+    public String getEntityName() {
+        return "person";
+    }
+
+    @Override
+    public String getRelatedTabName() {
+        return "verejnaOsoba";
+    }
+
     //getters:
     public Integer getId() {
         return this.id;

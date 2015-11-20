@@ -1,0 +1,22 @@
+<v-css-layout style-name="card new-form" width-full>
+    <v-horizontal-layout style-name="v-panel-caption" width-full>
+        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Detail verejné funkce" icon="font://MALE" />
+        <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
+    </v-horizontal-layout>
+    <v-vertical-layout _id="readLayout" spacing margin>
+        <v-label _id="lblVerejnyOrgan" caption="Verejný orgán:"/>
+        <v-label _id="lblName" caption="Název funkce:"/>
+        <v-label _id="lblObdobi" caption="Obdobie:"/>
+        <v-label _id="lblVerejnaOsoba" caption="Verejná osoba:"/>
+    </v-vertical-layout>
+    <v-vertical-layout _id="editLayout" spacing margin>
+        <v-combo-box _id="cbName" width-full caption="Název funkce:" input-prompt="Vyberte funkci" required="true"/>
+        <v-combo-box _id="cbObdobi" width-full caption="Obdobie:" input-prompt="Vyberte obdobie" required="true"/>
+        <v-combo-box _id="cbVerejnaOsoba" width-full caption="Verejná osoba:" input-prompt="Vyberte verejnů osobu" required="true"/>
+        <v-horizontal-layout spacing>
+            <v-button _id="butSave" style-name="primary">Uložit</v-button>
+            <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>
+            <v-button _id="butRemove" style-name="danger" icon="font://TRASH_O">Odstranit</v-button>
+        </v-horizontal-layout>
+    </v-vertical-layout>
+</v-css-layout>

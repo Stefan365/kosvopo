@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.stereotype.Service;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
@@ -20,6 +22,7 @@ import sk.stefan.mvps.model.repo.UniRepo;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.utils.ToolsDao;
 
+@Service
 public class VoteServiceImpl implements VoteService {
 
     // repa:
@@ -106,7 +109,7 @@ public class VoteServiceImpl implements VoteService {
         Date d;
 
         List<Vote> lvotFin = new ArrayList<>();
-        List<Vote> lvot = voteRepo.findByParam("public_body_id",
+        List<Vote> lvot = voteRepo.findByParam("subject_id",
                 "" + pr.getPublic_body_id());
 
         for (Vote vo : lvot) {
@@ -151,7 +154,17 @@ public class VoteServiceImpl implements VoteService {
         return role;
 
     }
-    
+
+    @Override
+    public List<Vote> getAllVotesForPublicBody(PublicBody publicBody) {
+        return voteRepo.findByParam("subject_id", String.valueOf(publicBody.getId()));
+    }
+
+    @Override
+    public List<VoteOfRole> getAllVotesOfPublicRole(PublicRole publicRole) {
+        return voteOfRoleRepo.findByParam("public_role_id", String.valueOf(publicRole.getId()));
+    }
+
 
     @Override
     public String getVoteDate(Vote vote) {

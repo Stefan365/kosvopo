@@ -24,6 +24,8 @@ import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.entity.VoteClassification;
 import sk.stefan.mvps.model.entity.VoteOfRole;
+import sk.stefan.mvps.view.components.verejnaOsoba.V4_PublicPersonView;
+import sk.stefan.mvps.view.components.verejnaOsoba.V4s_PublicPersonsView;
 import sk.stefan.utils.ToolsNames;
 
 /**
@@ -45,12 +47,12 @@ public class MyNavigator extends Navigator {
     private void initNavigator() {
         
         this.addView("V1_LoginView", new V1_LoginView());
-        this.addView("V2_EnterView", new V2_EnterView());
-        this.addView("V3_PublicBodyView", new V3_PublicBodyView());
-        this.addView("V3s_PublicBodiesView", new V3s_PublicBodiesView());
-        this.addView("V4_PublicPersonView", new V4_PublicPersonView());
-        this.addView("V4s_PublicPersonsView", new V4s_PublicPersonsView());
-        this.addView("V5_PublicRoleView", new V5_PublicRoleView());
+//        this.addView("V2_EnterView", new V2_EnterView());
+//        this.addView("V3_PublicBodyView", new V3_PublicBodyView());
+//        this.addView("V3s_PublicBodiesView", new V3s_PublicBodiesView());
+//        this.addView("V4_PublicPersonView", new V4_PublicPersonView());
+//        this.addView("V4s_PublicPersonsView", new V4s_PublicPersonsView());
+//        this.addView("V5_PublicRoleView", new V5_PublicRoleView());
         this.addView("V6_VoteView", new V6_VoteView());
         this.addView("V6s_VotesView", new V6s_VotesView());
         this.addView("V7_AdministrationView", new V7_AdministrationView());

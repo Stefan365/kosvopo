@@ -8,7 +8,7 @@ import sk.stefan.interfaces.PresentationName;
 /**
  * Trieda reprezentuje rolu, resp. funkciu verejne osoby (napr. poslanec, predseda zastupitelstva, etc).
  */
-public class PublicRole implements PresentationName {
+public class PublicRole implements PresentationName, TabEntity {
 
     public static final String TN = "t_public_role";
     
@@ -29,16 +29,17 @@ public class PublicRole implements PresentationName {
 
     private Boolean visible;
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    @Override
+    public String getEntityName() {
+        return "role";
+    }
+
+    @Override
+    public String getRelatedTabName() {
+        return "verejnaRole";
+    }
+
     // getters:
     public Integer getId() {
         return this.id;

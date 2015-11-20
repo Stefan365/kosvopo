@@ -5,6 +5,8 @@
  */
 package sk.stefan.enums;
 
+import sk.stefan.interfaces.PresentableEnum;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
  * Typy publiRole.
  * @author stefan
  */
-public enum PublicRoleType {
+public enum PublicRoleType implements PresentableEnum {
 
     POSLANEC("poslanec"), TAJOMNIK("tajomník"), PODPREDSEDA("podpredseda"), PREDSEDA("predseda");
 
@@ -22,6 +24,7 @@ public enum PublicRoleType {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }

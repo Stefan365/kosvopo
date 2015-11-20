@@ -4,6 +4,7 @@ import com.vaadin.server.VaadinSession;
 import java.security.MessageDigest;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.repo.GeneralRepo;
 import sk.stefan.mvps.model.service.SecurityService;
@@ -13,6 +14,7 @@ import sk.stefan.mvps.model.service.SecurityService;
  *
  * @author stefan
  */
+@Service
 public class SecurityServiceImpl implements SecurityService {
 
     private static final Logger log = Logger.getLogger(SecurityServiceImpl.class);

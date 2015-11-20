@@ -9,6 +9,8 @@ import sk.stefan.mvps.model.entity.District;
 import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.entity.Region;
 
+import java.util.List;
+
 /**
  *
  * @author stefan
@@ -21,6 +23,5 @@ public interface LocationService {
 
     public Region findOneRegion(Integer regId);
 
-    
-    
+    List<Location> findAll();
 }

@@ -12,7 +12,7 @@ v-select-optiongroup-horizontal .v-select-option {
     padding-right: 10px;
 }
 // Defines the plaintext font size, weight and family. Font size affects general component sizing.
-//$v-font-size: 16px;
+$v-font-size: 16px !default;
 //$v-font-weight: 300;
 $v-font-family: Arial, Courier, sans-serif;
 
@@ -39,144 +39,61 @@ $v-error-indicator-color: #ed473b;
 // For more information, see: https://vaadin.com/book/-/page/themes.valo.html
 // Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples
 
+// Override layout margins
+$v-layout-margin-top: 5px;
+$v-layout-margin-right: 5px;
+$v-layout-margin-bottom: 5px;
+$v-layout-margin-left: 5px;
+//#08b0ba
+// Override focus color
+$v-focus-color: #00f0d0 !default;
+
 @import "../valo/valo.scss";
+
+
 
 @mixin mytheme {
     @include valo;
 
-    .v-caption-labeled {
-        font-weight: bold;
-    }
+    .view-container {
+          background-color: white;
+        }
 
-    .appCaption{
-        margin-top: 20px;
-    }
+    // panel
+    .new-form {
 
-    .applayout{
-        border: solid;
-        border-width: 1px;
-        border-color: #c5c5c5;
-        border-radius: 4px;
-        background-color: white;
-        margin: 12px;
-        padding: 12px; 
-    }
-
-    .appMenulayout{
-        border-bottom-style: solid;
-        border-bottom-color: #c5c5c5; 
-        border-bottom-width: 1px;
-        padding: 4px 0px 8px 0px; 
-    }
-
-    .appHotTasksLayout{
-        margin: 8px 0px 4px 0px;
-        padding: 6px 8px 4px 8px;
-        border-style: solid;
-        border-width: thin;
-        border-color: $v-error-indicator-color;
-        border-radius: $v-border-radius;
-        background-color: lighten($v-error-indicator-color, 40%);
-        cursor: pointer;
-    }	
-    
-    .v-verticallayout{
-        
-        
-    }
-    
-    .v-horizontallayout{
-        /*border: solid red;*/
-    }
-    
-   
-    .viewLayout{
-        
-        border: solid #ffff33;
-        border-width: 1px;
-        border-style: groove;
-        padding: 20px 20px 20px 20px;
-        position: absolute; 
-        
-    }
-    
-    .viewTitleLabel{
-        
-        text-height: 20px;
-    
-    }
-
-    /*PANELS:*/
-    
-    .detailedPanel{
-    }
-    
-    .briefPanel{
-    }
-    
-    
-    
-    .PUB_detPanel{
-    }
-    .PUB_briefPanel{
-    }
-
-    .PUP_detPanel{
-    }
-    .PUP_briefPanel{
-    }
-
-    .PUR_detPanel{
-    }
-    .PUR_briefPanel{
-    }
-
-    
-
-    .VOT_detPanel{
-    
-    }
-    
-    
-    
-    .VOT_briefPanel{
-        border: solid #ffff33;
-        border-width: 1px;
-        border-style: groove;
-    }
-
-    .SUB_detPanel{
-    }
-    .SUB_briefPanel{
-    }
- 
-    .THE_detPanel{
-    }
-    .THE_briefPanel{
-    }
+      .v-caption {
+        padding-bottom: 0 !important;
+      }
 
 
-    .viewSearchTextArea{
-    }
- 
-    .voteBriefPanel{
-        
-       /*background-color: white;*/
-/*        caption: 30px;
-        caption-text-align: center;*/
-        
-    }   
-    
-    /*END OF PANELS*/
-    
-    .voteLayout{
-        
-        padding: 20px 20px 20px 20px;
-        
+      .v-panel-caption {
+        // Nadpis komponenty NEmá mít styl h3
+        .v-caption-on-top .v-caption .v-captiontext {
+          line-height: 34px;
+        }
+      }
+
+      .v-verticallayout {
+          .v-captiontext {
+              font-size: 12px;
+              font-weight: 600;
+          }
+      }
     }
 
-    .todoInfoLayout{
-        padding: 0px 0px 0px 8px; 
+    /**
+     * Upravný label, ve kterém je inline ikona.
+     */
+    .v-label.icon-label {
+      .v-icon {
+        width: 1.5em;
+        text-align: center;
+      }
     }
 
+    .v-panel-caption {
+        @include valo-panel-caption-style($background-color: $v-focus-color);
+        line-height: 34px;
+    }
 }

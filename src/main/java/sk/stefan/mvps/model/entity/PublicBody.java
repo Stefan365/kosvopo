@@ -7,7 +7,7 @@ import sk.stefan.mvps.model.serviceImpl.PublicBodyServiceImpl;
 /**
  * Trieda reprezentuje verjny organ (mestke zastupitelstvo, parlament, ...).
  */
-public class PublicBody implements PresentationName {
+public class PublicBody implements PresentationName, TabEntity {
 
     public static final String TN = "t_public_body";
     
@@ -25,7 +25,18 @@ public class PublicBody implements PresentationName {
 
     private Boolean visible;
 
+    @Override
+    public String getEntityName() {
+        return "body";
+    }
+
+    @Override
+    public String getRelatedTabName() {
+        return "verejnyOrgan";
+    }
+
     // getters:
+    @Override
     public Integer getId() {
         return this.id;
     }

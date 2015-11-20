@@ -9,6 +9,7 @@ import com.vaadin.ui.Notification;
 import java.util.Date;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.A_Role;
 import sk.stefan.mvps.model.entity.A_User;
@@ -22,6 +23,7 @@ import sk.stefan.mvps.model.service.UserService;
  *
  * @author stefan
  */
+@Service
 public class UserServiceImpl implements UserService {
 
     private static final Logger log = Logger.getLogger(UserServiceImpl.class);

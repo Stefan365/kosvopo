@@ -5,6 +5,7 @@
  */
 package sk.stefan.mvps.model.service;
 
+import java.util.Collection;
 import java.util.List;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
@@ -109,6 +110,8 @@ public interface VoteService {
 
     public String getSubjectPresentationName(Subject sub);
 
-    
 
+    List<Vote> getAllVotesForPublicBody(PublicBody publicBody);
+
+    List<VoteOfRole> getAllVotesOfPublicRole(PublicRole publicRole);
 }

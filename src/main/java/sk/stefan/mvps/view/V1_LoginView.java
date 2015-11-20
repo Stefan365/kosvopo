@@ -5,6 +5,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Sizeable;
+import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
@@ -16,6 +17,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
@@ -23,20 +26,28 @@ import sk.stefan.mvps.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.view.components.layouts.MyViewLayout;
 import sk.stefan.ui.KosvopoUI;
+import sk.stefan.ui.TopPanel;
 import sk.stefan.utils.ToolsNames;
+
+import javax.annotation.PostConstruct;
 
 /**
  * View pre login.
  */
-@SuppressWarnings("serial")
+@SpringView(name = "loginView", ui = KosvopoUI.class)
+@Scope("prototype")
 public class V1_LoginView extends MyViewLayout implements View {
+
+    @Autowired
+    private TopPanel topPanel;
 
     private static final Logger log = Logger.getLogger(V1_LoginView.class);
 
     //servisy:
-    private final SecurityService securityService;
+    @Autowired
+    private SecurityService securityService;
     
-    private final UserService userService;
+    private UserService userService;
 
     private Button loginBt;
 
@@ -49,22 +60,28 @@ public class V1_LoginView extends MyViewLayout implements View {
 
     private VerticalLayout formVl;
 
-    private final VerticalLayout temporaryLy;
-    private final Navigator nav;
+    private VerticalLayout temporaryLy;
+    private Navigator nav;
 
     public V1_LoginView() {
-        super("Prihlásenie sa do systému");
-        this.nav = UI.getCurrent().getNavigator();
+
+    }
+
+    @PostConstruct
+    public void init() {
+        //super("Prihlásenie sa do systému");
+        //this.nav = UI.getCurrent().getNavigator();
 
         temporaryLy = new VerticalLayout();
         this.addComponent(temporaryLy);
 
         //inicializace BIS
-        securityService = new SecurityServiceImpl();
+//        securityService = new SecurityServiceImpl();
         userService = new UserServiceImpl();
 
         this.initFields();
         this.initLayoutContent();
+
     }
 
     private void initLayoutContent() {
@@ -105,8 +122,9 @@ public class V1_LoginView extends MyViewLayout implements View {
 //                    
                     if (securityService.checkPassword(passwordPf.getValue(), userPwHash)) {
                         securityService.login(user);
-                        ((KosvopoUI)UI.getCurrent()).getMainView().getNavComp().obohatNavigator();
-                        ((KosvopoUI)UI.getCurrent()).getMainView().getNavComp().getLoginBut().setCaption("logout");
+//                        ((KosvopoUI)UI.getCurrent()).getMainView().getNavComp().obohatNavigator();
+//                        ((KosvopoUI)UI.getCurrent()).getMainView().getNavComp().getLoginBut().setCaption("logout");
+                        topPanel.updateLogButtonCaption("logout");
                         Notification.show("prihlásenie prebehlo úspešne!");
                         nav.navigateTo("V2_EnterView");
                     } else {

@@ -5,16 +5,20 @@
  */
 package sk.stefan.mvps.model.serviceImpl;
 
+import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.District;
 import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.entity.Region;
 import sk.stefan.mvps.model.repo.UniRepo;
 import sk.stefan.mvps.model.service.LocationService;
 
+import java.util.List;
+
 /**
  *
  * @author stefan
  */
+@Service
 public class ZBD_LocationServiceImpl implements LocationService {
     
     private final UniRepo<Location> locRepo;
@@ -52,5 +56,10 @@ public class ZBD_LocationServiceImpl implements LocationService {
         return regRepo.findOne(regId);
         
     }
-    
+
+    @Override
+    public List<Location> findAll() {
+        return locRepo.findAll();
+    }
+
 }

@@ -57,5 +57,6 @@ public interface PublicRoleService {
     public String getPresentationName2(PublicRole pr);
 
     public List<PublicRole> findByTwoParams(String public_body_id, String pbId, String name, String chiefRole);
-    
+
+    List<PublicRole> findAllPublicRoleByPublicBodyId(Integer publicBodyId);
 }
