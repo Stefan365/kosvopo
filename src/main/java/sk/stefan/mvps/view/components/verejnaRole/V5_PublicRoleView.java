@@ -6,27 +6,19 @@
 package sk.stefan.mvps.view.components.verejnaRole;
 
 import com.vaadin.annotations.DesignRoot;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.UI;
-import java.util.List;
 
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.ViewTab;
-import sk.stefan.enums.UserType;
 import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
-import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.PublicRole;
-import sk.stefan.mvps.model.entity.TabEntity;
-import sk.stefan.mvps.model.entity.VoteOfRole;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.service.VoteService;
@@ -34,15 +26,7 @@ import sk.stefan.mvps.model.serviceImpl.PublicRoleServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.mvps.view.components.DokumentyPanel;
-import sk.stefan.mvps.view.components.MyTimeline;
 import sk.stefan.mvps.view.components.TimelinePanel;
-import sk.stefan.mvps.view.components.layouts.DownAndUploaderBriefLayout;
-import sk.stefan.mvps.view.components.layouts.DownloaderBriefLayout;
-import sk.stefan.mvps.view.components.layouts.MyViewLayout;
-import sk.stefan.mvps.view.components.layouts.VORs_briefLayout;
-import sk.stefan.mvps.view.components.panContents.PUR_detPanContent;
-import sk.stefan.mvps.view.components.panels.MyDetailedPanel;
-import sk.stefan.mvps.view.components.panels.MyTimelinePanel;
 import sk.stefan.mvps.view.tabs.TabComponent;
 import sk.stefan.wrappers.FunctionalEditWrapper;
 
@@ -226,6 +210,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements TabCompon
         this.publicRole = (PublicRole) entity;
         detailPanel.setPublicRole(publicRole);
         hlasovaniFunkcePanel.setPublicRole(publicRole);
+        timelinePanel.setRelatedEntity(publicRole);
         timelinePanel.setVotes(voteService.getAllVotesForPublicRole(publicRole));
     }
 

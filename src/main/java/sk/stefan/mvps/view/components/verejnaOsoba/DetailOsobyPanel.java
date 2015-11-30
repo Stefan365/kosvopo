@@ -19,6 +19,8 @@ import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.SecurityService;
+import sk.stefan.mvps.view.components.ImageComponent;
+import sk.stefan.utils.DateTimeUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.StringJoiner;
@@ -38,6 +40,7 @@ public class DetailOsobyPanel extends CssLayout {
     private PublicRoleService publicRoleService;
 
     //Design
+    private ImageComponent imageComponent;
     private Label lblCaption;
     private Button butEdit;
     private VerticalLayout readLayout;
@@ -59,8 +62,6 @@ public class DetailOsobyPanel extends CssLayout {
     private SaveListener<PublicPerson> saveListener;
     private RemoveListener<PublicPerson> removeListener;
 
-    private SimpleDateFormat format;
-
     public DetailOsobyPanel() {
         Design.read(this);
         bfg = new BeanFieldGroup<>(PublicPerson.class);
@@ -68,12 +69,10 @@ public class DetailOsobyPanel extends CssLayout {
         bfg.bind(tfPrijmeni, "last_name");
         bfg.bind(dfDatumNarozeni, "date_of_birth");
 
-        String dateFormat = "d. MMMMM yyyy";
-        format = new SimpleDateFormat(dateFormat);
-        dfDatumNarozeni.setDateFormat(dateFormat);
+        dfDatumNarozeni.setDateFormat(DateTimeUtils.getDatePattern());
 
         butEdit.addClickListener(event -> setReadOnly(false));
-        butCancel.addClickListener(event -> setReadOnly(true));
+        butCancel.addClickListener(event -> onCancel());
         butSave.addClickListener(event -> onSave());
         butRemove.addClickListener(event -> onRemove());
     }
@@ -91,19 +90,21 @@ public class DetailOsobyPanel extends CssLayout {
         bfg.setItemDataSource(publicPerson);
 
         lblName.setValue(publicPerson.getPresentationName());
-        lblDatumNarozeni.setValue(format.format(publicPerson.getDate_of_birth()));
+        lblDatumNarozeni.setValue(DateTimeUtils.getDateFormat().format(publicPerson.getDate_of_birth()));
 
         StringJoiner sj = new StringJoiner(System.lineSeparator());
         publicRoleService.getActualPublicRolesOfPublicPerson(publicPerson).forEach(role -> {
             sj.add(role.getPresentationName());
         });
-
+        lblAktualniRole.setValue(sj.toString().isEmpty() ? "Žádné role" : sj.toString());
+        imageComponent.setImage(publicPerson.getImage());
         setReadOnly(true);
     }
 
     @Override
     public void setReadOnly(boolean readOnly) {
         butEdit.setVisible(readOnly);
+        imageComponent.setReadOnly(readOnly);
         readLayout.setVisible(readOnly);
         editLayout.setVisible(!readOnly);
     }
@@ -115,10 +116,16 @@ public class DetailOsobyPanel extends CssLayout {
         }
     }
 
+    private void onCancel() {
+        imageComponent.setImage(publicPerson.getImage());
+        setReadOnly(true);
+    }
+
     private void onSave() {
         if (bfg.isValid()) {
             try {
                 bfg.commit();
+                publicPerson.setImage(imageComponent.getImage());
                 if (saveListener != null) {
                     saveListener.save(publicPerson);
                 }

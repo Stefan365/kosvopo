@@ -2,11 +2,12 @@ package sk.stefan.mvps.model.entity;
 
 import java.sql.Date;
 import sk.stefan.interfaces.PresentationName;
+import sk.stefan.interfaces.TabEntity;
 
 /**
  * Trieda reprezentuje verejne cinnu fyzicku osobu (napr. Vaclav Havel, etc...).
  */
-public class PublicPerson implements PresentationName, TabEntity {
+public class PublicPerson implements TabEntity {
 
     public static final String TN = "t_public_person";
     
@@ -19,10 +20,9 @@ public class PublicPerson implements PresentationName, TabEntity {
     private String last_name;
 
     private Date date_of_birth;
-    
-    //potom pridat
-//    private byte[] photo;
-    
+
+    private byte[] image;
+
 
     private Boolean visible;
 
@@ -86,5 +86,13 @@ public class PublicPerson implements PresentationName, TabEntity {
     @Override
     public String getPresentationName() {
         return (this.getFirst_name() + " " + this.getLast_name());
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

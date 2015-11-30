@@ -7,6 +7,8 @@ package sk.stefan.mvps.model.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.PersonClassification;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.Vote;
@@ -19,6 +21,7 @@ import sk.stefan.mvps.model.service.ClassificationService;
  *
  * @author stefan
  */
+@Service
 public class ClassificationServiceImpl implements ClassificationService {
 
     private final UniRepo<PersonClassification> personClassRepo;

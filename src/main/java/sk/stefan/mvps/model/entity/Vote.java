@@ -1,6 +1,8 @@
 package sk.stefan.mvps.model.entity;
 
 import java.util.Date;
+
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.enums.VoteResult;
@@ -9,7 +11,7 @@ import sk.stefan.interfaces.PresentationName;
 /**
  * Predstavuje jedno konkretne hlasovanie verejneho organu.
  */
-public class Vote implements PresentationName {
+public class Vote implements TabEntity {
 
     public static final String TN = "t_vote";
 
@@ -36,15 +38,19 @@ public class Vote implements PresentationName {
     private VoteResult result_vote;
 
     private Boolean visible;
-    
-    
-    
-    
-    
-    
-    
 
-//     getters adn setters:
+
+    @Override
+    public String getEntityName() {
+        return "vote";
+    }
+
+    @Override
+    public String getRelatedTabName() {
+        return "hlasovani";
+    }
+
+    //     getters adn setters:
     public Integer getId() {
         return this.id;
     }

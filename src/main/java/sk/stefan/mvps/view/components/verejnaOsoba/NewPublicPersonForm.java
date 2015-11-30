@@ -13,8 +13,9 @@ import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.ViewTab;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.PublicPerson;
-import sk.stefan.mvps.model.entity.TabEntity;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.DateTimeUtils;
 
 /**
  * Created by elopin on 18.11.2015.
@@ -38,6 +39,8 @@ public class NewPublicPersonForm extends VerticalLayout implements TabComponent 
 
     public NewPublicPersonForm() {
         Design.read(this);
+
+        dfNarozeni.setDateFormat(DateTimeUtils.getDatePattern());
 
         bfg = new BeanFieldGroup<>(PublicPerson.class);
         bfg.bind(tfMeno, "first_name");

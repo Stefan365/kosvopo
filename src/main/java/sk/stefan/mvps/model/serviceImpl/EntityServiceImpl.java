@@ -1,10 +1,12 @@
 package sk.stefan.mvps.model.serviceImpl;
 
 import org.springframework.stereotype.Service;
+import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
-import sk.stefan.mvps.model.entity.TabEntity;
+import sk.stefan.interfaces.TabEntity;
+import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.repo.UniRepo;
 import sk.stefan.mvps.model.service.EntityService;
 
@@ -17,12 +19,14 @@ public class EntityServiceImpl implements EntityService {
     private UniRepo<PublicBody> pubBodyRepo;
     private UniRepo<PublicRole> pubRoleRepo;
     private UniRepo<PublicPerson> pubPersonRepo;
+    private UniRepo<Vote> voteRepo;
 
 
     public EntityServiceImpl() {
         pubBodyRepo = new UniRepo<>(PublicBody.class);
         pubRoleRepo = new UniRepo<>(PublicRole.class);
         pubPersonRepo = new UniRepo<>(PublicPerson.class);
+        voteRepo = new UniRepo<>(Vote.class);
     }
 
     @Override
@@ -47,6 +51,8 @@ public class EntityServiceImpl implements EntityService {
             return "verejnaRole" + entity.getId();
         } else if (PublicPerson.class.isAssignableFrom(entity.getClass())) {
             return "verejnaOsoba" + entity.getId();
+        } else if (Vote.class.isAssignableFrom(entity.getClass())) {
+            return "hlasovani" + entity.getId();
         }
         throw new RuntimeException("Nepodporovaná tvorba id záložky pro entitu " + entity.getClass());
     }
@@ -59,6 +65,8 @@ public class EntityServiceImpl implements EntityService {
             return pubRoleRepo.save((PublicRole) entity, entity.getId() != null);
         } else if (PublicPerson.class.isAssignableFrom(entity.getClass())) {
             return pubPersonRepo.save((PublicPerson) entity, entity.getId() != null);
+        } else if(Vote.class.isAssignableFrom(entity.getClass())) {
+            return voteRepo.save((Vote) entity, entity.getId() != null);
         } else {
             throw new RuntimeException("Nepodarilo sa uložiť entitu " + entity);
         }
@@ -81,6 +89,8 @@ public class EntityServiceImpl implements EntityService {
                 return pubRoleRepo.findOne(entityId);
             case "verejnaOsoba":
                 return pubPersonRepo.findOne(entityId);
+            case "hlasovani":
+                return voteRepo.findOne(entityId);
             default:
                 throw new RuntimeException("Nepodporované vyhledání entity pro záložku: " + tabName);
         }

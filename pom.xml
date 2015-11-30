@@ -28,7 +28,7 @@
         <tomcat.port>8080</tomcat.port>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.5.8</vaadin.version>
+        <vaadin.version>7.5.9</vaadin.version>
         <spring.boot.version>1.2.7.RELEASE</spring.boot.version>
         <vaadin.boot.version>1.0.0.beta1</vaadin.boot.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
@@ -124,13 +124,18 @@
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-validator</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter</artifactId>-->
+        <!--</dependency>-->
+
 
         <!-- JPA Container-->
         <dependency>
@@ -317,4 +322,24 @@
 
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </dependency>
+
+                <!-- Nechápu proč, ale to tu musí být jinak Undertow skončí s ClassNotFoundException
+
+                     (přitom má servlet-api v závislostech) -->
+
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

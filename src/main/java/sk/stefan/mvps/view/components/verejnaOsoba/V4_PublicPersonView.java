@@ -18,7 +18,7 @@ import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
-import sk.stefan.mvps.model.entity.TabEntity;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.ClassificationService;
 import sk.stefan.mvps.model.service.PublicPersonService;
 import sk.stefan.mvps.model.service.PublicRoleService;
@@ -266,6 +266,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements TabComp
         this.publicPerson = (PublicPerson) tabEntity;
         detailPanel.setPublicPerson(publicPerson);
         verejneFunkcePanel.setPublicPerson(publicPerson);
+        timelinePanel.setRelatedEntity(publicPerson);
         timelinePanel.setVotes(voteService.getAllVotesForPublicPerson(publicPerson));
     }
 

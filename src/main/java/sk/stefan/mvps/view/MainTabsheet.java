@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContext;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
-import sk.stefan.mvps.model.entity.TabEntity;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.EntityService;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.view.tabs.TabComponent;
@@ -68,10 +68,13 @@ public class MainTabsheet extends TabSheet implements View {
             ParamsCache params = new ParamsCache(event.getParameters());
             String tabName = params.getTabName();
             Integer id = params.getId();
+            Integer parentId = params.getParentId();
+            String parentName = params.getParentName();
 
-            TabComponent tab = tabMap.get(tabName + (id == null ? "" : id));
+            String tabId = tabName + (id != null ? id : parentId != null ? parentId : "");
+            TabComponent tab = tabMap.get(tabId);
             if (tab == null) {
-                tab = context.getBean((Class<? extends TabComponent>) tabFactory.getTabTypeByName(params.getTabName()));
+                tab = context.getBean((Class<? extends TabComponent>) tabFactory.getTabTypeByName(tabName));
 
                 if (params.getId() != null) {
                     TabEntity entity = entityService.getTabEntityByTabName(params.getTabName(), params.getId());
@@ -130,10 +133,12 @@ public class MainTabsheet extends TabSheet implements View {
         TabComponent tab = ((TabComponent) getSelectedTab());
         tab.show();
         String uriFragment;
-        if (tab.getEntity() == null) {
-            uriFragment = linkService.getUriFragmentForTab(tab.getClass()).substring(1);
-        } else {
+        if (tab.getEntity() != null) {
             uriFragment = linkService.getUriFragmentForEntity(tab.getEntity()).substring(1);
+        } else if (tab.getParentEntity() != null) {
+            uriFragment = linkService.getUriFragmentForTabWithParentEntity(tab.getClass(), tab.getParentEntity().getEntityName(), tab.getParentEntity().getId()).substring(1);
+        } else {
+            uriFragment = linkService.getUriFragmentForTab(tab.getClass()).substring(1);
         }
         Page.getCurrent().setUriFragment(uriFragment, false);
     }

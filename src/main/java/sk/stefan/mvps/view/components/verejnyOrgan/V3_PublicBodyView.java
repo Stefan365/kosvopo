@@ -17,7 +17,7 @@ import sk.stefan.annotations.ViewTab;
 import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.PublicBody;
-import sk.stefan.mvps.model.entity.TabEntity;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.UserService;
@@ -98,6 +98,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements TabCompon
         this.publicBody = (PublicBody) tabEntity;
         detailPanel.setPublicBody(publicBody);
         funkcePanel.setPublicBody(publicBody);
+        timeline.setRelatedEntity(publicBody);
         timeline.setVotes(voteService.getAllVotesForPublicBody(publicBody));
     }
 

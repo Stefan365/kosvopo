@@ -1,13 +1,14 @@
 package sk.stefan.mvps.model.entity;
 
 import sk.stefan.interfaces.PresentationName;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.serviceImpl.PublicBodyServiceImpl;
 
 /**
  * Trieda reprezentuje verjny organ (mestke zastupitelstvo, parlament, ...).
  */
-public class PublicBody implements PresentationName, TabEntity {
+public class PublicBody implements TabEntity {
 
     public static final String TN = "t_public_body";
     
@@ -22,6 +23,8 @@ public class PublicBody implements PresentationName, TabEntity {
     private String name;
 
     private Integer location_id;
+
+    private byte[] image;
 
     private Boolean visible;
 
@@ -80,4 +83,11 @@ public class PublicBody implements PresentationName, TabEntity {
         return pubBodyService.getPresentationName(this);
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }
