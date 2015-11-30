@@ -25,7 +25,7 @@
 
     <properties>
         <project.encoding>UTF-8</project.encoding>
-        <tomcat.port>8080</tomcat.port>
+        <tomcat.port>8085</tomcat.port>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vaadin.version>7.5.8</vaadin.version>
@@ -123,6 +123,10 @@
                 <exclusion>
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-validator</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-core</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -265,7 +269,7 @@
 
                     <style>OBF</style>
                     <strict>true</strict>
-                    <runTarget>http://localhost:8080/kosvopo6</runTarget>
+                    <runTarget>http://localhost:8085/kosvopo6</runTarget>
                     <skip>false</skip>
                     <validateOnly>false</validateOnly>
                 </configuration>
@@ -288,6 +292,7 @@
                 </executions>
             </plugin>
 
+			<!--
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -309,7 +314,7 @@
                     </execution>
                 </executions>
             </plugin>
-
+-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
