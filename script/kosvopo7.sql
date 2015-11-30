@@ -26,11 +26,11 @@ CREATE TABLE `a_change` (
 
 INSERT INTO `a_change` (`id`, `date_stamp`, `user_id`, `public_body_id`, `table_name`, `column_name`, `row_id`, `old_value`, `new_value`, `visible`) VALUES
 (1,	'2015-06-20',	4,	NULL,	't_public_person',	'first_name',	4,	'Alex',	'Alexej',	CONV('1', 2, 10) + 0),
-(2,	'2015-06-20',	4,	NULL,	't_public_person',	'last_name',	1,	'Proch·zka',	'Proch·zkar',	CONV('1', 2, 10) + 0),
-(3,	'2015-06-20',	4,	NULL,	't_public_person',	'last_name',	1,	'Proch·zkar',	'Proch·zkare',	CONV('1', 2, 10) + 0),
+(2,	'2015-06-20',	4,	NULL,	't_public_person',	'last_name',	1,	'ProchÔøΩzka',	'ProchÔøΩzkar',	CONV('1', 2, 10) + 0),
+(3,	'2015-06-20',	4,	NULL,	't_public_person',	'last_name',	1,	'ProchÔøΩzkar',	'ProchÔøΩzkare',	CONV('1', 2, 10) + 0),
 (4,	'2015-06-20',	4,	NULL,	't_public_person',	'first_name',	2,	'Karol',	'Karolko',	CONV('1', 2, 10) + 0),
 (5,	'2015-06-20',	4,	NULL,	't_public_person',	'date_of_birth',	2,	'1966-05-13',	'1966-05-17',	CONV('1', 2, 10) + 0),
-(6,	'2015-06-20',	4,	NULL,	't_public_person',	'last_name',	2,	'?˙tora',	'?˙tora',	CONV('1', 2, 10) + 0),
+(6,	'2015-06-20',	4,	NULL,	't_public_person',	'last_name',	2,	'?ÔøΩtora',	'?ÔøΩtora',	CONV('1', 2, 10) + 0),
 (7,	'2015-06-20',	4,	NULL,	't_public_person',	'visible',	5,	'true',	'false',	CONV('1', 2, 10) + 0),
 (8,	'2015-06-20',	4,	NULL,	't_person_classification',	'visible',	2,	'true',	'false',	CONV('1', 2, 10) + 0),
 (9,	'2015-06-20',	4,	NULL,	't_public_role',	'visible',	5,	'true',	'false',	CONV('1', 2, 10) + 0),
@@ -99,11 +99,11 @@ INSERT INTO `a_change` (`id`, `date_stamp`, `user_id`, `public_body_id`, `table_
 (72,	'2015-07-31',	4,	NULL,	't_public_person',	'id',	8,	'null',	'8',	CONV('1', 2, 10) + 0),
 (73,	'2015-07-31',	4,	NULL,	't_public_person',	'first_name',	8,	'null',	'Kamil',	CONV('1', 2, 10) + 0),
 (74,	'2015-08-07',	4,	NULL,	't_public_role',	'name',	3,	'PREDSEDA',	'POSLANEC',	CONV('1', 2, 10) + 0),
-(75,	'2015-09-04',	4,	NULL,	't_public_person',	'last_name',	2,	'?˙tora',	'?˙torako',	CONV('1', 2, 10) + 0),
-(76,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	5,	'MestkÈ zastupite?stvo Koöice z·humienok',	'MestkÈ zastupitelstvo Koöice z·humienok',	CONV('1', 2, 10) + 0),
-(77,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	4,	'MestkÈ zastupite?stvo R·zto?no',	'MestkÈ zastup R·zto?no',	CONV('1', 2, 10) + 0),
+(75,	'2015-09-04',	4,	NULL,	't_public_person',	'last_name',	2,	'?ÔøΩtora',	'?ÔøΩtorako',	CONV('1', 2, 10) + 0),
+(76,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	5,	'MestkÔøΩ zastupite?stvo KoÔøΩice zÔøΩhumienok',	'MestkÔøΩ zastupitelstvo KoÔøΩice zÔøΩhumienok',	CONV('1', 2, 10) + 0),
+(77,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	4,	'MestkÔøΩ zastupite?stvo RÔøΩzto?no',	'MestkÔøΩ zastup RÔøΩzto?no',	CONV('1', 2, 10) + 0),
 (78,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	7,	'KOKOSOVO',	'KOsakovo',	CONV('1', 2, 10) + 0),
-(79,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	5,	'MestkÈ zastupitelstvo Koöice z·humienok',	'MestkÈ zvtovo Koöice z·humienok',	CONV('1', 2, 10) + 0),
+(79,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	5,	'MestkÔøΩ zastupitelstvo KoÔøΩice zÔøΩhumienok',	'MestkÔøΩ zvtovo KoÔøΩice zÔøΩhumienok',	CONV('1', 2, 10) + 0),
 (80,	'2015-09-06',	4,	NULL,	't_public_body',	'visible',	9,	'null',	'true',	CONV('1', 2, 10) + 0),
 (81,	'2015-09-06',	4,	NULL,	't_public_body',	'name',	9,	'null',	'KUKUKUK',	CONV('1', 2, 10) + 0),
 (82,	'2015-09-06',	4,	NULL,	't_public_body',	'id',	9,	'null',	'9',	CONV('1', 2, 10) + 0),
@@ -118,7 +118,7 @@ INSERT INTO `a_change` (`id`, `date_stamp`, `user_id`, `public_body_id`, `table_
 (91,	'2015-09-06',	4,	NULL,	't_tenure',	'visible',	7,	'null',	'true',	CONV('1', 2, 10) + 0),
 (92,	'2015-09-06',	4,	NULL,	't_tenure',	'id',	7,	'null',	'7',	CONV('1', 2, 10) + 0),
 (93,	'2015-09-06',	4,	NULL,	't_tenure',	'since',	7,	'null',	'2015-09-15',	CONV('1', 2, 10) + 0),
-(94,	'2015-09-12',	4,	NULL,	't_public_body',	'name',	4,	'MestkÈ zastup R·zto?no',	'MestkÈ zastup R·ztocno',	CONV('1', 2, 10) + 0),
+(94,	'2015-09-12',	4,	NULL,	't_public_body',	'name',	4,	'MestkÔøΩ zastup RÔøΩzto?no',	'MestkÔøΩ zastup RÔøΩztocno',	CONV('1', 2, 10) + 0),
 (95,	'2015-09-12',	4,	NULL,	't_public_body',	'name',	9,	'KUKUKUK',	'Moslimske zastupitelstvo Raca',	CONV('1', 2, 10) + 0),
 (96,	'2015-09-12',	4,	NULL,	't_public_body',	'visible',	10,	'null',	'true',	CONV('1', 2, 10) + 0),
 (97,	'2015-09-12',	4,	NULL,	't_public_body',	'name',	10,	'null',	'kokosak',	CONV('1', 2, 10) + 0),
@@ -128,7 +128,7 @@ INSERT INTO `a_change` (`id`, `date_stamp`, `user_id`, `public_body_id`, `table_
 (101,	'2015-09-12',	4,	NULL,	't_public_body',	'name',	11,	'null',	'Samaritansky kruzok, Handlova',	CONV('1', 2, 10) + 0),
 (102,	'2015-09-12',	4,	NULL,	't_public_body',	'id',	11,	'null',	'11',	CONV('1', 2, 10) + 0),
 (103,	'2015-09-12',	4,	NULL,	't_public_body',	'location_id',	11,	'null',	'3',	CONV('1', 2, 10) + 0),
-(104,	'2015-09-20',	4,	NULL,	't_public_body',	'name',	5,	'MestkÈ zvtovo Koöice z·humienok',	'MestkÈ zastupitelstvo Koöice z·humienok',	CONV('1', 2, 10) + 0),
+(104,	'2015-09-20',	4,	NULL,	't_public_body',	'name',	5,	'MestkÔøΩ zvtovo KoÔøΩice zÔøΩhumienok',	'MestkÔøΩ zastupitelstvo KoÔøΩice zÔøΩhumienok',	CONV('1', 2, 10) + 0),
 (105,	'2015-09-20',	4,	NULL,	't_public_body',	'visible',	12,	'null',	'true',	CONV('1', 2, 10) + 0),
 (106,	'2015-09-20',	4,	NULL,	't_public_body',	'name',	12,	'null',	'kokosatcke zastupitelstvo',	CONV('1', 2, 10) + 0),
 (107,	'2015-09-20',	4,	NULL,	't_public_body',	'id',	12,	'null',	'12',	CONV('1', 2, 10) + 0),
@@ -188,16 +188,17 @@ CREATE TABLE `a_user` (
   `last_name` varchar(20) COLLATE utf8_slovak_ci DEFAULT NULL,
   `e_mail` varchar(50) COLLATE utf8_slovak_ci DEFAULT NULL,
   `login` varchar(50) COLLATE utf8_slovak_ci DEFAULT NULL,
+  `image` longblob,
   `password` blob,
   `visible` bit(1) DEFAULT b'1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `a_user` (`id`, `first_name`, `last_name`, `e_mail`, `login`, `password`, `visible`) VALUES
-(1,	'Peter',	'Sarkoci',	'peter.sarkoci@gmail.com',	'petak',	'Äz∆y©ÓÎpN´Ä\\ìe',	CONV('1', 2, 10) + 0),
-(2,	'≈†tefan',	'Vere≈°',	'stefan.veres@gmail.com',	'stefan',	'.óÇ.\Zà4 =´∂YÏ',	CONV('1', 2, 10) + 0),
-(3,	'Miro',	'Sƒçibr√°nyi',	'miro.scibranyi@gmail.com',	'miro',	'‡ÍÛÑå•øì¢¬°–dçD',	CONV('1', 2, 10) + 0),
-(4,	'admin',	'adminovic',	'admin@admin.sk',	'admin',	'!#/)zW•ßCâJJÄ√',	CONV('1', 2, 10) + 0);
+(1,	'Peter',	'Sarkoci',	'peter.sarkoci@gmail.com',	'petak',	'ÔøΩzÔøΩyÔøΩÔøΩÔøΩpNÔøΩÔøΩ\\ÔøΩe',	CONV('1', 2, 10) + 0),
+(2,	'≈†tefan',	'Vere≈°',	'stefan.veres@gmail.com',	'stefan',	'.ÔøΩÔøΩ.\ZÔøΩ4 =ÔøΩÔøΩYÔøΩ',	CONV('1', 2, 10) + 0),
+(3,	'Miro',	'Sƒçibr√°nyi',	'miro.scibranyi@gmail.com',	'miro',	'ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ¬°ÔøΩdÔøΩD',	CONV('1', 2, 10) + 0),
+(4,	'admin',	'adminovic',	'admin@admin.sk',	'admin',	'!#/)zWÔøΩÔøΩCÔøΩJJÔøΩÔøΩ',	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `a_user_role`;
 CREATE TABLE `a_user_role` (
@@ -317,23 +318,24 @@ CREATE TABLE `t_public_body` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_slovak_ci DEFAULT NULL,
   `location_id` int(11) DEFAULT NULL,
+  `image` longblob,
   `visible` bit(1) DEFAULT b'1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
-INSERT INTO `t_public_body` (`id`, `name`, `location_id`, `visible`) VALUES
-(1,	'Mestk√© zastupiteƒæstvo Bratislava Raƒça',	1,	CONV('1', 2, 10) + 0),
-(2,	'Mestk√© zastupiteƒæstvo Handlov√°',	3,	CONV('1', 2, 10) + 0),
-(3,	'Mestk√© zastupiteƒæstvo Nov√°ky',	4,	CONV('1', 2, 10) + 0),
-(4,	'Mestk√© zastup R√°ztocno',	6,	CONV('1', 2, 10) + 0),
-(5,	'Mestk√© zastupitelstvo Ko≈°ice z√°humienok',	8,	CONV('1', 2, 10) + 0),
-(6,	'Mestk√© zastupiteƒæstvo Sereƒè',	9,	CONV('1', 2, 10) + 0),
-(7,	'KOsakovo',	4,	CONV('1', 2, 10) + 0),
-(8,	'Mestky urad Kokava nad Rimavicou',	3,	CONV('1', 2, 10) + 0),
-(9,	'Moslimske zastupitelstvo Raca',	1,	CONV('1', 2, 10) + 0),
-(10,	'kokosakce zastupitestvo v Handlovej',	3,	CONV('1', 2, 10) + 0),
-(11,	'Samaritansky kruzok, Handlova',	3,	CONV('1', 2, 10) + 0),
-(12,	'kokosatcke zastupitelstvo',	4,	CONV('1', 2, 10) + 0);
+INSERT INTO `t_public_body` (`id`, `name`, `location_id`, `visible`, `image`) VALUES
+(1,	'Mestk√© zastupiteƒæstvo Bratislava Raƒça',	1,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(2,	'Mestk√© zastupiteƒæstvo Handlov√°',	3,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(3,	'Mestk√© zastupiteƒæstvo Nov√°ky',	4,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(4,	'Mestk√© zastup R√°ztocno',	6,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(5,	'Mestk√© zastupitelstvo Ko≈°ice z√°humienok',	8,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(6,	'Mestk√© zastupiteƒæstvo Sereƒè',	9,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(7,	'KOsakovo',	4,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(8,	'Mestky urad Kokava nad Rimavicou',	3,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(9,	'Moslimske zastupitelstvo Raca',	1,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(10,	'kokosakce zastupitestvo v Handlovej',	3,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(11,	'Samaritansky kruzok, Handlova',	3,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
+(12,	'kokosatcke zastupitelstvo',	4,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg'));
 
 DROP TABLE IF EXISTS `t_public_person`;
 CREATE TABLE `t_public_person` (
@@ -341,19 +343,20 @@ CREATE TABLE `t_public_person` (
   `first_name` varchar(50) COLLATE utf8_slovak_ci DEFAULT NULL,
   `last_name` varchar(50) COLLATE utf8_slovak_ci DEFAULT NULL,
   `date_of_birth` date DEFAULT NULL,
+  `image` longblob,
   `visible` bit(1) DEFAULT b'1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
-INSERT INTO `t_public_person` (`id`, `first_name`, `last_name`, `date_of_birth`, `visible`) VALUES
-(1,	'Johan',	'Proch√°zkare',	'1956-09-07',	CONV('1', 2, 10) + 0),
-(2,	'Karolko',	'?√∫torako',	'1966-05-17',	CONV('1', 2, 10) + 0),
-(3,	'Lubo≈°',	'Jozef√≠ny',	'1954-12-21',	CONV('1', 2, 10) + 0),
-(4,	'Alexej',	'Spev√°k',	'1979-09-01',	CONV('1', 2, 10) + 0),
-(5,	'Emil',	'ƒå√∫tora',	'1967-04-01',	CONV('0', 2, 10) + 0),
-(6,	'Pavol',	'Oblazek',	'2001-07-10',	CONV('1', 2, 10) + 0),
-(7,	'Karolko',	'Predseda',	'1989-07-05',	CONV('1', 2, 10) + 0),
-(8,	'Kamil',	'Sebes',	'1993-07-14',	CONV('1', 2, 10) + 0);
+INSERT INTO `t_public_person` (`id`, `first_name`, `last_name`, `date_of_birth`, `visible`, `image`) VALUES
+(1,	'Johan',	'Proch√°zkare',	'1956-09-07',	CONV('1', 2, 10) + 0, LOAD_FILE('/public_person.jpg')),
+(2,	'Karolko',	'B√∫torako',	'1966-05-17',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
+(3,	'Lubo≈°',	'Jozef√≠ny',	'1954-12-21',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
+(4,	'Alexej',	'Spev√°k',	'1979-09-01',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
+(5,	'Emil',	'ƒå√∫tora',	'1967-04-01',	CONV('0', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
+(6,	'Pavol',	'Oblazek',	'2001-07-10',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
+(7,	'Karolko',	'Predseda',	'1989-07-05',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
+(8,	'Kamil',	'Sebes',	'1993-07-14',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg'));
 
 DROP TABLE IF EXISTS `t_public_role`;
 CREATE TABLE `t_public_role` (

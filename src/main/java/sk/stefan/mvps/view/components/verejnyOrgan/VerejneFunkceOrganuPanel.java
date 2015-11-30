@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Scope;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
-import sk.stefan.mvps.model.entity.TabEntity;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.entity.Tenure;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.PublicRoleService;

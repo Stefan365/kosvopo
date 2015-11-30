@@ -2,7 +2,7 @@ package sk.stefan.mvps.model.serviceImpl;
 
 import org.springframework.stereotype.Service;
 import sk.stefan.annotations.ViewTab;
-import sk.stefan.mvps.model.entity.TabEntity;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.view.tabs.TabComponent;
 

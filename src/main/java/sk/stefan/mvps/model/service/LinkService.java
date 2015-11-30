@@ -1,8 +1,6 @@
 package sk.stefan.mvps.model.service;
 
-import sk.stefan.mvps.model.entity.PublicBody;
-import sk.stefan.mvps.model.entity.TabEntity;
-import sk.stefan.mvps.view.components.verejnaRole.NewPublicRoleForm;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.view.tabs.TabComponent;
 
 /**

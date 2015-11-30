@@ -1,7 +1,9 @@
 package sk.stefan.mvps.view.components;
 
 import com.vaadin.annotations.DesignRoot;
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.declarative.Design;
 import org.dussan.vaadin.dcharts.DCharts;
@@ -16,8 +18,12 @@ import org.dussan.vaadin.dcharts.options.Highlighter;
 import org.dussan.vaadin.dcharts.options.Options;
 import org.dussan.vaadin.dcharts.options.SeriesDefaults;
 import org.dussan.vaadin.dcharts.renderers.tick.AxisTickRenderer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.entity.Vote;
+import sk.stefan.mvps.model.service.LinkService;
+import sk.stefan.mvps.view.components.hlasovani.V6s_VotesView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,14 +38,22 @@ import java.util.List;
 @DesignRoot
 public class TimelinePanel extends Panel {
 
-    private DCharts chart;
+    @Autowired
+    private LinkService linkService;
 
+    private DCharts chart;
+    private Button butZobrazHlasovani;
+
+    private TabEntity relatedEntity;
     private List<Vote> container;
 
     private SimpleDateFormat dateFormatter;
 
     public TimelinePanel() {
         Design.read(this);
+
+        butZobrazHlasovani.addClickListener(event -> Page.getCurrent()
+                .open(linkService.getUriFragmentForTabWithParentEntity(V6s_VotesView.class, relatedEntity.getEntityName(), relatedEntity.getId()), null));
 
         container = new ArrayList<>();
         dateFormatter = new SimpleDateFormat("dd-mm-yyyy");
@@ -78,6 +92,11 @@ public class TimelinePanel extends Panel {
         chart.setWidthUndefined();
         chart.setOptions(options);
 
+    }
+
+    public void setRelatedEntity(TabEntity relatedEntity) {
+        this.relatedEntity = relatedEntity;
+        butZobrazHlasovani.setVisible(relatedEntity != null);
     }
 
     public void setVotes(List<Vote> votes) {

@@ -28,7 +28,7 @@
         <tomcat.port>8085</tomcat.port>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.5.8</vaadin.version>
+        <vaadin.version>7.5.9</vaadin.version>
         <spring.boot.version>1.2.7.RELEASE</spring.boot.version>
         <vaadin.boot.version>1.0.0.beta1</vaadin.boot.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
@@ -125,16 +125,27 @@
                     <artifactId>hibernate-validator</artifactId>
                 </exclusion>
                 <exclusion>
+<!--                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-core</artifactId>-->
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>org.apache.tomcat.embed</groupId>
                     <artifactId>tomcat-embed-core</artifactId>
+<!--                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>-->
                 </exclusion>
+                
+                
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter</artifactId>-->
+        <!--</dependency>-->
+
 
         <!-- JPA Container-->
         <dependency>
@@ -185,7 +196,13 @@
             <version>6.8.1</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin</artifactId>
+            <version>7.0-SNAPSHOT</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -322,4 +339,24 @@
 
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </dependency>
+
+                <!-- NechÃ¡pu proÄ�, ale to tu musÃ­ bÃ½t jinak Undertow skonÄ�Ã­ s ClassNotFoundException
+
+                     (pÅ™itom mÃ¡ servlet-api v zÃ¡vislostech) -->
+
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

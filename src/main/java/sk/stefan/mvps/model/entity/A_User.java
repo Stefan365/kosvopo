@@ -27,6 +27,8 @@ public class A_User implements Serializable, PresentationName {
     private String login;
 
     private byte[] password;
+
+    private byte[] image;
     
     private Boolean visible;
     
@@ -117,4 +119,11 @@ public class A_User implements Serializable, PresentationName {
     }
 
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

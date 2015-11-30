@@ -9,6 +9,9 @@ import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.enums.UserType;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  *
  * @author stefan
@@ -46,5 +49,8 @@ public interface UserService {
 
     public void saveUserRole(A_UserRole urole, boolean b);
 
-    
+
+    List<A_User> findAllUsers();
+
+    A_User findOneUser(Integer id);
 }

@@ -1,21 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="package-mapping" content="c:sk.stefan.mvps.view.components"/>
+</head>
+<body>
 <v-css-layout style-name="card new-form" width-full>
     <v-horizontal-layout style-name="v-panel-caption" width-full>
-        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Detail verejné osoby" icon="font://USER" />
+        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Detail verejné osoby"
+                 icon="font://USER"/>
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
-    <v-vertical-layout _id="readLayout" spacing margin>
-        <v-label _id="lblName" caption="Meno osoby:"/>
-        <v-label _id="lblDatumNarozeni" caption="Datum narodení:"/>
-        <v-label _id="lblAktualniRole" caption="Aktuální verejné role:"/>
-    </v-vertical-layout>
-    <v-vertical-layout _id="editLayout" spacing margin>
-        <v-text-field _id="tfJmeno" width-full caption="Meno osoby:" input-prompt="Vyplňte meno verejne osoby" required="true"/>
-        <v-text-field _id="tfPrijmeni" width-full caption="Príjmení osoby:" input-prompt="Vyplňte príjmení verejne osoby" required="true"/>
-        <v-popup-date-field _id="dfDatumNarozeni" width-full caption="Datum narodení:" input-prompt="Vyberte datum narodení" required="true"/>
-        <v-horizontal-layout spacing>
-            <v-button _id="butSave" style-name="primary">Uložit</v-button>
-            <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>
-            <v-button _id="butRemove" style-name="danger" icon="font://TRASH_O">Odstranit</v-button>
-        </v-horizontal-layout>
-    </v-vertical-layout>
+    <v-horizontal-layout spacing margin>
+        <c-image-component _id="imageComponent"/>
+        <v-vertical-layout _id="readLayout" spacing>
+            <v-label _id="lblName" caption="Meno osoby:"/>
+            <v-label _id="lblDatumNarozeni" caption="Datum narodení:"/>
+            <v-label _id="lblAktualniRole" caption="Aktuální verejné role:"/>
+        </v-vertical-layout>
+        <v-vertical-layout _id="editLayout" spacing>
+            <v-text-field _id="tfJmeno" width-full caption="Meno osoby:" input-prompt="Vyplňte meno verejne osoby"
+                          required="true"/>
+            <v-text-field _id="tfPrijmeni" width-full caption="Príjmení osoby:"
+                          input-prompt="Vyplňte príjmení verejne osoby" required="true"/>
+            <v-popup-date-field _id="dfDatumNarozeni" width-full caption="Datum narodení:"
+                                input-prompt="Vyberte datum narodení" required="true"/>
+            <v-horizontal-layout spacing>
+                <v-button _id="butSave" style-name="primary">Uložit</v-button>
+                <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>
+                <v-button _id="butRemove" style-name="danger" icon="font://TRASH_O">Odstranit</v-button>
+            </v-horizontal-layout>
+        </v-vertical-layout>
+    </v-horizontal-layout>
 </v-css-layout>
+</body>
+</html>

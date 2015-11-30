@@ -3,7 +3,7 @@ package sk.stefan.mvps.view.tabs;
 import com.vaadin.ui.Component;
 import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
-import sk.stefan.mvps.model.entity.TabEntity;
+import sk.stefan.interfaces.TabEntity;
 
 /**
  * Rozhraní pro navigovatelné záložky.
@@ -39,6 +39,8 @@ public interface TabComponent extends Component {
      * @return entitu s daty
      */
     default TabEntity getEntity() { return null; }
+
+    default TabEntity getParentEntity() { return null; }
 
     default void setSaveListener(SaveListener<TabEntity> saveListener) {}
 

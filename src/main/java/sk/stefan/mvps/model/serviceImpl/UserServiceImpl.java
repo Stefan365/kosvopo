@@ -173,4 +173,14 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public List<A_User> findAllUsers() {
+        return userRepo.findAll();
+    }
+
+    @Override
+    public A_User findOneUser(Integer id) {
+        return userRepo.findOne(id);
+    }
+
 }
