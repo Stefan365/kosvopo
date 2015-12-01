@@ -131,6 +131,7 @@
             </exclusions>
         </dependency>
 
+        <!-- možná to vůbec není potřeba -->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-starter</artifactId>-->
