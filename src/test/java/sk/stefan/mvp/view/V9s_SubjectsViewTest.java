@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.mvps.view;
+package sk.stefan.mvp.view;
 
-import sk.stefan.mvps.view.V9s_SubjectsView;
 import com.vaadin.navigator.ViewChangeListener;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import sk.stefan.mvps.view.V9s_SubjectsView;
 import sk.stefan.mvps.view.components.layouts.PUBs_briefLayout;
 
 /**

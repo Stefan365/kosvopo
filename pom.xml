@@ -25,7 +25,7 @@
 
     <properties>
         <project.encoding>UTF-8</project.encoding>
-        <tomcat.port>8080</tomcat.port>
+        <tomcat.port>8085</tomcat.port>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vaadin.version>7.5.9</vaadin.version>
@@ -125,9 +125,19 @@
                     <artifactId>hibernate-validator</artifactId>
                 </exclusion>
                 <exclusion>
+<!--                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-core</artifactId>-->
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-core</artifactId>
+<!--                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>-->
+                </exclusion>
+                
+                
             </exclusions>
         </dependency>
 
@@ -187,7 +197,13 @@
             <version>6.8.1</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin</artifactId>
+            <version>7.0-SNAPSHOT</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -271,7 +287,7 @@
 
                     <style>OBF</style>
                     <strict>true</strict>
-                    <runTarget>http://localhost:8080/kosvopo6</runTarget>
+                    <runTarget>http://localhost:8085/kosvopo6</runTarget>
                     <skip>false</skip>
                     <validateOnly>false</validateOnly>
                 </configuration>
@@ -294,6 +310,7 @@
                 </executions>
             </plugin>
 
+			<!--
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -315,7 +332,7 @@
                     </execution>
                 </executions>
             </plugin>
-
+-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -332,9 +349,9 @@
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </dependency>
 
-                <!-- Nechápu proč, ale to tu musí být jinak Undertow skončí s ClassNotFoundException
+                <!-- NechÃ¡pu proÄ�, ale to tu musÃ­ bÃ½t jinak Undertow skonÄ�Ã­ s ClassNotFoundException
 
-                     (přitom má servlet-api v závislostech) -->
+                     (pÅ™itom mÃ¡ servlet-api v zÃ¡vislostech) -->
 
                 <dependency>
                     <groupId>javax.servlet</groupId>
