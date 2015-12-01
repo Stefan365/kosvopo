@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.enums.UserType;
+import sk.stefan.mvps.model.entity.A_UserRole;
 
 /**
  * Obsluhuje veci okolo prihlasovania a hesiel. 
@@ -32,4 +33,5 @@ public interface SecurityService {
  
     public byte[] encryptPassword(String password);
 
+    A_UserRole getActualUserRoleForUser(A_User user);
 }

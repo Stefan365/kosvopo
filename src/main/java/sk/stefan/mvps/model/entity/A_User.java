@@ -1,6 +1,8 @@
 package sk.stefan.mvps.model.entity;
 
 import java.io.Serializable;
+
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.serviceImpl.SecurityServiceImpl;
 import sk.stefan.interfaces.PresentationName;
@@ -8,7 +10,7 @@ import sk.stefan.interfaces.PresentationName;
 /**
  * Reprezentuje uzivatela nasho systemu.
  */
-public class A_User implements Serializable, PresentationName {
+public class A_User implements Serializable, TabEntity {
 
     public static final long serialVersionUID = 1L;
 
@@ -49,6 +51,16 @@ public class A_User implements Serializable, PresentationName {
 
     public A_User() {
         
+    }
+
+    @Override
+    public String getEntityName() {
+        return "user";
+    }
+
+    @Override
+    public String getRelatedTabName() {
+        return "user";
     }
 
     //getters:
@@ -115,7 +127,7 @@ public class A_User implements Serializable, PresentationName {
 
     @Override
     public String getPresentationName() {
-        return "USER: " + this.first_name + " " + this.last_name;
+        return this.first_name + " " + this.last_name;
     }
 
 

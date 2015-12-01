@@ -1,12 +1,17 @@
 package sk.stefan.mvps.model.serviceImpl;
 
 import com.vaadin.server.VaadinSession;
+
 import java.security.MessageDigest;
 import java.sql.SQLException;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.A_User;
+import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.mvps.model.repo.GeneralRepo;
+import sk.stefan.mvps.model.repo.UniRepo;
 import sk.stefan.mvps.model.service.SecurityService;
 
 /**
@@ -20,23 +25,26 @@ public class SecurityServiceImpl implements SecurityService {
     private static final Logger log = Logger.getLogger(SecurityServiceImpl.class);
 
     private final GeneralRepo genRepo;
-    
+
+    private final UniRepo<A_UserRole> userRoleRepo;
+
 
     //0.konstruktor:
+
     /**
-     * 
+     *
      */
     public SecurityServiceImpl() {
-        
+
         this.genRepo = new GeneralRepo();
-        
+        this.userRoleRepo = new UniRepo<>(A_UserRole.class);
+
     }
 
     /**
      * Přidá přihlášeného uživatele do session.
      *
      * @param user uživatel
-     *
      */
     @Override
     public void login(A_User user) {
@@ -68,7 +76,7 @@ public class SecurityServiceImpl implements SecurityService {
     /**
      * Porovná hesla.
      *
-     * @param rawPassword heslo v podobe plain text
+     * @param rawPassword  heslo v podobe plain text
      * @param hashPassword hash hesla z databazy
      * @return TRUE, pokial su hesla rovnake.
      */
@@ -85,7 +93,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     }
 
-    
+
     @Override
     public byte[] getPassword(Integer id) throws SQLException {
 
@@ -94,15 +102,29 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public void updatePassword(String newPwd, String uid) throws SQLException  {
-        
+    public void updatePassword(String newPwd, String uid) throws SQLException {
+
         genRepo.updatePassword(newPwd, uid);
-        
+
     }
 
     @Override
     public byte[] encryptPassword(String rawPassword) {
         return genRepo.encryptPassword(rawPassword);
+    }
+
+    @Override
+    public A_UserRole getActualUserRoleForUser(A_User user) {
+        if (user == null) {
+            return null;
+        }
+
+        List<A_UserRole> roles = userRoleRepo.findByTwoParams("user_id", String.valueOf(user.getId()), "actual", "true");
+        if (roles.size() > 1) {
+            throw new RuntimeException("Nalezeny více jak jedna aktuální role uživatele: " + user.getPresentationName());
+        } else {
+            return roles.isEmpty() ? null : roles.get(0);
+        }
     }
 
 
