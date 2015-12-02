@@ -5,6 +5,7 @@
  */
 package sk.stefan.mvps.model.service;
 
+import sk.stefan.mvps.model.entity.A_Role;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.enums.UserType;
@@ -53,4 +54,8 @@ public interface UserService {
     List<A_User> findAllUsers();
 
     A_User findOneUser(Integer id);
+
+    A_User saveUser(A_User user);
+
+    A_Role getRoleByRoleType(UserType type);
 }

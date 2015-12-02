@@ -60,7 +60,7 @@ public class A_User implements Serializable, TabEntity {
 
     @Override
     public String getRelatedTabName() {
-        return "user";
+        return "uzivatel";
     }
 
     //getters:

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="package-mapping" content="c:sk.stefan.mvps.view.components"/>
+    <meta name="package-mapping" content="h:sk.stefan.mvps.view.components.hlasovani"/>
+</head>
+<body>
+<v-vertical-layout spacing margin width-full>
+    <v-horizontal-layout spacing width-full>
+        <v-vertical-layout spacing>
+            <h-detail-hlasovani-panel _id="detailPanel"/>
+            <h-hlasovani-panel _id="hlasovaniPanel"/>
+        </v-vertical-layout>
+        <v-vertical-layout spacing>
+            <c-dokumenty-panel _id="dokumentyPanel"/>
+            <h-graf-hlasovani-panel _id="grafHlasovaniPanel"/>
+        </v-vertical-layout>
+    </v-horizontal-layout>
+</v-vertical-layout>
+</body>
+</html>

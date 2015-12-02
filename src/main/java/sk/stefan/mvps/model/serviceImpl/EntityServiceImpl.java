@@ -20,6 +20,7 @@ public class EntityServiceImpl implements EntityService {
     private UniRepo<PublicRole> pubRoleRepo;
     private UniRepo<PublicPerson> pubPersonRepo;
     private UniRepo<Vote> voteRepo;
+    private UniRepo<A_User> userRepo;
 
 
     public EntityServiceImpl() {
@@ -27,6 +28,7 @@ public class EntityServiceImpl implements EntityService {
         pubRoleRepo = new UniRepo<>(PublicRole.class);
         pubPersonRepo = new UniRepo<>(PublicPerson.class);
         voteRepo = new UniRepo<>(Vote.class);
+        userRepo = new UniRepo<>(A_User.class);
     }
 
     @Override
@@ -53,6 +55,8 @@ public class EntityServiceImpl implements EntityService {
             return "verejnaOsoba" + entity.getId();
         } else if (Vote.class.isAssignableFrom(entity.getClass())) {
             return "hlasovani" + entity.getId();
+        } else if(A_User.class.isAssignableFrom(entity.getClass())) {
+            return "uzivatel" + entity.getId();
         }
         throw new RuntimeException("Nepodporovaná tvorba id záložky pro entitu " + entity.getClass());
     }
@@ -91,6 +95,8 @@ public class EntityServiceImpl implements EntityService {
                 return pubPersonRepo.findOne(entityId);
             case "hlasovani":
                 return voteRepo.findOne(entityId);
+            case "uzivatel":
+                return userRepo.findOne(entityId);
             default:
                 throw new RuntimeException("Nepodporované vyhledání entity pro záložku: " + tabName);
         }

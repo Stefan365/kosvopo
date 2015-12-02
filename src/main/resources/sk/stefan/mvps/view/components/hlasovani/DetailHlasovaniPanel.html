@@ -1,0 +1,29 @@
+<v-css-layout style-name="card new-form" width-full>
+    <v-horizontal-layout style-name="v-panel-caption" width-full>
+        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Detail uživatele" icon="font://USER" />
+        <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
+    </v-horizontal-layout>
+    <v-vertical-layout _id="readLayout" spacing margin>
+        <v-label _id="lblOrgan" caption="Verejný orgán:"/>
+        <v-label _id="lblPredmet" caption="Predmet hlasování:"/>
+        <v-label _id="lblTema" caption="Tématický okruh:"/>
+        <v-label _id="lblDatum" caption="Datum a čas hlasování:"/>
+        <v-label _id="lblCislo" caption="Interní číslo:"/>
+        <v-label _id="lblVysledek" caption="Výsledek hlasování:"/>
+        <v-label _id="lblPopis" caption="Popis:"/>
+        <v-label _id="lblHodnoceni" caption="Verejná užitočnosť:"/>
+    </v-vertical-layout>
+    <v-vertical-layout _id="editLayout" spacing margin>
+        <v-combo-box _id="cbPredmet" width-full caption="Predmet hlasování:" input-prompt="Vyplňte predmet hlasování" required="true"/>
+        <v-popup-date-field _id="dfDatum" width-full caption="Datum hlasování:" input-prompt="Vyberte datum hlasování" required="true"/>
+        <v-text-field _id="tfCislo" width-full caption="Interní číslo:" input-prompt="Vyplňte interní číslo hlasování" required="true"/>
+        <v-combo-box _id="cbVysledek" width-full caption="Výsledek hlasování" input-prompt="Vyberte výsledek hlasování"/>
+        <v-text-area _id="areaPopis" width-full caption="Popis:" input-prompt="Vyplňte popis hlasování"/>
+        <v-combo-box _id="cbHodnoceni" width-full caption="Verejná užitočnosť:" input-prompt="Vyberte užitočnosť"/>
+        <v-horizontal-layout spacing>
+            <v-button _id="butSave" style-name="primary">Uložit</v-button>
+            <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>
+            <v-button _id="butRemove" style-name="danger" icon="font://TRASH_O">Odstranit</v-button>
+        </v-horizontal-layout>
+    </v-vertical-layout>
+</v-css-layout>

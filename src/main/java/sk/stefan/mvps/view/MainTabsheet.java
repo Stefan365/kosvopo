@@ -8,6 +8,7 @@ import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.TabSheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
@@ -151,6 +152,8 @@ public class MainTabsheet extends TabSheet implements View {
             tabId = "novaVerejnaRole";
         } else if (PublicPerson.class.isAssignableFrom(entity.getClass())) {
             tabId = "novaVerejnaOsoba";
+        } else if (A_User.class.isAssignableFrom(entity.getClass())) {
+            tabId = "novyUzivatel";
         }
         if (tabId != null) {
             TabComponent tab = tabMap.get(tabId);

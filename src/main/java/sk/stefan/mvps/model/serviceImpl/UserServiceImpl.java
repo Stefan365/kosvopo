@@ -183,4 +183,17 @@ public class UserServiceImpl implements UserService {
         return userRepo.findOne(id);
     }
 
+    @Override
+    public A_User saveUser(A_User user) {
+        return userRepo.save(user, user.getId() != null);
+    }
+
+    @Override
+    public A_Role getRoleByRoleType(UserType type) {
+        List<A_Role> roles = roleRepo.findByParam("role", String.valueOf(type.ordinal()));
+        if (roles.isEmpty()) {
+            throw new RuntimeException("Nelze nalézt roli typu: " + type);
+        }
+        return roles.get(0);
+    }
 }

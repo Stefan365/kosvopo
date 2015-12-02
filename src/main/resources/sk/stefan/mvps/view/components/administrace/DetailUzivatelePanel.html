@@ -1,0 +1,39 @@
+<html>
+<head>
+    <meta name="package-mapping" content="c:sk.stefan.mvps.view.components"/>
+</head>
+<body>
+<v-css-layout style-name="card new-form" width-full>
+    <v-horizontal-layout style-name="v-panel-caption" width-full>
+        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Detail uživatele"
+                 icon="font://MALE"/>
+        <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
+    </v-horizontal-layout>
+    <v-horizontal-layout spacing margin width-full>
+        <c-image-component _id="imageComponent" width="150px"/>
+        <v-vertical-layout _id="readLayout" width-full spacing margin :expand>
+            <v-label _id="lblName" caption="Meno:"/>
+            <v-label _id="lblEmail" caption="E-mail:"/>
+            <v-label _id="lblNick" caption="Prihlašovací meno:"/>
+            <v-label _id="lblRole" caption="Role:"/>
+        </v-vertical-layout>
+        <v-vertical-layout _id="editLayout" spacing margin width-full :expand>
+            <v-text-field _id="tfName" width-full caption="Meno:" input-prompt="Vyplňte meno" required="true"/>
+            <v-text-field _id="tfSurname" width-full caption="Prijmeni:" input-prompt="Vyplňte prijmeni"
+                          required="true"/>
+            <v-text-field _id="tfNick" width-full caption="Prihlašovací meno:" input-prompt="Prihlašovací meno"
+                          required="true"/>
+            <v-text-field _id="tfEmail" width-full caption="E-mail:" input-prompt="Vyplňte e-mail" required="true"/>
+            <v-password-field _id="pfPass" width-full caption="Heslo:" input-prompt="Vyplňte heslo"/>
+            <v-password-field _id="pfPassConfirm" width-full caption="Potvrzení hesla:"
+                              input-prompt="Vyplňte znovu heslo"/>
+            <v-horizontal-layout spacing>
+                <v-button _id="butSave" style-name="primary">Uložit</v-button>
+                <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>
+                <v-button _id="butRemove" style-name="danger" icon="font://TRASH_O">Odstranit</v-button>
+            </v-horizontal-layout>
+        </v-vertical-layout>
+    </v-horizontal-layout>
+</v-css-layout>
+</body>
+</html>
