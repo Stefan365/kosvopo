@@ -6,15 +6,17 @@ import com.vaadin.ui.declarative.Design;
 import com.vaadin.ui.declarative.DesignContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
- * Toto rozšíření umožňuje Autowirování Spring beanů do deklarativních komponent.
+ * Toto rozšíření umožňuje Autowirování Spring beanů do deklarativních
+ * komponent.
+ *
  * @author elopin on 12.11.2015.
  */
 @SpringComponent
 public class CustomizedFactory extends Design.DefaultComponentFactory {
+
+    private static final long serialVersionUID = 43113294832L;
 
     @Autowired
     private AutowireCapableBeanFactory factory;

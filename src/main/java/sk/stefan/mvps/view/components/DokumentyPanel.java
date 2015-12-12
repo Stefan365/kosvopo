@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Scope;
 @DesignRoot
 public class DokumentyPanel extends Panel {
 
+    private static final long serialVersionUID = 1L;
+
     public DokumentyPanel() {
         Design.read(this);
     }

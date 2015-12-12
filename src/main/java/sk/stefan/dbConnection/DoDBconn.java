@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
  * Trieda, ktora sa stara o pripojenie k DB. connectionpool ma synchronizaciu
  * implicitne vyriesenu, preto sa o nu viac netreba starat.
  *
- *
  * @author veres
  *
  *

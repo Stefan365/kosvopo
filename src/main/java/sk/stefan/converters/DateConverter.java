@@ -1,10 +1,9 @@
 package sk.stefan.converters;
 
+import com.vaadin.data.util.converter.Converter;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Locale;
-
-import com.vaadin.data.util.converter.Converter;
 /**
  * Konvertor mezi java.util.Date a Timestamp(získaným SQL dotazem z DB).
  * 

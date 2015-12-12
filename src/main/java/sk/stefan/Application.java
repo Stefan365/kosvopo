@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Spouštěcí a konfigurační třída pro SpringBoot. Nahrazuje konfiguraci pomocí xml.
+ * 
  * @author elopin on 01.11.2015.
  */
 @Configuration
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 public class Application extends SpringBootServletInitializer{
 
     public static void main(String[] args) {
+        
         SpringApplication.run(Application.class, args);
     }
 }

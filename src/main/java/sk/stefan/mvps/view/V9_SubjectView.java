@@ -30,6 +30,7 @@ import sk.stefan.wrappers.FunctionalEditWrapper;
 public final class V9_SubjectView extends MyViewLayout implements View {
 
     private static final long serialVersionUID = 121322L;
+    
     private static final Logger log = Logger.getLogger(V9_SubjectView.class);
 
 //    entity:

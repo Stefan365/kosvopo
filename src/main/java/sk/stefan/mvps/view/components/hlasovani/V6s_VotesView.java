@@ -37,6 +37,8 @@ import sk.stefan.mvps.view.tabs.TabComponent;
 @DesignRoot
 public class V6s_VotesView extends VerticalLayout implements TabComponent {
 
+    private static final long serialVersionUID = 12L;
+
     @Autowired
     private VoteService voteService;
 
@@ -53,8 +55,8 @@ public class V6s_VotesView extends VerticalLayout implements TabComponent {
     private TabEntity tabEntity;
     private BeanItemContainer<Vote> container;
 
-
-    public V6s_VotesView (){
+    public V6s_VotesView() {
+        
         Design.read(this);
 
         container = new BeanItemContainer<>(Vote.class);
@@ -98,7 +100,7 @@ public class V6s_VotesView extends VerticalLayout implements TabComponent {
         Integer relatedId = tabEntity != null ? tabEntity.getId() : null;
         return "hlasovaniTab" + (relatedId != null ? String.valueOf(relatedId) : "");
     }
-    
+
 //    /**
 //     *
 //     * @param isVolunteer
@@ -124,10 +126,6 @@ public class V6s_VotesView extends VerticalLayout implements TabComponent {
 //        this.votesBriefLayout = new VOTs_briefLayout(voteService.findAll(), voteService);
 //
 //    }
-    
-    
-
-
 //    /**
 //     * Inicializuje tlacitko na pridavanie novej verejnej osoby.
 //     */
@@ -136,9 +134,6 @@ public class V6s_VotesView extends VerticalLayout implements TabComponent {
 //        this.addVoteBt = InputNewEntityButtonFactory.createMyInputButton(Vote.class);
 //        this.addComponent(addVoteBt);
 //    }
-
-    
-    
 //    @Override
 //    public void enter(ViewChangeListener.ViewChangeEvent event) {
 //

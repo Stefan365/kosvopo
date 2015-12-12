@@ -7,9 +7,9 @@ package sk.stefan.factories;
 
 import com.vaadin.ui.Button;
 import org.apache.log4j.Logger;
-import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.listeners.InputVoteButClickListener;
 import sk.stefan.listeners.Input_EditButClickListener;
+import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.utils.ToolsDao;
 
 /**
