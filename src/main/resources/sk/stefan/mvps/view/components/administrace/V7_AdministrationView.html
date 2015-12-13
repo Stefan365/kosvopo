@@ -4,11 +4,33 @@
             <v-panel icon="font://USERS" caption="Použivatelovia" style-name="card new-form"
                      width-full>
                 <v-vertical-layout margin spacing>
-                    <v-button _id="butUsers">Seznam použivatelov</v-button>
+                    <v-horizontal-layout spacing>
+                        <v-button _id="butUsers">Seznam použivatelov</v-button>
+                        <v-button _id="butNewUser" icon="font://PLUS">Pridat použivateľa</v-button>
+                    </v-horizontal-layout>
+                </v-vertical-layout>
+            </v-panel>
+            <v-panel icon="font://HAND_O_UP" caption="Politika" style-name="card new-form"
+                     width-full>
+                <v-vertical-layout margin spacing>
+                    <v-horizontal-layout spacing>
+                        <v-button _id="butTema">Seznam témat</v-button>
+                        <v-button _id="butPredmet">Seznam predmetov</v-button>
+                        <v-button _id="butObdobi">Seznam obdobie</v-button>
+                    </v-horizontal-layout>
                 </v-vertical-layout>
             </v-panel>
         </v-vertical-layout>
         <v-vertical-layout spacing>
+            <v-panel icon="font://MAP_MARKER" caption="Miesta" style-name="card new-form" width-full>
+                <v-vertical-layout margin spacing>
+                    <v-horizontal-layout spacing>
+                        <v-button _id="butKraj">Kraje</v-button>
+                        <v-button _id="butOkres">Okresy</v-button>
+                        <v-button _id="butMiesto">Miesta</v-button>
+                    </v-horizontal-layout>
+                </v-vertical-layout>
+            </v-panel>
         </v-vertical-layout>
     </v-horizontal-layout>
 </v-vertical-layout>

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import sk.stefan.mvps.model.entity.A_Role;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.mvps.model.repo.GeneralRepo;
@@ -28,6 +29,8 @@ public class SecurityServiceImpl implements SecurityService {
 
     private final UniRepo<A_UserRole> userRoleRepo;
 
+    private final UniRepo<A_Role> roleRepo;
+
 
     //0.konstruktor:
 
@@ -38,6 +41,7 @@ public class SecurityServiceImpl implements SecurityService {
 
         this.genRepo = new GeneralRepo();
         this.userRoleRepo = new UniRepo<>(A_UserRole.class);
+        this.roleRepo = new UniRepo<>(A_Role.class);
 
     }
 
@@ -125,6 +129,11 @@ public class SecurityServiceImpl implements SecurityService {
         } else {
             return roles.isEmpty() ? null : roles.get(0);
         }
+    }
+
+    @Override
+    public List<A_Role> getAvailableRoles() {
+        return roleRepo.findAll();
     }
 
 

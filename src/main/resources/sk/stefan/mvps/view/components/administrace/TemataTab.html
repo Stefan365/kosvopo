@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="package-mapping" content="a:sk.stefan.mvps.view.components.administrace"/>
+</head>
+<body>
+<v-vertical-layout margin spacing>
+    <v-panel style-name="card new-form" caption="Seznam témat" icon="font://LIST">
+        <v-vertical-layout spacing margin>
+            <v-text-field _id="searchFd" width-full null-representation="" caption="Vyhľadávanie:"
+                          input-prompt="všechen spěch jest od ďábla!"/>
+            <v-grid _id="grid" width-full>
+                <table>
+                    <col property-id="brief_description"/>
+                </table>
+            </v-grid>
+            <v-button _id="butPridat" icon="font://PLUS">Pridaj téma</v-button>
+        </v-vertical-layout>
+    </v-panel>
+    <a-tema-panel _id="temaPanel" width-full visible="false"/>
+</v-vertical-layout>
+</body>
+</html>

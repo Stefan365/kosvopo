@@ -4,7 +4,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Created by elopin on 03.11.2015.
+ * Anotace pro identifikátor záložky pro inicializaci seznamu záložek v TabFactory.
+ * @author elopin on 03.11.2015.
  */
 @Target({ java.lang.annotation.ElementType.TYPE })
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)

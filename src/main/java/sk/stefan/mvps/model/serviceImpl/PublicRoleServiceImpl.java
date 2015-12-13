@@ -257,4 +257,13 @@ public class PublicRoleServiceImpl implements PublicRoleService {
     public List<PublicRole> findAllPublicRoleByPublicBodyId(Integer publicBodyId) {
         return pubRoleRepo.findByParam("public_body_id", String.valueOf(publicBodyId));
     }
+
+    @Override
+    public PublicBody getPublicBodyForRoleId(Integer public_role_id) {
+        PublicRole role = pubRoleRepo.findOne(public_role_id);
+        if (role != null) {
+            return pubBodyRepo.findOne(role.getPublic_body_id());
+        }
+        return null;
+    }
 }

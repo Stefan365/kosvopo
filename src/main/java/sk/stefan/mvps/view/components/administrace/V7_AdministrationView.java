@@ -89,6 +89,13 @@ public class V7_AdministrationView extends VerticalLayout implements TabComponen
 //    private final Label adminLb = new Label("Administrácia");
 
     private Button butUsers;
+    private Button butNewUser;
+    private Button butKraj;
+    private Button butOkres;
+    private Button butMiesto;
+    private Button butTema;
+    private Button butPredmet;
+    private Button butObdobi;
 
 
     public V7_AdministrationView() {
@@ -96,7 +103,13 @@ public class V7_AdministrationView extends VerticalLayout implements TabComponen
 
         butUsers.addClickListener(event -> Page.getCurrent()
                 .open(linkService.getUriFragmentForTab(UsersTab.class), null));
-
+        butNewUser.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(NewUserForm.class), null));
+        butKraj.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(KrajeTab.class), null));
+        butOkres.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(DistrictTab.class), null));
+        butMiesto.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(LocationTab.class), null));
+        butTema.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(TemataTab.class), null));
+        butPredmet.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(SubjectsTab.class), null));
+        butObdobi.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(TenuresTab.class), null));
     }
 
     @Override

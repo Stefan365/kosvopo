@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.MenuButton;
 import sk.stefan.annotations.ViewTab;
 import sk.stefan.interfaces.TabEntity;
+import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.VoteService;
@@ -74,6 +75,8 @@ public class V6s_VotesView extends VerticalLayout implements TabComponent {
         this.tabEntity = tabEntity;
         lblRelatedEntity.setValue(tabEntity.getPresentationName());
         lblRelatedEntity.setVisible(true);
+
+        addVoteBt.setVisible(tabEntity instanceof PublicBody);
     }
 
     @Override

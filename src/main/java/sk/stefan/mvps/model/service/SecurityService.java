@@ -6,32 +6,34 @@
 package sk.stefan.mvps.model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
-import org.springframework.stereotype.Service;
+import sk.stefan.mvps.model.entity.A_Role;
 import sk.stefan.mvps.model.entity.A_User;
-import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.A_UserRole;
 
 /**
- * Obsluhuje veci okolo prihlasovania a hesiel. 
- * 
+ * Obsluhuje veci okolo prihlasovania a hesiel.
+ *
  * @author stefan
  */
 public interface SecurityService {
 
-    public void login(A_User user);
+    void login(A_User user);
 
-    public void logout();
+    void logout();
 
-    public A_User getCurrentUser();
+    A_User getCurrentUser();
 
-    public Boolean checkPassword(String rawPassword, byte[] hashPassword);
+    Boolean checkPassword(String rawPassword, byte[] hashPassword);
 
-    public byte[] getPassword(Integer id) throws SQLException;
+    byte[] getPassword(Integer id) throws SQLException;
 
-    public void updatePassword(String newPwd, String uid) throws SQLException;
- 
-    public byte[] encryptPassword(String password);
+    void updatePassword(String newPwd, String uid) throws SQLException;
+
+    byte[] encryptPassword(String password);
 
     A_UserRole getActualUserRoleForUser(A_User user);
+
+    List<A_Role> getAvailableRoles();
 }

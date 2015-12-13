@@ -46,9 +46,9 @@ public interface UserService {
     /**
      * Pokial nieje tak ho touto metodou vytvori.
      */
-    public void initAdmin();
+    void initAdmin();
 
-    public void saveUserRole(A_UserRole urole, boolean b);
+    void saveUserRole(A_UserRole urole, boolean b);
 
 
     List<A_User> findAllUsers();
@@ -58,4 +58,25 @@ public interface UserService {
     A_User saveUser(A_User user);
 
     A_Role getRoleByRoleType(UserType type);
+
+    /**
+     * Vrací všechny role uživatele.
+     * @param user uživatel
+     * @return role uživatele
+     */
+    List<A_UserRole> findUserRolesForUser(A_User user);
+
+    /**
+     * Vrací aktuální roli uživatele.
+     * @param userId id uživatele
+     * @return aktuální roli uživatele
+     */
+    A_UserRole getCurrentUserRoleForUser(Integer userId);
+
+    /**
+     * Vrací název role uživatele.
+     * @param userRole uživatelská role
+     * @return název role uživatele
+     */
+    String getRoleNameFromUserRole(A_UserRole userRole);
 }

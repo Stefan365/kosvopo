@@ -198,6 +198,31 @@ public class VoteServiceImpl implements VoteService {
         }
     }
 
+    @Override
+    public Theme saveTheme(Theme theme) {
+        return themeRepo.save(theme, theme.getId() != null);
+    }
+
+    @Override
+    public void removeTheme(Theme theme) {
+        themeRepo.deactivateOneOnly(theme, false);
+    }
+
+    @Override
+    public List<Subject> findAllSubjects() {
+        return subjectRepo.findAll();
+    }
+
+    @Override
+    public Subject saveSubject(Subject subject) {
+        return subjectRepo.save(subject, subject.getId() != null);
+    }
+
+    @Override
+    public void removeSubject(Subject subject) {
+        subjectRepo.deactivateOneOnly(subject, false);
+    }
+
 
     @Override
     public String getVoteDate(Vote vote) {
