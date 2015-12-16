@@ -47,6 +47,9 @@ public final class V4_PublicPersonView extends VerticalLayout implements TabComp
     @Autowired
     private PublicPersonService publicPersonService;
 
+    @Autowired
+    private VoteService voteService;
+
     // Design
     private DetailOsobyPanel detailPanel;
     private VerejneFunkceOsobyPanel verejneFunkcePanel;
@@ -58,13 +61,6 @@ public final class V4_PublicPersonView extends VerticalLayout implements TabComp
     //dvolezita entita, ktora predstavuje aktualnu verejnu funkciu danej osoby.
     //bude vyznacena farebne.
     private PublicRole actualPublicRole;
-
-//    servisy:
-    private final PublicRoleService publicRoleService;
-    private final VoteService voteService;
-    private final UserService userService;
-    private final ClassificationService classificationService;
-
 
 //    KOMPONENTY pre zobrazeneie verejnych roli dane osoby (tj. jedna aktivna a 
     //zvysok stare): 
@@ -86,12 +82,6 @@ public final class V4_PublicPersonView extends VerticalLayout implements TabComp
     //konstruktor:
     public V4_PublicPersonView() {
         Design.read(this);
-
-        this.publicRoleService = new PublicRoleServiceImpl();
-        this.voteService = new VoteServiceImpl();
-        this.userService = new UserServiceImpl();
-        this.classificationService = new ClassificationServiceImpl();
-
 
     }
 

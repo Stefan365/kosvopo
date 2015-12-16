@@ -10,4 +10,8 @@ import java.util.List;
 public interface TenureService {
 
     List<Tenure> findAllTenures();
+
+    void removeTenure(Tenure tenure);
+
+    Tenure saveTenure(Tenure tenure);
 }

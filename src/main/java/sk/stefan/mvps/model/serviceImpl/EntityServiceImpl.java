@@ -71,6 +71,8 @@ public class EntityServiceImpl implements EntityService {
             return pubPersonRepo.save((PublicPerson) entity, entity.getId() != null);
         } else if(Vote.class.isAssignableFrom(entity.getClass())) {
             return voteRepo.save((Vote) entity, entity.getId() != null);
+        } else if (A_User.class.isAssignableFrom(entity.getClass())) {
+            return userRepo.save((A_User) entity, entity.getId() != null);
         } else {
             throw new RuntimeException("Nepodarilo sa uložiť entitu " + entity);
         }
@@ -80,6 +82,12 @@ public class EntityServiceImpl implements EntityService {
     public boolean removeEntity(TabEntity entity) {
         if (PublicBody.class.isAssignableFrom(entity.getClass())) {
             return pubBodyRepo.deactivateOneOnly((PublicBody) entity, false);
+        } else if (A_User.class.isAssignableFrom(entity.getClass())) {
+            return userRepo.deactivateOneOnly((A_User) entity, false);
+        } else if (PublicPerson.class.isAssignableFrom(entity.getClass())) {
+            return pubPersonRepo.deactivateOneOnly((PublicPerson) entity, false);
+        } else if (PublicRole.class.isAssignableFrom(entity.getClass())) {
+            return pubRoleRepo.deactivateOneOnly((PublicRole) entity, false);
         }
         throw new RuntimeException("Nepodarilo sa odstranit entitu " + entity);
     }

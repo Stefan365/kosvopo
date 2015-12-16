@@ -18,6 +18,7 @@ import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.service.LocationService;
+import sk.stefan.mvps.view.components.ImageComponent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +36,7 @@ public class DetailOrganuPanel extends CssLayout {
     private LocationService locationService;
 
     // Design
+    private ImageComponent imageComponent;
     private Label lblCaption;
     private Button butEdit;
     private VerticalLayout readLayout;
@@ -59,7 +61,7 @@ public class DetailOrganuPanel extends CssLayout {
         Design.read(this);
 
         butEdit.addClickListener(event -> setReadOnly(false));
-        butCancel.addClickListener(event -> setReadOnly(true));
+        butCancel.addClickListener(event -> onCancel());
         butSave.addClickListener(event -> onSave());
         butRemove.addClickListener(event -> onRemove());
 
@@ -93,6 +95,7 @@ public class DetailOrganuPanel extends CssLayout {
         lblObec.setValue(locationService.findOneLocation(publicBody.getLocation_id()).getLocation_name());
         cbObec.setValue(locationMap.get(publicBody.getLocation_id()));
 
+        imageComponent.setImage(publicBody.getImage());
         setReadOnly(true);
     }
 
@@ -100,6 +103,7 @@ public class DetailOrganuPanel extends CssLayout {
     public void setReadOnly(boolean readOnly) {
         butEdit.setVisible(readOnly);
         readLayout.setVisible(readOnly);
+        imageComponent.setReadOnly(readOnly);
         editLayout.setVisible(!readOnly);
     }
 
@@ -110,6 +114,7 @@ public class DetailOrganuPanel extends CssLayout {
         if (bfg.isValid()) {
             try {
                 bfg.commit();
+                publicBody.setImage(imageComponent.getImage());
                 if (saveListener != null) {
                     saveListener.save(publicBody);
                 }
@@ -118,6 +123,11 @@ public class DetailOrganuPanel extends CssLayout {
                 throw new RuntimeException("Nepodarilo sa uložiť verejný orgán!", e);
             }
         }
+    }
+
+    private void onCancel() {
+        imageComponent.setImage(publicBody.getImage());
+        setReadOnly(true);
     }
 
     /**

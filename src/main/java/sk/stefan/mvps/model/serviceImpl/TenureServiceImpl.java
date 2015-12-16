@@ -23,4 +23,14 @@ public class TenureServiceImpl implements TenureService {
     public List<Tenure> findAllTenures() {
         return tenureRepo.findAll();
     }
+
+    @Override
+    public void removeTenure(Tenure tenure) {
+        tenureRepo.deactivateOneOnly(tenure, false);
+    }
+
+    @Override
+    public Tenure saveTenure(Tenure tenure) {
+        return tenureRepo.save(tenure, tenure.getId() != null);
+    }
 }

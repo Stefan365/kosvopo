@@ -5,7 +5,6 @@ import java.io.Serializable;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.serviceImpl.SecurityServiceImpl;
-import sk.stefan.interfaces.PresentationName;
 
 /**
  * Reprezentuje uzivatela nasho systemu.

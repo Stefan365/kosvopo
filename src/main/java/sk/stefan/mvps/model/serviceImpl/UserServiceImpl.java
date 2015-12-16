@@ -168,7 +168,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUserRole(A_UserRole urole, boolean b) {
-        
+        A_UserRole lastUserRole = getCurrentUserRoleForUser(urole.getUser_id());
+        if (lastUserRole != null) {
+            lastUserRole.setTill(new Date());
+            userRoleRepo.save(lastUserRole, true);
+        }
         userRoleRepo.save(urole, b);
 
     }
@@ -195,5 +199,25 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Nelze nalézt roli typu: " + type);
         }
         return roles.get(0);
+    }
+
+    @Override
+    public List<A_UserRole> findUserRolesForUser(A_User user) {
+        return userRoleRepo.findByParam("user_id", String.valueOf(user.getId()));
+    }
+
+    @Override
+    public A_UserRole getCurrentUserRoleForUser(Integer userId) {
+        List<A_UserRole> roles = userRoleRepo.findByTwoParams("user_id", String.valueOf(userId), "till", null);
+        return roles.isEmpty() ? null : roles.get(0);
+    }
+
+    @Override
+    public String getRoleNameFromUserRole(A_UserRole userRole) {
+        A_Role role = roleRepo.findOne(userRole.getRole_id());
+        if (role == null) {
+            throw new RuntimeException("Nenalezena role s id " + userRole.getRole_id());
+        }
+        return role.getRole_name();
     }
 }

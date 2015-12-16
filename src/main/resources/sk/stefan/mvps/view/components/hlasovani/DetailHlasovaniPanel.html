@@ -10,16 +10,12 @@
         <v-label _id="lblDatum" caption="Datum a čas hlasování:"/>
         <v-label _id="lblCislo" caption="Interní číslo:"/>
         <v-label _id="lblVysledek" caption="Výsledek hlasování:"/>
-        <v-label _id="lblPopis" caption="Popis:"/>
-        <v-label _id="lblHodnoceni" caption="Verejná užitočnosť:"/>
     </v-vertical-layout>
     <v-vertical-layout _id="editLayout" spacing margin>
         <v-combo-box _id="cbPredmet" width-full caption="Predmet hlasování:" input-prompt="Vyplňte predmet hlasování" required="true"/>
         <v-popup-date-field _id="dfDatum" width-full caption="Datum hlasování:" input-prompt="Vyberte datum hlasování" required="true"/>
         <v-text-field _id="tfCislo" width-full caption="Interní číslo:" input-prompt="Vyplňte interní číslo hlasování" required="true"/>
         <v-combo-box _id="cbVysledek" width-full caption="Výsledek hlasování" input-prompt="Vyberte výsledek hlasování"/>
-        <v-text-area _id="areaPopis" width-full caption="Popis:" input-prompt="Vyplňte popis hlasování"/>
-        <v-combo-box _id="cbHodnoceni" width-full caption="Verejná užitočnosť:" input-prompt="Vyberte užitočnosť"/>
         <v-horizontal-layout spacing>
             <v-button _id="butSave" style-name="primary">Uložit</v-button>
             <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>

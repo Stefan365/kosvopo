@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="package-mapping" content="a:sk.stefan.mvps.view.components.administrace"/>
+</head>
+<body>
+<v-vertical-layout margin spacing>
+    <v-panel style-name="card new-form" caption="Seznam obdobie" icon="font://LIST">
+        <v-vertical-layout spacing margin>
+            <v-grid _id="grid" width-full>
+                <table>
+                    <col property-id="presentationName"/>
+                </table>
+            </v-grid>
+            <v-button _id="butPridat" icon="font://PLUS">Pridaj obdobie</v-button>
+        </v-vertical-layout>
+    </v-panel>
+    <a-tenure-panel _id="tenurePanel" width-full visible="false"/>
+</v-vertical-layout>
+</body>
+</html>

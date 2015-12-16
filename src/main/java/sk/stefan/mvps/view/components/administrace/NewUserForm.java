@@ -112,6 +112,7 @@ public class NewUserForm extends VerticalLayout implements TabComponent {
                 A_User user = bfg.getItemDataSource().getBean();
                 user.setVisible(true);
                 user.setPassword(securityService.encryptPassword(pfPass.getValue()));
+                user.setImage(imageComponent.getImage());
                 user = userService.saveUser(user);
 
                 A_UserRole role = new A_UserRole();

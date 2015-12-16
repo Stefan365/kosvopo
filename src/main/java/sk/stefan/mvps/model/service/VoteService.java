@@ -120,4 +120,14 @@ public interface VoteService {
     List<Vote> findAllVotesForTabEntity(TabEntity tabEntity);
 
     PublicBody getVotePublicBody(Vote vote);
+
+    Theme saveTheme(Theme theme);
+
+    void removeTheme(Theme theme);
+
+    List<Subject> findAllSubjects();
+
+    Subject saveSubject(Subject subject);
+
+    void removeSubject(Subject subject);
 }

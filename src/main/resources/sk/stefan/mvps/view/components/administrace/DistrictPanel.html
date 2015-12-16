@@ -1,0 +1,20 @@
+<v-css-layout style-name="card new-form" width-full>
+    <v-horizontal-layout style-name="v-panel-caption" width-full>
+        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Detail okresu"
+                 icon="font://MAP_MARKER"/>
+        <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
+    </v-horizontal-layout>
+    <v-vertical-layout _id="readLayout" margin spacing>
+        <v-label _id="lblRegion" caption="Názov kraje:"/>
+        <v-label _id="lblNazev" caption="Názov okresu:"/>
+    </v-vertical-layout>
+    <v-vertical-layout _id="editLayout" margin spacing>
+        <v-combo-box _id="cbRegion" width-full caption="Názov kraje:" input-prompt="Vyberte kraj" required="true"/>
+        <v-text-field _id="tfNazev" width-full caption="Názov okresu:" input-prompt="Vyplňte názov" null-representation="" required="true"/>
+        <v-horizontal-layout spacing>
+            <v-button _id="butSave" style-name="primary">Uložit</v-button>
+            <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>
+            <v-button _id="butRemove" icon="font://TRASH_O" style-name="danger">Odstranit</v-button>
+        </v-horizontal-layout>
+    </v-vertical-layout>
+</v-css-layout>

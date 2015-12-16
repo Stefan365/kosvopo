@@ -36,9 +36,6 @@ public class DetailHlasovaniPanel extends CssLayout {
     private VoteService voteService;
 
     @Autowired
-    private ClassificationService classificationService;
-
-    @Autowired
     private PublicBodyService publicBodyService;
 
     // Design
@@ -51,15 +48,11 @@ public class DetailHlasovaniPanel extends CssLayout {
     private Label lblDatum;
     private Label lblCislo;
     private Label lblVysledek;
-    private Label lblPopis;
-    private Label lblHodnoceni;
     private VerticalLayout editLayout;
     private ComboBox cbPredmet;
     private PopupDateField dfDatum;
     private TextField tfCislo;
     private ComboBox cbVysledek;
-    private TextArea areaPopis;
-    private ComboBox cbHodnoceni;
     private Button butSave;
     private Button butRemove;
     private Button butCancel;
@@ -67,7 +60,6 @@ public class DetailHlasovaniPanel extends CssLayout {
     // data
     private Vote vote;
     private BeanFieldGroup<Vote> bfgVote;
-    private BeanFieldGroup<VoteClassification> bfgHodnoceni;
 
     private SimpleDateFormat format;
 
@@ -80,10 +72,6 @@ public class DetailHlasovaniPanel extends CssLayout {
         bfgVote.bind(tfCislo, "internal_nr");
         bfgVote.bind(cbVysledek, "result_vote");
 
-        bfgHodnoceni = new BeanFieldGroup<>(VoteClassification.class);
-        bfgHodnoceni.bind(areaPopis, "brief_description");
-        bfgHodnoceni.bind(cbHodnoceni, "public_usefulness");
-
         String dateFormat = "d. MMMMM yyyy";
         format = new SimpleDateFormat(dateFormat);
         dfDatum.setDateFormat(dateFormat);
@@ -94,11 +82,6 @@ public class DetailHlasovaniPanel extends CssLayout {
         for (VoteResult voteResult : VoteResult.values()) {
             cbVysledek.addItem(voteResult);
             cbVysledek.setItemCaption(voteResult, voteResult.getName());
-        }
-
-        for (PublicUsefulness usefulness : PublicUsefulness.values()) {
-            cbHodnoceni.addItem(usefulness);
-            cbHodnoceni.setItemCaption(usefulness, usefulness.getName());
         }
     }
 
@@ -119,17 +102,6 @@ public class DetailHlasovaniPanel extends CssLayout {
         lblDatum.setValue(format.format(vote.getVote_date()));
         lblCislo.setValue(vote.getInternal_nr());
         lblVysledek.setValue(vote.getResult_vote() != null ? vote.getResult_vote().getName() : "dosud nezadáno");
-
-        VoteClassification classification = classificationService.findVoteClassByVoteId(vote.getId());
-        lblPopis.setVisible(classification != null);
-        lblHodnoceni.setVisible(classification != null);
-        if (classification != null) {
-            bfgHodnoceni.setItemDataSource(classification);
-            lblPopis.setValue(classification.getBrief_description());
-            lblHodnoceni.setValue(classification.getPublic_usefulness().getName());
-        } else {
-            bfgHodnoceni.setItemDataSource(new VoteClassification());
-        }
 
         bfgVote.setItemDataSource(vote);
 
