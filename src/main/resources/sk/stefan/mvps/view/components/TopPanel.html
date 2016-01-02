@@ -1,0 +1,13 @@
+<v-horizontal-layout margin width-full>
+    <v-label _id="lblCaption" style-name="h3" :expand :center/>
+    <v-horizontal-layout _id="basic" spacing :right>
+        <v-label _id="lblUser" :middle visible="false"/>
+        <v-button _id="butLogin" style-name="link" >Prihlásiť</v-button>
+        <v-button _id="butLogout" style-name="link" visible="false">Odhlásiť</v-button>
+    </v-horizontal-layout>
+    <v-horizontal-layout spacing _id="loginForm" visible="false">
+        <v-text-field _id="tfUsername" caption="Login" :bottom null-representation=""/>
+        <v-password-field _id="pfPassword" caption="Heslo" :bottom null-representation=""/>
+        <v-button _id="butSend" :bottom>Odeslat</v-button>
+    </v-horizontal-layout>
+</v-horizontal-layout>

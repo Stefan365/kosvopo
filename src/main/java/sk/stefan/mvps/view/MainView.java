@@ -1,25 +1,15 @@
 package sk.stefan.mvps.view;
 
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.VaadinSessionScope;
+import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.HorizontalSplitPanel;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.SingleComponentContainer;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-import sk.stefan.mvps.view.components.NavigationPanel;
-import sk.stefan.ui.KosvopoUI;
 import sk.stefan.ui.NavigationMenu;
-import sk.stefan.ui.TopPanel;
+import sk.stefan.mvps.view.components.TopPanel;
 
 import javax.annotation.PostConstruct;
 
@@ -28,13 +18,16 @@ import javax.annotation.PostConstruct;
  */
 @SpringComponent
 @VaadinSessionScope
-public class MainView extends VerticalLayout {
+public class MainView extends VerticalLayout implements TopPanel.LoginListener {
 
     @Autowired
     private NavigationMenu navigationMenu;
 
     @Autowired
     private TopPanel topPanel;
+
+    @Autowired
+    private SpringViewProvider provider;
 
     // view container
     private VerticalLayout content;
@@ -45,6 +38,8 @@ public class MainView extends VerticalLayout {
 
     @PostConstruct
     public void init() {
+
+        topPanel.setLoginListener(this);
 
         HorizontalLayout split = new HorizontalLayout();
         split.setSizeFull();
@@ -62,13 +57,14 @@ public class MainView extends VerticalLayout {
 
     public NavigationMenu getNavigationMenu() { return navigationMenu; }
 
-    
-    public NavigationPanel getNavComp() {
-        return null;
-//        return navComp;
-    }
-
     public ComponentContainer getViewContainer() {
         return content;
+    }
+
+    @Override
+    public void refresh() {
+        navigationMenu.createMenu();
+        MainTabsheet tabsheet = (MainTabsheet) provider.getView("");
+        tabsheet.refresh();
     }
 }

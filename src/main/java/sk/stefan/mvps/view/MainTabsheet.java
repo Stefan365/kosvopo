@@ -75,25 +75,32 @@ public class MainTabsheet extends TabSheet implements View {
             String tabId = tabName + (id != null ? id : parentId != null ? parentId : "");
             TabComponent tab = tabMap.get(tabId);
             if (tab == null) {
-                tab = context.getBean((Class<? extends TabComponent>) tabFactory.getTabTypeByName(tabName));
+                Class<? extends TabComponent> tabClass = tabFactory.getTabTypeByName(tabName);
+                if (tabClass != null) {
+                    tab = context.getBean(tabClass);
+                    if (params.getId() != null) {
+                        TabEntity entity = entityService.getTabEntityByTabName(params.getTabName(), params.getId());
+                        tab.setEntity(entity);
+                        tab.setSaveListener(this::saveEntity);
+                        tab.setRemoveListener(this::removeEntity);
+                    } else if (params.getParentId() != null) {
+                        TabEntity entity = entityService.getTabEntityByNameAndId(params.getParentName(), params.getParentId());
+                        tab.setEntity(entity);
+                        tab.setSaveListener(this::saveEntity);
+                    } else {
+                        tab.setSaveListener(this::saveEntity);
+                    }
 
-                if (params.getId() != null) {
-                    TabEntity entity = entityService.getTabEntityByTabName(params.getTabName(), params.getId());
-                    tab.setEntity(entity);
-                    tab.setSaveListener(this::saveEntity);
-                    tab.setRemoveListener(this::removeEntity);
-                } else if(params.getParentId() != null) {
-                    TabEntity entity = entityService.getTabEntityByNameAndId(params.getParentName(), params.getParentId());
-                    tab.setEntity(entity);
-                    tab.setSaveListener(this::saveEntity);
-                } else {
-                    tab.setSaveListener(this::saveEntity);
+                    addTab(tab, tab.getTabCaption()).setClosable(true);
+                    tabMap.put(tab.getTabId(), tab);
                 }
-
-                addTab(tab, tab.getTabCaption()).setClosable(true);
-                tabMap.put(tab.getTabId(), tab);
             }
-            setSelectedTab(tab);
+
+            if (tab != null) {
+                setSelectedTab(tab);
+            } else {
+                Page.getCurrent().open("#!/tab=enterTab", null);
+            }
         } else {
             Page.getCurrent().open("#!/tab=enterTab", null);
         }
@@ -162,5 +169,11 @@ public class MainTabsheet extends TabSheet implements View {
                 tabMap.remove(tabId);
             }
         }
+    }
+
+    public void refresh() {
+        tabMap.clear();
+        removeAllComponents();
+        showDefaultTab();
     }
 }

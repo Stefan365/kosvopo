@@ -13,11 +13,13 @@ import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.enums.PublicRoleType;
+import sk.stefan.enums.UserType;
 import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.service.PublicPersonService;
 import sk.stefan.mvps.model.service.PublicRoleService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.TenureService;
 
 /**
@@ -36,6 +38,9 @@ public class DetailVerejneFunkcePanel extends CssLayout {
 
     @Autowired
     private TenureService tenureService;
+
+    @Autowired
+    private SecurityService securityService;
 
     // Design
     private Label lblCaption;
@@ -114,7 +119,8 @@ public class DetailVerejneFunkcePanel extends CssLayout {
 
     @Override
     public void setReadOnly(boolean readOnly) {
-        butEdit.setVisible(readOnly);
+        butEdit.setVisible(readOnly && (securityService.currentUserHasRole(UserType.ADMIN)
+                || securityService.currentUserHasRole(UserType.VOLUNTEER)));
         readLayout.setVisible(readOnly);
         editLayout.setVisible(!readOnly);
     }

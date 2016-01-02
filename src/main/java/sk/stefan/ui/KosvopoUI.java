@@ -51,7 +51,6 @@ public class KosvopoUI extends UI {
 
         Navigator navigator = new Navigator(this, mainView.getViewContainer());
         navigator.addProvider(viewProvider);
-        navigator.addViewChangeListener(mainView.getNavigationMenu());
         setNavigator(navigator);
 
         mainView.getNavigationMenu().createMenu();

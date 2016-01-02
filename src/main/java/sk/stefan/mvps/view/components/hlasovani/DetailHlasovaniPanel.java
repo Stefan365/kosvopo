@@ -15,11 +15,13 @@ import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.enums.PublicUsefulness;
+import sk.stefan.enums.UserType;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.entity.VoteClassification;
 import sk.stefan.mvps.model.service.ClassificationService;
 import sk.stefan.mvps.model.service.PublicBodyService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.VoteService;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +39,9 @@ public class DetailHlasovaniPanel extends CssLayout {
 
     @Autowired
     private PublicBodyService publicBodyService;
+
+    @Autowired
+    private SecurityService securityService;
 
     // Design
     private Label lblCaption;
@@ -110,7 +115,8 @@ public class DetailHlasovaniPanel extends CssLayout {
 
     @Override
     public void setReadOnly(boolean readOnly) {
-        butEdit.setVisible(readOnly);
+        butEdit.setVisible(readOnly && (securityService.currentUserHasRole(UserType.ADMIN)
+        || securityService.currentUserHasRole(UserType.VOLUNTEER)));
         readLayout.setVisible(readOnly);
         editLayout.setVisible(!readOnly);
     }

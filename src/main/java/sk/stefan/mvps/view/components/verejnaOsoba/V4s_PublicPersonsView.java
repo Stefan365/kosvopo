@@ -16,6 +16,8 @@ import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
+
+import java.security.Security;
 import java.util.List;
 
 import com.vaadin.ui.VerticalLayout;
@@ -24,10 +26,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.MenuButton;
 import sk.stefan.annotations.ViewTab;
+import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.PublicPersonService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.tabs.TabComponent;
 
 import javax.annotation.PostConstruct;
@@ -48,6 +52,9 @@ public class V4s_PublicPersonsView extends VerticalLayout implements TabComponen
 
     @Autowired
     private LinkService linkService;
+
+    @Autowired
+    private SecurityService securityService;
 
     // Design
     private TextField searchFd;
@@ -94,28 +101,12 @@ public class V4s_PublicPersonsView extends VerticalLayout implements TabComponen
         container.removeAllItems();
         container.addAll(publicPersonService.findAll());
         grid.setHeightByRows(container.size() >= 7 ? 7 : container.size() + 1);
+
+        addNewPublicPersonBt.setVisible(securityService.currentUserHasRole(UserType.ADMIN) || securityService.currentUserHasRole(UserType.VOLUNTEER));
     }
 
     @Override
     public String getTabId() {
         return "osobyTab";
     }
-
-
-//    @Override
-//    public void enter(ViewChangeListener.ViewChangeEvent event) {
-//
-//        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
-//
-//        Boolean isVolunteer = Boolean.FALSE;
-//        if (user != null) {
-//            UserType utype = userService.getUserType(user);
-//            //moze byt dobrovolnik, alebo admin.
-//            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
-//        }
-//
-//        initAllBasic(isVolunteer);
-//
-//    }
-
 }

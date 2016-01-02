@@ -101,24 +101,30 @@ public class VoteServiceImpl implements VoteService {
         if (pr == null) {
             return new ArrayList<>();
         }
-        Tenure ten = tenureRepo.findOne(pr.getTenure_id());
-        Date dSince = ten.getSince();
-        Date dTill = ten.getTill();
+        List<VoteOfRole> votesOfRole = getAllVotesOfPublicRole(pr);
+        List<Vote> votes = new ArrayList<>();
+        votesOfRole.forEach(voteOfRole -> votes.add(findOne(voteOfRole.getVote_id())));
+        return votes;
 
-        Date d;
 
-        List<Vote> lvotFin = new ArrayList<>();
-        List<Vote> lvot = voteRepo.findByParam("subject_id",
-                "" + pr.getPublic_body_id());
-
-        for (Vote vo : lvot) {
-            d = vo.getVote_date();
-            if ((d.compareTo(dSince) == 1 && ((dTill == null) || dTill
-                    .compareTo(d) == 1))) {
-                lvotFin.add(vo);
-            }
-        }
-        return lvotFin;
+//        Tenure ten = tenureRepo.findOne(pr.getTenure_id());
+//        Date dSince = ten.getSince();
+//        Date dTill = ten.getTill();
+//
+//        Date d;
+//
+//        List<Vote> lvotFin = new ArrayList<>();
+//        List<Vote> lvot = voteRepo.findByParam("subject_id",
+//                "" + pr.getPublic_body_id());
+//
+//        for (Vote vo : lvot) {
+//            d = vo.getVote_date();
+//            if ((d.compareTo(dSince) == 1 && ((dTill == null) || dTill
+//                    .compareTo(d) == 1))) {
+//                lvotFin.add(vo);
+//            }
+//        }
+//        return lvotFin;
     }
 
     //*888**************************************************************************

@@ -62,27 +62,8 @@ public final class V4_PublicPersonView extends VerticalLayout implements TabComp
     //bude vyznacena farebne.
     private PublicRole actualPublicRole;
 
-//    KOMPONENTY pre zobrazeneie verejnych roli dane osoby (tj. jedna aktivna a 
-    //zvysok stare): 
-//    layout pre zobrazenie zakladnych udajov danej osoby.
-//    private MyDetailedPanel<PUP_detPanContent> pubPersonDetailedPanel;
-//    private PURs_briefLayout pubRolesBriefLayout;
-//    private PCLs_briefLayout classPersonLayout;
-//    private MyTimelinePanel timelinePanel;
-    //tlacitko na pridavanie novej entity:
-//    private Button addNewPublicRoleBt;
-    //pre uzivatela obcan:  
-//    private DownloaderBriefLayout<PublicPerson> downoaderLayout;
-    //pre uzivatela admin a dobrovolnik
-//    private DownAndUploaderBriefLayout<PublicPerson> uploaderLayout;
-
-    
-    
-    
-    //konstruktor:
     public V4_PublicPersonView() {
         Design.read(this);
-
     }
 
     @Override
@@ -94,157 +75,6 @@ public final class V4_PublicPersonView extends VerticalLayout implements TabComp
     public void setRemoveListener(RemoveListener<TabEntity> removeListener) {
         detailPanel.setRemoveListener(l -> removeListener.remove(publicPerson));
     }
-
-//    /**
-//     */
-//    private void initAllBasic(Boolean isVolunteer) {
-//
-//        this.removeAllComponents();
-//
-//        this.initPublicPersonComponent();
-//        this.initPublicRolesLayout();
-////        this.initVoteLayout();
-//        this.initTimeline();
-//        this.classPersonLayout();
-//
-//        this.addComponents(pubPersonDetailedPanel, pubRolesBriefLayout, classPersonLayout, timelinePanel);
-//
-//        if (isVolunteer) {
-//
-//            this.initNewPublicRoleButton();
-//            this.initEditPublicPersonButton();
-//            this.initUploadLayout();
-//
-//        } else {
-//            this.initDownloadLayout();
-//        }
-//
-//    }
-
-//    //
-//    private void setPublicPersonValue(PublicPerson pp) {
-//
-//        this.publicPerson = pp;
-//        List<PublicRole> proles = publicRoleService.getActualPublicRolesOfPublicPerson(pp);
-//        if (proles != null && !proles.isEmpty()) {
-//            this.actualPublicRole = proles.get(0);
-//        } else {
-//            this.actualPublicRole = null;
-//        }
-//
-//    }
-
-//    /**
-//     */
-//    private void initPublicPersonComponent() {
-//
-//        PUP_detPanContent pupCont = new PUP_detPanContent(publicPerson, null);
-//        this.pubPersonDetailedPanel = new MyDetailedPanel<>(pupCont);
-//
-//    }
-
-//    /**
-//     *
-//     */
-//    private void initPublicRolesLayout() {
-//
-//        List<Integer> prIds = publicRoleService.findPublicRoleIdsByPubPersonId(publicPerson.getId());
-//
-//        List<PublicRole> publicRoles = publicRoleService.getPublicRoles(prIds);
-//
-//        this.pubRolesBriefLayout = new PURs_briefLayout(publicRoles, publicRoleService);
-//
-//        if (actualPublicRole != null) {
-//            this.pubRolesBriefLayout.setActual(actualPublicRole);
-//        }
-//
-//    }
-
-//    private void initTimeline() {
-//
-//        List<Integer> ids = voteService.findVoteIdsByPubPersonId(this.publicPerson.getId());
-//
-//        MyTimeline tl = new MyTimeline(ids);
-//        timelinePanel = new MyTimelinePanel(tl);
-//
-//
-//    }
-    
-//
-//    public PublicPerson getPublicPerson() {
-//        return publicPerson;
-//    }
-//
-//    public void setPublicPerson(PublicPerson publicPerson) {
-//        this.publicPerson = publicPerson;
-//    }
-//
-//    public PURs_briefLayout getPublicRolesLayout() {
-//        return pubRolesBriefLayout;
-//    }
-//
-//    public void setPublicRolesLayout(PURs_briefLayout publicRolesLy) {
-//        this.pubRolesBriefLayout = publicRolesLy;
-//    }
-
-//    /**
-//     * Prida tlacitko na pridavanie novej entity PublicBody.
-//     */
-//    private void initNewPublicRoleButton() {
-//
-//        this.addNewPublicRoleBt = InputNewEntityButtonFactory.createMyInputButton(PublicRole.class);
-//        this.addComponent(addNewPublicRoleBt);
-//
-//    }
-
-//    /**
-//     * Inicializuje editovatelny layout s dokumentami prisluchajucimi entite
-//     * PublicBody
-//     */
-//    private void initUploadLayout() {
-//
-//        this.uploaderLayout = new DownAndUploaderBriefLayout<>(PublicPerson.class, this.publicPerson);
-//
-//        this.addComponent(uploaderLayout);
-//
-//    }
-
-//    /**
-//     * Komponenta na zobrazovanie dokumentov prisluchajucich entite PublicBody.
-//     */
-//    private void initDownloadLayout() {
-//
-//        this.downoaderLayout = new DownloaderBriefLayout<>(PublicPerson.class, this.publicPerson);
-//
-//        this.addComponent(downoaderLayout);
-//
-//    }
-
-//    /**
-//     */
-//    private void classPersonLayout() {
-//
-//        List<Integer> pclIds = classificationService.findActualPersonClassIds(publicPerson.getId());
-//
-//        List<PersonClassification> pcls = classificationService.findNewPersonClass(pclIds);
-//
-//        this.classPersonLayout = new PCLs_briefLayout(pcls, classificationService);
-//
-//    }
-
-    
-//    /**
-//     * Sluzi na inicializaciu - tj. vytvorenie editovacieho tlacitka.
-//     *
-//     */
-//    private void initEditPublicPersonButton() {
-//
-//        Button editPUPbt;
-//        FunctionalEditWrapper<PublicPerson> ew = new FunctionalEditWrapper<>(PublicPerson.class, publicPerson);
-//        editPUPbt = EditEntityButtonFactory.createMyEditButton(ew);
-//        this.addComponent(editPUPbt);
-//    }
-
 
     @Override
     public TabEntity getEntity() {
@@ -258,6 +88,7 @@ public final class V4_PublicPersonView extends VerticalLayout implements TabComp
         verejneFunkcePanel.setPublicPerson(publicPerson);
         timelinePanel.setRelatedEntity(publicPerson);
         timelinePanel.setVotes(voteService.getAllVotesForPublicPerson(publicPerson));
+        dokumentyPanel.setEntity(publicPerson);
     }
 
     @Override
@@ -275,29 +106,4 @@ public final class V4_PublicPersonView extends VerticalLayout implements TabComp
     public String getTabId() {
         return "verejnaOsoba" + publicPerson.getId();
     }
-
-//    @Override
-//    public void enter(ViewChangeListener.ViewChangeEvent event) {
-//
-//        PublicPerson pp = UI.getCurrent().getSession().getAttribute(PublicPerson.class);
-//
-//        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
-//
-//        Boolean isVolunteer = Boolean.FALSE;
-//        if (user != null) {
-//
-//            UserType utype = userService.getUserType(user);
-//            //moze byt dobrovolnik, alebo admin.
-//            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
-//        }
-//
-//        if (pp != null) {
-//            setPublicPersonValue(pp);
-//            initAllBasic(isVolunteer);
-//        } else {
-//            UI.getCurrent().getNavigator().navigateTo("V4s_PublicPersonsView");
-//        }
-//
-//    }
-
 }

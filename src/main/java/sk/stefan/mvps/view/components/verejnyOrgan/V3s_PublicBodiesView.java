@@ -22,10 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.MenuButton;
 import sk.stefan.annotations.ViewTab;
+import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.PublicBodyService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.view.tabs.TabComponent;
 
@@ -53,6 +55,9 @@ public class V3s_PublicBodiesView extends VerticalLayout implements TabComponent
     @Autowired
     private LinkService linkService;
 
+    @Autowired
+    private SecurityService securityService;
+
     // Designové komponenty
     private TextField searchFd;
     private Grid grid;
@@ -73,7 +78,6 @@ public class V3s_PublicBodiesView extends VerticalLayout implements TabComponent
         searchFd.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
 
         addNewPublicBodyBt.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(NewPublicBodyForm.class), null));
-
     }
 
     @PostConstruct
@@ -97,6 +101,8 @@ public class V3s_PublicBodiesView extends VerticalLayout implements TabComponent
         container.removeAllItems();
         container.addAll(publicBodyService.findAll());
         grid.setHeightByRows(container.size() > 7 ? 7 : container.size() == 0 ? 1 : container.size());
+
+        addNewPublicBodyBt.setVisible(securityService.currentUserHasRole(UserType.ADMIN) || securityService.currentUserHasRole(UserType.VOLUNTEER));
     }
 
     @Override

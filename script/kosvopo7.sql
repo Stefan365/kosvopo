@@ -189,16 +189,16 @@ CREATE TABLE `a_user` (
   `e_mail` varchar(50) COLLATE utf8_slovak_ci DEFAULT NULL,
   `login` varchar(50) COLLATE utf8_slovak_ci DEFAULT NULL,
   `image` longblob,
-  `password` blob,
+  `password` binary(16),
   `visible` bit(1) DEFAULT b'1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `a_user` (`id`, `first_name`, `last_name`, `e_mail`, `login`, `password`, `visible`) VALUES
-(1,	'Peter',	'Sarkoci',	'peter.sarkoci@gmail.com',	'petak',	'�z�y���pN��\\�e',	CONV('1', 2, 10) + 0),
-(2,	'Štefan',	'Vereš',	'stefan.veres@gmail.com',	'stefan',	'.��.\Z�4 =��Y�',	CONV('1', 2, 10) + 0),
-(3,	'Miro',	'Sčibrányi',	'miro.scibranyi@gmail.com',	'miro',	'��������¡�d�D',	CONV('1', 2, 10) + 0),
-(4,	'admin',	'adminovic',	'admin@admin.sk',	'admin',	'!#/)zW��C�JJ��',	CONV('1', 2, 10) + 0);
+(1,	'Peter',	'Sarkoci',	'peter.sarkoci@gmail.com',	'petak',	unhex('807ac679a9eeeb1e704eab805c059365'),	CONV('1', 2, 10) + 0),
+(2,	'Štefan',	'Vereš',	'stefan.veres@gmail.com',	'stefan',	unhex('2e970e822e1a8834203d06abb60f59ec'),	CONV('1', 2, 10) + 0),
+(3,	'Miro',	'Sčibrányi',	'miro.scibranyi@gmail.com',	'miro',	unhex('e0eaf3841f8ca5bf93a2c2a1d0648d44'),	CONV('1', 2, 10) + 0),
+(4,	'admin',	'adminovic',	'admin@admin.sk',	'admin',	unhex('21232f297a57a5a743894a0e4a801fc3'),	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `a_user_role`;
 CREATE TABLE `a_user_role` (
