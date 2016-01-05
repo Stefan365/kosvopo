@@ -13,11 +13,13 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import sk.stefan.enums.UserType;
 import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.service.LocationService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.components.ImageComponent;
 
 import java.util.HashMap;
@@ -34,6 +36,9 @@ public class DetailOrganuPanel extends CssLayout {
 
     @Autowired
     private LocationService locationService;
+
+    @Autowired
+    private SecurityService securityService;
 
     // Design
     private ImageComponent imageComponent;
@@ -101,7 +106,8 @@ public class DetailOrganuPanel extends CssLayout {
 
     @Override
     public void setReadOnly(boolean readOnly) {
-        butEdit.setVisible(readOnly);
+        butEdit.setVisible(readOnly && (securityService.currentUserHasRole(UserType.ADMIN)
+                || securityService.currentUserHasRole(UserType.VOLUNTEER)));
         readLayout.setVisible(readOnly);
         imageComponent.setReadOnly(readOnly);
         editLayout.setVisible(!readOnly);

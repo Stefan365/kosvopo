@@ -4,7 +4,133 @@
     <option name="ANALYZE_TEST_SOURCES" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ed8ea447-fca2-4b77-96ec-a6beda02a3b5" name="Default" comment="" />
+    <list default="true" id="ed8ea447-fca2-4b77-96ec-a6beda02a3b5" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_4.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/DokumentComponent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/utils/EnhancedBeanItemContainer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/DokumentComponent.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/TopPanel.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/factories/EditEntityButtonFactory.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/factories/InputNewEntityButtonFactory.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/listeners/InputVoteButClickListener.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/listeners/Input_EditButClickListener.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/V10_ThemeView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/V10s_ThemesView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/V1_LoginView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/V8_UniEditableTableView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/V9_SubjectView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/V9s_SubjectsView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/MyTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/NavigationPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/PasswordDoubleFieldComponent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/PasswordForm.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/UniDlg.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/ViewTitleLabel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/ZBD_InputOptionGroup.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/documents/MyFileDownAndUploader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/documents/MyFileDownloader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/filtering/FilterComboBox.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/filtering/FilterTableListener.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/filtering/FilterVoteListener.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/filtering/Filtering3Component.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/DownAndUploaderBriefLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/DownloaderBriefLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/InputFormLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/InputVoteComplexLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/InputVoteFormLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/MyViewLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/PCLs_briefLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/PUBs_briefLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/PUPs_briefLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/PURs_briefLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/SUBs_briefLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/THEs_briefLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/VORs_brief2Layout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/VORs_briefLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/layouts/VOTs_briefLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/PCL_briefPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/PUB_briefPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/PUB_detPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/PUP_briefPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/PUP_detPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/PUR_briefPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/PUR_detPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/SUB_briefPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/SUB_detPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/THE_briefPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/THE_detPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/VCL_detPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/VOR_brief2PanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/VOR_briefPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/VOR_detPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/VOT_briefPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panContents/VOT_detPanContent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/DownAndUploaderBriefPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/DownloaderBriefPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/MyBriefPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/MyDetailedPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/MyInputFormPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/MyTablePanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/MyTimelinePanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/MyUniPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/vote/PritomniLayout.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/vote/PritomnyComponent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/zbd/ZBD_PUB_detPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/zbd/ZBD_PUP_detPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/zbd/ZBD_PUR_detPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/zbd/ZBD_SUB_detPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/zbd/ZBD_THE_detPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/zbd/ZBD_VCL_detPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/zbd/ZBD_VOR_detPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/zbd/ZBD_VOT_detPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/zbd/ZBD_VoteBriefPanel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/utils/ZBD_ToolsEncrypt.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/ui/TopPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TopPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/kosvopo6.iml" afterPath="$PROJECT_DIR$/kosvopo6.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/kosvopo7.sql" afterPath="$PROJECT_DIR$/script/kosvopo7.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/enums/VoteAction.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/enums/VoteAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/DocumentService.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/DocumentService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/PublicRoleService.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/PublicRoleService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/SecurityService.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/SecurityService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/DocumentServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/DocumentServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicRoleServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicRoleServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/SecurityServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/SecurityServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/UserServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/UserServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/VoteServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/VoteServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MainTabsheet.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MainTabsheet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MainView.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MainView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MyNavigator.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MyNavigator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/DokumentyPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/DokumentyPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TimelinePanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TimelinePanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/DetailHlasovaniPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/DetailHlasovaniPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/GrafHlasovaniPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/GrafHlasovaniPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/HlasovaniPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/HlasovaniPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6_VoteView.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6_VoteView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6s_VotesView.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6s_VotesView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/DetailOsobyPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/DetailOsobyPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4_PublicPersonView.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4_PublicPersonView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4s_PublicPersonsView.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4s_PublicPersonsView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/VerejneFunkceOsobyPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/VerejneFunkceOsobyPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/DetailVerejneFunkcePanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/DetailVerejneFunkcePanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/HlasovaniFunkcePanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/HlasovaniFunkcePanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/V5_PublicRoleView.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/V5_PublicRoleView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3_PublicBodyView.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3_PublicBodyView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3s_PublicBodiesView.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3s_PublicBodiesView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/VerejneFunkceOrganuPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/VerejneFunkceOrganuPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/tabs/TabFactory.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/tabs/TabFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/ui/KosvopoUI.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/ui/KosvopoUI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/ui/NavigationMenu.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/ui/NavigationMenu.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/wrappers/FunctionalEditWrapper.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/wrappers/FunctionalEditWrapper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/DokumentyPanel.html" afterPath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/DokumentyPanel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.html" afterPath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/GrafHlasovaniPanel.html" afterPath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/GrafHlasovaniPanel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/HlasovaniPanel.html" afterPath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/HlasovaniPanel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/sk/stefan/mvp/view/V9s_SubjectsViewTest.java" afterPath="$PROJECT_DIR$/src/test/java/sk/stefan/mvp/view/V9s_SubjectsViewTest.java" />
+    </list>
     <ignored path="kosvopo6.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -25,51 +151,101 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DetailOsobyPanel.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/verejnaOsoba/DetailOsobyPanel.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.2692308">
-              <caret line="5" column="6" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DetailOrganuPanel.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.269231">
-              <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NewVoteForm.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/NewVoteForm.java">
+      <file leaf-file-name="V6s_VotesView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6s_VotesView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+              <caret line="71" column="31" selection-start-line="71" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="V9_SubjectView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/V9_SubjectView.java">
+      <file leaf-file-name="DetailHlasovaniPanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/DetailHlasovaniPanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+              <caret line="118" column="66" selection-start-line="117" selection-start-column="36" selection-end-line="118" selection-end-column="66" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CrutialNonEditable.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/enums/CrutialNonEditable.java">
+      <file leaf-file-name="V3_PublicBodyView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3_PublicBodyView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.4149253">
-              <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="39" column="19" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="V4_PublicPersonView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4_PublicPersonView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="V4s_PublicPersonsView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4s_PublicPersonsView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="104" column="147" selection-start-line="104" selection-start-column="147" selection-end-line="104" selection-end-column="147" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DetailOsobyPanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/DetailOsobyPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DetailVerejneFunkcePanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/DetailVerejneFunkcePanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DetailOrganuPanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="109" column="74" selection-start-line="109" selection-start-column="74" selection-end-line="109" selection-end-column="74" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HlasovaniFunkcePanel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/HlasovaniFunkcePanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="64" column="79" selection-start-line="64" selection-start-column="79" selection-end-line="64" selection-end-column="79" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DokumentyPanel.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/DokumentyPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8582474">
+              <caret line="94" column="24" selection-start-line="94" selection-start-column="24" selection-end-line="94" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -83,10 +259,13 @@
         <option value="AnnotationType" />
         <option value="Html5" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -96,57 +275,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/DetailUzivatelePanel.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/RoleUzivatelePanel.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/UserService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/RoleUzivatelePanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/utils/StringToDateConverter.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/NewUserForm.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/annotations/ViewTab.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/NewRegionForm.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/entity/Region.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/KrajeTab.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/KrajeTab.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/RegionPanel.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/DistrictPanel.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/DistrictTab.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/DistrictTab.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/RegionPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/DistrictPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/LocationService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/ZBD_LocationServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/LocationTab.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/LocationTab.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/LocationPanel.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/TemataTab.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/TemataTab.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/LocationPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/TemaPanel.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/TemaPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/SubjectsTab.html" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/DownAndUploaderBriefPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/documents/MyFileDownAndUploader.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/MyInputFormPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/wrappers/FunctionalEditWrapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/vote/PritomniLayout.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MyNavigator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/filtering/FilterVoteListener.java" />
+        <option value="$PROJECT_DIR$/src/test/java/sk/stefan/mvp/view/V9s_SubjectsViewTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/DocumentService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3_PublicBodyView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/V5_PublicRoleView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/DocumentServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/DokumentComponent.html" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/ui/KosvopoUI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TopPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MainView.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.html" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/tabs/TabFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/TopPanel.html" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/ui/NavigationMenu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/SecurityService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/SecurityServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/DetailHlasovaniPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/DokumentComponent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MainTabsheet.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/GrafHlasovaniPanel.html" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/GrafHlasovaniPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/DokumentyPanel.html" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/enums/VoteAction.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6_VoteView.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/PublicRoleService.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicRoleServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/SubjectsTab.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/VoteService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/utils/EnhancedBeanItemContainer.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/HlasovaniPanel.html" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/HlasovaniPanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/VoteServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/SubjectsTab.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/SubjectPanel.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/SubjectPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/TenuresTab.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/TenurePanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/TenuresTab.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/TenureService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/TenureServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/TenurePanel.html" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TimelinePanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4_PublicPersonView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/VerejneFunkceOsobyPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4s_PublicPersonsView.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6s_VotesView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/DetailHlasovaniPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/DetailHlasovaniPanel.html" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3s_PublicBodiesView.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/VerejneFunkceOrganuPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/DetailOsobyPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/DetailVerejneFunkcePanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.html" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/HlasovaniFunkcePanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/DokumentyPanel.java" />
       </list>
     </option>
   </component>
@@ -169,20 +348,6 @@
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="kosvopo6" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Dependencies" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
-        </PATH_ELEMENT>
-      </PATH>
       <PATH>
         <PATH_ELEMENT>
           <option name="myItemId" value="" />
@@ -254,8 +419,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -285,6 +448,18 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -968,74 +1143,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stefan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mvps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kosvopo6" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Kosvopo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stefan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enums" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kosvopo6" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Kosvopo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="script" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1056,40 +1163,42 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="dynamic.classpath" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/verejnaRole" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="sk.stefan.mvps.view.components.administrace" />
-      <recent name="sk.stefan.mvps.view.components.hlasovani" />
-      <recent name="sk.stefan.interfaces" />
-      <recent name="sk.stefan.mvps.view.components.verejnyOrgan" />
-      <recent name="sk.stefan.mvps.view.components" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Kosvopo\src\main\resources\images" />
-      <recent name="D:\Kosvopo\script" />
-      <recent name="D:\Kosvopo\src\main\webapp\VAADIN\themes\mytheme\images" />
-      <recent name="D:\Kosvopo\src\main\resources" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Kosvopo\src\main\webapp\VAADIN\themes\mytheme\images" />
       <recent name="D:\Kosvopo\src\main\resources\images" />
       <recent name="D:\Kosvopo\src\main\resources\sk\stefan\mvps\view\components\verejnyOrgan" />
       <recent name="D:\Kosvopo\src\main\resources\sk\stefan\mvps\view\components" />
       <recent name="D:\Kosvopo\src\main\resources\sk\stefan\mvps\view\components\verejnaRole" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="sk.stefan.mvps.view.components" />
+      <recent name="sk.stefan.mvps.view.components.administrace" />
+      <recent name="sk.stefan.mvps.view.components.hlasovani" />
+      <recent name="sk.stefan.interfaces" />
+      <recent name="sk.stefan.mvps.view.components.verejnyOrgan" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Kosvopo\src\main\resources\images" />
+      <recent name="D:\Kosvopo\script" />
+      <recent name="D:\Kosvopo\src\main\webapp\VAADIN\themes\mytheme\images" />
+      <recent name="D:\Kosvopo\src\main\resources" />
     </key>
   </component>
   <component name="RunManager" selected="Application.kosvopo">
@@ -1381,35 +1490,44 @@
   <component name="SvnConfiguration">
     <configuration />
   </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ed8ea447-fca2-4b77-96ec-a6beda02a3b5" name="Default" comment="" />
+      <created>1451082340846</created>
+      <option name="number" value="Default" />
+      <updated>1451082340846</updated>
+    </task>
+    <servers />
+  </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32820514" sideWeight="0.49699247" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34700316" sideWeight="0.49699247" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3965812" sideWeight="0.50680786" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12708019" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12664714" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35897437" sideWeight="0.49319214" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35804418" sideWeight="0.49319214" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23974763" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31013617" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27452415" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962063" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3794872" sideWeight="0.4956076" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3438486" sideWeight="0.4956076" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36410257" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928678" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1425,181 +1543,147 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="186" />
+      <option name="time" value="236" />
     </breakpoint-manager>
     <watches-manager />
   </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/DistrictTab.html">
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/utils/EnumConverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.576923">
-          <caret line="23" column="7" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/DistrictPanel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="19" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/DistrictPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="129" column="46" selection-start-line="129" selection-start-column="46" selection-end-line="129" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/entity/Location.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/DistrictTab.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/LocationService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/ZBD_LocationServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="106" column="51" selection-start-line="106" selection-start-column="51" selection-end-line="106" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/LocationPanel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1553398">
-          <caret line="21" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="21" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/LocationTab.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8899676">
-          <caret line="24" column="7" selection-start-line="0" selection-start-column="0" selection-end-line="24" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/VoteService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59402984">
-          <caret line="123" column="4" selection-start-line="123" selection-start-column="4" selection-end-line="123" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/LocationTab.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="52" selection-start-line="55" selection-start-column="52" selection-end-line="55" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/LocationPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="113" column="9" selection-start-line="113" selection-start-column="9" selection-end-line="113" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/TemataTab.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.0769231">
-          <caret line="13" column="55" selection-start-line="0" selection-start-column="0" selection-end-line="22" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/entity/Theme.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/entity/Subject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25373134">
+        <state vertical-scroll-proportion="0.3278237">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/TemaPanel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
-          <caret line="9" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="19" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/VoteService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="129" column="16" selection-start-line="129" selection-start-column="16" selection-end-line="129" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/utils/PresentationNameConverter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3313433">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/VoteServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/enums/VoteAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="222" column="54" selection-start-line="222" selection-start-column="54" selection-end-line="222" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#6570#6571#0" expanded="false" />
-            <element signature="e#6637#6638#0" expanded="false" />
-            <element signature="e#6695#6696#0" expanded="false" />
-            <element signature="e#6752#6753#0" expanded="false" />
-            <element signature="e#6812#6813#0" expanded="false" />
-            <element signature="e#6856#6857#0" expanded="false" />
-            <element signature="e#6921#6922#0" expanded="false" />
-            <element signature="e#6994#6995#0" expanded="false" />
-            <element signature="e#7058#7059#0" expanded="false" />
-            <element signature="e#7119#7120#0" expanded="false" />
-            <element signature="e#7398#7399#0" expanded="false" />
-            <element signature="e#7442#7443#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/TemaPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="105" column="9" selection-start-line="95" selection-start-column="8" selection-end-line="105" selection-end-column="9" />
+          <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/TemataTab.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/entity/VoteOfRole.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/entity/PublicRole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="59" selection-start-line="17" selection-start-column="42" selection-end-line="17" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/7.5.10/vaadin-server-7.5.10.jar!/com/vaadin/data/util/AbstractBeanContainer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.148148">
+          <caret line="370" column="19" selection-start-line="370" selection-start-column="19" selection-end-line="370" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/7.5.10/vaadin-server-7.5.10-sources.jar!/com/vaadin/data/util/NestedPropertyDescriptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="11" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/7.5.10/vaadin-server-7.5.10-sources.jar!/com/vaadin/data/util/BeanItemContainer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="87" column="11" selection-start-line="87" selection-start-column="11" selection-end-line="87" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/7.5.10/vaadin-server-7.5.10-sources.jar!/com/vaadin/data/util/AbstractBeanContainer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="828" column="28" selection-start-line="828" selection-start-column="28" selection-end-line="828" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/7.5.10/vaadin-server-7.5.10-sources.jar!/com/vaadin/data/util/MethodPropertyDescriptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_66/src.zip!/java/util/List.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.459799">
+          <caret line="110" column="17" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_66/src.zip!/java/util/Arrays.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3316583">
+          <caret line="3876" column="20" selection-start-line="3876" selection-start-column="20" selection-end-line="3876" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_66/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4849247">
+          <caret line="1241" column="16" selection-start-line="1241" selection-start-column="16" selection-end-line="1241" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_66/src.zip!/java/lang/Iterable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3316583">
+          <caret line="71" column="17" selection-start-line="71" selection-start-column="17" selection-end-line="71" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_66/src.zip!/java/util/stream/ReferencePipeline.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.477387">
+          <caret line="159" column="31" selection-start-line="159" selection-start-column="31" selection-end-line="159" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_66/src.zip!/java/util/stream/Stream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3316583">
+          <caret line="168" column="14" selection-start-line="168" selection-start-column="14" selection-end-line="168" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/7.5.10/vaadin-server-7.5.10-sources.jar!/com/vaadin/data/util/VaadinPropertyDescriptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="17" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/PublicRoleService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.65829146">
+          <caret line="64" column="4" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -1607,142 +1691,222 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicRoleServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="264" column="65" selection-start-line="264" selection-start-column="65" selection-end-line="264" selection-end-column="65" />
+          <caret line="273" column="69" selection-start-line="273" selection-start-column="69" selection-end-line="273" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/PublicRoleService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="17" selection-start-line="64" selection-start-column="17" selection-end-line="64" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/7.5.10/vaadin-server-7.5.10-sources.jar!/com/vaadin/ui/Grid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4898" column="47" selection-start-line="4898" selection-start-column="47" selection-end-line="4898" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/vaadin/vaadin-server/7.5.10/vaadin-server-7.5.10-sources.jar!/com/vaadin/event/SelectionEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="82" column="21" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_66/src.zip!/java/util/function/Consumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="17" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/utils/EnhancedBeanItemContainer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="83" selection-start-line="17" selection-start-column="83" selection-end-line="17" selection-end-column="83" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#693#694#0" expanded="true" />
+            <element signature="e#742#743#0" expanded="true" />
+            <element signature="e#813#814#0" expanded="true" />
+            <element signature="e#856#857#0" expanded="true" />
+            <element signature="e#1067#1068#0" expanded="true" />
+            <element signature="e#1146#1147#0" expanded="true" />
+            <element signature="e#1364#1365#0" expanded="true" />
+            <element signature="e#1423#1424#0" expanded="true" />
+            <element signature="e#1504#1505#0" expanded="true" />
+            <element signature="e#1564#1565#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/VoteService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="22" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/HlasovaniPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20467836">
+          <caret line="45" column="29" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/HlasovaniPanel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="64" selection-start-line="0" selection-start-column="64" selection-end-line="0" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/GrafHlasovaniPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="38" selection-start-line="58" selection-start-column="38" selection-end-line="58" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16504854">
-          <caret line="12" column="62" selection-start-line="12" selection-start-column="62" selection-end-line="12" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.05074627">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/SubjectPanel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.9615383">
-          <caret line="25" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="25" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/SubjectsTab.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.0">
-          <caret line="20" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/entity/Tenure.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/entity/Vote.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/TenuresTab.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2692308">
-          <caret line="11" column="51" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/SubjectPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="154" column="9" selection-start-line="152" selection-start-column="8" selection-end-line="154" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/TenureService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55820894">
-          <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/SubjectsTab.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="92" column="102" selection-start-line="92" selection-start-column="8" selection-end-line="92" selection-end-column="102" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/TenureService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/TenureServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="61" selection-start-line="33" selection-start-column="61" selection-end-line="33" selection-end-column="61" />
+          <caret line="57" column="16" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
           <folding>
-            <element signature="e#555#556#0" expanded="false" />
-            <element signature="e#598#599#0" expanded="false" />
-            <element signature="e#659#660#0" expanded="false" />
-            <element signature="e#718#719#0" expanded="false" />
-            <element signature="e#779#780#0" expanded="false" />
-            <element signature="e#849#850#0" expanded="false" />
+            <element signature="e#1185#1186#0" expanded="true" />
+            <element signature="e#1222#1223#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/TenurePanel.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/vaadin/addons/dcharts-widget/1.7.0/dcharts-widget-1.7.0.jar!/org/dussan/vaadin/dcharts/base/renderers/TickRenderer.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.2179105">
-          <caret line="98" column="9" selection-start-line="98" selection-start-column="9" selection-end-line="98" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1784#1785#0" expanded="true" />
-            <element signature="e#1836#1837#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/TenuresTab.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/TenurePanel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.230769">
-          <caret line="11" column="103" selection-start-line="11" selection-start-column="103" selection-end-line="11" selection-end-column="103" />
+        <state vertical-scroll-proportion="1.9889196">
+          <caret line="134" column="41" selection-start-line="134" selection-start-column="41" selection-end-line="134" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/entity/PublicPerson.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/vaadin/addons/dcharts-widget/1.7.0/dcharts-widget-1.7.0.jar!/org/dussan/vaadin/dcharts/helpers/ChartDataHelper.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3313433">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.33240998">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding>
+            <element signature="e#811#812#0" expanded="true" />
+            <element signature="e#878#879#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.153846">
+          <caret line="94" column="34" selection-start-line="94" selection-start-column="34" selection-end-line="94" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/vaadin/addons/dcharts-widget/1.7.0/dcharts-widget-1.7.0.jar!/org/dussan/vaadin/dcharts/renderers/tick/AxisTickRenderer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49861497">
+          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/vaadin/addons/dcharts-widget/1.7.0/dcharts-widget-1.7.0.jar!/org/dussan/vaadin/dcharts/metadata/renderers/LabelRenderers.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47091413">
+          <caret line="13" column="12" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+          <folding>
+            <element signature="e#373#374#0" expanded="true" />
+            <element signature="e#413#414#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/verejnaOsoba/VerejneFunkceOsobyPanel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6_VoteView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.96391755">
+          <caret line="57" column="35" selection-start-line="57" selection-start-column="35" selection-end-line="57" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TimelinePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5515464">
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/VoteServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.4742268">
+          <caret line="105" column="86" selection-start-line="105" selection-start-column="86" selection-end-line="105" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/V5_PublicRoleView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="44" column="20" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/VerejneFunkceOsobyPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="76" column="145" selection-start-line="76" selection-start-column="145" selection-end-line="76" selection-end-column="145" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3s_PublicBodiesView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="79" column="142" selection-start-line="79" selection-start-column="142" selection-end-line="79" selection-end-column="142" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/VerejneFunkceOrganuPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="75" column="145" selection-start-line="75" selection-start-column="145" selection-end-line="75" selection-end-column="145" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3_PublicBodyView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="19" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -1750,47 +1914,23 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4_PublicPersonView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="14" selection-start-line="49" selection-start-column="14" selection-end-line="49" selection-end-column="14" />
+          <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TimelinePanel.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4s_PublicPersonsView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="74" selection-start-line="55" selection-start-column="74" selection-end-line="55" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6s_VotesView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.838806">
-          <caret line="75" column="67" selection-start-line="75" selection-start-column="67" selection-end-line="75" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/DetailHlasovaniPanel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.99029124">
-          <caret line="18" column="8" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
+          <caret line="104" column="147" selection-start-line="104" selection-start-column="147" selection-end-line="104" selection-end-column="147" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/DetailHlasovaniPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3402985">
-          <caret line="49" column="30" selection-start-line="49" selection-start-column="30" selection-end-line="49" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/entity/Vote.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.27761194">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="118" column="66" selection-start-line="117" selection-start-column="36" selection-end-line="118" selection-end-column="66" />
           <folding />
         </state>
       </provider>
@@ -1798,55 +1938,47 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/DetailOsobyPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="41" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="41" />
+          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/DetailVerejneFunkcePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3313433">
-          <caret line="116" column="61" selection-start-line="116" selection-start-column="61" selection-end-line="116" selection-end-column="61" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="109" column="74" selection-start-line="109" selection-start-column="74" selection-end-line="109" selection-end-column="74" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/verejnaOsoba/DetailOsobyPanel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2692308">
-          <caret line="5" column="6" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.269231">
-          <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/NewVoteForm.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6s_VotesView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <caret line="71" column="31" selection-start-line="71" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/V9_SubjectView.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/HlasovaniFunkcePanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+          <caret line="64" column="79" selection-start-line="64" selection-start-column="79" selection-end-line="64" selection-end-column="79" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/enums/CrutialNonEditable.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/DokumentyPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.4149253">
-          <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.8582474">
+          <caret line="94" column="24" selection-start-line="94" selection-start-column="24" selection-end-line="94" selection-end-column="24" />
           <folding />
         </state>
       </provider>

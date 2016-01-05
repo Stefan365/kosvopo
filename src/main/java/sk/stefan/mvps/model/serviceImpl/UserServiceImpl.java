@@ -119,10 +119,12 @@ public class UserServiceImpl implements UserService {
     private UserType getType(A_UserRole urole) {
 //        log.debug("UROLE IS NULL" + (urole==null));
 
-        Integer roleId = urole.getRole_id();
-        A_Role role = roleRepo.findOne(roleId);
-        if (role != null) {
-            return role.getRole();
+        if (urole != null) {
+            Integer roleId = urole.getRole_id();
+            A_Role role = roleRepo.findOne(roleId);
+            if (role != null) {
+                return role.getRole();
+            }
         }
         return null;
 

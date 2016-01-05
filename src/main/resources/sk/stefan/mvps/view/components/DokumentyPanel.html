@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-</head>
-<body>
 <v-panel style-name="new-form" caption="Dokumenty" icon="font://FILES_O">
-    <v-vertical-layout width-full>
-
+    <v-vertical-layout margin spacing>
+        <v-label _id="emptyLabel">Nejsou připojeny žádné dokumenty.</v-label>
+        <v-vertical-layout _id="layout" width-full/>
+        <v-upload _id="upload" immediate="true">Upload</v-upload>
     </v-vertical-layout>
-
 </v-panel>
-</body>
-</html>

@@ -7,13 +7,11 @@ package sk.stefan.mvps.view.components.verejnaRole;
 
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.ViewTab;
-import sk.stefan.factories.EditEntityButtonFactory;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
@@ -27,7 +25,6 @@ import sk.stefan.mvps.model.serviceImpl.VoteServiceImpl;
 import sk.stefan.mvps.view.components.DokumentyPanel;
 import sk.stefan.mvps.view.components.TimelinePanel;
 import sk.stefan.mvps.view.tabs.TabComponent;
-import sk.stefan.wrappers.FunctionalEditWrapper;
 
 /**
  * View zobrazujúci roľu danej verejnej osoby.
@@ -93,7 +90,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements TabCompon
 //        this.addComponents(publicRoleDetPanel, votesOfRoleBriefLy, timelinePanel);
 
         if (isVolunteer) {
-            this.initEditPublicRoleButton();
+//            this.initEditPublicRoleButton();
             this.initUploadLayout();
             
         } else {
@@ -152,16 +149,16 @@ public final class V5_PublicRoleView extends VerticalLayout implements TabCompon
 
     }
     
-    /**
-     * 
-     */
-    private void initEditPublicRoleButton() {
-        
-        Button editPubRoleBt;
-        FunctionalEditWrapper<PublicRole> ew = new FunctionalEditWrapper<>(PublicRole.class, publicRole);
-        editPubRoleBt = EditEntityButtonFactory.createMyEditButton(ew);
-        this.addComponent(editPubRoleBt);
-    }
+//    /**
+//     *
+//     */
+//    private void initEditPublicRoleButton() {
+//
+//        Button editPubRoleBt;
+//        FunctionalEditWrapper<PublicRole> ew = new FunctionalEditWrapper<>(PublicRole.class, publicRole);
+//        editPubRoleBt = EditEntityButtonFactory.createMyEditButton(ew);
+//        this.addComponent(editPubRoleBt);
+//    }
 
 
     /**
@@ -213,6 +210,7 @@ public final class V5_PublicRoleView extends VerticalLayout implements TabCompon
         hlasovaniFunkcePanel.setPublicRole(publicRole);
         timelinePanel.setRelatedEntity(publicRole);
         timelinePanel.setVotes(voteService.getAllVotesForPublicRole(publicRole));
+        dokumentyPanel.setEntity(publicRole);
     }
 
     @Override

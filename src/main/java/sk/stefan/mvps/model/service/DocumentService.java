@@ -6,15 +6,16 @@
 package sk.stefan.mvps.model.service;
 
 import java.util.List;
+
+import com.vaadin.server.Resource;
 import sk.stefan.mvps.model.entity.Document;
 
 /**
  * Obsluhuje dokument.
  * 
  * @author stefan
- * @param <E>
  */
-public interface DocumentService<E> {
+public interface DocumentService {
 
     /**
      * @param tn table name
@@ -22,25 +23,12 @@ public interface DocumentService<E> {
      * @return 
      */
     public List<Document> findAllEntityDocuments(String tn, Integer rid);
-    
-    /**
-     * @param ent entita
-     * @return 
-     */
-    public Integer getEntityId(E ent);
-    
+
     /**
      * @return nazov DB tabulky danej triedy.
      */
-    public String getClassTableName();
-    
-    /**
-     * Vrati class entity ku ktorej patri dokument.
-     * 
-     * @return 
-     */
-    public Class<E> getEntityClass();
-    
+    public String getClassTableName(Class clazz);
+
     /**
      * @param doc dokument
      * @return 
@@ -52,5 +40,6 @@ public interface DocumentService<E> {
      * @return 
      */
     public Document save(Document doc);
-    
+
+    Resource getDocumentResource(Document document);
 }

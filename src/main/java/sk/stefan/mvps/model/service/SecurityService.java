@@ -8,6 +8,7 @@ package sk.stefan.mvps.model.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.A_Role;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
@@ -36,4 +37,6 @@ public interface SecurityService {
     A_UserRole getActualUserRoleForUser(A_User user);
 
     List<A_Role> getAvailableRoles();
+
+    boolean currentUserHasRole(UserType userType);
 }

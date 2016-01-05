@@ -2,21 +2,21 @@ package sk.stefan.mvps.view;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
+import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import sk.stefan.mvps.view.components.NavigationPanel;
+import sk.stefan.mvps.view.components.TopPanel;
 import sk.stefan.ui.NavigationMenu;
-import sk.stefan.ui.TopPanel;
 
 /*
  * Hlavne view, ktore nesie listu s tlacitkami.
  */
 @SpringComponent
 @VaadinSessionScope
-public class MainView extends VerticalLayout {
+public class MainView extends VerticalLayout implements TopPanel.LoginListener {
 
     private static final long serialVersionUID = 2131432L;
 
@@ -25,6 +25,9 @@ public class MainView extends VerticalLayout {
 
     @Autowired
     private TopPanel topPanel;
+
+    @Autowired
+    private SpringViewProvider provider;
 
     // view container
     private VerticalLayout content;
@@ -35,6 +38,8 @@ public class MainView extends VerticalLayout {
 
     @PostConstruct
     public void init() {
+
+        topPanel.setLoginListener(this);
 
         HorizontalLayout split = new HorizontalLayout();
         split.setSizeFull();
@@ -52,13 +57,14 @@ public class MainView extends VerticalLayout {
 
     public NavigationMenu getNavigationMenu() { return navigationMenu; }
 
-    
-    public NavigationPanel getNavComp() {
-        return null;
-//        return navComp;
-    }
-
     public ComponentContainer getViewContainer() {
         return content;
+    }
+
+    @Override
+    public void refresh() {
+        navigationMenu.createMenu();
+        MainTabsheet tabsheet = (MainTabsheet) provider.getView("");
+        tabsheet.refresh();
     }
 }

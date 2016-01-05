@@ -100,6 +100,7 @@ public final class V3_PublicBodyView extends VerticalLayout implements TabCompon
         funkcePanel.setPublicBody(publicBody);
         timeline.setRelatedEntity(publicBody);
         timeline.setVotes(voteService.getAllVotesForPublicBody(publicBody));
+        dokumentyPanel.setEntity(publicBody);
     }
 
     @Override

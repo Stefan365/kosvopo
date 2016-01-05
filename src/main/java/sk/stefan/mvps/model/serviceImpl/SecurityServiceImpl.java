@@ -7,13 +7,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.A_Role;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.mvps.model.repo.GeneralRepo;
 import sk.stefan.mvps.model.repo.UniRepo;
 import sk.stefan.mvps.model.service.SecurityService;
+import sk.stefan.mvps.model.service.UserService;
 
 /**
  * SLuzi na zabezpecenie aplikacie pred nepovolanymi vstupmi.
@@ -31,12 +34,9 @@ public class SecurityServiceImpl implements SecurityService {
 
     private final UniRepo<A_Role> roleRepo;
 
+    @Autowired
+    private UserService userService;
 
-    //0.konstruktor:
-
-    /**
-     *
-     */
     public SecurityServiceImpl() {
 
         this.genRepo = new GeneralRepo();
@@ -134,6 +134,18 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public List<A_Role> getAvailableRoles() {
         return roleRepo.findAll();
+    }
+
+    @Override
+    public boolean currentUserHasRole(UserType userType) {
+        A_User user = getCurrentUser();
+        if (user != null) {
+            UserType currentUserType = userService.getUserType(user);
+            if (currentUserType != null && currentUserType == userType) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

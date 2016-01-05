@@ -61,4 +61,6 @@ public interface PublicRoleService {
     List<PublicRole> findAllPublicRoleByPublicBodyId(Integer publicBodyId);
 
     PublicBody getPublicBodyForRoleId(Integer public_role_id);
+
+    PublicPerson findPublicPersonFromPublicRoleId(Integer public_role_id);
 }

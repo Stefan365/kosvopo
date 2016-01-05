@@ -266,4 +266,13 @@ public class PublicRoleServiceImpl implements PublicRoleService {
         }
         return null;
     }
+
+    @Override
+    public PublicPerson findPublicPersonFromPublicRoleId(Integer public_role_id) {
+        PublicRole role = pubRoleRepo.findOne(public_role_id);
+        if (role != null) {
+            return pubPersonRepo.findOne(role.getPublic_person_id());
+        }
+        return null;
+    }
 }

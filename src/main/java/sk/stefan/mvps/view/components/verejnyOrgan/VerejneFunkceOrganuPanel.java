@@ -12,6 +12,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
@@ -19,6 +20,7 @@ import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.entity.Tenure;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.PublicRoleService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.components.verejnaRole.NewPublicRoleForm;
 import sk.stefan.utils.EnumConverter;
 import sk.stefan.utils.PresentationNameConverter;
@@ -37,6 +39,9 @@ public class VerejneFunkceOrganuPanel extends Panel {
 
     @Autowired
     private PublicRoleService publicRoleService;
+
+    @Autowired
+    private SecurityService securityService;
 
     // Design
     private TextField tfSearch;
@@ -68,5 +73,6 @@ public class VerejneFunkceOrganuPanel extends Panel {
         container.removeAllItems();
         container.addAll(publicRoleService.findAllPublicRoleByPublicBodyId(publicBody.getId()));
         grid.setHeightByRows(container.size() > 6 ? 6 : container.size() == 0 ? 1 : container.size());
+        addNewPublicRoleBt.setVisible(securityService.currentUserHasRole(UserType.ADMIN) || securityService.currentUserHasRole(UserType.VOLUNTEER));
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author stefan
  */
-public enum VoteAction implements PresentableEnum{
+public enum VoteAction implements PresentableEnum {
     
     FOR("Za"), AGAINST("Proti"), REFAIN("Zadržal sa"), ABSENT("Neprítomný");
 

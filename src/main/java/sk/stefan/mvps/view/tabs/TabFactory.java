@@ -18,21 +18,17 @@ public class TabFactory {
     @Autowired
     private ApplicationContext context;
 
-    private Map<String, Class<?>> tabMap = new HashMap<>();
+    private Map<String, Class<? extends TabComponent>> tabMap = new HashMap<>();
 
     @PostConstruct
     public void init() {
         context.getBeansWithAnnotation(ViewTab.class).values().forEach(clazz -> {
             ViewTab annotation = clazz.getClass().getAnnotation(ViewTab.class);
-            tabMap.put(annotation.value(), clazz.getClass());
+            tabMap.put(annotation.value(), (Class<? extends TabComponent>) clazz.getClass());
         });
     }
 
-    public Class<?> getTabTypeByName(String name) {
-        Class<?> clazz = tabMap.get(name);
-        if (clazz == null) {
-            throw new RuntimeException("Undefined tab class with name " + name + "!");
-        }
-        return clazz;
+    public Class<? extends TabComponent> getTabTypeByName(String name) {
+        return tabMap.get(name);
     }
 }
