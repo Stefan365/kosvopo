@@ -59,6 +59,8 @@ public class DokumentyPanel<E extends TabEntity> extends Panel implements Upload
 
     private boolean canRemove;
 
+    private static final long serialVersionUID = 1L;
+
     public DokumentyPanel() {
         Design.read(this);
 

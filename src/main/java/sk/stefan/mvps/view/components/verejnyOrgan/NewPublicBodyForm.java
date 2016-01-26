@@ -27,9 +27,9 @@ import java.util.List;
 /**
  * Created by elopin on 07.11.2015.
  */
-@ViewTab("novyOrgan")
 @SpringComponent
 @Scope("prototype")
+@ViewTab("novyOrgan")
 @DesignRoot
 public class NewPublicBodyForm extends VerticalLayout implements TabComponent {
 

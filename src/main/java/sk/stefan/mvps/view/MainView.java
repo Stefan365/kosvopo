@@ -5,13 +5,11 @@ import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import org.springframework.beans.factory.annotation.Autowired;
-import sk.stefan.ui.NavigationMenu;
-import sk.stefan.mvps.view.components.TopPanel;
-
 import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import sk.stefan.mvps.view.components.TopPanel;
+import sk.stefan.ui.NavigationMenu;
 
 /*
  * Hlavne view, ktore nesie listu s tlacitkami.
@@ -19,6 +17,8 @@ import javax.annotation.PostConstruct;
 @SpringComponent
 @VaadinSessionScope
 public class MainView extends VerticalLayout implements TopPanel.LoginListener {
+
+    private static final long serialVersionUID = 2131432L;
 
     @Autowired
     private NavigationMenu navigationMenu;

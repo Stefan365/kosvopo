@@ -7,17 +7,15 @@ package sk.stefan.mvps.view.components.verejnaRole;
 
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.ui.Button;
-
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.ViewTab;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.PublicRole;
-import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.service.VoteService;
@@ -40,6 +38,8 @@ import sk.stefan.mvps.view.tabs.TabComponent;
 public final class V5_PublicRoleView extends VerticalLayout implements TabComponent {
 
     private static final Logger log = Logger.getLogger(V5_PublicRoleView.class);
+
+    private static final long serialVersionUID = 1L;
 
     // Design
     private DetailVerejneFunkcePanel detailPanel;

@@ -41,6 +41,8 @@ import sk.stefan.mvps.view.tabs.TabComponent;
 @DesignRoot
 public class V6s_VotesView extends VerticalLayout implements TabComponent {
 
+    private static final long serialVersionUID = 12L;
+
     @Autowired
     private VoteService voteService;
 
@@ -60,8 +62,8 @@ public class V6s_VotesView extends VerticalLayout implements TabComponent {
     private TabEntity tabEntity;
     private BeanItemContainer<Vote> container;
 
-
-    public V6s_VotesView (){
+    public V6s_VotesView() {
+        
         Design.read(this);
 
         container = new BeanItemContainer<>(Vote.class);
@@ -114,4 +116,52 @@ public class V6s_VotesView extends VerticalLayout implements TabComponent {
         Integer relatedId = tabEntity != null ? tabEntity.getId() : null;
         return "hlasovaniTab" + (relatedId != null ? String.valueOf(relatedId) : "");
     }
+
+//    /**
+//     *
+//     * @param isVolunteer
+//     */
+//    private void initAllBasic(Boolean isVolunteer) {
+//
+//        this.removeAllComponents();
+//        this.initLayout();
+//        this.addComponents(votesBriefLayout);
+//
+//        if(isVolunteer){
+//            this.initNewPublicBodyButton();
+//        }
+//    }
+//
+//    /**
+//     *
+//     */
+//    private void initLayout(){
+//
+//        this.setMargin(true);
+//        this.setSpacing(true);
+//        this.votesBriefLayout = new VOTs_briefLayout(voteService.findAll(), voteService);
+//
+//    }
+//    /**
+//     * Inicializuje tlacitko na pridavanie novej verejnej osoby.
+//     */
+//    private void initNewPublicBodyButton() {
+//
+//        this.addVoteBt = InputNewEntityButtonFactory.createMyInputButton(Vote.class);
+//        this.addComponent(addVoteBt);
+//    }
+//    @Override
+//    public void enter(ViewChangeListener.ViewChangeEvent event) {
+//
+//        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
+//
+//        Boolean isVolunteer = Boolean.FALSE;
+//        if (user != null){
+//            UserType utype = userService.getUserType(user);
+//            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
+//        }
+//
+//        initAllBasic(isVolunteer);
+//
+//    }
 }

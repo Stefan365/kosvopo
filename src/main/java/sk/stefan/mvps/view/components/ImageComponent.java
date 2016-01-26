@@ -8,12 +8,11 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
+import java.io.ByteArrayInputStream;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sk.stefan.utils.ImageTools;
-
-import java.io.ByteArrayInputStream;
 
 /**
  * Created by elopin on 28.11.2015.
@@ -22,6 +21,8 @@ import java.io.ByteArrayInputStream;
 @Scope("prototype")
 @DesignRoot
 public class ImageComponent extends VerticalLayout {
+
+    private static final long serialVersionUID = 1L;
 
     //Design
     private Image image;
@@ -32,6 +33,7 @@ public class ImageComponent extends VerticalLayout {
     private ByteArrayOutputStream baos;
 
     public ImageComponent() {
+        
         Design.read(this);
 
         upload.setReceiver((filename, mimetype) -> baos = new ByteArrayOutputStream());

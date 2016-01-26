@@ -1,4 +1,9 @@
-/target/*
-/src/main/webapp/VAADIN/widgetsets/*
-/src/main/resources/application.properties
-/src/main/resources/db/dBconn.properties
+target/*
+src/main/webapp/VAADIN/widgetsets/*
+src/main/resources/db/*
+log/*
+temp/*
+libs/*
+.gitignore
+src/main/resources/application.properties
+src/main/resources/db/dBconn.properties

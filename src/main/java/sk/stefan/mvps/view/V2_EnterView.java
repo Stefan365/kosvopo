@@ -28,9 +28,9 @@ public class V2_EnterView extends VerticalLayout implements TabComponent {
 
     private static final Logger log = Logger.getLogger(V2_EnterView.class);
 
+    private static final long serialVersionUID = 1L;
+
     private final UserService userService;
-    
-    
     
     private Button initAdminBt;
     
