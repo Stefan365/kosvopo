@@ -27,7 +27,7 @@
         <project.encoding>UTF-8</project.encoding>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.5.10</vaadin.version>
+        <vaadin.version>7.6.1</vaadin.version>
         <spring.boot.version>1.2.7.RELEASE</spring.boot.version>
         <vaadin.boot.version>1.0.0.beta1</vaadin.boot.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
