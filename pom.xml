@@ -206,12 +206,6 @@
             <scope>test</scope>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>sk.stefan</groupId>
-            <artifactId>kosvopo6</artifactId>
-            <version>1.0</version>
-            <type>war</type>
-        </dependency>
     </dependencies>
 
     <build>
