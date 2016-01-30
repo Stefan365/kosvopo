@@ -8,6 +8,5 @@ log/*
 temp/*
 /kosvopo6.iml
 libs/*
-.gitignore
 src/main/resources/application.properties
 src/main/resources/db/dBconn.properties
