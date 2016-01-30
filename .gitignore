@@ -1,3 +1,6 @@
+/.idea
+/src/main/webapp/VAADIN/themes/mytheme/styles.scss.cache
+/src/main/webapp/VAADIN/themes/mytheme/styles.css
 target/*
 src/main/webapp/VAADIN/widgetsets/*
 src/main/resources/db/*
@@ -6,3 +9,5 @@ temp/*
 /kosvopo6.iml
 libs/*
 .gitignore
+src/main/resources/application.properties
+src/main/resources/db/dBconn.properties

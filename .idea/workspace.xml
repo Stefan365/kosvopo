@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AnalysisUIOptions">
-    <option name="ANALYZE_TEST_SOURCES" value="false" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="ed8ea447-fca2-4b77-96ec-a6beda02a3b5" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_vaadin_client_7_5_10.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_vaadin_client_compiled_7_5_10.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_vaadin_push_7_5_10.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_vaadin_sass_compiler_0_9_12.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_vaadin_server_7_5_10.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_vaadin_shared_7_5_10.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_vaadin_themes_7_5_10.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jsoup_jsoup_1_8_1.xml" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mariadb_jdbc_mariadb_java_client_1_3_4.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/kosvopo6.iml" afterPath="$PROJECT_DIR$/kosvopo6.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nb-configuration.xml" afterPath="$PROJECT_DIR$/nb-configuration.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/db/dBconn.properties" afterPath="$PROJECT_DIR$/src/main/resources/db/dBconn.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/VAADIN/themes/mytheme/addons.scss" afterPath="$PROJECT_DIR$/src/main/webapp/VAADIN/themes/mytheme/addons.scss" />
     </list>
     <ignored path="kosvopo6.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,8 +36,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.1827957">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+            <state vertical-scroll-proportion="0.030520646">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -50,78 +45,12 @@
       </file>
     </leaf>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="AnnotationType" />
-        <option value="Html5" />
-        <option value="Interface" />
-        <option value="HTML File" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GradleLocalSettings">
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/panels/MyInputFormPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/wrappers/FunctionalEditWrapper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/vote/PritomniLayout.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MyNavigator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/filtering/FilterVoteListener.java" />
-        <option value="$PROJECT_DIR$/src/test/java/sk/stefan/mvp/view/V9s_SubjectsViewTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/DocumentService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3_PublicBodyView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/V5_PublicRoleView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/DocumentServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/DokumentComponent.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/ui/KosvopoUI.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TopPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MainView.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/UserServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/tabs/TabFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/TopPanel.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/ui/NavigationMenu.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/SecurityService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/SecurityServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/administrace/V7_AdministrationView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/DetailHlasovaniPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/DokumentComponent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/MainTabsheet.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/GrafHlasovaniPanel.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/GrafHlasovaniPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/DokumentyPanel.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/enums/VoteAction.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6_VoteView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/PublicRoleService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicRoleServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/utils/EnhancedBeanItemContainer.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/hlasovani/HlasovaniPanel.html" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/HlasovaniPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/VoteServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TimelinePanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4_PublicPersonView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/VerejneFunkceOsobyPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/V4s_PublicPersonsView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/hlasovani/V6s_VotesView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/V3s_PublicBodiesView.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/VerejneFunkceOrganuPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaOsoba/DetailOsobyPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/DetailVerejneFunkcePanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnyOrgan/DetailOrganuPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/verejnaRole/HlasovaniFunkcePanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/DokumentyPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/db/dBconn.properties" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
@@ -131,11 +60,6 @@
       <MavenGeneralSettings>
         <option name="mavenHome" value="Bundled (Maven 3)" />
       </MavenGeneralSettings>
-    </option>
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="importAutomatically" value="true" />
-      </MavenImportingSettings>
     </option>
     <option name="enabledProfiles">
       <list>
@@ -181,9 +105,6 @@
       </PATH>
     </treeState>
   </component>
-  <component name="MavenRunner">
-    <option name="skipTests" value="true" />
-  </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
@@ -228,45 +149,149 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kosvopo6" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Kosvopo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kosvopo6" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Kosvopo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kosvopo6" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Kosvopo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kosvopo6" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Kosvopo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAADIN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kosvopo6" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Kosvopo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAADIN" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="themes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mytheme" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kosvopo6" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Kosvopo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kosvopo6" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Kosvopo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".idea" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
   </component>
-  <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="project.structure.last.edited" value="SDKs" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="restartRequiresConfirmation" value="true" />
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Kosvopo\src\main\webapp\VAADIN\themes\mytheme\images" />
-      <recent name="D:\Kosvopo\src\main\resources\images" />
-      <recent name="D:\Kosvopo\src\main\resources\sk\stefan\mvps\view\components\verejnyOrgan" />
-      <recent name="D:\Kosvopo\src\main\resources\sk\stefan\mvps\view\components" />
-      <recent name="D:\Kosvopo\src\main\resources\sk\stefan\mvps\view\components\verejnaRole" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="sk.stefan.mvps.view.components" />
-      <recent name="sk.stefan.mvps.view.components.administrace" />
-      <recent name="sk.stefan.mvps.view.components.hlasovani" />
-      <recent name="sk.stefan.interfaces" />
-      <recent name="sk.stefan.mvps.view.components.verejnyOrgan" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Kosvopo\src\main\resources\images" />
-      <recent name="D:\Kosvopo\script" />
-      <recent name="D:\Kosvopo\src\main\webapp\VAADIN\themes\mytheme\images" />
-      <recent name="D:\Kosvopo\src\main\resources" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.kosvopo">
+  <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -333,6 +358,7 @@
       <method />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
@@ -458,28 +484,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list />
-            </option>
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method />
-    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -501,7 +505,7 @@
       <option name="TEST_OBJECT" value="CLASS" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <option name="OUTPUT_DIRECTORY" />
       <option name="ANNOTATION_TYPE" />
       <option name="ENV_VARIABLES" />
@@ -544,43 +548,9 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="false" name="kosvopo" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="sk.stefan.Application" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="kosvopo6" />
-      <envs />
-      <method />
-    </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Application.kosvopo" />
-    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="ed8ea447-fca2-4b77-96ec-a6beda02a3b5" name="Default" comment="" />
-      <created>1451082340846</created>
-      <option name="number" value="Default" />
-      <updated>1451082340846</updated>
-    </task>
-    <task id="LOCAL-00001" summary="vaadin 7.6.1">
-      <created>1453876531283</created>
-      <option name="number" value="00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1453876531283</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -613,21 +583,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36239317" sideWeight="0.49319214" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
-  </component>
-  <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USER_GROUPS">
-      <collection />
-    </option>
-    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-      <collection />
-    </option>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="vaadin 7.6.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="vaadin 7.6.1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -998,99 +953,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1827957">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        <state vertical-scroll-proportion="0.030520646">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>kosvopo6</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Maven: aopalliance:aopalliance:1.0</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
