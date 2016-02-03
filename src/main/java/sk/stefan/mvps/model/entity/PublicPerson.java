@@ -1,5 +1,6 @@
 package sk.stefan.mvps.model.entity;
 
+
 import java.sql.Date;
 import sk.stefan.interfaces.PresentationName;
 import sk.stefan.interfaces.TabEntity;

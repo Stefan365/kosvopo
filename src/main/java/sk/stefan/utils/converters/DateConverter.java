@@ -1,4 +1,4 @@
-package sk.stefan.converters;
+package sk.stefan.utils.converters;
 
 import com.vaadin.data.util.converter.Converter;
 import java.sql.Timestamp;

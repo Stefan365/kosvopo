@@ -26,6 +26,7 @@ import sk.stefan.mvps.model.entity.A_Change;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.mvps.model.entity.Document;
+import sk.stefan.utils.ToolsDao;
 import sk.stefan.utils.ToolsFiltering;
 
 /**
@@ -470,8 +471,8 @@ public class GeneralRepo {
         zmena.setTable_name(tn);
         zmena.setColumn_name("visible");
         zmena.setRow_id(rowId);
-        zmena.setOld_value("true");
-        zmena.setNew_value("false");
+        zmena.setOld_value(ToolsDao.getBytes(Boolean.TRUE, Boolean.class));
+        zmena.setNew_value(ToolsDao.getBytes(Boolean.FALSE, Boolean.class));
         zmena.setVisible(Boolean.TRUE);
 
         return zmena;

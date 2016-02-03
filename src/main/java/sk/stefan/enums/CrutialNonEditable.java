@@ -44,6 +44,7 @@ public enum CrutialNonEditable {
     
         switch (this) {
             case T_REGION:
+//                (nothing)
                 return new String[]{};
 
             case T_DISTRICT:
@@ -59,37 +60,53 @@ public enum CrutialNonEditable {
                 return new String[]{"location_id"};
 
             case T_PUBLIC_PERSON:
-                return new String[]{};
+                return new String[]{ "first_name", "last_name"};
 
             case T_PUBLIC_ROLE:
+//                (all)
                 return new String[]{"public_body_id", "tenure_id", "public_person_id", "name"};
 
             case T_SUBJECT:
                 return new String[]{"public_role_id", "theme_id"};
 
             case T_TENURE:
+//                (all)
                 return new String[]{"since", "till"};
 
             case T_THEME:
+//                (nothing)
                 return new String[]{};
 
             case T_VOTE:
-//                return new String[]{"for_vote","against_vote", "refrain_vote", "absent", "visible"};
                 return new String[]{"subject_id", "result_vote", "vote_date"};
 
             case T_VOTE_CLASSIFICATION:
+//                toto tam implementovat nebudeme:
                 return new String[]{"vote_id", "public_usefulness"};
 
             case T_VOTE_OF_ROLE:
+//                Lukas, ako sa budu mazat (tj. ked sa niekto pomyli) entity voteOfRole?
+//                pretoze v tom okne Vote, kde sa bude dat editovat ta dolna cast - tak ono by to malo byt po
+//                prvom zadani vlastne uz needitovatelne.
+//                Tam treba spravit nieco, co sa postara o to, ze po prvom vyplneni uz bude toto policko needitovatelne.
+//                A ked tam niekto bude chciet nieco zmenit - rozposle to upozornenia vsetkym
+//                  ludom patrici k danemu zdruzeniu (rola: dobrovolnik a admin) ze sa dotycny pokusil o zmenu -
+//                    a bude ju musiet vysvetlit (napr. ze robil opravu)
+
+//                Kludne si to mozme nechat az na dalsie kolo vyvoja - v prvok kole
+//                 mozes teda z toho "decision" vynbechat - moze to byt menitelne.
+//
                 return new String[]{"public_role_id", "vote_id", "decision"};
 
             case A_USER:
                 return new String[]{"login"};
 
             case A_ROLE:
-                return new String[]{"role","role_name"};
+//                (all)
+                return new String[]{"role","role_name", "rights_description"};
 
             case A_USER_ROLE:
+//                (all)
                 return new String[]{"role_id","user_id","actual", "since", "till"};
 
             default:

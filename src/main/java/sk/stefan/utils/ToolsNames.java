@@ -43,7 +43,7 @@ public abstract class ToolsNames {
      * @param required
      * @return
      */
-    public static TextField createFormTextField(String caption, boolean required) {
+    public static synchronized TextField createFormTextField(String caption, boolean required) {
         TextField tf = new TextField(caption);
         tf.setStyleName(ValoTheme.TEXTFIELD_SMALL);
         tf.setSizeFull();
@@ -59,7 +59,7 @@ public abstract class ToolsNames {
      * @param required
      * @return
      */
-    public static PasswordField createFormPasswordField(String caption,
+    public static synchronized PasswordField createFormPasswordField(String caption,
             boolean required) {
         PasswordField pf = new PasswordField(caption);
         pf.setStyleName(ValoTheme.TEXTFIELD_SMALL);
@@ -74,7 +74,7 @@ public abstract class ToolsNames {
      * @param caption
      * @return
      */
-    public static Label createPanelCaption(String caption) {
+    public static synchronized Label createPanelCaption(String caption) {
         Label la = new Label(caption);
         la.addStyleName(ValoTheme.LABEL_BOLD);
         la.addStyleName(ValoTheme.LABEL_NO_MARGIN);
@@ -93,7 +93,7 @@ public abstract class ToolsNames {
      * @return
      * @throws java.lang.NoSuchFieldException
      */
-    public static Map<String, Class<?>> getTypParametrov(Class<?> cls, boolean withId)
+    public static synchronized Map<String, Class<?>> getTypParametrov(Class<?> cls, boolean withId)
             throws NoSuchFieldException, SecurityException {
 
         Map<String, Class<?>> typy = new HashMap<>();
@@ -116,7 +116,7 @@ public abstract class ToolsNames {
      * @return
      * @throws java.lang.NoSuchFieldException
      */
-    public static List<String> getClassProperties(Class<?> cls, boolean keepId)
+    public static synchronized List<String> getClassProperties(Class<?> cls, boolean keepId)
             throws NoSuchFieldException, SecurityException {
 
         //Set<String> properties= new HashSet<>();
@@ -173,7 +173,7 @@ public abstract class ToolsNames {
      * @param listI zodpovidajici seznam integeru.
      * @return
      */
-    public static Map<String, Integer> makeEnumMap(List<String> listS, List<Integer> listI) {
+    public static synchronized Map<String, Integer> makeEnumMap(List<String> listS, List<Integer> listI) {
         Map<String, Integer> map = new HashMap<>();
         for (int i = 0; i < listI.size(); i++) {
             map.put(listS.get(i), listI.get(i));
@@ -187,7 +187,7 @@ public abstract class ToolsNames {
      * @param tabName
      * @return
      */
-    public static Properties getDepictParams(String tabName) {
+    public static synchronized Properties getDepictParams(String tabName) {
 
         String path = "columnNames/" + tabName.toLowerCase();
         ResourceBundle properties = ResourceBundle.getBundle(path);
@@ -207,7 +207,7 @@ public abstract class ToolsNames {
      * @param tabName
      * @return
      */
-    public static Properties getPoradieParams(String tabName) {
+    public static synchronized Properties getPoradieParams(String tabName) {
 
         String path = "columnsSequence/" + tabName.toLowerCase() + "_p";
         ResourceBundle properties = ResourceBundle.getBundle(path);
@@ -223,7 +223,7 @@ public abstract class ToolsNames {
     }
 
 //    neni treba, je to v tabulkach ako parameter PRES_NAME
-    public static String getTableDepictNames(String tabName) {
+    public static synchronized String getTableDepictNames(String tabName) {
 
         String path = "tableNames/tableNames";
         ResourceBundle properties = ResourceBundle.getBundle(path);
@@ -245,7 +245,7 @@ public abstract class ToolsNames {
      * @param pn
      * @return
      */
-    public static Class<?> getClassFromName(String pn) {
+    public static synchronized Class<?> getClassFromName(String pn) {
 //        log.info("MARTINKO:" + pn);
         switch (pn) {
 
@@ -286,7 +286,7 @@ public abstract class ToolsNames {
      * @param tn
      * @return
      */
-    public static String decapit(String tn) {
+    public static synchronized String decapit(String tn) {
 
         if (tn.contains("t_")) {
             return tn.replace("t_", "");

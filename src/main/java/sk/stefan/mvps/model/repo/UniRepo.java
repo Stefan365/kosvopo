@@ -4,6 +4,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -268,7 +269,6 @@ public class UniRepo<E> implements MyRepo<E> {
 
     
     
-    
 // ****************** INVASIVE **************************************    
     
     // 4.
@@ -386,7 +386,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
             if (id != null) {
                 String sql = String.format("UPDATE %s SET visible = false WHERE id = %d", TN, id);
-                st.executeUpdate(sql);
+                st.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
             } else {
 //                do nothing
                 return true;
@@ -425,7 +425,7 @@ public class UniRepo<E> implements MyRepo<E> {
      * @param noteChange
      * @throws java.sql.SQLException
      */
-    public void updateParam(String paramName, String paramValue, String entId, boolean noteChange) throws SQLException {
+    public void updateParam(String paramName, String paramValue, String entId, boolean noteChange) throws SQLException, NoSuchFieldException {
 
         Connection conn;
         Statement st;
@@ -447,7 +447,7 @@ public class UniRepo<E> implements MyRepo<E> {
             sql.append(String.format(" WHERE id =%s", entId));
 
             log.info("SQL:*" + sql + "*");
-            int i = st.executeUpdate(sql.toString());
+            int i = st.executeUpdate(sql.toString(),Statement.RETURN_GENERATED_KEYS);
 
             //to druhe a tretie je ten len kvoli poisteniu. staci len noteChange! 
             if (noteChange && !"a_change".equals(TN) && this.invasiveConnection == null) {
@@ -500,7 +500,7 @@ public class UniRepo<E> implements MyRepo<E> {
 //                Format formatterSql = new SimpleDateFormat("yyyy-MM-dd");
             String date;
 
-            PreparedStatement st = conn.prepareStatement(sql);
+            PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             Class<?> stCls = st.getClass();
 
             Method stMethod;
@@ -517,7 +517,7 @@ public class UniRepo<E> implements MyRepo<E> {
                 if ("id".equals(pn)) {
                     continue;
                 }
-//                setter pre prepared statemet:
+//                setter for prepared statemet:
                 stMetName = ToolsDao.getSetterForPreparedStatement(mapPar.get(pn));
 //                medzi typom v statemente a typom v java entite je rozdiel, 
 //                tj. spravny typ sa musi namapovat:  
@@ -545,6 +545,7 @@ public class UniRepo<E> implements MyRepo<E> {
                     Integer sh = ToolsDao.getShortFromEnum(mapPar.get(pn), o);
                     st.setInt(i, sh);
                 } else {
+                    log.info("case ELSE, use type as is: " + o.toString());
                     stMethod.invoke(st, i, o);
                 }
                 i++;
@@ -873,9 +874,10 @@ public class UniRepo<E> implements MyRepo<E> {
      */
     private List<A_Change> createChangesToPersist(E entOrigin, E entChanged, Map<String, Class<?>> mapPar) {
 
-        //Tohle chce pryč. Z repa čučet do session nejde. Je to špageťárna.
-//        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
-        A_User user = new A_User();
+//        Tohle chce pryč. Z repa čučet do session nejde. Je to špageťárna.
+        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+//        A_User user = new A_User();
+
         Integer userId;
         Integer rowId;
         Object orig;
@@ -885,7 +887,6 @@ public class UniRepo<E> implements MyRepo<E> {
             log.warn("This shouldnt be possible!!");
             return null;
         } else {
-//            userId = 1;
             userId = user.getId();
         }
 
@@ -910,8 +911,8 @@ public class UniRepo<E> implements MyRepo<E> {
                 zmena.setColumn_name(param);
                 zmena.setRow_id(rowId);
                 //zistit, ci je to Strinfg postacujuce pre spatnu konverziu!
-                zmena.setOld_value(orig + "");
-                zmena.setNew_value(changed + "");
+                zmena.setOld_value(ToolsDao.getBytes(orig, mapPar.get(param)));
+                zmena.setNew_value(ToolsDao.getBytes(orig, mapPar.get(param)));
                 zmena.setVisible(Boolean.TRUE);
 
                 changesToPersist.add(zmena);
@@ -949,8 +950,8 @@ public class UniRepo<E> implements MyRepo<E> {
         zmena.setTable_name(TN);
         zmena.setColumn_name("visible");
         zmena.setRow_id(rowId);
-        zmena.setOld_value("true");
-        zmena.setNew_value("false");
+        zmena.setOld_value(ToolsDao.getBytes(Boolean.TRUE, Boolean.class));
+        zmena.setNew_value(ToolsDao.getBytes(Boolean.FALSE, Boolean.class));
         zmena.setVisible(Boolean.TRUE);
 
         return zmena;
@@ -964,7 +965,7 @@ public class UniRepo<E> implements MyRepo<E> {
      * @param paramNewValue
      * @param entId
      */
-    private A_Change createParamChangeToPersist(String paramName, String paramNewValue, String entId) {
+    private A_Change createParamChangeToPersist(String paramName, String paramNewValue, String entId) throws NoSuchFieldException {
 
         A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
 
@@ -983,6 +984,9 @@ public class UniRepo<E> implements MyRepo<E> {
 
         entOrig = this.findOne(rowId);
 
+//        Type typ = clsE.getDeclaredField(paramName).getType();
+//        typy.put(p, (Class<?>) typ);
+
         try {
             String getterName = ToolsDao.getG_SetterName(paramName, "get");
             Method entMethod = clsE.getMethod(getterName);
@@ -994,8 +998,8 @@ public class UniRepo<E> implements MyRepo<E> {
             zmena.setTable_name(TN);
             zmena.setColumn_name(paramName);
             zmena.setRow_id(rowId);
-            zmena.setOld_value(valOrig+"");
-            zmena.setNew_value(paramNewValue);
+            zmena.setOld_value(ToolsDao.getBytes(valOrig, clsE.getDeclaredField(paramName).getType()));
+            zmena.setNew_value(ToolsDao.getBytes(paramNewValue, clsE.getDeclaredField(paramName).getType()));
             zmena.setVisible(Boolean.TRUE);
 
             return zmena;

@@ -196,12 +196,26 @@ public final class V5_PublicRoleView extends VerticalLayout implements TabCompon
 
     @Override
     public void setSaveListener(SaveListener<TabEntity> saveListener) {
-        detailPanel.setSaveListener(l -> saveListener.save(publicRole));
+        detailPanel.setSaveListener(new SaveListener<PublicRole>() {
+            @Override
+            public void accept(Object l) {
+                saveListener.save(publicRole);
+            }
+        });
     }
 
+//    @Override
+//    public void setRemoveListener(RemoveListener<TabEntity> removeListener) {
+//        detailPanel.setRemoveListener(l -> removeListener.remove(publicRole));
+//    }
     @Override
     public void setRemoveListener(RemoveListener<TabEntity> removeListener) {
-        detailPanel.setRemoveListener(l -> removeListener.remove(publicRole));
+        detailPanel.setRemoveListener(new RemoveListener<PublicRole>() {
+            @Override
+            public void accept(Object l) {
+                removeListener.remove(publicRole);
+            }
+        });
     }
 
     public void setEntity(TabEntity entity) {

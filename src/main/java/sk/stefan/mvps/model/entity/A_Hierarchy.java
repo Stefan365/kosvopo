@@ -19,7 +19,8 @@ public class A_Hierarchy {
     private String table_name;
     private String boss_table;
     private String boss_reference;
-    
+    private Boolean visible;
+
 
     public static final String TN = "a_hierarchy";
     public A_Hierarchy(){
@@ -62,6 +63,10 @@ public class A_Hierarchy {
         this.boss_table = boss_table;
     }
 
+    public Boolean getVisible() {return visible;}
+
+    public void setVisible(Boolean visible) {this.visible = visible;}
+
     /**
      * @return the boss_reference
      */
@@ -75,5 +80,5 @@ public class A_Hierarchy {
     public void setBoss_reference(String boss_reference) {
         this.boss_reference = boss_reference;
     }
-    
+
 }

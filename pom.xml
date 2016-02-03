@@ -31,6 +31,9 @@
         <spring.boot.version>1.2.7.RELEASE</spring.boot.version>
         <vaadin.boot.version>1.0.0.beta1</vaadin.boot.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+        <server.port>8086</server.port>
+
+
     </properties>
 
     <repositories>
@@ -289,7 +292,7 @@
 
                     <style>OBF</style>
                     <strict>true</strict>
-                    <runTarget>http://localhost:8085/kosvopo6</runTarget>
+                    <runTarget>http://localhost:${server.port}/kosvopo6</runTarget>
                     <skip>false</skip>
                     <validateOnly>false</validateOnly>
                 </configuration>

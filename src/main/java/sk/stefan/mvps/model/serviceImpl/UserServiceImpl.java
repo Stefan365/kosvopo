@@ -222,4 +222,6 @@ public class UserServiceImpl implements UserService {
         }
         return role.getRole_name();
     }
+
+//    A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
 }

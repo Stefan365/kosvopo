@@ -10,7 +10,7 @@ import java.net.URL;
  */
 public class ImageTools {
 
-    public static void fillDefaultImage(Image image) {
+    public static synchronized void fillDefaultImage(Image image) {
         image.setSource(new ThemeResource("images/default.jpg"));
     }
 }

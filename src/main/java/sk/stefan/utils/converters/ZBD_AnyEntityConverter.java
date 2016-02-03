@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sk.stefan.converters;
+package sk.stefan.utils.converters;
 
 import com.vaadin.data.util.converter.Converter;
 import java.util.Locale;

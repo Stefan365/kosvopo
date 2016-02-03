@@ -43,7 +43,7 @@ public abstract class ToolsFiltering {
      * @param touchingTn
      * @return
      */
-    public static List<String> getHierarchicalSequence(String touchedTn, String touchingTn) {
+    public static synchronized List<String> getHierarchicalSequence(String touchedTn, String touchingTn) {
 
 //        log.info("TOUCHED: " + touchedTn);
 //        log.info("TOUCHING: " + touchingTn);
@@ -111,7 +111,7 @@ public abstract class ToolsFiltering {
      * @param hierarchicalSeq
      * @return
      */
-    public static List<A_Hierarchy> getFinalHierSequence(List<String> hierarchicalSeq) {
+    public static synchronized List<A_Hierarchy> getFinalHierSequence(List<String> hierarchicalSeq) {
 
         List<A_Hierarchy> hs = new ArrayList<>();
         A_Hierarchy ae;
@@ -145,7 +145,7 @@ public abstract class ToolsFiltering {
      * @param value
      * @return
      */
-    public static List<Integer> getFinalIds(List<A_Hierarchy> hs, Integer value) {
+    public static synchronized List<Integer> getFinalIds(List<A_Hierarchy> hs, Integer value) {
 
         String sql;
 
@@ -164,7 +164,7 @@ public abstract class ToolsFiltering {
      * @param ids
      * @return
      */
-    public static Filter createFilter(List<Integer> ids) {
+    public static synchronized Filter createFilter(List<Integer> ids) {
 
         Filter o;
         List<Filter> fls = new ArrayList<>();
@@ -341,7 +341,7 @@ public abstract class ToolsFiltering {
      * @param tn
      * @return 
      */
-    public static String getParamName(String tn) {
+    public static synchronized String getParamName(String tn) {
 
         String result = tn.replace("t_", "");
         result = result.replace("a_", "");
@@ -357,7 +357,7 @@ public abstract class ToolsFiltering {
      * @param tn
      * @return 
      */
-    public static List<String> getSlaves(String tn) {
+    public static synchronized List<String> getSlaves(String tn) {
 
         List<A_Hierarchy> ret;
         ret = hierRepo.findByParam("boss_table", tn);

@@ -121,7 +121,7 @@ public class NewVoteForm extends VerticalLayout implements TabComponent {
                     saveListener.save(bfg.getItemDataSource().getBean());
                 }
             } catch (FieldGroup.CommitException e) {
-                throw new RuntimeException("Nepodarilo sa uložit orgán!");
+                throw new RuntimeException("Nepodarilo sa uložiť hlasovanie!");
             }
         }
     }

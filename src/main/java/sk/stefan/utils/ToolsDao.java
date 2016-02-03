@@ -1,6 +1,7 @@
 package sk.stefan.utils;
 
 import com.vaadin.data.Item;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -15,7 +16,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
+import sk.stefan.enums.PublicRoleType;
+import sk.stefan.enums.PublicUsefulness;
+import sk.stefan.enums.Stability;
+import sk.stefan.enums.UserType;
+import sk.stefan.enums.VoteAction;
+import sk.stefan.enums.VoteResult;
+
 import sk.stefan.mvps.model.entity.A_Hierarchy;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicRole;
@@ -31,7 +40,7 @@ public abstract class ToolsDao {
 
     private static final Logger log = Logger.getLogger(ToolsDao.class);
 
-    //1. 
+    //1.
     /**
      * Ziska nazvy parametrov danej triedy ako zoznam typu String
      *
@@ -63,7 +72,7 @@ public abstract class ToolsDao {
         return properties;
     }
 
-    //2. 
+    //2.
     /**
      * gets getter or setter method name for given parameter
      *
@@ -81,7 +90,7 @@ public abstract class ToolsDao {
         return sb.toString();
     }
 
-    //3. 
+    //3.
     /**
      * Ziska mapu nazvov 'parameter : jeho typ' danej triedy ako string.
      *
@@ -100,15 +109,13 @@ public abstract class ToolsDao {
             Type typ = cls.getDeclaredField(p).getType();
             //typy.put(p, getShortTyp(typ.toString()));
             typy.put(p, (Class<?>) typ);
-
         }
         return typy;
     }
 
     /**
-     * 
      * @param cls
-     * @return 
+     * @return
      */
     public static Class<?> transformToPrimitive(Class<?> cls) {
 
@@ -117,19 +124,19 @@ public abstract class ToolsDao {
         switch (typ) {
             case "java.lang.Integer":
                 return Integer.TYPE;
-                
+
             case "java.lang.Byte[]":
                 return byte[].class;
-            
+
             case "java.util.Date":
-                 return String.class;
-            
+                return String.class;
+
             case "java.sql.Timestamp":
-                 return String.class;
-            
+                return String.class;
+
             case "java.sql.Date":
-                 return String.class;
-            
+                return String.class;
+
             case "java.lang.Short":
             case "sk.stefan.enums.VoteResult":
             case "sk.stefan.enums.VoteAction":
@@ -140,22 +147,19 @@ public abstract class ToolsDao {
             case "sk.stefan.enums.NonEditableFields":
             case "sk.stefan.enums.PublicRoleType":
                 return Integer.TYPE;
-                
+
             case "java.lang.Long":
 //                return long.class;
                 return Long.TYPE;
-            
+
             case "java.lang.Boolean":
 //                return boolean.class;
                 return Boolean.TYPE;
-            
+
             default:
                 return cls;
         }
-
     }
-    
-
 
     /**
      * Ziska mapu parameter : typ danej triedy.
@@ -269,7 +273,7 @@ public abstract class ToolsDao {
 
                     sb.append("Int");
                     break;
-                    
+
                 default:
                     String fields[] = typ.split("\\.");
                     sb.append(fields[fields.length - 1]);
@@ -283,7 +287,6 @@ public abstract class ToolsDao {
         return s;
     }
 
-    
     /**
      * Metoda sluzi k prevodu java.util.Date do stringu, ktory je ochotny
      * spolknout typ MYSQL timestamp.
@@ -295,7 +298,6 @@ public abstract class ToolsDao {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date.getTime());
-
     }
 
     /**
@@ -309,11 +311,9 @@ public abstract class ToolsDao {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date.getTime());
-
     }
 
     /**
-     *
      * @param cls
      * @param value
      * @return
@@ -338,7 +338,6 @@ public abstract class ToolsDao {
     }
 
     /**
-     *
      * @param clsEnum
      * @param sh
      * @return
@@ -380,7 +379,6 @@ public abstract class ToolsDao {
 //        item.getItemProperty("refrain_vote").setValue(vot.getRefrain_vote());
 //        item.getItemProperty("absent").setValue(vot.getAbsent());
         item.getItemProperty("visible").setValue(vot.getVisible());
-
     }
 
     /**
@@ -397,7 +395,6 @@ public abstract class ToolsDao {
         List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
         List<Integer> idsC = ToolsFiltering.getFinalIds(hASeq, intVal);
         c.applyFilter(idsC);
-
     }
 
     /**
@@ -406,7 +403,7 @@ public abstract class ToolsDao {
      * @param touchedTn
      * @param touchingTn
      * @param intVal
-     * @return 
+     * @return
      */
     public static synchronized List<Integer> getLeavesIds(String touchedTn, String touchingTn, Integer intVal) {
 
@@ -414,10 +411,8 @@ public abstract class ToolsDao {
         List<A_Hierarchy> hASeq = ToolsFiltering.getFinalHierSequence(hSeq);
         List<Integer> touchedIds = ToolsFiltering.getFinalIds(hASeq, intVal);
         return touchedIds;
-
     }
 
-    
     /**
      * pomocna funkcia.
      *
@@ -461,14 +456,14 @@ public abstract class ToolsDao {
 
     /**
      * Najde vsetky zive entity danej triedy.
-     * 
-     * 
+     *
      * @param cls
-     * @return Mapa. key = representation Name danej entity, value = id danej entity.
+     * @return Mapa. key = representation Name danej entity, value = id danej
+     * entity.
      */
     @SuppressWarnings("unchecked")
     public static synchronized Map<String, Integer> findAllByClass(Class<?> cls) {
-    
+
         Map<String, Integer> map = new HashMap<>();
         String repN;
         Integer id;
@@ -477,27 +472,24 @@ public abstract class ToolsDao {
             Constructor<UniRepo<? extends Object>> repoCtor;
             repoCtor = (Constructor<UniRepo<?>>) repoCls.getConstructor(Class.class);
             List<?> listObj;
-            
+
 //            log.info("KAROLKO, CLS:" + (cls.getCanonicalName()));
-            
             listObj = repoCtor.newInstance(cls).findAll();
             for (Object o : listObj) {
                 Method getRepNameMethod = cls.getMethod("getPresentationName");
-                
+
                 repN = (String) getRepNameMethod.invoke(o);
                 Method getIdMethod = cls.getMethod("getId");
                 id = (Integer) getIdMethod.invoke(o);
                 map.put(repN, id);
             }
             return map;
-            
-        } catch (NoSuchMethodException | InvocationTargetException | 
-                IllegalArgumentException | IllegalAccessException | 
-                InstantiationException | SecurityException | 
+        } catch (NoSuchMethodException | InvocationTargetException |
+                IllegalArgumentException | IllegalAccessException |
+                InstantiationException | SecurityException |
                 ClassNotFoundException ex) {
             log.error(ex.getMessage(), ex);
             return null;
-
         }
     }
 
@@ -508,11 +500,11 @@ public abstract class ToolsDao {
      * @return
      */
     public static synchronized Boolean isActual(Integer tenure_id) {
-        
+
         UniRepo<Tenure> tenRepo = new UniRepo<>(Tenure.class);
-        
+
         Tenure ten = tenRepo.findOne(tenure_id);
-        
+
         if (ten != null) {
             Long today = (new Date()).getTime();
             Long since = ten.getSince().getTime();
@@ -535,9 +527,9 @@ public abstract class ToolsDao {
 
         List<PublicRole> prActual = new ArrayList<>();
         UniRepo<PublicRole> prRepo = new UniRepo<>(PublicRole.class);
-        
+
         List<PublicRole> pubRoles = prRepo.findByParam("public_body_id", "" + pubB.getId());
-        
+
         Integer tid;
         for (PublicRole pr : pubRoles) {
             tid = pr.getTenure_id();
@@ -547,8 +539,52 @@ public abstract class ToolsDao {
         }
         return prActual;
     }
-    
-    
-//                    
 
+    public static byte[] getBytes(Object orig, Class<?> oCls) {
+
+        String clsName = oCls.getCanonicalName();
+
+        switch (clsName) {
+
+            case "java.lang.String":
+                return Transformers.getBytesFromString((String) orig);
+
+            case "java.lang.Integer":
+                return Transformers.getBytesFromInteger((Integer) orig);
+
+            case "java.util.Date":
+                return Transformers.getBytesFromDate((Date) orig);
+
+            case "byte[]":
+                return (byte[]) orig;
+
+            case "java.lang.Byte[]":
+                return Transformers.getbytesFromBytes((Byte[]) orig);
+
+            case "sk.stefan.enums.VoteResult":
+                return Transformers.getBytesFromVoteResult((VoteResult)orig);
+
+            case "sk.stefan.enums.VoteAction":
+                return Transformers.getBytesFromVoteAction((VoteAction) orig);
+
+            case "sk.stefan.enums.Stability":
+                return Transformers.getBytesFromStability((Stability) orig);
+
+            case "sk.stefan.enums.PublicUsefulness":
+                return Transformers.getBytesFromPublicUsefulness((PublicUsefulness) orig);
+
+            case "sk.stefan.enums.PublicRoleType":
+                return Transformers.getBytesFromPublicRoleType((PublicRoleType)orig);
+
+            case "sk.stefan.enums.UserType":
+                return Transformers.getBytesFromUserType((UserType)orig);
+
+            default:
+                break;
+        }
+
+        return null;
+    }
+
+//                    
 }

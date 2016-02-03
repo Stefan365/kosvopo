@@ -24,9 +24,9 @@ public class A_Change implements PresentationName {
     
     private Integer row_id;
 
-    private String old_value;
+    private byte[] old_value;
     
-    private String new_value;
+    private byte[] new_value;
     
     private Boolean visible;
     
@@ -104,11 +104,11 @@ public class A_Change implements PresentationName {
         this.column_name = column_name;
     }
 
-    public String getOld_value() {
+    public byte[] getOld_value() {
         return old_value;
     }
 
-    public void setOld_value(String old_value) {
+    public void setOld_value(byte[] old_value) {
         this.old_value = old_value;
     }
     
@@ -122,11 +122,11 @@ public class A_Change implements PresentationName {
         this.visible = visible;
     }
 
-    public String getNew_value() {
+    public byte[] getNew_value() {
         return new_value;
     }
 
-    public void setNew_value(String new_value) {
+    public void setNew_value(byte[] new_value) {
         this.new_value = new_value;
     }
 }
