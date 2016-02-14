@@ -64,7 +64,7 @@ public class DoDBconn {
         try {
             Connection conn = connectionPool.reserveConnection();
             count++;
-            log.info("VYTVORIL SOM NEINVAZIVNE CONN: " + count);
+//            log.info("VYTVORIL SOM NEINVAZIVNE CONN: " + count);
             return conn;
         } catch (SQLException ex) {
             log.error(ex.getMessage(),ex);
@@ -102,7 +102,7 @@ public class DoDBconn {
         
         connectionPool.releaseConnection(conn);
         count--;
-        log.info("UVOLNIL SOM INVASIVE, ALEBO NON INVASIVE CONNECTION: " + count);
+//        log.info("UVOLNIL SOM INVASIVE, ALEBO NON INVASIVE CONNECTION: " + count);
 
     }
 

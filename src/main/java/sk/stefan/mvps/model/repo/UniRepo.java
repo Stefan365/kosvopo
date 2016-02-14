@@ -137,7 +137,7 @@ public class UniRepo<E> implements MyRepo<E> {
             
 
             rs = st.executeQuery(sql);
-            log.info(sql);
+            log.debug(sql);
             E ent = this.fillEntity(rs);
 
             rs.close();
@@ -179,7 +179,7 @@ public class UniRepo<E> implements MyRepo<E> {
             sql.append(this.getFindByParamQuery(paramName, paramValue));
             sql.append(" AND visible = true");
             
-            log.info("SQL: *" + sql.toString() + "*");
+            log.debug("SQL: *" + sql.toString() + "*");
             
             rs = st.executeQuery(sql.toString());
 
@@ -232,7 +232,7 @@ public class UniRepo<E> implements MyRepo<E> {
             
             rs = st.executeQuery(sql.toString());
 
-            log.info("SQL: *" + sql.toString() + "*");
+            log.debug("SQL: *" + sql.toString() + "*");
             List<E> listEnt = this.fillListEntity(rs);
 
             rs.close();
@@ -292,11 +292,10 @@ public class UniRepo<E> implements MyRepo<E> {
                 sql = this.createUpdateQueryPrepared(mapPar, eid);
                 entOrigin = this.findOne(eid);
             }
-            log.info("*"+sql+"*");
+            log.debug("*"+sql+"*");
             st = this.createStatement(mapPar, conn, sql, ent);
 
             st.executeUpdate();
-//            log.info("SOM TUS!");
             rs = st.getGeneratedKeys();
             if (novy && rs.next()) {
                 Integer newId = rs.getInt(1);
@@ -433,7 +432,7 @@ public class UniRepo<E> implements MyRepo<E> {
             sql.append(this.getFindByParamQuery(paramName, paramValue));
             sql.append(String.format(" WHERE id =%s", entId));
 
-            log.info("SQL:*" + sql + "*");
+            log.debug("SQL:*" + sql + "*");
             int i = st.executeUpdate(sql.toString(),Statement.RETURN_GENERATED_KEYS);
 
             //to druhe a tretie je ten len kvoli poisteniu. staci len noteChange! 

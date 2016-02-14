@@ -2,31 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed8ea447-fca2-4b77-96ec-a6beda02a3b5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/ActiveUserService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/ActiveUserServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/UniTableService.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/ZBD_UniTableService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/UniTableServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/ZBD_UniTableServiceImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/ZBD_LocationServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/LocationServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/kosvopo7.sql" afterPath="$PROJECT_DIR$/script/kosvopo7.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/dbConnection/DoDBconn.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/dbConnection/DoDBconn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/interfaces/MyRepo.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/interfaces/MyRepo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/interfaces/Transformable.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/interfaces/Transformable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/repo/GeneralRepo.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/repo/GeneralRepo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/repo/UniRepo.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/repo/UniRepo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/DocumentService.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/DocumentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/EntityService.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/EntityService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/PublicBodyService.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/service/PublicBodyService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/DocumentServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/DocumentServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/EntityServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/EntityServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicBodyServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicBodyServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicPersonServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicPersonServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicRoleServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/PublicRoleServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/SecurityServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/SecurityServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/TenureServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/TenureServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/UserServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/UserServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/VoteServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/VoteServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/utils/Transformers.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/utils/Transformers.java" />
     </list>
     <ignored path="kosvopo6.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -112,25 +89,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DoDBconn.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DoDBconn.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/dbConnection/DoDBconn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.72863567">
-              <caret line="104" column="59" selection-start-line="104" selection-start-column="59" selection-end-line="104" selection-end-column="59" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UniRepo.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UniRepo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/repo/UniRepo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="173" column="8" selection-start-line="173" selection-start-column="8" selection-end-line="173" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.3658171">
+              <caret line="533" column="26" selection-start-line="533" selection-start-column="26" selection-end-line="533" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1455442126208" expanded="true" signature="7157:7366" placeholder="/**...*/" />
-                <marker date="1455442126208" expanded="true" signature="12500:12517" placeholder="/**...*/" />
+                <element signature="e#20042#20072#1" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -214,10 +190,10 @@
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/UserServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/VoteServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/LocationServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/repo/UniRepo.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/DocumentServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/EntityServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/sk/stefan/dbConnection/DoDBconn.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/repo/UniRepo.java" />
       </list>
     </option>
   </component>
@@ -1463,18 +1439,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/repo/UniRepo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="173" column="8" selection-start-line="173" selection-start-column="8" selection-end-line="173" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1455442126208" expanded="true" signature="7157:7366" placeholder="/**...*/" />
-            <marker date="1455442126208" expanded="true" signature="12500:12517" placeholder="/**...*/" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/serviceImpl/DocumentServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4587706">
@@ -1501,9 +1465,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/dbConnection/DoDBconn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.72863567">
-          <caret line="104" column="59" selection-start-line="104" selection-start-column="59" selection-end-line="104" selection-end-column="59" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sk/stefan/mvps/model/repo/UniRepo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3658171">
+          <caret line="533" column="26" selection-start-line="533" selection-start-column="26" selection-end-line="533" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#20042#20072#1" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
