@@ -18,8 +18,8 @@ CREATE TABLE `a_change` (
   `table_name` varchar(30) COLLATE utf8_slovak_ci DEFAULT NULL,
   `column_name` varchar(30) COLLATE utf8_slovak_ci DEFAULT NULL,
   `row_id` int(11) DEFAULT NULL,
-  `old_value` blob,
-  `new_value` blob,
+  `old_value` longblob,
+  `new_value` longblob,
   `visible` bit(1) DEFAULT b'1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
