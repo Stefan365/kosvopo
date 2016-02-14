@@ -29,7 +29,7 @@ import sk.stefan.mvps.model.service.PublicBodyService;
 @Service
 public class PublicBodyServiceImpl implements PublicBodyService {
 
-    private static final Logger log = Logger.getLogger(PublicPersonServiceImpl.class);
+    private static final Logger log = Logger.getLogger(PublicBodyServiceImpl.class);
 
     private final GeneralRepo genRepo;
     private final UniRepo<PublicBody> pubBodyRepo;
@@ -146,7 +146,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
     public synchronized String getPresentationName(PublicBody pb) {
 
         Integer locId = pb.getLocation_id();
-        log.info("LOC ID:" + locId);
+        log.debug("LOC ID:" + locId);
         if (locId != null) {
             Location loc = locRepo.findOne(locId);
             return pb.getName() + ", " + loc.getPresentationName();

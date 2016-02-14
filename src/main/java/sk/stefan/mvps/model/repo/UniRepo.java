@@ -894,7 +894,7 @@ public class UniRepo<E> implements MyRepo<E> {
                 zmena.setRow_id(rowId);
                 //zistit, ci je to Strinfg postacujuce pre spatnu konverziu!
                 zmena.setOld_value(ToolsDao.getBytes(orig, mapPar.get(param)));
-                zmena.setNew_value(ToolsDao.getBytes(orig, mapPar.get(param)));
+                zmena.setNew_value(ToolsDao.getBytes(changed, mapPar.get(param)));
                 zmena.setVisible(Boolean.TRUE);
 
                 changesToPersist.add(zmena);

@@ -130,7 +130,7 @@ public class GeneralRepo {
             st = conn.createStatement();
 
             List<Integer> listIds;
-            log.info("MEGASQL:*" + sql + "*");
+            log.debug("MEGASQL:*" + sql + "*");
             rs = st.executeQuery(sql);
 
             listIds = fillListIds(rs);
@@ -171,7 +171,7 @@ public class GeneralRepo {
         String sql = "SELECT id FROM " + tn + " WHERE " + paramName + " = '" + paramVal
                 + "' AND visible = true";
 
-        log.info("**" + sql + "*");
+        log.debug("**" + sql + "*");
 
         try {
             conn = DoDBconn.createNoninvasiveConnection();
@@ -363,7 +363,7 @@ public class GeneralRepo {
 
         String sql = String.format("UPDATE t_document "
                 + " SET visible = false WHERE table_name = '%s' AND table_row_id = %d", tn, rid);
-        log.info("*" + sql + "**");
+        log.debug("*" + sql + "**");
         st.executeUpdate(sql);
 
         //for creating change:
