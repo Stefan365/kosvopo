@@ -24,6 +24,7 @@ public class PublicPersonServiceImpl implements PublicPersonService {
     private final GeneralRepo generalRepo;
     private final UniRepo<PublicPerson> publicPersonRepo;
 
+
     public PublicPersonServiceImpl() {
 
         generalRepo = new GeneralRepo();

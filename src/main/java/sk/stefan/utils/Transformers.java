@@ -15,8 +15,9 @@ import sk.stefan.enums.VoteResult;
 //import sk.stefan.interfaces.Transformable;
 
 /**
- * This will be not static methods - all instances will use them.
  * <p>
+ * This will be not static methods - but decoration bean for UniRepo.
+ * </p>
  * Created by sveres on 1/31/16.
  */
 public class Transformers { //implements Transformable {
@@ -77,10 +78,12 @@ public class Transformers { //implements Transformable {
         return pus.toString().getBytes();
     }
 
+//    @Override
     public static byte[] getBytesFromUserType(UserType ut) {
         return ut.toString().getBytes();
     }
 
+//    @Override
     public static byte[] getBytesFromVoteResult(VoteResult vr) {
         return vr.toString().getBytes();
     }
@@ -151,11 +154,13 @@ public class Transformers { //implements Transformable {
         return PublicUsefulness.valueOf(enumStr);
     }
 
+//    @Override
     public static UserType getUserTypeFromBytes(byte[] bytes) {
         String enumStr = new String(bytes);
         return UserType.valueOf(enumStr);
     }
 
+//    @Override
     public static VoteResult getVoteResultFromBytes(byte[] bytes) {
         String enumStr = new String(bytes);
         return VoteResult.valueOf(enumStr);

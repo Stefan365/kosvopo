@@ -1,5 +1,6 @@
 package sk.stefan.mvps.model.serviceImpl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.PublicBody;
@@ -8,6 +9,7 @@ import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.repo.UniRepo;
+import sk.stefan.mvps.model.service.ActiveUserService;
 import sk.stefan.mvps.model.service.EntityService;
 
 /**
@@ -22,6 +24,8 @@ public class EntityServiceImpl implements EntityService {
     private UniRepo<Vote> voteRepo;
     private UniRepo<A_User> userRepo;
 
+    @Autowired
+    private ActiveUserService activeUserService;
 
     public EntityServiceImpl() {
         pubBodyRepo = new UniRepo<>(PublicBody.class);
@@ -64,15 +68,15 @@ public class EntityServiceImpl implements EntityService {
     @Override
     public TabEntity saveEntity(TabEntity entity) {
         if (PublicBody.class.isAssignableFrom(entity.getClass())) {
-            return pubBodyRepo.save((PublicBody) entity, entity.getId() != null);
+            return pubBodyRepo.save((PublicBody) entity, true, activeUserService.getActualUser());
         } else if (PublicRole.class.isAssignableFrom(entity.getClass())){
-            return pubRoleRepo.save((PublicRole) entity, entity.getId() != null);
+            return pubRoleRepo.save((PublicRole) entity, true, activeUserService.getActualUser());
         } else if (PublicPerson.class.isAssignableFrom(entity.getClass())) {
-            return pubPersonRepo.save((PublicPerson) entity, entity.getId() != null);
+            return pubPersonRepo.save((PublicPerson) entity, true, activeUserService.getActualUser());
         } else if(Vote.class.isAssignableFrom(entity.getClass())) {
-            return voteRepo.save((Vote) entity, entity.getId() != null);
+            return voteRepo.save((Vote) entity, true, activeUserService.getActualUser());
         } else if (A_User.class.isAssignableFrom(entity.getClass())) {
-            return userRepo.save((A_User) entity, entity.getId() != null);
+            return userRepo.save((A_User) entity, true, activeUserService.getActualUser());
         } else {
             throw new RuntimeException("Nepodarilo sa uložiť entitu " + entity);
         }
@@ -81,13 +85,13 @@ public class EntityServiceImpl implements EntityService {
     @Override
     public boolean removeEntity(TabEntity entity) {
         if (PublicBody.class.isAssignableFrom(entity.getClass())) {
-            return pubBodyRepo.deactivateOneOnly((PublicBody) entity, false);
+            return pubBodyRepo.deactivateOneOnly((PublicBody) entity, entity.getId()!=null, activeUserService.getActualUser());
         } else if (A_User.class.isAssignableFrom(entity.getClass())) {
-            return userRepo.deactivateOneOnly((A_User) entity, false);
+            return userRepo.deactivateOneOnly((A_User) entity, entity.getId()!=null, activeUserService.getActualUser());
         } else if (PublicPerson.class.isAssignableFrom(entity.getClass())) {
-            return pubPersonRepo.deactivateOneOnly((PublicPerson) entity, false);
+            return pubPersonRepo.deactivateOneOnly((PublicPerson) entity, entity.getId()!=null, activeUserService.getActualUser());
         } else if (PublicRole.class.isAssignableFrom(entity.getClass())) {
-            return pubRoleRepo.deactivateOneOnly((PublicRole) entity, false);
+            return pubRoleRepo.deactivateOneOnly((PublicRole) entity, entity.getId()!=null, activeUserService.getActualUser());
         }
         throw new RuntimeException("Nepodarilo sa odstranit entitu " + entity);
     }

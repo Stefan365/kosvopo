@@ -8,6 +8,8 @@ package sk.stefan.mvps.model.service;
 import java.util.List;
 
 import com.vaadin.server.Resource;
+
+import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.Document;
 
 /**
@@ -31,13 +33,13 @@ public interface DocumentService {
 
     /**
      * @param doc dokument
-     * @return 
+     * @return
      */
     public Boolean deactivate(Document doc);
     
     /**
      * @param doc
-     * @return 
+     * @return
      */
     public Document save(Document doc);
 

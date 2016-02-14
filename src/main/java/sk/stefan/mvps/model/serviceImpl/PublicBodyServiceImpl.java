@@ -9,13 +9,17 @@ import com.vaadin.ui.Notification;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.repo.GeneralRepo;
 import sk.stefan.mvps.model.repo.UniRepo;
+import sk.stefan.mvps.model.service.ActiveUserService;
 import sk.stefan.mvps.model.service.PublicBodyService;
 
 /**
@@ -24,20 +28,18 @@ import sk.stefan.mvps.model.service.PublicBodyService;
  */
 @Service
 public class PublicBodyServiceImpl implements PublicBodyService {
-    
-    
+
     private static final Logger log = Logger.getLogger(PublicPersonServiceImpl.class);
-    
+
     private final GeneralRepo genRepo;
     private final UniRepo<PublicBody> pubBodyRepo;
     private final UniRepo<PublicRole> pubRoleRepo;
     private final UniRepo<PublicPerson> pubPersonRepo;
     private final UniRepo<Location> locRepo;
 
-//    na odlahcenie RAM, nebudem tu pouzivat objemne Service.:    
-//    private final PublicPersonService pubPersonService;
-//    private final LocationService locationService;
-    
+    @Autowired
+    private ActiveUserService activeUserService;
+
     public PublicBodyServiceImpl() {
 
         genRepo = new GeneralRepo();
@@ -45,14 +47,9 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         pubRoleRepo = new UniRepo<>(PublicRole.class);
         pubPersonRepo = new UniRepo<>(PublicPerson.class);
         locRepo = new UniRepo<>(Location.class);
-        
-//        pubPersonService = new PublicPersonServiceImpl();
-//        locationService = new LocationServiceImpl();
-        
 
     }
 
-    
     @Override
     public String getPublicBodyChief(PublicBody pb) {
 
@@ -102,7 +99,7 @@ public class PublicBodyServiceImpl implements PublicBodyService {
         return pbIds;
 
     }
-    
+
     /**
      *
      * @param tx
@@ -119,18 +116,16 @@ public class PublicBodyServiceImpl implements PublicBodyService {
                 + " OR loc.town_section like '%" + tx + "%') "
                 + " AND pb.visible = true"
                 + " AND loc.visible = true";
-        
-        
+
         pbIds = this.genRepo.findIds(sql);
 
         return pbIds;
 
     }
 
-
     @Override
     public List<PublicBody> findPublicBodies(List<Integer> pbIds) {
-        
+
         List<PublicBody> publicBodies = new ArrayList<>();
 
         for (Integer i : pbIds) {
@@ -143,13 +138,13 @@ public class PublicBodyServiceImpl implements PublicBodyService {
 
     @Override
     public PublicBody findOne(Integer pbId) {
-        
+
         return pubBodyRepo.findOne(pbId);
     }
 
     @Override
     public synchronized String getPresentationName(PublicBody pb) {
-        
+
         Integer locId = pb.getLocation_id();
         log.info("LOC ID:" + locId);
         if (locId != null) {
@@ -163,6 +158,6 @@ public class PublicBodyServiceImpl implements PublicBodyService {
 
     @Override
     public PublicBody savePublicBody(PublicBody publicBody) {
-        return pubBodyRepo.save(publicBody, false);
+        return pubBodyRepo.save(publicBody, true, activeUserService.getActualUser());
     }
 }

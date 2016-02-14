@@ -5,11 +5,13 @@
  */
 package sk.stefan.mvps.model.serviceImpl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.District;
 import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.entity.Region;
 import sk.stefan.mvps.model.repo.UniRepo;
+import sk.stefan.mvps.model.service.ActiveUserService;
 import sk.stefan.mvps.model.service.LocationService;
 
 import java.util.List;
@@ -19,16 +21,20 @@ import java.util.List;
  * @author stefan
  */
 @Service
-public class ZBD_LocationServiceImpl implements LocationService {
+public class LocationServiceImpl implements LocationService {
     
     private final UniRepo<Location> locRepo;
     private final UniRepo<District> distrRepo;
     private final UniRepo<Region> regRepo;
 
+    @Autowired
+    private ActiveUserService activeUserService;
+
+
     /**
      * Konstruktor inicializuje repozitáře.
      */
-    public ZBD_LocationServiceImpl(){
+    public LocationServiceImpl(){
         
         locRepo = new UniRepo<>(Location.class);
         distrRepo = new UniRepo<>(District.class);
@@ -69,12 +75,12 @@ public class ZBD_LocationServiceImpl implements LocationService {
 
     @Override
     public Region saveRegion(Region region) {
-        return regRepo.save(region, region.getId() == null);
+        return regRepo.save(region, true,activeUserService.getActualUser());
     }
 
     @Override
     public void removeRegion(Region region) {
-        regRepo.deactivateOneOnly(region, false);
+        regRepo.deactivateOneOnly(region, region.getId() != null, activeUserService.getActualUser());
     }
 
     @Override
@@ -84,12 +90,12 @@ public class ZBD_LocationServiceImpl implements LocationService {
 
     @Override
     public District saveDistrict(District district) {
-        return distrRepo.save(district, district.getId() == null);
+        return distrRepo.save(district, true, activeUserService.getActualUser());
     }
 
     @Override
     public void removeDistrict(District district) {
-        distrRepo.deactivateOneOnly(district, false);
+        distrRepo.deactivateOneOnly(district, district.getId() != null, activeUserService.getActualUser());
     }
 
     @Override
@@ -99,12 +105,12 @@ public class ZBD_LocationServiceImpl implements LocationService {
 
     @Override
     public Location saveLocation(Location location) {
-        return locRepo.save(location, location.getId() != null);
+        return locRepo.save(location, true, activeUserService.getActualUser());
     }
 
     @Override
     public void removeLocation(Location location) {
-        locRepo.deactivateOneOnly(location, false);
+        locRepo.deactivateOneOnly(location, location.getId() != null, activeUserService.getActualUser());
     }
 
 }

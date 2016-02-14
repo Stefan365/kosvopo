@@ -9,6 +9,8 @@ import com.vaadin.ui.Notification;
 import java.util.Date;
 import java.util.List;
 import org.apache.log4j.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.A_Role;
@@ -16,6 +18,7 @@ import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.mvps.model.repo.GeneralRepo;
 import sk.stefan.mvps.model.repo.UniRepo;
+import sk.stefan.mvps.model.service.ActiveUserService;
 import sk.stefan.mvps.model.service.UserService;
 
 /**
@@ -32,6 +35,9 @@ public class UserServiceImpl implements UserService {
     private final UniRepo<A_UserRole> userRoleRepo;
     private final UniRepo<A_Role> roleRepo;
     private final GeneralRepo genRepo;
+
+    @Autowired
+    private ActiveUserService activeUserService;
 
     public UserServiceImpl() {
         
@@ -171,11 +177,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUserRole(A_UserRole urole, boolean b) {
         A_UserRole lastUserRole = getCurrentUserRoleForUser(urole.getUser_id());
+        A_User user = activeUserService.getActualUser();
         if (lastUserRole != null) {
             lastUserRole.setTill(new Date());
-            userRoleRepo.save(lastUserRole, true);
+            userRoleRepo.save(lastUserRole, true, user);
         }
-        userRoleRepo.save(urole, b);
+        userRoleRepo.save(urole, b, user);
 
     }
 
@@ -191,7 +198,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public A_User saveUser(A_User user) {
-        return userRepo.save(user, user.getId() != null);
+        return userRepo.save(user, true, activeUserService.getActualUser());
     }
 
     @Override
@@ -223,5 +230,4 @@ public class UserServiceImpl implements UserService {
         return role.getRole_name();
     }
 
-//    A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
 }

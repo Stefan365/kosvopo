@@ -2,6 +2,8 @@ package sk.stefan.interfaces;
 
 import java.util.List;
 
+import sk.stefan.mvps.model.entity.A_User;
+
 public interface MyRepo<T> {
 
     // 1.
@@ -53,7 +55,7 @@ public interface MyRepo<T> {
      * @param noteChange
      * @return
      */
-    public T save(T ent, boolean noteChange);
+    public T save(T ent, boolean noteChange, A_User user);
     
 
 //    // 5.
@@ -72,7 +74,7 @@ public interface MyRepo<T> {
      * @param noteChange
      * @return
      */
-    public boolean deactivateOneOnly(T ent, boolean noteChange);
+    public boolean deactivateOneOnly(T ent, boolean noteChange, A_User user);
 
     // 6.
     /**

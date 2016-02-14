@@ -1,6 +1,7 @@
 package sk.stefan.mvps.model.service;
 
 import sk.stefan.interfaces.TabEntity;
+import sk.stefan.mvps.model.entity.A_User;
 
 /**
  * Created by elopin on 08.11.2015.

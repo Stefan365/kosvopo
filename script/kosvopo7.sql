@@ -141,31 +141,32 @@ CREATE TABLE `a_hierarchy` (
   `table_name` varchar(30) COLLATE utf8_slovak_ci DEFAULT NULL,
   `boss_table` varchar(30) COLLATE utf8_slovak_ci DEFAULT NULL,
   `boss_reference` varchar(30) COLLATE utf8_slovak_ci DEFAULT NULL,
+  `visible` bit(1) DEFAULT b'1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
-INSERT INTO `a_hierarchy` (`id`, `table_name`, `boss_table`, `boss_reference`) VALUES
-(1,	't_public_person',	NULL,	NULL),
-(2,	't_tenure',	NULL,	NULL),
-(3,	't_theme',	NULL,	NULL),
-(4,	't_region',	NULL,	NULL),
-(5,	't_district',	't_region',	'region_id'),
-(6,	't_location',	't_district',	'district_id'),
-(7,	't_public_body',	't_location',	'location_id'),
-(8,	't_person_classification',	't_public_person',	'public_person_id'),
-(9,	't_public_role',	't_tenure',	'tenure_id'),
-(10,	't_public_role',	't_public_body',	'public_body_id'),
-(11,	't_public_role',	't_public_person',	'public_person_id'),
-(12,	't_subject',	't_theme',	'theme_id'),
-(13,	't_subject',	't_public_role',	'public_role_id'),
-(14,	't_vote',	't_subject',	'subject_id'),
-(15,	't_vote_classification',	't_vote',	'vote_id'),
-(16,	't_vote_of_role',	't_vote',	'vote_id'),
-(17,	't_vote_of_role',	't_public_role',	'public_role_id'),
-(18,	'a_user',	NULL,	NULL),
-(19,	'a_role',	NULL,	NULL),
-(20,	'a_user_role',	'a_user',	'user_id'),
-(21,	'a_user_role',	'a_role',	'role_id');
+INSERT INTO `a_hierarchy` (`id`, `table_name`, `boss_table`, `boss_reference`, `visible`) VALUES
+(1,	't_public_person',	NULL,	NULL,	CONV('1', 2, 10) + 0),
+(2,	't_tenure',	NULL,	NULL,	CONV('1', 2, 10) + 0),
+(3,	't_theme',	NULL,	NULL,	CONV('1', 2, 10) + 0),
+(4,	't_region',	NULL,	NULL,	CONV('1', 2, 10) + 0),
+(5,	't_district',	't_region',	'region_id',	CONV('1', 2, 10) + 0),
+(6,	't_location',	't_district',	'district_id',	CONV('1', 2, 10) + 0),
+(7,	't_public_body',	't_location',	'location_id',	CONV('1', 2, 10) + 0),
+(8,	't_person_classification',	't_public_person',	'public_person_id',	CONV('1', 2, 10) + 0),
+(9,	't_public_role',	't_tenure',	'tenure_id',	CONV('1', 2, 10) + 0),
+(10,	't_public_role',	't_public_body',	'public_body_id',	CONV('1', 2, 10) + 0),
+(11,	't_public_role',	't_public_person',	'public_person_id',	CONV('1', 2, 10) + 0),
+(12,	't_subject',	't_theme',	'theme_id',	CONV('1', 2, 10) + 0),
+(13,	't_subject',	't_public_role',	'public_role_id',	CONV('1', 2, 10) + 0),
+(14,	't_vote',	't_subject',	'subject_id',	CONV('1', 2, 10) + 0),
+(15,	't_vote_classification',	't_vote',	'vote_id',	CONV('1', 2, 10) + 0),
+(16,	't_vote_of_role',	't_vote',	'vote_id',	CONV('1', 2, 10) + 0),
+(17,	't_vote_of_role',	't_public_role',	'public_role_id',	CONV('1', 2, 10) + 0),
+(18,	'a_user',	NULL,	NULL,	CONV('1', 2, 10) + 0),
+(19,	'a_role',	NULL,	NULL,	CONV('1', 2, 10) + 0),
+(20,	'a_user_role',	'a_user',	'user_id',	CONV('1', 2, 10) + 0),
+(21,	'a_user_role',	'a_role',	'role_id',	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `a_role`;
 CREATE TABLE `a_role` (

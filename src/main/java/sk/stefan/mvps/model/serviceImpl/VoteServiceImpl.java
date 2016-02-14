@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.TabEntity;
@@ -22,6 +23,7 @@ import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.entity.VoteOfRole;
 import sk.stefan.mvps.model.repo.GeneralRepo;
 import sk.stefan.mvps.model.repo.UniRepo;
+import sk.stefan.mvps.model.service.ActiveUserService;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.utils.ToolsDao;
 
@@ -36,11 +38,14 @@ public class VoteServiceImpl implements VoteService {
     private final UniRepo<Subject> subjectRepo;
     private final UniRepo<VoteOfRole> voteOfRoleRepo;
 
-    //    na odlahcenie RAM, nebudem tu pouzivat objemne Service, 
+//    na odlahcenie RAM, nebudem tu pouzivat objemne Service, 
 //    i ked by to viac vyhovovalo MVP:
     private final UniRepo<PublicBody> pubBodyRepo;
     private final UniRepo<PublicPerson> pubPersonRepo;
     private final UniRepo<PublicRole> pubRoleRepo;
+
+    @Autowired
+    private ActiveUserService activeUserService;
 
 
     public VoteServiceImpl() {
@@ -127,9 +132,9 @@ public class VoteServiceImpl implements VoteService {
 //        return lvotFin;
     }
 
-    //*888**************************************************************************
+//    ***************************************************************************
 //VOTE OF ROLE SECTION:
-//*888**************************************************************************
+//***************************************************************************
     @Override
     public List<VoteOfRole> getAllVotesOfPublicPerson(PublicPerson pp) {
 
@@ -206,12 +211,12 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public Theme saveTheme(Theme theme) {
-        return themeRepo.save(theme, theme.getId() != null);
+        return themeRepo.save(theme, true,activeUserService.getActualUser());
     }
 
     @Override
     public void removeTheme(Theme theme) {
-        themeRepo.deactivateOneOnly(theme, false);
+        themeRepo.deactivateOneOnly(theme, theme.getId() != null,activeUserService.getActualUser());
     }
 
     @Override
@@ -221,12 +226,12 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public Subject saveSubject(Subject subject) {
-        return subjectRepo.save(subject, subject.getId() != null);
+        return subjectRepo.save(subject, true,activeUserService.getActualUser());
     }
 
     @Override
     public void removeSubject(Subject subject) {
-        subjectRepo.deactivateOneOnly(subject, false);
+        subjectRepo.deactivateOneOnly(subject, subject.getId() != null,activeUserService.getActualUser());
     }
 
 
@@ -323,7 +328,7 @@ public class VoteServiceImpl implements VoteService {
 
         List<Integer> prIds;
 
-        //SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
+//        SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
 //        zdola naho a zhora nadol.
 //        SELECT pr.public_body_id FROM t_public_role pr JOIN t_subject sub ON (pr.id = sub.public_role_id) JOIN t_vote vot ON (sub.id = vot.subject_id) WHERE vot.id = 4;
         String sql = "SELECT vot.id FROM t_vote vot WHERE vot.subject_id IN "
@@ -343,8 +348,8 @@ public class VoteServiceImpl implements VoteService {
 
         List<Integer> prIds;
 
-        //SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
-        //viacnasobne viible je tam kvoli bezpecnosti.
+//        SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
+//        viacnasobne viible je tam kvoli bezpecnosti.
         String sql = "SELECT vot.id FROM t_vote vot WHERE vot.subject_id IN "
                 + "(SELECT sub.id FROM t_subject sub WHERE sub.public_role_id IN "
                 + "(SELECT pr.id FROM t_public_role pr WHERE pr.public_person_id = " + ppId + " "
@@ -421,9 +426,9 @@ public class VoteServiceImpl implements VoteService {
 
         List<Integer> votIds;
 
-        //SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
+//        SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
 //        zdola naho a zhora nadol.
-        //viacnasobne viible je tam kvoli bezpecnosti.
+//        viacnasobne viible je tam kvoli bezpecnosti.
         String sql = "SELECT vot.id FROM t_vote vot JOIN t_vote_of_role vor ON "
                 + "(vot.id = vor.vote_id) JOIN t_public_role pr ON "
                 + "(pr.id = vor.public_role_id) "
@@ -443,9 +448,9 @@ public class VoteServiceImpl implements VoteService {
 
         List<Integer> vorIds;
 
-        //SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
+//        SPRAVIT TO PODLA TOHO UNIVERZALNEHO FORMULARA TJ. FIND (TABLE1, TABLE2);
 //        zdola naho a zhora nadol.
-        //viacnasobne viible je tam kvoli bezpecnosti.
+//        viacnasobne viible je tam kvoli bezpecnosti.
         String sql = "SELECT vor.id FROM t_vote_of_role vor JOIN t_public_role pr ON "
                 + "(pr.id = vor.public_role_id) "
                 + "WHERE pr.id = " + pubRoleId + " "
@@ -607,7 +612,7 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public VoteOfRole saveVoteOfRole(VoteOfRole vor, boolean noteChange) {
 
-        return voteOfRoleRepo.save(vor, noteChange);
+        return voteOfRoleRepo.save(vor, noteChange,activeUserService.getActualUser());
     }
 
     @Override

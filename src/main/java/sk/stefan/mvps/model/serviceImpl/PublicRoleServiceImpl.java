@@ -22,10 +22,6 @@ public class PublicRoleServiceImpl implements PublicRoleService {
     private final UniRepo<PublicBody> pubBodyRepo;
     private final UniRepo<PublicPerson> pubPersonRepo;
 
-//    na odlahcenie RAM, nebudem tu pouzivat objemne Service.:    
-//    private final PublicBodyService pubBodyService;
-//    private final PublicPersonService pubPersonService;
-    
     //0. konstruktor
     /**
      */

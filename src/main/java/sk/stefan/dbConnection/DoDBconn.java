@@ -102,7 +102,7 @@ public class DoDBconn {
         
         connectionPool.releaseConnection(conn);
         count--;
-        log.info("UVOLNIL SOM INVAZIVNE CONNECTION: " + count);
+        log.info("UVOLNIL SOM INVASIVE, ALEBO NON INVASIVE CONNECTION: " + count);
 
     }
 

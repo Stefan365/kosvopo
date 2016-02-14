@@ -5,7 +5,9 @@ import java.util.Date;
 import sk.stefan.enums.PublicRoleType;
 import sk.stefan.enums.PublicUsefulness;
 import sk.stefan.enums.Stability;
+import sk.stefan.enums.UserType;
 import sk.stefan.enums.VoteAction;
+import sk.stefan.enums.VoteResult;
 
 /**
  * Znackovaci interface.
@@ -14,43 +16,47 @@ import sk.stefan.enums.VoteAction;
  */
 public interface Transformable {
 
-	public byte[] getBytesFromString(String str);
+    public byte[] getBytesFromString(String str);
 
-	public byte[] getBytesFromInteger(Integer intg);
+    public byte[] getBytesFromInteger(Integer intg);
 
-	public byte[] getBytesFromBoolean(Boolean str);
+    public byte[] getBytesFromBoolean(Boolean str);
 
-	public byte[] getBytesFromDate(Date date);
+    public byte[] getBytesFromDate(Date date);
 
-	public byte[] getBytesFromPublicRoleType(PublicRoleType prt);
+    public byte[] getBytesFromPublicRoleType(PublicRoleType prt);
 
-	public byte[] getBytesFromVoteAction(VoteAction va);
+    public byte[] getBytesFromVoteAction(VoteAction va);
 
-	public byte[] getBytesFromStability(Stability sta);
-        
-	public byte[] getBytesFromPublicUsefulness(PublicUsefulness pus);
+    public byte[] getBytesFromStability(Stability sta);
 
-        //    Stability,
-//    PublicUsefulness,
+    public byte[] getBytesFromPublicUsefulness(PublicUsefulness pus);
+
+    public byte[] getBytesFromUserType(UserType ut);
+
+    public byte[] getBytesFromVoteResult(VoteResult vr);
 
 //****************************************************************        
-	public String getStringFromBytes(byte[] bytes);
+    public String getStringFromBytes(byte[] bytes);
 
-	public Integer getIntFromBytes(byte[] bytes);
+    public Integer getIntFromBytes(byte[] bytes);
 
-	public Date getDateFromBytes(byte[] bytes);
+    public Date getDateFromBytes(byte[] bytes);
 
-	public Boolean getBooleanFromBytes(byte[] bytes);
+    public Boolean getBooleanFromBytes(byte[] bytes);
 
-	public byte[] getbytesFromBytes(Byte[] bytes);
+    public byte[] getbytesFromBytes(Byte[] bytes);
 
-	public PublicRoleType getPublicRoleTypeFromBytes(byte[] bytes);
+    public PublicRoleType getPublicRoleTypeFromBytes(byte[] bytes);
 
-	public VoteAction getVoteActionFromBytes(byte[] bytes);
-        
-        public Stability getStabilityFromBytes(byte[] bytes);
-        
-        public PublicUsefulness getPublicUsefulnessFromBytes(byte[] bytes);
-        
-        
+    public VoteAction getVoteActionFromBytes(byte[] bytes);
+
+    public Stability getStabilityFromBytes(byte[] bytes);
+
+    public PublicUsefulness getPublicUsefulnessFromBytes(byte[] bytes);
+    
+    public UserType getUserTypeFromBytes(byte[] bytes);
+    
+    public VoteResult getVoteResultFromBytes(byte[] bytes);
+
 }

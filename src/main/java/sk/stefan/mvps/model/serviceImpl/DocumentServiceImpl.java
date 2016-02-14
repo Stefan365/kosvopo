@@ -8,16 +8,18 @@ package sk.stefan.mvps.model.serviceImpl;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
 import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import org.apache.log4j.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import sk.stefan.mvps.model.entity.Document;
 import sk.stefan.mvps.model.repo.UniRepo;
+import sk.stefan.mvps.model.service.ActiveUserService;
 import sk.stefan.mvps.model.service.DocumentService;
 
 /**
@@ -30,6 +32,10 @@ public class DocumentServiceImpl implements DocumentService {
     private static final Logger log = Logger.getLogger(DocumentServiceImpl.class);
 
     private UniRepo<Document> docRepo;
+
+	@Autowired
+    private ActiveUserService activeUserService;
+
 
     public DocumentServiceImpl() {
 
@@ -80,13 +86,13 @@ public class DocumentServiceImpl implements DocumentService {
     public Boolean deactivate(Document doc) {
 //        dokumenty su koncova entita, tj. deaktivujeme je jednoduchsou cestou (nie zbytocne cez 
 //                deaktivaciu stromu entit)
-        Boolean b = this.docRepo.deactivateOneOnly(doc, false);
+        Boolean b = this.docRepo.deactivateOneOnly(doc, doc.getId() != null, activeUserService.getActualUser());
         return b;
     }
 
     @Override
-    public Document save(Document doc) {
-        return docRepo.save(doc, true);
+    public Document save(Document doc ) {
+        return docRepo.save(doc, true, activeUserService.getActualUser());
                 
     }
 

@@ -280,7 +280,7 @@ public class GeneralRepo {
      * @param id
      * @throws java.sql.SQLException
      */
-    public void deactivateWithSlavesTree(String tn, Integer id) throws SQLException {
+    public void deactivateWithSlavesTree(String tn, Integer id, A_User user) throws SQLException {
 
         if (transactionalConn == null) {
             log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
@@ -289,9 +289,9 @@ public class GeneralRepo {
 
         changeRepo = new UniRepo<>(A_Change.class, transactionalConn);
 
-        this.deactivateOne(tn, id);
+        this.deactivateOne(tn, id, user);
         //deactivate documents;
-        this.deactivateEntityDocuments(tn, id);
+        this.deactivateEntityDocuments(tn, id, user);
 
         List<String> slaveTns = ToolsFiltering.getSlaves(tn);
 
@@ -312,7 +312,7 @@ public class GeneralRepo {
             for (String key : slavesIdsMap.keySet()) {
                 slvIds = slavesIdsMap.get(key);
                 for (Integer aid : slvIds) {
-                    deactivateWithSlavesTree(key, aid);
+                    deactivateWithSlavesTree(key, aid, user);
                 }
             }
         }
@@ -332,7 +332,7 @@ public class GeneralRepo {
      *
      * @throws java.sql.SQLException
      */
-    private void deactivateOne(String tn, Integer entId) throws SQLException {
+    private void deactivateOne(String tn, Integer entId, A_User user) throws SQLException {
 
         Statement st = transactionalConn.createStatement();
 
@@ -340,8 +340,8 @@ public class GeneralRepo {
         st.executeUpdate(sql);
 
         //for creating change:
-        A_Change change = createDeactivateChangeToPersist(tn, entId);
-        changeRepo.save(change, false);
+        A_Change change = createDeactivateChangeToPersist(tn, entId, user);
+        changeRepo.save(change, false, null);
 
         st.close();
 
@@ -357,7 +357,7 @@ public class GeneralRepo {
      * @param rid
      * @throws java.sql.SQLException
      */
-    private void deactivateEntityDocuments(String tn, Integer rid) throws SQLException {
+    private void deactivateEntityDocuments(String tn, Integer rid, A_User user) throws SQLException {
 
         Statement st = transactionalConn.createStatement();
 
@@ -370,8 +370,8 @@ public class GeneralRepo {
         A_Change change;
         List<Document> touchedDocumetsIds = docRepo.findByTwoParams("table_name", tn, "table_row_id", rid + "");
         for (Document doc : touchedDocumetsIds) {
-            change = createDeactivateChangeToPersist("t_document", doc.getId());
-            changeRepo.save(change, false);
+            change = createDeactivateChangeToPersist("t_document", doc.getId(), user);
+            changeRepo.save(change, false, null);
         }
 
         st.close();
@@ -452,9 +452,9 @@ public class GeneralRepo {
      * @param rowId
      * @return
      */
-    public A_Change createDeactivateChangeToPersist(String tn, Integer rowId) {
+    public A_Change createDeactivateChangeToPersist(String tn, Integer rowId, A_User user) {
 
-        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+//        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
 
         Integer userId;// = 2;
         A_Change zmena;
@@ -501,7 +501,7 @@ public class GeneralRepo {
         encPassword = this.encryptPassword("admin");
         admin.setPassword(encPassword);
 
-        admin = userRepo.save(admin, false);
+        admin = userRepo.save(admin, false, null);
 
         //user Role:
         A_UserRole urole = new A_UserRole();
@@ -513,7 +513,7 @@ public class GeneralRepo {
         urole.setVisible(Boolean.TRUE);
         urole.setActual(Boolean.TRUE);
 
-        userRoleRepo.save(urole, false);
+        userRoleRepo.save(urole, false, null);
 
         try {
             this.updatePassword("petak", "1");

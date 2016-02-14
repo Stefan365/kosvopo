@@ -6,6 +6,8 @@
 package sk.stefan.mvps.model.service;
 
 import java.util.List;
+
+import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.PublicBody;
 
 /**

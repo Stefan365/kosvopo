@@ -1,10 +1,9 @@
 package sk.stefan.mvps.model.repo;
 
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +40,7 @@ public class UniRepo<E> implements MyRepo<E> {
     private final Class<?> clsE;
 
     //pre potreby ukladania do a_change;
-    private Connection invasiveConnection = null;
+    private Connection changeInvasiveConnection = null;
 
     /**
      * Konstruktor:
@@ -52,7 +51,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
         this.clsE = cls;
         this.TN = ToolsDao.getTableName(cls);
-        this.invasiveConnection = null;
+        this.changeInvasiveConnection = null;
 
     }
 
@@ -66,7 +65,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
         this.clsE = cls;
         this.TN = ToolsDao.getTableName(cls);
-        this.invasiveConnection = conn;
+        this.changeInvasiveConnection = conn;
 
     }
 
@@ -90,12 +89,7 @@ public class UniRepo<E> implements MyRepo<E> {
             conn = DoDBconn.createNoninvasiveConnection();
             st = conn.createStatement();
 
-            String sql;
-            if ("a_hierarchy".equals(TN)) {
-                sql = String.format("SELECT * FROM %s", TN);
-            } else {
-                sql = String.format("SELECT * FROM %s  WHERE visible = true", TN);
-            }
+            String sql = String.format("SELECT * FROM %s  WHERE visible = true", TN);
 
             rs = st.executeQuery(sql);
             
@@ -129,7 +123,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
         try {
             
-            conn = DoDBconn.createInvasiveConnection();
+            conn = DoDBconn.createNoninvasiveConnection();
 
 //            TOTO STATICKE SPOJENIE NEFUNGUJE (RESP. DAVA ZASTARALE VYSLEDKY),
 //            NA AKTUALNE UDAJE SA MUSI VYTVORIT VZDY NOVE DB SPOJENIE!!!
@@ -139,12 +133,8 @@ public class UniRepo<E> implements MyRepo<E> {
 
             st = conn.createStatement();
 
-            String sql;
-            if ("a_hierarchy".equals(TN)) {
-                sql = String.format("SELECT * FROM %s WHERE id = %d", TN, id);
-            } else {
-                sql = String.format("SELECT * FROM %s WHERE id = %d AND visible = true", TN, id);
-            }
+            String sql= String.format("SELECT * FROM %s WHERE id = %d AND visible = true", TN, id);
+            
 
             rs = st.executeQuery(sql);
             log.info(sql);
@@ -187,12 +177,8 @@ public class UniRepo<E> implements MyRepo<E> {
 
             sql.append(String.format("SELECT * FROM %s WHERE ", TN));
             sql.append(this.getFindByParamQuery(paramName, paramValue));
-            if ("a_hierarchy".equals(TN)) {
-                //do nothing
-            } else {
-                sql.append(" AND visible = true");
-            }
-
+            sql.append(" AND visible = true");
+            
             log.info("SQL: *" + sql.toString() + "*");
             
             rs = st.executeQuery(sql.toString());
@@ -242,12 +228,8 @@ public class UniRepo<E> implements MyRepo<E> {
             sql.append(this.getFindByParamQuery(p1Name, p1Value));
             sql.append(" AND ");
             sql.append(this.getFindByParamQuery(p2Name, p2Value));
-            if ("a_hierarchy".equals(TN)) {
-                //do nothing
-            } else {
-                sql.append(" AND visible = true");
-            }
-
+            sql.append(" AND visible = true");
+            
             rs = st.executeQuery(sql.toString());
 
             log.info("SQL: *" + sql.toString() + "*");
@@ -277,10 +259,11 @@ public class UniRepo<E> implements MyRepo<E> {
      *
      * @param ent
      * @param noteChange ak je true, bude sa zapisovat do A_change, inak nie.
+     * @param user
      * @return
      */
     @Override
-    public E save(E ent, boolean noteChange) {
+    public E save(E ent, boolean noteChange, A_User user) {
 
         E entOrigin;
         Connection conn;
@@ -289,8 +272,8 @@ public class UniRepo<E> implements MyRepo<E> {
         
         try {
 //            log.info("TERAZ POJDEM VYTVORIT INVAZIVNE CONN" + DoDBconn.count);
-            if (this.invasiveConnection != null) {
-                conn = invasiveConnection;
+            if (this.changeInvasiveConnection != null) {
+                conn = changeInvasiveConnection;
             } else {
                 conn = DoDBconn.createInvasiveConnection();
             }
@@ -324,13 +307,13 @@ public class UniRepo<E> implements MyRepo<E> {
 
             
             //to druhe a tretie je ten len kvoli poisteniu. staci len noteChange! 
-            if (noteChange && !"a_change".equals(TN) && this.invasiveConnection == null) {
+            if (noteChange && !"a_change".equals(TN) && this.changeInvasiveConnection == null) {
                 //toto by sa malo prerobit na jedno invazivne connection a to by bolo spolocne 
                 //aj pre hlavne save aj pre save do A_change
-                List<A_Change> changes = this.createChangesToPersist(entOrigin, ent, mapPar);
+                List<A_Change> changes = this.createChangesToPersist(entOrigin, ent, mapPar, user);
                 UniRepo<A_Change> changeRepo = new UniRepo<>(A_Change.class, conn);
                 for (A_Change ch : changes) {
-                    changeRepo.save(ch, false);
+                    changeRepo.save(ch, false, null);
                 }
 
             }
@@ -339,7 +322,7 @@ public class UniRepo<E> implements MyRepo<E> {
             st.close();
 
             //ak sa vsetko podarilo(tj. ulozenie aj zapis do a_change), az teraz nastane commit:
-            if (this.invasiveConnection == null) {
+            if (this.changeInvasiveConnection == null) {
                 conn.commit();
                 DoDBconn.releaseConnection(conn);
             }
@@ -365,17 +348,18 @@ public class UniRepo<E> implements MyRepo<E> {
      *
      * @param ent
      * @param noteChange
+     * @param user
      * @return
      */
     @Override
-    public boolean deactivateOneOnly(E ent, boolean noteChange) {
+    public boolean deactivateOneOnly(E ent, boolean noteChange, A_User user) {
 
         Connection conn;
         Statement st;
         
         try {
-            if (this.invasiveConnection != null) {
-                conn = invasiveConnection;
+            if (this.changeInvasiveConnection != null) {
+                conn = changeInvasiveConnection;
             } else {
                 conn = DoDBconn.createInvasiveConnection();
             }
@@ -392,16 +376,16 @@ public class UniRepo<E> implements MyRepo<E> {
                 return true;
             }
             //to druhe a tretie je ten len kvoli poisteniu. staci len noteChange! 
-            if (noteChange && !"a_change".equals(TN) && this.invasiveConnection == null) {
-                A_Change change = this.createDeactivateChangeToPersist(ent);
+            if (noteChange && !"a_change".equals(TN) && this.changeInvasiveConnection == null) {
+                A_Change change = this.createDeactivateChangeToPersist(ent, user);
                 UniRepo<A_Change> changeRepo = new UniRepo<>(A_Change.class, conn);
-                changeRepo.save(change, false);
+                changeRepo.save(change, false, null);
             }
 
             st.close();
 
             //ak sa vsetko podarilo(tj. ulozenie aj zapis do a_change), az teraz nastane commit:
-            if (this.invasiveConnection == null) {
+            if (this.changeInvasiveConnection == null) {
                 conn.commit();
                 DoDBconn.releaseConnection(conn);
             }
@@ -423,17 +407,20 @@ public class UniRepo<E> implements MyRepo<E> {
      * @param paramValue the new value of parameter
      * @param entId id of row where the value is updated.
      * @param noteChange
+     * @param user
      * @throws java.sql.SQLException
+     * @throws java.lang.NoSuchFieldException
      */
-    public void updateParam(String paramName, String paramValue, String entId, boolean noteChange) throws SQLException, NoSuchFieldException {
+    public void updateParam(String paramName, String paramValue, String entId, boolean noteChange, A_User user)
+            throws SQLException, NoSuchFieldException {
 
         Connection conn;
         Statement st;
                 
         try {
             
-            if (this.invasiveConnection != null) {
-                conn = invasiveConnection;
+            if (this.changeInvasiveConnection != null) {
+                conn = changeInvasiveConnection;
             } else {
                 conn = DoDBconn.createInvasiveConnection();
             }
@@ -450,16 +437,16 @@ public class UniRepo<E> implements MyRepo<E> {
             int i = st.executeUpdate(sql.toString(),Statement.RETURN_GENERATED_KEYS);
 
             //to druhe a tretie je ten len kvoli poisteniu. staci len noteChange! 
-            if (noteChange && !"a_change".equals(TN) && this.invasiveConnection == null) {
-                A_Change change = this.createParamChangeToPersist(paramName, paramValue, entId);
+            if (noteChange && !"a_change".equals(TN) && this.changeInvasiveConnection == null) {
+                A_Change change = this.createParamChangeToPersist(paramName, paramValue, entId, user);
                 UniRepo<A_Change> changeRepo = new UniRepo<>(A_Change.class, conn);
-                changeRepo.save(change, false);
+                changeRepo.save(change, false, null);
             }
 
             st.close();
 
             //ak sa vsetko podarilo(tj. ulozenie aj zapis do a_change), az teraz nastane commit:
-            if (this.invasiveConnection == null) {
+            if (this.changeInvasiveConnection == null) {
                 conn.commit();
                 DoDBconn.releaseConnection(conn);
             }
@@ -872,11 +859,7 @@ public class UniRepo<E> implements MyRepo<E> {
      * @return list of changes.
      * 
      */
-    private List<A_Change> createChangesToPersist(E entOrigin, E entChanged, Map<String, Class<?>> mapPar) {
-
-//        Tohle chce pryč. Z repa čučet do session nejde. Je to špageťárna.
-        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
-//        A_User user = new A_User();
+    private List<A_Change> createChangesToPersist(E entOrigin, E entChanged, Map<String, Class<?>> mapPar, A_User user) {
 
         Integer userId;
         Integer rowId;
@@ -928,9 +911,7 @@ public class UniRepo<E> implements MyRepo<E> {
      * @param entChanged
      * @return
      */
-    public A_Change createDeactivateChangeToPersist(E entChanged) {
-
-        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+    public A_Change createDeactivateChangeToPersist(E entChanged, A_User user) {
 
         Integer userId;
         Integer rowId;
@@ -965,9 +946,7 @@ public class UniRepo<E> implements MyRepo<E> {
      * @param paramNewValue
      * @param entId
      */
-    private A_Change createParamChangeToPersist(String paramName, String paramNewValue, String entId) throws NoSuchFieldException {
-
-        A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+    private A_Change createParamChangeToPersist(String paramName, String paramNewValue, String entId, A_User user) throws NoSuchFieldException {
 
         E entOrig;
         Integer userId;

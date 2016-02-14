@@ -1,8 +1,10 @@
 package sk.stefan.mvps.model.serviceImpl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.stefan.mvps.model.entity.Tenure;
 import sk.stefan.mvps.model.repo.UniRepo;
+import sk.stefan.mvps.model.service.ActiveUserService;
 import sk.stefan.mvps.model.service.TenureService;
 
 import java.util.List;
@@ -15,8 +17,11 @@ public class TenureServiceImpl implements TenureService {
 
     private UniRepo<Tenure> tenureRepo;
 
+    @Autowired
+    private ActiveUserService activeUserService;
+
     public TenureServiceImpl() {
-        tenureRepo = new UniRepo<Tenure>(Tenure.class);
+        tenureRepo = new UniRepo<>(Tenure.class);
     }
 
     @Override
@@ -26,11 +31,11 @@ public class TenureServiceImpl implements TenureService {
 
     @Override
     public void removeTenure(Tenure tenure) {
-        tenureRepo.deactivateOneOnly(tenure, false);
+        tenureRepo.deactivateOneOnly(tenure, tenure.getId() != null, activeUserService.getActualUser());
     }
 
     @Override
     public Tenure saveTenure(Tenure tenure) {
-        return tenureRepo.save(tenure, tenure.getId() != null);
+        return tenureRepo.save(tenure, true, activeUserService.getActualUser());
     }
 }

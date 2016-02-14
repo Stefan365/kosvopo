@@ -17,7 +17,7 @@ import sk.stefan.mvps.model.entity.A_UserRole;
  * @author stefan
  * @param <E>
  */
-public interface UniTableService<E> {
+public interface ZBD_UniTableService<E> {
 
     /**
      * Ziska nazov DB tabulky danej prisluchajucej danej triede.

@@ -15,6 +15,7 @@ import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.mvps.model.repo.GeneralRepo;
 import sk.stefan.mvps.model.repo.UniRepo;
+import sk.stefan.mvps.model.service.ActiveUserService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
 
@@ -36,6 +37,10 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ActiveUserService activeUserService;
+
 
     public SecurityServiceImpl() {
 
@@ -74,7 +79,8 @@ public class SecurityServiceImpl implements SecurityService {
      */
     @Override
     public A_User getCurrentUser() {
-        return VaadinSession.getCurrent().getAttribute(A_User.class);
+        return activeUserService.getActualUser();
+//        return VaadinSession.getCurrent().getAttribute(A_User.class);
     }
 
     /**
