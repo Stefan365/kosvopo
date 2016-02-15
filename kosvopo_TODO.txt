@@ -1,0 +1,116 @@
+kosvopo problems:
+
+
+1. Zelena farba - zmenit na inu (modru? - daj mi na vyber - ukazky konkretnych farieb, 
+resp. kde sa to nastavuje, aby som si to vyskusal)
+
+- mythemes.css / (najst: $v-focus-color: 00eeff !default)
+
+2. VSEOBECNE: logovat do kosvopo.log (spravit prepinac. na Openshifte to logovat nemusi - aby to nezasieralo miesto)
+- (DONE)
+
+3. VSEOBECNE: obmedzeny pocet otvorenych okien (10?) neplytva to RAMkou?.
+
+(TBD, Luki,  not so important at the moment.)
+
+3a. VSEOBECNE: konstantna sirka okna, tj. nie dlhe podla velkosti nazvu
+
+- DONE (20 znakov)
+
+4. Hlasovanie: ked kliknem na tematicky okruh/ predmet hlasovania - musi sa to prepnut do dalsieho okna - dedikovanym tymto 2 entitam.
+
+- TBD(Luki)
+
+
+5. VSEOBECNE: admin(nie dobrovolnik) by mal mat aj moznost odstranovat ENTITY. (je tam moznost len pridat hlasovanie).
+   pokial ich bude odstranovat - bude tam musiet byt pouzity ten moj algoritmus aby sa odstranil cely strom zavislych entit.
+   + VELKE vystrazne okno - ze sa zmaze cely strom.
+
+- TBD (editacia - zmena ikonky - pridanie smetiaku, dialogove okno pred zmazanim entity)
+
+6. VSEOBECNE: Ked chcem ulozit novu entitu: "zapis do DB sa nepodaril!"
+   plati aj pre dokumenty.
+
+- (TBD, stv)problem s MAria DB - musim si to vyriesit sam. + vyriesit logovanie (log4j)
+
+
+7. Hlasovanie: Ked chcem pridat nove hlasovanie, nevidim tam moznost zadat ako kto hlasoval (ja som to mal vo svojom povodnom megaformulari -
+   radio checkboxy pre kazdu osobu, ktora patri do daneho verejneho organu)
+
+(TBD - Luki)
+
+8. Hlasovanie: Ked chcem ulozit nove hlasovanie: chyba tam moznost zadat vysledok hlasovania.
+
+(TBD - Luki)
+
+9. VSEOBECNE: Chyba moznost EDITacie existujucich entit (hlasovanie) s mojimi obmedzeniami (tj. ako enum bude vymenovane policka, 
+   ktore uz zmenit nepojde)
+
+(TBD - Stefan, poslat zoznam needitovatelnych policok pri editacii)
+DONE: 1.feb.2016
+
+(10. Download adminer for fedora.)
+
+13. VSEOBECNE: pri vkladani novych-resp. zmene starych. Nieje tam tlacitko CANCEL - (ked zavres okno je to to iste ako CANCEL?) Mozno nieje treba.
+
+(TBD - Luki, mozno to tam da)
+
+14. Public person, public body: chyba tam moznost nacitat obrazok pre ksicht (viz. vseobecny problem s EDIT).
+
+(DONE -by Luki)
+
+15. VSEOBECNE: chybaju moznosti pre pridavanie tychto entit: 
+    NOTE(spravit rovnake tlacitko ako pre Upload dokumentu)
+
+(TBD - Luki)
+
+---------------------------------------------------------------------
+
+
+18. Properties v jazyku: English a Deutsch.
+
+(TBD - Luki)
+
+19. deploy to OPENSHIFT, switch off journalling.
+
+(TBD - Luki + STV)
+
+
+
+
+
+
+(2.feb.2016)
+22. Odekorovat unirepo, kedze sa z neho robia instancie. Instanciami pomocnych tried -
+    tj. terajsej ToolsDao, a taktiez A_User_Service.(na získanie aktuálneho usera)
+    ToolsDao bude dekoracna beana ku UniRepu - nie staticke metody, potom netreba riesit to 
+    synchronized.
+
+(14.feb.2016)
+23. Treba dat fotku verejnej osoby aj v zobrazeni verejnej funkcie.
+
+(14.feb.2016)
+24. Nefunguje Hlasovanie: editacia "Detail uživatele" (mysleno detail hlasovania), 
+    keď zmením niečo tak sa nezavolá žiadne invazívne connection, tj. nezapíše sa to do DB. 
+
+
+
+*************************** DONE ***********************************************************
+
+16. Transformery vsetkych typov na Blob a Blobu na vsetky typy. Blob-> String-> Typ.(vyuzitie tychto transformerov pri zapisu do A_CHANGE)
+
+(TBD - STV)
+DONE - 3.2.2016
+
+
+17. Filtre - ked budem vyberat volaco, tak pri vybere dalsej polozky sa mi uz zuzi vyber.
+
+(DONE - Luki)
+
+
+21. Vytiahnut         A_User user = UI.getCurrent().getSession().getAttribute(A_User.class);
+    z repa do ServiceImpl.(odkial ma byt vyhlad do session?)
+DONE (stefan)
+
+20. tabulku a_hierarchy obohatit o stlpec visible /kvoli zjednoteniu db postupov
+
