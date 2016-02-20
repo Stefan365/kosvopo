@@ -1,6 +1,7 @@
 package sk.stefan.mvps.view.components;
 
 import com.vaadin.annotations.DesignRoot;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.Button;
@@ -51,6 +52,7 @@ public class TopPanel extends HorizontalLayout {
         butLogin.addClickListener(event -> onLogin());
         butLogout.addClickListener(event -> onLogout());
         butSend.addClickListener(event -> onSend());
+        butSend.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
     }
 
@@ -94,6 +96,7 @@ public class TopPanel extends HorizontalLayout {
 
     private void setLoginFormVisible(boolean visible) {
         tfUsername.setValue(null);
+        tfUsername.focus();
         pfPassword.setValue(null);
         basic.setVisible(!visible);
         loginForm.setVisible(visible);
