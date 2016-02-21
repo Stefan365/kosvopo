@@ -2,6 +2,7 @@ package sk.stefan.mvps.view.components.administrace;
 
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
@@ -12,8 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sk.stefan.annotations.ViewTab;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.entity.Theme;
+import sk.stefan.mvps.model.service.LinkService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.VoteService;
+import sk.stefan.mvps.view.components.hlasovani.NewTemaForm;
 import sk.stefan.mvps.view.tabs.TabComponent;
 
 /**
@@ -28,11 +33,17 @@ public class TemataTab extends VerticalLayout implements TabComponent {
     @Autowired
     private VoteService voteService;
 
+    @Autowired
+    private LinkService linkService;
+
+    @Autowired
+    private SecurityService securityService;
+
     //Design
     private TextField searchFd;
     private Grid grid;
     private Button butPridat;
-    private TemaPanel temaPanel;
+
 
     //data
     private BeanItemContainer<Theme> container;
@@ -45,35 +56,9 @@ public class TemataTab extends VerticalLayout implements TabComponent {
         grid.getColumn("brief_description").setHeaderCaption("Názov tématu");
         grid.setHeightMode(HeightMode.ROW);
 
-        grid.addSelectionListener(event -> showDetail((Theme) grid.getSelectedRow()));
+        grid.addSelectionListener(event -> Page.getCurrent().open(linkService.getUriFragmentForEntity((TabEntity) grid.getSelectedRow()), null));
 
-        temaPanel.setSaveListener(this::onSave);
-        temaPanel.setRemoveListener(this::onRemove);
-
-        butPridat.addClickListener(event -> onPridat());
-    }
-
-    private void showDetail(Theme theme) {
-        temaPanel.setTheme(theme);
-        temaPanel.setVisible(true);
-    }
-
-    private void onRemove(Theme theme) {
-        voteService.removeTheme(theme);
-        temaPanel.setVisible(false);
-        show();
-    }
-
-    private void onSave(Theme theme) {
-        temaPanel.setTheme(voteService.saveTheme(theme));
-        show();
-    }
-
-    private void onPridat() {
-        Theme theme = new Theme();
-        theme.setVisible(true);
-        temaPanel.setTheme(theme);
-        temaPanel.setVisible(true);
+        butPridat.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(NewTemaForm.class), null));
     }
 
     @Override

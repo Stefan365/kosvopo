@@ -7,6 +7,7 @@ import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.interfaces.TabEntity;
+import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.repo.UniRepo;
 import sk.stefan.mvps.model.service.ActiveUserService;
@@ -23,6 +24,7 @@ public class EntityServiceImpl implements EntityService {
     private UniRepo<PublicPerson> pubPersonRepo;
     private UniRepo<Vote> voteRepo;
     private UniRepo<A_User> userRepo;
+    private UniRepo<Theme> themeRepo;
 
     @Autowired
     private ActiveUserService activeUserService;
@@ -33,6 +35,7 @@ public class EntityServiceImpl implements EntityService {
         pubPersonRepo = new UniRepo<>(PublicPerson.class);
         voteRepo = new UniRepo<>(Vote.class);
         userRepo = new UniRepo<>(A_User.class);
+        themeRepo = new UniRepo<>(Theme.class);
     }
 
     @Override
@@ -77,6 +80,8 @@ public class EntityServiceImpl implements EntityService {
             return voteRepo.save((Vote) entity, true, activeUserService.getActualUser());
         } else if (A_User.class.isAssignableFrom(entity.getClass())) {
             return userRepo.save((A_User) entity, true, activeUserService.getActualUser());
+        } else if (Theme.class.isAssignableFrom(entity.getClass())) {
+            return themeRepo.save((Theme) entity, true, activeUserService.getActualUser());
         } else {
             throw new RuntimeException("Nepodarilo sa uložiť entitu " + entity);
         }
@@ -109,6 +114,8 @@ public class EntityServiceImpl implements EntityService {
                 return voteRepo.findOne(entityId);
             case "uzivatel":
                 return userRepo.findOne(entityId);
+            case "tema":
+                return themeRepo.findOne(entityId);
             default:
                 throw new RuntimeException("Nepodporované vyhledání entity pro záložku: " + tabName);
         }

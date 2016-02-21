@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.ViewTab;
 import sk.stefan.interfaces.TabEntity;
+import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.service.VoteService;
@@ -56,6 +57,12 @@ public final class V6_VoteView extends VerticalLayout implements TabComponent {
         dokumentyPanel.setEntity(vote);
         grafHlasovaniPanel.setVote(vote);
         hlasovaniPanel.setVote(vote);
+    }
+
+    @Override
+    public void setSaveListener(SaveListener<TabEntity> saveListener) {
+        detailPanel.setSaveListener(saveListener);
+        hlasovaniPanel.setSaveListener(l -> saveListener.accept(vote));
     }
 
     @Override

@@ -1,12 +1,12 @@
 <v-css-layout style-name="card new-form" width-full>
     <v-horizontal-layout style-name="v-panel-caption" width-full>
-        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Detail uživatele" icon="font://USER" />
+        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Detail hlasování" icon="font://HAND_O_UP" />
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
     <v-vertical-layout _id="readLayout" spacing margin>
         <v-label _id="lblOrgan" caption="Verejný orgán:"/>
         <v-label _id="lblPredmet" caption="Predmet hlasování:"/>
-        <v-label _id="lblTema" caption="Tématický okruh:"/>
+        <v-link _id="linkTema" caption="Tématický okruh:"/>
         <v-label _id="lblDatum" caption="Datum a čas hlasování:"/>
         <v-label _id="lblCislo" caption="Interní číslo:"/>
         <v-label _id="lblVysledek" caption="Výsledek hlasování:"/>

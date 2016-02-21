@@ -1,4 +1,4 @@
-package sk.stefan.mvps.view.components.administrace;
+package sk.stefan.mvps.view.components.hlasovani;
 
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;

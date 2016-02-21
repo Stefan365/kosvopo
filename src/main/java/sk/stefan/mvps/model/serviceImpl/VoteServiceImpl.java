@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.TabEntity;
@@ -30,6 +31,8 @@ import sk.stefan.utils.ToolsDao;
 @Service
 public class VoteServiceImpl implements VoteService {
 
+    private static final Logger LOG = Logger.getLogger(VoteServiceImpl.class);
+
     // repa:
     private final GeneralRepo generalRepo;
     private final UniRepo<Vote> voteRepo;
@@ -38,7 +41,7 @@ public class VoteServiceImpl implements VoteService {
     private final UniRepo<Subject> subjectRepo;
     private final UniRepo<VoteOfRole> voteOfRoleRepo;
 
-//    na odlahcenie RAM, nebudem tu pouzivat objemne Service, 
+//    na odlahcenie RAM, nebudem tu pouzivat objemne Service,
 //    i ked by to viac vyhovovalo MVP:
     private final UniRepo<PublicBody> pubBodyRepo;
     private final UniRepo<PublicPerson> pubPersonRepo;
@@ -187,6 +190,8 @@ public class VoteServiceImpl implements VoteService {
             return getAllVotesForPublicRole((PublicRole) tabEntity);
         } else if (tabEntity instanceof PublicBody) {
             return getAllVotesForPublicBody((PublicBody) tabEntity);
+        } else if (tabEntity instanceof Theme) {
+            return getAllVotesForTheme((Theme) tabEntity);
         }
         throw new RuntimeException("Nelze vyhledat hlasování pro entitu: " + tabEntity);
     }
@@ -232,6 +237,20 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public void removeSubject(Subject subject) {
         subjectRepo.deactivateOneOnly(subject, subject.getId() != null,activeUserService.getActualUser());
+    }
+
+    @Override
+    public VoteOfRole findVoteOfRoleForVoteAndPublicRole(Vote vote, PublicRole publicRole) {
+        List<VoteOfRole> votesOfRoles = voteOfRoleRepo.findByTwoParams("vote_id", String.valueOf(vote.getId()), "public_role_id", String.valueOf(publicRole.getId()));
+        if (votesOfRoles != null && votesOfRoles.size() > 1) {
+            LOG.warn("Multiple results for vote: " + vote.getPresentationName() + " and role: " + publicRole.getPresentationName());
+        }
+        return votesOfRoles == null || votesOfRoles.isEmpty() ? null : votesOfRoles.get(0);
+    }
+
+    @Override
+    public Theme findThemaById(Integer temaId) {
+        return themeRepo.findOne(temaId);
     }
 
 
@@ -520,6 +539,23 @@ public class VoteServiceImpl implements VoteService {
         List<Theme> ret = themeRepo.findAll();
         return ret;
 
+    }
+
+    @Override
+    public List<Vote> getAllVotesForTheme(Theme theme) {
+
+        List<Integer> subIds;
+
+        String sql = "SELECT v.id FROM t_vote v" +
+                " JOIN t_subject s ON v.subject_id = s.id" +
+                " WHERE s.theme_id = " + theme.getId();
+
+        subIds = this.generalRepo.findIds(sql);
+
+        List<Vote> votes = new ArrayList<>();
+        subIds.forEach(subId -> votes.add(findOne(subId)));
+
+        return votes;
     }
 
     @Override

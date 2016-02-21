@@ -89,7 +89,9 @@ public interface VoteService {
     //find All:
 
     public List<Theme> findAllThemes();
-    
+
+    List<Vote> getAllVotesForTheme(Theme theme);
+
     public List<Subject> findAllSubjectsForPublicBody(PublicBody pb);
 
     public List<Integer> findNewThemeIdsByFilter(String tx);
@@ -130,4 +132,8 @@ public interface VoteService {
     Subject saveSubject(Subject subject);
 
     void removeSubject(Subject subject);
+
+    VoteOfRole findVoteOfRoleForVoteAndPublicRole(Vote vote, PublicRole publicRole);
+
+    Theme findThemaById(Integer temaId);
 }

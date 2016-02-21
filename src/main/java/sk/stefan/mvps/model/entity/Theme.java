@@ -1,12 +1,13 @@
 package sk.stefan.mvps.model.entity;
 
 import sk.stefan.interfaces.PresentationName;
+import sk.stefan.interfaces.TabEntity;
 
 /**
  * Sirsi tematicky okruh ku ktoremu sa mozu(nemusia) hlasovania vztahovat
  * (napr. skolstvo, uzemny rozvoj, etc).
  */
-public class Theme implements PresentationName {
+public class Theme implements PresentationName, TabEntity {
 
     public static final String TN = "t_theme";
     
@@ -19,9 +20,17 @@ public class Theme implements PresentationName {
     private String description;
 
     private Boolean visible;
-    
-    
-    
+
+
+    @Override
+    public String getEntityName() {
+        return "tema";
+    }
+
+    @Override
+    public String getRelatedTabName() {
+        return "tema";
+    }
 
     //getters:
     public Integer getId() {

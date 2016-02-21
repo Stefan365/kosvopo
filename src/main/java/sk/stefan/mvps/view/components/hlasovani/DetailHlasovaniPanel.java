@@ -2,11 +2,14 @@ package sk.stefan.mvps.view.components.hlasovani;
 
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroup;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -17,9 +20,13 @@ import org.springframework.context.annotation.Scope;
 import sk.stefan.enums.PublicUsefulness;
 import sk.stefan.enums.UserType;
 import sk.stefan.enums.VoteResult;
+import sk.stefan.interfaces.TabEntity;
+import sk.stefan.listeners.SaveListener;
+import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.entity.VoteClassification;
 import sk.stefan.mvps.model.service.ClassificationService;
+import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.VoteService;
@@ -43,13 +50,16 @@ public class DetailHlasovaniPanel extends CssLayout {
     @Autowired
     private SecurityService securityService;
 
+    @Autowired
+    private LinkService linkService;
+
     // Design
     private Label lblCaption;
     private Button butEdit;
     private VerticalLayout readLayout;
     private Label lblOrgan;
     private Label lblPredmet;
-    private Label lblTema;
+    private Link linkTema;
     private Label lblDatum;
     private Label lblCislo;
     private Label lblVysledek;
@@ -65,6 +75,7 @@ public class DetailHlasovaniPanel extends CssLayout {
     // data
     private Vote vote;
     private BeanFieldGroup<Vote> bfgVote;
+    private SaveListener<? extends TabEntity> saveListener;
 
     private SimpleDateFormat format;
 
@@ -83,6 +94,7 @@ public class DetailHlasovaniPanel extends CssLayout {
 
         butEdit.addClickListener(event -> setReadOnly(false));
         butCancel.addClickListener(event -> setReadOnly(true));
+        butSave.addClickListener(event -> onSave());
 
         for (VoteResult voteResult : VoteResult.values()) {
             cbVysledek.addItem(voteResult);
@@ -103,7 +115,11 @@ public class DetailHlasovaniPanel extends CssLayout {
 
         lblOrgan.setValue(voteService.getVotePublicBodyName(vote));
         lblPredmet.setValue(voteService.getVoteSubjectName(vote));
-        lblTema.setValue(voteService.findThemeBySubjectId(vote.getSubject_id()).getPresentationName());
+        Theme theme = voteService.findThemeBySubjectId(vote.getSubject_id());
+        if (theme != null) {
+            linkTema.setCaption(theme.getPresentationName());
+            linkTema.setResource(new ExternalResource(linkService.getUriFragmentForEntity(theme)));
+        }
         lblDatum.setValue(format.format(vote.getVote_date()));
         lblCislo.setValue(vote.getInternal_nr());
         lblVysledek.setValue(vote.getResult_vote() != null ? vote.getResult_vote().getName() : "dosud nezadáno");
@@ -119,5 +135,28 @@ public class DetailHlasovaniPanel extends CssLayout {
         || securityService.currentUserHasRole(UserType.VOLUNTEER)));
         readLayout.setVisible(readOnly);
         editLayout.setVisible(!readOnly);
+    }
+
+    public void setSaveListener(SaveListener<? extends TabEntity> saveListener) {
+        this.saveListener = saveListener;
+    }
+
+    public boolean isValid() {
+        return bfgVote.isValid();
+    }
+
+
+    private void onSave() {
+        if (isValid()) {
+            try {
+                bfgVote.commit();
+                if (saveListener != null) {
+                    saveListener.accept(vote);
+                }
+            } catch (FieldGroup.CommitException e) {
+                throw new RuntimeException("Nepodařilo se uložit detail hlasování!", e);
+            }
+
+        }
     }
 }

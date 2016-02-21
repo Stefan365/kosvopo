@@ -5,6 +5,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.VaadinSessionScope;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -133,6 +134,14 @@ public class MainTabsheet extends TabSheet implements View {
         }
         setSelectedTab(tab);
         checkNewFormForEntity(entity);
+    }
+
+    @Override
+    public Tab addTab(Component c, String caption) {
+        if (caption.length() > 20) {
+            caption = caption.substring(0, 19) + "...";
+        }
+        return super.addTab(c, caption);
     }
 
     @Override
