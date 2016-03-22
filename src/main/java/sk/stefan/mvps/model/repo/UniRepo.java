@@ -265,6 +265,8 @@ public class UniRepo<E> implements MyRepo<E> {
     @Override
     public E save(E ent, boolean noteChange, A_User user) {
 
+        
+        log.debug("SAVE: ent:" + (ent == null) + ", notechange: " + noteChange + ", user" + user);
         E entOrigin;
         Connection conn;
         PreparedStatement st;
@@ -277,6 +279,9 @@ public class UniRepo<E> implements MyRepo<E> {
             } else {
                 conn = DoDBconn.createInvasiveConnection();
             }
+            
+            log.debug("conn: " + (conn == null));
+            
             Map<String, Class<?>> mapPar;
             String sql;
 
@@ -292,7 +297,7 @@ public class UniRepo<E> implements MyRepo<E> {
                 sql = this.createUpdateQueryPrepared(mapPar, eid);
                 entOrigin = this.findOne(eid);
             }
-            log.debug("*"+sql+"*");
+            log.info("*"+sql+"*");
             st = this.createStatement(mapPar, conn, sql, ent);
 
             st.executeUpdate();
@@ -305,10 +310,13 @@ public class UniRepo<E> implements MyRepo<E> {
             }
 
             
+            log.debug("som pred rozhodnutim do a_change!");
+            log.debug("notechange: " + noteChange + ", TN: " + TN + ", changeInvasiveCOnnection: " + (this.changeInvasiveConnection == null));
+            
             //to druhe a tretie je ten len kvoli poisteniu. staci len noteChange! 
             if (noteChange && !"a_change".equals(TN) && this.changeInvasiveConnection == null) {
-                //toto by sa malo prerobit na jedno invazivne connection a to by bolo spolocne 
-                //aj pre hlavne save aj pre save do A_change
+                
+                log.debug("som vnutri rozhodnutia, teda bude sa ukladat do a_change");
                 List<A_Change> changes = this.createChangesToPersist(entOrigin, ent, mapPar, user);
                 UniRepo<A_Change> changeRepo = new UniRepo<>(A_Change.class, conn);
                 for (A_Change ch : changes) {
@@ -322,6 +330,7 @@ public class UniRepo<E> implements MyRepo<E> {
 
             //ak sa vsetko podarilo(tj. ulozenie aj zapis do a_change), az teraz nastane commit:
             if (this.changeInvasiveConnection == null) {
+                log.debug("comitujem dane connection!!!");
                 conn.commit();
                 DoDBconn.releaseConnection(conn);
             }

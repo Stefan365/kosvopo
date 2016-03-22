@@ -25,25 +25,26 @@ public class Transformers { //implements Transformable {
 //    @Override
     public static byte[] getBytesFromString(String str) {
 
-        byte[] b = str.getBytes();
+        return (str == null) ? null : str.getBytes();
 //		byte[] b = string.getBytes(Charset.forName("UTF-8"));
 //		byte[] b = string.getBytes(StandardCharsets.UTF_8); // Java 7+ only
 
-        return b;
     }
 
 //    @Override
     public static byte[] getBytesFromInteger(Integer intg) {
-        return intg.toString().getBytes();
+        return (intg == null) ? null : intg.toString().getBytes();
     }
 
 //    @Override
     public static byte[] getBytesFromBoolean(Boolean bool) {
-        return bool.toString().getBytes();
+        return (bool == null) ? null : bool.toString().getBytes();
     }
 
 //    @Override
     public static byte[] getBytesFromDate(Date date) {
+        if (date == null){return null;}
+
         Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         return format.format(date).getBytes();
@@ -51,6 +52,8 @@ public class Transformers { //implements Transformable {
 
 //    @Override
     public static byte[] getbytesFromBytes(Byte[] pole) {
+        if (pole == null){return null;}
+        
         byte[] b = new byte[pole.length];
         for (int i = 0; i < pole.length; i++) {
             b[i] = pole[i];
@@ -60,32 +63,34 @@ public class Transformers { //implements Transformable {
 
 //    @Override
     public static byte[] getBytesFromPublicRoleType(PublicRoleType prt) {
-        return prt.toString().getBytes();
+        return (prt == null) ? null : prt.toString().getBytes();
     }
 
 //    @Override
     public static byte[] getBytesFromVoteAction(VoteAction act) {
+        if (act == null){return null;}
         return act.toString().getBytes();
     }
 
 //    @Override
     public static byte[] getBytesFromStability(Stability sta) {
+        if (sta == null){return null;}
         return sta.toString().getBytes();
     }
 
 //    @Override
     public static byte[] getBytesFromPublicUsefulness(PublicUsefulness pus) {
-        return pus.toString().getBytes();
+        return (pus == null) ? null : pus.toString().getBytes();
     }
 
 //    @Override
     public static byte[] getBytesFromUserType(UserType ut) {
-        return ut.toString().getBytes();
+        return (ut == null) ? null : ut.toString().getBytes();
     }
 
 //    @Override
     public static byte[] getBytesFromVoteResult(VoteResult vr) {
-        return vr.toString().getBytes();
+        return (vr == null) ? null : vr.toString().getBytes();
     }
 
 //    *********************************************

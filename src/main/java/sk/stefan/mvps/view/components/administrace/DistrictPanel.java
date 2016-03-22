@@ -10,14 +10,13 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
+import java.util.function.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sk.stefan.mvps.model.entity.District;
 import sk.stefan.mvps.model.entity.Region;
 import sk.stefan.mvps.model.service.LocationService;
-
-import java.util.function.Consumer;
 
 /**
  * Panel pro detail okresu.

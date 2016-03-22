@@ -3,34 +3,30 @@ kosvopo problems:
 
 1. Zelena farba - zmenit na inu (modru? - daj mi na vyber - ukazky konkretnych farieb, 
 resp. kde sa to nastavuje, aby som si to vyskusal)
-
 - mythemes.css / (najst: $v-focus-color: 00eeff !default)
 
 2. VSEOBECNE: logovat do kosvopo.log (spravit prepinac. na Openshifte to logovat nemusi - aby to nezasieralo miesto)
 - (DONE)
 
 3. VSEOBECNE: obmedzeny pocet otvorenych okien (10?) neplytva to RAMkou?.
-
 (TBD, Luki,  not so important at the moment.)
 
-3a. VSEOBECNE: konstantna sirka okna, tj. nie dlhe podla velkosti nazvu
 
+3a. VSEOBECNE: konstantna sirka okna, tj. nie dlhe podla velkosti nazvu
 - DONE (20 znakov)
 
-4. Hlasovanie: ked kliknem na tematicky okruh/ predmet hlasovania - musi sa to prepnut do dalsieho okna - dedikovanym tymto 2 entitam.
 
+4. Hlasovanie: ked kliknem na tematicky okruh/ predmet hlasovania - musi sa to prepnut do dalsieho okna - dedikovanym tymto 2 entitam.
 - TBD(Luki)
 
 
 5. VSEOBECNE: admin(nie dobrovolnik) by mal mat aj moznost odstranovat ENTITY. (je tam moznost len pridat hlasovanie).
    pokial ich bude odstranovat - bude tam musiet byt pouzity ten moj algoritmus aby sa odstranil cely strom zavislych entit.
    + VELKE vystrazne okno - ze sa zmaze cely strom.
-
 - TBD (editacia - zmena ikonky - pridanie smetiaku, dialogove okno pred zmazanim entity)
 
 6. VSEOBECNE: Ked chcem ulozit novu entitu: "zapis do DB sa nepodaril!"
    plati aj pre dokumenty.
-
 - (TBD, stv)problem s MAria DB - musim si to vyriesit sam. + vyriesit logovanie (log4j)
 
 
@@ -40,42 +36,33 @@ resp. kde sa to nastavuje, aby som si to vyskusal)
 (TBD - Luki)
 
 8. Hlasovanie: Ked chcem ulozit nove hlasovanie: chyba tam moznost zadat vysledok hlasovania.
-
 (TBD - Luki)
 
 9. VSEOBECNE: Chyba moznost EDITacie existujucich entit (hlasovanie) s mojimi obmedzeniami (tj. ako enum bude vymenovane policka, 
    ktore uz zmenit nepojde)
-
 (TBD - Stefan, poslat zoznam needitovatelnych policok pri editacii)
 DONE: 1.feb.2016
 
 (10. Download adminer for fedora.)
 
 13. VSEOBECNE: pri vkladani novych-resp. zmene starych. Nieje tam tlacitko CANCEL - (ked zavres okno je to to iste ako CANCEL?) Mozno nieje treba.
-
 (TBD - Luki, mozno to tam da)
 
 14. Public person, public body: chyba tam moznost nacitat obrazok pre ksicht (viz. vseobecny problem s EDIT).
-
 (DONE -by Luki)
 
 15. VSEOBECNE: chybaju moznosti pre pridavanie tychto entit: 
     NOTE(spravit rovnake tlacitko ako pre Upload dokumentu)
-
 (TBD - Luki)
 
 ---------------------------------------------------------------------
 
 
 18. Properties v jazyku: English a Deutsch.
-
 (TBD - Luki)
 
 19. deploy to OPENSHIFT, switch off journalling.
-
 (TBD - Luki + STV)
-
-
 
 
 
@@ -98,13 +85,11 @@ DONE: 1.feb.2016
 *************************** DONE ***********************************************************
 
 16. Transformery vsetkych typov na Blob a Blobu na vsetky typy. Blob-> String-> Typ.(vyuzitie tychto transformerov pri zapisu do A_CHANGE)
-
 (TBD - STV)
 DONE - 3.2.2016
 
 
 17. Filtre - ked budem vyberat volaco, tak pri vybere dalsej polozky sa mi uz zuzi vyber.
-
 (DONE - Luki)
 
 
