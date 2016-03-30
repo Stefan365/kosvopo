@@ -1,13 +1,12 @@
 package sk.stefan.mvps.view.tabs;
 
+import java.util.HashMap;
+import java.util.Map;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import sk.stefan.annotations.ViewTab;
-
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by elopin on 03.11.2015.

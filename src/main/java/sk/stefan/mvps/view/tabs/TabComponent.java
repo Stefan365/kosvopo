@@ -1,9 +1,9 @@
 package sk.stefan.mvps.view.tabs;
 
 import com.vaadin.ui.Component;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
-import sk.stefan.interfaces.TabEntity;
 
 /**
  * Rozhraní pro navigovatelné záložky.

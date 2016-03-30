@@ -7,13 +7,15 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
-import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.EntityService;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.view.tabs.TabComponent;
@@ -21,15 +23,14 @@ import sk.stefan.mvps.view.tabs.TabFactory;
 import sk.stefan.ui.KosvopoUI;
 import sk.stefan.utils.ParamsCache;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by elopin on 03.11.2015.
  */
 @SpringView(name = "", ui = KosvopoUI.class)
 @VaadinSessionScope
 public class MainTabsheet extends TabSheet implements View {
+
+    private static final long serialVersionUID = 134L;
 
     @Autowired
     private LinkService linkService;
@@ -64,6 +65,8 @@ public class MainTabsheet extends TabSheet implements View {
         setSelectedTab(tab);
     }
 
+    //vola sa aj pri vytvoreneni novej zalozky? alebo pri prekliknuti na iny tab?
+    //zda sa, ze pri oboch.
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         if (!event.getParameters().isEmpty()) {

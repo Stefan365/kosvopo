@@ -1,10 +1,9 @@
 package sk.stefan.mvps.model.entity;
 
+import sk.stefan.enums.PublicRoleType;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.serviceImpl.PublicRoleServiceImpl;
-import sk.stefan.enums.PublicRoleType;
-import sk.stefan.interfaces.PresentationName;
 
 /**
  * Trieda reprezentuje rolu, resp. funkciu verejne osoby (napr. poslanec, predseda zastupitelstva, etc).
@@ -42,6 +41,7 @@ public class PublicRole implements TabEntity {
     }
 
     // getters:
+    @Override
     public Integer getId() {
         return this.id;
     }

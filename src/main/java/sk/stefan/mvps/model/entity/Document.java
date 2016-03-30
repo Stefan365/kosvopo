@@ -13,7 +13,7 @@ import sk.stefan.interfaces.PresentationName;
 import sk.stefan.utils.ToolsNames;
 
 /**
- * Reprezentuje dokumnet, ktory sa moze vztahovat k akejkolvek entite.
+ * Reprezentuje dokument, ktory sa moze vztahovat k akejkolvek entite.
  * Vsechen spech jest od dabla!
  * 
  * @author stefan

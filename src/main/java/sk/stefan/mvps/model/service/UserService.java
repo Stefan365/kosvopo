@@ -5,13 +5,11 @@
  */
 package sk.stefan.mvps.model.service;
 
+import java.util.List;
+import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.A_Role;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
-import sk.stefan.enums.UserType;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  *

@@ -45,6 +45,8 @@ import java.util.List;
 @DesignRoot
 public class V3s_PublicBodiesView extends VerticalLayout implements TabComponent {
 
+    private static final long serialVersionUID = 122L;
+
 //    servisy:
     @Autowired
     private PublicBodyService publicBodyService;
@@ -66,14 +68,16 @@ public class V3s_PublicBodiesView extends VerticalLayout implements TabComponent
     //data
     private BeanItemContainer<PublicBody> container;
 
-    public V3s_PublicBodiesView (){
+    public V3s_PublicBodiesView() {
         Design.read(this);
 
         container = new BeanItemContainer<>(PublicBody.class);
         grid.setContainerDataSource(container);
         grid.getColumn("presentationName").setHeaderCaption("Názov verejného orgánu");
         grid.setHeightMode(HeightMode.ROW);
-        grid.addSelectionListener(event -> Page.getCurrent().open(linkService.getUriFragmentForEntity((TabEntity) grid.getSelectedRow()), null));
+        grid.addSelectionListener(event -> 
+                Page.getCurrent().open(linkService.getUriFragmentForEntity((TabEntity) 
+                        grid.getSelectedRow()), null));
 
         searchFd.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.LAZY);
 

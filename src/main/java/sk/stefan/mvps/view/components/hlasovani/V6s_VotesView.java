@@ -32,6 +32,7 @@ import sk.stefan.mvps.view.tabs.TabComponent;
 
 /**
  * Záložka se seznamem hlasování. Může zobrazovat všechna hlasování nebo jen ta, související s danou entitou.
+ *
  * @author stefan
  */
 @MenuButton(name = "Hlasování", position = 3, icon = FontAwesome.HAND_O_UP)
@@ -63,7 +64,7 @@ public class V6s_VotesView extends VerticalLayout implements TabComponent {
     private BeanItemContainer<Vote> container;
 
     public V6s_VotesView() {
-        
+
         Design.read(this);
 
         container = new BeanItemContainer<>(Vote.class);

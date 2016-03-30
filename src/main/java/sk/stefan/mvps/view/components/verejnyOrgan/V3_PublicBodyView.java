@@ -7,17 +7,16 @@ package sk.stefan.mvps.view.components.verejnyOrgan;
 
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.spring.annotation.SpringComponent;
-
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.ViewTab;
+import sk.stefan.interfaces.TabEntity;
 import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.PublicBody;
-import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.UserService;
@@ -106,84 +105,5 @@ public final class V3_PublicBodyView extends VerticalLayout implements TabCompon
     @Override
     public TabEntity getEntity() { return publicBody; }
 
-
-   //TODO dodělat role podle tohodle
-//        if (isVolunteer) {
-//
-//            this.initNewPublicRoleButton();
-//            this.initEditPublicBodyButton();
-//            this.initUploadLayout();
-//
-//        } else {
-//            this.initDownloadLayout();
-//        }
-
-
-//TODO vypadá to, že to má ukazovat poslední hlasování
-//    private void initVoteLayout() {
-//
-//        List<Integer> votIds = voteService.findVoteIdsByPubBodyId(publicBody.getId());
-//
-//        List<Vote> votes = voteService.findNewVotes(votIds);
-//
-////        this.votesBriefLy = new VOTs_briefLayout(votes, voteService);
-//
-//    }
-
-    /**
-     * 
-     */
-
-//   TODO tohle pak integrovat do komponenty pro dokumenty
-//
-//    /**
-//     * Inicializuje editovatelny layout s dokumentami prisluchajucimi entite
-//     * PublicBody
-//     */
-//    private void initUploadLayout() {
-//
-////        this.uploaderLayout = new DownAndUploaderBriefLayout<>(PublicBody.class, this.publicBody);
-//
-////        this.addComponent(uploaderLayout);
-//
-//    }
-
-//    /**
-//     * Komponenta na zobrazovanie dokumentov prisluchajucich entite PublicBody.
-//     */
-//    private void initDownloadLayout() {
-//
-////        this.downoaderLayout = new DownloaderBriefLayout<>(PublicBody.class, this.publicBody);
-//
-////        this.addComponent(downoaderLayout);
-//
-//    }
-
-
-
-//    @Override
-//    public void enter(ViewChangeListener.ViewChangeEvent event) {
-
-//        PublicBody pb = VaadinSession.getCurrent().getAttribute(PublicBody.class);
-//
-//        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
-//
-//        Boolean isVolunteer = Boolean.FALSE;
-//        if (user != null) {
-////            navComp.getLoginBut().setCaption("logout");
-//            UserType utype = userService.getUserType(user);
-//
-//            //moze byt dobrovolnik, alebo admin.
-//            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
-//        }
-//
-//        if (pb != null) {
-//            setPublicBodyValue(pb);
-//            initAllBasic(isVolunteer);
-//        } else {
-//            UI.getCurrent().getNavigator().navigateTo("V3s_PublicBodiesView");
-//        }
-
-//    }
 
 }

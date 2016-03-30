@@ -1,7 +1,5 @@
 package sk.stefan.ui;
 
-import com.google.gwt.user.client.rpc.core.java.util.HashMap_CustomFieldSerializer;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.VaadinSessionScope;
@@ -14,14 +12,11 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import sk.stefan.annotations.MenuButton;
-import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.view.tabs.TabComponent;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeMap;
 
 
