@@ -1,4 +1,4 @@
-/.idea
+.idea/*
 *.cache
 *.css
 target/*
@@ -6,7 +6,7 @@ src/main/webapp/VAADIN/widgetsets/*
 src/main/resources/db/*
 log/*
 temp/*
-/kosvopo6.iml
+kosvopo6.iml
 libs/*
 src/main/resources/application.properties
 src/main/resources/db/dBconn.properties

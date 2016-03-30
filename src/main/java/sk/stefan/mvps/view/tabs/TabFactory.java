@@ -19,15 +19,13 @@ public class TabFactory {
 
     private Map<String, Class<? extends TabComponent>> tabMap = new HashMap<>();
 
-    @PostConstruct
-    public void init() {
-        context.getBeansWithAnnotation(ViewTab.class).values().forEach(clazz -> {
-            ViewTab annotation = clazz.getClass().getAnnotation(ViewTab.class);
-            tabMap.put(annotation.value(), (Class<? extends TabComponent>) clazz.getClass());
-        });
-    }
-
     public Class<? extends TabComponent> getTabTypeByName(String name) {
+        if (tabMap.isEmpty()) {
+            context.getBeansWithAnnotation(ViewTab.class).values().forEach(clazz -> {
+                ViewTab annotation = clazz.getClass().getAnnotation(ViewTab.class);
+                tabMap.put(annotation.value(), (Class<? extends TabComponent>) clazz.getClass());
+            });
+        }
         return tabMap.get(name);
     }
 }

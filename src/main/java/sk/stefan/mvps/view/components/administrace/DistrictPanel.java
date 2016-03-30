@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import sk.stefan.mvps.model.entity.District;
 import sk.stefan.mvps.model.entity.Region;
 import sk.stefan.mvps.model.service.LocationService;
+import sk.stefan.utils.Localizator;
 
 /**
  * Panel pro detail okresu.
@@ -50,6 +51,7 @@ public class DistrictPanel extends CssLayout {
 
     public DistrictPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(District.class);
         bfg.bind(cbRegion, "region_id");

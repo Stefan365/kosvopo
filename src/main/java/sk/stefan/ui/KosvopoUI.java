@@ -6,6 +6,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.spring.server.SpringVaadinServlet;
@@ -15,6 +16,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import sk.stefan.CustomizedFactory;
 import sk.stefan.mvps.view.MainView;
+import sk.stefan.utils.VaadinUtils;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -46,6 +48,8 @@ public class KosvopoUI extends UI {
     protected void init(VaadinRequest request) {
         // musíme přenastavit výchozí továrnu na designové kompnenty, aby fungovalo autowirování
         Design.setComponentFactory(customizedFactory);
+
+        VaadinSession.getCurrent().setLocale(VaadinUtils.DEFAULT_LOCALE);
 
         addStyleName(ValoTheme.UI_WITH_MENU);
 
