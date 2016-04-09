@@ -5,6 +5,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
@@ -12,12 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sk.stefan.annotations.ViewTab;
+import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.Region;
 import sk.stefan.mvps.model.service.LocationService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 /**
- * Created by elopin on 06.12.2015.
+ * Záložka se seznamem krajů.
+ * @author elopin on 06.12.2015.
  */
 @Component
 @ViewTab("kraje")
@@ -28,7 +33,11 @@ public class KrajeTab extends VerticalLayout implements TabComponent {
     @Autowired
     private LocationService locationService;
 
+    @Autowired
+    private SecurityService securityService;
+
     // Design
+    private Panel panel;
     private TextField searchFd;
     private Button butPridat;
     private Grid grid;
@@ -39,11 +48,11 @@ public class KrajeTab extends VerticalLayout implements TabComponent {
 
     public KrajeTab() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         container = new BeanItemContainer<>(Region.class);
 
         grid.setContainerDataSource(container);
-        grid.getColumn("presentationName").setHeaderCaption("Názov kraje");
         grid.setHeightMode(HeightMode.ROW);
         grid.addSelectionListener(event -> showDetail((Region) grid.getSelectedRow()));
 
@@ -51,7 +60,6 @@ public class KrajeTab extends VerticalLayout implements TabComponent {
 
         regionPanel.setSaveListener(this::onSave);
         regionPanel.setRemoveListener(this::onRemove);
-
     }
 
     private void onRemove(Region region) {
@@ -78,11 +86,6 @@ public class KrajeTab extends VerticalLayout implements TabComponent {
     }
 
     @Override
-    public String getTabCaption() {
-        return "Kraje";
-    }
-
-    @Override
     public void show() {
         container.removeAllItems();
         container.addAll(locationService.findAllRegions());
@@ -93,5 +96,10 @@ public class KrajeTab extends VerticalLayout implements TabComponent {
     @Override
     public String getTabId() {
         return "kraje";
+    }
+
+    @Override
+    public boolean isUserAccessGranted() {
+        return securityService.currentUserHasRole(UserType.ADMIN) || securityService.currentUserHasRole(UserType.VOLUNTEER);
     }
 }

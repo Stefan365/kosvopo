@@ -15,7 +15,7 @@ public interface TabComponent extends Component {
      * Vrací popisek záložky.
      * @return popisek záložky
      */
-    String getTabCaption();
+    default String getTabCaption() { return "default"; };
 
     /**
      * Aktualizuje data v záložce.
@@ -40,9 +40,27 @@ public interface TabComponent extends Component {
      */
     default TabEntity getEntity() { return null; }
 
+    /**
+     * Vrací nadřazenou entitu, bez které nelze vytvořit jinou entitu.
+     * @return nadřazenou entitu
+     */
     default TabEntity getParentEntity() { return null; }
 
+    /**
+     * Nastaví do záložky listener tlačítka Uložit.
+     * @param saveListener save listener
+     */
     default void setSaveListener(SaveListener<TabEntity> saveListener) {}
 
+    /**
+     * Nastaví do komponenty listener tlačítka Odstranit.
+     * @param removeListener remove listener
+     */
     default void setRemoveListener(RemoveListener<TabEntity> removeListener) {}
+
+    /**
+     * Zkontroluje oprávnění pro aktuálního uživatele.
+     * @return true, pokud má aktuální uživatel právo na zobrazení záložky
+     */
+    default boolean isUserAccessGranted() { return true; }
 }

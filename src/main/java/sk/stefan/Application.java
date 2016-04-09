@@ -26,6 +26,10 @@ public class Application extends SpringBootServletInitializer{
         SpringApplication.run(Application.class, args);
     }
 
+    /**
+     * MessageSource pro lokalizaci pomocí messages.properties.
+     * @return implementaci MessageSource
+     */
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();

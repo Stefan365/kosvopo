@@ -1,10 +1,10 @@
 <v-vertical-layout margin>
-    <v-panel style-name="new-form" caption="Nový verejný orgán" icon="font://LIST">
+    <v-panel _id="panel" style-name="new-form" icon="font://LIST">
         <v-vertical-layout margin spacing width-full>
-            <v-text-field _id="tfName" width="100%" caption="Název:" input-prompt="Zadejte název orgánu" required="true"
+            <v-text-field _id="tfName" width="100%" required="true"
                           null-representation=""/>
-            <v-combo-box _id="cbLocation" caption="Mesto:" input-prompt="Vyberte mesto" required="true"/>
-            <v-button _id="butSave" style-name="primary">Uložit</v-button>
+            <v-combo-box _id="cbLocation" required="true"/>
+            <v-button _id="butSave" style-name="primary"/>
         </v-vertical-layout>
     </v-panel>
 </v-vertical-layout>

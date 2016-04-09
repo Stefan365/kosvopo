@@ -29,7 +29,7 @@ import sk.stefan.mvps.view.components.TimelinePanel;
 import sk.stefan.mvps.view.tabs.TabComponent;
 
 /**
- *
+ * Záložka s veřejným orgánem.
  * @author stefan
  */
 @ViewTab("verejnyOrgan")

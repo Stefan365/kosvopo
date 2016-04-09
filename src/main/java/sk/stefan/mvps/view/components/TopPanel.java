@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
+import sk.stefan.utils.Localizator;
+import sk.stefan.utils.VaadinUtils;
 
 /**
  * Horní panel s přihlášením uživatele.
@@ -46,8 +48,8 @@ public class TopPanel extends HorizontalLayout {
 
     public TopPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
         lblCaption.setSizeUndefined();
-        lblCaption.setValue("Budovanie demokracie");
 
         butLogin.addClickListener(event -> onLogin());
         butLogout.addClickListener(event -> onLogout());
@@ -66,7 +68,7 @@ public class TopPanel extends HorizontalLayout {
             byte[] userPwHash = userService.getEncPasswordByLogin(user.getLogin());
             if (securityService.checkPassword(pfPassword.getValue(), userPwHash)) {
                 securityService.login(user);
-                Notification.show("prihlásenie prebehlo úspešne!");
+                Notification.show(Localizator.getLocalizedMessage(getClass().getCanonicalName(), ".notification.loginSuccess", null, VaadinUtils.getLocale()));
                 lblUser.setValue(user.getPresentationName());
                 lblUser.setVisible(true);
                 setLoginFormVisible(false);
@@ -74,10 +76,10 @@ public class TopPanel extends HorizontalLayout {
                 butLogout.setVisible(true);
                 refreshApplication();
             } else {
-                Notification.show("Neplatné prihlasovacie údaje!");
+                Notification.show(Localizator.getLocalizedMessage(getClass().getCanonicalName(), ".notification.loginIncorrect", null, VaadinUtils.getLocale()));
             }
         } else {
-            Notification.show("Chyba prihlásenia!");
+            Notification.show(Localizator.getLocalizedMessage(getClass().getCanonicalName(), ".notification.loginFailed", null, VaadinUtils.getLocale()));
         }
     }
 
@@ -87,7 +89,7 @@ public class TopPanel extends HorizontalLayout {
 
     private void onLogout() {
         securityService.logout();
-        Notification.show("Odhlásenie prebehlo úspešne!");
+        Notification.show(Localizator.getLocalizedMessage(getClass().getCanonicalName(), ".notification.logoutSuccess", null, VaadinUtils.getLocale()));
         lblUser.setVisible(false);
         butLogout.setVisible(false);
         butLogin.setVisible(true);

@@ -18,7 +18,7 @@ import sk.stefan.mvps.view.tabs.TabComponent;
 /**
  * Vstupny View. 
  */
-@MenuButton(name = "Hlavná stránka", position = 0, icon = FontAwesome.HOME)
+@MenuButton(name = "enterTab", position = 0, icon = FontAwesome.HOME)
 @ViewTab("enterTab")
 @SpringComponent
 @Scope("prototype")
@@ -59,7 +59,7 @@ public class V2_EnterView extends VerticalLayout implements TabComponent {
     }
     
     /**
-     * 
+     * TODO zjistit, co to je a k čemu to je
      */
     private void initAdminButton(){
 
@@ -75,28 +75,6 @@ public class V2_EnterView extends VerticalLayout implements TabComponent {
                 thiss.removeComponent(initAdminBt);
             }
         });
-        
-    }
-
-//    @Override
-//    public void enter(ViewChangeEvent event) {
-//
-//        Boolean isThereAdm = userService.isThereAdmin();
-//        log.info("IS THERE ADMIN:" + isThereAdm);
-//
-//        if (!isThereAdm){
-//
-//            this.addComponent(initAdminBt);
-//        } else if(initAdminBt != null){
-//
-//            this.removeComponent(initAdminBt);
-//        }
-//
-//    }
-
-    @Override
-    public String getTabCaption() {
-        return "Hlavná stránka";
     }
 
     @Override

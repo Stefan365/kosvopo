@@ -23,13 +23,14 @@ import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 /**
  * Záložka s rozcestníkem administrace.
  *
  * @author stefan
  */
-@MenuButton(name = "Administrace", position = 4, icon = FontAwesome.GEARS)
+@MenuButton(name = "adminTab", position = 4, icon = FontAwesome.GEARS)
 @ViewTab("administraceTab")
 @SpringComponent
 @Scope("prototype")
@@ -55,10 +56,13 @@ public class V7_AdministrationView extends VerticalLayout implements TabComponen
     private Button butPredmet;
     private Button butObdobi;
     private Panel adminPanel;
+    private Panel politikaPanel;
+    private Panel lokacePanel;
 
 
     public V7_AdministrationView() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         butUsers.addClickListener(event -> Page.getCurrent()
                 .open(linkService.getUriFragmentForTab(UsersTab.class), null));
@@ -72,11 +76,6 @@ public class V7_AdministrationView extends VerticalLayout implements TabComponen
     }
 
     @Override
-    public String getTabCaption() {
-        return "Administrácia";
-    }
-
-    @Override
     public void show() {
         if (securityService.currentUserHasRole(UserType.ADMIN)) {
             adminPanel.setVisible(true);
@@ -86,5 +85,11 @@ public class V7_AdministrationView extends VerticalLayout implements TabComponen
     @Override
     public String getTabId() {
         return "administraceTab";
+    }
+
+    @Override
+    public boolean isUserAccessGranted() {
+        return securityService.currentUserHasRole(UserType.ADMIN) || securityService.currentUserHasRole(UserType.VOLUNTEER);
+
     }
 }

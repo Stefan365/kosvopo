@@ -21,9 +21,11 @@ import sk.stefan.mvps.model.service.PublicPersonService;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.TenureService;
+import sk.stefan.utils.Localizator;
 
 /**
- * Created by elopin on 09.11.2015.
+ * Panel s detailem veřejné funkce.
+ * @author elopin on 09.11.2015.
  */
 @SpringComponent
 @Scope("prototype")
@@ -66,6 +68,7 @@ public class DetailVerejneFunkcePanel extends CssLayout {
 
     public DetailVerejneFunkcePanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         butEdit.addClickListener(event -> setReadOnly(false));
         butCancel.addClickListener(event -> setReadOnly(true));

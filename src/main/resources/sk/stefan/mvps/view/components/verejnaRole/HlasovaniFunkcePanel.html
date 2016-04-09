@@ -1,12 +1,12 @@
 <v-panel style-name="new-form" caption="Seznam hlasovanie verejné funkce" icon="font://LIST">
     <v-vertical-layout spacing margin width-full>
-        <v-text-field _id="tfSearch" width-full caption="Vyhladavanie:"/>
-        <v-grid _id="grid" width-full clickable="true">
+        <v-text-field _id="searchFd" width-full/>
+        <v-grid _id="grid" width-full>
             <table>
                 <col property-id="vote_id"/>
                 <col property-id="decision"/>
             </table>
         </v-grid>
-        <v-button _id="addNewHlasovaniRole" icon="font://PLUS">Pridaj hlasovani funkce</v-button>
+        <v-button _id="addNewHlasovaniRole" icon="font://PLUS"/>
     </v-vertical-layout>
 </v-panel>

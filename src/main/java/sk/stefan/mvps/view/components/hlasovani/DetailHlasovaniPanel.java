@@ -30,6 +30,7 @@ import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.VoteService;
+import sk.stefan.utils.Localizator;
 
 import java.text.SimpleDateFormat;
 
@@ -81,6 +82,7 @@ public class DetailHlasovaniPanel extends CssLayout {
 
     public DetailHlasovaniPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfgVote = new BeanFieldGroup<>(Vote.class);
         bfgVote.bind(cbPredmet, "subject_id");

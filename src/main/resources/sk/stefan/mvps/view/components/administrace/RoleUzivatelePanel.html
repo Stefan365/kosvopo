@@ -1,13 +1,12 @@
 <v-css-layout style-name="card new-form" width-full>
     <v-horizontal-layout style-name="v-panel-caption" width-full>
-        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Role uživatele"
-                 icon="font://GAVEL"/>
+        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left icon="font://GAVEL"/>
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
     <v-vertical-layout _id="readLayout" margin spacing>
-        <v-label _id="aktualniRole" caption="Aktuálná role použivatela:"/>
-        <v-button _id="butShowHistory">Zobrazit historii</v-button>
-        <v-button _id="butHideHistory">Skrýt historii</v-button>
+        <v-label _id="aktualniRole"/>
+        <v-button _id="butShowHistory"/>
+        <v-button _id="butHideHistory"/>
         <v-grid _id="historyGrid" width-full visible="false">
             <table>
                 <col property-id="role_id"/>
@@ -17,10 +16,10 @@
         </v-grid>
     </v-vertical-layout>
     <v-vertical-layout _id="editLayout" margin spacing>
-        <v-combo-box _id="role" width-full caption="Role:" input-prompt="Vyberte roli" required="true"/>
+        <v-combo-box _id="role" width-full required="true"/>
         <v-horizontal-layout spacing>
-            <v-button _id="butSave" style-name="primary">Uložit</v-button>
-            <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>
+            <v-button _id="butSave" style-name="primary"/>
+            <v-button _id="butCancel" icon="font://PENCIL"/>
         </v-horizontal-layout>
     </v-vertical-layout>
 </v-css-layout>

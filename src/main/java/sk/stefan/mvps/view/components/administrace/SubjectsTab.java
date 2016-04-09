@@ -5,6 +5,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
@@ -12,15 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sk.stefan.annotations.ViewTab;
-import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.entity.Subject;
 import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 import sk.stefan.utils.PresentationNameConverter;
 
 /**
- * Created by elopin on 09.12.2015.
+ * Záložka se seznamem předmětů.
+ * @author elopin on 09.12.2015.
  */
 @Component
 @Scope("prototype")
@@ -32,6 +34,7 @@ public class SubjectsTab extends VerticalLayout implements TabComponent {
     private VoteService voteService;
 
     //Design
+    private Panel panel;
     private TextField searchFd;
     private Grid grid;
     private Button butPridat;
@@ -42,11 +45,10 @@ public class SubjectsTab extends VerticalLayout implements TabComponent {
 
     public SubjectsTab() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         container = new BeanItemContainer<>(Subject.class);
         grid.setContainerDataSource(container);
-        grid.getColumn("brief_description").setHeaderCaption("Názov predmetu");
-        grid.getColumn("theme_id").setHeaderCaption("Téma");
         grid.getColumn("theme_id").setConverter(new PresentationNameConverter<>(Theme.class));
         grid.setHeightMode(HeightMode.ROW);
 
@@ -79,11 +81,6 @@ public class SubjectsTab extends VerticalLayout implements TabComponent {
         subject.setVisible(true);
         subjectPanel.setSubject(subject);
         subjectPanel.setVisible(true);
-    }
-
-    @Override
-    public String getTabCaption() {
-        return "Predmety";
     }
 
     @Override

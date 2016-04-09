@@ -1,15 +1,16 @@
 package sk.stefan.mvps.view.tabs;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import sk.stefan.annotations.ViewTab;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * Created by elopin on 03.11.2015.
+ * Továrna na záložky.
+ * @author elopin on 03.11.2015.
  */
 @Component
 public class TabFactory {
@@ -19,6 +20,11 @@ public class TabFactory {
 
     private Map<String, Class<? extends TabComponent>> tabMap = new HashMap<>();
 
+    /**
+     * Vrací typ záložky podle názvu.
+     * @param name název, id záložky
+     * @return typ záložky
+     */
     public Class<? extends TabComponent> getTabTypeByName(String name) {
         if (tabMap.isEmpty()) {
             context.getBeansWithAnnotation(ViewTab.class).values().forEach(clazz -> {

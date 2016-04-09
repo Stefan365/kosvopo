@@ -13,6 +13,7 @@ import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 /**
  * Záložka s detailem uživatele.
@@ -36,6 +37,7 @@ public class UserTab extends VerticalLayout implements TabComponent {
 
     public UserTab() {
         Design.read(this);
+        Localizator.localizeDesign(this);
     }
 
     @Override

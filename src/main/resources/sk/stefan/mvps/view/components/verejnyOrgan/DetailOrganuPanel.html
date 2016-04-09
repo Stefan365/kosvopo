@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
     <meta name="package-mapping" content="c:sk.stefan.mvps.view.components"/>
@@ -6,25 +5,23 @@
 <body>
 <v-css-layout style-name="card new-form" width-full>
     <v-horizontal-layout style-name="v-panel-caption" width-full>
-        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Detail verejného orgánu"
-                 icon="font://GEARS"/>
+        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left icon="font://GEARS"/>
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
-    <v-horizontal-layout spacing margin>
+    <v-horizontal-layout spacing margin width-full>
         <c-image-component _id="imageComponent"/>
-        <v-vertical-layout _id="readLayout" spacing margin width-full>
-            <v-label _id="lblName" caption="Název orgánu:"/>
-            <v-label _id="lblObec" caption="Název obce:"/>
+        <v-vertical-layout _id="readLayout" spacing margin width-full :expand>
+            <v-label _id="lblName"/>
+            <v-label _id="lblObec"/>
         </v-vertical-layout>
-        <v-vertical-layout _id="editLayout" spacing margin width-full>
-            <v-text-field _id="tfName" caption="Název orgánu:" input-prompt="Vyplňte název orgánu" required="true"
-                          width-full/>
-            <v-combo-box _id="cbObec" caption="Obec:" input-prompt="Vyberte obec" required="true"
-                         null-selection-allowed="false" width-full/>
+        <v-vertical-layout _id="editLayout" spacing margin width-full :expand>
+            <v-text-field _id="tfName" width="100%" required="true"/>
+            <v-combo-box _id="cbObec" width="100%" required="true"
+                         null-selection-allowed="false"/>
             <v-horizontal-layout spacing>
-                <v-button _id="butSave" style-name="primary">Uložit</v-button>
-                <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>
-                <v-button _id="butRemove" style-name="danger" icon="font://TRASH_O">Odstranit</v-button>
+                <v-button _id="butSave" style-name="primary"/>
+                <v-button _id="butCancel" icon="font://PENCIL"/>
+                <v-button _id="butRemove" style-name="danger" icon="font://TRASH_O"/>
             </v-horizontal-layout>
         </v-vertical-layout>
     </v-horizontal-layout>

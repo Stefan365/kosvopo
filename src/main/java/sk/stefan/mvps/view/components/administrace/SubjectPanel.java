@@ -21,11 +21,13 @@ import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.VoteService;
+import sk.stefan.utils.Localizator;
 
 import java.util.function.Consumer;
 
 /**
- * Created by elopin on 09.12.2015.
+ * Panel s detailem předmětu hlasování.
+ * @author elopin on 09.12.2015.
  */
 @Component
 @Scope("prototype")
@@ -67,6 +69,7 @@ public class SubjectPanel extends CssLayout {
 
     public SubjectPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(Subject.class);
         bfg.bind(cbRole, "public_role_id");

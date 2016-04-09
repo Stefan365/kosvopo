@@ -21,10 +21,12 @@ import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.view.tabs.TabComponent;
 import sk.stefan.mvps.view.tabs.TabFactory;
 import sk.stefan.ui.KosvopoUI;
+import sk.stefan.utils.Localizator;
 import sk.stefan.utils.ParamsCache;
 
 /**
- * Created by elopin on 03.11.2015.
+ * Hlavní view pro zobrazení záložek.
+ * @author Lukas on 03.11.2015.
  */
 @SpringView(name = "", ui = KosvopoUI.class)
 @VaadinSessionScope
@@ -58,15 +60,19 @@ public class MainTabsheet extends TabSheet implements View {
         });
     }
 
+    /**
+     * Zobrazí výchozí záložku EnterView.
+     */
     private void showDefaultTab() {
         TabComponent tab = context.getBean(V2_EnterView.class);
-        addTab(tab, tab.getTabCaption()).setClosable(true);
+        addTab(tab, Localizator.localizeTab(tab)).setClosable(true);
         tabMap.put(tab.getTabId(), tab);
         setSelectedTab(tab);
     }
 
-    //vola sa aj pri vytvoreneni novej zalozky? alebo pri prekliknuti na iny tab?
-    //zda sa, ze pri oboch.
+    /**
+     * Metoda přidá záložku do view. Záložku bere z cache nebo záložku vytvoří.
+     */
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         if (!event.getParameters().isEmpty()) {
@@ -74,7 +80,6 @@ public class MainTabsheet extends TabSheet implements View {
             String tabName = params.getTabName();
             Integer id = params.getId();
             Integer parentId = params.getParentId();
-            String parentName = params.getParentName();
 
             String tabId = tabName + (id != null ? id : parentId != null ? parentId : "");
             TabComponent tab = tabMap.get(tabId);
@@ -95,8 +100,16 @@ public class MainTabsheet extends TabSheet implements View {
                         tab.setSaveListener(this::saveEntity);
                     }
 
-                    addTab(tab, tab.getTabCaption()).setClosable(true);
-                    tabMap.put(tab.getTabId(), tab);
+                    if (tab.isUserAccessGranted()) {
+                        String caption = Localizator.localizeTab(tab);
+                        if (caption == null) {
+                            caption = tab.getTabCaption();
+                        }
+                        addTab(tab, caption).setClosable(true);
+                        tabMap.put(tab.getTabId(), tab);
+                    } else {
+                        tab = null;
+                    }
                 }
             }
 

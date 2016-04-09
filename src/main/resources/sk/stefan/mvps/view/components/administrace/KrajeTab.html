@@ -5,16 +5,15 @@
 </head>
 <body>
 <v-vertical-layout margin spacing>
-    <v-panel style-name="card new-form" caption="Seznam krajů" icon="font://LIST">
+    <v-panel _id="panel" style-name="card new-form" icon="font://LIST">
         <v-vertical-layout spacing margin>
-            <v-text-field _id="searchFd" width-full null-representation="" caption="Vyhľadávanie:"
-                          input-prompt="všechen spěch jest od ďábla!"/>
+            <v-text-field _id="searchFd" width-full null-representation=""/>
             <v-grid _id="grid" width-full>
                 <table>
                     <col property-id="presentationName"/>
                 </table>
             </v-grid>
-            <v-button _id="butPridat" icon="font://PLUS">Pridaj kraj</v-button>
+            <v-button _id="butPridat" icon="font://PLUS"/>
         </v-vertical-layout>
     </v-panel>
     <a-region-panel _id="regionPanel" width-full visible="false"/>

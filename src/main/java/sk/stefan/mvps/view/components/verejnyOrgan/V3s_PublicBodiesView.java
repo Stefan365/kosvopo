@@ -15,6 +15,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
@@ -30,6 +31,7 @@ import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -38,7 +40,7 @@ import java.util.List;
  *
  * @author stefan
  */
-@MenuButton(name = "Verejné orgány", position = 1, icon = FontAwesome.BANK)
+@MenuButton(name = "organsTab", position = 1, icon = FontAwesome.BANK)
 @ViewTab("organyTab")
 @SpringComponent
 @Scope("prototype")
@@ -61,6 +63,7 @@ public class V3s_PublicBodiesView extends VerticalLayout implements TabComponent
     private SecurityService securityService;
 
     // Designové komponenty
+    private Panel panel;
     private TextField searchFd;
     private Grid grid;
     private Button addNewPublicBodyBt;
@@ -70,10 +73,10 @@ public class V3s_PublicBodiesView extends VerticalLayout implements TabComponent
 
     public V3s_PublicBodiesView() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         container = new BeanItemContainer<>(PublicBody.class);
         grid.setContainerDataSource(container);
-        grid.getColumn("presentationName").setHeaderCaption("Názov verejného orgánu");
         grid.setHeightMode(HeightMode.ROW);
         grid.addSelectionListener(event -> 
                 Page.getCurrent().open(linkService.getUriFragmentForEntity((TabEntity) 
@@ -93,11 +96,6 @@ public class V3s_PublicBodiesView extends VerticalLayout implements TabComponent
             container.addAll(publicBodyService.findPublicBodies(pbIds));
             grid.setHeightByRows(container.size() > 7 ? 7 : container.size() == 0 ? 1 : container.size());
         });
-    }
-
-    @Override
-    public String getTabCaption() {
-        return "Verejné orgány";
     }
 
     @Override

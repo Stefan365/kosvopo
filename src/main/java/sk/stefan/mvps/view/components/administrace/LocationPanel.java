@@ -16,11 +16,13 @@ import org.springframework.stereotype.Component;
 import sk.stefan.mvps.model.entity.District;
 import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.service.LocationService;
+import sk.stefan.utils.Localizator;
 
 import java.util.function.Consumer;
 
 /**
- * Created by elopin on 07.12.2015.
+ * Panel s detailem lokace.
+ * @author elopin on 07.12.2015.
  */
 @Component
 @Scope("prototype")
@@ -52,6 +54,7 @@ public class LocationPanel extends CssLayout {
 
     public LocationPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(Location.class);
         bfg.bind(cbOkres, "district_id");

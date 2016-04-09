@@ -21,10 +21,12 @@ import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.utils.EnumConverter;
+import sk.stefan.utils.Localizator;
 import sk.stefan.utils.PresentationNameConverter;
 
 /**
- * Created by elopin on 15.11.2015.
+ * Panel se seznamem hlasováním veřejné funkce.
+ * @author elopin on 15.11.2015.
  */
 @SpringComponent
 @Scope("prototype")
@@ -41,7 +43,7 @@ public class HlasovaniFunkcePanel extends Panel {
     private LinkService linkService;
 
     //Design
-    private TextField tfSearch;
+    private TextField searchFd;
     private Grid grid;
     private Button addNewHlasovaniRole;
 
@@ -50,12 +52,11 @@ public class HlasovaniFunkcePanel extends Panel {
 
     public HlasovaniFunkcePanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
         container = new BeanItemContainer<>(VoteOfRole.class);
 
         grid.setContainerDataSource(container);
-        grid.getColumn("vote_id").setHeaderCaption("Hlasovanie");
         grid.getColumn("vote_id").setConverter(new PresentationNameConverter<Vote>(Vote.class));
-        grid.getColumn("decision").setHeaderCaption("Rozhodnutie");
         grid.getColumn("decision").setConverter(new EnumConverter());
         grid.setHeightMode(HeightMode.ROW);
 

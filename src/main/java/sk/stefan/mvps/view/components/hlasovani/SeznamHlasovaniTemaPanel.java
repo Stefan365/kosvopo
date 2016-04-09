@@ -4,7 +4,6 @@ import com.vaadin.annotations.DesignRoot;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.grid.HeightMode;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
@@ -15,11 +14,9 @@ import org.springframework.stereotype.Component;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.entity.Vote;
-import sk.stefan.mvps.model.entity.VoteOfRole;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.VoteService;
-import sk.stefan.utils.EnumConverter;
-import sk.stefan.utils.PresentationNameConverter;
+import sk.stefan.utils.Localizator;
 
 /**
  * Panel se seznamem hlasování k tématu.
@@ -37,7 +34,7 @@ public class SeznamHlasovaniTemaPanel extends Panel {
     private LinkService linkService;
 
     //Design
-    private TextField tfSearch;
+    private TextField searchFd;
     private Grid grid;
 
     //data
@@ -45,15 +42,14 @@ public class SeznamHlasovaniTemaPanel extends Panel {
 
     public SeznamHlasovaniTemaPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
+
         container = new BeanItemContainer<>(Vote.class);
 
         grid.setContainerDataSource(container);
-        grid.getColumn("presentationName").setHeaderCaption("Názov hlasování");
         grid.setHeightMode(HeightMode.ROW);
-
         grid.addSelectionListener(event -> Page.getCurrent()
                 .open(linkService.getUriFragmentForEntity((TabEntity) grid.getSelectedRow()), null));
-
     }
 
     public void setTema(Theme tema) {

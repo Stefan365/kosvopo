@@ -16,12 +16,15 @@ import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
+import sk.stefan.utils.VaadinUtils;
 
 import java.util.TreeMap;
 
 
 /**
- * Created by elopin on 02.11.2015.
+ * Menu aplikace.
+ * @author elopin on 02.11.2015.
  */
 @SpringComponent
 @VaadinSessionScope
@@ -49,7 +52,7 @@ public class NavigationMenu extends CssLayout {
         removeAllComponents();
         VerticalLayout buttonLayout = new VerticalLayout();
         buttonLayout.addStyleName(ValoTheme.MENU_PART);
-        Label menu = new Label("Menu");
+        Label menu = new Label(Localizator.getLocalizedMessage("menu", ".mainMenuCaption", null, VaadinUtils.getLocale()));
         menu.setSizeUndefined();
         buttonLayout.addComponent(menu);
         buttonLayout.setComponentAlignment(menu, Alignment.TOP_CENTER);
@@ -58,11 +61,12 @@ public class NavigationMenu extends CssLayout {
         TreeMap<Integer, Button> menuButtonsMap = new TreeMap<>((s1, s2) -> s1.compareTo(s2));
         context.getBeansWithAnnotation(MenuButton.class).values().forEach(clazz -> {
             MenuButton annotation = clazz.getClass().getAnnotation(MenuButton.class);
-            Button menuButton = new Button(annotation.name(), (event) -> Page.getCurrent()
+            String menuItemCaption = Localizator.getLocalizedMessage("menuItemCaption", "." + annotation.name(), null, VaadinUtils.getLocale());
+            Button menuButton = new Button(menuItemCaption, (event) -> Page.getCurrent()
                     .open(linkService.getUriFragmentForTab((Class<? extends TabComponent>) clazz.getClass()), null));
             menuButton.setIcon(annotation.icon());
             menuButton.setPrimaryStyleName(ValoTheme.MENU_ITEM);
-            if (annotation.name().equals("Administrace")) {
+            if (annotation.name().equals("adminTab")) {
                 if (securityService.getCurrentUser() != null && userService.getUserType(securityService.getCurrentUser()) != null) {
                     menuButtonsMap.put(annotation.position(), menuButton);
                 }

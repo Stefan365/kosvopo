@@ -10,6 +10,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.ViewTab;
 import sk.stefan.interfaces.TabEntity;
@@ -50,149 +51,12 @@ public final class V5_PublicRoleView extends VerticalLayout implements TabCompon
     //data
     private PublicRole publicRole;
 
-//    servisy:
-    private final PublicRoleService publicRoleService;
-    private final VoteService voteService;
-    private final UserService userService;
-    
-//    KOMPONENTY:
-//    private MyDetailedPanel<PUR_detPanContent> publicRoleDetPanel;
-//    private VORs_briefLayout votesOfRoleBriefLy;
-//    private MyTimelinePanel timelinePanel;
-//    pre uzivatela obcan:
-//    private DownloaderBriefLayout<PublicRole> downoaderLayout;
-//    pre uzivatela admin a dobrovolnik:
-//    private DownAndUploaderBriefLayout<PublicRole> uploaderLayout;
+    @Autowired
+    private VoteService voteService;
 
-    //konstruktor:
-    /**
-     *
-     */
     public V5_PublicRoleView() {
         Design.read(this);
-
-        this.publicRoleService = new PublicRoleServiceImpl();
-        this.voteService = new VoteServiceImpl();
-        this.userService = new UserServiceImpl();
-        
     }
-
-    /**
-     */
-    private void initAllBasic(Boolean isVolunteer) {
-
-        this.removeAllComponents();
-
-        this.initPublicPersonComponent();
-        this.initVotesOfRoleLayout();
-        this.initTimeline();
-
-//        this.addComponents(publicRoleDetPanel, votesOfRoleBriefLy, timelinePanel);
-
-        if (isVolunteer) {
-//            this.initEditPublicRoleButton();
-            this.initUploadLayout();
-            
-        } else {
-            this.initDownloadLayout();
-        }
-    }
-
-    /**
-     */
-    private void setPublicRoleValue(PublicRole pr) {
-
-        this.publicRole = pr;
-
-    }
-
-    /**
-     */
-    private void initPublicPersonComponent() {
-
-//        PUR_detPanContent purCont = new PUR_detPanContent(publicRole, publicRoleService);
-//        this.publicRoleDetPanel = new MyDetailedPanel<>(purCont);
-
-    }
-
-    /**
-     *
-     */
-    private void initVotesOfRoleLayout() {
-//
-//        List<Integer> vorIds = voteService.findVoteOfRoleIdsByPubRoleId(publicRole.getId());
-//        List<VoteOfRole> votesOfRole = voteService.findNewVotesOfRole(vorIds);
-//        this.votesOfRoleBriefLy = new VORs_briefLayout(votesOfRole, voteService);
-
-    }
-
-    /**
-     * Timeline inicializacia.
-     */
-    private void initTimeline() {
-//
-//        List<Integer> ids = voteService.findVoteIdsByPubRoleId(this.publicRole.getId());
-//        MyTimeline tl = new MyTimeline(ids);
-//        timelinePanel = new MyTimelinePanel(tl);
-        
-
-    }
-
-    /**
-     * Inicializuje editovatelny layout s dokumentami prisluchajucimi entite
-     * PublicBody.
-     */
-    private void initUploadLayout() {
-//
-//        this.uploaderLayout = new DownAndUploaderBriefLayout<>(PublicRole.class, this.publicRole);
-//        this.addComponent(uploaderLayout);
-
-    }
-    
-//    /**
-//     *
-//     */
-//    private void initEditPublicRoleButton() {
-//
-//        Button editPubRoleBt;
-//        FunctionalEditWrapper<PublicRole> ew = new FunctionalEditWrapper<>(PublicRole.class, publicRole);
-//        editPubRoleBt = EditEntityButtonFactory.createMyEditButton(ew);
-//        this.addComponent(editPubRoleBt);
-//    }
-
-
-    /**
-     * Komponenta na zobrazovanie dokumentov prisluchajucich entite PublicBody.
-     */
-    private void initDownloadLayout() {
-//
-//        this.downoaderLayout = new DownloaderBriefLayout<>(PublicRole.class, this.publicRole);
-//        this.addComponent(downoaderLayout);
-
-    }
-
-//    @Override
-//    public void enter(ViewChangeListener.ViewChangeEvent event) {
-//
-//        PublicRole pr = VaadinSession.getCurrent().getAttribute(PublicRole.class);
-//
-//        A_User user = VaadinSession.getCurrent().getAttribute(A_User.class);
-//
-//        Boolean isVolunteer = Boolean.FALSE;
-//        if (user != null) {
-//            UserType utype = userService.getUserType(user);
-//            //moze byt dobrovolnik, alebo admin.
-//            isVolunteer = ((UserType.VOLUNTEER).equals(utype) || (UserType.ADMIN).equals(utype));
-//        }
-//
-//        if (pr != null) {
-//            setPublicRoleValue(pr);
-//            initAllBasic(isVolunteer);
-//        } else {
-//            UI.getCurrent().getNavigator().navigateTo("V4s_PublicPersonsView");
-//        }
-//
-//    }
 
     @Override
     public void setSaveListener(SaveListener<TabEntity> saveListener) {
@@ -204,10 +68,6 @@ public final class V5_PublicRoleView extends VerticalLayout implements TabCompon
         });
     }
 
-//    @Override
-//    public void setRemoveListener(RemoveListener<TabEntity> removeListener) {
-//        detailPanel.setRemoveListener(l -> removeListener.remove(publicRole));
-//    }
     @Override
     public void setRemoveListener(RemoveListener<TabEntity> removeListener) {
         detailPanel.setRemoveListener(new RemoveListener<PublicRole>() {

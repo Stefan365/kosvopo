@@ -20,6 +20,7 @@ import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
+import sk.stefan.utils.Localizator;
 import sk.stefan.utils.PresentationNameConverter;
 import sk.stefan.utils.StringToDateConverter;
 
@@ -60,15 +61,13 @@ public class RoleUzivatelePanel extends CssLayout {
 
     public RoleUzivatelePanel()  {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         container = new BeanItemContainer<>(A_UserRole.class);
         historyGrid.setContainerDataSource(container);
         historyGrid.setHeightMode(HeightMode.ROW);
-        historyGrid.getColumn("role_id").setHeaderCaption("Role");
         historyGrid.getColumn("role_id").setConverter(new PresentationNameConverter<A_Role>(A_Role.class));
-        historyGrid.getColumn("since").setHeaderCaption("Od");
         historyGrid.getColumn("since").setConverter(new StringToDateConverter());
-        historyGrid.getColumn("till").setHeaderCaption("Do");
         historyGrid.getColumn("till").setConverter(new StringToDateConverter());
 
         butEdit.addClickListener(event -> setReadOnly(false));

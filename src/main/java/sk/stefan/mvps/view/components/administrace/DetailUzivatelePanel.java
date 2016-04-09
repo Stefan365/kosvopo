@@ -26,9 +26,11 @@ import sk.stefan.mvps.model.entity.A_UserRole;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.view.components.ImageComponent;
+import sk.stefan.utils.Localizator;
 
 /**
- * Created by elopin on 29.11.2015.
+ * Panel s informacemi o uživateli.
+ * @author elopin on 29.11.2015.
  */
 @SpringComponent
 @Scope("prototype")
@@ -70,6 +72,7 @@ public class DetailUzivatelePanel extends CssLayout {
 
     public DetailUzivatelePanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(A_User.class);
         bfg.bind(tfName, "first_name");

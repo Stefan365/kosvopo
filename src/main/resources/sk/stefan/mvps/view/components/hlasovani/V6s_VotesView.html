@@ -1,15 +1,14 @@
 <v-vertical-layout margin>
     <v-panel style-name="new-form" caption="Seznam hlasování" icon="font://LIST">
         <v-vertical-layout spacing margin>
-            <v-label _id="lblRelatedEntity" caption="Zobrazena hlasování pro:" visible="false"/>
-            <v-text-field _id="searchFd" width-full null-representation="" caption="Vyhľadávanie:"
-                          input-prompt="všechen spěch jest od ďábla!"/>
+            <v-label _id="lblRelatedEntity" visible="false"/>
+            <v-text-field _id="searchFd" width-full null-representation=""/>
             <v-grid _id="grid" width-full>
                 <table>
                     <col property-id="presentationName"/>
                 </table>
             </v-grid>
-            <v-button _id="addVoteBt" icon="font://PLUS">Pridaj hlasování</v-button>
+            <v-button _id="addVoteBt" icon="font://PLUS"/>
         </v-vertical-layout>
     </v-panel>
 </v-vertical-layout>

@@ -9,4 +9,3 @@ temp/*
 kosvopo6.iml
 libs/*
 src/main/resources/application.properties
-src/main/resources/db/dBconn.properties

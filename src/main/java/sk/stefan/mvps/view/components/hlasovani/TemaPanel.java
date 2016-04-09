@@ -10,19 +10,27 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.Theme;
+import sk.stefan.mvps.model.service.SecurityService;
+import sk.stefan.utils.Localizator;
 
 import java.util.function.Consumer;
 
 /**
- * Created by elopin on 09.12.2015.
+ * Panel s detailem tématu hlasování.
+ * @author elopin on 09.12.2015.
  */
 @Component
 @Scope("prototype")
 @DesignRoot
 public class TemaPanel extends CssLayout {
+
+    @Autowired
+    private SecurityService securityService;
 
     //Design
     private Label lblCaption;
@@ -44,6 +52,7 @@ public class TemaPanel extends CssLayout {
 
     public TemaPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(Theme.class);
         bfg.bind(tfNazev, "brief_description");
@@ -73,11 +82,14 @@ public class TemaPanel extends CssLayout {
         lblPopis.setVisible(theme.getDescription() != null && !theme.getDescription().isEmpty());
 
         setReadOnly(theme.getId() != null);
+        butCancel.setVisible(theme.getId() != null);
+        butRemove.setVisible(theme.getId() != null);
     }
 
     @Override
     public void setReadOnly(boolean readOnly) {
-        butEdit.setVisible(readOnly);
+        butEdit.setVisible(readOnly && (securityService.currentUserHasRole(UserType.ADMIN)
+                || securityService.currentUserHasRole(UserType.VOLUNTEER)));
         readLayout.setVisible(readOnly);
         editLayout.setVisible(!readOnly);
     }

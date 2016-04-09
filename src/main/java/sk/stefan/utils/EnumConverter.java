@@ -6,7 +6,8 @@ import sk.stefan.interfaces.PresentableEnum;
 import java.util.Locale;
 
 /**
- * Created by elopin on 13.11.2015.
+ * Konvertor enumu na string.
+ * @author elopin on 13.11.2015.
  */
 public class EnumConverter implements Converter<String, PresentableEnum> {
     @Override

@@ -1,10 +1,10 @@
 <v-vertical-layout margin>
-    <v-panel style-name="new-form" caption="Nová verejná osoba" icon="font://USER">
+    <v-panel _id="panel" style-name="new-form" icon="font://USER">
         <v-vertical-layout margin spacing width-full>
-            <v-text-field _id="tfMeno" caption="Meno:" input-prompt="Vyplňte meno" width-full null-representation="" required="true"/>
-            <v-text-field _id="tfPrijmeni" caption="Príjmení:" input-prompt="Vyplňte prijmeni" width-full null-representation="" required="true"/>
-            <v-popup-date-field _id="dfNarozeni" caption="Datum narození:" input-prompt="Zadejte datum narodení" width-full null-representation="" required="true"/>
-            <v-button _id="butSave" style-name="primary">Uložit</v-button>
+            <v-text-field _id="tfMeno" width-full null-representation="" required="true"/>
+            <v-text-field _id="tfPrijmeni" width-full null-representation="" required="true"/>
+            <v-popup-date-field _id="dfNarozeni" width-full null-representation="" required="true"/>
+            <v-button _id="butSave" style-name="primary"/>
         </v-vertical-layout>
     </v-panel>
 </v-vertical-layout>
