@@ -1,5 +1,6 @@
 package sk.stefan.utils;
 
+import com.sun.corba.se.impl.legacy.connection.USLPort;
 import com.vaadin.server.VaadinSession;
 
 import java.util.Locale;
@@ -10,10 +11,11 @@ import java.util.Locale;
  */
 public class VaadinUtils {
 
+    public static final Locale US_LOCALE = new Locale("en", "US");
     /**
      * Výchozí locale aplikace.
      */
-    public static Locale DEFAULT_LOCALE = new Locale("sk", "SK");
+    public static final Locale DEFAULT_LOCALE = new Locale("sk", "SK");
 
     /**
      * Vrací locale z VaadinSession nebo výchozí.
