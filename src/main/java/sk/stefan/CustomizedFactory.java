@@ -21,6 +21,12 @@ public class CustomizedFactory extends Design.DefaultComponentFactory {
     @Autowired
     private AutowireCapableBeanFactory factory;
 
+    /**
+     * Provede Dependency Injection do vlastních UI komponent použitých v deklarativním designu.
+     * @param fullyQualifiedClassName class name
+     * @param context kontext deklarativního designu
+     * @return komponentu obohacenou o závislosti @Autowired
+     */
     @Override
     public Component createComponent(String fullyQualifiedClassName, DesignContext context) {
         Component component = super.createComponent(fullyQualifiedClassName, context);

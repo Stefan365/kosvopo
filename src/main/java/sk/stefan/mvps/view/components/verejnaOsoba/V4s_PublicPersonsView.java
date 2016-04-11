@@ -15,11 +15,8 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
-
-import java.security.Security;
-import java.util.List;
-
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,20 +24,22 @@ import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.MenuButton;
 import sk.stefan.annotations.ViewTab;
 import sk.stefan.enums.UserType;
-import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.interfaces.TabEntity;
+import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.PublicPersonService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
- *
+ * Záložka se seznamem veřejných osob.
  * @author stefan
  */
-@MenuButton(name = "Verejné osoby", position = 2, icon = FontAwesome.USERS)
+@MenuButton(name = "personsTab", position = 2, icon = FontAwesome.USERS)
 @ViewTab("osobyTab")
 @SpringComponent
 @Scope("prototype")
@@ -57,6 +56,7 @@ public class V4s_PublicPersonsView extends VerticalLayout implements TabComponen
     private SecurityService securityService;
 
     // Design
+    private Panel panel;
     private TextField searchFd;
     private Grid grid;
     private Button addNewPublicPersonBt;
@@ -66,10 +66,10 @@ public class V4s_PublicPersonsView extends VerticalLayout implements TabComponen
 
     public V4s_PublicPersonsView() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         container = new BeanItemContainer<>(PublicPerson.class);
         grid.setContainerDataSource(container);
-        grid.getColumn("presentationName").setHeaderCaption("Meno verejné osoby");
         grid.setHeightMode(HeightMode.ROW);
         grid.addSelectionListener(event -> Page.getCurrent().open(linkService.getUriFragmentForEntity((TabEntity) grid.getSelectedRow()), null));
 
@@ -87,13 +87,7 @@ public class V4s_PublicPersonsView extends VerticalLayout implements TabComponen
             container.addAll(publicPersonService.findPublicPersons(pbIds));
 
             grid.setHeightByRows(container.size() >= 7 ? 7 : container.size() + 1);
-
         });
-    }
-
-    @Override
-    public String getTabCaption() {
-        return "Verejné osoby";
     }
 
     @Override

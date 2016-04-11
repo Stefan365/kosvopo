@@ -8,6 +8,7 @@ import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -25,11 +26,13 @@ import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.view.components.ImageComponent;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 import java.util.Date;
 
 /**
- * Created by elopin on 29.11.2015.
+ * Formulář pro vytvoření nového uživatele.
+ * @author elopin on 29.11.2015.
  */
 @ViewTab("novyUzivatel")
 @SpringComponent
@@ -47,6 +50,7 @@ public class NewUserForm extends VerticalLayout implements TabComponent {
     private LinkService linkService;
 
     // Design
+    private Panel panel;
     private ImageComponent imageComponent;
     private TextField tfName;
     private TextField tfSurname;
@@ -59,10 +63,13 @@ public class NewUserForm extends VerticalLayout implements TabComponent {
 
     // data
     private BeanFieldGroup<A_User> bfg;
+
+    //TODO odstranit, nebo lépe dodržet návrh
     private SaveListener<TabEntity> saveListener;
 
     public NewUserForm() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(A_User.class);
         bfg.bind(tfName, "first_name");
@@ -79,8 +86,8 @@ public class NewUserForm extends VerticalLayout implements TabComponent {
     }
 
     @Override
-    public String getTabCaption() {
-        return "Nový použivatel";
+    public boolean isUserAccessGranted() {
+        return securityService.currentUserHasRole(UserType.ADMIN);
     }
 
     @Override

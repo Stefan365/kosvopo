@@ -7,21 +7,15 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.declarative.Design;
 import org.dussan.vaadin.dcharts.DCharts;
-import org.dussan.vaadin.dcharts.base.elements.Trendline;
 import org.dussan.vaadin.dcharts.base.elements.XYaxis;
 import org.dussan.vaadin.dcharts.data.DataSeries;
 import org.dussan.vaadin.dcharts.events.ChartData;
-import org.dussan.vaadin.dcharts.events.click.ChartDataClickEvent;
 import org.dussan.vaadin.dcharts.events.click.ChartDataClickHandler;
 import org.dussan.vaadin.dcharts.metadata.XYaxes;
-import org.dussan.vaadin.dcharts.metadata.locations.TooltipLocations;
 import org.dussan.vaadin.dcharts.metadata.renderers.AxisRenderers;
-import org.dussan.vaadin.dcharts.metadata.renderers.LabelRenderers;
 import org.dussan.vaadin.dcharts.options.Axes;
-import org.dussan.vaadin.dcharts.options.Cursor;
 import org.dussan.vaadin.dcharts.options.Highlighter;
 import org.dussan.vaadin.dcharts.options.Options;
-import org.dussan.vaadin.dcharts.options.SeriesDefaults;
 import org.dussan.vaadin.dcharts.renderers.tick.AxisTickRenderer;
 import org.dussan.vaadin.dcharts.renderers.tick.CanvasAxisTickRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +24,7 @@ import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.view.components.hlasovani.V6s_VotesView;
+import sk.stefan.utils.Localizator;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +34,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by elopin on 09.11.2015.
+ * Časová osa hlasování.
+ * @author elopin on 09.11.2015.
  */
 @SpringComponent
 @Scope("prototype")
@@ -61,6 +57,7 @@ public class TimelinePanel extends Panel {
 
     public TimelinePanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         butZobrazHlasovani.addClickListener(event -> Page.getCurrent()
                 .open(linkService.getUriFragmentForTabWithParentEntity(V6s_VotesView.class, relatedEntity.getEntityName(), relatedEntity.getId()), null));

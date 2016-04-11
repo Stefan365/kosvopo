@@ -17,6 +17,7 @@ import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.entity.Document;
 import sk.stefan.mvps.model.service.DocumentService;
 import sk.stefan.mvps.model.service.SecurityService;
+import sk.stefan.utils.Localizator;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by elopin on 09.11.2015.
+ * Panel s dokumenty.
+ * @author elopin on 09.11.2015.
  */
 @SpringComponent
 @Scope("prototype")
@@ -63,6 +65,7 @@ public class DokumentyPanel<E extends TabEntity> extends Panel implements Upload
 
     public DokumentyPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         upload.addSucceededListener(this);
         upload.setReceiver(this);

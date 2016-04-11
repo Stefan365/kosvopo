@@ -29,13 +29,14 @@ import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 /**
  * Záložka se seznamem hlasování. Může zobrazovat všechna hlasování nebo jen ta, související s danou entitou.
  *
  * @author stefan
  */
-@MenuButton(name = "Hlasování", position = 3, icon = FontAwesome.HAND_O_UP)
+@MenuButton(name = "voteTab", position = 3, icon = FontAwesome.HAND_O_UP)
 @ViewTab("hlasovaniTab")
 @SpringComponent
 @Scope("prototype")
@@ -64,13 +65,12 @@ public class V6s_VotesView extends VerticalLayout implements TabComponent {
     private BeanItemContainer<Vote> container;
 
     public V6s_VotesView() {
-
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         container = new BeanItemContainer<>(Vote.class);
 
         grid.setContainerDataSource(container);
-        grid.getColumn("presentationName").setHeaderCaption("Názov hlasování");
         grid.setHeightMode(HeightMode.ROW);
         grid.addSelectionListener(event -> Page.getCurrent().open(linkService.getUriFragmentForEntity((TabEntity) grid.getSelectedRow()), null));
 

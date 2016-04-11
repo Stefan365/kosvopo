@@ -12,6 +12,7 @@ import com.vaadin.ui.declarative.Design;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sk.stefan.mvps.model.entity.Region;
+import sk.stefan.utils.Localizator;
 
 import java.util.function.Consumer;
 
@@ -44,6 +45,7 @@ public class RegionPanel extends CssLayout {
 
     public RegionPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(Region.class);
         bfg.bind(tfNazev, "region_name");

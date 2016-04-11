@@ -17,6 +17,7 @@ import sk.stefan.enums.VoteAction;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.entity.VoteOfRole;
 import sk.stefan.mvps.model.service.VoteService;
+import sk.stefan.utils.Localizator;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class GrafHlasovaniPanel extends Panel {
 
     public GrafHlasovaniPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
     }
 
     public void setVote(Vote v) {

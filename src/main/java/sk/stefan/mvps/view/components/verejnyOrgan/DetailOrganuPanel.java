@@ -11,18 +11,16 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-
 import sk.stefan.enums.UserType;
 import sk.stefan.listeners.RemoveListener;
 import sk.stefan.listeners.SaveListener;
-import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.service.LocationService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.components.ImageComponent;
+import sk.stefan.utils.Localizator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,6 +65,7 @@ public class DetailOrganuPanel extends CssLayout {
 
 	public DetailOrganuPanel() {
 		Design.read(this);
+		Localizator.localizeDesign(this);
 
 		butEdit.addClickListener(event -> setReadOnly(false));
 		butCancel.addClickListener(event -> onCancel());

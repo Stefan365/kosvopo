@@ -1,22 +1,21 @@
 <v-css-layout style-name="card new-form" width-full>
     <v-horizontal-layout style-name="v-panel-caption" width-full>
-        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left caption="Detail miesta"
-                 icon="font://MAP_MARKER"/>
+        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left icon="font://MAP_MARKER"/>
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
     <v-vertical-layout _id="readLayout" margin spacing>
-        <v-label _id="lblOkres" caption="Názov okresu:"/>
-        <v-label _id="lblNazev" caption="Názov miesta:"/>
-        <v-label _id="lblCastMesta" caption="Názov čiasti miesta:"/>
+        <v-label _id="lblOkres"/>
+        <v-label _id="lblNazev"/>
+        <v-label _id="lblCastMesta"/>
     </v-vertical-layout>
     <v-vertical-layout _id="editLayout" margin spacing>
-        <v-combo-box _id="cbOkres" width-full caption="Názov okresu:" input-prompt="Vyberte okres" required="true"/>
-        <v-text-field _id="tfNazev" width-full caption="Názov miesta:" input-prompt="Vyplňte názov" null-representation="" required="true"/>
-        <v-text-field _id="tfCastMesta" width-full caption="Názov čiasti miesta" input-prompt="Vyplňte názvo mestské čiasti" null-representation=""/>
+        <v-combo-box _id="cbOkres" width-full required="true"/>
+        <v-text-field _id="tfNazev" width-full null-representation="" required="true"/>
+        <v-text-field _id="tfCastMesta" width-full null-representation=""/>
         <v-horizontal-layout spacing>
-            <v-button _id="butSave" style-name="primary">Uložit</v-button>
-            <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>
-            <v-button _id="butRemove" icon="font://TRASH_O" style-name="danger">Odstranit</v-button>
+            <v-button _id="butSave" style-name="primary"/>
+            <v-button _id="butCancel" icon="font://PENCIL"/>
+            <v-button _id="butRemove" icon="font://TRASH_O" style-name="danger"/>
         </v-horizontal-layout>
     </v-vertical-layout>
 </v-css-layout>

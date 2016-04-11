@@ -1,12 +1,11 @@
 package sk.stefan.mvps.view.components.administrace;
 
 import com.vaadin.annotations.DesignRoot;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,11 @@ import sk.stefan.annotations.ViewTab;
 import sk.stefan.mvps.model.entity.Tenure;
 import sk.stefan.mvps.model.service.TenureService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 /**
- * Created by elopin on 13.12.2015.
+ * Záložka s hlasovacími obdobími.
+ * @author elopin on 13.12.2015.
  */
 @Component
 @Scope("prototype")
@@ -30,6 +31,7 @@ public class TenuresTab extends VerticalLayout implements TabComponent {
     private TenureService tenureService;
 
     //Design
+    private Panel panel;
     private Grid grid;
     private Button butPridat;
     private TenurePanel tenurePanel;
@@ -39,10 +41,10 @@ public class TenuresTab extends VerticalLayout implements TabComponent {
 
     public TenuresTab() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         container = new BeanItemContainer<>(Tenure.class);
         grid.setContainerDataSource(container);
-        grid.getColumn("presentationName").setHeaderCaption("Obdobie");
         grid.setHeightMode(HeightMode.ROW);
         grid.addSelectionListener(event -> showDetail((Tenure) grid.getSelectedRow()));
 
@@ -74,11 +76,6 @@ public class TenuresTab extends VerticalLayout implements TabComponent {
     private void showDetail(Tenure tenure) {
         tenurePanel.setTenure(tenure);
         tenurePanel.setVisible(true);
-    }
-
-    @Override
-    public String getTabCaption() {
-        return "Volebná obdobie";
     }
 
     @Override

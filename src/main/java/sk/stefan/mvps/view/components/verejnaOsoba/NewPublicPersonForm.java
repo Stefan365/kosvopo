@@ -5,20 +5,26 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.ViewTab;
+import sk.stefan.enums.UserType;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.interfaces.TabEntity;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.tabs.TabComponent;
 import sk.stefan.utils.DateTimeUtils;
+import sk.stefan.utils.Localizator;
 
 /**
- * Created by elopin on 18.11.2015.
+ * Formulář pro vytvoření nové veřejné osoby.
+ * @author elopin on 18.11.2015.
  */
 @SpringComponent
 @Scope("prototype")
@@ -26,7 +32,11 @@ import sk.stefan.utils.DateTimeUtils;
 @DesignRoot
 public class NewPublicPersonForm extends VerticalLayout implements TabComponent {
 
+    @Autowired
+    private SecurityService securityService;
+
     //Design
+    private Panel panel;
     private TextField tfMeno;
     private TextField tfPrijmeni;
     private PopupDateField dfNarozeni;
@@ -39,6 +49,7 @@ public class NewPublicPersonForm extends VerticalLayout implements TabComponent 
 
     public NewPublicPersonForm() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         dfNarozeni.setDateFormat(DateTimeUtils.getDatePattern());
 
@@ -55,6 +66,12 @@ public class NewPublicPersonForm extends VerticalLayout implements TabComponent 
         this.saveListener = saveListener;
     }
 
+    @Override
+    public boolean isUserAccessGranted() {
+        return securityService.currentUserHasRole(UserType.ADMIN) || securityService.currentUserHasRole(UserType.VOLUNTEER);
+
+    }
+
     private void onSave() {
         if (bfg.isValid()) {
             try {
@@ -66,11 +83,6 @@ public class NewPublicPersonForm extends VerticalLayout implements TabComponent 
                 throw new RuntimeException("Nepodařilo se uložit veřejnou osobu!", e);
             }
         }
-    }
-
-    @Override
-    public String getTabCaption() {
-        return "Nová verejná osoba";
     }
 
     @Override

@@ -23,10 +23,12 @@ import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.components.verejnaRole.NewPublicRoleForm;
 import sk.stefan.utils.EnumConverter;
+import sk.stefan.utils.Localizator;
 import sk.stefan.utils.PresentationNameConverter;
 
 /**
- * Created by elopin on 17.11.2015.
+ * Panel se seznamem veřejných funkcí veřejné osoby.
+ * @author elopin on 17.11.2015.
  */
 @Component
 @Scope("prototype")
@@ -43,7 +45,7 @@ public class VerejneFunkceOsobyPanel extends Panel {
     private SecurityService securityService;
 
     // Design
-    private TextField tfSearch;
+    private TextField searchFd;
     private Grid grid;
     private Button addNewPublicRoleBt;
 
@@ -53,15 +55,14 @@ public class VerejneFunkceOsobyPanel extends Panel {
 
     public VerejneFunkceOsobyPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
+
         container = new BeanItemContainer<>(PublicRole.class);
 
         grid.setContainerDataSource(container);
         grid.getColumn("public_body_id").setConverter(new PresentationNameConverter<>(PublicBody.class));
-        grid.getColumn("public_body_id").setHeaderCaption("Názov verejného orgánu");
         grid.getColumn("tenure_id").setConverter(new PresentationNameConverter<Tenure>(Tenure.class));
-        grid.getColumn("tenure_id").setHeaderCaption("Volbené obdobie");
         grid.getColumn("name").setConverter(new EnumConverter());
-        grid.getColumn("name").setHeaderCaption("Názov funkce");
         grid.setHeightMode(HeightMode.ROW);
 
         grid.addSelectionListener(event -> Page.getCurrent().open(linkService.getUriFragmentForEntity((TabEntity) grid.getSelectedRow()), null));

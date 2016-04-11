@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.mvps.model.entity.Document;
 import sk.stefan.mvps.model.service.DocumentService;
+import sk.stefan.utils.Localizator;
 
 import java.util.function.Consumer;
 

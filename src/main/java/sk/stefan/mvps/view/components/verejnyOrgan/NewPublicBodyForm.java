@@ -6,12 +6,14 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.ViewTab;
+import sk.stefan.enums.UserType;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.entity.PublicBody;
@@ -19,13 +21,16 @@ import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.LocationService;
 import sk.stefan.mvps.model.service.PublicBodyService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
- * Created by elopin on 07.11.2015.
+ * Formulář pro vytvoření nového veřejného orgánu.
+ * @author elopin on 07.11.2015.
  */
 @SpringComponent
 @Scope("prototype")
@@ -42,7 +47,11 @@ public class NewPublicBodyForm extends VerticalLayout implements TabComponent {
     @Autowired
     private LinkService linkService;
 
+    @Autowired
+    private SecurityService securityService;
+
     // Design
+    private Panel panel;
     private TextField tfName;
     private ComboBox cbLocation;
     private Button butSave;
@@ -53,6 +62,7 @@ public class NewPublicBodyForm extends VerticalLayout implements TabComponent {
 
     public NewPublicBodyForm() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfg.bind(tfName, "name");
         bfg.bind(cbLocation, "location_id");
@@ -76,6 +86,12 @@ public class NewPublicBodyForm extends VerticalLayout implements TabComponent {
     @Override
     public void setSaveListener(SaveListener<TabEntity> saveListener) {
         this.saveListener = saveListener;
+    }
+
+    @Override
+    public boolean isUserAccessGranted() {
+        return securityService.currentUserHasRole(UserType.ADMIN) || securityService.currentUserHasRole(UserType.VOLUNTEER);
+
     }
 
     private void onSave() {

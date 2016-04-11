@@ -7,6 +7,7 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
@@ -17,9 +18,11 @@ import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 /**
- * Created by elopin on 29.11.2015.
+ * Záložka se seznamem uživatelů.
+ * @author elopin on 29.11.2015.
  */
 @ViewTab("uzivateleTab")
 @SpringComponent
@@ -34,6 +37,7 @@ public class UsersTab extends VerticalLayout implements TabComponent {
     private LinkService linkService;
 
     // Design
+    private Panel panel;
     private TextField searchFd;
     private Grid grid;
     private Button addUser;
@@ -43,6 +47,7 @@ public class UsersTab extends VerticalLayout implements TabComponent {
 
     public UsersTab() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         container = new BeanItemContainer<>(A_User.class);
         grid.setContainerDataSource(container);
@@ -50,11 +55,6 @@ public class UsersTab extends VerticalLayout implements TabComponent {
         grid.addSelectionListener(event -> Page.getCurrent().open(linkService.getUriFragmentForEntity((A_User) grid.getSelectedRow()), null));
 
         addUser.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(NewUserForm.class), null));
-    }
-
-    @Override
-    public String getTabCaption() {
-        return "Použivatelovia";
     }
 
     @Override

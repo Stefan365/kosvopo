@@ -12,11 +12,13 @@ import com.vaadin.ui.declarative.Design;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sk.stefan.mvps.model.entity.Tenure;
+import sk.stefan.utils.Localizator;
 
 import java.util.function.Consumer;
 
 /**
- * Created by elopin on 13.12.2015.
+ * Panel s detailem období hlasování.
+ * @author elopin on 13.12.2015.
  */
 @Component
 @Scope("prototype")
@@ -42,6 +44,7 @@ public class TenurePanel extends CssLayout {
 
     public TenurePanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(Tenure.class);
         bfg.bind(dfSince, "since");

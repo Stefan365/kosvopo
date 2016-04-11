@@ -4,12 +4,12 @@
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
     <v-vertical-layout _id="readLayout" margin spacing>
-        <v-label _id="lblRegion" caption="Názov kraje:"/>
-        <v-label _id="lblNazev" caption="Názov okresu:"/>
+        <v-label _id="lblRegion"/>
+        <v-label _id="lblNazev"/>
     </v-vertical-layout>
     <v-vertical-layout _id="editLayout" margin spacing>
-        <v-combo-box _id="cbRegion" width-full caption="Názov kraje:" input-prompt="Vyberte kraj" required="true"/>
-        <v-text-field _id="tfNazev" width-full caption="Názov okresu:" input-prompt="Vyplňte názov" null-representation="" required="true"/>
+        <v-combo-box _id="cbRegion" width-full required="true"/>
+        <v-text-field _id="tfNazev" width-full null-representation="" required="true"/>
         <v-horizontal-layout spacing>
             <v-button _id="butSave" style-name="primary">Uložit</v-button>
             <v-button _id="butCancel" icon="font://PENCIL">Zrušit</v-button>

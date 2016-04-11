@@ -1,14 +1,13 @@
 <v-vertical-layout margin>
-    <v-panel style-name="new-form" caption="Seznam verejných osob" icon="font://LIST">
+    <v-panel _id="panel" style-name="new-form" icon="font://LIST">
         <v-vertical-layout spacing margin>
-            <v-text-field _id="searchFd" width-full null-representation="" caption="Vyhľadávanie:"
-                          input-prompt="možeš použiť vyhľadávanie podľa mena"/>
-            <v-grid _id="grid" width-full :clickable>
+            <v-text-field _id="searchFd" width-full null-representation=""/>
+            <v-grid _id="grid" width-full>
                 <table>
                     <col property-id="presentationName"/>
                 </table>
             </v-grid>
-            <v-button _id="addNewPublicPersonBt" icon="font://PLUS">Pridaj verejnou osobu</v-button>
+            <v-button _id="addNewPublicPersonBt" icon="font://PLUS"/>
         </v-vertical-layout>
     </v-panel>
 </v-vertical-layout>

@@ -6,6 +6,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,14 @@ import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.utils.EnhancedBeanItemContainer;
 import sk.stefan.utils.EnumConverter;
+import sk.stefan.utils.Localizator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by elopin on 22.11.2015.
+ * Panel pro zobrazení a editaci hlasování veřejných osob v hlasování.
+ * @author elopin on 22.11.2015.
  */
 @SpringComponent
 @Scope("prototype")
@@ -49,6 +52,7 @@ public class HlasovaniPanel extends CssLayout {
     private ApplicationContext context;
 
     //Design
+    private Label lblCaption;
     private Button butEdit;
     private Button butCancel;
     private Button butSave;
@@ -65,6 +69,7 @@ public class HlasovaniPanel extends CssLayout {
 
     public HlasovaniPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         butEdit.addClickListener(e -> setReadOnly(false));
         butCancel.addClickListener(e -> setReadOnly(true));
@@ -77,8 +82,6 @@ public class HlasovaniPanel extends CssLayout {
         arr.stream().filter(item -> item.getClass() == Object.class);
 
         grid.setContainerDataSource(container);
-        grid.getColumn("person").setHeaderCaption("Verejná osoba");
-        grid.getColumn("decision").setHeaderCaption("Volba");
         grid.getColumn("decision").setConverter(new EnumConverter());
         grid.setHeightMode(HeightMode.ROW);
     }

@@ -6,6 +6,7 @@ import com.vaadin.server.Page;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
@@ -20,9 +21,11 @@ import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.view.components.hlasovani.NewTemaForm;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 /**
- * Created by elopin on 09.12.2015.
+ * Záložka se seznamem témat hlasování.
+ * @author elopin on 09.12.2015.
  */
 @Component
 @Scope("prototype")
@@ -40,6 +43,7 @@ public class TemataTab extends VerticalLayout implements TabComponent {
     private SecurityService securityService;
 
     //Design
+    private Panel panel;
     private TextField searchFd;
     private Grid grid;
     private Button butPridat;
@@ -50,20 +54,15 @@ public class TemataTab extends VerticalLayout implements TabComponent {
 
     public TemataTab() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         container = new BeanItemContainer<>(Theme.class);
         grid.setContainerDataSource(container);
-        grid.getColumn("brief_description").setHeaderCaption("Názov tématu");
         grid.setHeightMode(HeightMode.ROW);
 
         grid.addSelectionListener(event -> Page.getCurrent().open(linkService.getUriFragmentForEntity((TabEntity) grid.getSelectedRow()), null));
 
         butPridat.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(NewTemaForm.class), null));
-    }
-
-    @Override
-    public String getTabCaption() {
-        return "Témata";
     }
 
     @Override

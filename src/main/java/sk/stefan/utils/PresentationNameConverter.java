@@ -7,7 +7,8 @@ import sk.stefan.mvps.model.repo.UniRepo;
 import java.util.Locale;
 
 /**
- * Created by elopin on 13.11.2015.
+ * Konvertor pro použití v Gridu, kdy je v buňce tabulky potřeba zobrazit stringovou reprezentaci entity.
+ * @author  by elopin on 13.11.2015.
  */
 public class PresentationNameConverter<T extends PresentationName> implements Converter<String, Integer> {
 

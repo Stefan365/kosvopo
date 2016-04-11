@@ -3,7 +3,6 @@ package sk.stefan.mvps.view.components.verejnaOsoba;
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
@@ -22,12 +21,13 @@ import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.components.ImageComponent;
 import sk.stefan.utils.DateTimeUtils;
+import sk.stefan.utils.Localizator;
 
-import java.text.SimpleDateFormat;
 import java.util.StringJoiner;
 
 /**
- * Created by elopin on 17.11.2015.
+ * Panel s detailem veřejné osoby.
+ * @author elopin on 17.11.2015.
  */
 @SpringComponent
 @Scope("prototype")
@@ -65,6 +65,8 @@ public class DetailOsobyPanel extends CssLayout {
 
     public DetailOsobyPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
+
         bfg = new BeanFieldGroup<>(PublicPerson.class);
         bfg.bind(tfJmeno, "first_name");
         bfg.bind(tfPrijmeni, "last_name");

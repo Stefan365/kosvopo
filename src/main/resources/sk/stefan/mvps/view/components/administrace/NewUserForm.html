@@ -4,22 +4,18 @@
 </head>
 <body>
 <v-vertical-layout margin width-full>
-    <v-panel style-name="card new-form" caption="Nový použivatel" icon="font://USER">
+    <v-panel _id="panel" style-name="card new-form" icon="font://USER">
         <v-horizontal-layout spacing margin width-full>
             <c-image-component _id="imageComponent" width="150px"/>
             <v-vertical-layout spacing :expand>
-                <v-text-field _id="tfName" width-full caption="Meno:" input-prompt="Vyplňte meno" required="true" null-representation=""/>
-                <v-text-field _id="tfSurname" width-full caption="Prijmeni:" input-prompt="Vyplňte prijmeni"
-                              required="true" null-representation=""/>
-                <v-text-field _id="tfNick" width-full caption="Prihlašovací meno:" input-prompt="Prihlašovací meno"
-                              required="true" null-representation=""/>
-                <v-text-field _id="tfEmail" width-full caption="E-mail:" input-prompt="Vyplňte e-mail" required="true"/>
-                <v-combo-box _id="cbRole" width-full caption="Role použivatele" input-prompt="Vyberte roli použivatele"
-                             required="true"/>
-                <v-password-field _id="pfPass" width-full caption="Heslo:" input-prompt="Heslo" null-representation=""/>
-                <v-password-field _id="pfPassConfirm" width-full caption="Potvrzení hesla:"
-                                  input-prompt="Heslo" null-representation=""/>
-                <v-button _id="butSave" style-name="primary">Uložit</v-button>
+                <v-text-field _id="tfName" width-full required="true" null-representation=""/>
+                <v-text-field _id="tfSurname" width-full required="true" null-representation=""/>
+                <v-text-field _id="tfNick" width-full required="true" null-representation=""/>
+                <v-text-field _id="tfEmail" width-full required="true" null-representation=""/>
+                <v-combo-box _id="cbRole" width-full required="true"/>
+                <v-password-field _id="pfPass" width-full null-representation=""/>
+                <v-password-field _id="pfPassConfirm" width-full null-representation=""/>
+                <v-button _id="butSave" style-name="primary"/>
             </v-vertical-layout>
         </v-horizontal-layout>
     </v-panel>

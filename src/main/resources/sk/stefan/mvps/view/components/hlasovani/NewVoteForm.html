@@ -1,12 +1,12 @@
 <v-vertical-layout margin>
-    <v-panel style-name="new-form" caption="Nové hlasování" icon="font://HAND_O_UP">
+    <v-panel _id="panel" style-name="new-form" icon="font://HAND_O_UP">
         <v-vertical-layout margin spacing width-full>
-            <v-label _id="lblBody" caption="Nové hlasování pro verejný orgán:"/>
-            <v-combo-box _id="cbPublicBody" width-full caption="Verejný orgán:" input-prompt="Vyberte verejný orgán" required="true"/>
-            <v-combo-box _id="cbSubject" width-full caption="Předmět:" input-prompt="Vyberte předmět" required="true"/>
-            <v-popup-date-field _id="dfDatum" width-full caption="Datum hlasování:" input-prompt="Zadejte datum hlasování" required="true"/>
-            <v-text-field _id="tfCislo" width-full caption="Interní číslo:" input-prompt="Vyplňte číslo hlasování" null-representation="" required="true"/>
-            <v-button _id="butSave" style-name="primary">Uložit</v-button>
+            <v-label _id="lblBody"/>
+            <v-combo-box _id="cbPublicBody" width-full required="true"/>
+            <v-combo-box _id="cbSubject" width-full required="true"/>
+            <v-popup-date-field _id="dfDatum" width-full required="true"/>
+            <v-text-field _id="tfCislo" width-full null-representation="" required="true"/>
+            <v-button _id="butSave" style-name="primary"/>
         </v-vertical-layout>
     </v-panel>
 </v-vertical-layout>

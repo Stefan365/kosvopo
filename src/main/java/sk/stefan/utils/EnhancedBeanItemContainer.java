@@ -7,7 +7,8 @@ import com.vaadin.data.util.VaadinPropertyDescriptor;
 import java.util.function.Consumer;
 
 /**
- * Created by Lukas on 02.01.2016.
+ * Rozšířený BeanItemContainer umožňuje nastavit stringovou reprezentaci objektu v Gridu.
+ * @author Lukas on 02.01.2016.
  */
 public class EnhancedBeanItemContainer<BEANTYPE> extends BeanItemContainer {
 
@@ -15,6 +16,12 @@ public class EnhancedBeanItemContainer<BEANTYPE> extends BeanItemContainer {
         super(type);
     }
 
+    /**
+     * Vytvoří volitelnou property beanu v kontajneru. Lze tak do Gridu přidat sloupce.
+     * @param propertyId název property
+     * @param type typ objektu ve sloupci
+     * @param generator generátor hodnoty v řádku sloupce
+     */
     public void addGeneratedProperty(String propertyId, Class type, ValueGenerator<BEANTYPE> generator) {
         VaadinPropertyDescriptor<BEANTYPE> descriptor = new VaadinPropertyDescriptor<BEANTYPE>() {
             @Override

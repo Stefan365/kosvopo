@@ -1,21 +1,19 @@
-<!DOCTYPE html>
 <html>
 <head>
     <meta name="package-mapping" content="a:sk.stefan.mvps.view.components.administrace"/>
 </head>
 <body>
 <v-vertical-layout margin spacing>
-    <v-panel style-name="card new-form" caption="Seznam predmetov" icon="font://LIST">
+    <v-panel _id="panel" style-name="card new-form" icon="font://LIST">
         <v-vertical-layout spacing margin>
-            <v-text-field _id="searchFd" width-full null-representation="" caption="Vyhľadávanie:"
-                          input-prompt="všechen spěch jest od ďábla!"/>
+            <v-text-field _id="searchFd" width-full null-representation=""/>
             <v-grid _id="grid" width-full>
                 <table>
                     <col property-id="brief_description"/>
                     <col property-id="theme_id"/>
                 </table>
             </v-grid>
-            <v-button _id="butPridat" icon="font://PLUS">Pridaj predmet</v-button>
+            <v-button _id="butPridat" icon="font://PLUS"/>
         </v-vertical-layout>
     </v-panel>
     <a-subject-panel _id="subjectPanel" width-full visible="false"/>

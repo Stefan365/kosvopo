@@ -7,12 +7,14 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import sk.stefan.annotations.ViewTab;
 import sk.stefan.enums.PublicRoleType;
+import sk.stefan.enums.UserType;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
@@ -20,11 +22,14 @@ import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.PublicPersonService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.TenureService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 /**
- * Created by elopin on 14.11.2015.
+ * Formulář pro vytvoření nové veřejné role.
+ * @author elopin on 14.11.2015.
  */
 @SpringComponent
 @Scope("prototype")
@@ -41,7 +46,11 @@ public class NewPublicRoleForm extends VerticalLayout implements TabComponent {
     @Autowired
     private TenureService tenureService;
 
+    @Autowired
+    private SecurityService securityService;
+
     // Design
+    private Panel panel;
     private Label lblBody;
     private Label lblPerson;
     private ComboBox cbPublicBody;
@@ -59,6 +68,7 @@ public class NewPublicRoleForm extends VerticalLayout implements TabComponent {
 
     public NewPublicRoleForm() {
         Design.read(this);
+        Localizator.localizeDesign(this);
         bfg = new BeanFieldGroup<>(PublicRole.class);
 
         bfg.bind(cbName, "name");
@@ -122,6 +132,11 @@ public class NewPublicRoleForm extends VerticalLayout implements TabComponent {
         this.saveListener = saveListener;
     }
 
+    @Override
+    public boolean isUserAccessGranted() {
+        return securityService.currentUserHasRole(UserType.ADMIN) || securityService.currentUserHasRole(UserType.VOLUNTEER);
+    }
+
 
     private void onSave() {
         if (bfg.isValid()) {
@@ -134,11 +149,6 @@ public class NewPublicRoleForm extends VerticalLayout implements TabComponent {
                 throw new RuntimeException("Nepodařilo se uložit novou veřejnou roli: " + publicRole, e);
             }
         }
-    }
-
-    @Override
-    public String getTabCaption() {
-        return "Nová verejná role";
     }
 
     @Override

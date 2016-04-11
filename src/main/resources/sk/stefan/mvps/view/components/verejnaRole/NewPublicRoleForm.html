@@ -1,13 +1,13 @@
 <v-vertical-layout margin>
-    <v-panel style-name="new-form" caption="Nová verejná role" icon="font://MALE">
+    <v-panel _id="panel" style-name="new-form" icon="font://MALE">
         <v-vertical-layout margin spacing width-full>
-            <v-label _id="lblBody" caption="Nová verejná role pro verejný orgán:"/>
-            <v-label _id="lblPerson" caption="Nová verejná role pro verejnou osobu:"/>
-            <v-combo-box _id="cbPublicBody" width-full caption="Verejný orgán:" input-prompt="Vyberte verejný orgán" required="true"/>
-            <v-combo-box _id="cbPublicPerson" width-full caption="Verejná osoba:" input-prompt="Vyberte verejnu osobu" required="true"/>
-            <v-combo-box _id="cbTenure" width-full caption="Obdobie:" input-prompt="Vyberte volebne obdobie" required="true"/>
-            <v-combo-box _id="cbName" width-full caption="Názov role:" input-prompt="Vyberte roli" required="true"/>
-            <v-button _id="butSave" style-name="primary">Uložit</v-button>
+            <v-label _id="lblBody"/>
+            <v-label _id="lblPerson"/>
+            <v-combo-box _id="cbPublicBody" width-full required="true"/>
+            <v-combo-box _id="cbPublicPerson" width-full required="true"/>
+            <v-combo-box _id="cbTenure" width-full required="true"/>
+            <v-combo-box _id="cbName" width-full required="true"/>
+            <v-button _id="butSave" style-name="primary"/>
         </v-vertical-layout>
     </v-panel>
 </v-vertical-layout>

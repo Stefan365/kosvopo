@@ -13,9 +13,11 @@ import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sk.stefan.utils.ImageTools;
+import sk.stefan.utils.Localizator;
 
 /**
- * Created by elopin on 28.11.2015.
+ * Komponenta pro nahrání a zobrazení obrázku.
+ * @author elopin on 28.11.2015.
  */
 @Component
 @Scope("prototype")
@@ -33,8 +35,8 @@ public class ImageComponent extends VerticalLayout {
     private ByteArrayOutputStream baos;
 
     public ImageComponent() {
-        
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         upload.setReceiver((filename, mimetype) -> baos = new ByteArrayOutputStream());
         upload.addSucceededListener(event -> {

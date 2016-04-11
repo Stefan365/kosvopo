@@ -7,6 +7,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
@@ -14,17 +15,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sk.stefan.annotations.ViewTab;
+import sk.stefan.enums.UserType;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.listeners.SaveListener;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.Subject;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.service.PublicBodyService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 
 /**
- * Created by elopin on 25.11.2015.
+ * Formulář pro vytvoření nového hlasování.
+ * @author elopin on 25.11.2015.
  */
 @Component
 @Scope("prototype")
@@ -38,7 +43,11 @@ public class NewVoteForm extends VerticalLayout implements TabComponent {
     @Autowired
     private PublicBodyService publicBodyService;
 
+    @Autowired
+    private SecurityService securityService;
+
     // Design
+    private Panel panel;
     private Label lblBody;
     private ComboBox cbPublicBody;
     private ComboBox cbSubject;
@@ -51,9 +60,9 @@ public class NewVoteForm extends VerticalLayout implements TabComponent {
     private BeanFieldGroup<Vote> bfg;
     private SaveListener<TabEntity> saveListener;
 
-
     public NewVoteForm() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(Vote.class);
         bfg.bind(cbSubject, "subject_id");
@@ -72,18 +81,16 @@ public class NewVoteForm extends VerticalLayout implements TabComponent {
     }
 
     @Override
+    public boolean isUserAccessGranted() {
+        return securityService.currentUserHasRole(UserType.ADMIN) || securityService.currentUserHasRole(UserType.VOLUNTEER);
+    }
+
+    @Override
     public void setEntity(TabEntity tabEntity) {
         this.publicBody = (PublicBody) tabEntity;
         cbPublicBody.setVisible(false);
         lblBody.setValue(publicBody.getPresentationName());
         lblBody.setVisible(true);
-
-
-    }
-
-    @Override
-    public String getTabCaption() {
-        return "Nové hlasování";
     }
 
     @Override
@@ -102,7 +109,6 @@ public class NewVoteForm extends VerticalLayout implements TabComponent {
                 cbPublicBody.addItem(body.getId());
                 cbPublicBody.setItemCaption(body.getId(), body.getPresentationName());
             });
-
         }
         setValidationVisible(false);
     }

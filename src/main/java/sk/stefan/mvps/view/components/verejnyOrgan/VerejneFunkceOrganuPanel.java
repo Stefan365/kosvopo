@@ -23,6 +23,7 @@ import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.components.verejnaRole.NewPublicRoleForm;
 import sk.stefan.utils.EnumConverter;
+import sk.stefan.utils.Localizator;
 import sk.stefan.utils.PresentationNameConverter;
 
 /**
@@ -44,7 +45,7 @@ public class VerejneFunkceOrganuPanel extends Panel {
     private SecurityService securityService;
 
     // Design
-    private TextField tfSearch;
+    private TextField searchFd;
     private Grid grid;
     private Button addNewPublicRoleBt;
 
@@ -54,14 +55,12 @@ public class VerejneFunkceOrganuPanel extends Panel {
 
     public VerejneFunkceOrganuPanel() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         grid.setContainerDataSource(container);
         grid.getColumn("public_person_id").setConverter(new PresentationNameConverter<PublicPerson>(PublicPerson.class));
-        grid.getColumn("public_person_id").setHeaderCaption("Meno verejné osoby");
         grid.getColumn("tenure_id").setConverter(new PresentationNameConverter<Tenure>(Tenure.class));
-        grid.getColumn("tenure_id").setHeaderCaption("Volbené obdobie");
         grid.getColumn("name").setConverter(new EnumConverter());
-        grid.getColumn("name").setHeaderCaption("Názov funkce");
         grid.setHeightMode(HeightMode.ROW);
 
         grid.addSelectionListener(event -> Page.getCurrent().open(linkService.getUriFragmentForEntity((TabEntity) grid.getSelectedRow()), null));

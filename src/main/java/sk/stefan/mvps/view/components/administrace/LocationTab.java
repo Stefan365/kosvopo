@@ -5,6 +5,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.declarative.Design;
@@ -12,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import sk.stefan.annotations.ViewTab;
+import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.District;
 import sk.stefan.mvps.model.entity.Location;
 import sk.stefan.mvps.model.service.LocationService;
+import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.view.tabs.TabComponent;
+import sk.stefan.utils.Localizator;
 import sk.stefan.utils.PresentationNameConverter;
 
 /**
@@ -31,8 +35,12 @@ public class LocationTab extends VerticalLayout implements TabComponent {
     @Autowired
     private LocationService locationService;
 
+    @Autowired
+    private SecurityService securityService;
+
     //Design
     private TextField searchFd;
+    private Panel panel;
     private Grid grid;
     private Button butPridat;
     private LocationPanel locationPanel;
@@ -42,12 +50,10 @@ public class LocationTab extends VerticalLayout implements TabComponent {
 
     public LocationTab() {
         Design.read(this);
+        Localizator.localizeDesign(this);
 
         container = new BeanItemContainer<>(Location.class);
         grid.setContainerDataSource(container);
-        grid.getColumn("location_name").setHeaderCaption("Názov miesta");
-        grid.getColumn("town_section").setHeaderCaption("Názov čiasti miesta");
-        grid.getColumn("district_id").setHeaderCaption("Okres");
         grid.getColumn("district_id").setConverter(new PresentationNameConverter<District>(District.class));
         grid.setHeightMode(HeightMode.ROW);
 
@@ -61,7 +67,7 @@ public class LocationTab extends VerticalLayout implements TabComponent {
 
     private void showDetail(Location location) {
         locationPanel.setLocation(location);
-        location.setVisible(true);
+        locationPanel.setVisible(true);
     }
 
     private void onSave(Location location) {
@@ -77,14 +83,8 @@ public class LocationTab extends VerticalLayout implements TabComponent {
 
     private void onPridat() {
         Location location = new Location();
-        location.setVisible(true);
         locationPanel.setLocation(location);
         locationPanel.setVisible(true);
-    }
-
-    @Override
-    public String getTabCaption() {
-        return "Miesta";
     }
 
     @Override
@@ -97,5 +97,11 @@ public class LocationTab extends VerticalLayout implements TabComponent {
     @Override
     public String getTabId() {
         return "locationTab";
+    }
+
+    @Override
+    public boolean isUserAccessGranted() {
+        return securityService.currentUserHasRole(UserType.ADMIN) || securityService.currentUserHasRole(UserType.VOLUNTEER);
+
     }
 }
