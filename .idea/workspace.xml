@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="ed8ea447-fca2-4b77-96ec-a6beda02a3b5" name="Default" comment="lokalizace UI">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nb-configuration.xml" afterPath="$PROJECT_DIR$/nb-configuration.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/db/dBconn.properties" afterPath="$PROJECT_DIR$/src/main/resources/db/dBconn.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/VAADIN/themes/mytheme/addons.scss" afterPath="$PROJECT_DIR$/src/main/webapp/VAADIN/themes/mytheme/addons.scss" />
-=======
-    <list default="true" id="8b9b1304-262d-4410-9408-2b8ce5df9f82" name="Default" comment="lokalizace demo">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/VAADIN/themes/mytheme/images/flags/slovakia.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/VAADIN/themes/mytheme/images/flags/united_states.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/messages_en_US.properties" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/kosvopo6.iml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TopPanel.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/mvps/view/components/TopPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/ui/NavigationMenu.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/ui/NavigationMenu.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sk/stefan/utils/VaadinUtils.java" afterPath="$PROJECT_DIR$/src/main/java/sk/stefan/utils/VaadinUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/messages.properties" afterPath="$PROJECT_DIR$/src/main/resources/messages.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/TopPanel.html" afterPath="$PROJECT_DIR$/src/main/resources/sk/stefan/mvps/view/components/TopPanel.html" />
->>>>>>> de9abb84fba019fb808951265f74384b03531f18
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+     <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
     </list>
     <ignored path="kosvopo6.iws" />
     <ignored path=".idea/workspace.xml" />
