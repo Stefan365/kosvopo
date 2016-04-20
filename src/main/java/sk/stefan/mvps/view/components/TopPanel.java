@@ -17,6 +17,8 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.declarative.Design;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import sk.stefan.mvps.model.entity.A_User;
 import sk.stefan.mvps.model.service.SecurityService;
@@ -40,6 +42,8 @@ import java.util.function.Consumer;
 @VaadinSessionScope
 @DesignRoot
 public class TopPanel extends HorizontalLayout {
+
+    private static final Logger LOG = LoggerFactory.getLogger(TopPanel.class);
 
     @Autowired
     private SecurityService securityService;
@@ -71,11 +75,10 @@ public class TopPanel extends HorizontalLayout {
         butSend.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         butLang.setIcon(new ThemeResource("images/flags/united_states.png"));
-        butLang.addClickListener(e -> changeLocale());
-
+        butLang.addClickListener(e -> localizationChanged());
     }
 
-    private void changeLocale() {
+    private void localizationChanged() {
         Locale locale = VaadinSession.getCurrent().getLocale();
         if (locale.equals(Locale.US)) {
             VaadinSession.getCurrent().setLocale(VaadinUtils.DEFAULT_LOCALE);
@@ -84,6 +87,11 @@ public class TopPanel extends HorizontalLayout {
             VaadinSession.getCurrent().setLocale(VaadinUtils.US_LOCALE);
             butLang.setIcon(new ThemeResource("images/flags/slovakia.png"));
         }
+        changeLocale();
+    }
+
+    public void changeLocale() {
+        LOG.info("Current locale: " + VaadinSession.getCurrent().getLocale());
         walkComponentTree(UI.getCurrent(), (component) -> {
             if (MainTabsheet.class.isAssignableFrom(component.getClass())) {
                 MainTabsheet tabsheet = (MainTabsheet) component;

@@ -8,19 +8,12 @@
 
     <name>kosvopo6</name>
 
+    <!-- lookup parent from repository -->
     <parent>
-
         <groupId>org.springframework.boot</groupId>
-
         <artifactId>spring-boot-starter-parent</artifactId>
-
         <version>1.2.7.RELEASE</version>
-
         <relativePath/>
-
-        <!-- lookup parent from repository -->
-
-
     </parent>
 
     <properties>
@@ -33,7 +26,8 @@
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
         <server.port>8086</server.port>
 
-
+        <!-- default database connection setting is from production directory -->
+        <build.profile.id>prod</build.profile.id>
     </properties>
 
     <repositories>
@@ -66,7 +60,6 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
 
     <dependencies>
 
@@ -152,13 +145,6 @@
             <type>jar</type>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>org.hibernate</groupId>-->
-        <!--<artifactId>hibernate-validator</artifactId>-->
-        <!--<version>5.2.0.Alpha1</version>-->
-        <!--<type>jar</type>-->
-        <!--</dependency>-->
-
         <!-- DEPENCENCY FOR LOGGING -->
         <dependency>
             <groupId>log4j</groupId>
@@ -186,15 +172,6 @@
             <version>5.1.6</version>
         </dependency>
 
-        <!-- mariadb -->
-        <!--<dependency>-->
-            <!--<groupId>org.mariadb.jdbc</groupId>-->
-            <!--<artifactId>mariadb-java-client</artifactId>-->
-            <!--<version>1.3.4</version>-->
-        <!--</dependency>-->
-        
-
-
         <!-- DEPENCENCY FOR TESTING -->
         <dependency>
             <groupId>org.testng</groupId>
@@ -218,6 +195,17 @@
                 <includes>
                     <include>**/*.html</include>
                     <include>**/*.properties</include>
+                </includes>
+                <excludes>
+                    <exclude>**/db_conn.properties</exclude>
+                </excludes>
+            </resource>
+
+            <!-- this resource adds database connection related to build profile -->
+            <resource>
+                <directory>src/main/resources/db/${build.profile.id}</directory>
+                <includes>
+                    <include>db_conn.properties</include>
                 </includes>
             </resource>
         </resources>
@@ -261,11 +249,11 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.7</version>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-resources-plugin</artifactId>-->
+                <!--<version>2.7</version>-->
+            <!--</plugin>-->
 
             <plugin>
                 <groupId>com.vaadin</groupId>
@@ -306,9 +294,9 @@
                         <goals>
                             <goal>clean</goal>
                             <goal>resources</goal>
-                            <goal>update-theme</goal>
-                            <goal>update-widgetset</goal>
-                            <goal>compile-theme</goal>
+                            <!--<goal>update-theme</goal>-->
+                            <!--<goal>update-widgetset</goal>-->
+                            <!--<goal>compile-theme</goal>-->
                             <goal>compile</goal>
                         </goals>
                     </execution>
@@ -325,6 +313,11 @@
     <profiles>
         <profile>
             <id>dev</id>
+            <properties>
+
+                <!-- development database connection settings are from dev directory -->
+                <build.profile.id>dev</build.profile.id>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.springframework.boot</groupId>

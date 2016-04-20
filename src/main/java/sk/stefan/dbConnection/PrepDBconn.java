@@ -24,7 +24,7 @@ public class PrepDBconn {
 
     static {
         
-      ResourceBundle props = ResourceBundle.getBundle("db/dBconn");
+      ResourceBundle props = ResourceBundle.getBundle("db_conn");
         
         switch (db) {
 
