@@ -59,5 +59,7 @@ public class KosvopoUI extends UI {
 
         mainView.getNavigationMenu().createMenu();
         setContent(mainView);
+
+        mainView.setDefaultLocalization();
     }
 }

@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import sk.stefan.mvps.view.components.TopPanel;
 import sk.stefan.ui.NavigationMenu;
+import sk.stefan.utils.VaadinUtils;
 
 /*
  * Hlavne view, ktore nesie listu s tlacitkami.
@@ -66,5 +67,9 @@ public class MainView extends VerticalLayout implements TopPanel.LoginListener {
         navigationMenu.createMenu();
         MainTabsheet tabsheet = (MainTabsheet) provider.getView("");
         tabsheet.refresh();
+    }
+
+    public void setDefaultLocalization() {
+        topPanel.changeLocale();
     }
 }
