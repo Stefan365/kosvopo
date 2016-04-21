@@ -46,7 +46,9 @@ $v-layout-margin-bottom: 5px;
 $v-layout-margin-left: 5px;
 //#08b0ba
 // Override focus color
-$v-focus-color: #00f0d0 !default;
+/*#579aff*/
+/*$v-focus-color: #00f0d0 !default;*/
+$v-focus-color: #579aff !default;
 
 @import "../valo/valo.scss";
 
