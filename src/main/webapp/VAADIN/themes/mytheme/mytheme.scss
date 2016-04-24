@@ -22,9 +22,13 @@ $v-font-family: Arial, Courier, sans-serif;
 $v-border-radius: 4px;
 
 // Affects the color of some component elements, e.g Button, Panel title, etc
-//$v-background-color: hsl(50, 50%, 98%);
+/*$v-background-color: hsl(50, 50%, 98%);*/
+$v-background-color: #579aff;
+
+
 // Affects the color of content areas, e.g  Panel and Window content, TextField input etc
-//$v-app-background-color: $v-background-color;
+$v-app-background-color: $v-background-color;
+
 
 // Affects the visual appearance of all components
 //$v-gradient: v-linear 8%;
@@ -48,7 +52,8 @@ $v-layout-margin-left: 5px;
 // Override focus color
 /*#579aff*/
 /*$v-focus-color: #00f0d0 !default;*/
-$v-focus-color: #579aff !default;
+$v-focus-color: #579aff;
+/*$v-focus-color: #ff3110;*/
 
 @import "../valo/valo.scss";
 
