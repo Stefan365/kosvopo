@@ -1706,8 +1706,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme select:focus {
 	outline: none;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme button {
@@ -1892,7 +1892,7 @@ div.v-layout.v-horizontal.v-widget {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 2px solid rgba(0, 240, 208, 0.2);
+	border: 2px solid rgba(201, 218, 248, 0.2);
 	border-top-color: #579aff;
 	border-right-color: #579aff;
 	border-radius: 100%;
@@ -2119,8 +2119,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-button:focus:after {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-button:active:after {
@@ -2158,17 +2158,17 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .v-button-primary:hover:after {
-	background-color: rgba(0, 112, 97, 0.1);
+	background-color: rgba(201, 218, 248, 0.1);
 }
 
 .mytheme .v-button-primary:focus:after {
 	border: inherit;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-button-primary:active:after {
-	background-color: rgba(0, 120, 104, 0.2);
+	background-color: rgba(201, 218, 248, 0.2);
 }
 
 .v-ie8 .mytheme .v-button-primary {
@@ -2208,8 +2208,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-button-friendly:focus:after {
 	border: inherit;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-button-friendly:active:after {
@@ -2249,8 +2249,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-button-danger:focus:after {
 	border: inherit;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-button-danger:active:after {
@@ -2519,10 +2519,10 @@ div.v-layout.v-horizontal.v-widget {
 
 :root .mytheme .v-checkbox > input:focus ~ label:before {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
 :root .mytheme .v-checkbox > input ~ label:before, :root .mytheme .v-checkbox > input ~ label:after {
@@ -2649,10 +2649,10 @@ div.v-layout.v-horizontal.v-widget {
 
 :root .mytheme .v-checkbox-small > input:focus ~ label:before {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
 :root .mytheme .v-checkbox-small > input ~ label:before, :root .mytheme .v-checkbox-small > input ~ label:after {
@@ -2779,10 +2779,10 @@ div.v-layout.v-horizontal.v-widget {
 
 :root .mytheme .v-checkbox-large > input:focus ~ label:before {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
 :root .mytheme .v-checkbox-large > input ~ label:before, :root .mytheme .v-checkbox-large > input ~ label:after {
@@ -2936,10 +2936,10 @@ div.v-layout.v-horizontal.v-widget {
 	-moz-transition: none;
 	transition: none;
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-filterselect [class*="input"][class*="prompt"] {
@@ -3281,10 +3281,10 @@ div.v-layout.v-horizontal.v-widget {
 	-moz-transition: none;
 	transition: none;
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-filterselect-no-input [class$="button"] {
@@ -4109,10 +4109,10 @@ div.v-layout.v-horizontal.v-widget {
 	-moz-transition: none;
 	transition: none;
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), none;
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), none;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), none;
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), none;
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-textfield:focus, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-textarea:focus, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-filterselect input:focus, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-datefield input:focus, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-richtextarea:focus {
@@ -4835,7 +4835,7 @@ div.v-layout.v-horizontal.v-widget {
 	background-image: linear-gradient(to bottom,#c9daf8 2%, #c9daf8 98%);
 	color: #0c3731;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
-	border-color: #08bfa7;
+	border-color: #c9daf8;
 }
 
 .mytheme .v-grid-row-selected  > .v-grid-cell-focused:before {
@@ -4843,8 +4843,8 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .v-grid-editor {
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 	border-color: #579aff;
 }
 
@@ -5044,10 +5044,10 @@ div.v-layout.v-horizontal.v-widget {
 	-moz-transition: none;
 	transition: none;
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-textfield[class*="prompt"] {
@@ -5514,10 +5514,10 @@ div.v-layout.v-horizontal.v-widget {
 	-moz-transition: none;
 	transition: none;
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-textarea[class*="prompt"] {
@@ -5803,10 +5803,10 @@ div.v-layout.v-horizontal.v-widget {
 	-moz-transition: none;
 	transition: none;
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 #f7f7f7, 0 1px 0 rgba(255, 255, 255, 0.1);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-datefield [class*="textfield"][class*="prompt"] {
@@ -6022,8 +6022,8 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .v-datefield-popup .v-datefield-calendarpanel-day.v-datefield-calendarpanel-day-focused {
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 	position: relative;
 }
 
@@ -6215,8 +6215,8 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .v-datefield-calendarpanel-day.v-datefield-calendarpanel-day-focused {
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 	position: relative;
 }
 
@@ -6910,8 +6910,8 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .v-inline-datefield-calendarpanel-day.v-inline-datefield-calendarpanel-day-focused {
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 	position: relative;
 }
 
@@ -7141,8 +7141,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-menubar:focus:after {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-menubar  > .v-menubar-menuitem {
@@ -7542,10 +7542,10 @@ div.v-layout.v-horizontal.v-widget {
 
 :root .mytheme .v-radiobutton > input:focus ~ label:before {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
 :root .mytheme .v-radiobutton > input ~ label:before, :root .mytheme .v-radiobutton > input ~ label:after {
@@ -7705,10 +7705,10 @@ div.v-layout.v-horizontal.v-widget {
 
 :root .mytheme .v-select-optiongroup-small .v-checkbox > input:focus ~ label:before {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
 :root .mytheme .v-select-optiongroup-small .v-checkbox > input ~ label:before, :root .mytheme .v-select-optiongroup-small .v-checkbox > input ~ label:after {
@@ -7834,10 +7834,10 @@ div.v-layout.v-horizontal.v-widget {
 
 :root .mytheme .v-select-optiongroup-small .v-radiobutton > input:focus ~ label:before {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
 :root .mytheme .v-select-optiongroup-small .v-radiobutton > input ~ label:before, :root .mytheme .v-select-optiongroup-small .v-radiobutton > input ~ label:after {
@@ -7997,10 +7997,10 @@ div.v-layout.v-horizontal.v-widget {
 
 :root .mytheme .v-select-optiongroup-large .v-checkbox > input:focus ~ label:before {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
 :root .mytheme .v-select-optiongroup-large .v-checkbox > input ~ label:before, :root .mytheme .v-select-optiongroup-large .v-checkbox > input ~ label:after {
@@ -8126,10 +8126,10 @@ div.v-layout.v-horizontal.v-widget {
 
 :root .mytheme .v-select-optiongroup-large .v-radiobutton > input:focus ~ label:before {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5), inset 0 1px 0 white, inset 0 -1px 0 #e7e7e7, 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
 :root .mytheme .v-select-optiongroup-large .v-radiobutton > input ~ label:before, :root .mytheme .v-select-optiongroup-large .v-radiobutton > input ~ label:after {
@@ -9043,7 +9043,7 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-table [class*="-row"].v-selected .v-table-cell-content {
 	border-color: transparent;
-	border-left-color: #08bfa7;
+	border-left-color: #c9daf8;
 }
 
 .mytheme .v-table [class*="-row"].v-selected .v-table-cell-content:first-child {
@@ -9162,8 +9162,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-table-column-selector:focus:after {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-table-column-selector:active:after {
@@ -9255,8 +9255,8 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .v-table-drag .v-table-body {
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 	border-color: #579aff;
 }
 
@@ -9270,7 +9270,7 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-table-row-drag-middle .v-table-cell-content {
 	background-color: #ccfcf5;
-	color: #1c645a;
+	color: #579aff;
 }
 
 .mytheme .v-table-row-drag-bottom td.v-table-cell-content {
@@ -9519,8 +9519,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-splitpanel-horizontal  > div > .v-splitpanel-hsplitter div:before:focus:after {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-splitpanel-horizontal  > div > .v-splitpanel-hsplitter div:before:active:after {
@@ -9576,8 +9576,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-splitpanel-vertical  > div > .v-splitpanel-vsplitter div:before:focus:after {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-splitpanel-vertical  > div > .v-splitpanel-vsplitter div:before:active:after {
@@ -9632,8 +9632,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-splitpanel-horizontal.large  > div > .v-splitpanel-hsplitter div:before:focus:after {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-splitpanel-horizontal.large  > div > .v-splitpanel-hsplitter div:before:active:after {
@@ -9703,8 +9703,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-splitpanel-vertical.large  > div > .v-splitpanel-vsplitter div:before:focus:after {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-splitpanel-vertical.large  > div > .v-splitpanel-vsplitter div:before:active:after {
@@ -9790,7 +9790,7 @@ div.v-layout.v-horizontal.v-widget {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 2px solid rgba(0, 240, 208, 0.2);
+	border: 2px solid rgba(201, 218, 248, 0.2);
 	border-top-color: #579aff;
 	border-right-color: #579aff;
 	border-radius: 100%;
@@ -9934,8 +9934,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-slider-handle:before:focus:after {
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-slider-handle:before:active:after {
@@ -9945,8 +9945,8 @@ div.v-layout.v-horizontal.v-widget {
 .mytheme .v-slider-handle:after {
 	border: 1px solid #c5c5c5;
 	border-color: #579aff;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 	opacity: 0;
 	-webkit-transition: opacity 200ms;
 	-moz-transition: opacity 200ms;
@@ -10277,7 +10277,7 @@ div.v-layout.v-horizontal.v-widget {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 2px solid rgba(0, 240, 208, 0.2);
+	border: 2px solid rgba(201, 218, 248, 0.2);
 	border-top-color: #579aff;
 	border-right-color: #579aff;
 	border-radius: 100%;
@@ -10487,7 +10487,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .v-colorpicker-popup .v-slider-green .v-slider-base:after {
-	background: green;
+	background: blue;
 	border: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -10851,8 +10851,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-select-twincol select:focus {
 	outline: none;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-select-twincol .v-textfield, .mytheme .v-select-twincol .v-nativebutton {
@@ -10935,8 +10935,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-select select:focus {
 	outline: none;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-select-select {
@@ -11497,7 +11497,7 @@ div.v-layout.v-horizontal.v-widget {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 2px solid rgba(0, 240, 208, 0.2);
+	border: 2px solid rgba(201, 218, 248, 0.2);
 	border-top-color: #579aff;
 	border-right-color: #579aff;
 	border-radius: 100%;
@@ -11657,8 +11657,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-select select:focus {
 	outline: none;
-	-webkit-box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
-	box-shadow: 0 0 0 2px rgba(0, 240, 208, 0.5);
+	-webkit-box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
+	box-shadow: 0 0 0 2px rgba(201, 218, 248, 0.5);
 }
 
 .mytheme .v-select-select {
@@ -11742,7 +11742,7 @@ div.v-layout.v-horizontal.v-widget {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 2px solid rgba(0, 240, 208, 0.2);
+	border: 2px solid rgba(201, 218, 248, 0.2);
 	border-top-color: #579aff;
 	border-right-color: #579aff;
 	border-radius: 100%;
@@ -12520,7 +12520,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .valo-menu-subtitle [class*="badge"] {
-	color: #66dece;
+	color: #c9daf8;
 }
 
 .mytheme .valo-menuitems {
@@ -12856,7 +12856,7 @@ div.v-layout.v-horizontal.v-widget {
 	margin: 0;
 	padding: 0;
 	height: 37px;
-	color: #0f695d;
+	color: #4a86e6;
 	max-width: 30%;
 	-webkit-backface-visibility: hidden;
 }
