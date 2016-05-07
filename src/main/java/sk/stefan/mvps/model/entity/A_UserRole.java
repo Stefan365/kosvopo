@@ -2,6 +2,7 @@
 package sk.stefan.mvps.model.entity;
 
 import java.util.Date;
+import lombok.Data;
 import sk.stefan.interfaces.PresentationName;
 import sk.stefan.mvps.model.service.UserService;
 import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
@@ -9,6 +10,7 @@ import sk.stefan.mvps.model.serviceImpl.UserServiceImpl;
 /**
  * Resprezentuje vazbu medzi uzivatelom a rolou.
  */
+@Data
 public class A_UserRole implements PresentationName {
 
     public static final String TN = "a_user_role";
@@ -35,81 +37,12 @@ public class A_UserRole implements PresentationName {
 
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    // getters:
-    public Integer getId() {
-        return this.id;
-    }
-
-    public Integer getUser_id() {
-        return this.user_id;
-    }
-
-    public Integer getRole_id() {
-        return this.role_id;
-    }
-
-    public Date getSince() {
-        return this.since;
-    }
-
-    public Date getTill() {
-        return this.till;
-    }
-
     public static String getTN() {
         return TN;
     }
 
-    // setters:
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setUser_id(Integer uid) {
-        this.user_id = uid;
-    }
-
-    public void setRole_id(Integer rid) {
-        this.role_id = rid;
-    }
-
-    public void setSince(Date since) {
-        this.since = since;
-    }
-
-    public void setTill(Date till) {
-        this.till = till;
-    }
-    
-
-    public Boolean getVisible() {
-        return visible;
-    }
-
-    public void setVisible(Boolean visible) {
-        this.visible = visible;
-    }
-
-    public Boolean getActual() {
-        return actual;
-    }
-
-    public void setActual(Boolean actual) {
-        this.actual = actual;
-    }
-
     @Override
     public String getPresentationName() {
-        
         return userService.getUserRolePresentationName(this);
-        
     }
 }

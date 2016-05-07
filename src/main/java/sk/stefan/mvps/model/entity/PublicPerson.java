@@ -2,12 +2,14 @@ package sk.stefan.mvps.model.entity;
 
 
 import java.sql.Date;
+import lombok.Data;
 import sk.stefan.interfaces.PresentationName;
 import sk.stefan.interfaces.TabEntity;
 
 /**
  * Trieda reprezentuje verejne cinnu fyzicku osobu (napr. Vaclav Havel, etc...).
  */
+@Data
 public class PublicPerson implements TabEntity {
 
     public static final String TN = "t_public_person";
@@ -24,7 +26,6 @@ public class PublicPerson implements TabEntity {
 
     private byte[] image;
 
-
     private Boolean visible;
 
 
@@ -38,50 +39,8 @@ public class PublicPerson implements TabEntity {
         return "verejnaOsoba";
     }
 
-    //getters:
-    public Integer getId() {
-        return this.id;
-    }
-
-    public String getFirst_name() {
-        return this.first_name;
-    }
-
-    public String getLast_name() {
-        return this.last_name;
-    }
-
-    public Date getDate_of_birth() {
-        return this.date_of_birth;
-    }
-
-    public Boolean getVisible() {
-        return this.visible;
-    }
-
     public static String getTN() {
         return TN;
-    }
-
-    //setters:
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setFirst_name(String fn) {
-        this.first_name = fn;
-    }
-
-    public void setLast_name(String ln) {
-        this.last_name = ln;
-    }
-
-    public void setDate_of_birth(Date bd) {
-        this.date_of_birth = bd;
-    }
-
-    public void setVisible(Boolean vis) {
-        this.visible = vis;
     }
 
     @Override
@@ -89,11 +48,4 @@ public class PublicPerson implements TabEntity {
         return (this.getFirst_name() + " " + this.getLast_name());
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 }

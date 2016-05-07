@@ -1,6 +1,7 @@
 package sk.stefan.mvps.model.entity;
 
 import java.io.Serializable;
+import lombok.Data;
 
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.mvps.model.service.SecurityService;
@@ -9,6 +10,7 @@ import sk.stefan.mvps.model.serviceImpl.SecurityServiceImpl;
 /**
  * Reprezentuje uzivatela nasho systemu.
  */
+@Data
 public class A_User implements Serializable, TabEntity {
 
     public static final long serialVersionUID = 1L;
@@ -49,7 +51,6 @@ public class A_User implements Serializable, TabEntity {
     }
 
     public A_User() {
-        
     }
 
     @Override
@@ -62,79 +63,12 @@ public class A_User implements Serializable, TabEntity {
         return "uzivatel";
     }
 
-    //getters:
-    public Integer getId() {
-        return this.id;
-    }
-
-    public String getFirst_name() {
-        return this.first_name;
-    }
-
-    public String getLast_name() {
-        return this.last_name;
-    }
-
-    public String getE_mail() {
-        return this.e_mail;
-    }
-
-    public String getLogin() {
-        return this.login;
-    }
-
-    public byte[] getPassword() {
-        return this.password;
-    }
-
     public static String getTN() {
         return TN;
-    }
-
-    //setters:
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public void setE_mail(String e_mail) {
-        this.e_mail = e_mail;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(byte[] password) {
-        this.password = password;
-    }
-
-    public Boolean getVisible() {
-        return visible;
-    }
-
-    public void setVisible(Boolean visible) {
-        this.visible = visible;
     }
 
     @Override
     public String getPresentationName() {
         return this.first_name + " " + this.last_name;
-    }
-
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 }

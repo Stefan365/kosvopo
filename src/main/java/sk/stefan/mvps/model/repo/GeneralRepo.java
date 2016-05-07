@@ -114,7 +114,7 @@ public class GeneralRepo {
     }
 
     /**
-     * Specificka metoda pre filtrovacie ucely. Vrati id pre dany sql dotaz.
+     * Specificka metoda pre filtrovacie ucely. Vrati ids pre dany sql dotaz.
      *
      * @param sql
      * @return

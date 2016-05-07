@@ -5,6 +5,8 @@
  */
 package sk.stefan.mvps.model.entity;
 
+import lombok.Data;
+
 
 /**
  * Trieda zachytavajuca hierarchicke vztahy mezdi statnymi entitami. 
@@ -13,6 +15,7 @@ package sk.stefan.mvps.model.entity;
  * 
  * @author stefan
  */
+@Data
 public class A_Hierarchy {
     
     private Integer id;
@@ -24,61 +27,16 @@ public class A_Hierarchy {
 
     public static final String TN = "a_hierarchy";
     public A_Hierarchy(){
-        
     }
+
     public A_Hierarchy(String tn, String btn, String bref){
-        
         this.table_name = tn;
         this.boss_table = btn;
         this.boss_reference = bref;
-    
     }
     
     public static String getTN() {
         return TN;
-    }
-
-    
-    public String getTable_name() {
-        return table_name;
-    }
-
-    public void setTable_name(String table_name) {
-        this.table_name = table_name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getBoss_table() {
-        return boss_table;
-    }
-
-    public void setBoss_table(String boss_table) {
-        this.boss_table = boss_table;
-    }
-
-    public Boolean getVisible() {return visible;}
-
-    public void setVisible(Boolean visible) {this.visible = visible;}
-
-    /**
-     * @return the boss_reference
-     */
-    public String getBoss_reference() {
-        return boss_reference;
-    }
-
-    /**
-     * @param boss_reference the boss_reference to set
-     */
-    public void setBoss_reference(String boss_reference) {
-        this.boss_reference = boss_reference;
     }
 
 }

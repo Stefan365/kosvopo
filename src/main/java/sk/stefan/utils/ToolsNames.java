@@ -24,7 +24,7 @@ import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.entity.Region;
 import sk.stefan.mvps.model.entity.Subject;
 import sk.stefan.mvps.model.entity.Tenure;
-import sk.stefan.mvps.model.entity.Theme;
+//import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.entity.Vote;
 
 /**
@@ -271,8 +271,8 @@ public abstract class ToolsNames {
                 return Vote.class;
             case "subject_id":
                 return Subject.class;
-            case "theme_id":
-                return Theme.class;
+//            case "theme_id":
+//                return Theme.class;
             case "tenure_id":
                 return Tenure.class;
             default:

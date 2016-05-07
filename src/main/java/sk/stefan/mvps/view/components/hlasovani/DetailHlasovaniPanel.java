@@ -22,7 +22,7 @@ import sk.stefan.enums.UserType;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.listeners.SaveListener;
-import sk.stefan.mvps.model.entity.Theme;
+//import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.entity.VoteClassification;
 import sk.stefan.mvps.model.service.ClassificationService;
@@ -60,7 +60,7 @@ public class DetailHlasovaniPanel extends CssLayout {
     private VerticalLayout readLayout;
     private Label lblOrgan;
     private Label lblPredmet;
-    private Link linkTema;
+//    private Link linkTema;
     private Label lblDatum;
     private Label lblCislo;
     private Label lblVysledek;
@@ -117,11 +117,11 @@ public class DetailHlasovaniPanel extends CssLayout {
 
         lblOrgan.setValue(voteService.getVotePublicBodyName(vote));
         lblPredmet.setValue(voteService.getVoteSubjectName(vote));
-        Theme theme = voteService.findThemeBySubjectId(vote.getSubject_id());
-        if (theme != null) {
-            linkTema.setCaption(theme.getPresentationName());
-            linkTema.setResource(new ExternalResource(linkService.getUriFragmentForEntity(theme)));
-        }
+//        Theme theme = voteService.findThemeBySubjectId(vote.getSubject_id());
+//        if (theme != null) {
+//            linkTema.setCaption(theme.getPresentationName());
+//            linkTema.setResource(new ExternalResource(linkService.getUriFragmentForEntity(theme)));
+//        }
         lblDatum.setValue(format.format(vote.getVote_date()));
         lblCislo.setValue(vote.getInternal_nr());
         lblVysledek.setValue(vote.getResult_vote() != null ? vote.getResult_vote().getName() : "dosud nezadáno");

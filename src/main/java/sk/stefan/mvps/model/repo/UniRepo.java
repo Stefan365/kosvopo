@@ -688,7 +688,8 @@ public class UniRepo<E> implements MyRepo<E> {
                 E ent = (E) clsE.newInstance();
 
                 for (String pn : mapPar.keySet()) {
-
+                    
+                    log.debug("PN:*" + pn + "*");
                     entMetName = ToolsDao.getG_SetterName(pn, "set");
                     rsMetName = ToolsDao.getGettersForResultSet(mapPar.get(pn));
 

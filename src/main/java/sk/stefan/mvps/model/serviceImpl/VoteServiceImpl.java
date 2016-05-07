@@ -8,9 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.TabEntity;
@@ -19,7 +18,6 @@ import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.entity.Subject;
 import sk.stefan.mvps.model.entity.Tenure;
-import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.entity.VoteOfRole;
 import sk.stefan.mvps.model.repo.GeneralRepo;
@@ -31,13 +29,12 @@ import sk.stefan.utils.ToolsDao;
 @Service
 public class VoteServiceImpl implements VoteService {
 
-    private static final Logger LOG = Logger.getLogger(VoteServiceImpl.class);
+    private static final Logger log = Logger.getLogger(VoteServiceImpl.class);
 
     // repa:
     private final GeneralRepo generalRepo;
     private final UniRepo<Vote> voteRepo;
     private final UniRepo<Tenure> tenureRepo;
-    private final UniRepo<Theme> themeRepo;
     private final UniRepo<Subject> subjectRepo;
     private final UniRepo<VoteOfRole> voteOfRoleRepo;
 
@@ -50,22 +47,18 @@ public class VoteServiceImpl implements VoteService {
     @Autowired
     private ActiveUserService activeUserService;
 
-
     public VoteServiceImpl() {
 
         generalRepo = new GeneralRepo();
 
         voteRepo = new UniRepo<>(Vote.class);
         tenureRepo = new UniRepo<>(Tenure.class);
-        themeRepo = new UniRepo<>(Theme.class);
         subjectRepo = new UniRepo<>(Subject.class);
         voteOfRoleRepo = new UniRepo<>(VoteOfRole.class);
-
 
         pubBodyRepo = new UniRepo<>(PublicBody.class);
         pubPersonRepo = new UniRepo<>(PublicPerson.class);
         pubRoleRepo = new UniRepo<>(PublicRole.class);
-
 
     }
 
@@ -84,7 +77,6 @@ public class VoteServiceImpl implements VoteService {
 
         // 1. step: ziskej vsechny public Roles for that public person
         List<PublicRole> lrole = pubRoleRepo.findByParam("public_person_id", "" + pp.getId());
-
 
         // 2. step: get list of all votes for these public bodies.
 //        List<Vote> lvot;
@@ -114,25 +106,6 @@ public class VoteServiceImpl implements VoteService {
         votesOfRole.forEach(voteOfRole -> votes.add(findOne(voteOfRole.getVote_id())));
         return votes;
 
-
-//        Tenure ten = tenureRepo.findOne(pr.getTenure_id());
-//        Date dSince = ten.getSince();
-//        Date dTill = ten.getTill();
-//
-//        Date d;
-//
-//        List<Vote> lvotFin = new ArrayList<>();
-//        List<Vote> lvot = voteRepo.findByParam("subject_id",
-//                "" + pr.getPublic_body_id());
-//
-//        for (Vote vo : lvot) {
-//            d = vo.getVote_date();
-//            if ((d.compareTo(dSince) == 1 && ((dTill == null) || dTill
-//                    .compareTo(d) == 1))) {
-//                lvotFin.add(vo);
-//            }
-//        }
-//        return lvotFin;
     }
 
 //    ***************************************************************************
@@ -190,9 +163,10 @@ public class VoteServiceImpl implements VoteService {
             return getAllVotesForPublicRole((PublicRole) tabEntity);
         } else if (tabEntity instanceof PublicBody) {
             return getAllVotesForPublicBody((PublicBody) tabEntity);
-        } else if (tabEntity instanceof Theme) {
-            return getAllVotesForTheme((Theme) tabEntity);
         }
+//        else if (tabEntity instanceof Theme) {
+//            return getAllVotesForTheme((Theme) tabEntity);
+//        }
         throw new RuntimeException("Nelze vyhledat hlasování pro entitu: " + tabEntity);
     }
 
@@ -214,15 +188,15 @@ public class VoteServiceImpl implements VoteService {
         }
     }
 
-    @Override
-    public Theme saveTheme(Theme theme) {
-        return themeRepo.save(theme, true,activeUserService.getActualUser());
-    }
-
-    @Override
-    public void removeTheme(Theme theme) {
-        themeRepo.deactivateOneOnly(theme, theme.getId() != null,activeUserService.getActualUser());
-    }
+//    @Override
+//    public Theme saveTheme(Theme theme) {
+//        return themeRepo.save(theme, true, activeUserService.getActualUser());
+//    }
+//
+//    @Override
+//    public void removeTheme(Theme theme) {
+//        themeRepo.deactivateOneOnly(theme, theme.getId() != null, activeUserService.getActualUser());
+//    }
 
     @Override
     public List<Subject> findAllSubjects() {
@@ -231,28 +205,27 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public Subject saveSubject(Subject subject) {
-        return subjectRepo.save(subject, true,activeUserService.getActualUser());
+        return subjectRepo.save(subject, true, activeUserService.getActualUser());
     }
 
     @Override
     public void removeSubject(Subject subject) {
-        subjectRepo.deactivateOneOnly(subject, subject.getId() != null,activeUserService.getActualUser());
+        subjectRepo.deactivateOneOnly(subject, subject.getId() != null, activeUserService.getActualUser());
     }
 
     @Override
     public VoteOfRole findVoteOfRoleForVoteAndPublicRole(Vote vote, PublicRole publicRole) {
         List<VoteOfRole> votesOfRoles = voteOfRoleRepo.findByTwoParams("vote_id", String.valueOf(vote.getId()), "public_role_id", String.valueOf(publicRole.getId()));
         if (votesOfRoles != null && votesOfRoles.size() > 1) {
-            LOG.warn("Multiple results for vote: " + vote.getPresentationName() + " and role: " + publicRole.getPresentationName());
+            log.warn("Multiple results for vote: " + vote.getPresentationName() + " and role: " + publicRole.getPresentationName());
         }
         return votesOfRoles == null || votesOfRoles.isEmpty() ? null : votesOfRoles.get(0);
     }
 
-    @Override
-    public Theme findThemaById(Integer temaId) {
-        return themeRepo.findOne(temaId);
-    }
-
+//    @Override
+//    public Theme findThemaById(Integer temaId) {
+//        return themeRepo.findOne(temaId);
+//    }
 
     @Override
     public String getVoteDate(Vote vote) {
@@ -293,7 +266,6 @@ public class VoteServiceImpl implements VoteService {
 
     }
 
-
     @Override
     public String getVoteResultAsString(Vote vote) {
 
@@ -303,7 +275,6 @@ public class VoteServiceImpl implements VoteService {
         } else {
             return "žiadny výsledok";
         }
-
 
     }
 
@@ -327,7 +298,6 @@ public class VoteServiceImpl implements VoteService {
         return numbers.toString();
     }
 
-
     @Override
     public List<Vote> findNewVotes(List<Integer> voteIds) {
 
@@ -340,7 +310,6 @@ public class VoteServiceImpl implements VoteService {
         return votes;
 
     }
-
 
     @Override
     public List<Integer> findVoteIdsByPubBodyId(Integer publicBodyId) {
@@ -376,7 +345,6 @@ public class VoteServiceImpl implements VoteService {
                 + " AND sub.visible = true) "
                 + " AND vot.visible = true"
                 + " UNION DISTINCT"
-
                 + " SELECT vot.id FROM t_vote vot JOIN t_vote_of_role vor ON (vot.id = vor.vote_id) "
                 + " JOIN t_public_role pur ON (vor.public_role_id = pur.id) "
                 + " WHERE pur.public_person_id = " + ppId
@@ -402,7 +370,6 @@ public class VoteServiceImpl implements VoteService {
                 + " ON (sub.public_role_id = pr.id) JOIN t_public_body pb "
                 + " ON (pr.public_body_id = pb.id) JOIN t_public_person pp "
                 + " ON (pr.public_person_id = pp.id) "
-
                 + " WHERE sub.brief_description like '%" + tx + "%'"
                 + " OR pp.last_name like '%" + tx + "%' "
                 + " OR pp.first_name like '%" + tx + "%' "
@@ -482,24 +449,6 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public String getThemeNameById(Integer theme_id) {
-
-        Theme th = themeRepo.findOne(theme_id);
-
-        return th.getPresentationName();
-
-    }
-
-    @Override
-    public Theme getThemeById(Integer theme_id) {
-
-        Theme th = themeRepo.findOne(theme_id);
-
-        return th;
-
-    }
-
-    @Override
     public PublicRole getPublicRoleById(Integer prId) {
 
         PublicRole pr = pubRoleRepo.findOne(prId);
@@ -507,18 +456,6 @@ public class VoteServiceImpl implements VoteService {
 
     }
 
-    @Override
-    public List<Theme> findNewThemes(List<Integer> themeIds) {
-
-        List<Theme> themes = new ArrayList<>();
-
-        for (Integer i : themeIds) {
-            themes.add(themeRepo.findOne(i));
-        }
-
-        return themes;
-
-    }
 
     @Override
     public List<Subject> findNewSubjects(List<Integer> subjectIds) {
@@ -533,27 +470,26 @@ public class VoteServiceImpl implements VoteService {
 
     }
 
+//    @Override
+//    public List<Theme> findAllThemes() {
+//
+//        List<Theme> ret = themeRepo.findAll();
+//        return ret;
+//
+//    }
+
     @Override
-    public List<Theme> findAllThemes() {
+    public List<Vote> getAllVotesForSubject(Subject subject) {
 
-        List<Theme> ret = themeRepo.findAll();
-        return ret;
+        List<Integer> votIds;
 
-    }
+        String sql = "SELECT v.id FROM t_vote v"
+                + " WHERE v.subject_id = " + subject.getId();
 
-    @Override
-    public List<Vote> getAllVotesForTheme(Theme theme) {
-
-        List<Integer> subIds;
-
-        String sql = "SELECT v.id FROM t_vote v" +
-                " JOIN t_subject s ON v.subject_id = s.id" +
-                " WHERE s.theme_id = " + theme.getId();
-
-        subIds = this.generalRepo.findIds(sql);
+        votIds = this.generalRepo.findIds(sql);
 
         List<Vote> votes = new ArrayList<>();
-        subIds.forEach(subId -> votes.add(findOne(subId)));
+        votIds.forEach(subId -> votes.add(findOne(subId)));
 
         return votes;
     }
@@ -569,19 +505,19 @@ public class VoteServiceImpl implements VoteService {
 
     }
 
-    @Override
-    public List<Integer> findNewThemeIdsByFilter(String tx) {
-
-        List<Integer> thIds;
-
-        String sql = "SELECT id FROM t_theme "
-                + " WHERE brief_description like '%" + tx + "%'"
-                + " AND visible = true";
-
-        thIds = this.generalRepo.findIds(sql);
-
-        return thIds;
-    }
+//    @Override
+//    public List<Integer> findNewThemeIdsByFilter(String tx) {
+//
+//        List<Integer> thIds;
+//
+//        String sql = "SELECT id FROM t_theme "
+//                + " WHERE brief_description like '%" + tx + "%'"
+//                + " AND visible = true";
+//
+//        thIds = this.generalRepo.findIds(sql);
+//
+//        return thIds;
+//    }
 
     @Override
     public List<Integer> findNewSubjectIdsByFilter(String tx) {
@@ -614,16 +550,6 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public Theme findThemeBySubjectId(Integer subject_id) {
-
-        Subject sub = subjectRepo.findOne(subject_id);
-
-        return themeRepo.findOne(sub.getTheme_id());
-
-
-    }
-
-    @Override
     public List<VoteOfRole> findVoteOfRolesByVoteId(Integer vote_id) {
 
         List<VoteOfRole> hlasovaniaOsob = voteOfRoleRepo.findByParam("vote_id", "" + vote_id);
@@ -648,7 +574,7 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public VoteOfRole saveVoteOfRole(VoteOfRole vor, boolean noteChange) {
 
-        return voteOfRoleRepo.save(vor, noteChange,activeUserService.getActualUser());
+        return voteOfRoleRepo.save(vor, noteChange, activeUserService.getActualUser());
     }
 
     @Override
@@ -693,15 +619,7 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public synchronized String getSubjectPresentationName(Subject sub) {
 
-        PublicRole pr = pubRoleRepo.findOne(sub.getPublic_role_id());
-        PublicBody pb = null;
-        if (pr != null) {
-            pb = pubBodyRepo.findOne(pr.getPublic_body_id());
-        }
         String s = sub.getBrief_description();
-        if (pb != null) {
-            s += " " + pb.getPresentationName();
-        }
         return s;
     }
 

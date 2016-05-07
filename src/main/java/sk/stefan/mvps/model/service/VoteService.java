@@ -13,7 +13,6 @@ import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicPerson;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.entity.Subject;
-import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.entity.VoteOfRole;
 
@@ -70,11 +69,11 @@ public interface VoteService {
 
     public List<Integer> findVoteOfRoleIdsByPubRoleId(Integer pubRoleId);
 
-    public String getThemeNameById(Integer theme_id);
+//    public String getThemeNameById(Integer theme_id);
     
-    public Theme getThemeById(Integer theme_id);
+//    public Theme getThemeById(Integer theme_id);
     
-    public PublicRole getPublicRoleById(Integer theme_id);
+    public PublicRole getPublicRoleById(Integer pr_id);
 
     public List<Vote> findNewVotes(List<Integer> voteIds);
     
@@ -82,25 +81,21 @@ public interface VoteService {
     
     public VoteOfRole saveVoteOfRole(VoteOfRole vor, boolean noteChange);
 
-    public List<Theme> findNewThemes(List<Integer> themeIds);
+//    public List<Theme> findNewThemes(List<Integer> themeIds);
     
     public List<Subject> findNewSubjects(List<Integer> subjectIds);
     
     //find All:
 
-    public List<Theme> findAllThemes();
+//    public List<Theme> findAllThemes();
 
-    List<Vote> getAllVotesForTheme(Theme theme);
+//    List<Vote> getAllVotesForTheme(Theme theme);
 
     public List<Subject> findAllSubjectsForPublicBody(PublicBody pb);
 
-    public List<Integer> findNewThemeIdsByFilter(String tx);
-    
     public List<Integer> findNewSubjectIdsByFilter(String tx);   
 
     public Subject findSubjectById(Integer subject_id);
-
-    public Theme findThemeBySubjectId(Integer subject_id);
 
     public List<VoteOfRole> findVoteOfRolesByVoteId(Integer vote_id);
 
@@ -123,9 +118,9 @@ public interface VoteService {
 
     PublicBody getVotePublicBody(Vote vote);
 
-    Theme saveTheme(Theme theme);
+//    Theme saveTheme(Theme theme);
 
-    void removeTheme(Theme theme);
+//    void removeTheme(Theme theme);
 
     List<Subject> findAllSubjects();
 
@@ -135,5 +130,6 @@ public interface VoteService {
 
     VoteOfRole findVoteOfRoleForVoteAndPublicRole(Vote vote, PublicRole publicRole);
 
-    Theme findThemaById(Integer temaId);
+//    Theme findThemaById(Integer temaId);
+    public List<Vote> getAllVotesForSubject(Subject subject);
 }

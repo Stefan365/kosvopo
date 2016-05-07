@@ -1,10 +1,12 @@
 package sk.stefan.mvps.model.entity;
 
+import lombok.Data;
 import sk.stefan.interfaces.PresentationName;
 
 /**
  * Trieda reprezentuje miesto v zmysle budto obec, alebo mestka cast obce.
  */
+@Data
 public class Location implements PresentationName {
 
     public static final String TN = "t_location";
@@ -21,50 +23,10 @@ public class Location implements PresentationName {
 
     private Boolean visible;
 
-    //getters:
-    public Integer getId() {
-        return this.id;
-    }
 
-    public String getLocation_name() {
-        return this.location_name;
-    }
-
-    public String getTown_section() {
-        return this.town_section;
-    }
-
-    public Integer getDistrict_id() {
-        return this.district_id;
-    }
-
-    public Boolean getVisible() {
-        return this.visible;
-    }
-
+    
     public static String getTN() {
         return TN;
-    }
-
-    //setters:
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setLocation_name(String ln) {
-        this.location_name = ln;
-    }
-
-    public void setTown_section(String ts) {
-        this.town_section = ts;
-    }
-
-    public void setDistrict_id(Integer okrid) {
-        this.district_id = okrid;
-    }
-
-    public void setVisible(Boolean vis) {
-        this.visible = vis;
     }
 
     @Override
@@ -78,5 +40,4 @@ public class Location implements PresentationName {
         }
         return rn;
     }
-
 }

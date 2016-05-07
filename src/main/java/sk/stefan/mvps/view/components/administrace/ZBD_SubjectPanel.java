@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.entity.PublicRole;
 import sk.stefan.mvps.model.entity.Subject;
-import sk.stefan.mvps.model.entity.Theme;
 import sk.stefan.mvps.model.service.PublicBodyService;
 import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.VoteService;
@@ -32,7 +31,7 @@ import java.util.function.Consumer;
 @Component
 @Scope("prototype")
 @DesignRoot
-public class SubjectPanel extends CssLayout {
+public class ZBD_SubjectPanel extends CssLayout {
 
     @Autowired
     private PublicBodyService publicBodyService;
@@ -47,15 +46,14 @@ public class SubjectPanel extends CssLayout {
     private Label lblCaption;
     private Button butEdit;
     private VerticalLayout readLayout;
-    private Label lblOrgan;
-    private Label lblRole;
-    private Label lblTema;
+    private Label lblSubmitter;
+    private Label lblPubBody;
     private Label lblNazev;
     private Label lblPopis;
     private VerticalLayout editLayout;
-    private ComboBox cbOrgan;
-    private ComboBox cbRole;
-    private ComboBox cbTema;
+    
+    private ComboBox cbSubmitter;
+    private ComboBox cbPubBody;
     private TextField tfNazev;
     private TextArea areaPopis;
     private Button butSave;
@@ -67,13 +65,13 @@ public class SubjectPanel extends CssLayout {
     private Consumer<Subject> saveListener;
     private Consumer<Subject> removeListener;
 
-    public SubjectPanel() {
+    public ZBD_SubjectPanel() {
         Design.read(this);
         Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(Subject.class);
-        bfg.bind(cbRole, "public_role_id");
-        bfg.bind(cbTema, "theme_id");
+        bfg.bind(cbSubmitter, "submitter_name");
+        bfg.bind(cbPubBody, "public_body_id");
         bfg.bind(tfNazev, "brief_description");
         bfg.bind(areaPopis, "description");
 
@@ -82,7 +80,7 @@ public class SubjectPanel extends CssLayout {
         butSave.addClickListener(event -> onSave());
         butRemove.addClickListener(event -> onRemove());
 
-        cbOrgan.addValueChangeListener(event -> updateRoleSelection((Integer) cbOrgan.getValue()));
+        cbPubBody.addValueChangeListener(event -> updateRoleSelection((Integer) cbPubBody.getValue()));
     }
 
     public void setSaveListener(Consumer<Subject> saveListener) {
@@ -94,31 +92,31 @@ public class SubjectPanel extends CssLayout {
     }
 
     public void setSubject(Subject subject) {
-        cbOrgan.removeAllItems();
+        cbPubBody.removeAllItems();
         publicBodyService.findAll().forEach(body -> {
-            cbOrgan.addItem(body.getId());
-            cbOrgan.setItemCaption(body.getId(), body.getPresentationName());
+            cbPubBody.addItem(body.getId());
+            cbPubBody.setItemCaption(body.getId(), body.getPresentationName());
         });
 
         if (subject.getId() != null) {
-            PublicBody body = publicRoleService.getPublicBodyForRoleId(subject.getPublic_role_id());
-            cbOrgan.setValue(body != null ? body.getId() : null);
-            lblOrgan.setValue(body != null ? body.getPresentationName() : null);
+            PublicBody body = publicBodyService.findOne(subject.getPublic_body_id());
+            cbPubBody.setValue(body != null ? body.getId() : null);
+            lblPubBody.setValue(body != null ? body.getPresentationName() : null);
             if (body != null) {
                 updateRoleSelection(body.getId());
             }
-            Theme tema = voteService.getThemeById(subject.getTheme_id());
-            lblTema.setValue(tema != null ? tema.getPresentationName() : null);
+//            Theme tema = voteService.getThemeById(subject.getPublic_body_id());
+//            lblPubBody.setValue(tema != null ? tema.getPresentationName() : null);
         }
 
-        cbTema.removeAllItems();
-        voteService.findAllThemes().forEach(theme -> {
-            cbTema.addItem(theme.getId());
-            cbTema.setItemCaption(theme.getId(), theme.getPresentationName());
+        cbPubBody.removeAllItems();
+        publicBodyService.findAll().forEach(pb -> {
+            cbPubBody.addItem(pb.getId());
+            cbPubBody.setItemCaption(pb.getId(), pb.getPresentationName());
         });
 
-        PublicRole role = publicRoleService.findOne(subject.getPublic_role_id());
-        lblRole.setValue(role != null ? role.getPresentationName() : null);
+        String submitter = subject.getSubmitter_name();
+        lblSubmitter.setValue(submitter);
         lblNazev.setValue(subject.getBrief_description());
         lblPopis.setValue(subject.getDescription());
         lblPopis.setVisible(subject.getDescription() != null && !subject.getDescription().isEmpty());
@@ -166,16 +164,16 @@ public class SubjectPanel extends CssLayout {
     }
 
     public void setValidationVisible(boolean visible) {
-        cbRole.setValidationVisible(visible);
+        cbSubmitter.setValidationVisible(visible);
         tfNazev.setValidationVisible(visible);
     }
 
 
     private void updateRoleSelection(Integer organId) {
-        cbRole.removeAllItems();
+        cbSubmitter.removeAllItems();
         publicRoleService.findAllPublicRoleByPublicBodyId(organId).forEach(role -> {
-            cbRole.addItem(role.getId());
-            cbRole.setItemCaption(role.getId(), role.getPresentationName());
+            cbSubmitter.addItem(role.getPresentationName());
+            cbSubmitter.setItemCaption(role.getPresentationName(), role.getPresentationName());
         });
     }
 }

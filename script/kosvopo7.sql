@@ -24,116 +24,7 @@ CREATE TABLE `a_change` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
-INSERT INTO `a_change` (`id`, `date_stamp`, `user_id`, `public_body_id`, `table_name`, `column_name`, `row_id`, `old_value`, `new_value`, `visible`) VALUES
-(1,	'2015-06-20',	4,	NULL,	't_public_person',	'first_name',	4,	'Alex',	'Alexej',	CONV('1', 2, 10) + 0),
-(2,	'2015-06-20',	4,	NULL,	't_public_person',	'last_name',	1,	'Proch�zka',	'Proch�zkar',	CONV('1', 2, 10) + 0),
-(3,	'2015-06-20',	4,	NULL,	't_public_person',	'last_name',	1,	'Proch�zkar',	'Proch�zkare',	CONV('1', 2, 10) + 0),
-(4,	'2015-06-20',	4,	NULL,	't_public_person',	'first_name',	2,	'Karol',	'Karolko',	CONV('1', 2, 10) + 0),
-(5,	'2015-06-20',	4,	NULL,	't_public_person',	'date_of_birth',	2,	'1966-05-13',	'1966-05-17',	CONV('1', 2, 10) + 0),
-(6,	'2015-06-20',	4,	NULL,	't_public_person',	'last_name',	2,	'?�tora',	'?�tora',	CONV('1', 2, 10) + 0),
-(7,	'2015-06-20',	4,	NULL,	't_public_person',	'visible',	5,	'true',	'false',	CONV('1', 2, 10) + 0),
-(8,	'2015-06-20',	4,	NULL,	't_person_classification',	'visible',	2,	'true',	'false',	CONV('1', 2, 10) + 0),
-(9,	'2015-06-20',	4,	NULL,	't_public_role',	'visible',	5,	'true',	'false',	CONV('1', 2, 10) + 0),
-(10,	'2015-06-20',	4,	NULL,	't_vote_of_role',	'visible',	5,	'true',	'false',	CONV('1', 2, 10) + 0),
-(11,	'2015-06-20',	4,	NULL,	't_vote_of_role',	'visible',	10,	'true',	'false',	CONV('1', 2, 10) + 0),
-(12,	'2015-06-20',	4,	NULL,	't_vote_of_role',	'visible',	15,	'true',	'false',	CONV('1', 2, 10) + 0),
-(13,	'2015-06-20',	4,	NULL,	't_vote_of_role',	'visible',	20,	'true',	'false',	CONV('1', 2, 10) + 0),
-(14,	'2015-06-20',	4,	NULL,	't_public_person',	'date_of_birth',	1,	'1956-09-11',	'1956-09-07',	CONV('1', 2, 10) + 0),
-(15,	'2015-07-08',	4,	NULL,	't_public_body',	'visible',	7,	'null',	'true',	CONV('1', 2, 10) + 0),
-(16,	'2015-07-08',	4,	NULL,	't_public_body',	'name',	7,	'null',	'KOKOSOVO',	CONV('1', 2, 10) + 0),
-(17,	'2015-07-08',	4,	NULL,	't_public_body',	'id',	7,	'null',	'7',	CONV('1', 2, 10) + 0),
-(18,	'2015-07-08',	4,	NULL,	't_public_body',	'location_id',	7,	'null',	'null',	CONV('1', 2, 10) + 0),
-(19,	'2015-07-10',	4,	NULL,	't_public_person',	'visible',	6,	'null',	'true',	CONV('1', 2, 10) + 0),
-(20,	'2015-07-10',	4,	NULL,	't_public_person',	'date_of_birth',	6,	'null',	'2001-07-10',	CONV('1', 2, 10) + 0),
-(21,	'2015-07-10',	4,	NULL,	't_public_person',	'last_name',	6,	'null',	'Oblazek',	CONV('1', 2, 10) + 0),
-(22,	'2015-07-10',	4,	NULL,	't_public_person',	'id',	6,	'null',	'6',	CONV('1', 2, 10) + 0),
-(23,	'2015-07-10',	4,	NULL,	't_public_person',	'first_name',	6,	'null',	'Pavol',	CONV('1', 2, 10) + 0),
-(24,	'2015-07-10',	4,	NULL,	't_public_person',	'visible',	7,	'null',	'true',	CONV('1', 2, 10) + 0),
-(25,	'2015-07-10',	4,	NULL,	't_public_person',	'date_of_birth',	7,	'null',	'1989-07-05',	CONV('1', 2, 10) + 0),
-(26,	'2015-07-10',	4,	NULL,	't_public_person',	'last_name',	7,	'null',	'Predseda',	CONV('1', 2, 10) + 0),
-(27,	'2015-07-10',	4,	NULL,	't_public_person',	'id',	7,	'null',	'7',	CONV('1', 2, 10) + 0),
-(28,	'2015-07-10',	4,	NULL,	't_public_person',	'first_name',	7,	'null',	'Karolko',	CONV('1', 2, 10) + 0),
-(29,	'2015-07-10',	4,	NULL,	't_district',	'district_name',	15,	'null',	'KOLAROVO',	CONV('1', 2, 10) + 0),
-(30,	'2015-07-10',	4,	NULL,	't_district',	'visible',	15,	'null',	'true',	CONV('1', 2, 10) + 0),
-(31,	'2015-07-10',	4,	NULL,	't_district',	'region_id',	15,	'null',	'2',	CONV('1', 2, 10) + 0),
-(32,	'2015-07-10',	4,	NULL,	't_district',	'id',	15,	'null',	'15',	CONV('1', 2, 10) + 0),
-(33,	'2015-07-10',	4,	NULL,	't_district',	'district_name',	16,	'null',	'Kremnica',	CONV('1', 2, 10) + 0),
-(34,	'2015-07-10',	4,	NULL,	't_district',	'visible',	16,	'null',	'true',	CONV('1', 2, 10) + 0),
-(35,	'2015-07-10',	4,	NULL,	't_district',	'region_id',	16,	'null',	'2',	CONV('1', 2, 10) + 0),
-(36,	'2015-07-10',	4,	NULL,	't_district',	'id',	16,	'null',	'16',	CONV('1', 2, 10) + 0),
-(37,	'2015-07-10',	4,	NULL,	't_vote_classification',	'visible',	5,	'null',	'true',	CONV('1', 2, 10) + 0),
-(38,	'2015-07-10',	4,	NULL,	't_vote_classification',	'public_usefulness',	5,	'null',	'PU3',	CONV('1', 2, 10) + 0),
-(39,	'2015-07-10',	4,	NULL,	't_vote_classification',	'brief_description',	5,	'null',	'kokocina',	CONV('1', 2, 10) + 0),
-(40,	'2015-07-10',	4,	NULL,	't_vote_classification',	'vote_id',	5,	'null',	'1',	CONV('1', 2, 10) + 0),
-(41,	'2015-07-10',	4,	NULL,	't_vote_classification',	'id',	5,	'null',	'5',	CONV('1', 2, 10) + 0),
-(42,	'2015-07-10',	4,	NULL,	't_vote_classification',	'visible',	6,	'null',	'true',	CONV('1', 2, 10) + 0),
-(43,	'2015-07-10',	4,	NULL,	't_vote_classification',	'public_usefulness',	6,	'null',	'PU3',	CONV('1', 2, 10) + 0),
-(44,	'2015-07-10',	4,	NULL,	't_vote_classification',	'brief_description',	6,	'null',	'kokocina',	CONV('1', 2, 10) + 0),
-(45,	'2015-07-10',	4,	NULL,	't_vote_classification',	'vote_id',	6,	'null',	'1',	CONV('1', 2, 10) + 0),
-(46,	'2015-07-10',	4,	NULL,	't_vote_classification',	'id',	6,	'null',	'6',	CONV('1', 2, 10) + 0),
-(47,	'2015-07-10',	4,	NULL,	't_person_classification',	'public_usefulness',	4,	'PU1',	'PU4',	CONV('1', 2, 10) + 0),
-(48,	'2015-07-10',	4,	NULL,	't_person_classification',	'stability',	4,	'S1',	'S5',	CONV('1', 2, 10) + 0),
-(49,	'2015-07-10',	4,	NULL,	't_person_classification',	'actual',	6,	'null',	'null',	CONV('1', 2, 10) + 0),
-(50,	'2015-07-10',	4,	NULL,	't_person_classification',	'visible',	6,	'null',	'true',	CONV('1', 2, 10) + 0),
-(51,	'2015-07-10',	4,	NULL,	't_person_classification',	'public_usefulness',	6,	'null',	'PU5',	CONV('1', 2, 10) + 0),
-(52,	'2015-07-10',	4,	NULL,	't_person_classification',	'classification_date',	6,	'null',	'2015-07-14',	CONV('1', 2, 10) + 0),
-(53,	'2015-07-10',	4,	NULL,	't_person_classification',	'id',	6,	'null',	'6',	CONV('1', 2, 10) + 0),
-(54,	'2015-07-10',	4,	NULL,	't_person_classification',	'stability',	6,	'null',	'S3',	CONV('1', 2, 10) + 0),
-(55,	'2015-07-10',	4,	NULL,	't_person_classification',	'public_person_id',	6,	'null',	'3',	CONV('1', 2, 10) + 0),
-(56,	'2015-07-10',	4,	NULL,	't_person_classification',	'actual',	7,	'null',	'null',	CONV('1', 2, 10) + 0),
-(57,	'2015-07-10',	4,	NULL,	't_person_classification',	'visible',	7,	'null',	'true',	CONV('1', 2, 10) + 0),
-(58,	'2015-07-10',	4,	NULL,	't_person_classification',	'public_usefulness',	7,	'null',	'PU1',	CONV('1', 2, 10) + 0),
-(59,	'2015-07-10',	4,	NULL,	't_person_classification',	'classification_date',	7,	'null',	'2015-07-10',	CONV('1', 2, 10) + 0),
-(60,	'2015-07-10',	4,	NULL,	't_person_classification',	'id',	7,	'null',	'7',	CONV('1', 2, 10) + 0),
-(61,	'2015-07-10',	4,	NULL,	't_person_classification',	'stability',	7,	'null',	'S5',	CONV('1', 2, 10) + 0),
-(62,	'2015-07-10',	4,	NULL,	't_person_classification',	'public_person_id',	7,	'null',	'1',	CONV('1', 2, 10) + 0),
-(63,	'2015-07-10',	4,	NULL,	't_person_classification',	'visible',	7,	'true',	'false',	CONV('1', 2, 10) + 0),
-(64,	'2015-07-31',	4,	NULL,	't_public_body',	'visible',	8,	'null',	'true',	CONV('1', 2, 10) + 0),
-(65,	'2015-07-31',	4,	NULL,	't_public_body',	'name',	8,	'null',	'Mestky urad Kokava nad rimavicou',	CONV('1', 2, 10) + 0),
-(66,	'2015-07-31',	4,	NULL,	't_public_body',	'id',	8,	'null',	'8',	CONV('1', 2, 10) + 0),
-(67,	'2015-07-31',	4,	NULL,	't_public_body',	'location_id',	8,	'null',	'3',	CONV('1', 2, 10) + 0),
-(68,	'2015-07-31',	4,	NULL,	't_public_body',	'name',	8,	'Mestky urad Kokava nad rimavicou',	'Mestky urad Kokava nad Rimavicou',	CONV('1', 2, 10) + 0),
-(69,	'2015-07-31',	4,	NULL,	't_public_person',	'visible',	8,	'null',	'true',	CONV('1', 2, 10) + 0),
-(70,	'2015-07-31',	4,	NULL,	't_public_person',	'date_of_birth',	8,	'null',	'1993-07-14',	CONV('1', 2, 10) + 0),
-(71,	'2015-07-31',	4,	NULL,	't_public_person',	'last_name',	8,	'null',	'Sebes',	CONV('1', 2, 10) + 0),
-(72,	'2015-07-31',	4,	NULL,	't_public_person',	'id',	8,	'null',	'8',	CONV('1', 2, 10) + 0),
-(73,	'2015-07-31',	4,	NULL,	't_public_person',	'first_name',	8,	'null',	'Kamil',	CONV('1', 2, 10) + 0),
-(74,	'2015-08-07',	4,	NULL,	't_public_role',	'name',	3,	'PREDSEDA',	'POSLANEC',	CONV('1', 2, 10) + 0),
-(75,	'2015-09-04',	4,	NULL,	't_public_person',	'last_name',	2,	'?�tora',	'?�torako',	CONV('1', 2, 10) + 0),
-(76,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	5,	'Mestk� zastupite?stvo Ko�ice z�humienok',	'Mestk� zastupitelstvo Ko�ice z�humienok',	CONV('1', 2, 10) + 0),
-(77,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	4,	'Mestk� zastupite?stvo R�zto?no',	'Mestk� zastup R�zto?no',	CONV('1', 2, 10) + 0),
-(78,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	7,	'KOKOSOVO',	'KOsakovo',	CONV('1', 2, 10) + 0),
-(79,	'2015-09-04',	4,	NULL,	't_public_body',	'name',	5,	'Mestk� zastupitelstvo Ko�ice z�humienok',	'Mestk� zvtovo Ko�ice z�humienok',	CONV('1', 2, 10) + 0),
-(80,	'2015-09-06',	4,	NULL,	't_public_body',	'visible',	9,	'null',	'true',	CONV('1', 2, 10) + 0),
-(81,	'2015-09-06',	4,	NULL,	't_public_body',	'name',	9,	'null',	'KUKUKUK',	CONV('1', 2, 10) + 0),
-(82,	'2015-09-06',	4,	NULL,	't_public_body',	'id',	9,	'null',	'9',	CONV('1', 2, 10) + 0),
-(83,	'2015-09-06',	4,	NULL,	't_public_body',	'location_id',	9,	'null',	'1',	CONV('1', 2, 10) + 0),
-(84,	'2015-09-06',	4,	NULL,	't_public_role',	'public_body_id',	6,	'null',	'4',	CONV('1', 2, 10) + 0),
-(85,	'2015-09-06',	4,	NULL,	't_public_role',	'visible',	6,	'null',	'true',	CONV('1', 2, 10) + 0),
-(86,	'2015-09-06',	4,	NULL,	't_public_role',	'name',	6,	'null',	'PODPREDSEDA',	CONV('1', 2, 10) + 0),
-(87,	'2015-09-06',	4,	NULL,	't_public_role',	'id',	6,	'null',	'6',	CONV('1', 2, 10) + 0),
-(88,	'2015-09-06',	4,	NULL,	't_public_role',	'tenure_id',	6,	'null',	'6',	CONV('1', 2, 10) + 0),
-(89,	'2015-09-06',	4,	NULL,	't_public_role',	'public_person_id',	6,	'null',	'6',	CONV('1', 2, 10) + 0),
-(90,	'2015-09-06',	4,	NULL,	't_tenure',	'till',	7,	'null',	'2015-09-17',	CONV('1', 2, 10) + 0),
-(91,	'2015-09-06',	4,	NULL,	't_tenure',	'visible',	7,	'null',	'true',	CONV('1', 2, 10) + 0),
-(92,	'2015-09-06',	4,	NULL,	't_tenure',	'id',	7,	'null',	'7',	CONV('1', 2, 10) + 0),
-(93,	'2015-09-06',	4,	NULL,	't_tenure',	'since',	7,	'null',	'2015-09-15',	CONV('1', 2, 10) + 0),
-(94,	'2015-09-12',	4,	NULL,	't_public_body',	'name',	4,	'Mestk� zastup R�zto?no',	'Mestk� zastup R�ztocno',	CONV('1', 2, 10) + 0),
-(95,	'2015-09-12',	4,	NULL,	't_public_body',	'name',	9,	'KUKUKUK',	'Moslimske zastupitelstvo Raca',	CONV('1', 2, 10) + 0),
-(96,	'2015-09-12',	4,	NULL,	't_public_body',	'visible',	10,	'null',	'true',	CONV('1', 2, 10) + 0),
-(97,	'2015-09-12',	4,	NULL,	't_public_body',	'name',	10,	'null',	'kokosak',	CONV('1', 2, 10) + 0),
-(98,	'2015-09-12',	4,	NULL,	't_public_body',	'id',	10,	'null',	'10',	CONV('1', 2, 10) + 0),
-(99,	'2015-09-12',	4,	NULL,	't_public_body',	'location_id',	10,	'null',	'3',	CONV('1', 2, 10) + 0),
-(100,	'2015-09-12',	4,	NULL,	't_public_body',	'visible',	11,	'null',	'null',	CONV('1', 2, 10) + 0),
-(101,	'2015-09-12',	4,	NULL,	't_public_body',	'name',	11,	'null',	'Samaritansky kruzok, Handlova',	CONV('1', 2, 10) + 0),
-(102,	'2015-09-12',	4,	NULL,	't_public_body',	'id',	11,	'null',	'11',	CONV('1', 2, 10) + 0),
-(103,	'2015-09-12',	4,	NULL,	't_public_body',	'location_id',	11,	'null',	'3',	CONV('1', 2, 10) + 0),
-(104,	'2015-09-20',	4,	NULL,	't_public_body',	'name',	5,	'Mestk� zvtovo Ko�ice z�humienok',	'Mestk� zastupitelstvo Ko�ice z�humienok',	CONV('1', 2, 10) + 0),
-(105,	'2015-09-20',	4,	NULL,	't_public_body',	'visible',	12,	'null',	'true',	CONV('1', 2, 10) + 0),
-(106,	'2015-09-20',	4,	NULL,	't_public_body',	'name',	12,	'null',	'kokosatcke zastupitelstvo',	CONV('1', 2, 10) + 0),
-(107,	'2015-09-20',	4,	NULL,	't_public_body',	'id',	12,	'null',	'12',	CONV('1', 2, 10) + 0),
-(108,	'2015-09-20',	4,	NULL,	't_public_body',	'location_id',	12,	'null',	'4',	CONV('1', 2, 10) + 0),
-(109,	'2015-09-20',	4,	NULL,	't_public_body',	'name',	10,	'kokosak',	'kokosakce zastupitestvo v Handlovej',	CONV('1', 2, 10) + 0);
+
 
 DROP TABLE IF EXISTS `a_hierarchy`;
 CREATE TABLE `a_hierarchy` (
@@ -148,25 +39,23 @@ CREATE TABLE `a_hierarchy` (
 INSERT INTO `a_hierarchy` (`id`, `table_name`, `boss_table`, `boss_reference`, `visible`) VALUES
 (1,	't_public_person',	NULL,	NULL,	CONV('1', 2, 10) + 0),
 (2,	't_tenure',	NULL,	NULL,	CONV('1', 2, 10) + 0),
-(3,	't_theme',	NULL,	NULL,	CONV('1', 2, 10) + 0),
-(4,	't_region',	NULL,	NULL,	CONV('1', 2, 10) + 0),
-(5,	't_district',	't_region',	'region_id',	CONV('1', 2, 10) + 0),
-(6,	't_location',	't_district',	'district_id',	CONV('1', 2, 10) + 0),
-(7,	't_public_body',	't_location',	'location_id',	CONV('1', 2, 10) + 0),
-(8,	't_person_classification',	't_public_person',	'public_person_id',	CONV('1', 2, 10) + 0),
-(9,	't_public_role',	't_tenure',	'tenure_id',	CONV('1', 2, 10) + 0),
-(10,	't_public_role',	't_public_body',	'public_body_id',	CONV('1', 2, 10) + 0),
-(11,	't_public_role',	't_public_person',	'public_person_id',	CONV('1', 2, 10) + 0),
-(12,	't_subject',	't_theme',	'theme_id',	CONV('1', 2, 10) + 0),
-(13,	't_subject',	't_public_role',	'public_role_id',	CONV('1', 2, 10) + 0),
-(14,	't_vote',	't_subject',	'subject_id',	CONV('1', 2, 10) + 0),
-(15,	't_vote_classification',	't_vote',	'vote_id',	CONV('1', 2, 10) + 0),
-(16,	't_vote_of_role',	't_vote',	'vote_id',	CONV('1', 2, 10) + 0),
-(17,	't_vote_of_role',	't_public_role',	'public_role_id',	CONV('1', 2, 10) + 0),
-(18,	'a_user',	NULL,	NULL,	CONV('1', 2, 10) + 0),
-(19,	'a_role',	NULL,	NULL,	CONV('1', 2, 10) + 0),
-(20,	'a_user_role',	'a_user',	'user_id',	CONV('1', 2, 10) + 0),
-(21,	'a_user_role',	'a_role',	'role_id',	CONV('1', 2, 10) + 0);
+(3,	't_region',	NULL,	NULL,	CONV('1', 2, 10) + 0),
+(4,	't_district',	't_region',	'region_id',	CONV('1', 2, 10) + 0),
+(5,	't_location',	't_district',	'district_id',	CONV('1', 2, 10) + 0),
+(6,	't_public_body',	't_location',	'location_id',	CONV('1', 2, 10) + 0),
+(7,	't_person_classification',	't_public_person',	'public_person_id',	CONV('1', 2, 10) + 0),
+(8,	't_public_role',	't_tenure',	'tenure_id',	CONV('1', 2, 10) + 0),
+(9,	't_public_role',	't_public_body',	'public_body_id',	CONV('1', 2, 10) + 0),
+(10,	't_public_role',	't_public_person',	'public_person_id',	CONV('1', 2, 10) + 0),
+(11,	't_subject',	't_public_body',	'public_body_id',	CONV('1', 2, 10) + 0),
+(12,	't_vote',	't_subject',	'subject_id',	CONV('1', 2, 10) + 0),
+(13,	't_vote_classification',	't_vote',	'vote_id',	CONV('1', 2, 10) + 0),
+(14,	't_vote_of_role',	't_vote',	'vote_id',	CONV('1', 2, 10) + 0),
+(15,	't_vote_of_role',	't_public_role',	'public_role_id',	CONV('1', 2, 10) + 0),
+(16,	'a_user',	NULL,	NULL,	CONV('1', 2, 10) + 0),
+(17,	'a_role',	NULL,	NULL,	CONV('1', 2, 10) + 0),
+(18,	'a_user_role',	'a_user',	'user_id',	CONV('1', 2, 10) + 0),
+(19,	'a_user_role',	'a_role',	'role_id',	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `a_role`;
 CREATE TABLE `a_role` (
@@ -196,10 +85,7 @@ CREATE TABLE `a_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `a_user` (`id`, `first_name`, `last_name`, `e_mail`, `login`, `password`, `visible`) VALUES
-(1,	'Peter',	'Sarkoci',	'peter.sarkoci@gmail.com',	'petak',	unhex('807ac679a9eeeb1e704eab805c059365'),	CONV('1', 2, 10) + 0),
-(2,	'Štefan',	'Vereš',	'stefan.veres@gmail.com',	'stefan',	unhex('2e970e822e1a8834203d06abb60f59ec'),	CONV('1', 2, 10) + 0),
-(3,	'Miro',	'Sčibrányi',	'miro.scibranyi@gmail.com',	'miro',	unhex('e0eaf3841f8ca5bf93a2c2a1d0648d44'),	CONV('1', 2, 10) + 0),
-(4,	'admin',	'adminovic',	'admin@admin.sk',	'admin',	unhex('21232f297a57a5a743894a0e4a801fc3'),	CONV('1', 2, 10) + 0);
+(1,	'admin',	'adminovic',	'admin@admin.sk',	'admin',	unhex('21232f297a57a5a743894a0e4a801fc3'),	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `a_user_role`;
 CREATE TABLE `a_user_role` (
@@ -214,10 +100,7 @@ CREATE TABLE `a_user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `a_user_role` (`id`, `role_id`, `user_id`, `actual`, `since`, `till`, `visible`) VALUES
-(1,	1,	1,	CONV('1', 2, 10) + 0,	'2015-06-19',	NULL,	CONV('1', 2, 10) + 0),
-(2,	1,	2,	CONV('1', 2, 10) + 0,	'2015-06-19',	NULL,	CONV('1', 2, 10) + 0),
-(3,	2,	2,	CONV('1', 2, 10) + 0,	'2015-06-19',	NULL,	CONV('1', 2, 10) + 0),
-(4,	2,	4,	CONV('1', 2, 10) + 0,	'2015-06-20',	NULL,	CONV('1', 2, 10) + 0);
+(1,	1,	1,	CONV('1', 2, 10) + 0,	'2015-06-19',	NULL,	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `t_district`;
 CREATE TABLE `t_district` (
@@ -229,22 +112,7 @@ CREATE TABLE `t_district` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `t_district` (`id`, `district_name`, `region_id`, `visible`) VALUES
-(1,	'Bratislava',	1,	CONV('1', 2, 10) + 0),
-(2,	'Trnava',	1,	CONV('1', 2, 10) + 0),
-(3,	'Nitra',	1,	CONV('1', 2, 10) + 0),
-(4,	'Trenčín',	1,	CONV('1', 2, 10) + 0),
-(5,	'Prievidza',	2,	CONV('1', 2, 10) + 0),
-(6,	'Banská Bystrica',	2,	CONV('1', 2, 10) + 0),
-(7,	'Zvolen',	2,	CONV('1', 2, 10) + 0),
-(8,	'Žarnovica',	2,	CONV('1', 2, 10) + 0),
-(9,	'Lučenec',	2,	CONV('1', 2, 10) + 0),
-(10,	'Kosice',	3,	CONV('1', 2, 10) + 0),
-(11,	'Michalovce',	3,	CONV('1', 2, 10) + 0),
-(12,	'Zvolen',	3,	CONV('1', 2, 10) + 0),
-(13,	'Roznava',	3,	CONV('1', 2, 10) + 0),
-(14,	'Presov',	3,	CONV('1', 2, 10) + 0),
-(15,	'KOLAROVO',	2,	CONV('1', 2, 10) + 0),
-(16,	'Kremnica',	2,	CONV('1', 2, 10) + 0);
+(1,	'Lučenec',	2,	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `t_document`;
 CREATE TABLE `t_document` (
@@ -270,15 +138,7 @@ CREATE TABLE `t_location` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `t_location` (`id`, `location_name`, `town_section`, `district_id`, `visible`) VALUES
-(1,	'Bratislava',	'Rača',	1,	CONV('1', 2, 10) + 0),
-(2,	'Bratislava',	'Dúbravka',	1,	CONV('1', 2, 10) + 0),
-(3,	'Handlová',	NULL,	5,	CONV('1', 2, 10) + 0),
-(4,	'Nováky',	NULL,	5,	CONV('1', 2, 10) + 0),
-(5,	'Patrizánske',	NULL,	5,	CONV('1', 2, 10) + 0),
-(6,	'Ráztočno',	NULL,	5,	CONV('1', 2, 10) + 0),
-(7,	'Topoľčany',	NULL,	3,	CONV('1', 2, 10) + 0),
-(8,	'Košice',	'Záhumienok',	10,	CONV('1', 2, 10) + 0),
-(9,	'Sereď',	NULL,	1,	CONV('1', 2, 10) + 0);
+(1,	'Kokava nad Rimavicou',	NULL,	1,	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `t_note`;
 CREATE TABLE `t_note` (
@@ -305,14 +165,6 @@ CREATE TABLE `t_person_classification` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
-INSERT INTO `t_person_classification` (`id`, `classification_date`, `public_person_id`, `stability`, `public_usefulness`, `actual`, `visible`) VALUES
-(1,	'2015-06-19',	4,	3,	3,	CONV('1', 2, 10) + 0,	CONV('1', 2, 10) + 0),
-(2,	'2015-06-19',	5,	3,	4,	CONV('0', 2, 10) + 0,	CONV('0', 2, 10) + 0),
-(3,	'2015-06-19',	3,	2,	2,	CONV('0', 2, 10) + 0,	CONV('1', 2, 10) + 0),
-(4,	'2015-06-19',	2,	4,	3,	CONV('0', 2, 10) + 0,	CONV('1', 2, 10) + 0),
-(5,	'2015-06-19',	1,	4,	2,	CONV('0', 2, 10) + 0,	CONV('1', 2, 10) + 0),
-(6,	'2015-07-14',	3,	2,	4,	NULL,	CONV('1', 2, 10) + 0),
-(7,	'2015-07-10',	1,	4,	0,	NULL,	CONV('0', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `t_public_body`;
 CREATE TABLE `t_public_body` (
@@ -325,18 +177,7 @@ CREATE TABLE `t_public_body` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `t_public_body` (`id`, `name`, `location_id`, `visible`, `image`) VALUES
-(1,	'Mestké zastupiteľstvo Bratislava Rača',	1,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(2,	'Mestké zastupiteľstvo Handlová',	3,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(3,	'Mestké zastupiteľstvo Nováky',	4,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(4,	'Mestké zastup Ráztocno',	6,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(5,	'Mestké zastupitelstvo Košice záhumienok',	8,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(6,	'Mestké zastupiteľstvo Sereď',	9,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(7,	'KOsakovo',	4,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(8,	'Mestky urad Kokava nad Rimavicou',	3,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(9,	'Moslimske zastupitelstvo Raca',	1,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(10,	'kokosakce zastupitestvo v Handlovej',	3,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(11,	'Samaritansky kruzok, Handlova',	3,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg')),
-(12,	'kokosatcke zastupitelstvo',	4,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg'));
+(1,	'Mestky urad Kokava nad Rimavicou',	1,	CONV('1', 2, 10) + 0, LOAD_FILE('public_body.jpg'));
 
 DROP TABLE IF EXISTS `t_public_person`;
 CREATE TABLE `t_public_person` (
@@ -350,14 +191,11 @@ CREATE TABLE `t_public_person` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `t_public_person` (`id`, `first_name`, `last_name`, `date_of_birth`, `visible`, `image`) VALUES
-(1,	'Johan',	'Procházkare',	'1956-09-07',	CONV('1', 2, 10) + 0, LOAD_FILE('/public_person.jpg')),
-(2,	'Karolko',	'Bútorako',	'1966-05-17',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
-(3,	'Luboš',	'Jozefíny',	'1954-12-21',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
-(4,	'Alexej',	'Spevák',	'1979-09-01',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
-(5,	'Emil',	'Čútora',	'1967-04-01',	CONV('0', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
-(6,	'Pavol',	'Oblazek',	'2001-07-10',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
-(7,	'Karolko',	'Predseda',	'1989-07-05',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
-(8,	'Kamil',	'Sebes',	'1993-07-14',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg'));
+(1,	'Johann',	'Procházka',	'1956-09-07',	CONV('1', 2, 10) + 0, LOAD_FILE('/public_person.jpg')),
+(2,	'Karol',	'Bútora',	'1966-05-17',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
+(3,	'Emil',	'Čútora',	'1967-04-01',	CONV('0', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
+(4,	'Pavel',	'Oblázek',	'2001-07-10',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg')),
+(5,	'Karol',	'Predseda',	'1989-07-05',	CONV('1', 2, 10) + 0, LOAD_FILE('public_person.jpg'));
 
 DROP TABLE IF EXISTS `t_public_role`;
 CREATE TABLE `t_public_role` (
@@ -371,12 +209,11 @@ CREATE TABLE `t_public_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `t_public_role` (`id`, `public_body_id`, `tenure_id`, `public_person_id`, `name`, `visible`) VALUES
-(1,	5,	1,	1,	0,	CONV('1', 2, 10) + 0),
-(2,	5,	1,	2,	0,	CONV('1', 2, 10) + 0),
-(3,	5,	1,	3,	0,	CONV('1', 2, 10) + 0),
-(4,	5,	1,	4,	0,	CONV('1', 2, 10) + 0),
-(5,	5,	1,	5,	0,	CONV('0', 2, 10) + 0),
-(6,	4,	6,	6,	2,	CONV('1', 2, 10) + 0);
+(1,	1,	1,	1,	0,	CONV('1', 2, 10) + 0),
+(2,	1,	1,	2,	0,	CONV('1', 2, 10) + 0),
+(3,	1,	1,	3,	0,	CONV('1', 2, 10) + 0),
+(4,	1,	1,	4,	0,	CONV('1', 2, 10) + 0),
+(5,	1,	1,	5,	0,	CONV('0', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `t_region`;
 CREATE TABLE `t_region` (
@@ -396,17 +233,16 @@ CREATE TABLE `t_subject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `brief_description` varchar(50) COLLATE utf8_slovak_ci DEFAULT NULL,
   `description` text COLLATE utf8_slovak_ci,
-  `public_role_id` int(11) DEFAULT NULL,
-  `theme_id` int(11) DEFAULT NULL,
+  `submitter_name` varchar(50) DEFAULT NULL,
+  `public_body_id` int(11) DEFAULT NULL,
   `visible` bit(1) DEFAULT b'1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
-INSERT INTO `t_subject` (`id`, `brief_description`, `description`, `public_role_id`, `theme_id`, `visible`) VALUES
-(1,	'Výberové konanie lesníckej firmy',	NULL,	1,	1,	CONV('1', 2, 10) + 0),
-(2,	'Výberové konanie na firmu',	NULL,	1,	4,	CONV('1', 2, 10) + 0),
-(3,	'Výberové konanie stavebnej firmy',	NULL,	1,	6,	CONV('1', 2, 10) + 0),
-(4,	'Hlasovanie o odpredaji pozemku XYZ Uranovym baniam',	NULL,	1,	5,	CONV('1', 2, 10) + 0);
+INSERT INTO `t_subject` (`id`, `brief_description`, `description`, `submitter_name`, `public_body_id`, `visible`) VALUES
+(1,	'Výberové konanie lesníckej firmy',	NULL,	'kokosko',	1,	CONV('1', 2, 10) + 0),
+(2,	'Výberové konanie na firmu',	NULL,	'kokosko',	1,	CONV('1', 2, 10) + 0),
+(3,	'Výberové konanie stavebnej firmy',	NULL,	'kokosko',	1,	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `t_tenure`;
 CREATE TABLE `t_tenure` (
@@ -418,30 +254,8 @@ CREATE TABLE `t_tenure` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `t_tenure` (`id`, `since`, `till`, `visible`) VALUES
-(1,	'2011-07-04',	NULL,	CONV('1', 2, 10) + 0),
-(2,	'2010-07-04',	NULL,	CONV('1', 2, 10) + 0),
-(3,	'2009-07-04',	NULL,	CONV('1', 2, 10) + 0),
-(4,	'2008-07-04',	NULL,	CONV('1', 2, 10) + 0),
-(5,	'2007-07-04',	NULL,	CONV('1', 2, 10) + 0),
-(6,	'2006-07-04',	NULL,	CONV('1', 2, 10) + 0),
-(7,	'2015-09-15',	'2015-09-17',	CONV('1', 2, 10) + 0);
+(1,	'2011-07-04',	NULL,	CONV('1', 2, 10) + 0);
 
-DROP TABLE IF EXISTS `t_theme`;
-CREATE TABLE `t_theme` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `brief_description` varchar(50) COLLATE utf8_slovak_ci DEFAULT NULL,
-  `description` text COLLATE utf8_slovak_ci,
-  `visible` bit(1) DEFAULT b'1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
-
-INSERT INTO `t_theme` (`id`, `brief_description`, `description`, `visible`) VALUES
-(1,	'Kácanie záhumienkového lesa',	NULL,	CONV('1', 2, 10) + 0),
-(2,	'Zrušenie obecej školy',	NULL,	CONV('1', 2, 10) + 0),
-(3,	'Vymáhanie pohľadávok',	NULL,	CONV('1', 2, 10) + 0),
-(4,	'Stavba divokej skládky',	NULL,	CONV('1', 2, 10) + 0),
-(5,	'Predaj pozemkov uránovým baniam',	NULL,	CONV('1', 2, 10) + 0),
-(6,	'Dokončenie stavby kultúrneho domu',	NULL,	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `t_vote`;
 CREATE TABLE `t_vote` (
@@ -455,10 +269,9 @@ CREATE TABLE `t_vote` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 INSERT INTO `t_vote` (`id`, `vote_date`, `subject_id`, `internal_nr`, `result_vote`, `visible`) VALUES
-(1,	'2006-07-04',	1,	'957-AC',	1,	CONV('1', 2, 10) + 0),
-(2,	'2007-07-04',	2,	'958-AC',	1,	CONV('1', 2, 10) + 0),
-(3,	'2008-07-04',	2,	'959-AC',	1,	CONV('1', 2, 10) + 0),
-(4,	'2009-07-04',	4,	'963-AC',	0,	CONV('1', 2, 10) + 0);
+(1,	'2006-07-04',	1,	'957-KNR',	1,	CONV('1', 2, 10) + 0),
+(2,	'2007-07-04',	2,	'958-KNR',	1,	CONV('1', 2, 10) + 0),
+(3,	'2008-07-04',	3,	'959-KNR',	1,	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `t_vote_classification`;
 CREATE TABLE `t_vote_classification` (
@@ -470,13 +283,6 @@ CREATE TABLE `t_vote_classification` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
-INSERT INTO `t_vote_classification` (`id`, `vote_id`, `public_usefulness`, `brief_description`, `visible`) VALUES
-(1,	1,	0,	'uplne na picu hlasovanie, akodlive jak das',	CONV('1', 2, 10) + 0),
-(2,	2,	4,	'hlasovanie naozaj v zaujme obcanov',	CONV('1', 2, 10) + 0),
-(3,	3,	2,	'nieco medzi, asi v tom bude tunel, nicmene stale je to prospesne verejnosti',	CONV('1', 2, 10) + 0),
-(4,	4,	1,	'nieco medzi, asi v tom bude tunel, nicmene stale je to prospesne verejnosti',	CONV('1', 2, 10) + 0),
-(5,	1,	2,	'kokocina',	CONV('1', 2, 10) + 0),
-(6,	1,	2,	'kokocina',	CONV('1', 2, 10) + 0);
 
 DROP TABLE IF EXISTS `t_vote_of_role`;
 CREATE TABLE `t_vote_of_role` (
@@ -503,11 +309,6 @@ INSERT INTO `t_vote_of_role` (`id`, `public_role_id`, `vote_id`, `decision`, `vi
 (12,	2,	3,	1,	CONV('1', 2, 10) + 0),
 (13,	3,	3,	3,	CONV('1', 2, 10) + 0),
 (14,	4,	3,	1,	CONV('1', 2, 10) + 0),
-(15,	5,	3,	1,	CONV('0', 2, 10) + 0),
-(16,	1,	4,	0,	CONV('1', 2, 10) + 0),
-(17,	2,	4,	0,	CONV('1', 2, 10) + 0),
-(18,	3,	4,	0,	CONV('1', 2, 10) + 0),
-(19,	4,	4,	1,	CONV('1', 2, 10) + 0),
-(20,	5,	4,	1,	CONV('0', 2, 10) + 0);
+(15,	5,	3,	1,	CONV('0', 2, 10) + 0);
 
 -- 2015-10-31 17:00:02

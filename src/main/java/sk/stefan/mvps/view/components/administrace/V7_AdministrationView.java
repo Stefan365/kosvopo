@@ -70,8 +70,8 @@ public class V7_AdministrationView extends VerticalLayout implements TabComponen
         butKraj.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(KrajeTab.class), null));
         butOkres.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(DistrictTab.class), null));
         butMiesto.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(LocationTab.class), null));
-        butTema.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(TemataTab.class), null));
-        butPredmet.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(SubjectsTab.class), null));
+//        butTema.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(TemataTab.class), null));
+        butPredmet.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(ZBD_SubjectsTab.class), null));
         butObdobi.addClickListener(event -> Page.getCurrent().open(linkService.getUriFragmentForTab(TenuresTab.class), null));
     }
 
