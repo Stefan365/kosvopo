@@ -51,7 +51,7 @@ public class ZBD_SubjectPanel extends CssLayout {
     private Label lblNazev;
     private Label lblPopis;
     private VerticalLayout editLayout;
-    
+
     private ComboBox cbSubmitter;
     private ComboBox cbPubBody;
     private TextField tfNazev;
@@ -60,7 +60,7 @@ public class ZBD_SubjectPanel extends CssLayout {
     private Button butCancel;
     private Button butRemove;
 
-    //data
+//    //data
     private BeanFieldGroup<Subject> bfg;
     private Consumer<Subject> saveListener;
     private Consumer<Subject> removeListener;

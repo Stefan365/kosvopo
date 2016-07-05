@@ -5,9 +5,9 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP DATABASE IF EXISTS `kosvopo7`;
-CREATE DATABASE `kosvopo7` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_slovak_ci */;
-USE `kosvopo7`;
+DROP DATABASE IF EXISTS `kosvopo8`;
+CREATE DATABASE `kosvopo8` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_slovak_ci */;
+USE `kosvopo8`;
 
 DROP TABLE IF EXISTS `a_change`;
 CREATE TABLE `a_change` (

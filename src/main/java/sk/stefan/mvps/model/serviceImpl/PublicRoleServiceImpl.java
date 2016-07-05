@@ -271,4 +271,14 @@ public class PublicRoleServiceImpl implements PublicRoleService {
         }
         return null;
     }
+
+    @Override
+    public List<PublicRole> getActualRolesForPubBody(Integer pbId) {
+        return ;
+    }
+
+    @Override
+    public List<PublicRole> getAllRolesForPubBody(Integer pbId) {
+        return null;
+    }
 }
