@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 public interface SaveListener<T> extends Consumer {
 
     default void save(T entity) {
+        //another operations with entity
         accept(entity);
     }
 }

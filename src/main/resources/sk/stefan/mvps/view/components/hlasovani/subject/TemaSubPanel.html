@@ -1,12 +1,16 @@
 <v-css-layout style-name="card new-form" width-full>
+
     <v-horizontal-layout style-name="v-panel-caption" width-full>
         <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left icon="font://LIGHTBULB_O"/>
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
+
     <v-vertical-layout _id="readLayout" margin spacing>
         <v-label _id="lblNazev"/>
         <v-label _id="lblPopis"/>
+        <v-label _id="lblSubmitter"/>
     </v-vertical-layout>
+
     <v-vertical-layout _id="editLayout" margin spacing>
         <v-text-field _id="tfNazev" width-full null-representation="" required="true"/>
         <v-text-area _id="areaPopis" width-full null-representation=""/>
@@ -16,4 +20,5 @@
             <v-button _id="butRemove" icon="font://TRASH_O" style-name="danger"/>
         </v-horizontal-layout>
     </v-vertical-layout>
+
 </v-css-layout>

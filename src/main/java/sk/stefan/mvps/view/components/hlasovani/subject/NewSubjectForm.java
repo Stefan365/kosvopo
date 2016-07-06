@@ -1,4 +1,4 @@
-package sk.stefan.mvps.view.components.hlasovani;
+package sk.stefan.mvps.view.components.hlasovani.subject;
 
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.ui.VerticalLayout;
@@ -18,24 +18,23 @@ import sk.stefan.mvps.view.tabs.TabComponent;
  */
 @Component
 @Scope("prototype")
-//@ViewTab("noveTema")
 @ViewTab("newSubject")
 @DesignRoot
-public class NewTemaSubForm extends VerticalLayout implements TabComponent {
+public class NewSubjectForm extends VerticalLayout implements TabComponent {
 
     @Autowired
     private SecurityService securityService;
 
     //Design
-    private TemaSubPanel temaSubPanel;
+    private SubjectPanel subjectPanel;
 
-    public NewTemaSubForm() {
+    public NewSubjectForm() {
         Design.read(this);
     }
 
     @Override
     public void show() {
-        temaSubPanel.setThemeSub(new Subject());
+        subjectPanel.setSubject(new Subject());
     }
 
     @Override

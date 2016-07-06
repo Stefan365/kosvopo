@@ -115,8 +115,8 @@ public class EntityServiceImpl implements EntityService {
                 return voteRepo.findOne(entityId);
             case "uzivatel":
                 return userRepo.findOne(entityId);
-//            case "tema":
-//                return subjectRepo.findOne(entityId);
+            case "subject":
+                return subjectRepo.findOne(entityId);
             default:
                 throw new RuntimeException("Nepodporované vyhledání entity pro záložku: " + tabName);
         }

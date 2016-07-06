@@ -7,8 +7,10 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.VaadinSessionScope;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import sk.stefan.interfaces.TabEntity;
@@ -26,6 +28,7 @@ import sk.stefan.utils.ParamsCache;
 
 /**
  * Hlavní view pro zobrazení záložek.
+ *
  * @author Lukas on 03.11.2015.
  */
 @SpringView(name = "", ui = KosvopoUI.class)
@@ -49,7 +52,20 @@ public class MainTabsheet extends TabSheet implements View {
     private Map<String, TabComponent> tabMap = new HashMap<>();
 
     public MainTabsheet() {
+
         setSizeFull();
+
+//        setCloseHandler(new TabSheet.CloseHandler(){
+//            @Override
+//            public void onTabClose(TabSheet tabSheet, Component component) {
+//                TabComponent tab = (TabComponent) component;
+//                removeComponent(tab);
+//                tabMap.remove(tab.getTabId());
+//                if (getComponentCount() == 0) {
+//                    showDefaultTab();
+//                }
+//            }
+//        });
         setCloseHandler((tabsheet, component) -> {
             TabComponent tab = (TabComponent) component;
             removeComponent(tab);
@@ -75,6 +91,7 @@ public class MainTabsheet extends TabSheet implements View {
      */
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
+
         if (!event.getParameters().isEmpty()) {
             ParamsCache params = new ParamsCache(event.getParameters());
             String tabName = params.getTabName();

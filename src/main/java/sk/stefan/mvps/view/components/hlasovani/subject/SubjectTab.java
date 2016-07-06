@@ -1,4 +1,4 @@
-package sk.stefan.mvps.view.components.hlasovani;
+package sk.stefan.mvps.view.components.hlasovani.subject;
 
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -25,7 +25,7 @@ import sk.stefan.mvps.view.tabs.TabComponent;
 @SpringComponent
 @Scope("prototype")
 @DesignRoot
-public class TemaSubTab extends VerticalLayout implements TabComponent {
+public class SubjectTab extends VerticalLayout implements TabComponent {
 
     @Autowired
     private VoteService voteService;
@@ -36,31 +36,31 @@ public class TemaSubTab extends VerticalLayout implements TabComponent {
     @Autowired
     private SecurityService securityService;
 
-    private TemaSubPanel temasubPanel;
+    private SubjectPanel temasubPanel;
 
     //data:
     private Subject subject;
 
-    public TemaSubTab() {
+    public SubjectTab() {
         Design.read(this);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void setSaveListener(SaveListener<TabEntity> saveListener) {
-        temasubPanel.setSaveListener(l -> saveListener.accept(subject));
+//        obohateny listener:
+        temasubPanel.setSaveListener(l -> saveListener.save(subject));
 //        temasubPanel.setSaveListener(saveListener);
     }
 
     @Override
     public void setRemoveListener(RemoveListener<TabEntity> removeListener) {
-        temasubPanel.setRemoveListener(l -> removeListener.accept(subject));
+        temasubPanel.setRemoveListener(l -> removeListener.remove(subject));
     }
 
     @Override
     public void setEntity(TabEntity tabEntity) {
         this.subject = (Subject) tabEntity;
-        temasubPanel.setThemeSub(subject);
+        temasubPanel.setSubject(subject);
     }
 
     @Override

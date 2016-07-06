@@ -1,4 +1,4 @@
-package sk.stefan.mvps.view.components.hlasovani;
+package sk.stefan.mvps.view.components.hlasovani.subject;
 
 import com.vaadin.annotations.DesignRoot;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import sk.stefan.enums.UserType;
 import sk.stefan.mvps.model.entity.PublicBody;
 import sk.stefan.mvps.model.service.PublicBodyService;
+import sk.stefan.mvps.model.service.PublicRoleService;
 import sk.stefan.mvps.model.service.SecurityService;
 import sk.stefan.mvps.model.service.VoteService;
 import sk.stefan.utils.Localizator;
@@ -27,7 +28,7 @@ import sk.stefan.mvps.model.entity.Subject;
 @Component
 @Scope("prototype")
 @DesignRoot
-public class TemaSubPanel extends CssLayout {
+public class SubjectPanel extends CssLayout {
 
     @Autowired
     private SecurityService securityService;
@@ -35,50 +36,52 @@ public class TemaSubPanel extends CssLayout {
     @Autowired
     private PublicBodyService publicBodyService;
 
+    @Autowired
+    private PublicRoleService publicRoleService;
 
     @Autowired
     private VoteService voteService;
 
 
-    //Grafika:
+//    GRAFIKA:
     private Label lblCaption;
 
-    //policka zodpovedajuce properties:
-    //brief_description:
+//  policka zodpovedajuce properties:
+//  non  editable:
     private Label lblNazev;
-    private TextField tfNazev;
-    //description:
     private Label lblPopis;
-    private TextArea areaPopis;
-    //submitter_name:
     private Label lblSubmitter;
-    private TextField tfSubmitter;
     private Label lblPubBody;
+
+    private VerticalLayout readLayout;
+
+//    editable:
+    private TextField tfNazev;
+    private TextArea areaPopis;
+    private ComboBox cbSubmitter;
     private ComboBox cbPubBody;
 
-    //layouty:
-    private VerticalLayout readLayout;
-    private VerticalLayout editLayout;
-
-    //vseobecne tlacitka:
     private Button butEdit;
     private Button butSave;
     private Button butCancel;
     private Button butRemove;
 
-    //data
+    private VerticalLayout editLayout;
+
+//    data:
     private BeanFieldGroup<Subject> bfg;
     private Consumer<Subject> saveListener;
     private Consumer<Subject> removeListener;
 
-    public TemaSubPanel() {
+
+    public SubjectPanel() {
         Design.read(this);
         Localizator.localizeDesign(this);
 
         bfg = new BeanFieldGroup<>(Subject.class);
         bfg.bind(tfNazev, "brief_description");
         bfg.bind(areaPopis, "description");
-        bfg.bind(tfSubmitter, "submitter_name");
+        bfg.bind(cbSubmitter, "submitter_name");
         bfg.bind(cbPubBody, "public_body_id");
 
         butEdit.addClickListener(event -> setReadOnly(false));
@@ -89,7 +92,6 @@ public class TemaSubPanel extends CssLayout {
         cbPubBody.addValueChangeListener(event -> updateRoleSelection((Integer) cbPubBody.getValue()));
     }
 
-
     public void setSaveListener(Consumer<Subject> saveListener) {
         this.saveListener = saveListener;
     }
@@ -98,18 +100,37 @@ public class TemaSubPanel extends CssLayout {
         this.removeListener = removeListener;
     }
 
-
-    public void setThemeSub(Subject themeSubject) {
+    public void setSubject(Subject subject) {
         setValidationVisible(false);
-        bfg.setItemDataSource(themeSubject);
+        bfg.setItemDataSource(subject);
 
-        lblNazev.setValue(themeSubject.getBrief_description());
-        lblPopis.setValue(themeSubject.getDescription());
-        lblPopis.setVisible(themeSubject.getDescription() != null && !themeSubject.getDescription().isEmpty());
+//        editable:
+        cbPubBody.removeAllItems();
+        publicBodyService.findAll().forEach(body -> {
+            cbPubBody.addItem(body.getId());
+            cbPubBody.setItemCaption(body.getId(), body.getPresentationName());
+        });
 
-        setReadOnly(themeSubject.getId() != null);
-        butCancel.setVisible(themeSubject.getId() != null);
-        butRemove.setVisible(themeSubject.getId() != null);
+        if (subject.getId() != null) {
+            PublicBody body = publicBodyService.findOne(subject.getPublic_body_id());
+            cbPubBody.setValue(body != null ? body.getId() : null);
+            lblPubBody.setValue(body != null ? body.getPresentationName() : null);
+            if (body != null) {
+                updateRoleSelection(body.getId());
+            }
+        }
+
+//        non editable:
+        String submitter = subject.getSubmitter_name();
+        lblSubmitter.setValue(submitter);
+        lblNazev.setValue(subject.getBrief_description());
+        lblPopis.setValue(subject.getDescription());
+        lblPopis.setVisible(subject.getDescription() != null && !subject.getDescription().isEmpty());
+
+        setValidationVisible(false);
+        bfg.setItemDataSource(subject);
+
+        setReadOnly(subject.getId() != null);
     }
 
     @Override
@@ -153,11 +174,10 @@ public class TemaSubPanel extends CssLayout {
     }
 
     private void updateRoleSelection(Integer organId) {
-        cbPubBody.removeAllItems();
-        PublicBody body = publicBodyService.findOne(organId).g;
-        tfSubmitter.setValue();
-//      cbSubmitter.setValue(body.getPresentationName());
-//      cbSubmitter.setItemCaption(body.getPresentationName(), body.getPresentationName());
-    }
 
+        publicRoleService.findAllRolesForPubBody(organId).forEach(role -> {
+            cbSubmitter.addItem(role.getPresentationName2());
+            cbSubmitter.setItemCaption(role.getPresentationName2(), role.getPresentationName2());
+        });
+    }
 }

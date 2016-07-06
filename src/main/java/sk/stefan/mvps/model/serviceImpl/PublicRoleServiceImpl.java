@@ -273,12 +273,13 @@ public class PublicRoleServiceImpl implements PublicRoleService {
     }
 
     @Override
-    public List<PublicRole> getActualRolesForPubBody(Integer pbId) {
-        return ;
+    public List<PublicRole> findActualRolesForPubBody(Integer pbId) {
+        //todo, to the time being:
+        return pubRoleRepo.findByParam("id",pbId + "");
     }
 
     @Override
-    public List<PublicRole> getAllRolesForPubBody(Integer pbId) {
-        return null;
+    public List<PublicRole> findAllRolesForPubBody(Integer pbId) {
+        return pubRoleRepo.findByParam("id",pbId + "");
     }
 }

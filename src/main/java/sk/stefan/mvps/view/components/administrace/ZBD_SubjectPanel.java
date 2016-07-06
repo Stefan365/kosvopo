@@ -92,6 +92,7 @@ public class ZBD_SubjectPanel extends CssLayout {
     }
 
     public void setSubject(Subject subject) {
+
         cbPubBody.removeAllItems();
         publicBodyService.findAll().forEach(body -> {
             cbPubBody.addItem(body.getId());
