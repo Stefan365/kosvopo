@@ -38,6 +38,7 @@ import java.util.Map;
 
 /**
  * Časová osa hlasování.
+ *
  * @author elopin on 09.11.2015.
  */
 @SpringComponent
@@ -71,29 +72,54 @@ public class TimelinePanel extends Panel {
         chart.setEnableChartDataClickEvent(true);
 
 //        chart.addHandler((ChartDataClickHandler) event -> {
-//        ChartDataClickHandler chd = chartDataClickEvent -> {
-//            ChartData data = chartDataClickEvent.getChartData();
-//            Object[] originData = (Object[]) data.getOriginData();
-//            Vote vote = voteMap.get(originData[0]);
-//            if (vote != null) {
-//                Page.getCurrent().open(linkService.getUriFragmentForEntity(vote), null);
-//            }
-//
-//        };
+        ChartDataClickHandler chd = new ChartDataClickHandler() {
 
-        chart.addHandler((ChartDataClickHandler) event -> {
+            @Override
+            public void onChartDataClick(ChartDataClickEvent event) {
+                ChartData data = event.getChartData();
+                Object[] originData = (Object[]) data.getOriginData();
+                Vote vote = voteMap.get(originData[0]);
+                if (vote != null) {
+                    Page.getCurrent().open(linkService.getUriFragmentForEntity(vote), null);
+                }
 
-            ChartData data = event.getChartData();
-            Object[] originData = (Object[]) data.getOriginData();
-            Vote vote = voteMap.get(originData[0]);
-            if (vote != null) {
-                Page.getCurrent().open(linkService.getUriFragmentForEntity(vote), null);
             }
-        });
+        };
 
-        xYaxis = new XYaxis()
-                .setRenderer(AxisRenderers.DATE)
-        .setTickOptions(new CanvasAxisTickRenderer().setAngle(-90).setFormatString("%m/%d/%y-%H:%M "));
+        chart.addHandler(chd);
+
+//        chart.addHandler((ChartDataClickHandler) event ->
+//                {
+//                    ChartData data = event.getChartData();
+//                    Object[] originData = (Object[]) data.getOriginData();
+//                    Vote vote = voteMap.get(originData[0]);
+//                    if (vote != null) {
+//                        Page.getCurrent().open(linkService.getUriFragmentForEntity(vote), null);
+//                    }
+//                }
+//        );
+
+        xYaxis = new
+
+                XYaxis()
+
+                .
+
+                        setRenderer(AxisRenderers.DATE)
+
+                .
+
+                        setTickOptions(new CanvasAxisTickRenderer()
+
+                                .
+
+                                        setAngle(-90)
+
+                                .
+
+                                        setFormatString("%m/%d/%y-%H:%M ")
+
+                        );
         Axes axes = new Axes()
                 .addAxis(xYaxis)
                 .addAxis(
