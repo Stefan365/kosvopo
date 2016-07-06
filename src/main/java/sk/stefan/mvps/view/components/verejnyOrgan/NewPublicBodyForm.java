@@ -34,7 +34,7 @@ import java.util.List;
  */
 @SpringComponent
 @Scope("prototype")
-@ViewTab("novyOrgan")
+@ViewTab("newPublicBody")
 @DesignRoot
 public class NewPublicBodyForm extends VerticalLayout implements TabComponent {
 
@@ -125,7 +125,7 @@ public class NewPublicBodyForm extends VerticalLayout implements TabComponent {
 
     @Override
     public String getTabId() {
-        return "novyOrgan";
+        return "newPublicBody";
     }
 
     public void setValidationVisible(boolean validationVisible) {
