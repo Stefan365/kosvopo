@@ -99,27 +99,12 @@ public class TimelinePanel extends Panel {
 //                }
 //        );
 
-        xYaxis = new
-
-                XYaxis()
-
+        xYaxis = new XYaxis().setRenderer(AxisRenderers.DATE).setTickOptions(new CanvasAxisTickRenderer()
                 .
-
-                        setRenderer(AxisRenderers.DATE)
-
+                        setAngle(-90)
                 .
-
-                        setTickOptions(new CanvasAxisTickRenderer()
-
-                                .
-
-                                        setAngle(-90)
-
-                                .
-
-                                        setFormatString("%m/%d/%y-%H:%M ")
-
-                        );
+                        setFormatString("%m/%d/%y-%H:%M ")
+        );
         Axes axes = new Axes()
                 .addAxis(xYaxis)
                 .addAxis(
