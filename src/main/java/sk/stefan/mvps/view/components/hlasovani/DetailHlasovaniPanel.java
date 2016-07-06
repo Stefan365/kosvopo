@@ -23,6 +23,7 @@ import sk.stefan.enums.VoteResult;
 import sk.stefan.interfaces.TabEntity;
 import sk.stefan.listeners.SaveListener;
 //import sk.stefan.mvps.model.entity.Theme;
+import sk.stefan.mvps.model.entity.Subject;
 import sk.stefan.mvps.model.entity.Vote;
 import sk.stefan.mvps.model.entity.VoteClassification;
 import sk.stefan.mvps.model.service.ClassificationService;
@@ -60,7 +61,7 @@ public class DetailHlasovaniPanel extends CssLayout {
     private VerticalLayout readLayout;
     private Label lblOrgan;
     private Label lblPredmet;
-//    private Link linkTema;
+    private Link linkPredmet;
     private Label lblDatum;
     private Label lblCislo;
     private Label lblVysledek;
@@ -81,6 +82,7 @@ public class DetailHlasovaniPanel extends CssLayout {
     private SimpleDateFormat format;
 
     public DetailHlasovaniPanel() {
+
         Design.read(this);
         Localizator.localizeDesign(this);
 
@@ -117,11 +119,12 @@ public class DetailHlasovaniPanel extends CssLayout {
 
         lblOrgan.setValue(voteService.getVotePublicBodyName(vote));
         lblPredmet.setValue(voteService.getVoteSubjectName(vote));
-//        Theme theme = voteService.findThemeBySubjectId(vote.getSubject_id());
-//        if (theme != null) {
-//            linkTema.setCaption(theme.getPresentationName());
-//            linkTema.setResource(new ExternalResource(linkService.getUriFragmentForEntity(theme)));
-//        }
+
+        Subject subject = voteService.findSubjectById(vote.getSubject_id());
+        if (subject != null) {
+            linkPredmet.setCaption(subject.getPresentationName());
+            linkPredmet.setResource(new ExternalResource(linkService.getUriFragmentForEntity(subject)));
+        }
         lblDatum.setValue(format.format(vote.getVote_date()));
         lblCislo.setValue(vote.getInternal_nr());
         lblVysledek.setValue(vote.getResult_vote() != null ? vote.getResult_vote().getName() : "dosud nezadáno");

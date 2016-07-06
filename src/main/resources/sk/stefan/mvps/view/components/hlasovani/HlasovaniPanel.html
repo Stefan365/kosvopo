@@ -1,8 +1,10 @@
 <v-css-layout style-name="card new-form" width-full>
+
     <v-horizontal-layout style-name="v-panel-caption" width-full>
         <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left icon="font://LIST"/>
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
+
     <v-vertical-layout _id="readLayout" spacing margin width-full>
         <v-grid _id="grid" width-full>
             <table>
@@ -11,6 +13,7 @@
             </table>
         </v-grid>
     </v-vertical-layout>
+
     <v-vertical-layout _id="editLayout" spacing margin width-full>
         <v-vertical-layout _id="componentsLayout" spacing width-full/>
         <v-horizontal-layout spacing>
@@ -18,4 +21,5 @@
             <v-button _id="butCancel" icon="font://PENCIL"/>
         </v-horizontal-layout>
     </v-vertical-layout>
+
 </v-css-layout>

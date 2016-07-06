@@ -1,16 +1,19 @@
 <v-css-layout style-name="card new-form" width-full>
+
     <v-horizontal-layout style-name="v-panel-caption" width-full>
-        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left icon="font://HAND_O_UP" />
+        <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left icon="font://HAND_O_UP"/>
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
+
     <v-vertical-layout _id="readLayout" spacing margin>
         <v-label _id="lblOrgan"/>
         <v-label _id="lblPredmet"/>
-        <v-link _id="linkTema"/>
+        <v-link _id="linkPredmet"/>
         <v-label _id="lblDatum"/>
         <v-label _id="lblCislo"/>
         <v-label _id="lblVysledek"/>
     </v-vertical-layout>
+
     <v-vertical-layout _id="editLayout" spacing margin>
         <v-combo-box _id="cbPredmet" width-full required="true"/>
         <v-popup-date-field _id="dfDatum" width-full required="true"/>

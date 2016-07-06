@@ -36,7 +36,7 @@ public class SubjectTab extends VerticalLayout implements TabComponent {
     @Autowired
     private SecurityService securityService;
 
-    private SubjectPanel temasubPanel;
+    private SubjectPanel subjectPanel;
 
     //data:
     private Subject subject;
@@ -48,19 +48,20 @@ public class SubjectTab extends VerticalLayout implements TabComponent {
     @Override
     public void setSaveListener(SaveListener<TabEntity> saveListener) {
 //        obohateny listener:
-        temasubPanel.setSaveListener(l -> saveListener.save(subject));
-//        temasubPanel.setSaveListener(saveListener);
+        subjectPanel.setSaveListener(l -> saveListener.save(subject));
+//        povodny listener:
+//        subjectPanel.setSaveListener(saveListener);
     }
 
     @Override
     public void setRemoveListener(RemoveListener<TabEntity> removeListener) {
-        temasubPanel.setRemoveListener(l -> removeListener.remove(subject));
+        subjectPanel.setRemoveListener(l -> removeListener.remove(subject));
     }
 
     @Override
     public void setEntity(TabEntity tabEntity) {
         this.subject = (Subject) tabEntity;
-        temasubPanel.setSubject(subject);
+        subjectPanel.setSubject(subject);
     }
 
     @Override

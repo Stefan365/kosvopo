@@ -1,0 +1,5 @@
+<root>
+  <item name='org.dussan.vaadin.dcharts.events.rightclick.ChartDataRightClickEvent org.dussan.vaadin.dcharts.events.ChartData getChartData()'>
+    <annotation name='org.jetbrains.annotations.Nullable'/>
+  </item>
+</root>

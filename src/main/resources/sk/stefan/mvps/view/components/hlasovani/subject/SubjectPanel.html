@@ -1,25 +1,28 @@
 <v-css-layout style-name="card new-form" width-full>
+
     <v-horizontal-layout style-name="v-panel-caption" width-full>
         <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left icon="font://LIGHTBULB_O"/>
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
+
     <v-vertical-layout _id="readLayout" margin spacing>
-        <v-label _id="lblOrgan"/>
-        <v-label _id="lblRole"/>
-        <v-label _id="lblTema"/>
         <v-label _id="lblNazev"/>
         <v-label _id="lblPopis"/>
+        <v-label _id="lblPubBody"/>
+        <v-label _id="lblSubmitter"/>
     </v-vertical-layout>
+
     <v-vertical-layout _id="editLayout" margin spacing>
-        <v-combo-box _id="cbOrgan" width-full required="true"/>
-        <v-combo-box _id="cbRole" width-full required="true"/>
-        <v-combo-box _id="cbTema" width-full required="true"/>
         <v-text-field _id="tfNazev" width-full null-representation="" required="true"/>
         <v-text-area _id="areaPopis" width-full null-representation=""/>
+        <v-combo-box _id="cbPubBody" width-full required="false"/>
+        <v-combo-box _id="cbSubmitter" width-full required="false"/>
+
         <v-horizontal-layout spacing>
             <v-button _id="butSave" style-name="primary"/>
             <v-button _id="butCancel" icon="font://PENCIL"/>
             <v-button _id="butRemove" icon="font://TRASH_O" style-name="danger"/>
         </v-horizontal-layout>
     </v-vertical-layout>
+
 </v-css-layout>

@@ -5,17 +5,22 @@
 </head>
 <body>
 <v-css-layout style-name="card new-form" width-full>
+
     <v-horizontal-layout style-name="v-panel-caption" width-full>
         <v-label _id="lblCaption" style-name="v-captiontext" :expand :middle :left icon="font://USER"/>
         <v-button _id="butEdit" style-name="borderless small" :middle :right icon="font://PENCIL"/>
     </v-horizontal-layout>
+
     <v-horizontal-layout spacing margin width-full>
+
         <c-image-component _id="imageComponent"/>
+
         <v-vertical-layout _id="readLayout" spacing :expand>
             <v-label _id="lblName"/>
             <v-label _id="lblDatumNarozeni"/>
             <v-label _id="lblAktualniRole"/>
         </v-vertical-layout>
+
         <v-vertical-layout _id="editLayout" spacing :expand>
             <v-text-field _id="tfJmeno" width="100%" required="true"/>
             <v-text-field _id="tfPrijmeni" width="100%" required="true"/>
@@ -26,6 +31,7 @@
                 <v-button _id="butRemove" style-name="danger" icon="font://TRASH_O"/>
             </v-horizontal-layout>
         </v-vertical-layout>
+
     </v-horizontal-layout>
 </v-css-layout>
 </body>

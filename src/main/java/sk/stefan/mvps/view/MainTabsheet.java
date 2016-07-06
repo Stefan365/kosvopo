@@ -14,10 +14,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import sk.stefan.interfaces.TabEntity;
-import sk.stefan.mvps.model.entity.A_User;
-import sk.stefan.mvps.model.entity.PublicBody;
-import sk.stefan.mvps.model.entity.PublicPerson;
-import sk.stefan.mvps.model.entity.PublicRole;
+import sk.stefan.mvps.model.entity.*;
 import sk.stefan.mvps.model.service.EntityService;
 import sk.stefan.mvps.model.service.LinkService;
 import sk.stefan.mvps.view.tabs.TabComponent;
@@ -196,14 +193,17 @@ public class MainTabsheet extends TabSheet implements View {
     private void checkNewFormForEntity(TabEntity entity) {
         String tabId = null;
         if (PublicBody.class.isAssignableFrom(entity.getClass())) {
-            tabId = "novyOrgan";
+            tabId = "newPublicBody";
         } else if (PublicRole.class.isAssignableFrom(entity.getClass())) {
             tabId = "novaVerejnaRole";
         } else if (PublicPerson.class.isAssignableFrom(entity.getClass())) {
             tabId = "novaVerejnaOsoba";
         } else if (A_User.class.isAssignableFrom(entity.getClass())) {
             tabId = "novyUzivatel";
+        } else if (Subject.class.isAssignableFrom(entity.getClass())) {
+            tabId = "newSubject";
         }
+
         if (tabId != null) {
             TabComponent tab = tabMap.get(tabId);
             if (tab != null) {

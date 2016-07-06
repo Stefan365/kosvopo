@@ -10,7 +10,10 @@ import org.dussan.vaadin.dcharts.DCharts;
 import org.dussan.vaadin.dcharts.base.elements.XYaxis;
 import org.dussan.vaadin.dcharts.data.DataSeries;
 import org.dussan.vaadin.dcharts.events.ChartData;
+import org.dussan.vaadin.dcharts.events.chartImageChange.ChartImageChangeHandler;
+import org.dussan.vaadin.dcharts.events.click.ChartDataClickEvent;
 import org.dussan.vaadin.dcharts.events.click.ChartDataClickHandler;
+import org.dussan.vaadin.dcharts.events.rightclick.ChartDataRightClickHandler;
 import org.dussan.vaadin.dcharts.metadata.XYaxes;
 import org.dussan.vaadin.dcharts.metadata.renderers.AxisRenderers;
 import org.dussan.vaadin.dcharts.options.Axes;
@@ -67,7 +70,19 @@ public class TimelinePanel extends Panel {
 
         chart.setEnableChartDataClickEvent(true);
 
+//        chart.addHandler((ChartDataClickHandler) event -> {
+//        ChartDataClickHandler chd = chartDataClickEvent -> {
+//            ChartData data = chartDataClickEvent.getChartData();
+//            Object[] originData = (Object[]) data.getOriginData();
+//            Vote vote = voteMap.get(originData[0]);
+//            if (vote != null) {
+//                Page.getCurrent().open(linkService.getUriFragmentForEntity(vote), null);
+//            }
+//
+//        };
+
         chart.addHandler((ChartDataClickHandler) event -> {
+
             ChartData data = event.getChartData();
             Object[] originData = (Object[]) data.getOriginData();
             Vote vote = voteMap.get(originData[0]);
