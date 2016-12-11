@@ -1,5 +1,7 @@
 package sk.stefan.mvps.model.repo;
 
+import org.apache.log4j.Logger;
+
 import com.vaadin.ui.Notification;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,11 +18,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.log4j.Logger;
+
 import sk.stefan.dbConnection.DoDBconn;
+import sk.stefan.interfaces.MyRepo;
 import sk.stefan.mvps.model.entity.A_Change;
 import sk.stefan.mvps.model.entity.A_User;
-import sk.stefan.interfaces.MyRepo;
 import sk.stefan.utils.ToolsDao;
 
 /**

@@ -1,40 +1,40 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <oracle.dbtools.crest.model.design.relational.RelationalDesign>
-   <object objectType="Table" objectID="0AE27602-32A9-1C1E-820F-2AAD6028BFE5" name="T_PUBLIC_BODY" seqName="seg_0"/>
-   <object objectType="Table" objectID="23545763-AAEE-EC63-1940-5C544E98880B" name="T_VOTE" seqName="seg_0"/>
-   <object objectType="Table" objectID="248925C2-5ACD-C170-3BB2-75CC737E2339" name="T_TENURE" seqName="seg_0"/>
-   <object objectType="Table" objectID="25D2239F-5023-6B2C-0D56-6D0B5E72E033" name="T_PUBLIC_PERSON" seqName="seg_0"/>
-   <object objectType="Table" objectID="2C079ADE-D8A5-9C28-AFFA-F5105F82CDD6" name="T_LOCATION" seqName="seg_0"/>
-   <object objectType="Table" objectID="3CCF3EC8-A44A-A9BA-0B23-3788FCBD13EC" name="T_DISTRICT" seqName="seg_0"/>
-   <object objectType="Table" objectID="5C997B9E-D989-FDFF-AC91-4A30ED7E0A57" name="A_ROLE" seqName="seg_0"/>
-   <object objectType="Table" objectID="5E0DDA86-20F3-CD5D-07CA-A167C497475E" name="T_THEME" seqName="seg_0"/>
-   <object objectType="Table" objectID="6739C27A-5B92-6D23-3E1E-8B059CA68707" name="T_VOTE_CLASSIFICATION" seqName="seg_0"/>
-   <object objectType="Table" objectID="702CA546-9995-F0A3-9DF3-DE7F9608A76B" name="A_USER_ROLE" seqName="seg_0"/>
-   <object objectType="Table" objectID="752B7709-37B3-4396-99B9-8A6457E1EBCA" name="T_DOCUMENT" seqName="seg_0"/>
-   <object objectType="Table" objectID="8EC9AC9F-3350-2D1A-61B0-F984878A6954" name="T_VOTE_OF_ROLE" seqName="seg_0"/>
-   <object objectType="Table" objectID="92EA623C-9D87-90BC-8812-ADF4C63AD017" name="A_CHANGE" seqName="seg_0"/>
-   <object objectType="Table" objectID="94CD0EEF-9E53-6740-64EE-BB81050A1648" name="T_SUBJECT" seqName="seg_0"/>
-   <object objectType="Table" objectID="A858A778-B38D-BC3C-AC95-454EDDAD1DC1" name="T_PERSON_CLASSIFICATION" seqName="seg_0"/>
-   <object objectType="Table" objectID="AC514D59-21EF-9BFF-B6F2-92E32AFC050C" name="A_USER" seqName="seg_0"/>
-   <object objectType="Table" objectID="AE225834-24C4-154B-AF45-F167DC842F6B" name="A_HIERARCHY" seqName="seg_0"/>
-   <object objectType="Table" objectID="B570475F-D145-5BD8-A19E-D39F7BF7D4A0" name="T_PUBLIC_ROLE" seqName="seg_0"/>
-   <object objectType="Table" objectID="E2B02982-0919-6E68-60CE-C692FB6209D4" name="T_REGION" seqName="seg_0"/>
-   <object objectType="Table" objectID="E32CD588-C2E5-2D60-CCE7-42D5D4E89F90" name="T_NOTE" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="059C66CF-EDF3-B81E-F91F-C9ABAED21DA0" name="vor_FK1" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="09E9429B-D84A-28C5-B3A4-CB206A8F2C85" name="pur_FK3" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="0FE90226-355E-ED1E-9046-D9575B61FE06" name="pur_FK2" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="11AA45AA-B64E-12EF-1F91-AD86CF62EDFD" name="loc_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="14ED81C8-6000-D774-E2FA-BA4D63D11403" name="pcl_FK1" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="4FCC8C22-1CD8-D5A7-7A5A-6D564E9FB325" name="sub_FK2" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="52C646EB-B45F-3D9D-DA21-1BDE836CAC03" name="vot_FK2" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="621DB39E-E845-46CA-5531-F61AE91F78F6" name="uro_FK1" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="7A513795-CEF7-183D-4FD7-A9AB7422ACA7" name="chg_FK2" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="9CE42D28-C772-89C1-2414-D60883D8AB64" name="pur_FK1" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="AFE34E8F-19DE-3F41-ECB2-68917DC890C9" name="dis_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="BBA1FF5E-C358-299F-A500-2C320182D8ED" name="uro_FK2" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="C27DE6E1-9584-B798-FDEC-4ED6CCA021AD" name="vcl_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="C732788B-FCC2-418A-9EC7-452BBB4AD150" name="loc_FK1" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="CFC9A6B7-7A06-FF2A-69DB-8B84A5672F91" name="sub_FK1" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="DD25C3C2-1A52-E38C-2314-5BCC55FD71DF" name="vor_FK2" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="E3C0A265-21FE-EEED-7851-404B42278A5F" name="chg_FK1" seqName="seg_0"/>
+   <object objectType="Table" objectID="AC514D59-21EF-9BFF-B6F2-92E32AFC050C" name="A_USER" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="E32CD588-C2E5-2D60-CCE7-42D5D4E89F90" name="T_NOTE" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="702CA546-9995-F0A3-9DF3-DE7F9608A76B" name="A_USER_ROLE" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="A858A778-B38D-BC3C-AC95-454EDDAD1DC1" name="T_PERSON_CLASSIFICATION" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="5C997B9E-D989-FDFF-AC91-4A30ED7E0A57" name="A_ROLE" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="92EA623C-9D87-90BC-8812-ADF4C63AD017" name="A_CHANGE" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="23545763-AAEE-EC63-1940-5C544E98880B" name="T_VOTE" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="3CCF3EC8-A44A-A9BA-0B23-3788FCBD13EC" name="T_DISTRICT" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="0AE27602-32A9-1C1E-820F-2AAD6028BFE5" name="T_PUBLIC_BODY" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="6739C27A-5B92-6D23-3E1E-8B059CA68707" name="T_VOTE_CLASSIFICATION" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="5E0DDA86-20F3-CD5D-07CA-A167C497475E" name="T_THEME" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="94CD0EEF-9E53-6740-64EE-BB81050A1648" name="T_SUBJECT" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="B570475F-D145-5BD8-A19E-D39F7BF7D4A0" name="T_PUBLIC_ROLE" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="2C079ADE-D8A5-9C28-AFFA-F5105F82CDD6" name="T_LOCATION" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="AE225834-24C4-154B-AF45-F167DC842F6B" name="A_HIERARCHY" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="E2B02982-0919-6E68-60CE-C692FB6209D4" name="T_REGION" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="8EC9AC9F-3350-2D1A-61B0-F984878A6954" name="T_VOTE_OF_ROLE" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="752B7709-37B3-4396-99B9-8A6457E1EBCA" name="T_DOCUMENT" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="25D2239F-5023-6B2C-0D56-6D0B5E72E033" name="T_PUBLIC_PERSON" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="248925C2-5ACD-C170-3BB2-75CC737E2339" name="T_TENURE" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="DD25C3C2-1A52-E38C-2314-5BCC55FD71DF" name="vor_FK2" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="621DB39E-E845-46CA-5531-F61AE91F78F6" name="uro_FK1" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="AFE34E8F-19DE-3F41-ECB2-68917DC890C9" name="dis_FK" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="9CE42D28-C772-89C1-2414-D60883D8AB64" name="pur_FK1" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="14ED81C8-6000-D774-E2FA-BA4D63D11403" name="pcl_FK1" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="E3C0A265-21FE-EEED-7851-404B42278A5F" name="chg_FK1" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="059C66CF-EDF3-B81E-F91F-C9ABAED21DA0" name="vor_FK1" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="11AA45AA-B64E-12EF-1F91-AD86CF62EDFD" name="loc_FK" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="09E9429B-D84A-28C5-B3A4-CB206A8F2C85" name="pur_FK3" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="52C646EB-B45F-3D9D-DA21-1BDE836CAC03" name="vot_FK2" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="CFC9A6B7-7A06-FF2A-69DB-8B84A5672F91" name="sub_FK1" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="7A513795-CEF7-183D-4FD7-A9AB7422ACA7" name="chg_FK2" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="BBA1FF5E-C358-299F-A500-2C320182D8ED" name="uro_FK2" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="0FE90226-355E-ED1E-9046-D9575B61FE06" name="pur_FK2" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="4FCC8C22-1CD8-D5A7-7A5A-6D564E9FB325" name="sub_FK2" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="C732788B-FCC2-418A-9EC7-452BBB4AD150" name="loc_FK1" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="C27DE6E1-9584-B798-FDEC-4ED6CCA021AD" name="vcl_FK" containerID="" refContainerID="" seqName="seg_0" propertyClassName="" propertyParentId="" propertySourceId="" propertyTargetId=""/>
 </oracle.dbtools.crest.model.design.relational.RelationalDesign>
